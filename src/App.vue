@@ -7,13 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import Navbar from "@/components/core/Navbar.vue";
 import Footer from "@/components/core/Footer.vue";
-
-onMounted(() => {
-  console.log('App mounted successfully!')
-})
 </script>
 
 <style>

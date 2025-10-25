@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue'
   import Hero from "@/components/core/Hero.vue";
   import Button from "@/components/core/Button.vue";
 </script>
