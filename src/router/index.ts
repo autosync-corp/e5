@@ -1,17 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
+import { routes as galleryRoutes} from '@/gallery/router'
+import { routes as coreRoutes} from '@/core/router'
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import("@/views/HomePage.vue"),
-  }
+    ...coreRoutes,
+    ...galleryRoutes,
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+    history: createWebHistory(),
+    routes
 })
 
 export default router

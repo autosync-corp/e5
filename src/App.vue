@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view/>
+    <router-view class="mt-107"/>
     <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
-import Navbar from "@/components/core/Navbar.vue";
-import Footer from "@/components/core/Footer.vue";
+import Navbar from "@/core/components/Navbar.vue";
+import Footer from "@/core/components/Footer.vue";
 </script>
 
 <style>
