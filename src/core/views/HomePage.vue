@@ -98,7 +98,7 @@
             <img src="/src/core/assets/images/e5-gallery-2.png" alt="Wheel Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
               <router-link to="/gallery/wheel" class="mt-auto mb-10">
-                <Button primary class="mt-auto mb-10 py-4">
+                <Button primary class="mt-auto py-4">
                   VIEW WHEEL <br /> GALLERY
                 </Button>
               </router-link>>
