@@ -18,7 +18,9 @@
     <section class="container-e5 py-16 px-24">
       <div class="grid grid-cols-3 gap-6">
         <VehicleDetailedCard
-            v-for="vehicle in VetteGallery"
+            v-for="(vehicle, index) in VetteGallery"
+            :key="index"
+            :vehicle-id="index"
             :image="vehicle.image"
             :logo="vehicle.logo"
             :brand="vehicle.brand"

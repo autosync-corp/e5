@@ -4,7 +4,7 @@ import {computed} from "vue";
 import {routes as galleryRoutes} from "@/gallery/router"
 
 const route = useRoute();
-const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.path === route.path)))
+const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name === route.name)))
 </script>
 
 <template>
@@ -18,14 +18,14 @@ const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.path =
 
       <div class="flex justify-center">
         <a href="/">
-          <img src="/src/core/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="h-[24px] w-auto" />
+          <img src="/src/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="h-[24px] w-auto" />
         </a>
       </div>
 
       <div class="flex justify-end items-center gap-6">
         <a href="#" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
         <a href="#" class="nav-link">CONTACT US</a>
-        <img src="/src/core/assets/images/asset-18.png" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+        <img src="/src/assets/images/asset-18.png" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
   </nav>

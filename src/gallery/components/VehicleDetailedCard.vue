@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import Button from "@/core/components/Button.vue";
 
+const router = useRouter();
+
 const props = defineProps({
+  vehicleId: {
+    type: Number,
+    required: true,
+  },
   image: {
     type: String,
     required: true,
@@ -39,11 +46,15 @@ const props = defineProps({
     required: true,
   }
 })
+
+const viewGallery = () => {
+  router.push(`/gallery/detail/${props.vehicleId}`);
+};
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-50 px-4 py-3">
-    <div class="w-full h-[350px] bg-gray-50 flex align-middle justify-center">
+  <div class="flex flex-col bg-gray-100 px-4 py-3">
+    <div class="w-full h-[350px] bg-gray-100 flex align-middle justify-center">
       <img :src="props.image" alt="Corvette Build" class="w-full object-cover"/>
     </div>
     <div class="grid grid-cols-2 gap-8 text-start mt-4 px-4">
@@ -68,6 +79,6 @@ const props = defineProps({
       </p>
     </div>
 
-    <Button primary class="mx-auto mt-8" style="max-width: 230px">VIEW GALLERY</Button>
+    <Button primary class="mx-auto mt-8" style="max-width: 230px" @click="viewGallery">VIEW GALLERY</Button>
   </div>
 </template>

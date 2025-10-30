@@ -10,6 +10,11 @@ export const routes = [
         component: () => import("@/gallery/views/VetteDetailedGallery.vue"),
     },
     {
+        path: '/gallery/detail/:id',
+        name: 'gallery-detail',
+        component: () => import("@/gallery/views/VetteGalleryDetail.vue"),
+    },
+    {
         path: '/gallery/:pathMatch(.*)*',
         name: 'not-found',
         redirect: '/gallery'
