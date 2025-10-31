@@ -2,8 +2,10 @@
 import {useRoute} from "vue-router";
 import {computed} from "vue";
 import {routes as galleryRoutes} from "@/gallery/router"
+import {routes as wheelsRoutes} from "@/wheels/router"
 
 const route = useRoute();
+const isWheelsRoute = computed(() => Boolean(wheelsRoutes.find(wr => wr.name === route.name)))
 const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name === route.name)))
 </script>
 
@@ -11,7 +13,7 @@ const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name =
   <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center">
     <div class="inline-grid h-full grid-cols-[1fr_auto_1fr] items-center gap-16">
       <div class="flex justify-start gap-6">
-        <a href="#" class="nav-link">WHEELS</a>
+        <a href="/wheels" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
         <a href="/gallery" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
         <a href="#" class="nav-link">OUR PROCESS</a>
       </div>
