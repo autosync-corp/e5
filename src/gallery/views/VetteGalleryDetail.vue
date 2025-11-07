@@ -5,6 +5,8 @@ import VetteGallery from "@/gallery/constants/VetteGallery.ts";
 import VehicleCard from "@/gallery/components/VehicleCard.vue";
 import VehicleImagesGallery from "@/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
+import VehicleWheelSizeFit from "@/gallery/components/VehicleWheelSizeFit.vue";
+import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/wheels/constants/Wheels.ts";
 
 const route = useRoute();
 const router = useRouter();
@@ -12,20 +14,13 @@ const router = useRouter();
 const vehicleId = ref<number>(0);
 
 const vehicle = computed(() => {
-  return VetteGallery[vehicleId.value] || null;
+  return VetteGallery.find(v => v.id === vehicleId.value) || null;
 });
 
 // Gallery images for the C7 Corvette Gallery section (using different vehicles)
 const corvetteGalleryImages = computed(() => {
-  return VetteGallery.slice(0, 3);
+  return VetteGallery.filter(v => v.model === vehicle.value?.model).slice(0, 3) ?? [];
 });
-
-// Wheel gallery images
-const wheelGalleryImages = ref([
-  "/src/assets/images/560ac3f8b1099b2daae4a94ca20ee27ccfd3e19c.png",
-  "/src/assets/images/1c2da75e73ddd418dd5781f30e936d44508e695a.png",
-  "/src/assets/images/f64453e3ffa137fa97c81ca409e6d07b0e2a2f8d.png"
-]);
 
 onMounted(() => {
   const id = parseInt(route.params.id as string);
@@ -76,56 +71,45 @@ const goToGallery = () => {
         </div>
       </div>
 
-      <div class="flex gap-16">
-        <!-- Wheel Image -->
-        <div class="flex items-center justify-center">
-          <img :src="vehicle.wheelImage" :alt="vehicle.wheelModel" class="w-full max-w-[480px] h-auto" />
-        </div>
-
-        <!-- Wheel Details -->
-        <div class="flex align-middle flex-col justify-center">
-          <div class="mb-8">
-            <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px] mb-4">
-              WHEEL MODEL
+      <VehicleWheelSizeFit
+        :image="vehicle.wheelImage"
+        :alt="vehicle.wheelModel"
+        :logo="vehicle.wheelLogo"
+        :title="vehicle.wheelModel"
+      >
+        <template #details>
+          <div>
+            <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
+              SIZES
             </p>
-            <img :src="vehicle.wheelLogo" :alt="`${vehicle.brand} Logo`" class="h-[36px] w-auto" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-8 mb-12">
-            <div>
-              <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
-                SIZES
-              </p>
-              <ul class="list-disc pl-8">
-                <li
+            <ul class="list-disc pl-8">
+              <li
                   v-for="(size, index) in vehicle.sizingDetails"
                   :key="index"
                   class="text-lg text-black opacity-70 tracking-wide leading-[30px]"
-                >
-                  {{ size }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="ml-auto">
-              <p class="text-black/50 opacity-70 tracking-wide leading-[30px]">
-                FINISH
-              </p>
-              <ul class="list-disc pl-8">
-                <li class="text-black opacity-70 tracking-wide leading-[30px]">
-                  {{ vehicle.wheelFinish }}
-                </li>
-              </ul>
-            </div>
+              >
+                {{ size }}
+              </li>
+            </ul>
           </div>
-
-          <!-- Action Buttons -->
+          <div class="ml-auto">
+            <p class="text-black/50 opacity-70 tracking-wide leading-[30px]">
+              FINISH
+            </p>
+            <ul class="list-disc pl-8">
+              <li class="text-black opacity-70 tracking-wide leading-[30px]">
+                {{ vehicle.wheelFinish }}
+              </li>
+            </ul>
+          </div>
+        </template>
+        <template #actions>
           <div class="flex gap-6">
-            <Button primary class="w-full">SHOP {{ vehicle.wheelModel }}</Button>
-            <Button secondary class="w-full uppercase">EXPLORE {{ vehicle.brand }}</Button>
+            <Button primary class="w-full" link="pending">SHOP {{ vehicle.wheelModel }}</Button>
+            <Button secondary class="w-full uppercase" link="pending">EXPLORE {{ vehicle.wheelBrand }}</Button>
           </div>
-        </div>
-      </div>
+        </template>
+      </VehicleWheelSizeFit>
     </section>
 
     <!-- C7 Corvette Gallery Section -->
@@ -143,6 +127,7 @@ const goToGallery = () => {
           :trim="item.trim"
           :wheel-model="item.wheelModel"
           :wheel-finish="item.wheelFinish"
+          :link="`/gallery/detail/${item.id}`"
         />
       </div>
 
@@ -153,19 +138,17 @@ const goToGallery = () => {
       </div>
     </section>
 
-    <!-- Daytona Wheel Gallery Section -->
     <section class="container-e5 py-24 px-24">
-      <h2 class="text-3xl text-black opacity-70 tracking-wide leading-[34px] mb-8">
+      <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8">
         {{ vehicle.wheelModel }} WHEEL GALLERY
       </h2>
 
       <div class="grid grid-cols-3 gap-12">
         <div
-          v-for="(wheelImg, index) in wheelGalleryImages"
-          :key="index"
+          v-for="wheel in WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand]"
           class="w-full h-auto overflow-hidden flex items-center justify-center"
         >
-          <img :src="wheelImg" :alt="`${vehicle.wheelModel} Wheel ${index + 1}`" class="w-full object-cover" />
+          <img :src="wheel.image" :alt="wheel.finish" class="w-full object-cover cursor-pointer" @click="router.push(`/wheels/${vehicle.wheelBrand}/${vehicle.wheelModel}`)"/>
         </div>
       </div>
     </section>

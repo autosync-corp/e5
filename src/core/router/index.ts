@@ -9,4 +9,9 @@ export const routes = [
         name: 'home',
         component: () => import("@/core/views/HomePage.vue"),
     },
+    {
+        path: '/pending',
+        name: 'pending',
+        component: () => import("@/core/views/PendingPage.vue"),
+    },
 ];

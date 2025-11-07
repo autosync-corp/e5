@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 const props = defineProps({
   image: {
     type: String,
@@ -20,11 +23,18 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  link: String,
 })
+
+const onClick = () => {
+  if (props.link) {
+    router.push(props.link);
+  }
+}
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" @click="onClick">
     <img :src="props.image" alt="Corvette Build" class="w-full h-[330px] object-cover"/>
     <div class="bg-gray-100 px-4 py-3 text-center">
       <p class="text-18 font-bold text-black/35 tracking-[1px]">{{props.year}}</p>

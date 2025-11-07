@@ -5,11 +5,6 @@ export const routes = [
         component: () => import("@/gallery/views/VetteGallery.vue"),
     },
     {
-        path: '/gallery/detailed',
-        name: 'gallery-detailed',
-        component: () => import("@/gallery/views/VetteDetailedGallery.vue"),
-    },
-    {
         path: '/gallery/detail/:id',
         name: 'gallery-detail',
         component: () => import("@/gallery/views/VetteGalleryDetail.vue"),

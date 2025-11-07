@@ -28,7 +28,7 @@ import Button from "@/core/components/Button.vue";
           <option>YEAR</option>
         </select>
       </div>
-      <Button>
+      <Button disabled>
         SEARCH
       </Button>
     </div>

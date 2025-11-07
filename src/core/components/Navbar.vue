@@ -20,7 +20,7 @@ const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name =
 
       <div class="flex justify-center">
         <a href="/">
-          <img src="/src/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="h-[24px] w-auto" />
+          <img src="/src/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
 

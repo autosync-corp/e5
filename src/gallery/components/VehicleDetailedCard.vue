@@ -5,10 +5,6 @@ import Button from "@/core/components/Button.vue";
 const router = useRouter();
 
 const props = defineProps({
-  vehicleId: {
-    type: Number,
-    required: true,
-  },
   image: {
     type: String,
     required: true,
@@ -44,41 +40,53 @@ const props = defineProps({
   sizing: {
     type: String,
     required: true,
+  },
+  link: {
+    type: String,
+    required: true,
   }
 })
 
-const viewGallery = () => {
-  router.push(`/gallery/detail/${props.vehicleId}`);
+const onClick = () => {
+  router.push(props.link);
 };
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-100 px-4 py-3">
-    <div class="w-full h-[350px] bg-gray-100 flex align-middle justify-center">
+  <div class="flex flex-col bg-gray-100">
+    <div class="w-full h-[330px] bg-gray-100 flex align-middle justify-center">
       <img :src="props.image" alt="Corvette Build" class="w-full object-cover"/>
     </div>
-    <div class="grid grid-cols-2 gap-8 text-start mt-4 px-4">
+    <div class="grid grid-cols-2 gap-2 text-start mt-4 px-6">
       <div class="text-start color flex flex-col">
         <div class="font-medium text-black/35 tracking-[1px]">{{props.year}}</div>
         <div class="font-franklin-heavy text-xl"> {{ props.trim}} </div>
       </div>
 
-      <div class="flex justify-end mt-3"><img :src="props.logo" :alt="`${props.brand} Logo`" class="h-[60px] w-auto" /></div>
+      <div class="flex justify-end mt-3 px-3"><img :src="props.logo" :alt="`${props.brand} Logo`" class="h-[60px] w-auto" /></div>
 
       <p>
-        <small>WHEEL MODEL:</small>
+        <small class="text-black/35">WHEEL MODEL:</small>
+        <br />
+        <small>{{props.wheelModel}}</small>
       </p>
       <p>
-        <small>FINISH:</small>
+        <small class="text-black/35">WHEEL FINISH:</small>
+        <br />
+        <small>{{props.wheelFinish}}</small>
       </p>
       <p>
-        <small>SIZING:</small>
+        <small class="text-black/35">SIZING:</small>
+        <br />
+        <small>{{props.sizing}}</small>
       </p>
       <p>
-        <small>TIRES:</small>
+        <small class="text-black/35">TIRES:</small>
+        <br />
+        <small>{{props.tires}}</small>
       </p>
     </div>
 
-    <Button primary class="mx-auto mt-8" style="max-width: 230px" @click="viewGallery">VIEW GALLERY</Button>
+    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" @click="onClick">VIEW GALLERY</Button>
   </div>
 </template>
