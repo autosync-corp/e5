@@ -40,7 +40,7 @@
           <Button  primary>EXPLORE FORM FORGED</Button>
         </div>
         <div class="col-start-2 row-start-1">
-          <img src="/src/assets/images/e5-forged-logo.png" alt="Form Forged" class="w-3/4 h-auto mx-auto" />
+          <img src="/src/assets/images/e5-forged-logo.png" alt="Form Forged" class="w-3/5 h-auto mx-auto" />
         </div>
         <div class="col-start-2 row-start-2 mx-10">
           <div class="relative flex justify-end">

@@ -68,6 +68,7 @@ export const DAYTONA_WHEELS_BANNERS = [
 export const SPEEDWAY_BRAND_NAME = "Speedway";
 export const SPEEDWAY_LOGO = "/src/assets/figma/5a059fba9b6f32612b072a121dc09766ef507b86.png";
 export const SPEEDWAY_TITANIUM_BRUSHED = "/src/assets/images/wheels/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png";
+export const SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT = "/src/assets/figma/2cb17a45657fa348958b15419df6f796aa26a518.png";
 export const SPEEDWAY_BRONZE = "/src/assets/images/wheels/55e2dad1e72a82c3b811737504db985db4ec5353.png";
 export const SPEEDWAY_GLOSS_BLACK = "/src/assets/images/wheels/cd19461c451031cb11b5e748b6774ae80b22a516.png";
 export const SPEEDWAY_WHEELS = [
@@ -108,6 +109,8 @@ export const SEBRING_WHEELS = [
 
 export const E5_FORGED_LOGO = "/src/assets/images/wheels/02d80e5501d4b44b3e61daf67192b4fe23242b09.png";
 export const FORM_FORGED_LOGO = "/src/assets/figma/48b34752d7bd939ae556a6e8de9fa0837077ec48.png";
+export const VPS_FORGED_LOGO = "/src/assets/images/vossen_forged_banner.webp";
+export const VPS_FORGED_VIDEO = "/src/assets/videos/vps_forged_vid.mp4";
 export const WHEEL_PAGE_BANNER = "/src/assets/images/wheels/c402aa3042a129d737dc524a911947fe4291970d.png";
 export const WHEEL_GALLERY_STUDIO_BANNER = "/src/assets/images/wheels/80496ef76dbfffdc9aec2b05ddb00a9c06a7debc.png";
 export const WHEEL_GALLERY_WHEELS_BY_BRAND: Record<string, { image: string, finish: string }[]> = {
