@@ -1,5 +1,7 @@
 export const TALLADEGA_BRAND_NAME = "Talladega";
+export const TALLADEGA_VIDEO = "/src/assets/videos/talladega_vid.mp4"
 export const TALLADEGA_LOGO = "/src/assets/images/wheels/3a0f898a970a7108262be2cdc91dcdde57744bd4.png";
+export const TALLADEGA_LOGO_WHITE = "/src/assets/images/wheels/talladega_logo_white.png";
 export const TALLADEGA_SMOKED_POLISHED = "/src/assets/images/wheels/c5130d4e56f6e2437cc78fe4904cdcbc6e716569.png";
 export const TALLADEGA_SATIN_GREY = "/src/assets/images/wheels/5aadb0394c4c49db86d0f64235e3f00404c7faf7.png";
 export const TALLADEGA_PODIUM_BRONZE = "/src/assets/images/wheels/edd03fa4648dfa8d219b2e1dd0aef9cc737c3b27.png";
