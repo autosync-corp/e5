@@ -12,12 +12,16 @@ const props = defineProps({
   orientation: {
     type: String,
     default: 'right',
-  }
+  },
+  height: {
+    type: String,
+    default: '380',
+  },
 })
 </script>
 
 <template>
-  <section class="w-full h-[380px] relative overflow-hidden mb-12">
+  <section class="w-full relative overflow-hidden" :class="`h-[${props.height}px]`">
     <img
         :src="props.image"
         :alt="props.alt"
