@@ -4,7 +4,7 @@ import Button from "@/core/components/Button.vue";
 
 <template>
   <!-- Choose Your Corvette Filter Section -->
-  <section class="w-full bg-[rgba(233,233,233,0.61)] py-10">
+  <section class="w-full bg-[rgba(233,233,233,0.61)] pb-10">
     <div
         class="bg-e5-red h-[39px] shadow-[0px_18px_14px_-14px_rgba(0,0,0,0.25)] flex items-center justify-center mb-8">
       <p class="font-sans text-xl text-white tracking-[20px] uppercase">

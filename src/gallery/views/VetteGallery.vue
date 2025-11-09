@@ -2,7 +2,6 @@
 import VetteGallery from "@/gallery/constants/VetteGallery.ts";
 import VehicleCard from "@/gallery/components/VehicleCard.vue";
 import VehicleDetailedCard from "@/gallery/components/VehicleDetailedCard.vue";
-import GalleryTitleSection from "@/gallery/components/GalleryTitleSection.vue";
 import YearMakeModelSelector from "@/gallery/components/YearMakeModelSelector.vue";
 import GalleryPageStyleSelector from "@/gallery/components/GalleryPageStyleSelector.vue";
 import {ref} from "vue";
@@ -11,14 +10,12 @@ const detailedGallery = ref<boolean>(false);
 </script>
 <template>
   <main class="w-full h-full">
-    <GalleryTitleSection />
-
     <YearMakeModelSelector />
 
     <GalleryPageStyleSelector :detailedView="detailedGallery" @detailed-view="detailedGallery = $event" />
 
     <!-- Gallery Grid -->
-    <section class="container-e5 py-16 px-24">
+    <section class="container-e5 pt-8 pb-16 px-24">
       <div v-if="detailedGallery" class="grid grid-cols-3 gap-6">
         <VehicleDetailedCard
             v-for="vehicle in VetteGallery"
