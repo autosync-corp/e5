@@ -61,8 +61,6 @@ const router = useRouter();
       </article>
     </BannerFullWidthWithLegend>
 
-    <DividerLine />
-
     <BannerFullWidthWithLegend
         :alt="`${TALLADEGA_BRAND_NAME} SHOTS`"
         :image="TALLADEGA_SHOT_2"
@@ -78,8 +76,6 @@ const router = useRouter();
         </p>
       </article>
     </BannerFullWidthWithLegend>
-
-    <DividerLine />
 
     <BannerFullWidthWithLegend
         :alt="`${TALLADEGA_BRAND_NAME} SHOTS`"
@@ -98,8 +94,6 @@ const router = useRouter();
         </p>
       </article>
     </BannerFullWidthWithLegend>
-
-    <DividerLine />
 
     <section class="container-e5">
       <img :src="TALLADEGA_LOGO" alt="TALLADEGA" class="my-20 mx-auto max-w-[700px]" />
@@ -144,8 +138,6 @@ const router = useRouter();
       </div>
     </section>
 
-    <DividerLine />
-
     <BannerFullWidthWithLegend
         orientation="left"
         bg-color="bg-black/10"
@@ -168,8 +160,6 @@ const router = useRouter();
         </div>
       </article>
     </BannerFullWidthWithLegend>
-
-    <DividerLine />
 
     <BannerFullWidthWithLegend
         alt="Wheel Gallery"
