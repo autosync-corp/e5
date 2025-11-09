@@ -74,7 +74,7 @@ const router = useRouter();
         </div>
 
         <!-- Explore Button -->
-        <Button primary class="max-w-[300px] mx-auto mt-6" link="/wheels/form-forged">
+        <Button primary class="max-w-[300px] mx-auto mt-6" link="/wheels/talladega">
           EXPLORE FORGED
         </Button>
       </div>

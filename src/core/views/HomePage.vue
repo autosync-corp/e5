@@ -37,7 +37,7 @@
           </p>
         </div>
         <div class="col-start-1 row-start-4 flex justify-center items-center mt-6">
-          <Button  primary>EXPLORE FORM FORGED</Button>
+          <Button primary link="/wheels/form-forged">EXPLORE FORM FORGED</Button>
         </div>
         <div class="col-start-2 row-start-1">
           <img src="/src/assets/images/e5-forged-logo.png" alt="Form Forged" class="w-3/5 h-auto mx-auto" />
@@ -54,7 +54,7 @@
           </p>
         </div>
         <div class="col-start-2 row-start-4 flex justify-center items-center mt-6">
-          <Button primary>EXPLORE E5 FORGED</Button>
+          <Button primary link="/wheels/talladega">EXPLORE E5 FORGED</Button>
         </div>
       </div>
     </section>

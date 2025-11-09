@@ -19,7 +19,6 @@ router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized) =
         window.scrollTo({
             top: 0,
             left: 0,
-            behavior: "smooth",
         });
     }
 });
