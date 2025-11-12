@@ -21,7 +21,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="w-full relative overflow-hidden" :class="`h-[${props.height}px]`">
+  <section class="w-full relative overflow-hidden" :class="props.height && `h-[${props.height}px]`">
     <img
         :src="props.image"
         :alt="props.alt"

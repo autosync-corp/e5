@@ -109,7 +109,7 @@ const router = useRouter();
     </div>
 
     <BannerFullWidthWithLegend
-        class="mb-12"
+        class="mb-12 h-[380px]"
         alt="Wheel Gallery"
         :image="WHEEL_GALLERY_STUDIO_BANNER"
     >

@@ -46,10 +46,10 @@ const router = useRouter();
     <DividerLine />
 
     <BannerFullWidthWithLegend
+        class="h-[582px]"
         :alt="`${TALLADEGA_BRAND_NAME} SHOTS`"
         :image="TALLADEGA_SHOT_1"
         bg-color="bg-black/10"
-        height="582"
     >
       <article class="flex flex-col justify-center text-white text-center">
         <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
@@ -64,8 +64,8 @@ const router = useRouter();
     <BannerFullWidthWithLegend
         :alt="`${TALLADEGA_BRAND_NAME} SHOTS`"
         :image="TALLADEGA_SHOT_2"
+        class="h-[582px]"
         bg-color="bg-black/10"
-        height="582"
     >
       <article class="flex flex-col justify-center text-white text-center">
         <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
@@ -80,8 +80,8 @@ const router = useRouter();
     <BannerFullWidthWithLegend
         :alt="`${TALLADEGA_BRAND_NAME} SHOTS`"
         :image="TALLADEGA_SHOT_3"
+        class="h-[582px]"
         bg-color="bg-black/10"
-        height="582"
     >
       <article class="flex flex-col justify-center text-white text-center">
         <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
@@ -142,6 +142,7 @@ const router = useRouter();
         orientation="left"
         bg-color="bg-black/10"
         alt="Vette Gallery"
+        class="h-[582px]"
         :image="VETTE_GALLERY_IMAGE_1"
     >
       <article class="flex flex-col justify-center text-white text-center">
@@ -163,6 +164,7 @@ const router = useRouter();
 
     <BannerFullWidthWithLegend
         alt="Wheel Gallery"
+        class="h-[582px]"
         :image="WHEEL_GALLERY_STUDIO_BANNER"
     >
       <article class="flex flex-col justify-center text-white text-center">

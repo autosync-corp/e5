@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
-    <Navbar />
-    <router-view class="mt-107"/>
-    <Footer />
+  <Navbar />
+  <div style="min-height: calc(100dvh - 107px);">
+    <router-view id="router-view" class="mt-107"/>
   </div>
+  <Footer />
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ import Footer from "@/core/components/Footer.vue";
 </script>
 
 <style>
-#app, body {
+body {
   margin: auto;
   padding: 0;
   width: 100dvw;

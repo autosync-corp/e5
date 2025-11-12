@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory, type RouteRecordRaw, type RouteLocationNormalized} from 'vue-router'
+import {createRouter, createWebHistory, type RouteRecordRaw} from 'vue-router'
 import { routes as galleryRoutes} from '@/gallery/router'
 import { routes as coreRoutes} from '@/core/router'
 import { routes as wheelsRoutes} from '@/wheels/router'
@@ -14,12 +14,18 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    if (to.name !== from.name) {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-        });
+router.beforeEach(() => {
+    const viewEl = document.getElementById('#router-view');
+    if (viewEl) {
+        viewEl.style.height = '0';
+        viewEl.innerHTML = '';
+    }
+});
+
+router.afterEach(() => {
+    const viewEl = document.getElementById('#router-view');
+    if (viewEl) {
+        viewEl.style.height = 'auto';
     }
 });
 
