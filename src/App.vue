@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div style="min-height: calc(100dvh - 107px);">
+  <div style="min-height: 100dvh">
     <router-view id="router-view" class="mt-107"/>
   </div>
   <Footer />
