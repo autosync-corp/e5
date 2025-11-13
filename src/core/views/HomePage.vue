@@ -1,13 +1,21 @@
 <script setup lang="ts">
   import Hero from "@/core/components/Hero.vue";
   import Button from "@/core/components/Button.vue";
+  import {
+    E5_FORGED_LOGO,
+    FORM_FORGED_GROUP,
+    FORM_FORGED_LOGO_BLACK, TALLADEGA_EXO,
+    TALLADEGA_GLOSS_BLACK, TALLADEGA_SHOT_4,
+  } from "@/wheels/constants/Wheels.ts";
+  import {HOME_VETTE_VIDEO, VETTE_BLACK_ON_RIVER} from "@/gallery/constants/VetteGallery.ts";
+  import {E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1} from "@/core/constants/App.ts";
 </script>
 
 <template>
   <main class="w-full h-full">
     <Hero>
       <video autoplay loop muted playsinline class="w-full h-full object-cover">
-        <source src="/src/assets/videos/E5LPVID-.mp4" type="video/mp4" />
+        <source :src="HOME_VETTE_VIDEO" type="video/mp4" />
       </video>
     </Hero>
 
@@ -26,10 +34,10 @@
     <section class="container-e5 flex mt-8 bg-gray-100 py-20">
       <div class="grid grid-flow-row auto-rows-min grid-cols-2">
         <div class="col-start-1 row-start-1">
-          <img src="/src/assets/images/form-forged-logo-black.png" alt="Form Forged" class="w-1/2 h-auto mx-auto" />
+          <img :src="FORM_FORGED_LOGO_BLACK" alt="Form Forged" class="w-1/2 h-auto mx-auto" />
         </div>
         <div class="col-start-1 row-start-2">
-          <img src="/src/assets/images/form-forged-group.png" alt="Form Forged Wheels" class="w-4/5 h-auto mx-auto" />
+          <img :src="FORM_FORGED_GROUP" alt="Form Forged Wheels" class="w-4/5 h-auto mx-auto" />
         </div>
         <div class="col-start-1 row-start-3">
           <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
@@ -40,12 +48,12 @@
           <Button primary link="/wheels/form-forged">EXPLORE FORM FORGED</Button>
         </div>
         <div class="col-start-2 row-start-1">
-          <img src="/src/assets/images/e5-forged-logo.png" alt="Form Forged" class="w-3/5 h-auto mx-auto" />
+          <img :src="E5_FORGED_LOGO" alt="Form Forged" class="w-3/5 h-auto mx-auto" />
         </div>
         <div class="col-start-2 row-start-2 mx-10">
           <div class="relative flex justify-end">
-            <img src="/src/assets/images/talladega-render-gloss-black-red.png" alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
-            <img src="/src/assets/images/e5-talladega-rear.png" alt="Talladega Rear" class="me-10 w-1/2" />
+            <img :src="TALLADEGA_GLOSS_BLACK" alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
+            <img :src="TALLADEGA_SHOT_4" alt="Talladega Rear" class="me-10 w-1/2" />
           </div>
         </div>
         <div class="col-start-2 row-start-3">
@@ -61,7 +69,7 @@
 
     <section class="container-e5 max-w-[1500px] flex justify-between mx-auto py-32">
       <div class="grid grid-cols-1 auto-rows-min">
-        <img src="/src/assets/images/asset-29.png" alt="Asset 29" class="w-[264px] h-auto" />
+        <img :src="E5_BLACK_RED_DRAW" alt="Asset 29" class="w-[264px] h-auto" />
         <h1 class="text-5xl font-franklin-medium mt-12">OUR PROCESS</h1>
         <p class="max-w-[700px] text-xl text-black/70 mt-6">
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car’s design, and uphold the standards that define the Corvette platform.
@@ -71,7 +79,7 @@
         </div>
       </div>
       <div class="h-[438px]">
-        <img src="/src/assets/images/talladega-exo.png" alt="Talladega Exo" class="w-full max-w-[438px] h-auto" />
+        <img :src="TALLADEGA_EXO" alt="Talladega Exo" class="w-full max-w-[438px] h-auto" />
       </div>
     </section>
 
@@ -84,7 +92,7 @@
 
         <div class="grid grid-cols-[1fr_4px_1fr] gap-12">
           <div class="my-auto relative">
-            <img src="/src/assets/images/e5-gallery-1.png" alt="Vette Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
+            <img :src="VETTE_BLACK_ON_RIVER" alt="Vette Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
               <router-link to="/gallery" class="mt-auto mb-10">
                 <Button primary class="py-4">
@@ -95,7 +103,7 @@
           </div>
           <div class="bg-e5-separator h-full min-h-[660px]"></div>
           <div class="my-auto relative">
-            <img src="/src/assets/images/e5-gallery-2.png" alt="Wheel Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
+            <img :src="WHEEL_HOME_SHOT_1" alt="Wheel Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
               <router-link to="/wheels" class="mt-auto mb-10">
                 <Button primary class="mt-auto py-4">

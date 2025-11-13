@@ -7,9 +7,12 @@ export const TALLADEGA_SATIN_GREY = "/src/assets/images/wheels/5aadb0394c4c49db8
 export const TALLADEGA_PODIUM_BRONZE = "/src/assets/images/wheels/edd03fa4648dfa8d219b2e1dd0aef9cc737c3b27.png";
 export const TALLADEGA_GLOSS_BLACK = "/src/assets/images/wheels/afdec958cf713eb929ae510752b31594f43c1a4f.png";
 export const TALLADEGA_PODIUM_GOLD = "/src/assets/images/wheels/464d2ace3214351d17a75848ec4bddc985f8c836.png";
+export const TALLADEGA_EXO = "/src/assets/images/talladega-exo.png";
 export const TALLADEGA_SHOT_1 = "/src/assets/figma/ac4f9bca958678b8de35e44893e3d5a5f294ec8b.png";
 export const TALLADEGA_SHOT_2 = "/src/assets/figma/81b6e7a67f0ff714d31b243e6080853c26608bba.png";
 export const TALLADEGA_SHOT_3 = "/src/assets/figma/6a649ab233804998e9706b78af02bf981a2fa348.png";
+export const TALLADEGA_SHOT_4 = "/src/assets/images/wheels/e5-talladega-rear.png";
+
 export const TALLADEGA_WHEELS = [
     {
         image: TALLADEGA_SMOKED_POLISHED,
@@ -114,6 +117,8 @@ export const SEBRING_WHEELS = [
 
 export const E5_FORGED_LOGO = "/src/assets/images/wheels/02d80e5501d4b44b3e61daf67192b4fe23242b09.png";
 export const FORM_FORGED_LOGO = "/src/assets/figma/48b34752d7bd939ae556a6e8de9fa0837077ec48.png";
+export const FORM_FORGED_LOGO_BLACK = "/src/assets/images/form-forged-logo-black.png";
+export const FORM_FORGED_GROUP = "/src/assets/images/form-forged-group.png";
 export const VPS_FORGED_LOGO = "/src/assets/images/vossen_forged_banner.webp";
 export const VPS_FORGED_VIDEO = "/src/assets/videos/vps_forged_vid.mp4";
 export const WHEEL_PAGE_BANNER = "/src/assets/images/wheels/c402aa3042a129d737dc524a911947fe4291970d.png";
