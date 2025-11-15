@@ -111,6 +111,7 @@ const router = useRouter();
     <BannerFullWidthWithLegend
         class="mb-12 h-[380px]"
         alt="Wheel Gallery"
+        bg-color="bg-[rgba(211,29,37,0.16)]"
         :image="WHEEL_GALLERY_STUDIO_BANNER"
     >
       <article class="flex flex-col justify-center text-white text-center">

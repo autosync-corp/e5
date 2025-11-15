@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {Orientations} from "@/core/types/App.ts";
+
 const props = defineProps({
   image: {
     type: String,
@@ -10,12 +12,11 @@ const props = defineProps({
   },
   bgColor: String,
   orientation: {
-    type: String,
-    default: 'right',
+    type: String as () => Orientations,
+    default: Orientations.RIGHT,
   },
   height: {
     type: String,
-    default: '380',
   },
 })
 </script>
@@ -25,16 +26,16 @@ const props = defineProps({
     <img
         :src="props.image"
         :alt="props.alt"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover ml-auto"
     />
-    <div class="absolute inset-0" :class="props.bgColor ?? 'bg-[rgba(211,29,37,0.16)]'"></div>
+    <div class="absolute inset-0" :class="props.bgColor"></div>
 
     <div
         class="absolute inset-0 flex items-center"
         :class="{
-          'justify-center': orientation === 'center',
-          'justify-end pr-24' : orientation === 'right',
-          'justify-start pl-24' : orientation === 'left',
+          'justify-center': orientation === Orientations.CENTER,
+          'justify-end pr-24' : orientation === Orientations.RIGHT,
+          'justify-start pl-24' : orientation === Orientations.LEFT,
         }"
     >
       <slot />

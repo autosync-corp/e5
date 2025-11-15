@@ -13,6 +13,7 @@ import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLege
 import DividerLine from "@/core/components/DividerLine.vue";
 import {VETTE_GALLERY_IMAGE_1} from "@/gallery/constants/Images.ts";
 import {useRouter} from "vue-router";
+import {Orientations} from "@/core/types/App.ts";
 
 const router = useRouter();
 </script>
@@ -139,7 +140,7 @@ const router = useRouter();
     </section>
 
     <BannerFullWidthWithLegend
-        orientation="left"
+        :orientation="Orientations.LEFT"
         bg-color="bg-black/10"
         alt="Vette Gallery"
         class="h-[582px]"
@@ -165,6 +166,7 @@ const router = useRouter();
     <BannerFullWidthWithLegend
         alt="Wheel Gallery"
         class="h-[582px]"
+        bg-color="bg-[rgba(211,29,37,0.16)]"
         :image="WHEEL_GALLERY_STUDIO_BANNER"
     >
       <article class="flex flex-col justify-center text-white text-center">

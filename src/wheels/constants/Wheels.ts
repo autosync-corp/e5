@@ -44,6 +44,22 @@ export const DAYTONA_BRONZE_BRUSHED_TINT = "/src/assets/images/wheels/13015d5031
 export const DAYTONA_GLOSS_BLACK_BEAUTY_RIGHT = "/src/assets/images/560ac3f8b1099b2daae4a94ca20ee27ccfd3e19c.png";
 export const DAYTONA_TITANIUM_BRUSHED_TINT_FACE = "/src/assets/images/1c2da75e73ddd418dd5781f30e936d44508e695a.png";
 export const DAYTONA_BRONZE_BRUSHED_TINT_BEAUTY_LEFT = "/src/assets/images/f64453e3ffa137fa97c81ca409e6d07b0e2a2f8d.png";
+
+// Daytona Page Assets
+export const DAYTONA_HERO_IMAGE = "/src/assets/images/daytona/0b25de52c4a25ed59dec4932aa5130f2c3d17927.png";
+export const DAYTONA_PRECISION_FITMENT_BANNER = "/src/assets/images/daytona/cd9ed3af48c045065c3603b612a4912d3886ac2e.png";
+export const DAYTONA_LIGHTWEIGHT_DESIGN_BANNER = "/src/assets/images/daytona/f2628f0d9b327cbaf0d683fc5e4ad785608fe6a8.png";
+export const DAYTONA_MOTORSPORT_STYLING_BANNER = "/src/assets/images/daytona/601d0884714f52010c0ddc728a443860a099df9e.png";
+export const DAYTONA_DETAILS_BANNER = "/src/assets/images/daytona/12d5ffa6302b4f08081342bd36887b69cf92df0d.png";
+export const DAYTONA_PROCESS_IMAGE = "/src/assets/images/daytona/5d4d4d017ead06bdeae6d3faae66a66f43181fbd.png";
+export const DAYTONA_DETAIL_1 = "/src/assets/images/daytona/61ed3def55813a83b65545139bd63cf0c5ce93b2.png";
+export const DAYTONA_DETAIL_2 = "/src/assets/images/daytona/7c46cb55ba0cf4c7a4cff984573ab24385a35e68.png";
+export const DAYTONA_DETAIL_3 = "/src/assets/images/daytona/2878ed0a92a6a3fb5f9317e97c5d9829f20bcbd1.png";
+export const DAYTONA_DETAIL_4 = "/src/assets/images/daytona/e92a9bdeb80ede90f19193f2c416f628dec18b4a.png";
+export const DAYTONA_GALLERY_BANNER_1 = "/src/assets/images/daytona/2eea34e2ea8017ad89cd1939e3c1882e7e2bd198.png";
+export const DAYTONA_GALLERY_BANNER_2 = "/src/assets/images/daytona/d652ee7d9665742e476f8ec30d5ea43fd57f9edf.png";
+export const DAYTONA_STILLS_BANNER = "/src/assets/images/daytona/629b7aab3e30b699f8dd8b7aa7c5f73a4ae43c07.png";
+
 export const DAYTONA_WHEELS = [
     {
         image: DAYTONA_GLOSS_BLACK,
@@ -75,6 +91,18 @@ export const DAYTONA_WHEELS_BANNERS = [
 
 export const SPEEDWAY_BRAND_NAME = "Speedway";
 export const SPEEDWAY_LOGO = "/src/assets/figma/5a059fba9b6f32612b072a121dc09766ef507b86.png";
+export const SPEEDWAY_HERO_IMAGE = "/src/assets/images/speedway/speedway_hero_image.png";
+export const SPEEDWAY_PRECISION_FITMENT_BANNER = "/src/assets/images/speedway/speedway_precision_fitment_banner.png";
+export const SPEEDWAY_LIGHTWEIGHT_DESIGN_BANNER = "/src/assets/images/speedway/speedway_lightweight_design_banner.png";
+export const SPEEDWAY_MOTORSPORT_STYLING_BANNER = "/src/assets/images/speedway/speedway_motorsport_styling_banner.png";
+export const SPEEDWAY_DETAILS_BANNER = "/src/assets/images/speedway/speedway_details_banner.png";
+export const SPEEDWAY_VETTE_GALLERY_1 = "/src/assets/images/speedway/speedway_vette_gallery_1.png";
+export const SPEEDWAY_VETTE_GALLERY_2 = "/src/assets/images/speedway/speedway_vette_gallery_2.png";
+export const SPEEDWAY_VETTE_GALLERY_3 = "/src/assets/images/speedway/speedway_vette_gallery_3.png";
+export const SPEEDWAY_DETAIL_1 = "/src/assets/images/speedway/speedway_detail_1.png";
+export const SPEEDWAY_DETAIL_2 = "/src/assets/images/speedway/speedway_detail_2.png";
+export const SPEEDWAY_DETAIL_3 = "/src/assets/images/speedway/speedway_detail_3.png";
+export const SPEEDWAY_DETAIL_4 = "/src/assets/images/speedway/speedway_detail_4.png";
 export const SPEEDWAY_TITANIUM_BRUSHED = "/src/assets/images/wheels/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png";
 export const SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT = "/src/assets/figma/2cb17a45657fa348958b15419df6f796aa26a518.png";
 export const SPEEDWAY_BRONZE = "/src/assets/images/wheels/55e2dad1e72a82c3b811737504db985db4ec5353.png";
@@ -97,6 +125,19 @@ export const SPEEDWAY_WHEELS = [
 // Sebring Wheels
 export const SEBRING_BRAND_NAME = "Sebring";
 export const SEBRING_LOGO = "/src/assets/figma/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png";
+export const SEBRING_HERO_IMAGE = "/src/assets/images/sebring/sebring_hero_image.jpg";
+export const SEBRING_PRECISION_FITMENT_BANNER = "/src/assets/images/sebring/sebring_precision_fitment_banner.webp";
+export const SEBRING_LIGHTWEIGHT_DESIGN_BANNER = "/src/assets/images/sebring/sebring_lightweight_design_banner.png";
+export const SEBRING_MOTORSPORT_STYLING_BANNER = "/src/assets/images/sebring/sebring_motorsport_styling_banner.png";
+export const SEBRING_DETAILS_BANNER = "/src/assets/images/sebring/sebring_details_banner.png";
+export const SEBRING_VETTE_GALLERY_1 = "/src/assets/images/sebring/sebring_vette_gallery_1.png";
+export const SEBRING_VETTE_GALLERY_2 = "/src/assets/images/sebring/sebring_vette_gallery_2.png";
+export const SEBRING_VETTE_GALLERY_3 = "/src/assets/images/sebring/sebring_vette_gallery_3.png";
+export const SEBRING_DETAIL_1 = "/src/assets/images/sebring/sebring_detail_1.png";
+export const SEBRING_DETAIL_2 = "/src/assets/images/sebring/sebring_detail_2.png";
+export const SEBRING_DETAIL_3 = "/src/assets/images/sebring/sebring_detail_3.png";
+export const SEBRING_DETAIL_4 = "/src/assets/images/sebring/sebring_detail_4.png";
+
 export const SEBRING_BRONZE = "/src/assets/images/wheels/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png";
 export const SEBRING_GLOSS_BLACK = "/src/assets/images/wheels/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png";
 export const SEBRING_TITANIUM_BRUSHED = "/src/assets/images/wheels/d442c91c12ba3d5e69ac89b01731b5399b849d1f.png";

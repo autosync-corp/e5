@@ -1,3 +1,10 @@
+export const EMPTY_STRING = "";
+export const NULLISH = null;
+export const UNDEFINED = undefined;
+export const FALSE = false;
+export const TRUE = true;
+export const EMPTY_ARRAY = [];
+export const EMPTY_OBJECT = {};
 export const E5_LOGO_BLACK = "/src/assets/images/e5-wheels-alt-logo-black.png";
 export const E5_BLACK_RED_DRAW = "/src/assets/images/asset-29.png";
 export const SOCIAL_MEDIA_ICONS = "/src/assets/images/media-icons.png";
