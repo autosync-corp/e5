@@ -20,14 +20,14 @@ const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name =
 
       <div class="flex justify-center">
         <a href="/">
-          <img src="/src/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
+          <img src="/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
 
       <div class="flex justify-end items-center gap-6">
         <a href="#" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
         <a href="#" class="nav-link">CONTACT US</a>
-        <img src="/src/assets/images/asset-18.png" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+        <img src="/assets/images/asset-18.png" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
   </nav>
