@@ -1,50 +1,36 @@
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+---
+import MainLayout from '@/layouts/MainLayout.astro';
 import VetteGallery from "@/gallery/constants/VetteGallery.ts";
 import VehicleCard from "@/gallery/components/VehicleCard.vue";
 import VehicleImagesGallery from "@/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
 import VehicleWheelSizeFit from "@/gallery/components/VehicleWheelSizeFit.vue";
 import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/wheels/constants/Wheels.ts";
+import {GALLERY_DETAIL_ROUTE, GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
-const route = useRoute();
-const router = useRouter();
+export function getStaticPaths() {
+  return VetteGallery.map((vehicle) => ({
+    params: { id: vehicle.id.toString() },
+    props: { vehicle },
+  }));
+}
 
-const vehicleId = ref<number>(0);
+const { vehicle } = Astro.props;
+const corvetteGalleryImages = VetteGallery.filter(v => v.model === vehicle.model).slice(0, 3);
+const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] || [];
+---
 
-const vehicle = computed(() => {
-  return VetteGallery.find(v => v.id === vehicleId.value) || null;
-});
-
-// Gallery images for the C7 Corvette Gallery section (using different vehicles)
-const corvetteGalleryImages = computed(() => {
-  return VetteGallery.filter(v => v.model === vehicle.value?.model).slice(0, 3) ?? [];
-});
-
-onMounted(() => {
-  const id = parseInt(route.params.id as string);
-  if (!isNaN(id) && id >= 0 && id < VetteGallery.length) {
-    vehicleId.value = id;
-  } else {
-    router.push('/gallery');
-  }
-});
-
-const goToGallery = () => {
-  router.push('/gallery/detailed');
-};
-</script>
-
-<template>
-  <main class="w-full h-full" v-if="vehicle">
+<MainLayout title={`${vehicle.year} ${vehicle.trim} - E5 Wheels Gallery`}>
+  <div class="w-full h-full">
     <!-- Secondary Navigation -->
     <section class="w-full bg-white border-b border-gray-200 py-6">
       <div class="container-e5 flex items-center justify-between">
-        <button
-          @click="goToGallery"
+        <a
+          href={GALLERY_ROUTE}
           class="font-franklin-book text-xs text-black/40 tracking-[3.2px] uppercase hover:text-black transition-colors"
-        > BACK TO GALLERY </button>
+        >
+          BACK TO GALLERY
+        </a>
 
         <nav class="flex gap-8">
           <a href="#" class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>
@@ -55,7 +41,7 @@ const goToGallery = () => {
       </div>
     </section>
 
-    <VehicleImagesGallery :trim="vehicle.trim" :images="vehicle.galleryImages" />
+    <VehicleImagesGallery client:load trim={vehicle.trim} images={vehicle.galleryImages} />
 
     <!-- Vehicle & Wheel Details Section -->
     <section class="container-e5 pt-4 px-24">
@@ -66,30 +52,29 @@ const goToGallery = () => {
             VEHICLE MODEL
           </p>
           <p class="text-2xl text-black opacity-70 tracking-wide leading-[30px] mt-1">
-            {{ vehicle.year }} {{ vehicle.trim }}
+            {vehicle.year} {vehicle.trim}
           </p>
         </div>
       </div>
 
       <VehicleWheelSizeFit
-        :image="vehicle.wheelImage"
-        :alt="vehicle.wheelModel"
-        :logo="vehicle.wheelLogo"
-        :title="vehicle.wheelModel"
+        client:load
+        image={vehicle.wheelImage}
+        alt={vehicle.wheelModel}
+        logo={vehicle.wheelLogo}
+        title={vehicle.wheelModel}
       >
-        <template #details>
+        <div slot="details">
           <div>
             <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
               SIZES
             </p>
             <ul class="list-disc pl-8">
-              <li
-                  v-for="(size, index) in vehicle.sizingDetails"
-                  :key="index"
-                  class="text-lg text-black opacity-70 tracking-wide leading-[30px]"
-              >
-                {{ size }}
-              </li>
+              {vehicle.sizingDetails.map((size: string) => (
+                <li class="text-lg text-black opacity-70 tracking-wide leading-[30px]">
+                  {size}
+                </li>
+              ))}
             </ul>
           </div>
           <div class="ml-auto">
@@ -98,17 +83,15 @@ const goToGallery = () => {
             </p>
             <ul class="list-disc pl-8">
               <li class="text-black opacity-70 tracking-wide leading-[30px]">
-                {{ vehicle.wheelFinish }}
+                {vehicle.wheelFinish}
               </li>
             </ul>
           </div>
-        </template>
-        <template #actions>
-          <div class="flex gap-6">
-            <Button primary class="w-full" link="pending">SHOP {{ vehicle.wheelModel }}</Button>
-            <Button secondary class="w-full uppercase" link="pending">EXPLORE {{ vehicle.wheelBrand }}</Button>
-          </div>
-        </template>
+        </div>
+        <div slot="actions" class="flex gap-6">
+          <Button client:load primary class="w-full" link="pending">SHOP {vehicle.wheelModel}</Button>
+          <Button client:load secondary class="w-full" link="pending">EXPLORE {vehicle.wheelBrand}</Button>
+        </div>
       </VehicleWheelSizeFit>
     </section>
 
@@ -119,38 +102,42 @@ const goToGallery = () => {
       </h2>
 
       <div class="grid grid-cols-3 gap-6">
-        <VehicleCard
-          v-for="(item, index) in corvetteGalleryImages"
-          :key="index"
-          :image="item.image"
-          :year="item.year"
-          :trim="item.trim"
-          :wheel-model="item.wheelModel"
-          :wheel-finish="item.wheelFinish"
-          :link="`/gallery/detail/${item.id}`"
-        />
+        {corvetteGalleryImages.map((item) => (
+          <VehicleCard
+            client:load
+            image={item.image}
+            year={item.year}
+            trim={item.trim}
+            wheelModel={item.wheelModel}
+            wheelFinish={item.wheelFinish}
+            link={`${GALLERY_DETAIL_ROUTE}/${item.id}`}
+          />
+        ))}
       </div>
 
       <div class="w-full flex justify-center">
-        <Button primary class="mt-12" @click="goToGallery">
-          VIEW FULL GALLERY
-        </Button>
+        <a href={GALLERY_ROUTE}>
+          <Button client:load primary class="mt-12">
+            VIEW FULL GALLERY
+          </Button>
+        </a>
       </div>
     </section>
 
     <section class="container-e5 py-24 px-24">
       <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8">
-        {{ vehicle.wheelModel }} WHEEL GALLERY
+        {vehicle.wheelModel} WHEEL GALLERY
       </h2>
 
       <div class="grid grid-cols-3 gap-12">
-        <div
-          v-for="wheel in WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand]"
-          class="w-full h-auto overflow-hidden flex items-center justify-center"
-        >
-          <img :src="wheel.image" :alt="wheel.finish" class="w-full object-cover cursor-pointer" @click="router.push(`/wheels/${vehicle.wheelBrand}/${vehicle.wheelModel}`)"/>
-        </div>
+        {wheelGalleryImages.map((wheel: any) => (
+          <div class="w-full h-auto overflow-hidden flex items-center justify-center">
+            <a href={`${WHEELS_ROUTE}/${vehicle.wheelBrand}/${vehicle.wheelModel}`}>
+              <img src={wheel.image} alt={wheel.finish} class="w-full object-cover cursor-pointer" />
+            </a>
+          </div>
+        ))}
       </div>
     </section>
-  </main>
-</template>
+  </div>
+</MainLayout>

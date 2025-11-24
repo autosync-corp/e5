@@ -37,7 +37,7 @@ const props = defineProps({
     </div>
 
     <div v-if="props.btnText" class="w-full flex justify-center">
-      <Button primary class="max-w-[300px] mt-8 uppercase" :link="props.btnLink" :action="props.btnAction">{{props.btnText}}</Button>
+      <Button primary class="max-w-[300px] mt-8" :link="props.btnLink" :action="props.btnAction">{{props.btnText}}</Button>
     </div>
   </div>
 </template>

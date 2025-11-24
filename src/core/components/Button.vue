@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
-
-const router = useRouter();
 const props = defineProps({
   primary: {
     type: Boolean,
@@ -18,7 +15,7 @@ const props = defineProps({
 
 const onClick = () => {
   if (props.link) {
-    props.link.startsWith('/') ? router.push(props.link) : router.push({name: props.link});
+    window.location.href = props.link;
   } else if (props.action) {
     props.action();
   }
@@ -26,6 +23,7 @@ const onClick = () => {
 </script>
 <template>
   <button
+    class="uppercase"
     :disabled="props.disabled"
     :class="{
       'bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg': props.primary,

@@ -1,7 +1,7 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["src/**/*", "src/**/*.vue"],
-  "exclude": ["node_modules"],
+  "extends": "astro/tsconfigs/strict",
+  "include": ["src/**/*", "src/**/*.vue", "src/**/*.astro"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -23,6 +23,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "noEmit": true
+    "jsx": "react-jsx",
+    "jsxImportSource": "vue"
   }
 }

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
-
-const router = useRouter();
 const props = defineProps({
   image: {
     type: String,
@@ -28,7 +25,7 @@ const props = defineProps({
 
 const onClick = () => {
   if (props.link) {
-    router.push(props.link);
+    window.location.href = props.link;
   }
 }
 </script>

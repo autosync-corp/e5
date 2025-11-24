@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import Button from "@/core/components/Button.vue";
-
-const router = useRouter();
 
 const props = defineProps({
   image: {
@@ -48,7 +45,7 @@ const props = defineProps({
 })
 
 const onClick = () => {
-  router.push(props.link);
+  window.location.href = props.link;
 };
 </script>
 

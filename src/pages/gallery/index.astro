@@ -1,0 +1,59 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import VetteGallery from "@/gallery/constants/VetteGallery.ts";
+import VehicleCard from "@/gallery/components/VehicleCard.vue";
+import VehicleDetailedCard from "@/gallery/components/VehicleDetailedCard.vue";
+import YearMakeModelSelector from "@/gallery/components/YearMakeModelSelector.vue";
+import GalleryPageStyleSelector from "@/gallery/components/GalleryPageStyleSelector.vue";
+import {GALLERY_DETAIL_ROUTE} from "@/core/constants/Routes.ts";
+---
+
+<MainLayout title="Vette Gallery - E5 Wheels">
+  <div class="w-full h-full">
+    <YearMakeModelSelector client:load />
+
+    <GalleryPageStyleSelector client:load />
+
+    <!-- Gallery Grid -->
+    <section class="container-e5 pt-8 pb-16 px-24">
+      <div id="gallery-grid" class="grid grid-cols-3 gap-6">
+        {VetteGallery.map((vehicle) => (
+          <VehicleCard
+            client:load
+            class="cursor-pointer"
+            image={vehicle.image}
+            year={vehicle.year}
+            trim={vehicle.trim}
+            wheelModel={vehicle.wheelModel}
+            wheelFinish={vehicle.wheelFinish}
+            link={`${GALLERY_DETAIL_ROUTE}/${vehicle.id}`}
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<script>
+  // Add client-side interactivity for toggling between gallery views
+  document.addEventListener('astro:page-load', () => {
+    const galleryStyleSelector = document.querySelector('[data-gallery-style]');
+    if (galleryStyleSelector) {
+      galleryStyleSelector.addEventListener('detailed-view-change', (event: any) => {
+        const isDetailed = event.detail;
+        const galleryGrid = document.getElementById('gallery-grid');
+        if (galleryGrid) {
+          // Toggle between simple and detailed views
+          if (isDetailed) {
+            galleryGrid.innerHTML = '';
+            // Re-render with detailed cards
+          } else {
+            galleryGrid.innerHTML = '';
+            // Re-render with simple cards
+          }
+        }
+      });
+    }
+  });
+</script>
+</MainLayout>

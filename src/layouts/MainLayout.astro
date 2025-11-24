@@ -1,3 +1,16 @@
+---
+import Navbar from '@/core/components/Navbar.vue';
+import Footer from '@/core/components/Footer.vue';
+import '@/assets/main.css';
+import '@/assets/fonts/fonts.css';
+
+export interface Props {
+  title?: string;
+}
+
+const { title = 'E5 Wheels - Exclusively Engineered for Corvettes' } = Astro.props;
+---
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,13 +21,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>E5 Wheels - Exclusively Engineered for Corvettes</title>
+    <title>{title}</title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but E5 Wheels doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <Navbar client:load />
+    <div style="min-height: 100dvh">
+      <main class="mt-107">
+        <slot />
+      </main>
+    </div>
+    <Footer client:load />
   </body>
 </html>
+
+<style is:global>
+body {
+  margin: auto;
+  padding: 0;
+  width: 100dvw;
+  min-width: 100dvw;
+  max-width: 1920px;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+</style>

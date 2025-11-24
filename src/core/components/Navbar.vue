@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
-import {computed} from "vue";
-import {routes as galleryRoutes} from "@/gallery/router"
-import {routes as wheelsRoutes} from "@/wheels/router"
+import {computed, ref, onMounted} from "vue";
+import {CART_ICON, E5_LOGO_WHITE} from "@/core/constants/App.ts";
+import {GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
-const route = useRoute();
-const isWheelsRoute = computed(() => Boolean(wheelsRoutes.find(wr => wr.name === route.name)))
-const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name === route.name)))
+const currentPath = ref('');
+
+onMounted(() => {
+  currentPath.value = window.location.pathname;
+});
+
+const isWheelsRoute = computed(() => currentPath.value.startsWith(WHEELS_ROUTE))
+const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE))
 </script>
 
 <template>
@@ -20,14 +24,14 @@ const isGalleryRoute = computed(() => Boolean(galleryRoutes.find(gr => gr.name =
 
       <div class="flex justify-center">
         <a href="/">
-          <img src="/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
+          <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
 
       <div class="flex justify-end items-center gap-6">
         <a href="#" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
         <a href="#" class="nav-link">CONTACT US</a>
-        <img src="/assets/images/asset-18.png" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+        <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
   </nav>
