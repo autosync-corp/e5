@@ -1,0 +1,198 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="Checkout - E5 Wheels">
+  <div class="w-full bg-white">
+    <!-- Main Content Container -->
+    <div class="max-w-[1728px] mx-auto px-16 py-12">
+      <div class="grid grid-cols-2 gap-16">
+        <!-- Left Column - Product Images -->
+        <div class="space-y-8">
+          <!-- Main Product Image -->
+          <div class="w-full aspect-square flex items-center justify-center">
+            <img
+              src="/assets/images/afdec958cf713eb929ae510752b31594f43c1a4f.png"
+              alt="Talladega Wheel - Gloss Black Red"
+              class="w-full h-full object-contain"
+            />
+          </div>
+
+          <!-- Thumbnail Navigation -->
+          <div class="flex items-center justify-center gap-4">
+            <!-- Left Arrow -->
+            <button class="p-2 opacity-70 hover:opacity-100 transition-opacity">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <!-- Thumbnails -->
+            <div class="flex gap-4">
+              <div class="w-28 h-28 border-2 border-transparent hover:border-e5-red transition-colors cursor-pointer">
+                <img
+                  src="/assets/images/c5130d4e56f6e2437cc78fe4904cdcbc6e716569.png"
+                  alt="Brushed Aluminum Gloss Clear"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="w-28 h-28 border-2 border-transparent hover:border-e5-red transition-colors cursor-pointer">
+                <img
+                  src="/assets/images/5aadb0394c4c49db86d0f64235e3f00404c7faf7.png"
+                  alt="Brushed Aluminum No Clear"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="w-28 h-28 border-2 border-transparent hover:border-e5-red transition-colors cursor-pointer">
+                <img
+                  src="/assets/images/edd03fa4648dfa8d219b2e1dd0aef9cc737c3b27.png"
+                  alt="Brushed Bronze Satin"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            <!-- Right Arrow -->
+            <button class="p-2 opacity-70 hover:opacity-100 transition-opacity">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 6L15 12L9 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column - Product Details -->
+        <div class="space-y-6">
+          <!-- Brand Logo -->
+          <div class="flex justify-end">
+            <img
+              src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.png"
+              alt="E5 Forged"
+              class="h-5 object-contain"
+            />
+          </div>
+
+          <!-- Product Title -->
+          <div>
+            <img
+              src="/assets/images/3a0f898a970a7108262be2cdc91dcdde57744bd4.png"
+              alt="TALLADEGA"
+              class="h-8 object-contain"
+            />
+          </div>
+
+          <!-- Divider -->
+          <div class="w-full h-[2px] bg-e5-red"></div>
+
+          <!-- Price -->
+          <div class="space-y-2">
+            <p class="text-xl font-['Excon_Variable'] text-black/70">
+              <span class="font-normal">$12,000.00</span> <span class="font-thin">(Complete Set)</span>
+            </p>
+            <p class="text-xl font-['Excon_Variable'] font-thin text-black/70">
+              From <span class="font-normal">$500/mo</span> with
+              <img
+                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png"
+                alt="Affirm"
+                class="inline h-6 w-auto mx-1"
+              />
+              at checkout
+            </p>
+          </div>
+
+          <!-- Configuration Options -->
+          <div class="space-y-4">
+            <!-- Model & Trim -->
+            <div>
+              <label class="block text-base font-['Excon_Variable'] font-light text-black/70 mb-2">
+                MODEL & TRIM:
+              </label>
+              <div class="relative">
+                <select class="w-full h-10 border border-[#ccc] rounded-lg px-4 text-base font-['Excon_Variable'] font-light text-black/80 appearance-none bg-white">
+                  <option>CORVETTE C8 Z06</option>
+                </select>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" class="opacity-70">
+                    <path d="M6.5 9.75L1.625 3.25H11.375L6.5 9.75Z" fill="black"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Size -->
+            <div>
+              <label class="block text-base font-['Excon_Variable'] font-light text-black/70 mb-2">
+                SIZE: FRONT & REAR
+              </label>
+              <div class="relative">
+                <select class="w-full h-10 border border-[#ccc] rounded-lg px-4 text-base font-['Excon_Variable'] font-light text-black/80 appearance-none bg-white">
+                  <option>FRONT 20" x 10" | REAR 21" x 13"</option>
+                </select>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" class="opacity-70">
+                    <path d="M6.5 9.75L1.625 3.25H11.375L6.5 9.75Z" fill="black"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Finish -->
+            <div>
+              <label class="block text-base font-['Excon_Variable'] font-light text-black/70 mb-2">
+                FINISH:
+              </label>
+              <div class="relative">
+                <select class="w-full h-10 border border-[#ccc] rounded-lg px-4 text-base font-['Excon_Variable'] font-light text-black/80 appearance-none bg-white">
+                  <option>GLOSS BLACK</option>
+                </select>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" class="opacity-70">
+                    <path d="M6.5 9.75L1.625 3.25H11.375L6.5 9.75Z" fill="black"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button class="w-full h-10 bg-e5-red rounded-lg text-white text-base font-['Excon_Variable'] font-light tracking-[0.32em] hover:bg-e5-red/90 transition-colors">
+            ADD TO CART
+          </button>
+
+          <!-- Express Checkout -->
+          <div class="space-y-3">
+            <p class="text-sm font-['Excon_Variable'] font-light text-black/70 tracking-[0.08em] text-center">
+              EXPRESS CHECKOUT
+            </p>
+            <button class="w-full h-10 bg-black rounded-lg flex items-center justify-center hover:bg-black/90 transition-colors">
+              <img
+                src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.png"
+                alt="Apple Pay"
+                class="h-6"
+              />
+            </button>
+          </div>
+
+          <!-- More Purchase Options -->
+          <div class="space-y-3">
+            <p class="text-sm font-['Excon_Variable'] font-normal text-black/70 tracking-[0.08em] text-center">
+              MORE PURCHASE OPTIONS
+            </p>
+            <button class="w-full h-10 bg-white border border-black rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <img
+                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png"
+                alt="Affirm"
+                class="h-6"
+              />
+            </button>
+          </div>
+
+          <!-- Free Shipping Notice -->
+          <p class="text-xl font-['Excon_Variable'] text-black/70 pt-8">
+            FREE SHIPPING ON ALL COMPLETE SETS
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
