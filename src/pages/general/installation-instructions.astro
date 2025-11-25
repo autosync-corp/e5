@@ -4,372 +4,483 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
 <MainLayout title="E5 Wheels - Installation Instructions">
   <div class="w-full bg-white">
-    <!-- Hero Section with gray background -->
-    <section class="w-full bg-[#d9d9d9] py-20">
-      <div class="container-e5 text-center">
-        <h1 class="font-franklin-heavy text-64 tracking-[6.4px] uppercase mb-8">
+    <!-- Hero Section with Gray Background -->
+    <section class="w-full bg-[#d9d9d9] pt-24 pb-20">
+      <div class="max-w-[1536px] mx-auto px-24 text-center">
+        <h1 class="text-[64px] font-['Franklin_Gothic_Heavy'] tracking-[6.4px] uppercase mb-8 leading-[1.2]">
           e5 WHEELS Installation Guide
         </h1>
-        <p class="text-36 opacity-70 mb-12">
+        <p class="text-[36px] font-['Excon_Variable'] opacity-70 leading-[30px]">
           Corvette Specific Installation Instructions (C5 - C8)
         </p>
       </div>
     </section>
 
     <!-- Important Safety Notice -->
-    <section class="w-full bg-[rgba(255,200,0,0.38)] py-8">
-      <div class="container-e5 text-center">
-        <h2 class="font-franklin-demi text-24 tracking-[4.8px] uppercase text-black/75 mb-4">
-          IMPORTANT SAFETY NOTICE
-        </h2>
-        <p class="text-24 tracking-[1.2px] text-black/80 max-w-[1536px] mx-auto">
+    <section class="w-full bg-[rgba(255,200,0,0.38)]">
+      <div class="w-full bg-[rgba(255,200,0,0.38)] py-3">
+        <div class="max-w-[1536px] mx-auto px-24">
+          <h2 class="text-[24px] font-['Franklin_Gothic_Demi'] tracking-[4.8px] uppercase text-black/75 text-center leading-[20px]">
+            IMPORTANT SAFETY NOTICE
+          </h2>
+        </div>
+      </div>
+      <div class="max-w-[1536px] mx-auto px-24 pb-6">
+        <p class="text-[24px] font-['Franklin_Gothic_Book'] tracking-[1.2px] text-black/80 text-center leading-[25px]">
           Professional Installation is highly recommended. Improper installation can result in wheel damage, loss of control, or serious injury. Always follow torque specifications and safety procedures.
         </p>
       </div>
     </section>
 
-    <!-- Corvette Wheel Specifications Table -->
-    <section class="container-e5 my-20">
-      <h2 class="text-36 text-e5-red text-center mb-12">
-        CORVETTE WHEEL SPECIFICATIONS
-      </h2>
+    <!-- Corvette Wheel Specifications -->
+    <section class="py-20">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[36px] font-['Excon_Variable'] text-[#d31d25] text-center mb-16 leading-[30px]">
+          CORVETTE WHEEL SPECIFICATIONS
+        </h2>
 
-      <div class="max-w-[1400px] mx-auto">
-        <table class="w-full border-collapse">
-          <thead>
-            <tr class="bg-[#d9d9d9]/25">
-              <th class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6 text-left">SPECIFICATION</th>
-              <th class="bg-[#d31d25]/55 font-franklin-demi text-32 tracking-[1.6px] p-6">
-                <div>C5</div>
-                <div class="text-27">(1997 - 2004)</div>
-              </th>
-              <th class="bg-black/25 font-franklin-demi text-32 tracking-[1.6px] p-6">
-                <div>C6</div>
-                <div class="text-27">(2005 - 2013)</div>
-              </th>
-              <th class="bg-black/25 font-franklin-demi text-32 tracking-[1.6px] p-6">
-                <div>C7</div>
-                <div class="text-27">(2014 - 2019)</div>
-              </th>
-              <th class="bg-black/25 font-franklin-demi text-32 tracking-[1.6px] p-6">
-                <div>C8</div>
-                <div class="text-27">(2020+)</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">LUG NUT<br/>THREAD SIZE</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">M12 x 1.5</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">M12 x 1.5</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">M12 x 1.5</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">M14 x 1.5</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">LUG NUT<br/>SEAT TYPE</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">CONICAL (60°)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">CONICAL (60°)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">CONICAL (60°)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">CONICAL (60°)</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">SOCKET SIZE</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">19mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">19mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">19mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">21mm</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">NUMBER OF LUGS</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">5 BOLT<br/>(5x120.7mm)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">5 BOLT<br/>(5x120.7mm)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">5 BOLT<br/>(5x120.65mm)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">5 BOLT<br/>(5x120.65mm)</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">REC.<br/>TORQUE</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">100 ft-lbs</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">100 ft-lbs</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">100 ft-lbs</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">129 ft-lbs</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">HUB<br/>BORE</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">70.3mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">70.3mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">70.3mm</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">70.3mm</td>
-            </tr>
-            <tr class="bg-[#d9d9d9]/25">
-              <td class="font-franklin-demi text-27 tracking-[1.35px] opacity-70 p-6">TPMS</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">NOT FACTORY<br/>OPTION</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">STANDARD<br/>(315MHz)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">STANDARD<br/>(315MHz)</td>
-              <td class="text-27 tracking-[1.35px] p-6 text-center bg-black/10">STANDARD<br/>(315MHz)</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto">
+          <!-- Table -->
+          <div class="min-w-[1200px]">
+            <!-- Header Row -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6 flex items-center justify-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[54px]">SPECIFICATION</p>
+              </div>
+              <div class="bg-[#d31d25]/55 p-6 text-center">
+                <p class="text-[32px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">C5</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">(1997 - 2004)</p>
+              </div>
+              <div class="bg-black/25 p-6 text-center">
+                <p class="text-[32px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">C6</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">(2005 - 2013)</p>
+              </div>
+              <div class="bg-black/25 p-6 text-center">
+                <p class="text-[32px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">C7</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">(2014 - 2019)</p>
+              </div>
+              <div class="bg-black/25 p-6 text-center">
+                <p class="text-[32px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">C8</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.6px] leading-[30px]">(2020+)</p>
+              </div>
+            </div>
+
+            <!-- Lug Nut Thread Size -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">LUG NUT<br/>THREAD SIZE</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">M12 x 1.5</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">M12 x 1.5</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">M12 x 1.5</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">M14 x 1.5</p>
+              </div>
+            </div>
+
+            <!-- Lug Nut Seat Type -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">LUG NUT<br/>SEAT TYPE</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">CONICAL (60°)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">CONICAL (60°)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">CONICAL (60°)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">CONICAL (60°)</p>
+              </div>
+            </div>
+
+            <!-- Socket Size -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">SOCKET SIZE</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">19mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">19mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">19mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">21mm</p>
+              </div>
+            </div>
+
+            <!-- Number of Lugs -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">NUMBER OF LUGS</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">5 BOLT<br/>(5x120.7mm)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">5 BOLT<br/>(5x120.7mm)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">5 BOLT<br/>(5x120.65mm)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">5 BOLT<br/>(5x120.65mm)</p>
+              </div>
+            </div>
+
+            <!-- Rec. Torque -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">REC.<br/>TORQUE</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">100 ft-lbs</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">100 ft-lbs</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">100 ft-lbs</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">129 ft-lbs</p>
+              </div>
+            </div>
+
+            <!-- Hub Bore -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">HUB<br/>BORE</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">70.3mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">70.3mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">70.3mm</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[54px]">70.3mm</p>
+              </div>
+            </div>
+
+            <!-- TPMS -->
+            <div class="grid grid-cols-5 gap-0">
+              <div class="bg-[#d9d9d9]/25 p-6">
+                <p class="text-[27px] font-['Franklin_Gothic_Demi'] tracking-[1.35px] opacity-70 leading-[30px]">TPMS</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">NOT FACTORY<br/>OPTION</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">STANDARD<br/>(315MHz)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">STANDARD<br/>(315MHz)</p>
+              </div>
+              <div class="bg-black/10 p-6 text-center">
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[30px]">STANDARD<br/>(315MHz)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Required Tools & Materials -->
     <section class="w-full bg-black py-20">
-      <div class="container-e5">
-        <h2 class="text-48 text-e5-red mb-12">REQUIRED TOOLS & MATERIALS</h2>
-        <ul class="space-y-4 text-white text-32 opacity-70 tracking-[1.6px]">
-          <li>•TORQUE WRENCH - Calibrated to 100ft-lbs (C5-C7), 129ft-lbs (C8).</li>
-          <li>•LUG SOCKET - 19mm Socket for (C5-C7), 21mm for (C8).</li>
-          <li>•JACK & STANDS - Recommended hydraulic jacks & jack stands.</li>
-          <li>•ANTI-SEIZE - Recommended anti-seize compound for lug studs.</li>
-          <li>•WIRE BRUSH - Recommended wire brush for cleaning hub surface.</li>
-        </ul>
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[48px] font-['Excon_Variable'] text-[#d31d25] mb-12 leading-[30px]">REQUIRED TOOLS & MATERIALS</h2>
+        <div class="space-y-4">
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•TORQUE WRENCH - Calibrated to 100ft-lbs (C5-C7), 129ft-lbs (C8).</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•LUG SOCKET - 19mm Socket for (C5-C7), 21mm for (C8).</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•JACK & STANDS - Recommended hydraulic jacks & jack stands.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•ANTI-SEIZE - Recommended anti-seize compound for lug studs.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•WIRE BRUSH - Recommended wire brush for cleaning hub surface. </p>
+        </div>
       </div>
     </section>
 
     <!-- Installation Instructions -->
-    <section class="container-e5 my-20">
-      <h2 class="text-36 text-e5-red text-center mb-12">INSTALLATION INSTRUCTIONS</h2>
+    <section class="py-20">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[36px] font-['Excon_Variable'] text-[#d31d25] text-center mb-16 leading-[30px]">
+          INSTALLATION INSTRUCTIONS
+        </h2>
 
-      <div class="max-w-[1400px] mx-auto space-y-8">
-        <div>
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">PRE-INSTALLATION CHECKLIST</h3>
+        <div class="max-w-[1400px] mx-auto">
+          <!-- Pre-Installation Checklist -->
+          <div class="mb-16">
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-8 leading-[54px]">PRE-INSTALLATION CHECKLIST</h3>
 
-          <div class="space-y-6">
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 1 : VERIFY FITMENT</h4>
-              <p class="text-27 tracking-[1.6px]">Confirm wheel size, bolt pattern (5x120.7mm for C5/C6, 5x120.65mm for C7/C8), offset, and 70.3mm center bore match your Corvette specifications.</p>
-            </div>
+            <div class="space-y-6">
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 1 : VERIFY FITMENT</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Confirm wheel size, bolt pattern (5x120.7mm for C5/C6, 5x120.65mm for C7/C8), offset, and 70.3mm center bore match your Corvette specifications.</p>
+              </div>
 
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 2 : INSPECT WHEELS</h4>
-              <p class="text-27 tracking-[1.6px]">Check for any shipping damage, cracks, or defects before installation.</p>
-            </div>
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 2 : INSPECT WHEELS</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Check for any shipping damage, cracks, or defects before installation.</p>
+              </div>
 
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 3 : GATHER HARDWARE</h4>
-              <p class="text-27 tracking-[1.6px]">Use M12 x 1.5 conical seat lug nuts with 19mm socket (C5/C6/C7) or M14 x 1.5 conical seat lug nuts with 21mm socket (C8).</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-16">
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">STEP-BY-STEP INSTALLATION</h3>
-
-          <div class="space-y-6">
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 1 : PREPARE VEHICLE</h4>
-              <p class="text-27 tracking-[1.6px]">Park on level ground, engage parking brake, and loosen lug nuts slightly before lifting vehicle.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 2 : LIFT & SECURE</h4>
-              <p class="text-27 tracking-[1.6px]">Use proper jack points to lift vehicle. Always use jack stands- never work under a vehicle supported only by a jack.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 3 : REMOVE OLD WHEEL</h4>
-              <p class="text-27 tracking-[1.6px]">Remove lug nuts completely and carefully remove the old wheel.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 4 : CLEAN HUB SURFACE</h4>
-              <p class="text-27 tracking-[1.6px]">Use wire brush to clean hub face and mounting surface. Remove all rust, dirt, and debris for proper wheel seating.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 5 : APPLY ANTI-SEIZE</h4>
-              <p class="text-27 tracking-[1.6px]">Apply a thin coat of anti-seize compound to lug studs (not the nut face). This prevents seizing and ensures accurate torque readings.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 6 : MOUNT E5 WHEEL</h4>
-              <p class="text-27 tracking-[1.6px]">Align wheel with lug studs and slide onto hub. Ensure the wheel sits flush against the hub surface.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 7 : HAND-TIGHTEN LUGS</h4>
-              <p class="text-27 tracking-[1.6px]">Thread lug nuts by hand in a star/cross pattern to prevent cross-threading.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 8 : INITIAL TORQUE</h4>
-              <p class="text-27 tracking-[1.6px]">Lower vehicle so tire touches ground. Torque lug nuts to 50% of final spec in star pattern.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 9 : FINAL TORQUE</h4>
-              <p class="text-27 tracking-[1.6px]">Torque to specification in star pattern: 100ft-lbs for C5/C6/C7, and 129ft-lbs for C8.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 10 : LOWER VEHICLE</h4>
-              <p class="text-27 tracking-[1.6px]">Lower vehicle completely to ground and remove jack stands and jack.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 11 : RE-TORQUE</h4>
-              <p class="text-27 tracking-[1.6px]">After 50-100mi, re-check and re-torque all lug nuts to specification.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-16">
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">CENTER CAP INSTALLATION</h3>
-
-          <div class="space-y-6">
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 1 : CLEAN WHEEL CENTER</h4>
-              <p class="text-27 tracking-[1.6px]">Ensure the center bore area of the wheel is clean and free of debris.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 2 : ALIGN CAP</h4>
-              <p class="text-27 tracking-[1.6px]">Align the E5 Center Cap with the wheel center, ensuring any logos or markings are properly oriented.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 3: PRESS FIRMLY</h4>
-              <p class="text-27 tracking-[1.6px]">Press the center cap firmly into place until you hear or feel it click/snap into position.</p>
-            </div>
-
-            <div>
-              <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 4: VERIFY SECURITY</h4>
-              <p class="text-27 tracking-[1.6px]">Gently tug on the cap to ensure its securely fastened. It should not come loose with light pressure.</p>
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 3 : GATHER HARDWARE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Use M12 x 1.5 conical seat lug nuts with 19mm socket (C5/C6/C7) or M14 x 1.5 conical seat lug nuts with 21mm socket (C8).</p>
+              </div>
             </div>
           </div>
 
-          <div class="bg-gray-100 p-8 mt-8 text-center">
-            <h4 class="text-32 text-e5-red tracking-[1.6px] mb-4">PRO TIP</h4>
-            <p class="text-27 tracking-[1.6px]">Some center caps may have retention clips or screws. If your caps include these, follow the specific instructions provided with your wheel set. Avoid using excessive force that could crack the lip.</p>
+          <!-- Step-by-Step Installation -->
+          <div class="mb-16">
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-8 leading-[54px]">STEP-BY-STEP INSTALLATION</h3>
+
+            <div class="space-y-6">
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 1 : PREPARE VEHICLE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Park on level ground, engage parking brake, and loosen lug nuts slightly before lifting vehicle.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 2 : LIFT & SECURE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Use proper jack points to lift vehicle. Always use jack stands- never work under a vehicle supported only by a jack.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 3 : REMOVE OLD WHEEL</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Remove lug nuts completely and carefully remove the old wheel.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 4 : CLEAN HUB SURFACE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Use wire brush to clean hub face and mounting surface. Remove all rust, dirt, and debris for proper wheel seating.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 5 : APPLY ANTI-SEIZE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Apply a thin coat of anti-seize compound to lug studs (not the nut face). This prevents seizing and ensures accurate torque readings.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 6 : MOUNT E5 WHEEL</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Align wheel with lug studs and slide onto hub. Ensure the wheel sits flush against the hub surface.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 7 : HAND-TIGHTEN LUGS</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Thread lug nuts by hand in a star/cross pattern to precent cross-threading. </p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 8 : INITIAL TORQUE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Lower vehicle so tire touches ground. Torque lug nuts to 50% of final spec in star pattern.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 9 : FINAL TORQUE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Torque to specification in star pattern: 100ft-lbs for C5/C6/C7, and 129ft-lbs for C8.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 10 : LOWER VEHICLE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Lower vehicle completely to ground and remove jack stands and jack.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 11 : RE-TORQUE</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">After 50-100mi, re-check and re-torque all lug nuts to specification.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Cap Installation -->
+          <div class="mb-16">
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-8 leading-[54px]">CENTER CAP INSTALLATION</h3>
+
+            <div class="space-y-6">
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 1 : CLEAN WHEEL CENTER</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Ensure the center bore area of the wheel is clean and free of debris.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 2 : ALIGN CAP</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Align the E5 Center Cap with the wheel center, ensuring any logos or markings are properly oriented.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 3: PRESS FIRMLY</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Press the center cap firmly into place until you hear or feel it click/snap into position.</p>
+              </div>
+
+              <div>
+                <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 4: VERIFY SECURITY</p>
+                <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Gently tug on the cap to ensure its securely fastened. It should not come loose with light pressure.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pro Tip -->
+          <div class="text-center py-8">
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-4 leading-[40px]">PRO TIP</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px] max-w-[1276px] mx-auto">Some center caps may have retention clips or screws. If your caps include these, follow the specific instructions provided with your wheel set. Avoid using excessive force that could crack the lip.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Transferring TPMS Sensors -->
-    <section class="container-e5 my-20">
-      <h2 class="text-36 text-e5-red text-center mb-12">TRANSFERRING TPMS SENSORS</h2>
+    <section class="py-20">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[36px] font-['Excon_Variable'] text-[#d31d25] text-center mb-12 leading-[30px]">
+          TRANSFERRING TPMS SENSORS
+        </h2>
 
-      <p class="text-27 tracking-[1.35px] text-center opacity-75 max-w-[1276px] mx-auto mb-12">
-        E5 Wheels are compatible with factory Corvette TPMS sensors. You can transfer your existing sensors from your old wheels to your new E5 Wheels.
-      </p>
+        <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] text-center opacity-75 max-w-[1276px] mx-auto mb-16 leading-[40px]">
+          E5 Wheels are compatible with factory Corvette TPMS sensors. You can transfer your existing sensors from your old wheels to your new E5 Wheels.
+        </p>
 
-      <div class="max-w-[1400px] mx-auto space-y-8">
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 1: SENSOR REMOVAL</h4>
-          <p class="text-27 tracking-[1.6px]">Have a qualified tire technician remove TPMS sensors from your old wheels during tire dismounting. Sensors are delicate - improper removal can lead to damaging them.</p>
+        <div class="max-w-[1400px] mx-auto space-y-6">
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 1: SENSOR REMOVAL</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Have a qualified tire technician remove TPMS sensors from your old wheels during tire dismounting. Sensors are delicate - improper removal can lead to damaging them.</p>
+          </div>
+
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 2: INSPECT SENSORS</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Check sensors for damage. Replace valve stems, cores, and sealing components with new TPMS service kit.</p>
+          </div>
+
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 3: INSTALL IN E5 WHEELS</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Have TPMS sensors properly installed in your new E5 Wheels during tire mounting. Torque valve nut to specification. (Typically 35-60 in-lbs.)</p>
+          </div>
+
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">STEP 4: RELEARN PROCEDURE</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px] mb-4">After installation, perform a TPMS relearn:</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">• C6: Use Tech 2 scan tool or drive vehicle at 20+ mph for 10 minutes. </p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">• C7: Use scan tool or go to Settings > Tire Pressure > Relearn in Driver Information Center.</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">• C8: Use scan tool or go to Settings > Tire Pressure > Relearn in vehicle menu. </p>
+          </div>
         </div>
 
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 2: INSPECT SENSORS</h4>
-          <p class="text-27 tracking-[1.6px]">Check sensors for damage. Replace valve stems, cores, and sealing components with new TPMS service kit.</p>
-        </div>
-
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 3: INSTALL IN E5 WHEELS</h4>
-          <p class="text-27 tracking-[1.6px]">Have TPMS sensors properly installed in your new E5 Wheels during tire mounting. Torque valve nut to specification. (Typically 35-60 in-lbs.)</p>
-        </div>
-
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">STEP 4: RELEARN PROCEDURE</h4>
-          <p class="text-27 tracking-[1.6px] mb-4">After installation, perform a TPMS relearn:</p>
-          <ul class="text-27 tracking-[1.6px] space-y-2 ml-8">
-            <li>• C6: Use Tech 2 scan tool or drive vehicle at 20+ mph for 10 minutes.</li>
-            <li>• C7: Use scan tool or go to Settings > Tire Pressure > Relearn in Driver Information Center.</li>
-            <li>• C8: Use scan tool or go to Settings > Tire Pressure > Relearn in vehicle menu.</li>
-          </ul>
-        </div>
-
-        <div class="bg-gray-100 p-8 mt-8 text-center">
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-4">IMPORTANT</h4>
-          <p class="text-27 tracking-[1.6px]">TPMS Sensors have batteries with limited lifespan (typically 7-10 years). C6 sensors from early years may need replacement. C7 sensors from 2014-2016 should be tested. C8 sensors are newer and typically don't require replacement yet. Always replace rubber components (valve stems, seals, cores) during transfer. Corvette TPMS sensors use 315 MHz frequency - ensure any replacement sensors match this specification.</p>
+        <!-- Important Notice -->
+        <div class="text-center py-12">
+          <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-4 leading-[40px]">IMPORTANT</p>
+          <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px] max-w-[1276px] mx-auto">TPMS Sensors have batteries with limited lifespan (typically 7-10 years). C6 sensors from early years may need replacement. C7 sensors from 2014-2016 should be tested. C8 sensors are newer and typically don't require replacement yet. Always replace rubber components (valve stems, seals, cores) during transfer. Corvette TPMS sensors use 315 MHz frequency - ensure any replacement sensors match this specification. </p>
         </div>
       </div>
     </section>
 
     <!-- TPMS Service Kit Components -->
     <section class="w-full bg-black py-20">
-      <div class="container-e5">
-        <h2 class="text-48 text-e5-red mb-12">TPMS Service Kit Components</h2>
-        <ul class="space-y-4 text-white text-32 opacity-70 tracking-[1.6px]">
-          <li>•VALVE STEM - Rubber or metal.</li>
-          <li>•VALVE CORE - Standard or nickel plated.</li>
-          <li>•VALVE CAP - Protective Cap.</li>
-          <li>•GROMMET - Prevents air leaks.</li>
-          <li>•VALVE NUT - Secures sensor.</li>
-        </ul>
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[48px] font-['Excon_Variable'] text-[#d31d25] mb-12 leading-[30px]">TPMS Service Kit Components</h2>
+        <div class="space-y-4">
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•VALVE STEM - Rubber or metal.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•VALVE CORE - Standard or nickel plated.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•VALVE CAP - Protective Cap.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•GROMMET - Prevents air leaks.</p>
+          <p class="text-[32px] font-['Franklin_Gothic_Book'] text-white opacity-70 tracking-[1.6px] leading-[54px]">•VALVE NUT - Secures sensor. </p>
+        </div>
       </div>
     </section>
 
     <!-- Maintenance & Care -->
-    <section class="container-e5 my-20">
-      <h2 class="text-36 text-e5-red text-center mb-12">MAINTENANCE & CARE</h2>
+    <section class="py-20">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[36px] font-['Excon_Variable'] text-[#d31d25] text-center mb-16 leading-[30px]">
+          MAINTENANCE & CARE
+        </h2>
 
-      <div class="max-w-[1400px] mx-auto space-y-8">
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">CHECK TORQUE REGULARLY</h4>
-          <p class="text-27 tracking-[1.6px]">Re-torque lug nuts after the first 50-100mi, then check every 5,000mi or during tire rotation.</p>
-        </div>
+        <div class="max-w-[1400px] mx-auto space-y-6">
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">CHECK TORQUE REGULARLY </p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Re-torque lug nuts after the first 50-100mi, then check every 5,000mi or during tire rotation.</p>
+          </div>
 
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">CLEAN WHEELS</h4>
-          <p class="text-27 tracking-[1.6px]">Use pH-neutral wheel cleaner. Avoid harsh chemicals or abrasive materials that can damage the finish.</p>
-        </div>
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">CLEAN WHEELS</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Use pH-neutral wheel cleaner. Avoid harsh chemicals or abrasive materials that can damage the finish.</p>
+          </div>
 
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">INSPECT FOR DAMAGE</h4>
-          <p class="text-27 tracking-[1.6px]">Regularly check for cracks, bends, or other damage, especially after hitting potholes or curbs.</p>
-        </div>
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">INSPECT FOR DAMAGE</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Regularly check for cracks, bends, or other damage, especially after hitting potholes or curbs.</p>
+          </div>
 
-        <div>
-          <h4 class="text-32 text-e5-red tracking-[1.6px] mb-2">CHECK TIRE PRESSURE</h4>
-          <p class="text-27 tracking-[1.6px]">Maintain proper tire pressure as specified by your vehicle manufacturer. Check monthly and before long trips.</p>
+          <div>
+            <p class="text-[32px] text-[#d31d25] tracking-[1.6px] mb-2 leading-[40px]">CHECK TIRE PRESSURE</p>
+            <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.6px] leading-[40px]">Maintain proper tire pressure as specified by your vehicle manufacturer. Check monthly and before long trips.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Troubleshooting -->
-    <section class="container-e5 my-20">
-      <h2 class="text-36 text-e5-red text-center mb-12">TROUBLESHOOTING</h2>
+    <section class="py-20">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <h2 class="text-[36px] font-['Excon_Variable'] text-[#d31d25] text-center mb-16 leading-[30px]">
+          TROUBLESHOOTING
+        </h2>
 
-      <div class="max-w-[1400px] mx-auto space-y-12">
-        <div>
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">WHEEL VIBRATION</h3>
-          <ul class="text-27 tracking-[1.35px] space-y-2 ml-8">
-            <li>• Verify proper torque on all lug nuts.</li>
-            <li>• Have wheels balanced by a professional.</li>
-            <li>• Check for bent wheels or damaged tires.</li>
-            <li>• Ensure hub surface was properly cleaned.</li>
-          </ul>
-        </div>
+        <div class="max-w-[1400px] mx-auto space-y-12">
+          <div>
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-6 leading-[54px]">WHEEL VIBRATION</h3>
+            <div class="space-y-2">
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Verify proper torque on all lug nuts.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Have wheels balanced by a professional.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Check for bent wheels or damaged tires.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Ensure hub surface was properly cleaned.</p>
+            </div>
+          </div>
 
-        <div>
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">TPMS WARNING LIGHT</h3>
-          <ul class="text-27 tracking-[1.35px] space-y-2 ml-8">
-            <li>• Perform TPMS relearn procedure.</li>
-            <li>• Check tire pressure and adjust as needed.</li>
-            <li>• Verify sensor batteries are functional.</li>
-            <li>• Scan for TPMS fault codes.</li>
-          </ul>
-        </div>
+          <div>
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-6 leading-[54px]">TPMS WARNING LIGHT</h3>
+            <div class="space-y-2">
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Perform TPMS relearn procedure.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Check tire pressure and adjust as needed.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Verify sensor batteries are functional.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Scan for TPMS fault codes.</p>
+            </div>
+          </div>
 
-        <div>
-          <h3 class="font-franklin-demi text-32 opacity-70 tracking-[1.6px] mb-6">CENTER CAP LOOSE</h3>
-          <ul class="text-27 tracking-[1.35px] space-y-2 ml-8">
-            <li>• Check for debris in wheel center bore.</li>
-            <li>• Inspect cap retention clips.</li>
-          </ul>
+          <div>
+            <h3 class="text-[32px] font-['Franklin_Gothic_Demi'] opacity-70 tracking-[1.6px] mb-6 leading-[54px]">CENTER CAP LOOSE</h3>
+            <div class="space-y-2">
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Check for debris in wheel center bore.</p>
+              <p class="text-[27px] font-['Franklin_Gothic_Book'] tracking-[1.35px] leading-[40px]">• Inspect cap retention clips.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer Note -->
-    <section class="container-e5 my-20 text-center">
-      <div class="max-w-[1536px] mx-auto text-32 opacity-70 tracking-[1.6px] space-y-4">
-        <p>E5 WHEELS</p>
-        <p>EXCLUSIVELY ENGINEERED FOR CORVETTES</p>
-        <p class="mt-8">For technical support or questions, please contact your authorized E5 Wheels dealer.</p>
-        <p>Always follow your vehicles manufacturer's guidelines and local regulations.</p>
+    <section class="py-20 text-center">
+      <div class="max-w-[1536px] mx-auto px-24">
+        <div class="text-[32px] font-['Franklin_Gothic_Book'] opacity-70 tracking-[1.6px] leading-[35px] space-y-2">
+          <p>E5 WHEELS</p>
+          <p>EXCLUSIVELY ENGINEERED FOR CORVETTES</p>
+          <p class="mt-8">For technical support or questions, please contact your authorized E5 Wheels dealer. </p>
+          <p>Always follow your vehicles manufacturer's guidelines and local regulations.</p>
+        </div>
       </div>
     </section>
   </div>

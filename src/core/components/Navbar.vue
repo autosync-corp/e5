@@ -19,7 +19,7 @@ const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE
       <div class="flex justify-start gap-6">
         <a href="/wheels" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
         <a href="/gallery" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
-        <a href="#" class="nav-link">OUR PROCESS</a>
+        <a href="/general/our-process" class="nav-link">OUR PROCESS</a>
       </div>
 
       <div class="flex justify-center">
@@ -29,8 +29,8 @@ const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE
       </div>
 
       <div class="flex justify-end items-center gap-6">
-        <a href="#" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
-        <a href="#" class="nav-link">CONTACT US</a>
+        <a href="/corvette/choose-your-corvette" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
+        <a href="/general/contact-us" class="nav-link">CONTACT US</a>
         <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
