@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico"><!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <title>E5 Wheels - Exclusively Engineered for Corvettes</title>
+    <link rel="stylesheet" href="/_astro/c5.B7jWcb5V.css">
+</head>
+<body>
+<noscript><strong>We're sorry but E5 Wheels doesn't work properly without JavaScript enabled. Please enable it to
+    continue.</strong></noscript>
+<style>astro-island, astro-slot, astro-static-slot {
+    display: contents
+}</style>
+<script>(() => {
+    var e = async t => {
+        await (await t())()
+    };
+    (self.Astro || (self.Astro = {})).load = e;
+    window.dispatchEvent(new Event("astro:load"));
+})();</script>
+<script>(() => {
+    var A = Object.defineProperty;
+    var g = (i, o, a) => o in i ? A(i, o, {enumerable: !0, configurable: !0, writable: !0, value: a}) : i[o] = a;
+    var d = (i, o, a) => g(i, typeof o != "symbol" ? o + "" : o, a);
+    {
+        let i = {
+                0: t => m(t),
+                1: t => a(t),
+                2: t => new RegExp(t),
+                3: t => new Date(t),
+                4: t => new Map(a(t)),
+                5: t => new Set(a(t)),
+                6: t => BigInt(t),
+                7: t => new URL(t),
+                8: t => new Uint8Array(t),
+                9: t => new Uint16Array(t),
+                10: t => new Uint32Array(t),
+                11: t => 1 / 0 * t
+            }, o = t => {
+                let [l, e] = t;
+                return l in i ? i[l](e) : void 0
+            }, a = t => t.map(o),
+            m = t => typeof t != "object" || t === null ? t : Object.fromEntries(Object.entries(t).map(([l, e]) => [l, o(e)]));
+
+        class y extends HTMLElement {
+            constructor() {
+                super(...arguments);
+                d(this, "Component");
+                d(this, "hydrator");
+                d(this, "hydrate", async () => {
+                    var b;
+                    if (!this.hydrator || !this.isConnected) return;
+                    let e = (b = this.parentElement) == null ? void 0 : b.closest("astro-island[ssr]");
+                    if (e) {
+                        e.addEventListener("astro:hydrate", this.hydrate, {once: !0});
+                        return
+                    }
+                    let c = this.querySelectorAll("astro-slot"), n = {},
+                        h = this.querySelectorAll("template[data-astro-template]");
+                    for (let r of h) {
+                        let s = r.closest(this.tagName);
+                        s != null && s.isSameNode(this) && (n[r.getAttribute("data-astro-template") || "default"] = r.innerHTML, r.remove())
+                    }
+                    for (let r of c) {
+                        let s = r.closest(this.tagName);
+                        s != null && s.isSameNode(this) && (n[r.getAttribute("name") || "default"] = r.innerHTML)
+                    }
+                    let p;
+                    try {
+                        p = this.hasAttribute("props") ? m(JSON.parse(this.getAttribute("props"))) : {}
+                    } catch (r) {
+                        let s = this.getAttribute("component-url") || "<unknown>",
+                            v = this.getAttribute("component-export");
+                        throw v && (s += ` (export ${v})`), console.error(`[hydrate] Error parsing props for component ${s}`, this.getAttribute("props"), r), r
+                    }
+                    let u;
+                    await this.hydrator(this)(this.Component, p, n, {client: this.getAttribute("client")}), this.removeAttribute("ssr"), this.dispatchEvent(new CustomEvent("astro:hydrate"))
+                });
+                d(this, "unmount", () => {
+                    this.isConnected || this.dispatchEvent(new CustomEvent("astro:unmount"))
+                })
+            }
+
+            disconnectedCallback() {
+                document.removeEventListener("astro:after-swap", this.unmount), document.addEventListener("astro:after-swap", this.unmount, {once: !0})
+            }
+
+            connectedCallback() {
+                if (!this.hasAttribute("await-children") || document.readyState === "interactive" || document.readyState === "complete") this.childrenConnectedCallback(); else {
+                    let e = () => {
+                        document.removeEventListener("DOMContentLoaded", e), c.disconnect(), this.childrenConnectedCallback()
+                    }, c = new MutationObserver(() => {
+                        var n;
+                        ((n = this.lastChild) == null ? void 0 : n.nodeType) === Node.COMMENT_NODE && this.lastChild.nodeValue === "astro:end" && (this.lastChild.remove(), e())
+                    });
+                    c.observe(this, {childList: !0}), document.addEventListener("DOMContentLoaded", e)
+                }
+            }
+
+            async childrenConnectedCallback() {
+                let e = this.getAttribute("before-hydration-url");
+                e && await import(e), this.start()
+            }
+
+            async start() {
+                let e = JSON.parse(this.getAttribute("opts")), c = this.getAttribute("client");
+                if (Astro[c] === void 0) {
+                    window.addEventListener(`astro:${c}`, () => this.start(), {once: !0});
+                    return
+                }
+                try {
+                    await Astro[c](async () => {
+                        let n = this.getAttribute("renderer-url"), [h, {default: p}] = await Promise.all([import(this.getAttribute("component-url")), n ? import(n) : () => () => {
+                        }]), u = this.getAttribute("component-export") || "default";
+                        if (!u.includes(".")) this.Component = h[u]; else {
+                            this.Component = h;
+                            for (let f of u.split(".")) this.Component = this.Component[f]
+                        }
+                        return this.hydrator = p, this.hydrate
+                    }, e, this)
+                } catch (n) {
+                    console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`, n)
+                }
+            }
+
+            attributeChangedCallback() {
+                this.hydrate()
+            }
+        }
+
+        d(y, "observedAttributes", ["props"]), customElements.get("astro-island") || customElements.define("astro-island", y)
+    }
+})();</script>
+<astro-island uid="ul6nV" prefix="s0" component-url="/_astro/Navbar.Brvqwac8.js" component-export="default"
+              renderer-url="/_astro/client.ElkxBcZ8.js" props="{}" ssr client="load"
+              opts="{&quot;name&quot;:&quot;Navbar&quot;,&quot;value&quot;:true}" await-children>
+    <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center"
+         data-v-97e67d42>
+        <div class="inline-grid h-full grid-cols-[1fr_auto_1fr] items-center gap-16" data-v-97e67d42>
+            <div class="flex justify-start gap-6" data-v-97e67d42><a href="/wheels" class="nav-link" data-v-97e67d42>WHEELS</a><a
+                    href="/gallery" class="nav-link" data-v-97e67d42>GALLERY</a><a href="/general/our-process"
+                                                                                   class="nav-link" data-v-97e67d42>OUR
+                PROCESS</a></div>
+            <div class="flex justify-center" data-v-97e67d42><a href="https://efivewheels.com/?dev" data-v-97e67d42><img
+                    src="/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="max-h-[24px] w-auto"
+                    style="aspect-ratio:35/3;" data-v-97e67d42></a></div>
+            <div class="flex justify-end items-center gap-6" data-v-97e67d42><a href="/corvette/choose-your-corvette"
+                                                                                class="nav-link whitespace-nowrap"
+                                                                                data-v-97e67d42>CHOOSE YOUR CORVETTE</a><a
+                    href="/general/contact-us" class="nav-link" data-v-97e67d42>CONTACT US</a><img
+                    src="/assets/images/asset-18.png" alt="Cart"
+                    class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity"
+                    data-v-97e67d42></div>
+        </div>
+    </nav><!--astro:end--></astro-island>
+<div style="min-height: 100dvh">
+    <main class="mt-107">
+        <div class="w-full h-full">
+            <astro-island uid="eBO79" prefix="s2" component-url="/_astro/Hero.C3ZhVZQ4.js" component-export="default"
+                          renderer-url="/_astro/client.ElkxBcZ8.js" props="{}" ssr client="load"
+                          opts="{&quot;name&quot;:&quot;Hero&quot;,&quot;value&quot;:true}" await-children>
+                <section class="mt-107 w-full h-[754px] relative overflow-hidden"><!--[-->
+                    <astro-slot>
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <source src="/assets/videos/E5LPVID-.mp4" type="video/mp4">
+                        </video>
+                    </astro-slot><!--]--></section><!--astro:end--></astro-island>
+            <section class="container-e5 text-center my-20">
+                <div><h1 class="font-franklin-heavy text-6xl text-black mb-6 font-black">
+                    EXCLUSIVELY ENGINEERED FOR CORVETTES
+                </h1>
+                    <p class="font-sans font-bold text-26 text-black/70 mx-auto">
+                        E5 Wheels are exclusively engineered for Corvettes—no universal fitments, no compromises.
+                        Every design is forged to align with the car's aggressive stance, meet its high-performance
+                        demands, and complement its unmistakable identity.
+                    </p></div>
+            </section>
+            <section class="container-e5 flex mt-8 bg-gray-100 py-20">
+                <div class="grid grid-flow-row auto-rows-min grid-cols-2">
+                    <div class="col-start-1 row-start-1"><img src="/assets/images/form-forged-logo-black.png"
+                                                              alt="Form Forged" class="w-1/2 h-auto mx-auto"></div>
+                    <div class="col-start-1 row-start-2"><img src="/assets/images/form-forged-group.png"
+                                                              alt="Form Forged Wheels" class="w-4/5 h-auto mx-auto">
+                    </div>
+                    <div class="col-start-1 row-start-3"><p
+                            class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
+                        Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers
+                        strength and agility—without compromising daily drivability.
+                    </p></div>
+                    <div class="col-start-1 row-start-4 flex justify-center items-center mt-6">
+                        <astro-island uid="pGlmo" prefix="s3" component-url="/_astro/Button.BbZxw3fF.js"
+                                      component-export="default" renderer-url="/_astro/client.ElkxBcZ8.js"
+                                      props="{&quot;primary&quot;:[0,true],&quot;link&quot;:[0,&quot;/wheels/form-forged&quot;]}"
+                                      ssr client="load"
+                                      opts="{&quot;name&quot;:&quot;Button&quot;,&quot;value&quot;:true}"
+                                      await-children>
+                            <button class="uppercase bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                                <!--[-->
+                                <astro-slot>EXPLORE FORM FORGED</astro-slot><!--]--></button><!--astro:end-->
+                        </astro-island>
+                    </div>
+                    <div class="col-start-2 row-start-1"><img
+                            src="/assets/images/wheels/02d80e5501d4b44b3e61daf67192b4fe23242b09.png" alt="Form Forged"
+                            class="w-3/5 h-auto mx-auto"></div>
+                    <div class="col-start-2 row-start-2 mx-10">
+                        <div class="relative flex justify-end"><img
+                                src="/assets/images/wheels/afdec958cf713eb929ae510752b31594f43c1a4f.png"
+                                alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1">
+                            <img src="/assets/images/wheels/e5-talladega-rear.png" alt="Talladega Rear"
+                                 class="me-10 w-1/2"></div>
+                    </div>
+                    <div class="col-start-2 row-start-3"><p
+                            class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
+                        Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance,
+                        reduced weight, and maximum strength.
+                    </p></div>
+                    <div class="col-start-2 row-start-4 flex justify-center items-center mt-6">
+                        <astro-island uid="x7a70" prefix="s4" component-url="/_astro/Button.BbZxw3fF.js"
+                                      component-export="default" renderer-url="/_astro/client.ElkxBcZ8.js"
+                                      props="{&quot;primary&quot;:[0,true],&quot;link&quot;:[0,&quot;/wheels/talladega&quot;]}"
+                                      ssr client="load"
+                                      opts="{&quot;name&quot;:&quot;Button&quot;,&quot;value&quot;:true}"
+                                      await-children>
+                            <button class="uppercase bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                                <!--[-->
+                                <astro-slot>EXPLORE E5 FORGED</astro-slot><!--]--></button><!--astro:end-->
+                        </astro-island>
+                    </div>
+                </div>
+            </section>
+            <section class="container-e5 max-w-[1500px] flex justify-between mx-auto py-32">
+                <div class="grid grid-cols-1 auto-rows-min"><img src="/assets/images/asset-29.png" alt="Asset 29"
+                                                                 class="w-[264px] h-auto">
+                    <h1 class="text-5xl font-franklin-medium mt-12">OUR PROCESS</h1>
+                    <p class="max-w-[700px] text-xl text-black/70 mt-6">
+                        At E5, we approach every wheel with a process rooted in precision engineering, model-specific
+                        fitment, and an uncompromising attention to detail. From concept design to final finish, we
+                        engineer each product to enhance performance, complement the car's design, and uphold the
+                        standards that define the Corvette platform.
+                    </p>
+                    <div class="mt-20">
+                        <astro-island uid="1tXzD6" prefix="s5" component-url="/_astro/Button.BbZxw3fF.js"
+                                      component-export="default" renderer-url="/_astro/client.ElkxBcZ8.js"
+                                      props="{&quot;primary&quot;:[0,true]}" ssr client="load"
+                                      opts="{&quot;name&quot;:&quot;Button&quot;,&quot;value&quot;:true}"
+                                      await-children>
+                            <button class="uppercase bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                                <!--[-->
+                                <astro-slot>LEARN MORE</astro-slot><!--]--></button><!--astro:end--></astro-island>
+                    </div>
+                </div>
+                <div class="h-[438px]"><img src="/assets/images/talladega-exo.png" alt="Talladega Exo"
+                                            class="w-full max-w-[438px] h-auto"></div>
+            </section>
+            <section class="py-20 bg-gray-100">
+                <div class="container-e5"><h2 class="text-48 text-e5-red font-normal">GALLERIES</h2>
+                    <p class="text-24 text-black/60 uppercase mt-5 mb-20">
+                        From detailed finishes to full builds— experience E5 in our galleries.
+                    </p>
+                    <div class="grid grid-cols-[1fr_4px_1fr] gap-12">
+                        <div class="my-auto relative"><img src="/assets/images/vette-black-on-river.png"
+                                                           alt="Vette Gallery"
+                                                           class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]">
+                            <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
+                                <a href="/gallery" class="mt-auto mb-10">
+                                    <astro-island uid="1Hv3QN" prefix="s6" component-url="/_astro/Button.BbZxw3fF.js"
+                                                  component-export="default" renderer-url="/_astro/client.ElkxBcZ8.js"
+                                                  props="{&quot;primary&quot;:[0,true],&quot;class&quot;:[0,&quot;py-4&quot;]}"
+                                                  ssr client="load"
+                                                  opts="{&quot;name&quot;:&quot;Button&quot;,&quot;value&quot;:true}"
+                                                  await-children>
+                                        <button class="uppercase bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg py-4">
+                                            <!--[-->
+                                            <astro-slot>
+                                                VIEW VETTE <br> GALLERY
+                                            </astro-slot><!--]--></button><!--astro:end--></astro-island>
+                                </a></div>
+                        </div>
+                        <div class="bg-e5-separator h-full min-h-[660px]"></div>
+                        <div class="my-auto relative"><img src="/assets/images/e5-wheel-home-shot-1.png"
+                                                           alt="Wheel Gallery"
+                                                           class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]">
+                            <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
+                                <a href="/wheels" class="mt-auto mb-10">
+                                    <astro-island uid="Z11Meuc" prefix="s7" component-url="/_astro/Button.BbZxw3fF.js"
+                                                  component-export="default" renderer-url="/_astro/client.ElkxBcZ8.js"
+                                                  props="{&quot;primary&quot;:[0,true],&quot;class&quot;:[0,&quot;mt-auto py-4&quot;]}"
+                                                  ssr client="load"
+                                                  opts="{&quot;name&quot;:&quot;Button&quot;,&quot;value&quot;:true}"
+                                                  await-children>
+                                        <button class="uppercase bg-e5-red text-white font-franklin-demi border-0 px-8 py-5 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg mt-auto py-4">
+                                            <!--[-->
+                                            <astro-slot>
+                                                VIEW WHEEL <br> GALLERY
+                                            </astro-slot><!--]--></button><!--astro:end--></astro-island>
+                                </a></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+<astro-island uid="Z1oxMgg" prefix="s1" component-url="/_astro/Footer.CHf2zppy.js" component-export="default"
+              renderer-url="/_astro/client.ElkxBcZ8.js" props="{}" ssr client="load"
+              opts="{&quot;name&quot;:&quot;Footer&quot;,&quot;value&quot;:true}" await-children>
+    <footer class="container-e5 bg-e5-red font-medium text-black w-full py-20" data-v-9952b881>
+        <div class="flex justify-center mb-20" data-v-9952b881><img src="/assets/images/e5-wheels-alt-logo-black.png"
+                                                                    alt="E5 Wheels" class="w-1/4 h-auto"
+                                                                    data-v-9952b881></div>
+        <div class="grid grid-cols-[1fr_auto_1fr] items-start justify-between" data-v-9952b881>
+            <div class="flex flex-col" data-v-9952b881><a href="/general/our-process" class="footer-link"
+                                                          data-v-9952b881>OUR PROCESS</a><a href="/general/contact-us"
+                                                                                            class="footer-link"
+                                                                                            data-v-9952b881>CONTACT
+                US</a><a href="/pending/" class="footer-link" data-v-9952b881>REFUND &amp; RETURN POLICY</a><a href="/pending/"
+                                                                                                       class="footer-link"
+                                                                                                       data-v-9952b881>WARRANTY</a><a
+                    href="/general/installation-instructions" class="footer-link" data-v-9952b881>INSTALLATION GUIDELINES</a><a href="/pending/"
+                                                                                               class="footer-link"
+                                                                                               data-v-9952b881>MEDIA</a><a
+                    href="/pending/" class="footer-link" data-v-9952b881>COMMUNITY</a></div>
+            <div class="h-full flex items-center justify-center" data-v-9952b881><img
+                    src="/assets/images/media-icons.png" alt="Social Media" class="inline-block w-[207px] h-auto"
+                    data-v-9952b881></div>
+            <div class="flex flex-col items-end text-end" data-v-9952b881><a
+                    href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" data-v-9952b881>
+                <div class="footer-link flex items-start gap-4 text-16" data-v-9952b881><img
+                        src="/assets/images/pin-icon-black.png" alt="Location"
+                        class="w-6 h-auto mt-3 rotate-180 scale-y-[-1]" data-v-9952b881>
+                    <div data-v-9952b881><p class="m-0" data-v-9952b881>E5 WHEELS, LLC</p>
+                        <p class="m-0" data-v-9952b881>3500 NW 77 CT</p>
+                        <p class="m-0" data-v-9952b881>DORAL, FL 33122</p></div>
+                </div>
+            </a>
+                <div class="footer-link flex items-start gap-4 text-16" data-v-9952b881><img
+                        src="/assets/images/phone-icon-black.png" alt="Phone" class="w-6 h-auto mt-3" data-v-9952b881>
+                    <p class="m-0" data-v-9952b881><a href="tel:(305)964-7429" target="_blank" data-v-9952b881>(305)964-7429</a>
+                    </p></div>
+                <p class="text-16 m-0 footer-link" data-v-9952b881><a href="mailto:SALES@E5WHEELS.COM" target="_blank"
+                                                                      data-v-9952b881>SALES@E5WHEELS.COM</a></p>
+                <button class="uppercase bg-black text-white font-sans border-0 px-6 py-3 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                        data-v-9952b881><!--[-->GET IN TOUCH<!--]--></button>
+            </div>
+        </div>
+        <p class="footer-link text-16 text-center m-0" data-v-9952b881> © 2025 COPYRIGHT E5 WHEELS, LLC </p></footer>
+    <!--astro:end--></astro-island>
+</body>
+</html>
