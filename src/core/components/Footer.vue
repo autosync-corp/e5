@@ -11,8 +11,8 @@ import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} fro
 
     <div class="grid grid-cols-[1fr_auto_1fr] items-start justify-between">
       <div class="flex flex-col">
-        <a href="/general/our-process" class="footer-link">OUR PROCESS</a>
-        <a href="/general/contact-us" class="footer-link">CONTACT US</a>
+        <a href="/general/process" class="footer-link">OUR PROCESS</a>
+        <a href="/general/contact" class="footer-link">CONTACT US</a>
         <a href="#" class="footer-link">REFUND & RETURN POLICY</a>
         <a href="#" class="footer-link">WARRANTY</a>
         <a href="#" class="footer-link">INSTALLATION GUIDELINES</a>
@@ -44,7 +44,7 @@ import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} fro
         <p class="text-16 m-0 footer-link">
           <a href="mailto:SALES@E5WHEELS.COM" target="_blank">SALES@E5WHEELS.COM</a>
         </p>
-        <Button link="/general/contact-us">GET IN TOUCH</Button>
+        <Button link="/general/contact">GET IN TOUCH</Button>
       </div>
     </div>
 
