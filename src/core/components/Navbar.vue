@@ -19,18 +19,19 @@ const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE
       <div class="flex justify-start gap-6">
         <a href="/wheels" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
         <a href="/gallery" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
-        <a href="/general/our-process" class="nav-link">OUR PROCESS</a>
+        <a href="/general/process" class="nav-link">PROCESS</a>
       </div>
 
       <div class="flex justify-center">
-        <a href="/">
+        <a :href="`/?${Math.random()}`">
           <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
 
       <div class="flex justify-end items-center gap-6">
-        <a href="/corvette/choose-your-corvette" class="nav-link whitespace-nowrap">CHOOSE YOUR CORVETTE</a>
-        <a href="/general/contact-us" class="nav-link">CONTACT US</a>
+        <a href="/corvette/generations" class="nav-link whitespace-nowrap">GENERATIONS</a>
+        <a href="/configure" class="nav-link whitespace-nowrap">CONFIGURE</a>
+        <a href="/general/contact" class="nav-link">CONTACT</a>
         <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
