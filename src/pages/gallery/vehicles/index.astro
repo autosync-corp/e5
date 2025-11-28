@@ -1,0 +1,10 @@
+---
+import GalleryVehiclesGrid from '@/gallery/components/GalleryVehiclesGrid.vue';
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="Vette Gallery - E5 Wheels">
+  <div class="w-full h-full">
+      <GalleryVehiclesGrid client:load />
+  </div>
+</MainLayout>

@@ -6,7 +6,7 @@ import VehicleImagesGallery from "@/gallery/components/VehicleImagesGallery.vue"
 import Button from "@/core/components/Button.vue";
 import VehicleWheelSizeFit from "@/gallery/components/VehicleWheelSizeFit.vue";
 import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/wheels/constants/Wheels.ts";
-import {GALLERY_DETAIL_ROUTE, GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, PENDING_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
 export function getStaticPaths() {
   return VetteGallery.map((vehicle) => ({
@@ -26,17 +26,17 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
     <section class="w-full bg-white border-b border-gray-200 py-6">
       <div class="container-e5 flex items-center justify-between">
         <a
-          href={GALLERY_ROUTE}
+          href={GALLERY_VEHICLES_ROUTE}
           class="font-franklin-book text-xs text-black/40 tracking-[3.2px] uppercase hover:text-black transition-colors"
         >
           BACK TO GALLERY
         </a>
 
         <nav class="flex gap-8">
-          <a href="#" class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>
-          <a href="#" class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SIZES</a>
-          <a href="#" class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">FINISHES</a>
-          <a href="#" class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">WARRANTY</a>
+          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>
+          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SIZES</a>
+          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">FINISHES</a>
+          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">WARRANTY</a>
         </nav>
       </div>
     </section>
@@ -116,7 +116,7 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
       </div>
 
       <div class="w-full flex justify-center">
-        <a href={GALLERY_ROUTE}>
+        <a href={GALLERY_VEHICLES_ROUTE}>
           <Button client:load primary class="mt-12">
             VIEW FULL GALLERY
           </Button>

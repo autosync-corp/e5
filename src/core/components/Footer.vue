@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
 import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} from "@/core/constants/App.ts";
+import {
+  COMMUNITY_ROUTE,
+  CONTACT_ROUTE,
+  INSTALLATION_ROUTE, MEDIA_ROUTE,
+  PROCESS_ROUTE,
+  REFUND_ROUTE,
+  WARRANTY_ROUTE
+} from "@/core/constants/Routes.ts";
 </script>
 
 <template>
@@ -11,13 +19,13 @@ import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} fro
 
     <div class="footer-grid grid grid-cols-[1fr_auto_1fr] items-start justify-between gap-8">
       <div class="footer-section footer-links flex flex-col">
-        <a href="/general/process" class="footer-link">OUR PROCESS</a>
-        <a href="/general/contact" class="footer-link">CONTACT US</a>
-        <a href="#" class="footer-link">REFUND & RETURN POLICY</a>
-        <a href="#" class="footer-link">WARRANTY</a>
-        <a href="#" class="footer-link">INSTALLATION GUIDELINES</a>
-        <a href="#" class="footer-link">MEDIA</a>
-        <a href="#" class="footer-link">COMMUNITY</a>
+        <a :href="PROCESS_ROUTE" class="footer-link">PROCESS</a>
+        <a :href="CONTACT_ROUTE" class="footer-link">CONTACT</a>
+        <a :href="REFUND_ROUTE" class="footer-link">REFUND & RETURN POLICY</a>
+        <a :href="WARRANTY_ROUTE" class="footer-link">WARRANTY</a>
+        <a :href="INSTALLATION_ROUTE" class="footer-link">INSTALLATION</a>
+        <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
+        <a :href="COMMUNITY_ROUTE" class="footer-link">COMMUNITY</a>
       </div>
 
       <div class="footer-section footer-social h-full flex items-center justify-center">
@@ -44,7 +52,7 @@ import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} fro
         <p class="text-16 m-0 footer-link">
           <a href="mailto:SALES@E5WHEELS.COM" target="_blank">SALES@E5WHEELS.COM</a>
         </p>
-        <Button link="/general/contact">GET IN TOUCH</Button>
+        <Button :link="CONTACT_ROUTE">GET IN TOUCH</Button>
       </div>
     </div>
 

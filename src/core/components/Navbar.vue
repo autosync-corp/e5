@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import {computed, ref, onMounted} from "vue";
 import {CART_ICON, E5_LOGO_WHITE} from "@/core/constants/App.ts";
-import {GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {
+  CONTACT_ROUTE,
+  GALLERY_VEHICLES_ROUTE,
+  GENERATIONS_ROUTE,
+  HOME_ROUTE, PROCESS_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
+  WHEELS_ROUTE
+} from "@/core/constants/Routes.ts";
 
 const currentPath = ref('');
 const isMobileMenuOpen = ref(false);
@@ -11,7 +17,12 @@ onMounted(() => {
 });
 
 const isWheelsRoute = computed(() => currentPath.value.startsWith(WHEELS_ROUTE))
-const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE))
+const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_VEHICLES_ROUTE))
+const isShopRoute = computed(() => currentPath.value.startsWith(SHOP_ROUTE))
+const isProcessRoute = computed(() => currentPath.value.startsWith(PROCESS_ROUTE))
+const isVisualizeRoute = computed(() => currentPath.value.startsWith(VISUALIZE_ROUTE))
+const isGenerationRoute = computed(() => currentPath.value.startsWith(GENERATIONS_ROUTE))
+const isContactRoute = computed(() => currentPath.value.startsWith(CONTACT_ROUTE))
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -27,22 +38,22 @@ const closeMobileMenu = () => {
     <!-- Desktop Navigation -->
     <div class="desktop-nav inline-grid h-full grid-cols-[1fr_auto_1fr] items-center gap-16 px-4">
       <div class="flex justify-start gap-6">
-        <a href="/buy" class="nav-link" :class="{'selected': isWheelsRoute}">BUY</a>
-        <a href="/wheels" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
-        <a href="/gallery" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
-        <a href="/general/process" class="nav-link">PROCESS</a>
+        <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
+        <a :href="GALLERY_VEHICLES_ROUTE" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
+        <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}">PROCESS</a>
+        <a :href="SHOP_ROUTE" class="nav-link" :class="{'selected': isShopRoute}">SHOP</a>
       </div>
 
       <div class="flex justify-center">
-        <a href="/">
+        <a :href="HOME_ROUTE">
           <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
 
       <div class="flex justify-end items-center gap-6">
-        <a href="/corvette/generations" class="nav-link whitespace-nowrap">GENERATIONS</a>
-        <a href="/configure" class="nav-link whitespace-nowrap">CONFIGURE</a>
-        <a href="/general/contact" class="nav-link">CONTACT</a>
+        <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">GENERATIONS</a>
+        <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
+        <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
         <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
     </div>
@@ -50,7 +61,7 @@ const closeMobileMenu = () => {
     <!-- Mobile Navigation -->
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
       <!-- Mobile Logo -->
-      <a href="/">
+      <a :href="HOME_ROUTE">
         <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" />
       </a>
 
@@ -66,13 +77,13 @@ const closeMobileMenu = () => {
     <!-- Mobile Menu Overlay -->
     <div v-if="isMobileMenuOpen" class="mobile-menu" @click="closeMobileMenu">
       <div class="mobile-menu-content" @click.stop>
-        <a href="/general/process" class="mobile-nav-link" @click="closeMobileMenu">PROCESS</a>
-        <a href="/corvette/generations" class="mobile-nav-link" @click="closeMobileMenu">GENERATIONS</a>
-        <a href="/general/contact" class="mobile-nav-link" @click="closeMobileMenu">CONTACT</a>
-        <a href="/gallery" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
-        <a href="/wheels" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
-        <a href="/configure" class="mobile-nav-link" @click="closeMobileMenu">CONFIGURE</a>
-        <a href="/buy" class="mobile-nav-link" @click="closeMobileMenu">BUY</a>
+        <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">PROCESS</a>
+        <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">GENERATIONS</a>
+        <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
+        <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
+        <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
+        <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
+        <a :href="SHOP_ROUTE" class="mobile-nav-link" :class="{'selected': isShopRoute}" @click="closeMobileMenu">SHOP</a>
         <div class="flex justify-center mt-8">
           <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
         </div>

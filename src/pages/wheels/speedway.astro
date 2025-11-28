@@ -28,7 +28,7 @@ import BannerBesideDetailArea from "@/core/components/BannerBesideDetailArea.vue
 import {
     PENDING_ROUTE,
     WHEELS_DAYTONA_ROUTE,
-    WHEELS_GALLERY_ROUTE,
+    GALLERY_WHEELS_ROUTE,
     WHEELS_SEBRING_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
@@ -165,7 +165,7 @@ import {
             </p>
 
             <div class="my-12 flex justify-end px-16">
-                <Button client:load secondary link={WHEELS_GALLERY_ROUTE}>
+                <Button client:load secondary link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
                 </Button>
             </div>
@@ -283,7 +283,7 @@ import {
             </p>
 
             <div class="my-12 px-16">
-                <Button client:load secondary link={WHEELS_GALLERY_ROUTE}>
+                <Button client:load secondary link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
                 </Button>
             </div>

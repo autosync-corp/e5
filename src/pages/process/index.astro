@@ -1,5 +1,6 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro';
+import MainLayout from "@/layouts/MainLayout.astro";
+import {INSTALLATION_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="E5 Wheels - Our Process">
@@ -29,7 +30,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <span class="font-light">STARTING AT </span><span class="font-bold">$600</span>
             </p>
             <a
-              href="/wheels/sebring"
+              href={WHEELS_SEBRING_ROUTE}
               class="inline-block bg-[#d31d25] text-white px-12 py-4 text-[18px] tracking-[6.3px] opacity-85 hover:opacity-100 transition-opacity"
             >
               SHOP SEBRING
@@ -158,7 +159,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
             </p>
             <a
-              href="/general/installation"
+              href={INSTALLATION_ROUTE}
               class="inline-block bg-[#d31d25] text-white px-12 py-4 text-[16px] tracking-[5.6px] opacity-85 hover:opacity-100 transition-opacity"
             >
               LEARN MORE

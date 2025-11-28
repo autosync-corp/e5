@@ -13,7 +13,7 @@ import {
 import { HOME_VETTE_VIDEO, VETTE_BLACK_ON_RIVER } from "@/gallery/constants/VetteGallery.ts";
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
 import {
-    GALLERY_ROUTE,
+    GALLERY_VEHICLES_ROUTE, GALLERY_WHEELS_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
     WHEELS_ROUTE,
     WHEELS_TALLADEGA_ROUTE
@@ -103,7 +103,7 @@ import {
           <div class="my-auto relative">
             <img src={VETTE_BLACK_ON_RIVER} alt="Vette Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
-              <a href={GALLERY_ROUTE} class="mt-auto mb-10">
+              <a href={GALLERY_VEHICLES_ROUTE} class="mt-auto mb-10">
                 <Button client:load primary class="py-4">
                   VIEW VETTE <br /> GALLERY
                 </Button>
@@ -114,7 +114,7 @@ import {
           <div class="my-auto relative">
             <img src={WHEEL_HOME_SHOT_1} alt="Wheel Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
-              <a href={WHEELS_ROUTE} class="mt-auto mb-10">
+              <a href={GALLERY_WHEELS_ROUTE} class="mt-auto mb-10">
                 <Button client:load primary class="mt-auto py-4">
                   VIEW WHEEL <br /> GALLERY
                 </Button>

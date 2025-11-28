@@ -14,6 +14,7 @@ import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLege
 import DividerLine from "@/core/components/DividerLine.vue";
 import {VETTE_GALLERY_IMAGE_1} from "@/gallery/constants/Images.ts";
 import {Orientations} from "@/core/types/App.ts";
+import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Talladega - E5 Wheels">
@@ -153,7 +154,7 @@ import {Orientations} from "@/core/types/App.ts";
             <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
                 A collection of builds fitted with our Talladega.
             </p>
-            <a href="/gallery" class="flex mx-auto cursor-pointer">
+            <a href={GALLERY_WHEELS_ROUTE} class="flex mx-auto cursor-pointer">
                 <div class="text-[12px] tracking-[3.96px] uppercase border-b border-e5-red pb-2">
                     <div class="hover:-translate-y-0.5">
                         VIEW GALLERY
@@ -176,7 +177,7 @@ import {Orientations} from "@/core/types/App.ts";
             <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
                 Our wheels, up close & personal.
             </p>
-            <a href="/wheels/gallery" class="flex mx-auto cursor-pointer">
+            <a href={GALLERY_WHEELS_ROUTE} class="flex mx-auto cursor-pointer">
                 <div class="text-[12px] tracking-[3.96px] uppercase border-b border-e5-red pb-2">
                     <div class="hover:-translate-y-0.5">
                         VIEW GALLERY

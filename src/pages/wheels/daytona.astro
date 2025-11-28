@@ -28,7 +28,7 @@ import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import {WHEELS_GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Daytona - E5 Wheels">
@@ -160,7 +160,7 @@ import {WHEELS_GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             </p>
 
             <div class="my-12 flex justify-end">
-                <Button client:load secondary class="px-16" link={WHEELS_GALLERY_ROUTE}>
+                <Button client:load secondary class="px-16" link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
                 </Button>
             </div>
@@ -272,7 +272,7 @@ import {WHEELS_GALLERY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             </p>
 
             <div class="my-12">
-                <Button client:load secondary class="px-16 border-e5-red text-e5-red" link={WHEELS_GALLERY_ROUTE}>
+                <Button client:load secondary class="px-16 border-e5-red text-e5-red" link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
                 </Button>
             </div>
