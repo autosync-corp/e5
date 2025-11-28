@@ -151,3 +151,4 @@ target/
 *.old
 *.orig
 *.rej
+.astro
