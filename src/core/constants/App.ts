@@ -8,6 +8,7 @@ export const EMPTY_OBJECT = {};
 export const CART_ICON = "/assets/images/asset-18.png";
 export const E5_LOGO_BLACK = "/assets/images/e5-wheels-alt-logo-black.png";
 export const E5_LOGO_WHITE = "/assets/images/e5-wheels-logo-white.png";
+export const E5_LOGO_WHITE_SHORT = "/assets/images/e5-logo-short.png";
 export const E5_BLACK_RED_DRAW = "/assets/images/asset-29.png";
 export const SOCIAL_MEDIA_ICONS = "/assets/images/media-icons.png";
 export const PIN_BLACK_ICON="/assets/images/pin-icon-black.png";

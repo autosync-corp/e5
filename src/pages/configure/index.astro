@@ -1,0 +1,14 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="E5 Wheels - Configure">
+    <div id="autosync-visualizer"></div>
+    <script is:inline src="https://vvs.autosyncstudio.com/js/Autosync.js"></script>
+    <script is:inline>
+        new Autosync({
+            id: 'autosync-visualizer',
+            key: 'efive'
+        });
+    </script>
+</MainLayout>

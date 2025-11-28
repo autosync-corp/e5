@@ -27,13 +27,14 @@ const closeMobileMenu = () => {
     <!-- Desktop Navigation -->
     <div class="desktop-nav inline-grid h-full grid-cols-[1fr_auto_1fr] items-center gap-16 px-4">
       <div class="flex justify-start gap-6">
+        <a href="/buy" class="nav-link" :class="{'selected': isWheelsRoute}">BUY</a>
         <a href="/wheels" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
         <a href="/gallery" class="nav-link" :class="{'selected': isGalleryRoute}">GALLERY</a>
         <a href="/general/process" class="nav-link">PROCESS</a>
       </div>
 
       <div class="flex justify-center">
-        <a :href="`/?${Math.random()}`">
+        <a href="/">
           <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
         </a>
       </div>
@@ -49,8 +50,8 @@ const closeMobileMenu = () => {
     <!-- Mobile Navigation -->
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
       <!-- Mobile Logo -->
-      <a :href="`/?${Math.random()}`">
-        <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" style="aspect-ratio: 35/3" />
+      <a href="/">
+        <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" />
       </a>
 
       <!-- Mobile Menu Toggle -->
@@ -65,12 +66,13 @@ const closeMobileMenu = () => {
     <!-- Mobile Menu Overlay -->
     <div v-if="isMobileMenuOpen" class="mobile-menu" @click="closeMobileMenu">
       <div class="mobile-menu-content" @click.stop>
-        <a href="/wheels" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
-        <a href="/gallery" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
         <a href="/general/process" class="mobile-nav-link" @click="closeMobileMenu">PROCESS</a>
         <a href="/corvette/generations" class="mobile-nav-link" @click="closeMobileMenu">GENERATIONS</a>
-        <a href="/configure" class="mobile-nav-link" @click="closeMobileMenu">CONFIGURE</a>
         <a href="/general/contact" class="mobile-nav-link" @click="closeMobileMenu">CONTACT</a>
+        <a href="/gallery" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
+        <a href="/wheels" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
+        <a href="/configure" class="mobile-nav-link" @click="closeMobileMenu">CONFIGURE</a>
+        <a href="/buy" class="mobile-nav-link" @click="closeMobileMenu">BUY</a>
         <div class="flex justify-center mt-8">
           <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
         </div>
@@ -98,7 +100,7 @@ const closeMobileMenu = () => {
 }
 
 /* Mobile Navigation */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .desktop-nav {
     display: none;
   }
