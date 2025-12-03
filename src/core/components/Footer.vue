@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
-import {E5_LOGO_BLACK, PHONE_BLACK_ICON, PIN_BLACK_ICON, SOCIAL_MEDIA_ICONS} from "@/core/constants/App.ts";
 import {
-  COMMUNITY_ROUTE,
+  E5_LOGO_BLACK,
+  FACEBOOK_MEDIA_ICON,
+  INSTAGRAM_MEDIA_ICON,
+  PHONE_BLACK_ICON,
+  PIN_BLACK_ICON, TIKTOK_MEDIA_ICON, YOUTUBE_MEDIA_ICON
+} from "@/core/constants/App.ts";
+import {
   CONTACT_ROUTE,
   INSTALLATION_ROUTE, MEDIA_ROUTE,
   PROCESS_ROUTE,
-  REFUND_ROUTE,
+  REFUND_ROUTE, REGISTRATION_ROUTE,
   WARRANTY_ROUTE
 } from "@/core/constants/Routes.ts";
 </script>
@@ -25,11 +30,22 @@ import {
         <a :href="WARRANTY_ROUTE" class="footer-link">WARRANTY</a>
         <a :href="INSTALLATION_ROUTE" class="footer-link">INSTALLATION</a>
         <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
-        <a :href="COMMUNITY_ROUTE" class="footer-link">COMMUNITY</a>
+        <a :href="REGISTRATION_ROUTE" class="footer-link">REGISTRATION</a>
       </div>
 
       <div class="footer-section footer-social h-full flex items-center justify-center">
-        <img :src="SOCIAL_MEDIA_ICONS" alt="Social Media" class="inline-block w-[207px] h-auto" />
+        <a href="https://www.instagram.com/e5wheels/" target="_blank" class="cursor-pointer">
+          <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="inline-block max-w-[70px] h-auto px-1" />
+        </a>
+        <a href="https://www.facebook.com/e5wheels/" target="_blank" class="cursor-pointer">
+          <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="inline-block max-w-[70px] h-auto px-1" />
+        </a>
+        <a href="www.youtube.com/@E5Wheels" target="_blank" class="cursor-pointer">
+          <img :src="YOUTUBE_MEDIA_ICON" alt="Youtube" class="inline-block max-w-[70px] h-auto px-1" />
+        </a>
+        <a href="https://www.tiktok.com/@e5wheels" target="_blank" class="cursor-pointer">
+          <img :src="TIKTOK_MEDIA_ICON" alt="Tiktok" class="inline-block max-w-[70px] h-auto px-1" />
+        </a>
       </div>
 
       <div class="footer-section footer-contact flex flex-col items-end text-end">

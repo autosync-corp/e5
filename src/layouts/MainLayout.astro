@@ -27,13 +27,13 @@ const { title = 'E5 Wheels - Exclusively Engineered for Corvettes' } = Astro.pro
     <noscript>
       <strong>We're sorry but E5 Wheels doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <Navbar client:load />
+    <Navbar client:load transition:persist/>
     <div style="min-height: 100dvh">
       <main class="mt-107">
         <slot />
       </main>
     </div>
-    <Footer client:load />
+    <Footer client:visible transition:persist/>
   </body>
 </html>
 

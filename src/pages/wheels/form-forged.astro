@@ -10,7 +10,7 @@ import {
     VPS_FORGED_VIDEO, SEBRING_TITANIUM_BRUSHED,
     SEBRING_BRAND_NAME, DAYTONA_BRAND_NAME, DAYTONA_TITANIUM_BRUSHED_TINT_FACE,
     SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT, SPEEDWAY_BRAND_NAME, PROCESS_DIAGRAM,
-} from "@/wheels/constants/Wheels.ts";
+} from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import {WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE} from "@/core/constants/Routes.ts";
@@ -52,7 +52,7 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:load primary link={WHEELS_SEBRING_ROUTE}>EXPLORE {SEBRING_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_SEBRING_ROUTE}>EXPLORE {SEBRING_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -68,7 +68,7 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:load primary link={WHEELS_DAYTONA_ROUTE}>EXPLORE {DAYTONA_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_DAYTONA_ROUTE}>EXPLORE {DAYTONA_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -84,7 +84,7 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:load primary link={WHEELS_SPEEDWAY_ROUTE}>EXPLORE {SPEEDWAY_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}>EXPLORE {SPEEDWAY_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -173,7 +173,7 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
                         <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">{finish.stock}</span>
 
                         <div class="mt-6 uppercase">
-                            <Button client:load primary link="/pending">LEARN MORE</Button>
+                            <Button client:visible primary link="/pending">LEARN MORE</Button>
                         </div>
                     </div>
                 </ImageWithLegend>

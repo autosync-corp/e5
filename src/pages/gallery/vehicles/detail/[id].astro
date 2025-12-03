@@ -1,11 +1,11 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import VetteGallery from "@/gallery/constants/VetteGallery.ts";
-import VehicleCard from "@/gallery/components/VehicleCard.vue";
-import VehicleImagesGallery from "@/gallery/components/VehicleImagesGallery.vue";
+import VetteGallery from "@/pages/gallery/constants/VetteGallery.ts";
+import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
+import VehicleImagesGallery from "@/pages/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
-import VehicleWheelSizeFit from "@/gallery/components/VehicleWheelSizeFit.vue";
-import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/wheels/constants/Wheels.ts";
+import VehicleWheelSizeFit from "@/pages/gallery/components/VehicleWheelSizeFit.vue";
+import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/pages/wheels/constants/Wheels.ts";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, PENDING_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
 export function getStaticPaths() {
@@ -41,7 +41,7 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
       </div>
     </section>
 
-    <VehicleImagesGallery client:load trim={vehicle.trim} images={vehicle.galleryImages} />
+    <VehicleImagesGallery client:only="vue" trim={vehicle.trim} images={vehicle.galleryImages} />
 
     <!-- Vehicle & Wheel Details Section -->
     <section class="container-e5 pt-4 px-24">
@@ -58,7 +58,7 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
       </div>
 
       <VehicleWheelSizeFit
-        client:load
+        client:only="vue"
         image={vehicle.wheelImage}
         alt={vehicle.wheelModel}
         logo={vehicle.wheelLogo}
@@ -89,8 +89,8 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
           </div>
         </div>
         <div slot="actions" class="flex gap-6">
-          <Button client:load primary class="w-full" link="pending">SHOP {vehicle.wheelModel}</Button>
-          <Button client:load secondary class="w-full" link="pending">EXPLORE {vehicle.wheelBrand}</Button>
+          <Button client:only="vue" primary class="w-full" link="pending">SHOP {vehicle.wheelModel}</Button>
+          <Button client:only="vue" secondary class="w-full" link="pending">EXPLORE {vehicle.wheelBrand}</Button>
         </div>
       </VehicleWheelSizeFit>
     </section>
@@ -104,7 +104,7 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
       <div class="grid grid-cols-3 gap-6">
         {corvetteGalleryImages.map((item) => (
           <VehicleCard
-            client:load
+            client:only="vue"
             image={item.image}
             year={item.year}
             trim={item.trim}
@@ -117,7 +117,7 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
 
       <div class="w-full flex justify-center">
         <a href={GALLERY_VEHICLES_ROUTE}>
-          <Button client:load primary class="mt-12">
+          <Button client:only="vue" primary class="mt-12">
             VIEW FULL GALLERY
           </Button>
         </a>

@@ -9,39 +9,46 @@ import {
   TALLADEGA_EXO,
   TALLADEGA_GLOSS_BLACK,
   TALLADEGA_SHOT_4,
-} from "@/wheels/constants/Wheels.ts";
-import { HOME_VETTE_VIDEO, VETTE_BLACK_ON_RIVER } from "@/gallery/constants/VetteGallery.ts";
+} from "@/pages/wheels/constants/Wheels.ts";
+import { VETTE_BLACK_ON_RIVER } from "@/pages/gallery/constants/VetteGallery.ts";
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
 import {
     GALLERY_VEHICLES_ROUTE, GALLERY_WHEELS_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
-    WHEELS_ROUTE,
     WHEELS_TALLADEGA_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout>
   <div class="w-full h-full">
-    <Hero client:load>
-      <video autoplay loop muted playsinline class="w-full h-full object-cover">
-        <source src={HOME_VETTE_VIDEO} type="video/mp4" />
-      </video>
+    <Hero>
+      <div style="position: relative; width: 100%; height: 94%; overflow: hidden;">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/2zk8Sdi3Yh8?autoplay=1&mute=1&loop=1&playlist=2zk8Sdi3Yh8&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
+          frameborder="0"
+          allowtransparency="true"
+          style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
+          allow="autoplay; encrypted-media"
+          loading="eager"
+          title="E5 Wheels Hero Video"
+        ></iframe>
+      </div>
     </Hero>
 
-    <section class="container-e5 text-center my-20">
+    <section class="container-e5 text-center mt-8 mb-20">
       <div>
         <h1 class="font-franklin-heavy text-6xl text-black mb-6 font-black">
           EXCLUSIVELY ENGINEERED FOR CORVETTES
         </h1>
         <p class="font-sans font-bold text-26 text-black/70 mx-auto">
-          E5 Wheels are exclusively engineered for Corvettes—no universal fitments, no compromises.
+          E5 Wheels are exclusively engineered Afor Corvettes—no universal fitments, no compromises.
           Every design is forged to align with the car's aggressive stance, meet its high-performance demands, and complement its unmistakable identity.
         </p>
       </div>
     </section>
 
     <section class="container-e5 flex mt-8 bg-gray-100 py-20">
-      <div class="grid grid-flow-row auto-rows-min grid-cols-2">
+      <div class="grid grid-flow-row auto-rows-min grid-cols-1 lg:grid-cols-2">
         <div class="col-start-1 row-start-1">
           <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged" class="w-1/2 h-auto mx-auto" />
         </div>
@@ -53,69 +60,69 @@ import {
             Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
           </p>
         </div>
-        <div class="col-start-1 row-start-4 flex justify-center items-center mt-6">
-          <Button client:load primary link={WHEELS_FORM_FORGED_ROUTE}>EXPLORE FORM FORGED</Button>
+        <div class="col-start-1 row-start-4 flex justify-center items-center mt-6 mb-24 lg:mb-0">
+          <Button client:visible primary link={WHEELS_FORM_FORGED_ROUTE}>EXPLORE FORM FORGED</Button>
         </div>
-        <div class="col-start-2 row-start-1">
+        <div class="lg:col-start-2 lg:row-start-1">
           <img src={E5_FORGED_LOGO} alt="Form Forged" class="w-3/5 h-auto mx-auto" />
         </div>
-        <div class="col-start-2 row-start-2 mx-10">
+        <div class="lg:col-start-2 lg:row-start-2 mx-10">
           <div class="relative flex justify-end">
             <img src={TALLADEGA_GLOSS_BLACK} alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
             <img src={TALLADEGA_SHOT_4} alt="Talladega Rear" class="me-10 w-1/2" />
           </div>
         </div>
-        <div class="col-start-2 row-start-3">
+        <div class="lg:col-start-2 lg:row-start-3">
           <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
             Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.
           </p>
         </div>
-        <div class="col-start-2 row-start-4 flex justify-center items-center mt-6">
-          <Button client:load primary link={WHEELS_TALLADEGA_ROUTE}>EXPLORE E5 FORGED</Button>
+        <div class="lg:col-start-2 lg:ow-start-4 flex justify-center items-center mt-6">
+          <Button client:visible primary link={WHEELS_TALLADEGA_ROUTE}>EXPLORE E5 FORGED</Button>
         </div>
       </div>
     </section>
 
-    <section class="container-e5 max-w-[1500px] flex justify-between mx-auto py-32">
-      <div class="grid grid-cols-1 auto-rows-min">
-        <img src={E5_BLACK_RED_DRAW} alt="Asset 29" class="w-[264px] h-auto" />
+    <section class="container-e5 relative max-w-[1500px] lg:flex justify-between mx-auto py-32">
+      <div class="grid grid-cols-1 auto-rows-min text-center lg:text-start">
+        <img src={E5_BLACK_RED_DRAW} alt="Asset 29" class="w-[264px] h-auto mx-auto lg:mx-0" />
         <h1 class="text-5xl font-franklin-medium mt-12">OUR PROCESS</h1>
-        <p class="max-w-[700px] text-xl text-black/70 mt-6">
+        <p class="lg:max-w-[700px] text-xl text-black/70 mt-6">
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>
         <div class="mt-20">
-          <Button client:load primary>LEARN MORE</Button>
+          <Button client:visible primary>LEARN MORE</Button>
         </div>
       </div>
-      <div class="h-[438px]">
+      <div class="h-[438px] hidden lg:block">
         <img src={TALLADEGA_EXO} alt="Talladega Exo" class="w-full max-w-[438px] h-auto" />
       </div>
     </section>
 
-    <section class="py-20 bg-gray-100">
+    <section class="py-20 bg-gray-100 text-center md:text-start">
       <div class="container-e5">
         <h2 class="text-48 text-e5-red font-normal">GALLERIES</h2>
         <p class="text-24 text-black/60 uppercase mt-5 mb-20">
           From detailed finishes to full builds— experience E5 in our galleries.
         </p>
 
-        <div class="grid grid-cols-[1fr_4px_1fr] gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_4px_1fr] gap-12">
           <div class="my-auto relative">
             <img src={VETTE_BLACK_ON_RIVER} alt="Vette Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
               <a href={GALLERY_VEHICLES_ROUTE} class="mt-auto mb-10">
-                <Button client:load primary class="py-4">
+                <Button client:visible primary class="py-4">
                   VIEW VETTE <br /> GALLERY
                 </Button>
               </a>
             </div>
           </div>
-          <div class="bg-e5-separator h-full min-h-[660px]"></div>
+          <div class="bg-e5-separator h-full min-h-[660px] hidden lg:block"></div>
           <div class="my-auto relative">
             <img src={WHEEL_HOME_SHOT_1} alt="Wheel Gallery" class="w-full max-w-[715px] h-[714px] object-cover md:h-auto md:min-h-[400px]" />
             <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-center">
               <a href={GALLERY_WHEELS_ROUTE} class="mt-auto mb-10">
-                <Button client:load primary class="mt-auto py-4">
+                <Button client:visible primary class="mt-auto py-4">
                   VIEW WHEEL <br /> GALLERY
                 </Button>
               </a>

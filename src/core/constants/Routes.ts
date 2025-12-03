@@ -8,6 +8,7 @@ export const SHOP_ROUTE = '/pending';
 export const REFUND_ROUTE = '/refund';
 export const WARRANTY_ROUTE = '/warranty';
 export const MEDIA_ROUTE = '/media';
+export const REGISTRATION_ROUTE = '/registration';
 export const COMMUNITY_ROUTE = '/community';
 export const VISUALIZE_ROUTE = '/visualize';
 export const WHEELS_ROUTE = '/wheels';

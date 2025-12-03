@@ -94,11 +94,12 @@ const closeMobileMenu = () => {
 
 <style scoped>
 .nav-link {
-  @apply font-franklin-medium text-14 text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70;
+  @apply font-franklin-medium text-14 text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70 text-center ps-1;
+  border-bottom: #141414 2px solid;
 }
 
 .nav-link.selected {
-  @apply text-e5-red;
+  border-bottom: red 2px solid;
 }
 
 /* Desktop Navigation - Hidden on mobile */

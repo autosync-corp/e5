@@ -10,7 +10,7 @@ import {
     SEBRING_VETTE_GALLERY_1, SEBRING_VETTE_GALLERY_2, SEBRING_VETTE_GALLERY_3, SPEEDWAY_BRAND_NAME,
     SPEEDWAY_LOGO,
     SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT,
-} from "@/wheels/constants/Wheels.ts";
+} from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
@@ -72,7 +72,7 @@ import {
         </div>
 
         <div class="text-center mt-12">
-            <Button client:load primary class="px-16">
+            <Button client:visible primary class="px-16">
                 <span>
                     SHOP {SEBRING_BRAND_NAME}
                 </span>
@@ -96,7 +96,7 @@ import {
             </p>
 
             <div class="mt-28 px-28">
-                <Button client:load secondary link={PENDING_ROUTE}>
+                <Button client:visible secondary link={PENDING_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
                 </Button>
             </div>
@@ -152,7 +152,7 @@ import {
             </p>
 
             <div class="my-12 flex justify-end px-16">
-                <Button client:load secondary link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
                 </Button>
             </div>
@@ -218,7 +218,7 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:load primary link={PENDING_ROUTE}>
+                        <Button client:visible primary link={PENDING_ROUTE}>
                             ADD TO CART
                         </Button>
                     </div>
@@ -232,7 +232,7 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:load primary link={PENDING_ROUTE}>
+                        <Button client:visible primary link={PENDING_ROUTE}>
                             ADD TO CART
                         </Button>
                     </div>
@@ -246,7 +246,7 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:load primary link={PENDING_ROUTE}>
+                        <Button client:visible primary link={PENDING_ROUTE}>
                             ADD TO CART
                         </Button>
                     </div>
@@ -270,7 +270,7 @@ import {
             </p>
 
             <div class="my-12 px-16">
-                <Button client:load secondary link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
                 </Button>
             </div>
@@ -292,7 +292,7 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8 uppercase">
-                        <Button client:load primary link={WHEELS_DAYTONA_ROUTE}> EXPLORE {DAYTONA_BRAND_NAME} </Button>
+                        <Button client:visible primary link={WHEELS_DAYTONA_ROUTE}> EXPLORE {DAYTONA_BRAND_NAME} </Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -305,7 +305,7 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8 uppercase">
-                        <Button client:load primary link={WHEELS_SPEEDWAY_ROUTE}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
+                        <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
                     </div>
                 </div>
             </ImageWithLegend>

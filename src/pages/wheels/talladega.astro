@@ -5,24 +5,32 @@ import {
     TALLADEGA_PODIUM_GOLD,
     TALLADEGA_GLOSS_BLACK,
     TALLADEGA_SMOKED_POLISHED,
-    TALLADEGA_VIDEO, TALLADEGA_LOGO_WHITE, WHEEL_GALLERY_STUDIO_BANNER, TALLADEGA_BRAND_NAME, TALLADEGA_SHOT_2,
+    TALLADEGA_LOGO_WHITE, WHEEL_GALLERY_STUDIO_BANNER, TALLADEGA_BRAND_NAME, TALLADEGA_SHOT_2,
     TALLADEGA_SHOT_1, TALLADEGA_SHOT_3
-} from "@/wheels/constants/Wheels.ts";
+} from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import Hero from "@/core/components/Hero.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import DividerLine from "@/core/components/DividerLine.vue";
-import {VETTE_GALLERY_IMAGE_1} from "@/gallery/constants/Images.ts";
+import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import {Orientations} from "@/core/types/App.ts";
 import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Talladega - E5 Wheels">
 
-    <Hero class="relative">
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src={TALLADEGA_VIDEO} type="video/mp4" />
-        </video>
+    <Hero class="relative bg-e5-black">
+        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+            <iframe
+                    src="https://www.youtube-nocookie.com/embed/SP1rec1yG0I?autoplay=1&mute=1&loop=1&playlist=SP1rec1yG0I&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
+                    frameborder="0"
+                    allowtransparency="true"
+                    style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
+                    allow="autoplay; encrypted-media"
+                    loading="eager"
+                    title="E5 Wheels Hero Video"
+            ></iframe>
+        </div>
 
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="text-center text-white tracking-[3.2px]" style="text-shadow: 0 25px 90.6px rgba(0,0,0,0.96)">
@@ -37,7 +45,7 @@ import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <span class="text-e5-red font-medium"> USA</span>
                 </p>
                 <div class="mt-4">
-                    <Button client:load primary>
+                    <Button client:visible primary>
                         SHOP FORGED
                     </Button>
                 </div>
@@ -134,7 +142,7 @@ import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         </div>
 
         <div class="text-center mb-20">
-            <Button client:load primary>
+            <Button client:visible primary>
                 SHOP FORGED
             </Button>
         </div>

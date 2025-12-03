@@ -23,7 +23,7 @@ import {
     SEBRING_LOGO, SPEEDWAY_BRAND_NAME,
     SPEEDWAY_LOGO,
     SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT,
-} from "@/wheels/constants/Wheels.ts";
+} from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
@@ -53,12 +53,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
         <div class="grid grid-cols-3 gap-8">
             <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_GLOSS_BLACK}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                </div>
+
             </ImageWithLegend>
 
             <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_TITANIUM_BRUSHED_TINT}>
@@ -81,7 +76,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         </div>
 
         <div class="text-center mt-12">
-            <Button client:load primary class="px-16">
+            <Button client:visible primary class="px-16">
               <span>
                 SHOP {DAYTONA_BRAND_NAME}
               </span>
@@ -105,7 +100,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             </p>
 
             <div class="mt-28">
-                <Button client:load secondary class="px-28" link="/pending">
+                <Button client:visible secondary class="px-28" link="/pending">
                     <span class="text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
                 </Button>
             </div>
@@ -160,7 +155,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             </p>
 
             <div class="my-12 flex justify-end">
-                <Button client:load secondary class="px-16" link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary class="px-16" link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
                 </Button>
             </div>
@@ -225,7 +220,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:load primary class="mt-8" link="/pending">
+                    <Button client:visible primary class="mt-8" link="/pending">
                         ADD TO CART
                     </Button>
                 </div>
@@ -237,7 +232,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:load primary class="mt-8" link="/pending">
+                    <Button client:visible primary class="mt-8" link="/pending">
                         ADD TO CART
                     </Button>
                 </div>
@@ -249,7 +244,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:load primary class="mt-8" link="/pending">
+                    <Button client:visible primary class="mt-8" link="/pending">
                         ADD TO CART
                     </Button>
                 </div>
@@ -272,7 +267,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             </p>
 
             <div class="my-12">
-                <Button client:load secondary class="px-16 border-e5-red text-e5-red" link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary class="px-16 border-e5-red text-e5-red" link={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
                 </Button>
             </div>
@@ -293,7 +288,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:load primary class="mt-8" link={`${WHEELS_ROUTE}/${SEBRING_BRAND_NAME}`}> EXPLORE {SEBRING_BRAND_NAME} </Button>
+                    <Button client:visible primary class="mt-8" link={`${WHEELS_ROUTE}/${SEBRING_BRAND_NAME}`}> EXPLORE {SEBRING_BRAND_NAME} </Button>
                 </div>
             </ImageWithLegend>
 
@@ -304,7 +299,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:load primary class="mt-8" link={`${WHEELS_ROUTE}/${SPEEDWAY_BRAND_NAME}`}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
+                    <Button client:visible primary class="mt-8" link={`${WHEELS_ROUTE}/${SPEEDWAY_BRAND_NAME}`}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
                 </div>
             </ImageWithLegend>
         </div>

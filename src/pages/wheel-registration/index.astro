@@ -1,0 +1,213 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="E5 Wheels - Wheel Registration">
+  <div class="w-full bg-white pb-24">
+    <!-- Wheel Registration Section -->
+    <section class="container-e5 py-20">
+      <div class="max-w-[1200px] mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <h1 class="text-e5-red text-[48px] font-['Franklin_Gothic_Book'] tracking-[9.6px] uppercase mb-6 leading-tight">
+            E5 WHEEL REGISTRATION FORM
+          </h1>
+          <div class="w-full h-[2px] bg-e5-red mb-8"></div>
+          <p class="text-black/70 text-[24px] leading-[30px]">
+            Complete the form below to register your E5 Wheels.
+          </p>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-1 gap-12 mt-12">
+          <!-- Registration Form Column -->
+          <div>
+            <form class="space-y-6" id="wheelRegistrationForm">
+              <!-- First Name and Last Name Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label for="firstName" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    First Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="First Name"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+                <div class="relative">
+                  <label for="lastName" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Last Name"
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Phone and Email Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label for="phone" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Phone *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+                <div class="relative">
+                  <label for="email" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Date of Purchase and Corvette Model Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label for="purchaseDate" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Date Of Purchase *
+                  </label>
+                  <input
+                    type="date"
+                    id="purchaseDate"
+                    name="purchaseDate"
+                    placeholder="Date Of Purchase"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+                <div class="relative">
+                  <label for="corvetteModel" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Corvette Year, Make & Model *
+                  </label>
+                  <input
+                    type="text"
+                    id="corvetteModel"
+                    name="corvetteModel"
+                    placeholder="Corvette Year, Make & Model"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Wheel Style and Wheel Size Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label for="wheelStyle" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Wheel Style *
+                  </label>
+                  <select
+                    id="wheelStyle"
+                    name="wheelStyle"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 focus:outline-none focus:border-e5-red appearance-none bg-white"
+                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23666%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1em 1em;"
+                  >
+                    <option value="">< Select ></option>
+                    <option value="DAYTONA">DAYTONA</option>
+                    <option value="SEBRING">SEBRING</option>
+                    <option value="SPEEDWAY">SPEEDWAY</option>
+                  </select>
+                </div>
+                <div class="relative">
+                  <label for="wheelSize" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Wheel Size *
+                  </label>
+                  <input
+                    type="text"
+                    id="wheelSize"
+                    name="wheelSize"
+                    placeholder="Wheel Size"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Wheel Finish and Where Bought Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label for="wheelFinish" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Wheel Finish *
+                  </label>
+                  <select
+                    id="wheelFinish"
+                    name="wheelFinish"
+                    required
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 focus:outline-none focus:border-e5-red appearance-none bg-white"
+                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23666%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1em 1em;"
+                  >
+                    <option value="">< Select ></option>
+                    <option value="Titanium Brushed">Titanium Brushed</option>
+                    <option value="Bronze Brushed Tint">Bronze Brushed Tint</option>
+                    <option value="Brushed Aluminum">Brushed Aluminum</option>
+                    <option value="Gloss Black">Gloss Black</option>
+                    <option value="Dark Bronze">Dark Bronze</option>
+                    <option value="Chrome">Chrome</option>
+                  </select>
+                </div>
+                <div class="relative">
+                  <label for="whereBought" class="block text-black/70 text-[14px] mb-2 uppercase">
+                    Where Did You Buy Your Wheels
+                  </label>
+                  <input
+                    type="text"
+                    id="whereBought"
+                    name="whereBought"
+                    placeholder="Where Did You Buy Your Wheels"
+                    class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-4">
+                <button
+                  type="submit"
+                  class="w-full bg-e5-red text-white rounded-[7px] py-3 text-[16px] tracking-[5.12px] hover:bg-[#b11a21] transition-colors uppercase"
+                >
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<script>
+  // Handle form submission
+  const form = document.getElementById('wheelRegistrationForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Add your form submission logic here
+      console.log('Wheel registration form submitted');
+      alert('Thank you for registering your E5 Wheels! We will contact you shortly.');
+    });
+  }
+</script>
