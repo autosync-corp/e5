@@ -10,6 +10,7 @@ const props = defineProps({
     type: String,
     required: true
   },
+  customClassContainer: String,
   bgColor: String,
   orientation: {
     type: String as () => Orientations,
@@ -32,11 +33,12 @@ const props = defineProps({
 
     <div
         class="absolute inset-0 flex items-center"
-        :class="{
-          'justify-center': orientation === Orientations.CENTER,
-          'justify-end pr-24' : orientation === Orientations.RIGHT,
-          'justify-start pl-24' : orientation === Orientations.LEFT,
-        }"
+        :class="[
+          customClassContainer,
+          !customClassContainer && orientation === Orientations.CENTER && 'justify-center',
+          !customClassContainer && orientation === Orientations.RIGHT && 'justify-end pr-24',
+          !customClassContainer && orientation === Orientations.LEFT && 'justify-start pl-24',
+        ]"
     >
       <slot />
     </div>

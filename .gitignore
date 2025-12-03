@@ -136,10 +136,10 @@ target/
 
 # Docker
 .dockerignore
-.astro
-.gemini
-.claude
-.idea
+.astro/
+.gemini/
+.claude/
+.idea/
 # Terraform
 *.tfstate
 *.tfstate.*
