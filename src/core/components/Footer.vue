@@ -17,12 +17,12 @@ import {
 </script>
 
 <template>
-  <footer class="container-e5 bg-e5-red font-medium text-black w-full py-20 px-6">
-    <div class="flex justify-center mb-20">
+  <footer class="container-e5 bg-e5-red font-medium text-black w-full py-10 md:py-20 px-6">
+    <div class="flex justify-center mb-10 md:mb-20">
       <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="footer-logo w-1/4 h-auto" />
     </div>
 
-    <div class="footer-grid grid grid-cols-[1fr_auto_1fr] items-start justify-between gap-8">
+    <div class="footer-grid grid grid-cols-[1fr_auto_1fr] items-start justify-between gap-2 md:gap-8">
       <div class="footer-section footer-links flex flex-col">
         <a :href="PROCESS_ROUTE" class="footer-link">PROCESS</a>
         <a :href="CONTACT_ROUTE" class="footer-link">CONTACT</a>
@@ -80,14 +80,13 @@ import {
 
 <style scoped>
 .footer-link {
-  @apply font-sans text-16 text-black no-underline transition-opacity hover:opacity-70;
+  @apply font-sans text-16 leading-10 md:leading-[48px] text-black no-underline transition-opacity hover:opacity-70;
 }
 
 /* Tablet and Mobile Responsive Styles */
 @media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
   }
 
   .footer-section {
@@ -148,10 +147,6 @@ import {
 
   .footer-link {
     font-size: 13px;
-  }
-
-  .footer-grid {
-    gap: 32px;
   }
 }
 </style>
