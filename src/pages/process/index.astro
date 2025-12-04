@@ -1,359 +1,386 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import Button from "@/core/components/Button.vue"
+import Link from "@/core/components/Link.vue"
 import YearMakeModelSelector from "@/pages/gallery/components/YearMakeModelSelector.vue";
-import {INSTALLATION_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
+import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="E5 Wheels - Our Process">
-  <div class="w-full bg-white -mt-107">
-    <!-- Hero Section with Car Image -->
-    <section class="relative w-full h-[792px] overflow-hidden">
-      <img
-        src="/assets/images/ddf3b031aace1961a53533a1f783a84a67fb61b6.png"
-        alt="Corvette with E5 Wheels"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-
-      <!-- Content Overlay -->
-      <div class="absolute inset-0 flex items-center">
-        <div class="container-e5">
-          <div class="max-w-[627px]">
+    <div class="w-full bg-white -mt-107">
+        <!-- Hero Section with Car Image -->
+        <section class="relative w-full h-[792px] overflow-hidden">
             <img
-              src="/assets/images/0e9eff9fa7cc465dd3a5b67c51ae750c229ca71b.png"
-              alt="Sebring"
-              class="w-[627px] h-[58px] mb-8"
+                    src="/assets/images/ddf3b031aace1961a53533a1f783a84a67fb61b6.png"
+                    alt="Corvette with E5 Wheels"
+                    class="absolute inset-0 w-full h-full object-cover"
             />
-            <div class="w-[627px] h-[2px] bg-e5-red mb-4"></div>
-            <p class="text-[24px] text-white leading-[23px] mb-3">
-              AVAILABLE FOR C5, C6, C7, & C8
-            </p>
-            <p class="text-[24px] text-white leading-[23px] mb-12">
-              <span class="font-light">STARTING AT </span><span class="font-bold">$600</span>
-            </p>
 
-              <Button class="mt-8" link={WHEELS_SEBRING_ROUTE} primary>SHOP SEBRING</Button>
-          </div>
-        </div>
-      </div>
-    </section>
+            <!-- Content Overlay -->
+            <div class="absolute inset-0 flex items-center mb-36 lg:mb-0">
+                <div class="container-e5">
+                    <div class="max-w-[627px]">
+                        <img
+                                src="/assets/images/0e9eff9fa7cc465dd3a5b67c51ae750c229ca71b.png"
+                                alt="Sebring"
+                                class="max-w-[80vw] md:max-w-[627px] mb-8"
+                        />
+                        <div class="max-w-[80vw] lg:max-w-[627px] h-[2px] bg-e5-red mb-4"></div>
+                        <p class="text-[24px] text-white leading-[23px] mb-3">
+                            AVAILABLE FOR C5, C6, C7, & C8
+                        </p>
+                        <p class="text-[24px] text-white leading-[23px] mb-8">
+                            <span class="font-light">STARTING AT </span><span class="font-bold">$600</span>
+                        </p>
 
-    <!-- Exclusively Engineered Section -->
-    <section class="container-e5 py-20">
-      <div class="max-w-[1276px] mx-auto text-center">
-        <h1 class="text-[62px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-8">
-          EXCLUSIVELY ENGINEERED FOR CORVETTES
-        </h1>
-        <p class="text-[24px] opacity-70 text-black leading-[30px]">
-          E5 Wheels are exclusively engineered for Corvettes—no universal fitments, no compromises. Every design is forged to align with the car's aggressive stance, meet its high-performance demands, and complement its unmistakable identity.
-        </p>
-      </div>
-    </section>
+                        <Button link={WHEELS_SEBRING_ROUTE} primary>SHOP SEBRING</Button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Form Forged and E5 Forged Section -->
-    <section class="container-e5 py-20">
-      <div class="max-w-[1465px] mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <!-- Form Forged -->
-          <div class="text-center">
-            <img
-              src="/assets/images/24640ea00e203daa163bda379b3e86c51fc39c56.png"
-              alt="Form Forged"
-              class="max-w-[370px] mx-auto mb-8"
-            />
-            <img
-              src="/assets/images/e86e4291bb820016296face38b11167d456956e4.webp"
-              alt="Form Forged Wheels"
-              class="max-w-[500px] mx-auto mb-8"
-            />
-            <p class="text-[24px] font-light opacity-70 text-black text-center leading-[30px] max-w-[720px] mx-auto">
-              Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
-            </p>
-          </div>
+        <!-- Exclusively Engineered Section -->
+        <section class="container-e5 py-12 md:py-20">
+            <div class="max-w-[1276px] mx-auto text-center">
+                <h1 class="text-[62px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-8">
+                    EXCLUSIVELY ENGINEERED FOR CORVETTES
+                </h1>
+                <p class="text-[24px] opacity-70 text-black leading-[30px]">
+                    E5 Wheels are exclusively engineered for Corvettes—no universal fitments, no compromises. Every
+                    design is forged to align with the car's aggressive stance, meet its high-performance demands, and
+                    complement its unmistakable identity.
+                </p>
+            </div>
+        </section>
 
-        <!-- E5 Forged -->
-        <div class="text-center">
-            <img
-                    src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.png"
-                    alt="E5 Forged"
-                    class="max-w-[370px] mx-auto mb-8"
-            />
-            <img
-                    src="/assets/images/wheels/e5_our_process.webp"
-                    alt="Talladega Wheel"
-                    class="max-w-[560px] mx-auto mb-8"
-            />
-            <p class="text-[24px] font-light opacity-70 text-black text-center leading-[30px] max-w-[720px] mx-auto">
-                Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.
-            </p>
-        </div>
-      </div>
-    </section>
+        <!-- Form Forged and E5 Forged Section -->
+        <section class="container-e5 py-20">
+            <div class="max-w-[1465px] mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Form Forged -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/24640ea00e203daa163bda379b3e86c51fc39c56.png"
+                                alt="Form Forged"
+                                class="max-w-[50dvw] md:max-w-[370px] mx-auto mb-8"
+                        />
+                        <img
+                                src="/assets/images/e86e4291bb820016296face38b11167d456956e4.webp"
+                                alt="Form Forged Wheels"
+                                class="md:max-w-[500px] mx-auto mb-8"
+                        />
+                        <p class="text-[24px] font-light opacity-70 text-black text-center leading-[30px] max-w-[720px] mx-auto">
+                            Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers
+                            strength and agility—without compromising daily drivability.
+                        </p>
+                    </div>
 
-    <!-- Our Process Section -->
-    <section class="container-e5 py-20">
-      <div class="max-w-[1400px] mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <!-- Left Content -->
-          <div class="text-center lg:text-left">
-            <img
-              src="/assets/images/5581a2f8b1c15564ef1a7ddccca95fb8aaaec92d.png"
-              alt="E5 Logo"
-              class="w-[236px] h-[82px] mx-auto lg:mx-0 mb-8"
-            />
-            <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-8">
-              OUR PROCESS
-            </h2>
-            <p class="text-[24px] font-light opacity-70 text-black leading-[30px] mb-12 max-w-[792px]">
-              At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
-            </p>
-            <a
-              href={INSTALLATION_ROUTE}
-              class="inline-block bg-e5-red text-white px-12 py-4 text-[16px] tracking-[5.6px] opacity-85 hover:opacity-100 transition-opacity"
-            >
-              LEARN MORE
-            </a>
-          </div>
+                    <!-- E5 Forged -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.png"
+                                alt="E5 Forged"
+                                class="max-w-[60dvw] md:max-w-[370px] mx-auto mb-8"
+                        />
+                        <img
+                                src="/assets/images/wheels/e5_forged_wheels.webp"
+                                alt="Talladega Wheel"
+                                class="md:max-w-[560px] mx-auto mb-8"
+                        />
+                        <p class="text-[24px] font-light opacity-70 text-black text-center leading-[30px] max-w-[720px] mx-auto">
+                            Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme
+                            performance, reduced weight, and maximum strength.
+                        </p>
+                    </div>
+                </div>
+        </section>
 
-          <!-- Right Image -->
-          <div class="flex justify-center lg:justify-end">
-            <img
-              src="/assets/images/wheels/e5_our_process_diagram_wheel.webp"
-              alt="Wheel Technical Drawing"
-              class="max-w-full"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- Our Process Section -->
+        <section class="container-e5 py-20">
+            <div class="max-w-[1400px] mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Left Content -->
+                    <div class="text-center lg:text-left">
+                        <img
+                                src="/assets/images/5581a2f8b1c15564ef1a7ddccca95fb8aaaec92d.png"
+                                alt="E5 Logo"
+                                class="w-[236px] h-[82px] mx-auto lg:mx-0 mb-8"
+                        />
+                        <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-8">
+                            OUR PROCESS
+                        </h2>
+                        <p class="text-[24px] font-light opacity-70 text-black leading-[30px] mb-12 max-w-[792px]">
+                            At E5, we approach every wheel with a process rooted in precision engineering,
+                            model-specific fitment, and an uncompromising attention to detail. From concept design to
+                            final finish, we engineer each product to enhance performance, complement the car's design,
+                            and uphold the standards that define the Corvette platform.
+                        </p>
+                        <a
+                                href={INSTALLATION_ROUTE}
+                                class="inline-block bg-e5-red text-white px-12 py-4 text-[16px] tracking-[5.6px] opacity-85 hover:opacity-100 transition-opacity"
+                        >
+                            LEARN MORE
+                        </a>
+                    </div>
 
-    <!-- Shop Form Forged Section -->
-    <section class="container-e5 py-20">
-      <div class="max-w-[1536px] mx-auto">
-        <div class="flex items-center justify-between mb-12">
-          <div>
-            <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-4">
-              SHOP FORM FORGED
-            </h2>
-            <p class="text-[24px] font-light opacity-70 text-black leading-[30px]">
-              Explore our full Form Forged Series
-            </p>
-          </div>
-          <img
-            src="/176c8b6c187068573fad042f69c021856e9a1c88.png"
-            alt="Navigation Arrows"
-            class="w-[106px] h-[36px] opacity-70"
-          />
-        </div>
+                    <!-- Right Image -->
+                    <div class="flex justify-center lg:justify-end hidden lg:block">
+                        <img
+                                src="/assets/images/wheels/e5_our_process_diagram_wheel.webp"
+                                alt="Wheel Technical Drawing"
+                                class="max-w-full"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Wheel Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <!-- Sebring Wheel -->
-          <div class="text-center">
-            <img
-              src="/assets/images/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png"
-              alt="Sebring"
-              class="w-full aspect-square object-contain mb-4"
-            />
-            <div class="h-[2px] bg-e5-red mb-4"></div>
-            <img
-              src="/assets/images/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png"
-              alt="Sebring Logo"
-              class="w-[217px] h-[20px] mx-auto mb-3"
-            />
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              GLOSS BLACK
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              AVAILABLE FOR C5, C6, C7, & C8
-            </p>
-            <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
-              19" | 20" | 21"
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px]">
-              <span>STARTING AT </span><span class="font-bold">$600</span>
-            </p>
-          </div>
+        <!-- Shop Form Forged Section -->
+        <section class="container-e5 py-20">
+            <div class="max-w-[1536px] mx-auto text-center lg:text-start">
+                <div class="flex items-center justify-center lg:justify-between lg:mb-12">
+                    <div>
+                        <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] leading-[60px] mb-4">
+                            SHOP FORM FORGED
+                        </h2>
+                        <p class="text-[24px] font-light opacity-70 text-black leading-[30px]">
+                            Explore our full Form Forged Series
+                        </p>
+                    </div>
+                </div>
 
-          <!-- Sebring Bronze -->
-          <div class="text-center">
-            <img
-              src="/assets/images/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png"
-              alt="Sebring Bronze"
-              class="w-full aspect-square object-contain mb-4 rounded-[39px]"
-            />
-            <div class="h-[2px] bg-e5-red mb-4"></div>
-            <img
-              src="/assets/images/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png"
-              alt="Sebring Logo"
-              class="w-[217px] h-[20px] mx-auto mb-3"
-            />
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              BRONZE BRUSHED TINT
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              AVAILABLE FOR C5, C6, C7, & C8
-            </p>
-            <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
-              19" | 20" | 21"
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px]">
-              <span>STARTING AT </span><span class="font-bold">$600</span>
-            </p>
-          </div>
+                <!-- Wheel Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Sebring Wheel -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png"
+                                alt="Sebring"
+                                class="w-full aspect-square object-contain mb-4"
+                        />
+                        <div class="h-[2px] bg-e5-red mb-4"></div>
+                        <img
+                                src="/assets/images/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png"
+                                alt="Sebring Logo"
+                                class="w-[217px] h-[20px] mx-auto mb-3"
+                        />
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            GLOSS BLACK
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            AVAILABLE FOR C5, C6, C7, & C8
+                        </p>
+                        <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
+                            19" | 20" | 21"
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px]">
+                            <span>STARTING AT </span><span class="font-bold">$600</span>
+                        </p>
+                    </div>
 
-          <!-- Daytona -->
-          <div class="text-center">
-            <img
-              src="/assets/images/wheels/d4565cf05e3fa3637a06eedfd917c1499967f34b.png"
-              alt="Daytona"
-              class="w-full aspect-square object-contain mb-4"
-            />
-            <div class="h-[2px] bg-e5-red mb-4"></div>
-            <img
-              src="/assets/images/bf617359a30df6e52e23d25ba89f15964c216df1.png"
-              alt="Daytona Logo"
-              class="w-[222px] h-[19px] mx-auto mb-3"
-            />
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              TITANIUM BRUSHED
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              AVAILABLE FOR C5, C6, C7, & C8
-            </p>
-            <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
-              19" | 20" | 21"
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px]">
-              <span>STARTING AT </span><span class="font-bold">$600</span>
-            </p>
-          </div>
+                    <!-- Sebring Bronze -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/wheels/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png"
+                                alt="Sebring Bronze"
+                                class="w-full aspect-square object-contain mb-4 rounded-[39px]"
+                        />
+                        <div class="h-[2px] bg-e5-red mb-4"></div>
+                        <img
+                                src="/assets/images/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png"
+                                alt="Sebring Logo"
+                                class="w-[217px] h-[20px] mx-auto mb-3"
+                        />
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            BRONZE BRUSHED TINT
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            AVAILABLE FOR C5, C6, C7, & C8
+                        </p>
+                        <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
+                            19" | 20" | 21"
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px]">
+                            <span>STARTING AT </span><span class="font-bold">$600</span>
+                        </p>
+                    </div>
 
-          <!-- Speedway -->
-          <div class="text-center">
-            <img
-              src="/assets/image/71d944a2b1cbfaeed4ace56e9ca7aa671ff6253e.png"
-              alt="Speedway"
-              class="w-full aspect-square object-contain mb-4"
-            />
-            <div class="h-[2px] bg-e5-red mb-4"></div>
-            <img
-              src="/assets/images/5a059fba9b6f32612b072a121dc09766ef507b86.png"
-              alt="Speedway Logo"
-              class="w-[276px] h-[20px] mx-auto mb-3"
-            />
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              CHROME
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
-              AVAILABLE FOR C5, C6, C7, & C8
-            </p>
-            <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
-              19" | 20" | 21"
-            </p>
-            <p class="text-[24px] font-light text-black/70 leading-[23px]">
-              <span>STARTING AT </span><span class="font-bold">$600</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+                    <!-- Daytona -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/wheels/d4565cf05e3fa3637a06eedfd917c1499967f34b.png"
+                                alt="Daytona"
+                                class="w-full aspect-square object-contain mb-4"
+                        />
+                        <div class="h-[2px] bg-e5-red mb-4"></div>
+                        <img
+                                src="/assets/images/bf617359a30df6e52e23d25ba89f15964c216df1.png"
+                                alt="Daytona Logo"
+                                class="w-[222px] h-[19px] mx-auto mb-3"
+                        />
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            TITANIUM BRUSHED
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            AVAILABLE FOR C5, C6, C7, & C8
+                        </p>
+                        <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
+                            19" | 20" | 21"
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px]">
+                            <span>STARTING AT </span><span class="font-bold">$600</span>
+                        </p>
+                    </div>
 
-    <!-- Gallery Section -->
-    <section class="relative w-full h-[1048px]">
-      <div class="absolute inset-0">
-        <div class="grid grid-cols-2 gap-0 h-[576px]">
-          <img
-            src="/assets/images/a173a58ba6af24ce94660d91732caff0a43ca75e.png"
-            alt="Car Gallery"
-            class="w-full h-full object-cover"
-          />
-          <img
-            src="/assets/images/9092bc66bac6f2910bfc0368301cc2091a48d1f2.png"
-            alt="Wheel Gallery"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div class="grid grid-cols-3 gap-0 h-[472px]">
-          <img
-            src="/assets/images/489f59f3150b79818b93f5fd7bd9444f39fc59fe.png"
-            alt="C6"
-            class="w-full h-full object-cover"
-          />
-          <img
-            src="/assets/images/87cd64ec50ca716608b4e68fac741e7cfd625830.png"
-            alt="C7"
-            class="w-full h-full object-cover"
-          />
-          <img
-            src="/assets/images/d68e4ba54e888c46d76c10d040be97882071dd22.png"
-            alt="C8"
-            class="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+                    <!-- Speedway -->
+                    <div class="text-center">
+                        <img
+                                src="/assets/images/wheels/71d944a2b1cbfaeed4ace56e9ca7aa671ff6253e.webp"
+                                alt="Speedway"
+                                class="w-full aspect-square object-contain mb-4"
+                        />
+                        <div class="h-[2px] bg-e5-red mb-4"></div>
+                        <img
+                                src="/assets/images/5a059fba9b6f32612b072a121dc09766ef507b86.png"
+                                alt="Speedway Logo"
+                                class="w-[276px] h-[20px] mx-auto mb-3"
+                        />
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            CHROME
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px] mb-2">
+                            AVAILABLE FOR C5, C6, C7, & C8
+                        </p>
+                        <p class="text-[24px] font-light text-e5-red leading-[23px] mb-2">
+                            19" | 20" | 21"
+                        </p>
+                        <p class="text-[24px] font-light text-black/70 leading-[23px]">
+                            <span>STARTING AT </span><span class="font-bold">$600</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-black/29"></div>
+        <!-- Gallery Section -->
+        <section class="relative w-full md:h-[1048px]">
+            <div class="grid md:grid-cols-2 gap-0 md:h-[576px]">
+                <div class="relative">
+                    <div class="relative">
+                        <img
+                                src="/assets/images/489f59f3150b79818b93f5fd7bd9444f39fc59fe.webp"
+                                alt="Car Gallery"
+                                class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="flex flex-col align-middle justify-center flex-1 text-white">
+                            <h2 class="text-center text-5xl md:text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 md:leading-[60px] md:mb-4">
+                                CAR GALLERY
+                            </h2>
+                            <p class="text-center text-[18px] md:text-[24px] font-light opacity-70 text-white/92 leading-[30px] md:mb-8">
+                                Corvettes in the wild on our wheels.
+                            </p>
 
-      <!-- Content -->
-      <div class="absolute inset-0 flex flex-col items-center justify-center">
-        <div class="grid grid-cols-2 gap-32 w-full max-w-[1536px] px-24 mb-32">
-          <!-- Car Gallery -->
-          <div class="text-center">
-            <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
-              CAR GALLERY
-            </h2>
-            <p class="text-[24px] font-light opacity-70 text-white/92 text-center leading-[30px] mb-8">
-              Corvettes in the wild on our wheels.
-            </p>
-            <button class="bg-[rgba(211,29,37,0.85)] text-white px-8 py-2 text-[10px] tracking-[3.5px] opacity-85 hover:opacity-100 transition-opacity">
-              LEARN MORE
-            </button>
-          </div>
+                            <div class="max-w-[50%] mx-auto flex justify-center mt-10">
+                                <Button primary link={PENDING_ROUTE}>LEARN MORE</Button>
+                            </div>
+                        </div>
 
-          <!-- Wheel Gallery -->
-          <div class="text-center">
-            <h2 class="text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
-              WHEEL GALLERY
-            </h2>
-            <p class="text-[24px] font-light opacity-70 text-white/92 text-center leading-[30px] mb-8">
-              Our wheels, up close and personal.
-            </p>
-            <button class="bg-[rgba(211,29,37,0.85)] text-white px-8 py-2 text-[10px] tracking-[3.5px] opacity-85 hover:opacity-100 transition-opacity">
-              LEARN MORE
-            </button>
-          </div>
-        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative">
+                        <img
+                                src="/assets/images/9092bc66bac6f2910bfc0368301cc2091a48d1f2.png"
+                                alt="Wheel Gallery"
+                                class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="flex flex-col align-middle justify-center flex-1 text-white">
+                            <h2 class="text-center text-5xl md:text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 md:leading-[60px] md:mb-4">
+                                WHEEL GALLERY
+                            </h2>
+                            <p class="text-center text-[18px] md:text-[24px] font-light opacity-70 text-white/92 leading-[30px] md:mb-8">
+                                Our wheels, up close and personal.
+                            </p>
 
-        <!-- Bottom Car Model Links -->
-        <div class="grid grid-cols-3 gap-24 w-full max-w-[1536px] px-24">
-          <div class="text-center">
-            <h3 class="text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
-              C6
-            </h3>
-            <button class="text-[12px] text-white opacity-85 tracking-[4.2px] hover:opacity-100 transition-opacity border-b border-e5-red">
-              VIEW ALL C6 GALLERY
-            </button>
-          </div>
-          <div class="text-center">
-            <h3 class="text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
-              C7
-            </h3>
-            <button class="text-[12px] text-white opacity-85 tracking-[4.2px] hover:opacity-100 transition-opacity border-b border-e5-red">
-              VIEW ALL C7 GALLERY
-            </button>
-          </div>
-          <div class="text-center">
-            <h3 class="text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
-              C8
-            </h3>
-            <button class="text-[12px] text-white opacity-85 tracking-[4.2px] hover:opacity-100 transition-opacity border-b border-e5-red">
-              VIEW ALL C8 GALLERY
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                            <div class="max-w-[50%] mx-auto flex justify-center mt-10">
+                                <Button primary link={PENDING_ROUTE}>LEARN MORE</Button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 h-[472px]">
+                <div class="relative">
+                    <div class="relative">
+                        <img
+                                src="/assets/images/a173a58ba6af24ce94660d91732caff0a43ca75e.webp"
+                                alt="C6"
+                                class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="flex flex-col align-middle justify-center flex-1 text-white">
+                            <h3 class="text-center text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
+                                C6
+                            </h3>
+                            <div class="max-w-[50%] mx-auto flex justify-center mt-10">
+                                <Link href={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative">
+                        <img
+                                src="/assets/images/87cd64ec50ca716608b4e68fac741e7cfd625830.png"
+                                alt="C7"
+                                class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="flex flex-col align-middle justify-center flex-1 text-white">
+                            <h3 class="text-center text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
+                                C7
+                            </h3>
+                            <div class="max-w-[50%] mx-auto flex justify-center mt-10">
+                                <Link href={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative">
+                        <img
+                                src="/assets/images/d68e4ba54e888c46d76c10d040be97882071dd22.png"
+                                alt="C8"
+                                class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                    <div class="absolute inset-0 flex">
+                        <div class="flex flex-col align-middle justify-center flex-1 text-white">
+                            <h3 class="text-center text-[64px] font-['Franklin_Gothic_Heavy'] text-white/92 leading-[60px] mb-4">
+                                C8
+                            </h3>
+                            <div class="max-w-[50%] mx-auto flex justify-center mt-10">
+                                <Link href={PENDING_ROUTE}>VIEW ALL C8 GALLERY</Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </MainLayout>
