@@ -77,13 +77,13 @@ const closeMobileMenu = () => {
     <!-- Mobile Menu Overlay -->
     <div v-if="isMobileMenuOpen" class="mobile-menu" @click="closeMobileMenu">
       <div class="mobile-menu-content" @click.stop>
-        <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">PROCESS</a>
-        <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">GENERATIONS</a>
-        <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
-        <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
         <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
-        <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
+        <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">GALLERY</a>
+        <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">PROCESS</a>
         <a :href="SHOP_ROUTE" class="mobile-nav-link" :class="{'selected': isShopRoute}" @click="closeMobileMenu">SHOP</a>
+        <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">GENERATIONS</a>
+        <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
+        <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
           <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
         </div>
