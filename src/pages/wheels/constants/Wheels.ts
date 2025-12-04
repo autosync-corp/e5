@@ -160,7 +160,6 @@ export const FORM_FORGED_LOGO = "/assets/images/wheels/48b34752d7bd939ae556a6e8d
 export const FORM_FORGED_LOGO_BLACK = "/assets/images/form-forged-logo-black.png";
 export const FORM_FORGED_GROUP = "/assets/images/form-forged-group.png";
 export const VPS_FORGED_LOGO = "/assets/images/vossen_forged_banner.webp";
-export const VPS_FORGED_VIDEO = "/assets/videos/vps_forged_vid.mp4";
 export const WHEEL_PAGE_BANNER = "/assets/images/wheels/c402aa3042a129d737dc524a911947fe4291970d.png";
 export const WHEEL_GALLERY_STUDIO_BANNER = "/assets/images/wheels/80496ef76dbfffdc9aec2b05ddb00a9c06a7debc.png";
 export const WHEEL_GALLERY_WHEELS_BY_BRAND: Record<string, { image: string, finish: string }[]> = {

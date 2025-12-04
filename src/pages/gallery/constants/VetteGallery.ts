@@ -1,4 +1,3 @@
-export const HOME_VETTE_VIDEO = "/assets/videos/E5LPVID-.mp4";
 export const VETTE_BLACK_ON_RIVER = "/assets/images/vette-black-on-river.png";
 export default [
     {

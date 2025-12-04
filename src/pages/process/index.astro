@@ -264,9 +264,10 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
 
         <!-- Gallery Section -->
         <section class="relative w-full md:h-[1048px]">
-            <div class="grid md:grid-cols-2 gap-0 md:h-[576px]">
-                <div class="relative">
-                    <div class="relative">
+            <!-- Grid Row 1: 2 columns -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 md:h-[576px]">
+                <div class="relative h-[576px] md:h-full">
+                    <div class="relative h-full">
                         <img
                                 src="/assets/images/489f59f3150b79818b93f5fd7bd9444f39fc59fe.webp"
                                 alt="Car Gallery"
@@ -290,8 +291,8 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
 
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="relative">
+                <div class="relative h-[576px] md:h-full">
+                    <div class="relative h-full">
                         <img
                                 src="/assets/images/9092bc66bac6f2910bfc0368301cc2091a48d1f2.png"
                                 alt="Wheel Gallery"
@@ -316,14 +317,10 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 h-[472px]">
-                <div class="relative">
-                    <div class="relative">
-                        <img
-                                src="/assets/images/a173a58ba6af24ce94660d91732caff0a43ca75e.webp"
-                                alt="C6"
-                                class="w-full h-full object-cover"
-                        />
+            <!-- Grid Row 2: 3 columns -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 md:h-[472px]">
+                <div class="relative bg-e5-black h-[472px]">
+                    <div class="relative h-full" style="background-image: url('/assets/images/a173a58ba6af24ce94660d91732caff0a43ca75e.webp'); background-size: cover">
                         <div class="absolute inset-0 bg-black/30"></div>
                     </div>
                     <div class="absolute inset-0 flex">
@@ -332,19 +329,14 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C6
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link href={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
+                                <Link link={PENDING_ROUTE}>VIEW ALL C6 GALLERY</Link>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="relative">
-                        <img
-                                src="/assets/images/87cd64ec50ca716608b4e68fac741e7cfd625830.png"
-                                alt="C7"
-                                class="w-full h-full object-cover"
-                        />
+                <div class="relative bg-e5-black h-[472px]">
+                    <div class="relative h-full" style="background-image: url('/assets/images/87cd64ec50ca716608b4e68fac741e7cfd625830.png'); background-size: cover">
                         <div class="absolute inset-0 bg-black/30"></div>
                     </div>
                     <div class="absolute inset-0 flex">
@@ -353,19 +345,14 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C7
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link href={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
+                                <Link link={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="relative">
-                        <img
-                                src="/assets/images/d68e4ba54e888c46d76c10d040be97882071dd22.png"
-                                alt="C8"
-                                class="w-full h-full object-cover"
-                        />
+                <div class="relative bg-e5-black h-[472px]">
+                    <div class="relative h-full" style="background-image: url('/assets/images/d68e4ba54e888c46d76c10d040be97882071dd22.png'); background-size: cover">
                         <div class="absolute inset-0 bg-black/30"></div>
                     </div>
                     <div class="absolute inset-0 flex">
@@ -374,7 +361,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C8
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link href={PENDING_ROUTE}>VIEW ALL C8 GALLERY</Link>
+                                <Link link={PENDING_ROUTE}>VIEW ALL C8 GALLERY</Link>
                             </div>
                         </div>
 
