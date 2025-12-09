@@ -4,11 +4,15 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  brand: {
+    type: String,
+    required: true,
+  },
   year: {
     type: String,
     required: true,
   },
-  trim: {
+  title: {
     type: String,
     required: true,
   },
@@ -31,13 +35,13 @@ const onClick = () => {
 </script>
 
 <template>
-  <div class="flex flex-col" @click="onClick">
-    <img :src="props.image" alt="Corvette Build" class="w-full h-[330px] object-cover"/>
-    <div class="bg-gray-100 px-4 py-3 text-center">
-      <p class="text-18 font-bold text-black/35 tracking-[1px]">{{props.year}}</p>
-      <p class="font-franklin-demi text-xl text-black tracking-[1px]">{{props.trim}}</p>
-      <div class="text-black tracking-[0.8px]">{{ props.wheelModel }}</div>
-      <div class="text-black tracking-[0.8px]">{{props.wheelFinish}}</div>
+  <div class="flex flex-col bg-gray-50" @click="onClick">
+    <img :src="props.image" :alt="props.image" class="w-full h-[330px] object-cover"/>
+    <div class="bg-gray-100 px-4 py-3 text-center uppercase tracking-[1.5px] text-14">
+      <p class="text-black/30">{{ props.brand }}</p>
+      <p class="font-franklin-medium text-lg text-black">{{props.title}}</p>
+      <div class="text-black tracking-[0.8px]"></div>
+      <div class="text-black tracking-[0.8px]">{{ props.wheelModel }} {{props.wheelFinish}}</div>
     </div>
   </div>
 </template>

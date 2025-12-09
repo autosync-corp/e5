@@ -18,7 +18,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  trim: {
+  title: {
     type: String,
     required: true,
   },
@@ -51,16 +51,16 @@ const onClick = () => {
 
 <template>
   <div class="flex flex-col bg-gray-100">
-    <div class="w-full h-[330px] bg-gray-100 flex align-middle justify-center">
-      <img :src="props.image" alt="Corvette Build" class="w-full object-cover"/>
+    <div class="w-full h-[330px] bg-gray-100 flex align-middle justify-end">
+      <img :src="props.image" :alt="props.image" class="w-full object-cover"/>
     </div>
     <div class="grid grid-cols-2 gap-2 text-start mt-4 px-6">
       <div class="text-start color flex flex-col">
-        <div class="font-medium text-black/35 tracking-[1px]">{{props.year}}</div>
-        <div class="font-franklin-heavy text-xl"> {{ props.trim}} </div>
+        <div class="font-medium text-14 text-black/30 tracking-[1px]"><small>{{props.title}}</small></div>
+        <div class="font-franklin-medium text-lg uppercase tracking-[1px]"> {{ props.wheelModel}} </div>
       </div>
 
-      <div class="flex justify-end mt-3 px-3"><img :src="props.logo" :alt="`${props.brand} Logo`" class="h-[60px] w-auto" /></div>
+      <div class="flex justify-end mt-3 px-3"><img :src="props.logo" :alt="`${props.brand} Logo`" class="h-[32px] w-auto" /></div>
 
       <p>
         <small class="text-black/35">WHEEL MODEL:</small>

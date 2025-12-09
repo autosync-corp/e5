@@ -1,0 +1,55 @@
+GALLERY ID,YEAR,SUBMODEL,TRIM,VEHICLE COLOR,VEHICLE TITLE,WHEEL STYLE,WHEEL FINISH,WHEEL SIZE (F),OFFESET (F),PART# (F),TIRE SIZE (F),TIRE PART # (F),WHEEL SIZE (REAR),OFFSET (R),WHEEL PART# (R),TIRE SIZE (R),TIRE PART # (R),TIRE MODEL
+E5-38,2006,C6,Grand Sport,Matte Black,2006 C6 Corvette,Sebring,Gloss Black,"19"" x 10""",30mm,E5SE1910E30565BK,275/35R19,104420,"20"" x 12""",50mm,E5SE2012E50565BK,325/30R20,,Toyo Proxy R888R
+E5-26,2012,C6,,,2012 C6 Corvette,Daytona,Titanium Brushed,"19"" x 10""",30mm,E5DA1910E30565TIU,275/30R19,,"20"" x 12""",50mm,E5DA2012E50565TIU,335/25R20,,Continental ExtremeContact Sport 02
+E5-27,2012,C6,,,2012 C6 Corvette,Daytona,Titanium Brushed,"19"" x 10""",30mm,E5DA1910E30565TIU,275/30R19,,"20"" x 12""",50mm,E5DA2012E50565TIU,335/25R20,,Continental ExtremeContact Sport 02
+E5-08,2012,C6,Grand Sport,,2012 C6 Corvette Grand Sport,Daytona,Titanium Brushed,"19"" x 10""",30mm,E5DA1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565TIU,335/25R20,,
+E5-16,2014,C7,,,2014 C7 Corvette,Daytona,Bronze Brushed Tint,"19"" x 9.5""",53mm,E5DA1995E53565BBT,245/35R19,,"20"" x 11""",76mm,E5DA2011E76565BBT,305/30R20,,Michelin Pilot Sport 4S
+E5-37,2015,C7,Z06,,2015 C7 Corvette Z06 Laguna Blue ,Sebring,Gloss Black,"19"" x 10""",30mm,E5SE1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565BK,335/25R20,,Continental ExtremeContact Sport 02
+E5-19,2016,C7,Z06,,2016 C7 Corvette Z06,Daytona,Gloss Black,"19"" x 10""",30mm,E5DA1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565BK,335/25R20,,
+E5-33,2016,C7,Z06,,2016 C7 Corvette Z06,Daytona,Titanium Brushed,"19"" x 10""",30mm,E5DA1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565TIU,335/25R20,,
+E5-07,2017,C7,Grand Sport,,2017 C7 Corvette Grand Sport,Sebring,Titanium Brushed,"19"" x 10""",30mm,E5SE1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565TIU,335/25R20,,Continental Sport 02
+E5-30,2017,C7,Grand Sport,,2017 C7 Corvette Grand Sport,Daytona,Chrome,"19"" x 10""",30mm,E5DA1910E30565CH,275/30R19,,"20"" x 12""",50mm,E5DA2012E50565CH,335/25R20,,Continental ExtremeContact Sport 02
+E5-35,2017,C7,Grand Sport,,2017 C7 Corvette Grand Sport,Daytona,Gloss Black,"19"" x 10""",30mm,E5DA1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565BK,335/25R20,,
+E5-18,2017,C7,Grand Sport,,2017 C7 Corvette Grand Sport Collectors Edition,Sebring,Gloss Black,"19"" x 10""",30mm,E5SE1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565BK,335/25R20,,
+E5-09,2017,C7,Stingray,,2017 C7 Corvette Stingray,Daytona,Gloss Black,"19"" x 9.5""",53mm,E5DA1995E53565BK,275/30R19,,"20"" x 11""",76mm,E5DA2011E76565BK,325/25R20,,Michelin Pilot Sport 4S
+E5-15,2017,C7,Z06,,2017 C7 Corvette Z06 Racing Yellow,Sebring,Titanium Brushed,"19"" x 10""",30mm,E5SE1910E30565TIU,275/30R19,,"20"" x 12""",50mm,E5SE2012E50565TIU,335/25R20,,Continental ExtremeContact Sport 02
+E5-49,2018,C7,Grand Sport,,2018 C7 Corvette Grand Sport,Daytona,Gloss Black,"19"" x 10""",30mm,E5DA1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565BK,335/25R20,,
+E5-23,2019,C7,Grand Sport,,2019 C7 Corvette Grand Sport,Sebring,Titanium Brushed,"19"" x 10""",30mm,E5SE1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565TIU,335/25R20,,
+E5-05,2019,C7,Grand Sport,,2019 C7 Corvette Grand Sport Sebring Orange,Daytona,Titanium Brushed,"19"" x 10""",30mm,E5DA1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5DA2012E50565TIU,335/25R20,,Continental ExtremeContact Sport 02
+E5-12,2019,C7,Z51,,2019 C7 Corvette Z51,Daytona,Gloss Black,"19"" x 9.5""",53mm,E5DA1995E53565BK,275/30R19,,"20"" x 11""",76mm,E5DA2011E76565BK,325/25R20,,
+E5-43,2019,C7,Grand Sport,,2019 C7 Grand Sport,Speedway,Gloss Black,"19"" x 10""",30mm,E5SP1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5SP2012E50565BK,335/25R20,,
+E5-53,2019,C7,Z06,,2019 C7 Z06,Sebring,Bronze Brushed Tint,"19"" x 10""",30mm,E5SE1910E30565BBT,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565BBT,335/25R20,,
+E5-31,2019,C7,Z06,,2019 Custom Widebody C7 Corvette Z06,Sebring,Bronze Brushed Tint,"19"" x 10""",30mm,E5SE1910E30565BBT,275/30R19,,"20"" x 12""",50mm,E5SE2012E50565BBT,335/25R20,,Continental ExtremeContact Sport 02
+E5-28,2020,C8,,,2020 C8 Corvette 70th Anniversary Edition,Sebring,Bronze Brushed Tint,"19"" x 9""",35mm,E5SE1990E35520BBT,245/35R19,,"20' x 11""",45mm,E5SE2011E45520BBT,305/30R20,,Pirelli
+E5-03,2022,C8,C8.R,,2022 C8 Corvette C8.R Special Edition Accelerate Yellow,Daytona,Gloss Black,"19"" x 9""",35mm,E5DA1990E35520BK,245/35R19,,"20' x 11""",45mm,E5DA2011E45520BK,305/30R20,,Michelin Pilot Sport 4S
+E5-41,2023,C8,Stingray,,2023 C8 Corvette Stingray,Daytona,Titanium Brushed,"19"" x 9""",35mm,E5DA1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5DA2011E45520TIU,305/30R20,,Toyo Proxy R888R
+E5-36,2023,C8,Stingray,,2023 C8 Corvette Stingray 3LT,Daytona,Titanium Brushed,"19"" x 9""",35mm,E5DA1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5DA2011E45520TIU,305/30R20,,Toyo Proxy R888R
+E5-20,2023,C8,Stingray,,2023 C8 Stingray Torch Red,Sebring,Titanium Brushed,"20"" x 9""",35mm,E5SE2090E35520TIU,255/30R20,,"21"" x 13""",64mm,E5SE2113E64520TIU,355/30R21,,Michelin Pilot Sport 4S
+E5-40,2023,C8,Stingray,,2023 Corvette C8 Stingray,Daytona,Titanium Brushed,"19"" x 9""",35mm,E5DA1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5DA2011E45520TIU,305/30R20,,Toyo Proxy R888R
+E5-06,2023,C8,Stingray,,2023 Corvette C8 Stingray Black,Sebring,Gloss Black,"20"" x 9""",35mm,E5SE2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BK,325/25R21,,
+E5-02,2023,C8,Stingray,,2023 Corvette C8 Stingray Hypersonic Gray Metallic,Daytona,Titanium Brushed,"19"" x 9""",35mm,E5DA1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5DA2011E45520TIU,305/30R20,,Michelin Pilot Sport 4S
+E5-14,2023,C8,Stingray,,2023 Corvette C8 Stingray Rapid Blue,Sebring,Gloss Black,"19"" x 9""",35mm,E5SE1990E35520BK,245/35R19,,"20' x 11""",45mm,E5SE2011E45520BK,305/30R20,,Pirelli
+E5-01,2023,C8,Stingray,,2023 Corvette C8 Stingray Torch Red,Daytona,Titanium Brushed,"19"" x 9""",35mm,E5DA1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5DA2011E45520TIU,305/30R20,,Michelin Pilot Sport 4S
+E5-04,2023,C8,Stingray,,2023 Corvette C8 Stingray Torch Red,Sebring,Gloss Black,"20"" x 9""",35mm,E5SE2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BK,325/25R21,,
+E5-10,2023,C8,Stingray,,2023 Corvette C8 Stingray Torch Red,Speedway,Titanium Brushed,"20"" x 9""",35mm,E5SP2090E35520TIU,255/30R20,,"21"" x 12""",52mm,E5SP2112E52520TIU,325/25R21,,Michelin Pilot Sport 4S
+E5-13,2023,C8,Stingray,,2023 Corvette C8 Stingray Z51 Arctic White,Speedway,Titanium Brushed,"19"" x 9""",35mm,E5SP1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5SP2011E45520TIU,305/30R20,,Michelin Pilot Sport 4S
+E5-17,2023,C8,Z51,,2023 Corvette C8 Z51 Arctic White,Sebring,Bronze Brushed Tint,"20"" x 9""",35mm,E5SE2090E35520BBT,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BBT,325/25R21,,Michelin Pilot Sport 4S
+E5-29,2024,C8,,,2024 C8 Anderson Composite Kit,Daytona,Gloss Black,"20"" x 9""",35mm,E5DA2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5DA2112E52520BK,325/25R21,,Michelin Pilot Sport 4S
+E5-21,2024,C8,Stingray,,2024 C8 Corvette Stingray,Daytona,Bronze Brushed Tint,"19"" x 9""",35mm,E5DA1990E35520BBT,245/35R19,,"20' x 11""",45mm,E5DA2011E45520BBT,305/30R20,,Michelin Pilot Sport 4S
+E5-50,2024,C8,Stingray,,2024 C8 Corvette Stingray,Speedway,Titanium Brushed,"19"" x 9""",35mm,E5SP1990E35520TIU,245/35R19,,"20' x 11""",45mm,E5SP2011E45520TIU,305/30R20,,Pirelli
+E5-39,2024,C8,,,2024 C8 Corvette Z06,Talladega,Brushed Aluminum,"20"" x 10""",25,E5TA2010E25520AB,275/30R20,,"21"" x 13""",20,E5TA2113E20520AB,345/25R21,,Michelin Pilot Sport 4S
+E5-54,2024,C8,Stingray,,2024 C8 Stingray,Sebring,Gloss Black,"20"" x 9""",35mm,E5SE2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BK,325/25R21,,Michelin Pilot Sport 4S
+E5-25,2024,C8,Stingray,,2024 C8 Stingray Accelerate yellow,Sebring,Gloss Black,"20"" x 9""",35mm,,255/30R20,,"21"" x 12""",52mm,,325/25R21,,Michelin Pilot Sport 4S
+E5-22,2024,C8,Stingray,,2024 C8 Stingray Torch Red,Sebring,Bronze Brushed Tint,"19"" x 9""",35mm,E5SE1990E35520BBT,245/35R19,,"20' x 11""",45mm,E5SE2011E45520BBT,305/30R20,,Michelin Pilot Sport 4S
+E5-11,2024,C8,3LT,,2024 Chevrolet C8 Stingray 3LT,Sebring,Gloss Black,"20"" x 9""",35mm,E5SE2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BK,325/25R21,,Michelin Pilot Sport 4S
+E5-47,2025,C8,Z06,,2025 C8 Corvette Z06 – Blessing Farms,Talladega,Brushed Aluminum,"20"" x 10""",,,275/30R20,,"21"" x 13""",,,345/25R21,,Michelin Pilot Sport 4S
+E5-45,2025,C8,Z06,,2025 C8 Corvette Z06 – Cathedral,Talladega,Brushed Aluminum,"20"" x 10""",,,275/30R20,,"21"" x 13""",,,345/25R21,,Michelin Pilot Sport 4S
+E5-46,2025,C8,Z06,,2025 C8 Corvette Z06 – Downtown,Talladega,Brushed Aluminum,"20"" x 10""",,,275/30R20,,"21"" x 13""",,,345/25R21,,Michelin Pilot Sport 4S
+E5-48,2025,C8,ZR1,White,2025 C8 Corvette ZR1,Talladega,Brushed Aluminum,"20"" x 10""",,,275/30R20,,"21"" x 13""",,,345/25R21,,Michelin Pilot Sport 4S
+E5-42,2025,C8,Stingray,,2025 C8 Stingray,Speedway,Dark Bronze,"19"" x 9""",35mm,E5SP1990E35520DB,245/35R19,,"20' x 11""",45mm,E5SP2011E45520DB,305/30R20,,Toyo Proxy R888R
+E5-44,2025,C8,Z06,,2025 C8 Z06,Talladega,Brushed Aluminum,"20"" x 10""",,,275/30R20,,"21"" x 13""",,,345/25R21,,Michelin Pilot Sport 4S
+E5-52,2025,C8,Z06,,2025 C8 Z06 Black,Sonoma,Brushed Aluminum,"20"" x 10""",25MM,E5SO2010E25520AB,275/30R20,,"21"" x 13""",20MM,E5SO2113E20520AB,345/25R21,,Michelin Pilot Sport 4S
+E5-51,2015,C6,Grand Sport,Burgandy,C6 Grand Sport,Sebring,Gloss Black,"19"" x 10""",30mm,E5SE1910E30565BK,285/35R19,,"20"" x 12""",50mm,E5SE2012E50565BK,335/25R20,,
+E5-34,,C7,,,C7 Speedway Titanium Brushed,Speedway,Titanium Brushed,"19"" x 10""",30mm,E5SP1910E30565TIU,285/35R19,,"20"" x 12""",50mm,E5SP2012E50565TIU,335/25R20,,
+E5-32,,C8,Stingray,,C8 Stingray w/ Gloss Black Sebring,Sebring,Gloss Black,"20"" x 9""",35mm,E5SE2090E35520BK,255/30R20,,"21"" x 12""",52mm,E5SE2112E52520BK,325/25R21,,Michelin Pilot Sport 4S
+E5-24,,C8,Stingray,,C8.R Stingray,Speedway,Dark Bronze,"19"" x 9""",35mm,,245/35R19,,"20' x 11""",45mm,,305/30R20,,Michelin Pilot Sport 4S
