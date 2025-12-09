@@ -1,23 +1,88 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import VetteGallery from "@/pages/gallery/constants/VetteGallery.ts";
+import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
 import VehicleImagesGallery from "@/pages/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
 import VehicleWheelSizeFit from "@/pages/gallery/components/VehicleWheelSizeFit.vue";
 import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/pages/wheels/constants/Wheels.ts";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, PENDING_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import fs from 'fs';
+import path from 'path';
 
 export function getStaticPaths() {
-  return VetteGallery.map((vehicle) => ({
-    params: { id: vehicle.id.toString() },
-    props: { vehicle },
+  return corvetteGalleryData.map((vehicle) => ({
+    params: { id: vehicle.galleryId || '' },
+    props: { vehicleData: vehicle },
   }));
 }
 
-const { vehicle } = Astro.props;
-const corvetteGalleryImages = VetteGallery.filter(v => v.model === vehicle.model).slice(0, 3);
-const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] || [];
+const { vehicleData } = Astro.props as { vehicleData: CorvetteGalleryItem };
+
+// Helper function to get images from gallery directory
+function getGalleryImages(galleryId: string | null): string[] {
+  if (!galleryId) return [];
+
+  try {
+    const galleryDir = path.join(process.cwd(), 'public', 'assets', 'images', 'gallery', 'corvette', galleryId);
+    if (!fs.existsSync(galleryDir)) return [];
+
+    const files = fs.readdirSync(galleryDir)
+      .filter(file => file.match(/\.(jpg|jpeg|png|webp)$/i))
+      .sort((a, b) => {
+        const numA = parseInt(a.match(/\d+/)?.[0] || '0');
+        const numB = parseInt(b.match(/\d+/)?.[0] || '0');
+        return numA - numB;
+      });
+
+    return files.map(file => `/assets/images/gallery/corvette/${galleryId}/${file}`);
+  } catch (error) {
+    console.error(`Error reading gallery directory for ${galleryId}:`, error);
+    return [];
+  }
+}
+
+// Map CSV data to page format
+const vehicle = {
+  id: vehicleData.galleryId,
+  galleryId: vehicleData.galleryId,
+  year: vehicleData.year || 'N/A',
+  model: vehicleData.submodel || 'N/A',
+  trim: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
+  title: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
+  wheelBrand: 'E5 Wheels',
+  wheelModel: vehicleData.wheelStyle || 'N/A',
+  wheelFinish: vehicleData.wheelFinish || 'N/A',
+  image: `/assets/images/gallery/corvette/${vehicleData.galleryId}/0.webp`,
+  galleryImages: getGalleryImages(vehicleData.galleryId),
+  wheelImage: '/assets/images/form-forged-logo-black.png', // Default wheel image
+  wheelLogo: '/assets/images/form-forged-logo-black.png',
+  brand: 'E5 Wheels',
+  sizingDetails: [
+    vehicleData.wheelSizeF && vehicleData.offesetF ? `Front: ${vehicleData.wheelSizeF} / Offset ${vehicleData.offesetF}` : '',
+    vehicleData.wheelSizeRear && vehicleData.offsetR ? `Rear: ${vehicleData.wheelSizeRear} / Offset ${vehicleData.offsetR}` : '',
+    'Bolt Pattern: 5x120'
+  ].filter(Boolean),
+  tires: vehicleData.tireModel || 'N/A',
+};
+
+// Get similar corvettes (same model)
+const corvetteGalleryImages = corvetteGalleryData
+  .filter(v => v.submodel === vehicleData.submodel && v.galleryId !== vehicleData.galleryId)
+  .slice(0, 3)
+  .map((item, index) => ({
+    id: item.galleryId || `vehicle-${index}`,
+    image: `/assets/images/gallery/corvette/${item.galleryId}/0.webp`,
+    year: item.year || 'N/A',
+    trim: item.vehicleTitle || item.trim || 'N/A',
+    title: item.vehicleTitle || item.trim || 'N/A',
+    wheelModel: item.wheelStyle || 'N/A',
+    wheelFinish: item.wheelFinish || 'N/A',
+    brand: 'E5 Wheels',
+  }));
+
+const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND['E5 Wheels'] || [];
 ---
 
 <MainLayout title={`${vehicle.year} ${vehicle.trim} - E5 Wheels Gallery`}>
@@ -88,9 +153,13 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
             </ul>
           </div>
         </div>
-        <div slot="actions" class="flex gap-6">
-          <Button client:only="vue" primary class="w-full" link="pending">SHOP {vehicle.wheelModel}</Button>
-          <Button client:only="vue" secondary class="w-full" link="pending">EXPLORE {vehicle.wheelBrand}</Button>
+        <div slot="actions" class="flex gap-6 w-full">
+          <div class="w-full">
+            <Button client:only="vue" primary={true} secondary={false} disabled={false} link="pending">SHOP {vehicle.wheelModel}</Button>
+          </div>
+          <div class="w-full">
+            <Button client:only="vue" primary={false} secondary={true} disabled={false} link="pending">EXPLORE {vehicle.wheelBrand}</Button>
+          </div>
         </div>
       </VehicleWheelSizeFit>
     </section>
@@ -107,7 +176,8 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
             client:only="vue"
             image={item.image}
             year={item.year}
-            trim={item.trim}
+            title={item.title}
+            brand={item.brand}
             wheelModel={item.wheelModel}
             wheelFinish={item.wheelFinish}
             link={`${GALLERY_DETAIL_ROUTE}/${item.id}`}
@@ -115,12 +185,10 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND[vehicle.wheelBrand] ||
         ))}
       </div>
 
-      <div class="w-full flex justify-center">
-        <a href={GALLERY_VEHICLES_ROUTE}>
-          <Button client:only="vue" primary class="mt-12">
-            VIEW FULL GALLERY
-          </Button>
-        </a>
+      <div class="w-full flex justify-center mt-12">
+        <Button client:only="vue" primary={true} secondary={false} disabled={false} link={GALLERY_VEHICLES_ROUTE}>
+          VIEW FULL GALLERY
+        </Button>
       </div>
     </section>
 
