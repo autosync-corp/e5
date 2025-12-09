@@ -35,8 +35,8 @@ const onClick = () => {
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-50" @click="onClick">
-    <img :src="props.image" :alt="props.image" class="w-full h-[330px] object-cover"/>
+  <div class="flex flex-col " @click="onClick">
+    <img :src="props.image" :alt="props.image" class="w-full h-[330px] object-cover bg-gray-50"/>
     <div class="bg-gray-100 px-4 py-3 text-center uppercase tracking-[1.5px] text-14">
       <p class="text-black/30">{{ props.brand }}</p>
       <p class="font-franklin-medium text-lg text-black">{{props.title}}</p>
