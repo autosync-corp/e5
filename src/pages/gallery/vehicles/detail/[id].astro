@@ -6,7 +6,8 @@ import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
 import VehicleImagesGallery from "@/pages/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
 import VehicleWheelDetails from "@/pages/gallery/components/VehicleWheelDetails.vue";
-import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import WheelGalleryImages from "@/pages/gallery/components/WheelGalleryImages.vue";
+import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
 export function getStaticPaths() {
   return corvetteGalleryData.map((vehicle) => ({
@@ -56,8 +57,6 @@ const corvetteGalleryImages = corvetteGalleryData
     wheelModel: item.wheelStyle || 'N/A',
     wheelFinish: item.wheelFinish || 'N/A',
   }));
-
-// const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND['E5 Wheels'] || [];
 ---
 
 <MainLayout title={`${vehicle.trim} - E5 Wheels Gallery`}>
@@ -137,20 +136,12 @@ const corvetteGalleryImages = corvetteGalleryData
       </div>
     </section>
 
-    <!--<section class="container-e5 py-24 px-24">-->
-    <!--  <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8">-->
-    <!--    {vehicle.wheelModel} WHEEL GALLERY-->
-    <!--  </h2>-->
-
-    <!--  <div class="grid grid-cols-3 gap-12">-->
-    <!--    {wheelGalleryImages.map((wheel: any) => (-->
-    <!--      <div class="w-full h-auto overflow-hidden flex items-center justify-center">-->
-    <!--        <a href={`${WHEELS_ROUTE}/${vehicle.wheelBrand}/${vehicle.wheelModel}`}>-->
-    <!--          <img src={wheel.image} alt={wheel.finish} class="w-full object-cover cursor-pointer" />-->
-    <!--        </a>-->
-    <!--      </div>-->
-    <!--    ))}-->
-    <!--  </div>-->
-    <!--</section>-->
+    <WheelGalleryImages
+      client:only="vue"
+      partF={vehicleData.partF}
+      wheelPartR={vehicleData.wheelPartR}
+      wheelStyle={vehicle.style}
+      wheelsRoute={WHEELS_ROUTE}
+    />
   </div>
 </MainLayout>

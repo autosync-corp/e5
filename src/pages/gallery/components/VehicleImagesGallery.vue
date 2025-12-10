@@ -46,8 +46,11 @@ const updateScrollState = () => {
 };
 
 const goToPreviousImage = () => {
+  // Circular navigation: if at first image, go to last
   if (currentImageIndex.value > 0) {
     setCurrentImage(currentImageIndex.value - 1);
+  } else {
+    setCurrentImage(props.images.length - 1);
   }
 
   // Also scroll the thumbnail container
@@ -61,8 +64,11 @@ const goToPreviousImage = () => {
 };
 
 const goToNextImage = () => {
+  // Circular navigation: if at last image, go to first
   if (currentImageIndex.value < props.images.length - 1) {
     setCurrentImage(currentImageIndex.value + 1);
+  } else {
+    setCurrentImage(0);
   }
 
   // Also scroll the thumbnail container
@@ -99,12 +105,42 @@ onUnmounted(() => {
 <template>
   <!-- Hero Image Section -->
   <section class="w-full">
-    <div class="w-full overflow-hidden">
+    <div class="relative w-full overflow-hidden group">
       <img
           :src="props.images[currentImageIndex]"
           :alt="`${props.trim} ${currentImageIndex + 1}`"
           class="w-full max-h-[740px] object-cover"
       />
+
+      <!-- Navigation Controls on Main Image -->
+      <div class="absolute inset-0 flex items-center justify-between px-4 md:px-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <!-- Previous Button -->
+        <button
+            @click="goToPreviousImage"
+            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm"
+            aria-label="Previous image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Next Button -->
+        <button
+            @click="goToNextImage"
+            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm"
+            aria-label="Next image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Image Counter -->
+      <div class="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/60 text-white text-sm backdrop-blur-sm">
+        {{ currentImageIndex + 1 }} / {{ props.images.length }}
+      </div>
     </div>
 
     <!-- Thumbnail Gallery -->
@@ -113,8 +149,7 @@ onUnmounted(() => {
         <!-- Left Arrow Button -->
         <button
             @click="goToPreviousImage"
-            :disabled="currentImageIndex === 0"
-            class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 z-10"
+            class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
             aria-label="Previous image"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,8 +193,7 @@ onUnmounted(() => {
         <!-- Right Arrow Button -->
         <button
             @click="goToNextImage"
-            :disabled="currentImageIndex === props.images.length - 1"
-            class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 z-10"
+            class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
             aria-label="Next image"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
