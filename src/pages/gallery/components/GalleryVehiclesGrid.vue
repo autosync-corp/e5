@@ -33,13 +33,12 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
     vehicleId: item.galleryId || `vehicle-${index}`,
     image: `/assets/images/gallery/corvette/${item.galleryId}/0.webp`,
     logo: '/assets/images/form-forged-logo-black.png',
-    brand: 'E5 Wheels',
     year: item.year || 'N/A',
     model: item.submodel || 'N/A',
     trim: item.trim || 'N/A',
     title: item.vehicleTitle || item.trim || 'N/A',
-    wheelModel: item.wheelStyle || 'N/A',
-    wheelFinish: item.wheelFinish || 'N/A',
+    style: item.wheelStyle || 'N/A',
+    finish: item.wheelFinish || 'N/A',
     tires: item.tireModel || 'N/A',
     sizing,
     link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId || index}`,
@@ -81,11 +80,10 @@ const filteredVehicles = computed(() => {
           :vehicle-id="vehicle.vehicleId"
           :image="vehicle.image"
           :logo="vehicle.logo"
-          :brand="vehicle.brand"
+          :style="vehicle.style"
           :year="vehicle.year"
           :title="vehicle.title"
-          :wheel-model="vehicle.wheelModel"
-          :wheel-finish="vehicle.wheelFinish"
+          :finish="vehicle.finish"
           :tires="vehicle.tires"
           :sizing="vehicle.sizing"
           :link="vehicle.link"
@@ -99,9 +97,8 @@ const filteredVehicles = computed(() => {
           :image="vehicle.image"
           :year="vehicle.year"
           :title="vehicle.title"
-          :brand="vehicle.brand"
-          :wheel-model="vehicle.wheelModel"
-          :wheel-finish="vehicle.wheelFinish"
+          :style="vehicle.style"
+          :finish="vehicle.finish"
           :link="vehicle.link"
       />
     </div>

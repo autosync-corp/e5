@@ -10,10 +10,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  brand: {
-    type: String,
-    required: true,
-  },
   year: {
     type: String,
     required: true,
@@ -22,11 +18,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  wheelModel: {
+  style: {
     type: String,
     required: true,
   },
-  wheelFinish: {
+  finish: {
     type: String,
     required: true,
   },
@@ -57,20 +53,20 @@ const onClick = () => {
     <div class="grid grid-cols-2 gap-2 text-start mt-4 px-6">
       <div class="text-start color flex flex-col">
         <div class="font-medium text-14 text-black/30 tracking-[1px]"><small>{{props.title}}</small></div>
-        <div class="font-franklin-medium text-lg uppercase tracking-[1px]"> {{ props.wheelModel}} </div>
+        <div class="font-franklin-medium text-lg uppercase tracking-[1px]"> {{ props.style}} </div>
       </div>
 
-      <div class="flex justify-end mt-3 px-3"><img :src="props.logo" :alt="`${props.brand} Logo`" class="h-[32px] w-auto" /></div>
+      <div class="flex justify-end mt-3 px-3"><img :src="props.logo" :alt="`${props.style} Logo`" class="h-[32px] w-auto" /></div>
 
       <p>
-        <small class="text-black/35">WHEEL MODEL:</small>
+        <small class="text-black/35">WHEEL STYLE:</small>
         <br />
-        <small>{{props.wheelModel}}</small>
+        <small>{{props.style}}</small>
       </p>
       <p>
         <small class="text-black/35">WHEEL FINISH:</small>
         <br />
-        <small>{{props.wheelFinish}}</small>
+        <small>{{props.finish}}</small>
       </p>
       <p>
         <small class="text-black/35">SIZING:</small>

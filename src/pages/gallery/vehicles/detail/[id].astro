@@ -5,11 +5,8 @@ import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGall
 import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
 import VehicleImagesGallery from "@/pages/gallery/components/VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
-import VehicleWheelSizeFit from "@/pages/gallery/components/VehicleWheelSizeFit.vue";
-import {WHEEL_GALLERY_BANNERS_BY_BRAND} from "@/pages/wheels/constants/Wheels.ts";
-import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, PENDING_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
-import fs from 'fs';
-import path from 'path';
+import VehicleWheelDetails from "@/pages/gallery/components/VehicleWheelDetails.vue";
+import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
 
 export function getStaticPaths() {
   return corvetteGalleryData.map((vehicle) => ({
@@ -20,27 +17,14 @@ export function getStaticPaths() {
 
 const { vehicleData } = Astro.props as { vehicleData: CorvetteGalleryItem };
 
-// Helper function to get images from gallery directory
-function getGalleryImages(galleryId: string | null): string[] {
-  if (!galleryId) return [];
-
-  try {
-    const galleryDir = path.join(process.cwd(), 'public', 'assets', 'images', 'gallery', 'corvette', galleryId);
-    if (!fs.existsSync(galleryDir)) return [];
-
-    const files = fs.readdirSync(galleryDir)
-      .filter(file => file.match(/\.(jpg|jpeg|png|webp)$/i))
-      .sort((a, b) => {
-        const numA = parseInt(a.match(/\d+/)?.[0] || '0');
-        const numB = parseInt(b.match(/\d+/)?.[0] || '0');
-        return numA - numB;
-      });
-
-    return files.map(file => `/assets/images/gallery/corvette/${galleryId}/${file}`);
-  } catch (error) {
-    console.error(`Error reading gallery directory for ${galleryId}:`, error);
+// Helper function to get images from the vehicle data
+function getGalleryImages(vehicle: CorvetteGalleryItem): string[] {
+  if (!vehicle.galleryId || !vehicle.images || vehicle.images.length === 0) {
     return [];
   }
+
+  // Map the images to full paths
+  return vehicle.images.map((file: string) => `/assets/images/gallery/corvette/${vehicle.galleryId}/${file}`);
 }
 
 // Map CSV data to page format
@@ -51,19 +35,11 @@ const vehicle = {
   model: vehicleData.submodel || 'N/A',
   trim: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
   title: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
-  wheelBrand: 'E5 Wheels',
-  wheelModel: vehicleData.wheelStyle || 'N/A',
-  wheelFinish: vehicleData.wheelFinish || 'N/A',
+  style: vehicleData.wheelStyle || 'N/A',
+  finish: vehicleData.wheelFinish || 'N/A',
   image: `/assets/images/gallery/corvette/${vehicleData.galleryId}/0.webp`,
-  galleryImages: getGalleryImages(vehicleData.galleryId),
-  wheelImage: '/assets/images/form-forged-logo-black.png', // Default wheel image
-  wheelLogo: '/assets/images/form-forged-logo-black.png',
-  brand: 'E5 Wheels',
-  sizingDetails: [
-    vehicleData.wheelSizeF && vehicleData.offesetF ? `Front: ${vehicleData.wheelSizeF} / Offset ${vehicleData.offesetF}` : '',
-    vehicleData.wheelSizeRear && vehicleData.offsetR ? `Rear: ${vehicleData.wheelSizeRear} / Offset ${vehicleData.offsetR}` : '',
-    'Bolt Pattern: 5x120'
-  ].filter(Boolean),
+  galleryImages: getGalleryImages(vehicleData),
+  wheelLogo: `/assets/images/logos/e5-${vehicleData.wheelStyle?.toLowerCase().replace(' ', '-')}.webp`,
   tires: vehicleData.tireModel || 'N/A',
 };
 
@@ -79,107 +55,76 @@ const corvetteGalleryImages = corvetteGalleryData
     title: item.vehicleTitle || item.trim || 'N/A',
     wheelModel: item.wheelStyle || 'N/A',
     wheelFinish: item.wheelFinish || 'N/A',
-    brand: 'E5 Wheels',
   }));
 
-const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND['E5 Wheels'] || [];
+// const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND['E5 Wheels'] || [];
 ---
 
-<MainLayout title={`${vehicle.year} ${vehicle.trim} - E5 Wheels Gallery`}>
+<MainLayout title={`${vehicle.trim} - E5 Wheels Gallery`}>
   <div class="w-full h-full">
-    <!-- Secondary Navigation -->
-    <section class="w-full bg-white border-b border-gray-200 py-6">
-      <div class="container-e5 flex items-center justify-between">
-        <a
-          href={GALLERY_VEHICLES_ROUTE}
-          class="font-franklin-book text-xs text-black/40 tracking-[3.2px] uppercase hover:text-black transition-colors"
-        >
-          BACK TO GALLERY
-        </a>
+    <div class="relative">
+      <div class="absolute w-full bg-black/60 py-6">
+        <div class="container-e5 flex items-center justify-end">
+          <a
+              href={GALLERY_VEHICLES_ROUTE}
+              class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-white transition-colors"
+          >
+            BACK TO GALLERY
+          </a>
 
-        <nav class="flex gap-8">
-          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>
-          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SIZES</a>
-          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">FINISHES</a>
-          <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-black tracking-[3.2px] uppercase hover:text-e5-red transition-colors">WARRANTY</a>
-        </nav>
+          <!--<nav class="flex gap-8">-->
+          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>-->
+          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SIZES</a>-->
+          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">FINISHES</a>-->
+          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">WARRANTY</a>-->
+          <!--</nav>-->
+        </div>
       </div>
-    </section>
 
-    <VehicleImagesGallery client:only="vue" trim={vehicle.trim} images={vehicle.galleryImages} />
+      <VehicleImagesGallery client:only="vue" trim={vehicle.trim} images={vehicle.galleryImages} />
+    </div>
 
     <!-- Vehicle & Wheel Details Section -->
-    <section class="container-e5 pt-4 px-24">
+    <section class="container-e5 pt-4">
       <div class="flex items-start justify-between mb-8">
         <div></div>
         <div class="text-right">
           <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
             VEHICLE MODEL
           </p>
-          <p class="text-2xl text-black opacity-70 tracking-wide leading-[30px] mt-1">
-            {vehicle.year} {vehicle.trim}
-          </p>
+          <p class="text-2xl font-bold text-black opacity-70 tracking-wide leading-[30px] mt-1"> {vehicle.trim} </p>
         </div>
       </div>
 
-      <VehicleWheelSizeFit
+      <VehicleWheelDetails
         client:only="vue"
-        image={vehicle.wheelImage}
-        alt={vehicle.wheelModel}
-        logo={vehicle.wheelLogo}
-        title={vehicle.wheelModel}
-      >
-        <div slot="details">
-          <div>
-            <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
-              SIZES
-            </p>
-            <ul class="list-disc pl-8">
-              {vehicle.sizingDetails.map((size: string) => (
-                <li class="text-lg text-black opacity-70 tracking-wide leading-[30px]">
-                  {size}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div class="ml-auto">
-            <p class="text-black/50 opacity-70 tracking-wide leading-[30px]">
-              FINISH
-            </p>
-            <ul class="list-disc pl-8">
-              <li class="text-black opacity-70 tracking-wide leading-[30px]">
-                {vehicle.wheelFinish}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div slot="actions" class="flex gap-6 w-full">
-          <div class="w-full">
-            <Button client:only="vue" primary={true} secondary={false} disabled={false} link="pending">SHOP {vehicle.wheelModel}</Button>
-          </div>
-          <div class="w-full">
-            <Button client:only="vue" primary={false} secondary={true} disabled={false} link="pending">EXPLORE {vehicle.wheelBrand}</Button>
-          </div>
-        </div>
-      </VehicleWheelSizeFit>
+        partF={vehicleData.partF}
+        wheelPartR={vehicleData.wheelPartR}
+        vehicleWheelStyle={vehicle.style}
+        vehicleWheelFinish={vehicle.finish}
+        vehicleWheelSizeF={vehicleData.wheelSizeF}
+        vehicleOffesetF={vehicleData.offesetF}
+        vehicleWheelSizeRear={vehicleData.wheelSizeRear}
+        vehicleOffsetR={vehicleData.offsetR}
+        wheelStyleLogo={vehicle.wheelLogo}
+      />
     </section>
 
     <!-- C7 Corvette Gallery Section -->
     <section class="container-e5 pt-24">
       <h2 class="text-2xl text-black opacity-70 tracking-wide leading-[34px] mb-4">
-        C7 CORVETTE GALLERY
+        {vehicle.model} GALLERY
       </h2>
 
-      <div class="grid grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {corvetteGalleryImages.map((item) => (
           <VehicleCard
             client:only="vue"
             image={item.image}
             year={item.year}
             title={item.title}
-            brand={item.brand}
-            wheelModel={item.wheelModel}
-            wheelFinish={item.wheelFinish}
+            style={item.wheelModel}
+            finish={item.wheelFinish}
             link={`${GALLERY_DETAIL_ROUTE}/${item.id}`}
           />
         ))}
@@ -192,20 +137,20 @@ const wheelGalleryImages = WHEEL_GALLERY_BANNERS_BY_BRAND['E5 Wheels'] || [];
       </div>
     </section>
 
-    <section class="container-e5 py-24 px-24">
-      <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8">
-        {vehicle.wheelModel} WHEEL GALLERY
-      </h2>
+    <!--<section class="container-e5 py-24 px-24">-->
+    <!--  <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8">-->
+    <!--    {vehicle.wheelModel} WHEEL GALLERY-->
+    <!--  </h2>-->
 
-      <div class="grid grid-cols-3 gap-12">
-        {wheelGalleryImages.map((wheel: any) => (
-          <div class="w-full h-auto overflow-hidden flex items-center justify-center">
-            <a href={`${WHEELS_ROUTE}/${vehicle.wheelBrand}/${vehicle.wheelModel}`}>
-              <img src={wheel.image} alt={wheel.finish} class="w-full object-cover cursor-pointer" />
-            </a>
-          </div>
-        ))}
-      </div>
-    </section>
+    <!--  <div class="grid grid-cols-3 gap-12">-->
+    <!--    {wheelGalleryImages.map((wheel: any) => (-->
+    <!--      <div class="w-full h-auto overflow-hidden flex items-center justify-center">-->
+    <!--        <a href={`${WHEELS_ROUTE}/${vehicle.wheelBrand}/${vehicle.wheelModel}`}>-->
+    <!--          <img src={wheel.image} alt={wheel.finish} class="w-full object-cover cursor-pointer" />-->
+    <!--        </a>-->
+    <!--      </div>-->
+    <!--    ))}-->
+    <!--  </div>-->
+    <!--</section>-->
   </div>
 </MainLayout>

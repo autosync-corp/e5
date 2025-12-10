@@ -8,13 +8,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  title: String,
   logo: String,
 })
 </script>
 
 <template>
-  <div class="flex gap-16">
+  <div class="flex flex-col lg:flex-row gap-16">
     <!-- Wheel Image -->
     <div class="flex items-center justify-center">
       <img :src="props.image" :alt="props.alt" class="w-full max-w-[480px] h-auto" />
@@ -24,12 +23,12 @@ const props = defineProps({
     <div class="flex align-middle flex-col justify-center">
       <div class="mb-8">
         <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px] mb-4">
-          {{props.title}}
+          WHEEL MODEL
         </p>
-        <img :src="props.logo" alt="Logo" class="h-[36px] w-auto" />
+        <img :src="props.logo" alt="Logo" class="h-[60px] w-auto" />
       </div>
 
-      <div class="grid grid-cols-2 gap-8 mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <slot name="details" />
       </div>
 

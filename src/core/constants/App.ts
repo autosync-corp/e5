@@ -5,6 +5,7 @@ export const FALSE = false;
 export const TRUE = true;
 export const EMPTY_ARRAY = [];
 export const EMPTY_OBJECT = {};
+export const API_KEY = 'efive';
 export const CART_ICON = "/assets/images/asset-18.png";
 export const E5_LOGO_BLACK = "/assets/images/e5-wheels-alt-logo-black.png";
 export const E5_LOGO_WHITE = "/assets/images/e5-wheels-logo-white.png";

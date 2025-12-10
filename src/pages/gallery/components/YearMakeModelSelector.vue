@@ -88,7 +88,7 @@ const emitFilters = () => {
           v-model="selectedModel"
           class="w-full bg-transparent font-sans text-base tracking-[5.6px] opacity-70 uppercase outline-none cursor-pointer"
         >
-          <option value="">SELECT MODEL</option>
+          <option value="">MODEL</option>
           <option v-for="model in models" :key="model" :value="model">{{ model }}</option>
         </select>
       </div>
@@ -100,7 +100,7 @@ const emitFilters = () => {
           class="w-full bg-transparent font-sans text-base tracking-[5.6px] uppercase outline-none"
           :class="selectedModel ? 'opacity-70 cursor-pointer' : 'opacity-40 cursor-not-allowed'"
         >
-          <option value="">{{ selectedModel ? 'SELECT TRIM' : 'SELECT MODEL FIRST' }}</option>
+          <option value="">TRIM</option>
           <option v-for="trim in trims" :key="trim" :value="trim">{{ trim }}</option>
         </select>
       </div>
@@ -112,7 +112,7 @@ const emitFilters = () => {
           class="w-full bg-transparent font-sans text-base tracking-[5.6px] uppercase outline-none"
           :class="selectedModel && selectedTrim ? 'opacity-70 cursor-pointer' : 'opacity-40 cursor-not-allowed'"
         >
-          <option value="">{{ selectedModel && selectedTrim ? 'SELECT YEAR' : 'SELECT TRIM FIRST' }}</option>
+          <option value="">YEAR</option>
           <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
       </div>

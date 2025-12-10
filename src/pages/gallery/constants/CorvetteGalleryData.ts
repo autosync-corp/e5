@@ -18,6 +18,7 @@ export interface CorvetteGalleryItem {
   tireSizeR: string | null;
   tirePartR: string | null;
   tireModel: string | null;
+  images?: string[];
 }
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
@@ -40,7 +41,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BK",
     "tireSizeR": "325/30R20",
     "tirePartR": null,
-    "tireModel": "Toyo Proxy R888R"
+    "tireModel": "Toyo Proxy R888R",
+    "images": ["0.webp","1.webp","2.webp"]
   },
   {
     "galleryId": "E5-26",
@@ -61,7 +63,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp"]
   },
   {
     "galleryId": "E5-27",
@@ -82,7 +85,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp"]
   },
   {
     "galleryId": "E5-08",
@@ -103,7 +107,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp"]
   },
   {
     "galleryId": "E5-16",
@@ -124,7 +129,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E76565BBT",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp"]
   },
   {
     "galleryId": "E5-37",
@@ -145,7 +151,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
     "galleryId": "E5-19",
@@ -166,7 +173,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp"]
   },
   {
     "galleryId": "E5-33",
@@ -187,7 +195,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-07",
@@ -208,7 +217,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental Sport 02"
+    "tireModel": "Continental Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
     "galleryId": "E5-30",
@@ -229,7 +239,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565CH",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
     "galleryId": "E5-35",
@@ -250,7 +261,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
     "galleryId": "E5-18",
@@ -271,7 +283,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp"]
   },
   {
     "galleryId": "E5-09",
@@ -292,7 +305,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E76565BK",
     "tireSizeR": "325/25R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
     "galleryId": "E5-15",
@@ -313,7 +327,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
     "galleryId": "E5-49",
@@ -334,7 +349,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
     "galleryId": "E5-23",
@@ -355,7 +371,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp"]
   },
   {
     "galleryId": "E5-05",
@@ -376,7 +393,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
     "galleryId": "E5-12",
@@ -397,7 +415,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E76565BK",
     "tireSizeR": "325/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
     "galleryId": "E5-43",
@@ -418,7 +437,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
     "galleryId": "E5-53",
@@ -439,7 +459,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BBT",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp","33.webp","34.webp","35.webp","36.webp","37.webp","38.webp","39.webp","40.webp","41.webp","42.webp","43.webp","44.webp","45.webp"]
   },
   {
     "galleryId": "E5-31",
@@ -460,7 +481,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BBT",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": "Continental ExtremeContact Sport 02"
+    "tireModel": "Continental ExtremeContact Sport 02",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-28",
@@ -481,7 +503,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2011E45520BBT",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Pirelli"
+    "tireModel": "Pirelli",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-03",
@@ -502,7 +525,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520BK",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
     "galleryId": "E5-41",
@@ -523,7 +547,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Toyo Proxy R888R"
+    "tireModel": "Toyo Proxy R888R",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
     "galleryId": "E5-36",
@@ -544,7 +569,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Toyo Proxy R888R"
+    "tireModel": "Toyo Proxy R888R",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-20",
@@ -565,7 +591,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2113E64520TIU",
     "tireSizeR": "355/30R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp"]
   },
   {
     "galleryId": "E5-40",
@@ -586,7 +613,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Toyo Proxy R888R"
+    "tireModel": "Toyo Proxy R888R",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
     "galleryId": "E5-06",
@@ -607,7 +635,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
   },
   {
     "galleryId": "E5-02",
@@ -628,7 +657,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
     "galleryId": "E5-14",
@@ -649,7 +679,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2011E45520BK",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Pirelli"
+    "tireModel": "Pirelli",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-01",
@@ -670,7 +701,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
     "galleryId": "E5-04",
@@ -691,7 +723,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
     "galleryId": "E5-10",
@@ -712,7 +745,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2112E52520TIU",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
     "galleryId": "E5-13",
@@ -733,7 +767,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
     "galleryId": "E5-17",
@@ -754,7 +789,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BBT",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp"]
   },
   {
     "galleryId": "E5-29",
@@ -775,7 +811,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
     "galleryId": "E5-21",
@@ -796,7 +833,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5DA2011E45520BBT",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp"]
   },
   {
     "galleryId": "E5-50",
@@ -817,7 +855,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2011E45520TIU",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Pirelli"
+    "tireModel": "Pirelli",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
   },
   {
     "galleryId": "E5-39",
@@ -838,7 +877,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5TA2113E20520AB",
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
   },
   {
     "galleryId": "E5-54",
@@ -859,7 +899,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp"]
   },
   {
     "galleryId": "E5-25",
@@ -880,7 +921,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
     "galleryId": "E5-22",
@@ -901,7 +943,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2011E45520BBT",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp"]
   },
   {
     "galleryId": "E5-11",
@@ -922,7 +965,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
     "galleryId": "E5-47",
@@ -943,7 +987,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
     "galleryId": "E5-45",
@@ -964,7 +1009,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
     "galleryId": "E5-46",
@@ -985,7 +1031,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
     "galleryId": "E5-48",
@@ -1006,7 +1053,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp"]
   },
   {
     "galleryId": "E5-42",
@@ -1027,7 +1075,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2011E45520DB",
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Toyo Proxy R888R"
+    "tireModel": "Toyo Proxy R888R",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
     "galleryId": "E5-44",
@@ -1048,7 +1097,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
   },
   {
     "galleryId": "E5-52",
@@ -1069,7 +1119,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SO2113E20520AB",
     "tireSizeR": "345/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp"]
   },
   {
     "galleryId": "E5-51",
@@ -1090,7 +1141,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2012E50565BK",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
     "galleryId": "E5-34",
@@ -1111,7 +1163,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SP2012E50565TIU",
     "tireSizeR": "335/25R20",
     "tirePartR": null,
-    "tireModel": null
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp"]
   },
   {
     "galleryId": "E5-32",
@@ -1132,7 +1185,8 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": "E5SE2112E52520BK",
     "tireSizeR": "325/25R21",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
     "galleryId": "E5-24",
@@ -1153,6 +1207,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "wheelPartR": null,
     "tireSizeR": "305/30R20",
     "tirePartR": null,
-    "tireModel": "Michelin Pilot Sport 4S"
+    "tireModel": "Michelin Pilot Sport 4S",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp"]
   }
 ];
