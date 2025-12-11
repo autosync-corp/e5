@@ -1,7 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
-    FORM_FORGED_LOGO,
     FORM_FORGED_STUDIO_IMAGES,
     SHOP_FINISHES,
     SEBRING_LOGO,
@@ -9,7 +8,8 @@ import {
     SPEEDWAY_LOGO,
     SEBRING_TITANIUM_BRUSHED,
     SEBRING_BRAND_NAME, DAYTONA_BRAND_NAME, DAYTONA_TITANIUM_BRUSHED_TINT_FACE,
-    SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT, SPEEDWAY_BRAND_NAME, PROCESS_DIAGRAM,
+    SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT, SPEEDWAY_BRAND_NAME, PROCESS_DIAGRAM_1,
+    PROCESS_DIAGRAM_2, PROCESS_DIAGRAM_3, PROCESS_DIAGRAM_4,
 } from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
@@ -91,18 +91,64 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
         </div>
     </section>
 
-    <section class="py-20">
-        <div class="container-e5">
-            <div class="text-center mb-12">
-                <h2 class="text-5xl tracking-[5.6px] text-e5-red mb-4">
-                    OUR PROCESS
-                </h2>
-                <p class="text-lg mx-auto opacity-60 uppercase tracking-[3px]">
-                    Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
-                </p>
-            </div>
+    <!-- Our Process Section -->
+    <section class="container-e5 text-center">
+        <h2 class="text-[48px] tracking-[9.6px] leading-[48px] text-e5-red uppercase mb-6 mt-16">
+            OUR PROCESS
+        </h2>
+        <p class="text-[18px] tracking-[4.8px] leading-[18px] text-black/50 uppercase max-w-[1485px] mx-auto my-12">
+            Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
+        </p>
 
-            <img src={PROCESS_DIAGRAM} alt="Our Process" class="w-full h-auto object-contain" />
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16 mb-16">
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 1</span>
+                </div>
+                <ImageWithLegend image={PROCESS_DIAGRAM_1} alt="Step 1">
+                    <b>CAST PREFORM & DESIGN</b>
+                    Initial cast preform with design.
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 2</span>
+                </div>
+                <ImageWithLegend image={PROCESS_DIAGRAM_2} alt="Step 2">
+                    <b>HEATING & SPINNING</b>
+                    Heated workpiece rotated on mandrel.
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 3</span>
+                </div>
+                <ImageWithLegend image={PROCESS_DIAGRAM_3} alt="Step 3">
+                    <b>FLOW FORMING STRETCH</b>
+                    Rollers stretch and widen the barrel
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 4</span>
+                </div>
+                <ImageWithLegend image={PROCESS_DIAGRAM_4} alt="Step 4">
+                    <b>FINAL PROFILE</b>
+                    Finished barrel is significantly stronger and lighter.
+                </ImageWithLegend>
+            </div>
         </div>
     </section>
 
