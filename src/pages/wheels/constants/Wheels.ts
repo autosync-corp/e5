@@ -176,7 +176,10 @@ export const WHEEL_GALLERY_BANNERS_BY_BRAND: Record<string, { image: string, fin
 }
 ///////////////////////
 
-export const PROCESS_DIAGRAM = "/assets/images/our_process.webp";
+export const PROCESS_DIAGRAM_1 = "/assets/images/our_process_1.webp";
+export const PROCESS_DIAGRAM_2 = "/assets/images/our_process_2.webp";
+export const PROCESS_DIAGRAM_3 = "/assets/images/our_process_3.webp";
+export const PROCESS_DIAGRAM_4 = "/assets/images/our_process_4.webp";
 export const FORM_FORGED_STUDIO_IMAGES = [
     "/assets/images/wheels/458e21a13d0a34ebec2c1204b9ea4c2f5d42abd9.png",
     "/assets/images/wheels/4d0ad0fe85ca7d7fa24831e9b729b074e8030f19.png",
