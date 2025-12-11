@@ -19,7 +19,6 @@ import {
     DAYTONA_STILLS_BANNER,
     DAYTONA_TITANIUM_BRUSHED_TINT,
     FORM_FORGED_LOGO_BLACK,
-    PROCESS_DIAGRAM,
     PROCESS_DIAGRAM_1,
     PROCESS_DIAGRAM_2,
     PROCESS_DIAGRAM_3, PROCESS_DIAGRAM_4,
@@ -137,7 +136,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             alt={`${DAYTONA_BRAND_NAME} Motorsport Styling`}
             image={DAYTONA_MOTORSPORT_STYLING_BANNER}
             orientation={Orientations.LEFT}
-            class="h-[874px] border border-e5-red hidden lg:block"
+            class="h-[874px] border-t-2 border-b-2 border-e5-red hidden lg:block"
     >
         <article class="max-w-[720px] h-[874px] flex flex-col justify-end mb-24">
             <h2 class="text-[48px] uppercase tracking-[9.6px]">
@@ -153,7 +152,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             alt={`${DAYTONA_BRAND_NAME} Motorsport Styling`}
             image={DAYTONA_DETAILS_BANNER}
             orientation={Orientations.RIGHT}
-            class="h-[874px] border border-e5-red hidden lg:block"
+            class="h-[874px] border-t-2 border-b-2 border-e5-red hidden lg:block"
     >
         <article class="max-w-[720px] h-[874px] flex flex-col justify-end mb-24 text-end">
             <h2 class="text-[48px] uppercase tracking-[9.6px]">
@@ -181,7 +180,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         <h2 class="text-[48px] tracking-[9.6px] leading-[48px] text-e5-red uppercase mb-6">
             OUR PROCESS
         </h2>
-        <p class="text-[24px] tracking-[4.8px] leading-[30px] text-black/50 uppercase max-w-[1485px] mx-auto my-16">
+        <p class="text-[18px] tracking-[4.8px] leading-[18px] text-black/50 uppercase max-w-[1485px] mx-auto my-12">
             Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
         </p>
 
@@ -243,7 +242,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         <h2 class="text-[48px] tracking-[9.6px] leading-[48px] text-e5-red uppercase mb-6">
             FINISHING
         </h2>
-        <p class="text-[24px] tracking-[4.8px] leading-[30px] text-black/50 uppercase max-w-[1485px] mx-auto my-16">
+        <p class="text-[18px] tracking-[4.8px] leading-[18px] text-black/50 uppercase max-w-[1485px] mx-auto my-16">
             Our Form Forged Series is available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint, AND DARK BRONZE— finishes that embody the essence of timeless, modern, and bold design. Each surface is crafted to elevate the wheel's form while enduring the demands of the road, all <span class="text-[#d31d25]/65">backed by our 5-year finishing warranty</span>.
         </p>
     </section>
@@ -261,7 +260,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
     </section>
 
     <!-- Gallery Banner 1 -->
-    <section class="w-full h-[716px] relative overflow-hidden border border-e5-red">
+    <section class="w-full h-[716px] relative overflow-hidden border-t-2 border-b-2 border-e5-red">
         <img src={DAYTONA_GALLERY_BANNER_1} alt="Daytona Gallery" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-black/5"></div>
     </section>
@@ -315,7 +314,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
             alt={`${DAYTONA_BRAND_NAME} GALLERY`}
             image={DAYTONA_GALLERY_BANNER_2}
             orientation={Orientations.RIGHT}
-            class="h-[716px] border border-e5-red"
+            class="h-[716px] border-t-2 border-b-2 border-e5-red"
     >
         <article class="max-w-[720px] h-[716px] pl-24 md:pl-0 md:text-end pt-12">
             <h2 class="text-[48px] uppercase tracking-[9.6px]">
@@ -368,4 +367,3 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         BACK TO TOP
     </div>
 </MainLayout>
-
