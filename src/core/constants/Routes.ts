@@ -18,7 +18,8 @@ export const WHEELS_SEBRING_ROUTE = '/wheels/sebring';
 export const WHEELS_SPEEDWAY_ROUTE = '/wheels/speedway';
 
 export const WHEELS_FORM_FORGED_ROUTE = '/wheels/form-forged';
-export const GALLERY_WHEELS_ROUTE = "/pending"
+export const GALLERY_ROUTE = '/gallery';
+export const GALLERY_WHEELS_ROUTE = "/gallery/wheels"
 export const GALLERY_VEHICLES_ROUTE = '/gallery/vehicles';
 export const GALLERY_DETAIL_ROUTE = '/gallery/vehicles/detail';
 export const GENERATIONS_ROUTE = "/generations"

@@ -1,0 +1,138 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import {
+    WHEEL_GALLERY_BANNER,
+    E5_FORGED_GALLERY_BANNER,
+    FORM_FORGED_SOLO_BLACK,
+    SPEEDWAY_LOGO,
+    wheelGalleryItems
+} from '@/pages/gallery/constants/WheelGallery.ts';
+---
+
+<MainLayout title="Wheel Gallery - E5 Wheels">
+    <div class="w-full bg-white">
+        <!-- Hero Banner -->
+        <section class="relative w-full h-[600px] md:h-[700px]">
+            <img src={WHEEL_GALLERY_BANNER} alt="Wheel Gallery" class="w-full h-full object-cover" />
+        </section>
+
+        <!-- Gallery Header -->
+        <section class="container-e5 py-12 md:py-20">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div class="w-full md:w-1/2">
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="w-full max-w-[805px] h-auto" />
+                </div>
+                <div class="w-full md:w-1/2">
+                    <img src={FORM_FORGED_SOLO_BLACK} alt="Form Forged" class="w-full max-w-[234px] h-auto ml-auto" />
+                </div>
+            </div>
+            <p class="text-24 text-black/70 leading-[30px] mt-8 md:mt-12">
+                Indulge yourself in our large collection of wheel galleries featuring our Form Forged Series wheels in all kinds of environments.
+            </p>
+        </section>
+
+        <!-- View Toggle Icons -->
+        <section class="container-e5 flex justify-center gap-0 mb-12">
+            <button class="border border-black w-16 h-16 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                <svg width="40" height="38" viewBox="0 0 40 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="38" fill="black"/>
+                </svg>
+            </button>
+            <button class="border border-e5-red w-16 h-16 flex items-center justify-center hover:bg-red-50 transition-colors">
+                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="35" height="35" fill="#D31D25"/>
+                </svg>
+            </button>
+        </section>
+
+        <!-- Wheel Gallery Grid -->
+        <section class="container-e5 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 justify-items-center">
+                {wheelGalleryItems.map((item, index) => (
+                    <div class="relative group w-full max-w-[500px]">
+                        <a href={item.link} class="block">
+                            <!-- Wheel Image -->
+                            <div class="relative w-full h-[329px] overflow-hidden">
+                                <img
+                                    src={item.image}
+                                    alt={`${item.name} ${item.finish}`}
+                                    class="w-full h-full object-cover"
+                                />
+                                {item.featured && (
+                                    <div class="absolute inset-0 bg-black/35 flex items-center justify-center">
+                                        <span class="text-white text-2xl font-franklin-demi tracking-[5.04px] underline decoration-solid">
+                                            VIEW SPEEDWAY
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <!-- Wheel Info -->
+                            <div class="border border-black/18 p-6 text-center h-[94px] flex flex-col justify-center">
+                                <p class="text-[20px] text-black/35 font-franklin-book tracking-[1px] mb-2 leading-[20px]">
+                                    {item.series}
+                                </p>
+                                <h3 class="text-[20px] text-black font-franklin-demi tracking-[1px] mb-1 leading-[20px]">
+                                    {item.name}
+                                </h3>
+                                <p class="text-[16px] text-black font-franklin-book tracking-[0.8px] leading-[20px]">
+                                    {item.finish}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <!-- E5 Forged Gallery Section -->
+        <section class="container-e5 text-center mb-12">
+            <p class="text-[20px] text-black/49 tracking-[4px] font-franklin-book mb-16">
+                EXPLORE THE E5 FORGED GALLERY
+            </p>
+        </section>
+
+        <!-- E5 Forged Banner -->
+        <section class="relative w-full h-[600px] md:h-[700px] mb-16">
+            <img src={E5_FORGED_GALLERY_BANNER} alt="E5 Forged Gallery" class="w-full h-full object-cover" />
+        </section>
+
+        <!-- View E5 Forged Gallery Button -->
+        <section class="container-e5 text-center mb-16">
+            <a href="/gallery/wheels/e5-forged" class="inline-block bg-e5-red text-white font-franklin-demi text-2xl tracking-[2.4px] px-12 py-6 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                VIEW E5 FORGED GALLERY
+            </a>
+        </section>
+
+        <!-- Back to Top -->
+        <section class="container-e5 text-center pb-20">
+            <a href="#" class="text-[20px] text-black/49 tracking-[4px] font-franklin-book hover:text-black/70 transition-colors">
+                BACK TO TOP
+            </a>
+        </section>
+    </div>
+</MainLayout>
+
+<style>
+    .container-e5 {
+        max-width: 1560px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .container-e5 {
+            padding-left: 3rem;
+            padding-right: 3rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .container-e5 {
+            padding-left: 6rem;
+            padding-right: 6rem;
+        }
+    }
+</style>

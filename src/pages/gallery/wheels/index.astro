@@ -1,0 +1,10 @@
+---
+import WheelGallery from '@/pages/gallery/components/WheelGallery.vue';
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="Wheel Gallery - E5 Wheels">
+  <div class="w-full h-full">
+    <WheelGallery client:only="vue" />
+  </div>
+</MainLayout>
