@@ -24,13 +24,6 @@ const detailedGallery = ref<boolean>(false);
         alt="Wheel Gallery Banner"
         class="w-full h-full object-cover"
       />
-      <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
-        <img
-          :src="SPEEDWAY_LOGO"
-          alt="Speedway Logo"
-          class="w-[200px] md:w-[300px] h-auto"
-        />
-      </div>
     </div>
 
     <!-- Gallery Introduction Section -->
@@ -52,7 +45,7 @@ const detailedGallery = ref<boolean>(false);
     <GalleryPageStyleSelector :detailedView="detailedGallery" @detailed-view="detailedGallery = $event" />
 
     <!-- Gallery Grid - Simple Card View -->
-    <section v-if="!detailedGallery" class="container-e5 pb-16">
+    <section v-if="!detailedGallery" class="container-e5 pt-8 pb-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 justify-items-center">
         <WheelCard
           v-for="item in wheelGalleryItems"
@@ -68,7 +61,7 @@ const detailedGallery = ref<boolean>(false);
     </section>
 
     <!-- Gallery Grid - Detailed Card View -->
-    <section v-else class="container-e5 pb-16">
+    <section v-else class="container-e5 pt-8 pb-16">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-items-center">
         <WheelDetailedCard
           v-for="item in wheelGalleryItems"
