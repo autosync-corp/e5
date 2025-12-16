@@ -48,16 +48,10 @@ const onClick = () => {
     </div>
 
     <!-- Wheel Info -->
-    <div class="border border-black/18 p-6 text-center h-[94px] flex flex-col justify-center">
-      <p class="text-[20px] text-black/35 font-franklin-book tracking-[1px] mb-2 leading-[20px]">
-        {{ props.series }}
-      </p>
-      <h3 class="text-[20px] text-black font-franklin-demi tracking-[1px] mb-1 leading-[20px]">
-        {{ props.name }}
-      </h3>
-      <p class="text-[16px] text-black font-franklin-book tracking-[0.8px] leading-[20px]">
-        {{ props.finish }}
-      </p>
+    <div class="bg-gray-100 px-4 py-3 text-center uppercase tracking-[1.5px] text-14">
+      <p class="text-black/30">{{ props.series }}</p>
+      <p class="font-franklin-medium text-lg text-black">{{ props.name }}</p>
+      <div class="text-black tracking-[0.8px]">{{ props.finish }}</div>
     </div>
   </div>
 </template>

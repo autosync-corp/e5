@@ -42,77 +42,53 @@ const onClick = () => {
 </script>
 
 <template>
-  <div class="flex flex-col bg-white border border-black/34">
+  <div class="flex flex-col bg-gray-100">
     <!-- Wheel Image -->
-    <div class="w-full h-[504px] bg-white flex items-center justify-center">
-      <img :src="props.image" :alt="props.name" class="w-full h-full object-cover"/>
+    <div class="w-full h-[330px] bg-gray-100 flex align-middle justify-end">
+      <img :src="props.image" :alt="props.name" class="w-full object-cover"/>
     </div>
 
     <!-- Wheel Details Section -->
-    <div class="px-6 py-8 min-h-[431px] flex flex-col">
+    <div class="grid grid-cols-2 gap-2 text-start mt-4 px-6">
       <!-- Header with Name and Logo -->
-      <div class="flex justify-between items-start mb-6">
-        <div>
-          <p class="text-[20px] text-black/35 font-franklin-book tracking-[1px] mb-2">
-            {{ props.series }}
-          </p>
-          <h3 class="text-[32px] text-black font-franklin-demi tracking-[1.6px]">
-            {{ props.name }}
-          </h3>
-        </div>
-        <img :src="props.logo" :alt="`${props.name} Logo`" class="h-[60px] w-auto" />
+      <div class="text-start flex flex-col">
+        <div class="font-medium text-14 text-black/30 tracking-[1px]"><small>{{ props.series }}</small></div>
+        <div class="font-franklin-medium text-lg uppercase tracking-[1px]">{{ props.name }}</div>
       </div>
 
-      <!-- Specifications Grid -->
-      <div class="grid grid-cols-2 gap-8 flex-grow">
-        <!-- Finishes -->
-        <div>
-          <p class="text-[16px] text-black font-franklin-book tracking-[0.8px] mb-2">
-            FINISHES:
-          </p>
-          <ul class="list-disc list-inside">
-            <li v-for="(finish, index) in props.finishes" :key="index" class="text-[16px] text-black font-franklin-book tracking-[0.8px]">
-              {{ finish }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Made For -->
-        <div>
-          <p class="text-[16px] text-black font-franklin-book tracking-[0.8px] mb-2">
-            MADE FOR:
-          </p>
-          <ul class="list-disc list-inside">
-            <li v-for="(model, index) in props.madeFor" :key="index" class="text-[16px] text-black font-franklin-book tracking-[0.8px]">
-              {{ model }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Sizes -->
-        <div class="col-span-2">
-          <p class="text-[16px] text-black font-franklin-book tracking-[0.8px] mb-2">
-            SIZES:
-          </p>
-          <ul class="list-disc list-inside">
-            <li v-for="(size, index) in props.sizes" :key="index" class="text-[16px] text-black font-franklin-book tracking-[0.8px]">
-              {{ size }}
-            </li>
-          </ul>
-        </div>
+      <div class="flex justify-end mt-3 px-3">
+        <img :src="props.logo" :alt="`${props.name} Logo`" class="h-[32px] w-auto" />
       </div>
 
-      <!-- View Gallery Button -->
-      <div class="flex justify-center mt-8">
-        <Button
-          :primary="true"
-          :secondary="false"
-          :disabled="false"
-          @click="onClick"
-        >
-          VIEW GALLERY
-        </Button>
-      </div>
+      <!-- Finishes -->
+      <p>
+        <small class="text-black/35">FINISHES:</small>
+        <br />
+        <small v-for="(finish, index) in props.finishes" :key="index">
+          {{ finish }}<span v-if="index < props.finishes.length - 1">, </span>
+        </small>
+      </p>
+
+      <!-- Made For -->
+      <p>
+        <small class="text-black/35">MADE FOR:</small>
+        <br />
+        <small v-for="(model, index) in props.madeFor" :key="index">
+          {{ model }}<span v-if="index < props.madeFor.length - 1">, </span>
+        </small>
+      </p>
+
+      <!-- Sizes -->
+      <p class="col-span-2">
+        <small class="text-black/35">SIZES:</small>
+        <br />
+        <small v-for="(size, index) in props.sizes" :key="index">
+          {{ size }}<span v-if="index < props.sizes.length - 1"> / </span>
+        </small>
+      </p>
     </div>
+
+    <!-- View Gallery Button -->
+    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" @click="onClick">VIEW GALLERY</Button>
   </div>
 </template>
