@@ -1,0 +1,131 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { wheelGalleryItems } from "@/pages/gallery/constants/WheelGallery.ts";
+import type { WheelGalleryItem } from "@/pages/gallery/constants/WheelGallery.ts";
+import WheelCard from "@/pages/gallery/components/WheelCard.vue";
+import Button from "@/core/components/Button.vue";
+import { GALLERY_WHEELS_ROUTE, GALLERY_WHEELS_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
+
+export function getStaticPaths() {
+  return wheelGalleryItems.map((wheel) => ({
+    params: { id: wheel.id.toString() },
+    props: { wheelData: wheel },
+  }));
+}
+
+const { wheelData } = Astro.props as { wheelData: WheelGalleryItem };
+
+// Get similar wheels (same name, different finishes)
+const relatedWheels = wheelGalleryItems
+  .filter(w => w.name === wheelData.name && w.id !== wheelData.id)
+  .slice(0, 3);
+---
+
+<MainLayout title={`${wheelData.name} ${wheelData.finish} - E5 Wheels Gallery`}>
+  <div class="w-full h-full">
+    <div class="relative">
+      <div class="absolute w-full bg-black/60 py-6 z-10">
+        <div class="container-e5 flex items-center justify-end">
+          <a
+              href={GALLERY_WHEELS_ROUTE}
+              class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-white transition-colors"
+          >
+            BACK TO GALLERY
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Wheel Image -->
+      <section class="w-full">
+        <div class="relative w-full">
+          <img
+              src={wheelData.detailedImage || wheelData.image}
+              alt={`${wheelData.name} ${wheelData.finish}`}
+              class="w-full max-h-[740px] object-cover"
+          />
+        </div>
+      </section>
+    </div>
+
+    <!-- Wheel Details Section -->
+    <section class="container-e5 pt-16 pb-8">
+      <div class="flex items-start justify-between mb-8">
+        <div></div>
+        <div class="text-right">
+          <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px]">
+            {wheelData.series}
+          </p>
+          <p class="text-2xl font-bold text-black opacity-70 tracking-wide leading-[30px] mt-1">
+            {wheelData.name}
+          </p>
+        </div>
+      </div>
+
+      <!-- Wheel Specifications -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <!-- Finish -->
+        <div>
+          <h3 class="text-sm text-black/50 tracking-[2px] uppercase mb-2">FINISH</h3>
+          <p class="text-lg text-black">{wheelData.finish}</p>
+        </div>
+
+        <!-- Sizes -->
+        <div>
+          <h3 class="text-sm text-black/50 tracking-[2px] uppercase mb-2">SIZES</h3>
+          {wheelData.sizes.map((size) => (
+            <p class="text-lg text-black">{size}</p>
+          ))}
+        </div>
+
+        <!-- Made For -->
+        <div>
+          <h3 class="text-sm text-black/50 tracking-[2px] uppercase mb-2">MADE FOR</h3>
+          {wheelData.madeFor.map((model) => (
+            <p class="text-lg text-black">{model}</p>
+          ))}
+        </div>
+      </div>
+
+      <!-- All Finishes Available -->
+      <div class="mb-8">
+        <h3 class="text-sm text-black/50 tracking-[2px] uppercase mb-4">AVAILABLE FINISHES</h3>
+        <div class="flex flex-wrap gap-3">
+          {wheelData.finishes.map((finish) => (
+            <span class="px-4 py-2 bg-gray-100 text-black text-sm tracking-[1px] uppercase">
+              {finish}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Wheels Section -->
+    {relatedWheels.length > 0 && (
+      <section class="container-e5 pt-12 pb-16">
+        <h2 class="text-2xl text-black opacity-70 tracking-wide leading-[34px] mb-6">
+          OTHER {wheelData.name} FINISHES
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {relatedWheels.map((wheel) => (
+            <WheelCard
+              client:only="vue"
+              image={wheel.image}
+              name={wheel.name}
+              series={wheel.series}
+              finish={wheel.finish}
+              link={`${GALLERY_WHEELS_DETAIL_ROUTE}/${wheel.id}`}
+              featured={false}
+            />
+          ))}
+        </div>
+
+        <div class="w-full flex justify-center mt-12">
+          <Button client:only="vue" primary={true} secondary={false} disabled={false} link={GALLERY_WHEELS_ROUTE}>
+            VIEW FULL GALLERY
+          </Button>
+        </div>
+      </section>
+    )}
+  </div>
+</MainLayout>

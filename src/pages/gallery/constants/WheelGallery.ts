@@ -29,7 +29,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/speedway-titanium-brushed.png",
         detailedImage: "/assets/images/speedway-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/speedway",
+        link: "/gallery/wheels/detail/1",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "DARK BRONZE"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -42,7 +42,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/speedway-gloss-black.png",
         detailedImage: "/assets/images/speedway-detailed-2.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/speedway",
+        link: "/gallery/wheels/detail/2",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "DARK BRONZE"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -55,7 +55,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/speedway-dark-bronze.png",
         detailedImage: "/assets/images/speedway-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/speedway",
+        link: "/gallery/wheels/detail/3",
         featured: true,
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "DARK BRONZE"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
@@ -69,7 +69,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/daytona-titanium-brushed.png",
         detailedImage: "/assets/images/daytona-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/daytona",
+        link: "/gallery/wheels/detail/4",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -82,7 +82,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/daytona-gloss-black.png",
         detailedImage: "/assets/images/daytona-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/daytona",
+        link: "/gallery/wheels/detail/5",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -95,7 +95,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/daytona-bronze-brushed.png",
         detailedImage: "/assets/images/daytona-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/daytona",
+        link: "/gallery/wheels/detail/6",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -108,7 +108,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/sebring-titanium-brushed.png",
         detailedImage: "/assets/images/sebring-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/sebring",
+        link: "/gallery/wheels/detail/7",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -121,7 +121,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/sebring-gloss-black.png",
         detailedImage: "/assets/images/sebring-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/sebring",
+        link: "/gallery/wheels/detail/8",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
@@ -134,7 +134,7 @@ export const wheelGalleryItems: WheelGalleryItem[] = [
         image: "/assets/images/sebring-bronze-brushed.png",
         detailedImage: "/assets/images/sebring-detailed-1.png",
         logo: "/assets/images/form-forged-solo-black.png",
-        link: "/wheels/sebring",
+        link: "/gallery/wheels/detail/9",
         finishes: ["GLOSS BLACK", "TITANIUM BRUSHED TINT", "BRONZE BRUSHED TINT"],
         sizes: ['FRONTS - 19" x 9", 20" x 9"', 'REARS - 20" x 11", 21" x 12"'],
         madeFor: ["C6 (BASE, Z06, ZR1, GS)", "C7 (STINGRAY, Z06, ZR1, GS)", "C8 (STINGRAY)"]
