@@ -155,6 +155,56 @@ export const SEBRING_WHEELS = [
     }
 ];
 
+// Sonoma Wheels
+export const SONOMA_BRAND_NAME = "Sonoma";
+export const SONOMA_LOGO = "/assets/images/wheels/sonoma_logo.png";
+export const SONOMA_HERO_IMAGE = "/assets/images/sonoma/239b11a893388552c09735b9dd4278faad2482ce.png";
+export const SONOMA_PRECISION_FITMENT_BANNER = "/assets/images/sonoma/568a37a70a207e5d13c036c449be385814e61ebe.png";
+export const SONOMA_LIGHTWEIGHT_DESIGN_BANNER = "/assets/images/sonoma/87d2a47d73f3b90230d284d10956e01584776009.png";
+export const SONOMA_MOTORSPORT_STYLING_BANNER = "/assets/images/sonoma/54d04194724e8328e53966e443d8e2ae0960fe5d.png";
+export const SONOMA_VETTE_GALLERY_BANNER = "/assets/images/sonoma/0fb50ae33b3004757083394a9d52d67a15dff81a.png";
+export const SONOMA_FORGED_GALLERY_BANNER = "/assets/images/sonoma/f32714297e48b640d6eb3dc41b6c18fd44f36465.png";
+export const SONOMA_DETAIL_1 = "/assets/images/sonoma/sonoma_detail_1.png";
+export const SONOMA_DETAIL_2 = "/assets/images/sonoma/sonoma_detail_2.png";
+export const SONOMA_DETAIL_3 = "/assets/images/sonoma/sonoma_detail_3.png";
+export const SONOMA_DETAIL_4 = "/assets/images/sonoma/sonoma_detail_4.png";
+
+export const SONOMA_BRONZE_BRUSHED_TINT = "/assets/images/wheels/sonoma_bronze_brushed_tint.png";
+export const SONOMA_GLOSS_BLACK = "/assets/images/wheels/sonoma_gloss_black.png";
+export const SONOMA_TITANIUM_BRUSHED_TINT = "/assets/images/wheels/sonoma_titanium_brushed_tint.png";
+export const SONOMA_TITANIUM_BRUSHED_TINT_FACE = "/assets/images/wheels/sonoma_titanium_brushed_tint_face.png";
+export const SONOMA_GLOSS_BLACK_BEAUTY_RIGHT = "/assets/images/wheels/sonoma_gloss_black_beauty_right.png";
+export const SONOMA_BRONZE_BRUSHED_TINT_BEAUTY_LEFT = "/assets/images/wheels/sonoma_bronze_brushed_tint_beauty_left.png";
+
+export const SONOMA_WHEELS = [
+    {
+        image: SONOMA_GLOSS_BLACK,
+        finish: "Gloss Black",
+    },
+    {
+        image: SONOMA_TITANIUM_BRUSHED_TINT,
+        finish: "Titanium Brushed Tint",
+    },
+    {
+        image: SONOMA_BRONZE_BRUSHED_TINT,
+        finish: "Bronze Brushed Tint",
+    }
+];
+export const SONOMA_WHEELS_BANNERS = [
+    {
+        image: SONOMA_GLOSS_BLACK_BEAUTY_RIGHT,
+        finish: "Gloss Black",
+    },
+    {
+        image: SONOMA_TITANIUM_BRUSHED_TINT_FACE,
+        finish: "Titanium Brushed Tint",
+    },
+    {
+        image: SONOMA_BRONZE_BRUSHED_TINT_BEAUTY_LEFT,
+        finish: "Bronze Brushed Tint",
+    }
+];
+
 export const E5_FORGED_LOGO = "/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.png";
 export const FORM_FORGED_LOGO = "/assets/images/wheels/48b34752d7bd939ae556a6e8de9fa0837077ec48.png";
 export const FORM_FORGED_LOGO_BLACK = "/assets/images/form-forged-logo-black.png";
@@ -167,12 +217,14 @@ export const WHEEL_GALLERY_WHEELS_BY_BRAND: Record<string, { image: string, fini
     SPEEDWAY: SPEEDWAY_WHEELS,
     TALLADEGA: TALLADEGA_WHEELS,
     SEBRING: SEBRING_WHEELS,
+    SONOMA: SONOMA_WHEELS,
 }
 export const WHEEL_GALLERY_BANNERS_BY_BRAND: Record<string, { image: string, finish: string }[]> = {
     DAYTONA: DAYTONA_WHEELS_BANNERS,
     SPEEDWAY: SPEEDWAY_WHEELS,
     TALLADEGA: TALLADEGA_WHEELS,
     SEBRING: SEBRING_WHEELS,
+    SONOMA: SONOMA_WHEELS_BANNERS,
 }
 ///////////////////////
 
