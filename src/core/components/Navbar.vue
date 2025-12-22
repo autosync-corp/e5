@@ -7,6 +7,11 @@ import {
   GALLERY_VEHICLES_ROUTE,
   GALLERY_WHEELS_ROUTE,
   GENERATIONS_ROUTE,
+  GENERATIONS_C5_Z06_ROUTE,
+  GENERATIONS_C7_STINGRAY_ROUTE,
+  GENERATIONS_C7_GRAND_SPORT_ROUTE,
+  GENERATIONS_C8_STINGRAY_ROUTE,
+  GENERATIONS_C8_Z06_ROUTE,
   HOME_ROUTE, PROCESS_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
   WHEELS_ROUTE
 } from "@/core/constants/Routes.ts";
@@ -14,6 +19,7 @@ import {
 const currentPath = ref('');
 const isMobileMenuOpen = ref(false);
 const isGalleryDropdownOpen = ref(false);
+const isGenerationsDropdownOpen = ref(false);
 
 onMounted(() => {
   currentPath.value = window.location.pathname;
@@ -41,6 +47,14 @@ const toggleGalleryDropdown = () => {
 
 const closeGalleryDropdown = () => {
   isGalleryDropdownOpen.value = false;
+}
+
+const toggleGenerationsDropdown = () => {
+  isGenerationsDropdownOpen.value = !isGenerationsDropdownOpen.value;
+}
+
+const closeGenerationsDropdown = () => {
+  isGenerationsDropdownOpen.value = false;
 }
 </script>
 
@@ -77,7 +91,38 @@ const closeGalleryDropdown = () => {
       </div>
 
       <div class="flex justify-end items-center gap-6">
-        <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">GENERATIONS</a>
+        <!-- Generations Dropdown -->
+        <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
+          <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
+            GENERATIONS
+            <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div v-if="isGenerationsDropdownOpen" class="dropdown-menu generations-dropdown">
+            <div class="generation-group">
+              <div class="generation-title">C8</div>
+              <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
+              <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
+            </div>
+            <div class="generation-group">
+              <div class="generation-title">C7</div>
+              <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
+              <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
+            </div>
+            <div class="generation-group">
+              <div class="generation-title">C6</div>
+              <div class="dropdown-item coming-soon">Coming Soon</div>
+            </div>
+            <div class="generation-group">
+              <div class="generation-title">C5</div>
+              <a :href="GENERATIONS_C5_Z06_ROUTE" class="dropdown-item">Z06</a>
+            </div>
+          </div>
+        </div>
+
         <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
         <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
         <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
@@ -120,7 +165,41 @@ const closeGalleryDropdown = () => {
         </div>
 
         <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">PROCESS</a>
-        <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">GENERATIONS</a>
+
+        <!-- Generations Submenu for Mobile -->
+        <div class="mobile-submenu">
+          <div class="flex items-center gap-2">
+            <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">
+              GENERATIONS
+            </a>
+            <button @click="toggleGenerationsDropdown" class="text-white p-1">
+              <svg class="inline-block w-3 h-3" :class="{'rotate-180': isGenerationsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div v-if="isGenerationsDropdownOpen" class="mobile-submenu-items">
+            <div class="mobile-generation-group">
+              <div class="mobile-generation-title">C8</div>
+              <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
+              <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
+            </div>
+            <div class="mobile-generation-group">
+              <div class="mobile-generation-title">C7</div>
+              <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
+              <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
+            </div>
+            <div class="mobile-generation-group">
+              <div class="mobile-generation-title">C6</div>
+              <div class="mobile-submenu-link coming-soon">Coming Soon</div>
+            </div>
+            <div class="mobile-generation-group">
+              <div class="mobile-generation-title">C5</div>
+              <a :href="GENERATIONS_C5_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
+            </div>
+          </div>
+        </div>
+
         <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
@@ -188,6 +267,41 @@ const closeGalleryDropdown = () => {
   color: #d31d25;
 }
 
+/* Generations Dropdown Specific Styles */
+.generations-dropdown {
+  min-width: 250px;
+  padding: 0.5rem 0;
+}
+
+.generation-group {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.generation-group:last-child {
+  border-bottom: none;
+}
+
+.generation-title {
+  padding: 0.5rem 1.5rem 0.25rem;
+  color: #d31d25;
+  font-size: 12px;
+  font-family: 'Franklin Gothic Demi', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.generation-group .dropdown-item {
+  padding: 0.5rem 1.5rem 0.5rem 2.5rem;
+  font-size: 13px;
+}
+
+.dropdown-item.coming-soon {
+  color: rgba(255, 255, 255, 0.4);
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Desktop Navigation - Hidden on mobile */
 .desktop-nav {
   display: inline-grid;
@@ -246,6 +360,23 @@ const closeGalleryDropdown = () => {
 .rotate-180 {
   transform: rotate(180deg);
   transition: transform 0.2s;
+}
+
+/* Mobile Generation Groups */
+.mobile-generation-group {
+  @apply flex flex-col items-center gap-2 mb-4;
+}
+
+.mobile-generation-group:last-child {
+  @apply mb-0;
+}
+
+.mobile-generation-title {
+  @apply font-franklin-demi text-14 text-e5-red uppercase tracking-[2px] mb-1;
+}
+
+.mobile-submenu-link.coming-soon {
+  @apply text-white/30 pointer-events-none;
 }
 
 /* Tablet adjustments */
