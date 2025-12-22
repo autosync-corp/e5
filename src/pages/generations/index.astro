@@ -1,6 +1,5 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="E5 Wheels - Choose Your Corvette">
@@ -17,13 +16,20 @@ import {WHEELS_ROUTE} from "@/core/constants/Routes.ts";
       </div>
       <div class="absolute inset-0 flex items-center">
         <div class="container-e5">
-          <a :href={`${WHEELS_ROUTE}/generations/c8/`} class="inline-block">
-            <div class="bg-[#d31d25] px-12 py-6 hover:bg-[#b11a21] transition-colors cursor-pointer">
-              <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px]">
-                C8 WHEEL COLLECTION
-              </h2>
+          <div class="bg-[#d31d25] px-12 py-6 inline-block">
+            <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px] mb-4">
+              C8 WHEEL COLLECTION
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <a href="/generations/c8/c8-stingray" class="text-white text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase hover:text-white/80 transition-colors">
+                Stingray
+              </a>
+              <span class="text-white/50">|</span>
+              <a href="/generations/c8/c8-z06" class="text-white text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase hover:text-white/80 transition-colors">
+                Z06
+              </a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </section>
@@ -40,13 +46,20 @@ import {WHEELS_ROUTE} from "@/core/constants/Routes.ts";
       </div>
       <div class="absolute inset-0 flex items-center">
         <div class="container-e5">
-          <a :href={`${WHEELS_ROUTE}/generations/c7/`} class="inline-block">
-            <div class="bg-[#d31d25] px-12 py-6 hover:bg-[#b11a21] transition-colors cursor-pointer">
-              <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px]">
-                C7 WHEEL COLLECTION
-              </h2>
+          <div class="bg-[#d31d25] px-12 py-6 inline-block">
+            <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px] mb-4">
+              C7 WHEEL COLLECTION
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <a href="/generations/c7/c7-stingray" class="text-white text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase hover:text-white/80 transition-colors">
+                Stingray
+              </a>
+              <span class="text-white/50">|</span>
+              <a href="/generations/c7/c7-grand-sport" class="text-white text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase hover:text-white/80 transition-colors">
+                Grand Sport
+              </a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </section>
@@ -63,11 +76,16 @@ import {WHEELS_ROUTE} from "@/core/constants/Routes.ts";
       </div>
       <div class="absolute inset-0 flex items-center">
         <div class="container-e5">
-          <a :href={`${WHEELS_ROUTE}/generations/c6/`} class="inline-block bg-[#d31d25] px-12 py-6 hover:bg-[#b11a21] transition-colors cursor-pointer">
-              <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px]">
-                C6 WHEEL COLLECTION
-              </h2>
-          </a>
+          <div class="bg-[#d31d25] px-12 py-6 inline-block">
+            <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px] mb-4">
+              C6 WHEEL COLLECTION
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <span class="text-white/70 text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase">
+                Coming Soon
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -84,13 +102,16 @@ import {WHEELS_ROUTE} from "@/core/constants/Routes.ts";
       </div>
       <div class="absolute inset-0 flex items-center">
         <div class="container-e5">
-          <a :href={`${WHEELS_ROUTE}/generations/c5/`} class="inline-block">
-            <div class="bg-[#d31d25] px-12 py-6 hover:bg-[#b11a21] transition-colors cursor-pointer">
-              <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px]">
-                C5 WHEEL COLLECTION
-              </h2>
+          <div class="bg-[#d31d25] px-12 py-6 inline-block">
+            <h2 class="text-white text-[20px] font-['Franklin_Gothic_Demi'] tracking-[2px] uppercase leading-[20px] mb-4">
+              C5 WHEEL COLLECTION
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <a href="/generations/c5/c5-z06" class="text-white text-[16px] font-['Franklin_Gothic_Book'] tracking-[2px] uppercase hover:text-white/80 transition-colors">
+                Z06
+              </a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </section>
