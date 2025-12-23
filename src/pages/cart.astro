@@ -1,0 +1,639 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Shopping Cart - E5 Wheels">
+  <section class="e5CartProgBar">
+    <div class="e5CartProgInner">
+      <div class="e5CartProgRow">
+        <div class="e5CartProgLine"></div>
+
+        <!-- Step 1 -->
+        <div class="e5CartProgStepWheels">
+          <div class="e5CartProgDotWheels">
+            <img
+              class="e5CartProgIconWheels"
+              src="/assets/images/cart/61cc55a16a871139a1cf4a95a7854be48b2d404d.png"
+              alt="Wheels"
+            />
+          </div>
+          <p class="e5CartProgLabelWheels">WHEELS</p>
+        </div>
+
+        <!-- Step 2 (Active) -->
+        <div class="e5CartProgStepCart">
+          <div class="e5CartProgDotCart">
+            <img
+              class="e5CartProgIconCart"
+              src="/assets/images/cart/40eb342b73462b1f996cdb7f9c9a92e0d95a45fc.png"
+              alt="Cart"
+            />
+          </div>
+          <p class="e5CartProgLabelCart">CART</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="e5CartProgStepCheckout">
+          <div class="e5CartProgDotCheckout">
+            <img
+              class="e5CartProgIconCheckout"
+              src="/assets/images/cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.png"
+              alt="Checkout"
+            />
+          </div>
+          <p class="e5CartProgLabelCheckout">CHECKOUT</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Content Section -->
+  <section class="e5CartContent">
+    <div class="e5CartContainer">
+      <!-- Product Table -->
+      <div class="e5CartTableWrapper">
+        <div class="e5CartTableHeader">
+          <div class="e5CartHeaderProduct">Product</div>
+          <div class="e5CartHeaderPrice">Price</div>
+          <div class="e5CartHeaderQty">Quantity</div>
+          <div class="e5CartHeaderSubtotal">Subtotal</div>
+        </div>
+
+        <!-- Product Row -->
+        <div class="e5CartProductRow">
+          <div class="e5CartProductInfo">
+            <img
+              src="/assets/images/wheels/placeholder.png"
+              alt="SONOMA"
+              class="e5CartProductImage"
+            />
+            <div class="e5CartProductDetails">
+              <h3 class="e5CartProductName">SONOMA</h3>
+              <p class="e5CartProductSpec">+2 x FRONT 20"x10"</p>
+              <p class="e5CartProductSpec">+2 x REAR 21"x13"</p>
+              <p class="e5CartProductFinish">FINISH: BRUSHED ALUMINUM</p>
+              <p class="e5CartProductModel">MODEL: C8 Z06</p>
+            </div>
+          </div>
+          <div class="e5CartProductPrice">$12,000.00</div>
+          <div class="e5CartProductQty">
+            <input type="number" value="1" class="e5CartQtyInput" />
+          </div>
+          <div class="e5CartProductSubtotal">$12,000.00</div>
+        </div>
+
+        <!-- Coupon Section -->
+        <div class="e5CartCouponSection">
+          <input
+            type="text"
+            placeholder="COUPON CODE"
+            class="e5CartCouponInput"
+          />
+          <button class="e5CartCouponBtn">APPLY</button>
+        </div>
+      </div>
+
+      <!-- Cart Totals -->
+      <div class="e5CartTotalsSection">
+        <h2 class="e5CartTotalsTitle">CART TOTALS</h2>
+
+        <div class="e5CartTotalsContent">
+          <div class="e5CartTotalRow">
+            <span class="e5CartTotalLabel">Subtotal</span>
+            <span class="e5CartTotalValue">$12,000.00</span>
+          </div>
+
+          <div class="e5CartTotalRow">
+            <div class="e5CartTotalLabel">
+              <div>Shipping</div>
+              <div class="e5CartShippingInfo">
+                <span class="e5CartShippingFree">FREE SHIPPING</span>
+                <span class="e5CartShippingLocation">Shipping to FL.</span>
+                <a href="#" class="e5CartChangeAddress">Change Address</a>
+              </div>
+            </div>
+            <span class="e5CartTotalValue"></span>
+          </div>
+
+          <div class="e5CartTotalRow">
+            <span class="e5CartTotalLabel">FL State Tax</span>
+            <span class="e5CartTotalValue">$840.00</span>
+          </div>
+
+          <div class="e5CartTotalRow e5CartFinalTotal">
+            <span class="e5CartTotalLabel">Total</span>
+            <span class="e5CartTotalValue">$12,840.00</span>
+          </div>
+
+          <p class="e5CartAffirmText">
+            Starting at $696/mo or 0% APR with Affirm. <a href="#" class="e5CartAffirmLink">See if you qualify</a>
+          </p>
+
+          <!-- Payment Buttons -->
+          <div class="e5CartPaymentButtons">
+            <button class="e5CartAffirmButton">
+              <span class="e5CartAffirmLogo">affirm</span>
+            </button>
+            <button class="e5CartApplePayButton">
+              <span class="e5CartApplePayIcon"></span>
+            </button>
+          </div>
+
+          <p class="e5CartMoreOptions">MORE QUICK PURCHASE OPTIONS</p>
+
+          <button class="e5CartCheckoutButton">PROCEED TO CHECKOUT</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .e5CartProgBar {
+    width: 100%;
+    background: #0a0a0a;
+  }
+
+  .e5CartProgInner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 32px;
+  }
+
+  .e5CartProgRow {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .e5CartProgLine {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 18px;
+    height: 1px;
+    background: #a33a3a;
+    z-index: 0;
+  }
+
+  /* Steps layout */
+  .e5CartProgStepWheels,
+  .e5CartProgStepCart,
+  .e5CartProgStepCheckout {
+    position: relative;
+    z-index: 1;
+    width: 33.333%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Dots (middle slightly bigger) */
+  .e5CartProgDotWheels,
+  .e5CartProgDotCheckout {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: #c94343;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .e5CartProgDotCart {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    background: #c94343;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Icons */
+  .e5CartProgIconWheels,
+  .e5CartProgIconCheckout {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  .e5CartProgIconCart {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  /* Labels */
+  .e5CartProgLabelWheels,
+  .e5CartProgLabelCheckout {
+    margin-top: 12px;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .e5CartProgLabelCart {
+    margin-top: 12px;
+    font-size: 11px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  /* Cart Content Section */
+  .e5CartContent {
+    width: 100%;
+    background: #f5f5f5;
+    padding: 60px 32px 80px;
+  }
+
+  .e5CartContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* Product Table */
+  .e5CartTableWrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .e5CartTableHeader {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 32px;
+  }
+
+  .e5CartHeaderProduct,
+  .e5CartHeaderPrice,
+  .e5CartHeaderQty,
+  .e5CartHeaderSubtotal {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #0a0a0a;
+    text-align: left;
+  }
+
+  .e5CartHeaderPrice,
+  .e5CartHeaderQty,
+  .e5CartHeaderSubtotal {
+    text-align: center;
+  }
+
+  /* Product Row */
+  .e5CartProductRow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .e5CartProductInfo {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .e5CartProductImage {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+
+  .e5CartProductDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .e5CartProductName {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #d31d25;
+    margin: 0 0 8px 0;
+    letter-spacing: 1px;
+  }
+
+  .e5CartProductSpec {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 12px;
+    color: #0a0a0a;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .e5CartProductFinish,
+  .e5CartProductModel {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 11px;
+    color: #0a0a0a;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .e5CartProductPrice,
+  .e5CartProductSubtotal {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 16px;
+    color: #0a0a0a;
+    text-align: center;
+  }
+
+  .e5CartProductQty {
+    display: flex;
+    justify-content: center;
+  }
+
+  .e5CartQtyInput {
+    width: 60px;
+    height: 36px;
+    text-align: center;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #0a0a0a;
+    background: #ffffff;
+  }
+
+  /* Coupon Section */
+  .e5CartCouponSection {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 32px;
+  }
+
+  .e5CartCouponInput {
+    width: 240px;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 13px;
+    color: #0a0a0a;
+    background: #ffffff;
+  }
+
+  .e5CartCouponInput::placeholder {
+    color: #999999;
+    letter-spacing: 1px;
+  }
+
+  .e5CartCouponBtn {
+    background: #d31d25;
+    color: #ffffff;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 44px;
+  }
+
+  .e5CartCouponBtn:hover {
+    background: #a33a3a;
+  }
+
+  /* Cart Totals Section */
+  .e5CartTotalsSection {
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .e5CartTotalsTitle {
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0a0a0a;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d5d5d5;
+  }
+
+  .e5CartTotalsContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .e5CartTotalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+  }
+
+  .e5CartTotalLabel {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #0a0a0a;
+  }
+
+  .e5CartTotalValue {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #0a0a0a;
+  }
+
+  .e5CartShippingInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .e5CartShippingFree {
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    color: #0a0a0a;
+  }
+
+  .e5CartShippingLocation {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    color: #666666;
+  }
+
+  .e5CartChangeAddress {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    color: #d31d25;
+    text-decoration: underline;
+    font-size: 11px;
+  }
+
+  .e5CartFinalTotal {
+    padding-top: 20px;
+    border-top: 1px solid #d5d5d5;
+    margin-top: 12px;
+  }
+
+  .e5CartFinalTotal .e5CartTotalLabel,
+  .e5CartFinalTotal .e5CartTotalValue {
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .e5CartAffirmText {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 11px;
+    color: #666666;
+    text-align: center;
+    margin: 16px 0;
+    line-height: 1.5;
+  }
+
+  .e5CartAffirmLink {
+    color: #d31d25;
+    text-decoration: underline;
+  }
+
+  /* Payment Buttons */
+  .e5CartPaymentButtons {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .e5CartAffirmButton,
+  .e5CartApplePayButton {
+    flex: 1;
+    height: 48px;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    background: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+
+  .e5CartAffirmButton:hover,
+  .e5CartApplePayButton:hover {
+    background: #f9f9f9;
+  }
+
+  .e5CartAffirmLogo {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 18px;
+    color: #0a0a0a;
+    font-style: italic;
+  }
+
+  .e5CartApplePayIcon::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+    background: #000000;
+    border-radius: 4px;
+  }
+
+  .e5CartMoreOptions {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 11px;
+    color: #666666;
+    text-align: center;
+    margin: 16px 0;
+    letter-spacing: 1px;
+  }
+
+  .e5CartCheckoutButton {
+    width: 100%;
+    background: #d31d25;
+    color: #ffffff;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 8px;
+  }
+
+  .e5CartCheckoutButton:hover {
+    background: #a33a3a;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .e5CartTableHeader,
+    .e5CartProductRow {
+      grid-template-columns: 1fr;
+    }
+
+    .e5CartHeaderPrice,
+    .e5CartHeaderQty,
+    .e5CartHeaderSubtotal {
+      display: none;
+    }
+
+    .e5CartProductPrice,
+    .e5CartProductQty,
+    .e5CartProductSubtotal {
+      text-align: left;
+    }
+
+    .e5CartProductQty {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .e5CartContent {
+      padding: 40px 16px 60px;
+    }
+
+    .e5CartTableWrapper {
+      padding: 20px;
+    }
+
+    .e5CartProductInfo {
+      flex-direction: column;
+    }
+
+    .e5CartProductImage {
+      width: 100%;
+      height: auto;
+    }
+
+    .e5CartCouponSection {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .e5CartCouponInput {
+      width: 100%;
+    }
+  }
+</style>

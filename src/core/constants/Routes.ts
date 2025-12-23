@@ -2,6 +2,7 @@ export const HOME_ROUTE = '/';
 export const PENDING_ROUTE = '/pending';
 export const PROCESS_ROUTE = '/process';
 export const CONTACT_ROUTE = '/contact';
+export const CART_ROUTE = '/cart';
 export const CHECKOUT_ROUTE = '/checkout';
 export const INSTALLATION_ROUTE = '/installation';
 export const SHOP_ROUTE = '/pending';
