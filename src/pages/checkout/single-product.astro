@@ -1,0 +1,13 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import SingleProductPage from './components/SingleProductPage.vue';
+
+// Get product ID from URL query params if provided
+const url = new URL(Astro.request.url);
+const productIdParam = url.searchParams.get('id');
+const productId = productIdParam ? parseInt(productIdParam, 10) : undefined;
+---
+
+<MainLayout title="Checkout - E5 Wheels">
+  <SingleProductPage client:load productId={productId} />
+</MainLayout>
