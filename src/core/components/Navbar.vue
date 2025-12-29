@@ -61,36 +61,40 @@ const closeGenerationsDropdown = () => {
 <template>
   <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center">
     <!-- Desktop Navigation -->
-    <div class="desktop-nav inline-grid h-full grid-cols-[1fr_auto_1fr] items-center gap-16 px-4">
-      <div class="flex justify-start gap-6">
-        <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
+    <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-12">
+      <div class="flex items-center gap-12">
+        <!-- Left Menu Items -->
+        <div class="flex items-center gap-6">
+          <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
 
-        <!-- Gallery Dropdown -->
-        <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
-          <button class="nav-link" :class="{'selected': isGalleryRoute}">
-            GALLERY
-            <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+          <!-- Gallery Dropdown -->
+          <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
+            <button class="nav-link" :class="{'selected': isGalleryRoute}">
+              GALLERY
+              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-          <!-- Dropdown Menu -->
-          <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
-            <a :href="GALLERY_VEHICLES_ROUTE" class="dropdown-item">VEHICLES</a>
-            <a :href="GALLERY_WHEELS_ROUTE" class="dropdown-item">WHEELS</a>
+            <!-- Dropdown Menu -->
+            <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
+              <a :href="GALLERY_VEHICLES_ROUTE" class="dropdown-item">VEHICLES</a>
+              <a :href="GALLERY_WHEELS_ROUTE" class="dropdown-item">WHEELS</a>
+            </div>
           </div>
+
+          <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}">PROCESS</a>
         </div>
 
-        <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}">PROCESS</a>
-      </div>
+        <!-- Center Logo -->
+        <div class="flex justify-center items-center px-8">
+          <a :href="HOME_ROUTE">
+            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
+          </a>
+        </div>
 
-      <div class="flex justify-center">
-        <a :href="HOME_ROUTE">
-          <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
-        </a>
-      </div>
-
-      <div class="flex justify-end items-center gap-6">
+        <!-- Right Menu Items -->
+        <div class="flex items-center gap-6">
         <!-- Generations Dropdown -->
         <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
           <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
@@ -123,9 +127,10 @@ const closeGenerationsDropdown = () => {
           </div>
         </div>
 
-        <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
-        <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
-        <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+          <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
+          <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
+          <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+        </div>
       </div>
     </div>
 
