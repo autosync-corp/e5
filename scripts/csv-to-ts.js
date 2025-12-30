@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const CSV_FILE = path.join(__dirname, '..', 'corvette-gallery.csv');
+const CSV_FILE = path.join(__dirname, '..', 'data', 'corvette-gallery.csv');
 const OUTPUT_FILE = path.join(__dirname, '..', 'src', 'pages', 'gallery', 'constants', 'CorvetteGalleryData.ts');
 const VARIABLE_NAME = 'corvetteGalleryData';
 
