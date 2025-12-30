@@ -219,16 +219,8 @@ function checkFitmentSize(
   wheelOffset: number,
   fitment: VehicleFitment
 ): boolean {
-  console.log(`[CHECK FITMENT SIZE] Testing ${wheelDiameter}" x ${wheelWidth}" against fitment:`, {
-    RimDiameter: fitment.RimDiameter,
-    RimWidth: fitment.RimWidth,
-    RimWidthMin: fitment.RimWidthMin,
-    RimWidthMax: fitment.RimWidthMax
-  });
-
   // Check diameter - must match exactly
   if (fitment.RimDiameter !== null && fitment.RimDiameter !== undefined && wheelDiameter !== fitment.RimDiameter) {
-    console.log(`  ❌ Diameter mismatch: wheel ${wheelDiameter}" !== fitment ${fitment.RimDiameter}"`);
     return false;
   }
 
@@ -237,17 +229,13 @@ function checkFitmentSize(
       fitment.RimWidthMax !== null && fitment.RimWidthMax !== undefined) {
     // Width range provided
     if (wheelWidth < fitment.RimWidthMin || wheelWidth > fitment.RimWidthMax) {
-      console.log(`  ❌ Width out of range: wheel ${wheelWidth}" not in [${fitment.RimWidthMin}", ${fitment.RimWidthMax}"]`);
       return false;
     }
-    console.log(`  ✅ Width in range: ${wheelWidth}" in [${fitment.RimWidthMin}", ${fitment.RimWidthMax}"]`);
   } else if (fitment.RimWidth !== null && fitment.RimWidth !== undefined) {
     // Exact width provided
     if (wheelWidth !== fitment.RimWidth) {
-      console.log(`  ❌ Width mismatch: wheel ${wheelWidth}" !== fitment ${fitment.RimWidth}"`);
       return false;
     }
-    console.log(`  ✅ Width match: ${wheelWidth}" === ${fitment.RimWidth}"`);
   }
 
   // Offset check is OPTIONAL - we don't validate offset even if range is provided
@@ -258,7 +246,6 @@ function checkFitmentSize(
   //   }
   // }
 
-  console.log(`  ✅ MATCH FOUND!`);
   return true;
 }
 
@@ -312,11 +299,7 @@ export function checkWheelFitment(
   }
 
   // Rule B: Check size compatibility against fitment sets
-  console.log(`\n[FITMENT CHECK] Testing wheel ${wheel.Diameter}" x ${wheel.Width}" with ${wheel.Offset > 0 ? '+' : ''}${wheel.Offset}mm`);
-  console.log(`[FITMENT CHECK] Vehicle has ${vehicle.Fitments.length} standard, ${vehicle.OptionalFitments.length} optional, ${vehicle.PlusSizes.length} plus size fitments`);
-
   // Try standard fitments first
-  console.log(`[FITMENT CHECK] Checking ${vehicle.Fitments.length} standard fitments...`);
   for (const fitment of vehicle.Fitments) {
     if (checkFitmentSize(wheel.Diameter, wheel.Width, wheel.Offset, fitment)) {
       reasons.push('Matches standard fitment');
@@ -330,7 +313,6 @@ export function checkWheelFitment(
   }
 
   // Try optional fitments
-  console.log(`[FITMENT CHECK] Checking ${vehicle.OptionalFitments.length} optional fitments...`);
   for (const fitment of vehicle.OptionalFitments) {
     if (checkFitmentSize(wheel.Diameter, wheel.Width, wheel.Offset, fitment)) {
       reasons.push('Matches optional fitment');
@@ -344,7 +326,6 @@ export function checkWheelFitment(
   }
 
   // Try plus sizes
-  console.log(`[FITMENT CHECK] Checking ${vehicle.PlusSizes.length} plus size fitments...`);
   for (const fitment of vehicle.PlusSizes) {
     if (checkFitmentSize(wheel.Diameter, wheel.Width, wheel.Offset, fitment)) {
       reasons.push('Matches plus size fitment');

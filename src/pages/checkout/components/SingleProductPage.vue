@@ -182,10 +182,6 @@ const availableFrontSizeOffsets = computed(() => {
   // For PlusSizes: Use Type='F' for front
   const frontPlus = selectedVehicle.value.PlusSizes.filter(f => f.Type === 'F');
 
-  console.log('[FRONT DROPDOWN] Front Standard:', frontStandard.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-  console.log('[FRONT DROPDOWN] Front Optional:', frontOptional.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-  console.log('[FRONT DROPDOWN] Front Plus:', frontPlus.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-
   // Create a vehicle object with ONLY front fitments
   const frontOnlyVehicle = {
     ...selectedVehicle.value,
@@ -210,8 +206,6 @@ const availableFrontSizeOffsets = computed(() => {
 
     const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
     const sizeStr = `${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`;
-
-    console.log(`[FRONT DROPDOWN] Testing ${sizeStr}:`, fitmentCheck.fits ? 'FITS' : 'NO FIT', fitmentCheck.reasons);
 
     if (fitmentCheck.fits) {
       sizeOffsets.add(sizeStr);
@@ -265,10 +259,6 @@ const availableRearSizeOffsets = computed(() => {
   // For PlusSizes: Use Type='R' for rear
   const rearPlus = selectedVehicle.value.PlusSizes.filter(f => f.Type === 'R');
 
-  console.log('[REAR DROPDOWN] Rear Standard:', rearStandard.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-  console.log('[REAR DROPDOWN] Rear Optional:', rearOptional.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-  console.log('[REAR DROPDOWN] Rear Plus:', rearPlus.map(f => `${f.RimDiameter}" x ${f.RimWidth || `${f.RimWidthMin}-${f.RimWidthMax}`}`));
-
   // Create a vehicle object with ONLY rear fitments
   const rearOnlyVehicle = {
     ...selectedVehicle.value,
@@ -293,8 +283,6 @@ const availableRearSizeOffsets = computed(() => {
 
     const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
     const sizeStr = `${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`;
-
-    console.log(`[REAR DROPDOWN] Testing ${sizeStr}:`, fitmentCheck.fits ? 'FITS' : 'NO FIT', fitmentCheck.reasons);
 
     if (fitmentCheck.fits) {
       sizeOffsets.add(sizeStr);

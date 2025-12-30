@@ -56,17 +56,28 @@ onMounted(async () => {
 async function fetchYears() {
   isLoadingYears.value = true;
   try {
-    const params = new URLSearchParams({
-      key: API_KEY,
-      'i-tags': 'true',
-    });
-
-    const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-    if (!response.ok) throw new Error('Failed to fetch years');
-
-    const data = await response.json();
     const years = new Set<number>();
-    data.Vehicles?.forEach((v: Vehicle) => years.add(v.Year));
+    let pageNumber = 1;
+    let hasMoreItems = true;
+
+    while (hasMoreItems) {
+      const params = new URLSearchParams({
+        key: API_KEY,
+        'p-number': pageNumber.toString(),
+        'p-size': '500',
+        'i-tags': 'true',
+      });
+
+      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+      if (!response.ok) throw new Error('Failed to fetch years');
+
+      const data = await response.json();
+      data.Vehicles?.forEach((v: Vehicle) => years.add(v.Year));
+
+      hasMoreItems = data.MoreItems === true;
+      pageNumber++;
+    }
+
     availableYears.value = Array.from(years).sort((a, b) => b - a); // Descending
   } catch (error) {
     console.error('Error fetching years:', error);
@@ -84,18 +95,29 @@ async function fetchMakes(year: number) {
   selectedSubmodel.value = null;
 
   try {
-    const params = new URLSearchParams({
-      key: API_KEY,
-      'f-year': year.toString(),
-      'i-tags': 'true',
-    });
-
-    const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-    if (!response.ok) throw new Error('Failed to fetch makes');
-
-    const data = await response.json();
     const makes = new Set<string>();
-    data.Vehicles?.forEach((v: Vehicle) => makes.add(v.Make));
+    let pageNumber = 1;
+    let hasMoreItems = true;
+
+    while (hasMoreItems) {
+      const params = new URLSearchParams({
+        key: API_KEY,
+        'f-year': year.toString(),
+        'p-number': pageNumber.toString(),
+        'p-size': '500',
+        'i-tags': 'true',
+      });
+
+      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+      if (!response.ok) throw new Error('Failed to fetch makes');
+
+      const data = await response.json();
+      data.Vehicles?.forEach((v: Vehicle) => makes.add(v.Make));
+
+      hasMoreItems = data.MoreItems === true;
+      pageNumber++;
+    }
+
     availableMakes.value = Array.from(makes).sort();
   } catch (error) {
     console.error('Error fetching makes:', error);
@@ -112,19 +134,30 @@ async function fetchModels(year: number, make: string) {
   selectedSubmodel.value = null;
 
   try {
-    const params = new URLSearchParams({
-      key: API_KEY,
-      'f-year': year.toString(),
-      'f-make': make,
-      'i-tags': 'true',
-    });
-
-    const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-    if (!response.ok) throw new Error('Failed to fetch models');
-
-    const data = await response.json();
     const models = new Set<string>();
-    data.Vehicles?.forEach((v: Vehicle) => models.add(v.Model));
+    let pageNumber = 1;
+    let hasMoreItems = true;
+
+    while (hasMoreItems) {
+      const params = new URLSearchParams({
+        key: API_KEY,
+        'f-year': year.toString(),
+        'f-make': make,
+        'p-number': pageNumber.toString(),
+        'p-size': '500',
+        'i-tags': 'true',
+      });
+
+      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+      if (!response.ok) throw new Error('Failed to fetch models');
+
+      const data = await response.json();
+      data.Vehicles?.forEach((v: Vehicle) => models.add(v.Model));
+
+      hasMoreItems = data.MoreItems === true;
+      pageNumber++;
+    }
+
     availableModels.value = Array.from(models).sort();
   } catch (error) {
     console.error('Error fetching models:', error);
@@ -140,22 +173,33 @@ async function fetchSubmodels(year: number, make: string, model: string) {
   selectedSubmodel.value = null;
 
   try {
-    const params = new URLSearchParams({
-      key: API_KEY,
-      'f-year': year.toString(),
-      'f-make': make,
-      'f-model': model,
-      'i-tags': 'true',
-    });
-
-    const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-    if (!response.ok) throw new Error('Failed to fetch submodels');
-
-    const data = await response.json();
     const submodels = new Set<string>();
-    data.Vehicles?.forEach((v: Vehicle) => {
-      if (v.Submodel) submodels.add(v.Submodel);
-    });
+    let pageNumber = 1;
+    let hasMoreItems = true;
+
+    while (hasMoreItems) {
+      const params = new URLSearchParams({
+        key: API_KEY,
+        'f-year': year.toString(),
+        'f-make': make,
+        'f-model': model,
+        'p-number': pageNumber.toString(),
+        'p-size': '500',
+        'i-tags': 'true',
+      });
+
+      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+      if (!response.ok) throw new Error('Failed to fetch submodels');
+
+      const data = await response.json();
+      data.Vehicles?.forEach((v: Vehicle) => {
+        if (v.Submodel) submodels.add(v.Submodel);
+      });
+
+      hasMoreItems = data.MoreItems === true;
+      pageNumber++;
+    }
+
     availableSubmodels.value = Array.from(submodels).sort();
   } catch (error) {
     console.error('Error fetching submodels:', error);
@@ -173,6 +217,8 @@ async function fetchVehicle(year: number, make: string, model: string, submodel:
     const params = new URLSearchParams({
       key: API_KEY,
       'f-query': query,
+      'p-number': '1',
+      'p-size': '500',
       'i-fitments': 'true',
       'i-optionalFitments': 'true',
       'i-plusSizes': 'true',
