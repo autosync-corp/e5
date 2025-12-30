@@ -2,6 +2,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
 import { SINGLE_PRODUCT_ROUTE } from '@/core/constants/Routes';
+import VehicleSelector from '@/core/components/VehicleSelector.vue';
+import { filterWheelsByVehicle, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 
 // State
 const apiResponse = ref<WheelsApiResponse | null>(null);
@@ -9,6 +11,12 @@ const isLoading = ref(true);
 const error = ref<string | null>(null);
 const selectedSeries = ref<string>('');
 const searchQuery = ref('');
+const selectedVehicle = ref<Vehicle | null>(null);
+
+// Computed - Check if selected vehicle has staggered fitment
+const isStaggered = computed(() => {
+  return selectedVehicle.value ? hasStaggeredFitment(selectedVehicle.value) : false;
+});
 
 // Computed - Get available series (unique Model names)
 const availableSeries = computed(() => {
@@ -20,10 +28,15 @@ const availableSeries = computed(() => {
   return ['All Series', ...Array.from(series).sort()];
 });
 
-// Filter products by series and search
+// Filter products by series, search, and vehicle fitment
 const filteredProducts = computed(() => {
   if (!apiResponse.value) return [];
   let products = apiResponse.value.Wheels;
+
+  // Filter by vehicle fitment first (most restrictive)
+  if (selectedVehicle.value) {
+    products = filterWheelsByVehicle(products, selectedVehicle.value);
+  }
 
   // Filter by series (Model)
   if (selectedSeries.value && selectedSeries.value !== 'All Series') {
@@ -88,16 +101,97 @@ const productsBySeries = computed(() => {
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(([seriesName, products]) => {
       // Group by complete finish name (Color + Finish + Accent)
+      // Store one representative product for each unique finish combination
       const finishMap = new Map<string, WheelProduct>();
       products.forEach(p => {
         const finishKey = getFinishName(p);
+
         if (!finishMap.has(finishKey)) {
+          // First product with this finish combination - store it
           finishMap.set(finishKey, p);
+        } else {
+          // We already have a product for this finish combination
+          // Select the best representative product based on multiple criteria
+          const existing = finishMap.get(finishKey)!;
+          let shouldReplace = false;
+
+          // For staggered fitment, prefer smaller wheels (more likely to be front wheels)
+          // This ensures when user clicks, they land on a product that fits the front
+          if (isStaggered.value && selectedVehicle.value) {
+            const frontFitments = getFrontFitments(selectedVehicle.value);
+            const pMatchesFront = frontFitments.some(f =>
+              f.RimDiameter === p.Diameter &&
+              (f.RimWidth === p.Width || (f.RimWidthMin && f.RimWidthMax && p.Width >= f.RimWidthMin && p.Width <= f.RimWidthMax))
+            );
+            const existingMatchesFront = frontFitments.some(f =>
+              f.RimDiameter === existing.Diameter &&
+              (f.RimWidth === existing.Width || (f.RimWidthMin && f.RimWidthMax && existing.Width >= f.RimWidthMin && existing.Width <= f.RimWidthMax))
+            );
+
+            // Strongly prefer front-fitting products
+            if (pMatchesFront && !existingMatchesFront) {
+              shouldReplace = true;
+            } else if (pMatchesFront && existingMatchesFront) {
+              // Both fit front, prefer one with image and in stock
+              if (p.Img0001 && !existing.Img0001) {
+                shouldReplace = true;
+              } else if (p.Img0001 && existing.Img0001 && p.InStock && !existing.InStock) {
+                shouldReplace = true;
+              }
+            }
+          } else {
+            // Non-staggered: just prefer products with images and in stock
+            if (p.Img0001 && !existing.Img0001) {
+              shouldReplace = true;
+            } else if (p.Img0001 && existing.Img0001 && p.InStock && !existing.InStock) {
+              shouldReplace = true;
+            }
+          }
+
+          if (shouldReplace) {
+            finishMap.set(finishKey, p);
+          }
         }
       });
 
       // Get unique sizes for this series
       const allSizes = Array.from(new Set(products.map(p => `${p.Diameter}" x ${p.Width}"`))).sort();
+
+      // For staggered fitment, separate front and rear sizes
+      let frontSizes: string[] = [];
+      let rearSizes: string[] = [];
+      if (isStaggered.value && selectedVehicle.value) {
+        const frontFitments = getFrontFitments(selectedVehicle.value);
+        const rearFitments = getRearFitments(selectedVehicle.value);
+
+        // Get front sizes
+        const frontSizeSet = new Set<string>();
+        products.forEach(wheel => {
+          const matchesFront = frontFitments.some(f =>
+            f.RimDiameter === wheel.Diameter &&
+            (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+          );
+          if (matchesFront) {
+            const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
+            frontSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
+          }
+        });
+        frontSizes = Array.from(frontSizeSet).sort();
+
+        // Get rear sizes
+        const rearSizeSet = new Set<string>();
+        products.forEach(wheel => {
+          const matchesRear = rearFitments.some(f =>
+            f.RimDiameter === wheel.Diameter &&
+            (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+          );
+          if (matchesRear) {
+            const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
+            rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
+          }
+        });
+        rearSizes = Array.from(rearSizeSet).sort();
+      }
 
       return {
         seriesName,
@@ -106,11 +200,50 @@ const productsBySeries = computed(() => {
         finishVariations: Array.from(finishMap.entries()).map(([finish, product]) => {
           // Get all products for this specific finish combination
           const finishProducts = products.filter(p => getFinishName(p) === finish);
+
+          // For staggered fitment, calculate front and rear sizes for this finish
+          let finishFrontSizes: string[] = [];
+          let finishRearSizes: string[] = [];
+          if (isStaggered.value && selectedVehicle.value) {
+            const frontFitments = getFrontFitments(selectedVehicle.value);
+            const rearFitments = getRearFitments(selectedVehicle.value);
+
+            // Get front sizes for this finish
+            const frontSizeSet = new Set<string>();
+            finishProducts.forEach(wheel => {
+              const matchesFront = frontFitments.some(f =>
+                f.RimDiameter === wheel.Diameter &&
+                (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+              );
+              if (matchesFront) {
+                const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
+                frontSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
+              }
+            });
+            finishFrontSizes = Array.from(frontSizeSet).sort();
+
+            // Get rear sizes for this finish
+            const rearSizeSet = new Set<string>();
+            finishProducts.forEach(wheel => {
+              const matchesRear = rearFitments.some(f =>
+                f.RimDiameter === wheel.Diameter &&
+                (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+              );
+              if (matchesRear) {
+                const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
+                rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
+              }
+            });
+            finishRearSizes = Array.from(rearSizeSet).sort();
+          }
+
           return {
             finish,
             product,
             variantCount: finishProducts.length,
             sizes: Array.from(new Set(finishProducts.map(p => `${p.Diameter}" x ${p.Width}"`))).sort(),
+            frontSizes: finishFrontSizes,
+            rearSizes: finishRearSizes,
             priceRange: {
               min: Math.min(...finishProducts.map(p => p.Price)),
               max: Math.max(...finishProducts.map(p => p.Price))
@@ -118,6 +251,8 @@ const productsBySeries = computed(() => {
           };
         }),
         allSizes,
+        frontSizes,
+        rearSizes,
         // Get overall price range for series
         priceRange: {
           min: Math.min(...products.map(p => p.Price)),
@@ -157,6 +292,10 @@ function getProductImage(product: WheelProduct): string {
   return getWheelImageUrl(apiResponse.value.ImgUrlBase, product.Img0001);
 }
 
+function handleVehicleSelected(vehicle: Vehicle | null) {
+  selectedVehicle.value = vehicle;
+}
+
 onMounted(() => {
   loadProducts();
 });
@@ -188,6 +327,9 @@ onMounted(() => {
 
     <!-- Shop Content -->
     <div v-else class="max-w-[1728px] mx-auto px-16 py-12">
+      <!-- Vehicle Selector -->
+      <VehicleSelector @vehicle-selected="handleVehicleSelected" />
+
       <!-- Filters Section -->
       <div class="mb-12 space-y-6">
         <!-- Search Bar -->
@@ -224,6 +366,9 @@ onMounted(() => {
         <div class="text-center">
           <p class="text-lg font-['Franklin_Gothic_Book'] text-black/70">
             Showing {{ productsBySeries.length }} series ({{ filteredProducts.length }} variants)
+            <span v-if="selectedVehicle" class="text-e5-red font-['Franklin_Gothic_Demi']">
+              • Filtered for your vehicle
+            </span>
           </p>
         </div>
       </div>
@@ -283,18 +428,65 @@ onMounted(() => {
 
                 <!-- Available Sizes for this Finish -->
                 <div class="space-y-1">
-                  <p class="text-xs font-['Franklin_Gothic_Book'] text-black/60">
-                    {{ variation.variantCount }} size{{ variation.variantCount !== 1 ? 's' : '' }} available
-                  </p>
-                  <div class="flex flex-wrap gap-1">
-                    <span
-                      v-for="size in variation.sizes"
-                      :key="size"
-                      class="text-xs font-['Franklin_Gothic_Book'] text-black/70 bg-gray-50 px-2 py-0.5 rounded"
-                    >
-                      {{ size }}
-                    </span>
-                  </div>
+                  <!-- Non-staggered: Show regular sizes -->
+                  <template v-if="!isStaggered">
+                    <p class="text-xs font-['Franklin_Gothic_Book'] text-black/60">
+                      {{ variation.variantCount }} size{{ variation.variantCount !== 1 ? 's' : '' }} available
+                    </p>
+                    <div class="flex flex-wrap gap-1">
+                      <span
+                        v-for="size in variation.sizes"
+                        :key="size"
+                        class="text-xs font-['Franklin_Gothic_Book'] text-black/70 bg-gray-50 px-2 py-0.5 rounded"
+                      >
+                        {{ size }}
+                      </span>
+                    </div>
+                  </template>
+
+                  <!-- Staggered: Show front and rear sizes separately -->
+                  <template v-else>
+                    <p class="text-xs font-['Franklin_Gothic_Demi'] text-e5-red/80 mb-1">
+                      STAGGERED FITMENT
+                    </p>
+
+                    <!-- Front Sizes -->
+                    <div v-if="variation.frontSizes.length > 0" class="mb-2">
+                      <p class="text-xs font-['Franklin_Gothic_Medium'] text-black/70 mb-1">
+                        FRONT:
+                      </p>
+                      <div class="flex flex-wrap gap-1">
+                        <span
+                          v-for="size in variation.frontSizes"
+                          :key="'front-' + size"
+                          class="text-xs font-['Franklin_Gothic_Book'] text-black/70 bg-blue-50 px-2 py-0.5 rounded border border-blue-200"
+                        >
+                          {{ size }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Rear Sizes -->
+                    <div v-if="variation.rearSizes.length > 0">
+                      <p class="text-xs font-['Franklin_Gothic_Medium'] text-black/70 mb-1">
+                        REAR:
+                      </p>
+                      <div class="flex flex-wrap gap-1">
+                        <span
+                          v-for="size in variation.rearSizes"
+                          :key="'rear-' + size"
+                          class="text-xs font-['Franklin_Gothic_Book'] text-black/70 bg-green-50 px-2 py-0.5 rounded border border-green-200"
+                        >
+                          {{ size }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- No staggered sizes available -->
+                    <p v-if="variation.frontSizes.length === 0 && variation.rearSizes.length === 0" class="text-xs font-['Franklin_Gothic_Book'] text-black/50 italic">
+                      No staggered fitment sizes available for this finish
+                    </p>
+                  </template>
                 </div>
 
                 <!-- Price Range for this Finish -->
@@ -323,6 +515,9 @@ onMounted(() => {
       <div v-if="productsBySeries.length === 0" class="text-center py-20">
         <p class="text-2xl font-['Franklin_Gothic_Book'] text-black/50">
           No products found matching your filters.
+        </p>
+        <p v-if="selectedVehicle" class="text-lg font-['Franklin_Gothic_Book'] text-black/40 mt-4">
+          No wheels fit your selected vehicle with the current filters.
         </p>
         <button
           @click="selectedSeries = ''; searchQuery = ''"

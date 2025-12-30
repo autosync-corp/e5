@@ -9,5 +9,5 @@ const productId = productIdParam ? parseInt(productIdParam, 10) : undefined;
 ---
 
 <MainLayout title="Checkout - E5 Wheels">
-  <SingleProductPage client:load productId={productId} />
+  <SingleProductPage client:only="vue" productId={productId} />
 </MainLayout>
