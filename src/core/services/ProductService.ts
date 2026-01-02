@@ -207,8 +207,17 @@ export function getWheelDisplayName(wheel: WheelProduct): string {
  */
 export function calculateCartTotals(items: CartItem[], taxRate: number = 0.07) {
   const subtotal = items.reduce((sum, item) => {
-    const totalWheels = item.frontWheels + item.rearWheels;
-    return sum + (item.product.Price * totalWheels * item.quantity);
+    // Check if item is staggered (front-only or rear-only)
+    const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
+
+    if (isStaggeredItem) {
+      // For staggered items: quantity already represents number of wheels
+      return sum + (item.product.Price * item.quantity);
+    } else {
+      // For non-staggered items: quantity represents number of sets
+      const totalWheels = item.frontWheels + item.rearWheels;
+      return sum + (item.product.Price * totalWheels * item.quantity);
+    }
   }, 0);
 
   const tax = subtotal * taxRate;

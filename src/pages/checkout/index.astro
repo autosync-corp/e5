@@ -1,5 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
+import CheckoutOrder from "./components/CheckoutOrder.vue";
+import AddressForm from "./components/AddressForm.vue";
 ---
 
 <MainLayout title="Checkout - E5 Wheels">
@@ -40,213 +42,15 @@ import MainLayout from "@/layouts/MainLayout.astro";
   <section class="e5CheckoutContent">
     <div class="e5CheckoutContainer">
       <!-- Left Column - Billing Details -->
-      <div class="e5CheckoutBillingWrapper">
-        <h2 class="e5CheckoutSectionTitle">Billing Details</h2>
-
-        <form class="e5CheckoutForm">
-          <!-- Name Fields -->
-          <div class="e5CheckoutFormRow">
-            <div class="e5CheckoutFormGroup">
-              <label class="e5CheckoutLabel">FIRST NAME</label>
-              <input type="text" class="e5CheckoutInput" />
-            </div>
-            <div class="e5CheckoutFormGroup">
-              <label class="e5CheckoutLabel">LAST NAME</label>
-              <input type="text" class="e5CheckoutInput" />
-            </div>
-          </div>
-
-          <!-- Company Name -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">COMPANY NAME (OPTIONAL)</label>
-            <input type="text" class="e5CheckoutInput" />
-          </div>
-
-          <!-- Country -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">COUNTRY / REGION</label>
-            <select class="e5CheckoutSelect">
-              <option>UNITED STATES (US)</option>
-            </select>
-          </div>
-
-          <!-- Street Address -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">STREET ADDRESS</label>
-            <input type="text" placeholder="House number and street name" class="e5CheckoutInput" />
-            <input type="text" placeholder="Apartment, suite, unit, etc. (optional)" class="e5CheckoutInput e5CheckoutInputSecondary" />
-          </div>
-
-          <!-- Town / City -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">TOWN / CITY</label>
-            <input type="text" class="e5CheckoutInput" />
-          </div>
-
-          <!-- State -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">STATE</label>
-            <select class="e5CheckoutSelect">
-              <option>Select State</option>
-            </select>
-          </div>
-
-          <!-- ZIP Code -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">ZIP CODE</label>
-            <input type="text" class="e5CheckoutInput" />
-          </div>
-
-          <!-- Phone Number -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">PHONE NUMBER</label>
-            <input type="tel" class="e5CheckoutInput" />
-          </div>
-
-          <!-- Email Address -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">EMAIL ADDRESS</label>
-            <input type="email" class="e5CheckoutInput" />
-          </div>
-
-          <!-- Ship to different address -->
-          <div class="e5CheckoutCheckboxGroup">
-            <input type="checkbox" id="shipDifferent" class="e5CheckoutCheckbox" />
-            <label for="shipDifferent" class="e5CheckoutCheckboxLabel">Ship to a different address?</label>
-          </div>
-
-          <!-- Order Notes -->
-          <div class="e5CheckoutFormGroup">
-            <label class="e5CheckoutLabel">ORDER NOTES (OPTIONAL)</label>
-            <textarea class="e5CheckoutTextarea" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-          </div>
-        </form>
-      </div>
+      <AddressForm client:load />
 
       <!-- Right Column - Order Summary -->
-      <div class="e5CheckoutOrderWrapper">
-        <h2 class="e5CheckoutOrderTitle">YOUR ORDER</h2>
-
-        <!-- Product Info -->
-        <div class="e5CheckoutOrderSection">
-          <div class="e5CheckoutOrderRow">
-            <span class="e5CheckoutOrderLabel">Product</span>
-            <span class="e5CheckoutOrderLabel">Subtotal</span>
-          </div>
-
-          <div class="e5CheckoutProductItem">
-            <div>
-              <p class="e5CheckoutProductName">Sonoma × 1</p>
-              <p class="e5CheckoutProductDetail">+2 x FRONT 20"x10"</p>
-              <p class="e5CheckoutProductDetail">+2 x REAR 21"x13"</p>
-              <p class="e5CheckoutProductDetail">FINISH: BRUSHED ALUMINUM</p>
-              <p class="e5CheckoutProductDetail">MODEL: C8 Z06</p>
-            </div>
-            <span class="e5CheckoutProductPrice">$12,000.00</span>
-          </div>
-        </div>
-
-        <!-- Totals -->
-        <div class="e5CheckoutOrderSection">
-          <div class="e5CheckoutOrderRow">
-            <span class="e5CheckoutOrderLabel">Subtotal</span>
-            <span class="e5CheckoutOrderValue">$12,000.00</span>
-          </div>
-
-          <div class="e5CheckoutOrderRow">
-            <span class="e5CheckoutOrderLabel">Free Shipping</span>
-            <span class="e5CheckoutOrderValue">$0.00</span>
-          </div>
-
-          <div class="e5CheckoutOrderRow">
-            <span class="e5CheckoutOrderLabel">FL Sales Tax</span>
-            <span class="e5CheckoutOrderValue">$840.00</span>
-          </div>
-
-          <div class="e5CheckoutOrderRow e5CheckoutOrderTotal">
-            <span class="e5CheckoutOrderLabel">TOTAL</span>
-            <span class="e5CheckoutOrderValue">$12,840.00</span>
-          </div>
-        </div>
-
-        <!-- Payment Methods -->
-        <div class="e5CheckoutPaymentSection">
-          <!-- Credit/Debit Cards -->
-          <div class="e5CheckoutPaymentOption">
-            <input type="radio" name="payment" id="card" checked class="e5CheckoutRadio" />
-            <label for="card" class="e5CheckoutPaymentLabel">
-              <span>Credit/Debit Cards</span>
-              <div class="e5CheckoutCardIcons">
-                <img src="/assets/images/checkout/cards.png" alt="Payment Cards" class="e5CheckoutCardImage" />
-              </div>
-            </label>
-          </div>
-
-          <!-- Card Details Form -->
-          <div class="e5CheckoutCardForm">
-            <div class="e5CheckoutFormGroup">
-              <label class="e5CheckoutLabel">Card Number</label>
-              <input type="text" placeholder="1234 1234 1234 1234" class="e5CheckoutInput" />
-            </div>
-
-            <div class="e5CheckoutFormRow">
-              <div class="e5CheckoutFormGroup">
-                <label class="e5CheckoutLabel">Expiration Date</label>
-                <input type="text" placeholder="MM/YY" class="e5CheckoutInput" />
-              </div>
-              <div class="e5CheckoutFormGroup">
-                <label class="e5CheckoutLabel">Security Code</label>
-                <input type="text" placeholder="CVV" class="e5CheckoutInput" />
-              </div>
-            </div>
-
-            <div class="e5CheckoutCheckboxGroup">
-              <input type="checkbox" id="saveCard" class="e5CheckoutCheckbox" />
-              <label for="saveCard" class="e5CheckoutCheckboxLabel">Save Card</label>
-            </div>
-          </div>
-
-          <!-- Affirm Pay Over Time -->
-          <div class="e5CheckoutPaymentOption">
-            <input type="radio" name="payment" id="affirm" class="e5CheckoutRadio" />
-            <label for="affirm" class="e5CheckoutPaymentLabel">
-              <span>Affirm Pay Over Time</span>
-              <img src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png" alt="Affirm" class="e5CheckoutAffirmLogo" />
-            </label>
-          </div>
-
-          <!-- Google Pay -->
-          <div class="e5CheckoutPaymentOption">
-            <input type="radio" name="payment" id="googlepay" class="e5CheckoutRadio" />
-            <label for="googlepay" class="e5CheckoutPaymentLabel">
-              <span>Google Pay</span>
-              <img src="/assets/images/checkout/gpay.png" alt="Google Pay" class="e5CheckoutPaymentIcon" />
-            </label>
-          </div>
-
-          <!-- Apple Pay -->
-          <div class="e5CheckoutPaymentOption">
-            <input type="radio" name="payment" id="applepay" class="e5CheckoutRadio" />
-            <label for="applepay" class="e5CheckoutPaymentLabel">
-              <span>Apple Pay</span>
-              <img src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.png" alt="Apple Pay" class="e5CheckoutPaymentIcon" />
-            </label>
-          </div>
-        </div>
-
-        <!-- Privacy Notice -->
-        <p class="e5CheckoutPrivacyText">
-          Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#" class="e5CheckoutPrivacyLink">Terms and Conditions</a>.
-        </p>
-
-        <!-- Place Order Button -->
-        <button class="e5CheckoutPlaceOrderBtn">PLACE ORDER</button>
-      </div>
+      <CheckoutOrder client:load />
     </div>
   </section>
 </MainLayout>
 
-<style>
+<style is:global>
   /* Progress Bar */
   .e5CheckoutProgBar {
     width: 100%;
@@ -605,6 +409,33 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
   .e5CheckoutPlaceOrderBtn:hover {
     background: #a33a3a;
+  }
+
+  /* Empty State Styles */
+  .e5CheckoutEmptyState {
+    padding: 40px;
+    text-align: center;
+  }
+
+  .e5CheckoutEmptyText {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 16px;
+    color: #666666;
+  }
+
+  /* Shipping Address Section */
+  .e5CheckoutShippingSection {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 2px solid #e5e5e5;
+  }
+
+  .e5CheckoutSubsectionTitle {
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #0a0a0a;
+    margin-bottom: 24px;
   }
 
   /* Responsive Design */
