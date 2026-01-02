@@ -2,12 +2,15 @@
 import {computed, ref, onMounted} from "vue";
 import {CART_ICON, E5_LOGO_WHITE} from "@/core/constants/App.ts";
 import {
+  CART_ROUTE,
   CONTACT_ROUTE,
   GALLERY_ROUTE,
   GALLERY_VEHICLES_ROUTE,
   GALLERY_WHEELS_ROUTE,
   GENERATIONS_ROUTE,
   GENERATIONS_C5_Z06_ROUTE,
+  GENERATIONS_C6_ROUTE,
+  GENERATIONS_C6_GRAND_SPORT_ROUTE,
   GENERATIONS_C7_STINGRAY_ROUTE,
   GENERATIONS_C7_GRAND_SPORT_ROUTE,
   GENERATIONS_C8_STINGRAY_ROUTE,
@@ -118,7 +121,8 @@ const closeGenerationsDropdown = () => {
             </div>
             <div class="generation-group">
               <div class="generation-title">C6</div>
-              <div class="dropdown-item coming-soon">Coming Soon</div>
+              <a :href="GENERATIONS_C6_ROUTE" class="dropdown-item">Base Model</a>
+              <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C5</div>
@@ -129,7 +133,9 @@ const closeGenerationsDropdown = () => {
 
           <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
-          <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+          <a :href="CART_ROUTE">
+            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+          </a>
         </div>
       </div>
     </div>
@@ -196,7 +202,8 @@ const closeGenerationsDropdown = () => {
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C6</div>
-              <div class="mobile-submenu-link coming-soon">Coming Soon</div>
+              <a :href="GENERATIONS_C6_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base Model</a>
+              <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C5</div>
@@ -208,7 +215,9 @@ const closeGenerationsDropdown = () => {
         <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
-          <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+          <a :href="CART_ROUTE" @click="closeMobileMenu">
+            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+          </a>
         </div>
       </div>
     </div>

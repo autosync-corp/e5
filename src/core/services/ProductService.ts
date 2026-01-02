@@ -59,6 +59,7 @@ export interface CartItem {
   frontWheels: number; // e.g., 2
   rearWheels: number; // e.g., 2
   vehicleModel?: string; // e.g., "C8 Z06"
+  imgUrlBase?: string; // Image URL base from API
 }
 
 /**

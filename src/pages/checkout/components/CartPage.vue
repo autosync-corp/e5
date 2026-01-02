@@ -46,8 +46,18 @@ function continueShopping() {
 }
 
 function getItemSubtotal(item: CartItem): number {
-  const totalWheels = item.frontWheels + item.rearWheels;
-  return item.product.Price * totalWheels * item.quantity;
+  // For staggered fitment items, quantity already represents the number of wheels
+  // For non-staggered items, quantity represents sets, so multiply by total wheels
+  const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
+
+  if (isStaggeredItem) {
+    // Staggered: quantity = number of wheels, just multiply price × quantity
+    return item.product.Price * item.quantity;
+  } else {
+    // Non-staggered: quantity = number of sets, multiply by total wheels
+    const totalWheels = item.frontWheels + item.rearWheels;
+    return item.product.Price * totalWheels * item.quantity;
+  }
 }
 
 onMounted(() => {
@@ -138,25 +148,32 @@ onMounted(() => {
               <!-- Product Info -->
               <div class="flex gap-6 items-start">
                 <img
-                  :src="getWheelImageUrl('https://media.autosyncstudio.com/wheels/', item.product.Img0001)"
+                  :src="item.product.Img0001 && item.imgUrlBase ? `${item.imgUrlBase}${item.product.Img0001}` : '/assets/images/placeholder-wheel.png'"
                   :alt="item.product.Model"
                   class="w-[120px] h-[120px] object-contain"
+                  @error="($event.target as HTMLImageElement).src = '/assets/images/placeholder-wheel.png'"
                 />
                 <div class="flex flex-col gap-1">
                   <h3 class="text-lg font-['Franklin_Gothic_Demi'] text-e5-red tracking-wide mb-2">
                     {{ item.product.Model.toUpperCase() }}
                   </h3>
-                  <p class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    +{{ item.frontWheels }} x FRONT {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                  <p v-if="item.frontWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                    {{ item.frontWheels }} x FRONT {{ item.product.Diameter }}"x{{ item.product.Width }}"
                   </p>
-                  <p class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    +{{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                  <p v-if="item.rearWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                    {{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
                   </p>
                   <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
                     FINISH: {{ item.product.ShortFinish || item.product.Finish || 'Standard' }}
                   </p>
                   <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
                     MODEL: {{ item.vehicleModel }}
+                  </p>
+                  <p v-if="(item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)" class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
+                    ({{ item.quantity }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel)
+                  </p>
+                  <p v-else class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
+                    ({{ item.frontWheels + item.rearWheels }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
                   </p>
                   <button
                     @click="removeItem(item.product.Id)"

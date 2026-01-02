@@ -1,266 +1,410 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
+import MainLayout from '@/layouts/MainLayout.astro';
+import Button from "@/core/components/Button.vue";
+import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    DAYTONA_LOGO,
+    SEBRING_LOGO,
+    SPEEDWAY_LOGO,
+} from "@/pages/wheels/constants/Wheels.ts";
 ---
 
-<MainLayout title="Custom Corvette C8 Z06 Forged Wheels - E5 Wheels">
-  <div class="w-full bg-white">
-    <!-- Hero Section with Video Background -->
-    <section class="relative w-full h-[799px] overflow-hidden">
-      <!-- Placeholder for video - will show black background -->
-      <div class="absolute inset-0 bg-black"></div>
-      <!-- You can add video here if needed -->
-    </section>
+<MainLayout title="C6 Corvette Wheels - E5 Wheels">
+    <div class="w-full bg-white -mt-107">
+        <!-- Hero Banner -->
+        <section class="relative w-full h-[799px] overflow-hidden">
+            <div class="absolute inset-0">
+                <img
+                    src="/assets/images/generations/c6/19e3d04f39bacd3cde7701e9583418f945235fb5.png"
+                    alt="C6 Corvette"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+        </section>
 
-    <!-- Main Title and Description -->
-    <section class="max-w-[1536px] mx-auto px-16 py-12">
-      <h1 class="font-['Franklin_Gothic_Heavy'] text-[62px] leading-[60px] text-black text-center uppercase mb-6">
-        Custom Corvette C8 Z06 Forged Wheels
-      </h1>
+        <!-- Title and Description -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
+            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
+                Custom C6 CORVETTE Wheels
+            </h1>
+            <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
+                The passion for the C6 runs deep—and the support should match it. Built for the C6 base model, our Form Forged Series blends forged DNA with flow-formed construction to deliver strength, reduced weight, and everyday drivability. Exclusively engineered for Corvettes, each design complements the C6's proportions, performance character, and timeless identity.
+            </p>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
+                SHOP FORM FORGED FOR C6 CORVETTES
+            </p>
+        </section>
 
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-16">
-        Explore our E5 Forged Collection of Corvette C8 Z06 wheels, available exclusively for the C8 Z06, ZR1, and E-Ray. Made in the USA, our C8 Z06 forged wheels are engineered for extreme performance, reduced weight, and maximum strength—delivering the perfect upgrade for Corvette owners who demand more from their vehicle.
-      </p>
+        <!-- Three Wheel Options -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
+                <!-- Bronze Brushed Tint -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">ENJOY FREE SHIPPING</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
 
-      <!-- Talladega Showcase -->
-      <div class="grid grid-cols-2 gap-16 items-center mb-20">
-        <div class="flex justify-center">
-          <img
-            src="/assets/images/afdec958cf713eb929ae510752b31594f43c1a4f.png"
-            alt="Talladega Wheel"
-            class="w-full max-w-[520px] h-[477px] object-contain"
-          />
+                <!-- Gloss Black -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+
+                <!-- Titanium Brushed Tint -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">19" / 20" SIZES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <Button client:visible primary link={`${WHEELS_ROUTE}`}>
+                    <span>SHOP FORM FORGED</span>
+                </Button>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                OVERVIEW
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C6 Corvette, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div class="w-full h-[434px]">
+                    <img
+                        src="/assets/images/generations/c6/625c360a181b1fdc1da3a474f72af58d0bcaa9d6.png"
+                        alt="E5 Wheel Detail"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[435px]">
+                    <img
+                        src="/assets/images/generations/c6/df7543f5024bf725601bb1f963d352f6d20807df.png"
+                        alt="E5 Wheel Detail"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Finishing Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                FINISHING
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Our Form Forged Series is available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint, AND DARK BRONZE— finishes that embody the essence of timeless, modern, and bold design. Each surface is crafted to elevate the wheel's form while enduring the demands of the road, all backed by our 5-year finishing warranty.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mb-8">
+                <div class="w-full h-[575px]">
+                    <img
+                        src="/assets/images/generations/c6/7b0eb2bf712356f129743563b9cab285a89c93ba.png"
+                        alt="Bronze Brushed Tint"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[575px]">
+                    <img
+                        src="/assets/images/generations/c6/8e5841a54069de69a6a01416054324b8d9753076.png"
+                        alt="Titanium Brushed Tint"
+                        class="w-full h-full object-cover object-[0%_0%]"
+                    />
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mb-12">
+                <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                    BRONZE BRUSHED TINT
+                </p>
+                <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                    TITANIUM BRUSHED TINT
+                </p>
+            </div>
+            <div class="w-full h-[611px] mb-8">
+                <img
+                    src="/assets/images/generations/c6/3fc4a5a61713920ec596f2c3d1972913bf4e7a6b.png"
+                    alt="Gloss Black"
+                    class="w-full h-full object-cover object-[0%_53%]"
+                />
+            </div>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                GLOSS BLACK
+            </p>
+        </section>
+
+        <!-- C6 Specifications Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[35px] md:leading-[40px] lg:leading-[43px] text-e5-red uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">
+                C6 WHEEL SPECIFICATIONS
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
+                Here is what you need to know about your C6.
+            </p>
+
+            <!-- Specifications Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-center font-['Franklin_Gothic_Book'] text-[18px] md:text-[20px] lg:text-[24px] tracking-[1.2px]">
+                    <thead>
+                        <tr class="border-b border-black/20">
+                            <th class="py-6 px-4 text-black/70 font-normal leading-[54px]">C6 VARIANT</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">BOLT<br/>PATTERN</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">CENTER<br/>BORE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT WHEEL<br/>SIZE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT<br/>OFFSET</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR WHEEL<br/>SIZE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR<br/>OFFSET</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">BASE<br/>MODEL</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">18" x 8.5"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
+                        </tr>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">Grand Sport</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">18" x 9.5"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 12"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
+                        </tr>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">Z06</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">18" x 9.5"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+54 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 12"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+58 mm</td>
+                        </tr>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">ZR1</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">20" x 12"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Banner Image -->
+        <section class="w-full h-[716px] overflow-hidden">
+            <img
+                src="/assets/images/generations/c6/6ce8c3d28464c1fd0ab1c8cee39cb706a3c2b6f1.png"
+                alt="C6"
+                class="w-full h-full object-cover"
+            />
+        </section>
+
+        <!-- Wheel Detail 1: Titanium Brushed Tint -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <div class="w-full max-w-[613px] mx-auto">
+                    <img src="/assets/images/generations/c6/d4565cf05e3fa3637a06eedfd917c1499967f34b.png" alt="Daytona Titanium Brushed Tint" class="w-full h-auto" />
+                </div>
+                <div class="flex flex-col">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
+                            <img src={DAYTONA_LOGO} alt="Daytona" class="h-[52px] w-auto mb-4" />
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Front: 18x10 / Offset +25mm</li>
+                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Bolt Pattern: 5x120</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Titanium Brushed Tint</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                            <Button client:visible primary link={`${WHEELS_ROUTE}/daytona`}>
+                                <span>SHOP DAYTONA</span>
+                            </Button>
+                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
+                                <span>EXPLORE FORM FORGED</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner Image 2 -->
+        <section class="w-full h-[716px] overflow-hidden">
+            <img
+                src="/assets/images/generations/c6/45965a1f7b5d1621792495a8d5047e8de71e0caa.png"
+                alt="C6"
+                class="w-full h-full object-cover"
+            />
+        </section>
+
+        <!-- Wheel Detail 2: Gloss Black (Sebring) -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <div class="w-full max-w-[613px] mx-auto">
+                    <img src="/assets/images/generations/c6/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png" alt="Sebring Gloss Black" class="w-full h-auto" />
+                </div>
+                <div class="flex flex-col">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
+                            <img src={SEBRING_LOGO} alt="Sebring" class="h-[52px] w-auto mb-4" />
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Front: 18x10 / Offset +25mm</li>
+                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Bolt Pattern: 5x120</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Gloss Black</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                            <Button client:visible primary link={`${WHEELS_ROUTE}/sebring`}>
+                                <span>SHOP SEBRING</span>
+                            </Button>
+                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
+                                <span>EXPLORE FORM FORGED</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speedway Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase text-center mb-12">
+                ALSO AVAILABLE FOR C6 CORVETTES
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
+                <!-- Dark Bronze -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/cd19461c451031cb11b5e748b6774ae80b22a516.png" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">DARK BRONZE</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">ENJOY FREE SHIPPING</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+
+                <!-- Titanium Brushed Tint -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+
+                <!-- Gloss Black -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c6/55e2dad1e72a82c3b811737504db985db4ec5353.png" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">19" / 20" SIZES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <Button client:visible primary link={`${WHEELS_ROUTE}/speedway`}>
+                    <span>SHOP SPEEDWAY</span>
+                </Button>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                C6 CORVETTE GALLERY
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Explore our gallery of C6 Corvettes, showcasing a variety of styles and finishes on customer vehicles.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 md:mb-16">
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c6/3b74eb172b8dae322d2702ad3627c74ff388d9e1.png"
+                        alt="C6 Gallery 1"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c6/45965a1f7b5d1621792495a8d5047e8de71e0caa.png"
+                        alt="C6 Gallery 2"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c6/e21442d1d8316475411e59a4b7d71e5f75b67590.png"
+                        alt="C6 Gallery 3"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+            <div class="text-center">
+                <Button client:visible primary link={GALLERY_WHEELS_ROUTE}>
+                    <span>VIEW GALLERY</span>
+                </Button>
+            </div>
+        </section>
+
+        <!-- Back to Top -->
+        <div class="text-center hover:bg-black/5 transition-colors duration-300 py-4 md:py-6 text-[16px] md:text-[18px] lg:text-[20px] text-black/50 font-medium tracking-[2px] uppercase cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            BACK TO TOP
         </div>
-        <div>
-          <img
-            src="/assets/images/3a0f898a970a7108262be2cdc91dcdde57744bd4.png"
-            alt="Talladega Logo"
-            class="h-[52px] mb-6"
-          />
-
-          <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/50 mb-4">
-            FORGED FOR CORVETTE C8 Z06, ZR1, & E-RAY
-          </p>
-
-          <ul class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 list-disc pl-9 space-y-1 mb-8">
-            <li>Front: 20x10 / Offset +25mm</li>
-            <li>Rear: 21x13 / Offset +20mm</li>
-            <li>Bolt Pattern: 5x120</li>
-            <li>FITS STOCK TIRE SIZES 275/30 & 345/25</li>
-          </ul>
-
-          <div class="flex gap-4">
-            <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-              EXPLORE E5 FORGED
-            </button>
-            <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-              SHOP TALLADEGA
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Overview Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20 bg-white">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-12">
-        OVERVIEW
-      </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 max-w-[1276px] mb-12">
-        Every E5 Forged C8 Z06 wheel begins with a foundation of uncompromising strength and precision, crafted from premium 6061 aluminum. From there, we carve away excess material to optimize the strength-to-weight ratio, reduce inertia, and convert every ounce into performance. Engineered for maximum capability, our aftermarket C8 Z06 wheels unlock wider tire setups, greater grip, sharper handling, and improved brake clearance—delivering a decisive advantage on the street and the track.
-      </p>
-
-      <div class="grid grid-cols-2 gap-6">
-        <img
-          src="/assets/images/81b6e7a67f0ff714d31b243e6080853c26608bba.png"
-          alt="E5 Wheel Detail 1"
-          class="w-full h-[409px] object-cover"
-        />
-        <img
-          src="/assets/images/fe1152d3114af3b0fb103a4b205dba9f02fbf841.png"
-          alt="E5 Wheel Detail 2"
-          class="w-full h-[409px] object-cover"
-        />
-      </div>
-    </section>
-
-    <!-- Finishing Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20 bg-white">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-12">
-        FINISHING
-      </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 max-w-[1276px] mb-12">
-        Every wheel in the E5 Forged Collection is more than performance—it's a statement of individuality. Available in premium finishes like gloss black, silver, brushed, or polished, each design showcases the precision of its forged construction. For those seeking something truly unique, we also offer custom powder coats and bespoke finishes to match any vision. No matter the choice, every finish is executed with uncompromising attention to detail, delivering a look that lasts as long as the engineering behind it.
-      </p>
-
-      <!-- Finishing Images Row 1 -->
-      <div class="grid grid-cols-2 gap-6 mb-4">
-        <img
-          src="/assets/images/635c360776d4fed06014550fb174128129f3db5d.png"
-          alt="Gloss White"
-          class="w-full h-[259px] object-cover"
-        />
-        <img
-          src="/assets/images/594596d32c2664b60ada31f941308aa49a446810.png"
-          alt="Brushed Aluminum"
-          class="w-full h-[259px] object-cover"
-        />
-      </div>
-
-      <div class="grid grid-cols-2 gap-6 mb-12">
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center">
-          GLOSS WHITE
-        </p>
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center">
-          BRUSHED ALUMINUM
-        </p>
-      </div>
-
-      <!-- Full Width Gloss Gold Image -->
-      <img
-        src="/assets/images/ea5c4ce9fe1dff8253a015d8213129e6dfcc0fc2.png"
-        alt="Gloss Gold Finish"
-        class="w-full h-[527px] object-cover mb-4"
-      />
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center mb-20">
-        GLOSS GOLD
-      </p>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-8">
-        C8 Z06 GALLERY
-      </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 mb-12">
-        Explore our gallery of Corvette C8 Z06 wheels, showcasing a variety of styles and finishes on customer vehicles.
-      </p>
-
-      <div class="grid grid-cols-3 gap-8 mb-12">
-        <img
-          src="/assets/images/2aa980bafdc02ffb5bb841ba963f436f9cef7ece.png"
-          alt="C8 Z06 Gallery 1"
-          class="w-full h-[408px] object-cover"
-        />
-        <img
-          src="/assets/images/ca9a9d5bbdcec445ae42fe0a4b5b4bbd7ac79e81.png"
-          alt="C8 Z06 Gallery 2"
-          class="w-full h-[408px] object-cover"
-        />
-        <img
-          src="/assets/images/571e72291039231446ba08b58aa44f3358d4886a.png"
-          alt="C8 Z06 Gallery 3"
-          class="w-full h-[408px] object-cover"
-        />
-      </div>
-
-      <div class="flex justify-center mb-20">
-        <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-          SEE MORE C8 Z06
-        </button>
-      </div>
-    </section>
-
-    <!-- Shop Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-8">
-        SHOP C8 Z06 FORGED WHEELS
-      </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 mb-16">
-        Shop through our collection of E5 Forged wheels, Exclusively Forged for C8 Z06, ZR1, and E-Ray.
-      </p>
-
-      <p class="font-['Franklin_Gothic_Book'] text-[28px] leading-[17px] text-black/60 text-center tracking-[5.6px] mb-12">
-        <span class="text-e5-red">CUSTOM</span> FINISHES AVAILABLE
-      </p>
-
-      <!-- Wheel Products Grid -->
-      <div class="grid grid-cols-3 gap-8 mb-12">
-        <!-- Product 1 - Podium Gold -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/464d2ace3214351d17a75848ec4bddc985f8c836.png"
-            alt="Talladega - Podium Gold Brushed"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            PODIUM GOLD BRUSHED
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-
-        <!-- Product 2 - Gloss Black -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/afdec958cf713eb929ae510752b31594f43c1a4f.png"
-            alt="Talladega - Gloss Black"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            GLOSS BLACK
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-
-        <!-- Product 3 - Smoked Titanium -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/c5130d4e56f6e2437cc78fe4904cdcbc6e716569.png"
-            alt="Talladega - Smoked Titanium Brushed"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            SMOKED TITANIUM BRUSHED
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-      </div>
-
-      <div class="flex justify-center">
-        <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-          SHOP TALLADEGA
-        </button>
-      </div>
-    </section>
-
-    <!-- Specifications Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-16">
-        SPECIFICATIONS
-      </h2>
-
-      <!-- Add specifications table or content here if needed -->
-      <div class="min-h-[200px]">
-        <!-- Specifications content to be added -->
-      </div>
-    </section>
-  </div>
+    </div>
 </MainLayout>

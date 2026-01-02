@@ -579,22 +579,24 @@ function addToCart() {
       return;
     }
 
-    // Add front wheels (quantity 2)
+    // Add front wheels (quantity = number of wheels)
     CartManager.addItem({
       product: selectedFrontProduct.value,
       quantity: 2,
       frontWheels: 2,
       rearWheels: 0,
-      vehicleModel: selectedModel.value
+      vehicleModel: selectedModel.value,
+      imgUrlBase: apiResponse.value?.ImgUrlBase
     });
 
-    // Add rear wheels (quantity 2)
+    // Add rear wheels (quantity = number of wheels)
     CartManager.addItem({
       product: selectedRearProduct.value,
       quantity: 2,
       frontWheels: 0,
       rearWheels: 2,
-      vehicleModel: selectedModel.value
+      vehicleModel: selectedModel.value,
+      imgUrlBase: apiResponse.value?.ImgUrlBase
     });
   } else {
     // Non-staggered: add complete set of 4
@@ -603,7 +605,8 @@ function addToCart() {
       quantity: 1,
       frontWheels: 2,
       rearWheels: 2,
-      vehicleModel: selectedModel.value
+      vehicleModel: selectedModel.value,
+      imgUrlBase: apiResponse.value?.ImgUrlBase
     });
   }
 
