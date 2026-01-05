@@ -267,6 +267,10 @@ const productsBySeries = computed(() => {
           max: Math.max(...products.map(p => p.Price))
         }
       };
+    }).filter(series => {
+      // Hide series that have no finish variations after filtering
+      // This happens when all finishes in a series only have front OR rear (not both) for staggered vehicles
+      return series.finishVariations.length > 0;
     });
 });
 
