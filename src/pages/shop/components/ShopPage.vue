@@ -249,6 +249,14 @@ const productsBySeries = computed(() => {
               max: Math.max(...finishProducts.map(p => p.Price))
             }
           };
+        }).filter(variation => {
+          // For staggered fitment, only show finishes that have BOTH front AND rear sizes available
+          // Customers want complete sets, not just front-only or rear-only
+          if (isStaggered.value && selectedVehicle.value) {
+            return variation.frontSizes.length > 0 && variation.rearSizes.length > 0;
+          }
+          // For non-staggered, show all variations
+          return true;
         }),
         allSizes,
         frontSizes,
