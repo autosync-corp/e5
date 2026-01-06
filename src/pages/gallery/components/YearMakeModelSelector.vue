@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 
 const selectedModel = ref<string>("");
 const selectedTrim = ref<string>("");
@@ -9,6 +9,16 @@ const selectedYear = ref<string>("");
 const emit = defineEmits<{
   filter: [filters: { model: string; trim: string; year: string }];
 }>();
+
+// Check for generation query parameter on mount
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const generationParam = urlParams.get('generation');
+  if (generationParam) {
+    // Convert generation param to uppercase to match the data format (e.g., "c6" -> "C6")
+    selectedModel.value = generationParam.toUpperCase();
+  }
+});
 
 // Get all unique models (submodels) from the data, sorted
 const models = computed(() => {

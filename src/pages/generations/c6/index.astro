@@ -1,11 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
+    DAYTONA_BRAND_NAME,
     SEBRING_LOGO,
+    SEBRING_BRAND_NAME,
     SPEEDWAY_LOGO,
+    SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 ---
 
@@ -38,39 +41,39 @@ import {
         <!-- Three Wheel Options -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Bronze Brushed Tint -->
+                <!-- Speedway - Titanium Brushed Tint -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
-                <!-- Gloss Black -->
+                <!-- Daytona - Gloss Black -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
                     <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
-                <!-- Titanium Brushed Tint -->
+                <!-- Speedway - Bronze Brushed Tint -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png" alt="Speedway Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
             </div>
@@ -241,23 +244,23 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 9.5" / Offset +53mm</li>
+                                <li>Rear: 20" x 11" / Offset +76mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Titanium Brushed Tint</li>
+                                <li>Gloss Black</li>
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${WHEELS_ROUTE}/daytona`}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
                                 <span>SHOP DAYTONA</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
+                                <span>EXPLORE DAYTONA</span>
                             </Button>
                         </div>
                     </div>
@@ -289,8 +292,8 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
@@ -301,11 +304,11 @@ import {
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${WHEELS_ROUTE}/sebring`}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
                                 <span>SHOP SEBRING</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
+                                <span>EXPLORE SEBRING</span>
                             </Button>
                         </div>
                     </div>
@@ -320,15 +323,15 @@ import {
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Dark Bronze -->
+                <!-- Gloss Black -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/cd19461c451031cb11b5e748b6774ae80b22a516.png" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/cd19461c451031cb11b5e748b6774ae80b22a516.png" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
                     </div>
                     <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">DARK BRONZE</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
@@ -339,26 +342,26 @@ import {
                     </div>
                     <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
-                <!-- Gloss Black -->
+                <!-- Dark Bronze -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/55e2dad1e72a82c3b811737504db985db4ec5353.png" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/55e2dad1e72a82c3b811737504db985db4ec5353.png" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
                     </div>
                     <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">DARK BRONZE</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={`${WHEELS_ROUTE}/speedway`}>
+                <Button client:visible primary link={`${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`}>
                     <span>SHOP SPEEDWAY</span>
                 </Button>
             </div>
@@ -396,7 +399,7 @@ import {
                 </div>
             </div>
             <div class="text-center">
-                <Button client:visible primary link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible primary link={`${GALLERY_VEHICLES_ROUTE}?generation=c6`}>
                     <span>VIEW GALLERY</span>
                 </Button>
             </div>
