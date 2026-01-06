@@ -1,11 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, SHOP_ROUTE, WHEELS_SPEEDWAY_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
+    DAYTONA_BRAND_NAME,
     SPEEDWAY_LOGO,
+    SPEEDWAY_BRAND_NAME,
     SEBRING_LOGO,
+    SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 ---
 
@@ -28,7 +31,7 @@ import {
                 Custom C7 CORVETTE GRAND SPORT Wheels
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                Unlike universal fitments, every E5 wheel is specifically designed around the C7 platform—its offsets, brake clearance, and body lines. The fitment is aggressive yet refined, amplifying the Stingray's naturally muscular stance while keeping comfort uncompromised. Whether it's your daily drive or a track-built setup, these wheels deliver performance that meets the legend they were made for.
+                Unlike universal fitments, every E5 wheel is specifically designed around the C7 platform—its offsets, brake clearance, and body lines. The fitment is aggressive yet refined, amplifying the Grand Sport's naturally muscular stance while keeping comfort uncompromised. Whether it's your daily drive or a track-built setup, these wheels deliver performance that meets the legend they were made for.
             </p>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED SERIES FOR C7 CORVETTES
@@ -38,39 +41,39 @@ import {
         <!-- Three Wheel Options -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Bronze Brushed Tint -->
+                <!-- Speedway - Titanium Brushed Tint -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Speedway Bronze Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c7/grand-sport/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
                     <img src="/assets/images/generations/c7/grand-sport/5a059fba9b6f32612b072a121dc09766ef507b86.png" alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
-                <!-- Titanium Brushed Tint -->
+                <!-- Daytona - Gloss Black -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c7/grand-sport/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
                     <img src="/assets/images/generations/c7/grand-sport/bf617359a30df6e52e23d25ba89f15964c216df1.png" alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
 
-                <!-- Titanium Brushed Tint -->
+                <!-- Sebring - Bronze Brushed Tint -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png" alt="Sebring Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c7/grand-sport/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png" alt="Sebring Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
                     <img src="/assets/images/generations/c7/grand-sport/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png" alt="Sebring" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </div>
             </div>
@@ -88,7 +91,7 @@ import {
                 OVERVIEW
             </h2>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
-                Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C8 Stingray, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
+                Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C7 Grand Sport, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div class="w-full h-[434px]">
@@ -158,7 +161,7 @@ import {
                 C7 GRAND SPORT WHEEL SPECIFICATIONS
             </h2>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
-                Here is what you need to know about your C7 STINGRAY.
+                Here is what you need to know about your C7 GRAND SPORT.
             </p>
 
             <!-- Specifications Table -->
@@ -223,8 +226,8 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 19"x10 / Offset +40mm</li>
-                                <li>Rear: 20"x12" / Offset +59mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
@@ -235,11 +238,11 @@ import {
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${WHEELS_ROUTE}/speedway`}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`}>
                                 <span>SHOP SPEEDWAY</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_SPEEDWAY_ROUTE}>
+                                <span>EXPLORE SPEEDWAY</span>
                             </Button>
                         </div>
                     </div>
@@ -271,23 +274,23 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Gloss Black</li>
+                                <li>Titanium Brushed Tint</li>
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${WHEELS_ROUTE}/daytona`}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
                                 <span>SHOP DAYTONA</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
+                                <span>EXPLORE DAYTONA</span>
                             </Button>
                         </div>
                     </div>
@@ -319,8 +322,8 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
@@ -331,11 +334,11 @@ import {
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${WHEELS_ROUTE}/sebring`}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
                                 <span>SHOP SEBRING</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
+                                <span>EXPLORE SEBRING</span>
                             </Button>
                         </div>
                     </div>
