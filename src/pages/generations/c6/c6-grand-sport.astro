@@ -1,11 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
+    DAYTONA_BRAND_NAME,
     SEBRING_LOGO,
+    SEBRING_BRAND_NAME,
     SPEEDWAY_LOGO,
+    SPEEDWAY_BRAND_NAME,
     TALLADEGA_LOGO,
 } from "@/pages/wheels/constants/Wheels.ts";
 ---
@@ -242,23 +245,23 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Titanium Brushed Tint</li>
+                                <li>Gloss Black</li>
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={WHEELS_DAYTONA_ROUTE}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
                                 <span>SHOP DAYTONA</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
+                                <span>EXPLORE DAYTONA</span>
                             </Button>
                         </div>
                     </div>
@@ -290,8 +293,8 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 18x10 / Offset +25mm</li>
-                                <li>Rear: 19x11 / Offset +20mm</li>
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
                                 <li>Bolt Pattern: 5x120</li>
                             </ul>
                         </div>
@@ -302,11 +305,11 @@ import {
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={WHEELS_SEBRING_ROUTE}>
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
                                 <span>SHOP SEBRING</span>
                             </Button>
-                            <Button client:visible secondary link={`${WHEELS_ROUTE}`}>
-                                <span>EXPLORE FORM FORGED</span>
+                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
+                                <span>EXPLORE SEBRING</span>
                             </Button>
                         </div>
                     </div>
@@ -359,7 +362,7 @@ import {
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}>
+                <Button client:visible primary link={`${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`}>
                     <span>SHOP SPEEDWAY</span>
                 </Button>
             </div>
@@ -397,7 +400,7 @@ import {
                 </div>
             </div>
             <div class="text-center">
-                <Button client:visible primary link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible primary link={`${GALLERY_VEHICLES_ROUTE}?generation=c6`}>
                     <span>VIEW GALLERY</span>
                 </Button>
             </div>
