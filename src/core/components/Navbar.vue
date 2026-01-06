@@ -15,12 +15,18 @@ import {
   GENERATIONS_C7_GRAND_SPORT_ROUTE,
   GENERATIONS_C8_STINGRAY_ROUTE,
   GENERATIONS_C8_Z06_ROUTE,
+  GENERATIONS_C8_ZR1_ROUTE,
   HOME_ROUTE, PROCESS_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
-  WHEELS_ROUTE
+  WHEELS_ROUTE,
+  WHEELS_DAYTONA_ROUTE,
+  WHEELS_TALLADEGA_ROUTE,
+  WHEELS_SEBRING_ROUTE,
+  WHEELS_SPEEDWAY_ROUTE
 } from "@/core/constants/Routes.ts";
 
 const currentPath = ref('');
 const isMobileMenuOpen = ref(false);
+const isWheelsDropdownOpen = ref(false);
 const isGalleryDropdownOpen = ref(false);
 const isGenerationsDropdownOpen = ref(false);
 
@@ -59,6 +65,14 @@ const toggleGenerationsDropdown = () => {
 const closeGenerationsDropdown = () => {
   isGenerationsDropdownOpen.value = false;
 }
+
+const toggleWheelsDropdown = () => {
+  isWheelsDropdownOpen.value = !isWheelsDropdownOpen.value;
+}
+
+const closeWheelsDropdown = () => {
+  isWheelsDropdownOpen.value = false;
+}
 </script>
 
 <template>
@@ -68,7 +82,23 @@ const closeGenerationsDropdown = () => {
       <div class="flex items-center gap-12">
         <!-- Left Menu Items -->
         <div class="flex items-center gap-6">
-          <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">WHEELS</a>
+          <!-- Wheels Dropdown -->
+          <div class="gallery-dropdown-wrapper" @mouseenter="isWheelsDropdownOpen = true" @mouseleave="closeWheelsDropdown">
+            <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">
+              WHEELS
+              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+
+            <!-- Dropdown Menu -->
+            <div v-if="isWheelsDropdownOpen" class="dropdown-menu">
+              <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
+              <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
+              <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
+              <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
+            </div>
+          </div>
 
           <!-- Gallery Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
@@ -113,6 +143,7 @@ const closeGenerationsDropdown = () => {
               <div class="generation-title">C8</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
+              <a :href="GENERATIONS_C8_ZR1_ROUTE" class="dropdown-item">ZR1</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C7</div>
@@ -159,7 +190,25 @@ const closeGenerationsDropdown = () => {
     <!-- Mobile Menu Overlay -->
     <div v-if="isMobileMenuOpen" class="mobile-menu" @click="closeMobileMenu">
       <div class="mobile-menu-content" @click.stop>
-        <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">WHEELS</a>
+        <!-- Wheels Submenu for Mobile -->
+        <div class="mobile-submenu">
+          <div class="flex items-center gap-2">
+            <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">
+              WHEELS
+            </a>
+            <button @click="toggleWheelsDropdown" class="text-white p-1">
+              <svg class="inline-block w-3 h-3" :class="{'rotate-180': isWheelsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div v-if="isWheelsDropdownOpen" class="mobile-submenu-items">
+            <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
+            <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
+            <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
+            <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
+          </div>
+        </div>
 
         <!-- Gallery Submenu for Mobile -->
         <div class="mobile-submenu">
@@ -194,6 +243,7 @@ const closeGenerationsDropdown = () => {
               <div class="mobile-generation-title">C8</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
+              <a :href="GENERATIONS_C8_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C7</div>
