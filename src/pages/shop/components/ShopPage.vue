@@ -9,7 +9,7 @@ import { filterWheelsByVehicle, hasStaggeredFitment, getFrontFitments, getRearFi
 const apiResponse = ref<WheelsApiResponse | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
-const selectedSeries = ref<string>('');
+const selectedSeries = ref<string>('All Series');
 const searchQuery = ref('');
 const selectedVehicle = ref<Vehicle | null>(null);
 
@@ -310,6 +310,13 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
 
 onMounted(() => {
   loadProducts();
+
+  // Check for series query parameter in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const seriesParam = urlParams.get('series');
+  if (seriesParam) {
+    selectedSeries.value = seriesParam;
+  }
 });
 </script>
 

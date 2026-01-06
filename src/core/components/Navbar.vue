@@ -21,7 +21,8 @@ import {
   WHEELS_DAYTONA_ROUTE,
   WHEELS_TALLADEGA_ROUTE,
   WHEELS_SEBRING_ROUTE,
-  WHEELS_SPEEDWAY_ROUTE
+  WHEELS_SPEEDWAY_ROUTE,
+  WHEELS_SONOMA_ROUTE
 } from "@/core/constants/Routes.ts";
 
 const currentPath = ref('');
@@ -97,6 +98,7 @@ const closeWheelsDropdown = () => {
               <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
               <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
               <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
+              <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
             </div>
           </div>
 
@@ -207,6 +209,7 @@ const closeWheelsDropdown = () => {
             <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
             <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
             <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
+            <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
           </div>
         </div>
 

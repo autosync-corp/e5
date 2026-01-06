@@ -22,7 +22,8 @@ import {
     PENDING_ROUTE,
     WHEELS_DAYTONA_ROUTE,
     GALLERY_WHEELS_ROUTE,
-    WHEELS_SPEEDWAY_ROUTE
+    WHEELS_SPEEDWAY_ROUTE,
+    SHOP_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
 
@@ -74,7 +75,7 @@ import {
         </div>
 
         <div class="text-center mt-12">
-            <Button client:visible primary class="px-16">
+            <Button client:visible primary class="px-16" link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
                 <span>
                     SHOP {SEBRING_BRAND_NAME}
                 </span>
@@ -269,8 +270,8 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:visible primary link={PENDING_ROUTE}>
-                            ADD TO CART
+                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                            SHOP NOW
                         </Button>
                     </div>
                 </div>
@@ -283,8 +284,8 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:visible primary link={PENDING_ROUTE}>
-                            ADD TO CART
+                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                            SHOP NOW
                         </Button>
                     </div>
                 </div>
@@ -297,8 +298,8 @@ import {
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8">
-                        <Button client:visible primary link={PENDING_ROUTE}>
-                            ADD TO CART
+                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                            SHOP NOW
                         </Button>
                     </div>
                 </div>

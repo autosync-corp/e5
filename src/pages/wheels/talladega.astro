@@ -14,7 +14,7 @@ import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLege
 import DividerLine from "@/core/components/DividerLine.vue";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import {Orientations} from "@/core/types/App.ts";
-import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Talladega - E5 Wheels">
@@ -45,7 +45,7 @@ import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <span class="text-e5-red font-medium"> USA</span>
                 </p>
                 <div class="mt-4">
-                    <Button client:visible primary>
+                    <Button client:visible primary link={`${SHOP_ROUTE}?series=${TALLADEGA_BRAND_NAME}`}>
                         SHOP FORGED
                     </Button>
                 </div>
@@ -142,7 +142,7 @@ import {GALLERY_WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         </div>
 
         <div class="text-center mb-20">
-            <Button client:visible primary>
+            <Button client:visible primary link={`${SHOP_ROUTE}?series=${TALLADEGA_BRAND_NAME}`}>
                 SHOP FORGED
             </Button>
         </div>

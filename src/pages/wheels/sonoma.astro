@@ -32,7 +32,7 @@ import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE, SHOP_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Sonoma - E5 Wheels">
@@ -83,7 +83,7 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
         </div>
 
         <div class="text-center mt-8 md:mt-12">
-            <Button client:visible primary class="px-12 md:px-16">
+            <Button client:visible primary class="px-12 md:px-16" link={`${SHOP_ROUTE}?series=${SONOMA_BRAND_NAME}`}>
               <span>
                 SHOP {SONOMA_BRAND_NAME}
               </span>
@@ -187,8 +187,8 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:visible primary class="mt-6 md:mt-8" link="/pending">
-                        ADD TO CART
+                    <Button client:visible primary class="mt-6 md:mt-8" link={`${SHOP_ROUTE}?series=${SONOMA_BRAND_NAME}`}>
+                        SHOP NOW
                     </Button>
                 </div>
             </ImageWithLegend>
@@ -199,8 +199,8 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:visible primary class="mt-6 md:mt-8" link="/pending">
-                        ADD TO CART
+                    <Button client:visible primary class="mt-6 md:mt-8" link={`${SHOP_ROUTE}?series=${SONOMA_BRAND_NAME}`}>
+                        SHOP NOW
                     </Button>
                 </div>
             </ImageWithLegend>
@@ -211,8 +211,8 @@ import {GALLERY_WHEELS_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                     <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:visible primary class="mt-6 md:mt-8" link="/pending">
-                        ADD TO CART
+                    <Button client:visible primary class="mt-6 md:mt-8" link={`${SHOP_ROUTE}?series=${SONOMA_BRAND_NAME}`}>
+                        SHOP NOW
                     </Button>
                 </div>
             </ImageWithLegend>
