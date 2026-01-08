@@ -4,6 +4,7 @@ import {
     DAYTONA_BRAND_NAME,
     TALLADEGA_WHEELS,
     TALLADEGA_LOGO,
+    TALLADEGA_BRAND_NAME,
     DAYTONA_LOGO,
     SPEEDWAY_LOGO,
     SPEEDWAY_WHEELS,
@@ -13,126 +14,270 @@ import {
     SEBRING_BRAND_NAME,
     SEBRING_LOGO,
     SEBRING_WHEELS,
-    WHEEL_GALLERY_STUDIO_BANNER,
-    WHEEL_PAGE_BANNER,
     E5_FORGED_LOGO,
+    SONOMA_BRAND_NAME,
+    SONOMA_LOGO,
+    SONOMA_WHEELS,
 } from "@/pages/wheels/constants/Wheels.ts";
-import Button from "@/core/components/Button.vue";
-import Link from "@/core/components/Link.vue";
-import WheelImagesChain from "@/pages/wheels/components/WheelImagesChain.vue";
-import WheelImagesStack from "@/pages/wheels/components/WheelImagesStack.vue";
-import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
-import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import {
     WHEELS_DAYTONA_ROUTE,
-    GALLERY_WHEELS_ROUTE, WHEELS_SEBRING_ROUTE,
+    GALLERY_WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    WHEELS_SEBRING_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
-    WHEELS_TALLADEGA_ROUTE
+    WHEELS_TALLADEGA_ROUTE,
+    WHEELS_SONOMA_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="E5 Wheels - Wheel Gallery">
-    <!-- Hero Banner Image -->
-    <section class="w-full h-[371px] relative overflow-hidden">
-        <img
-                src={WHEEL_PAGE_BANNER}
-                alt="E5 Forged Wheels"
-                class="w-full h-full object-cover"
-        />
+    <!-- Hero Banner -->
+    <section class="w-full h-[150px] bg-[#d9d9d9]">
     </section>
 
     <!-- E5 Forged Series Section -->
-    <section class="container-e5 my-16 h-[138px] grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] align-middle">
-        <div class="flex items-center justify-center">
-            <img
-                    src={E5_FORGED_LOGO}
-                    alt="E5 Forged"
-                    class="w-3/4 object-contain"
-            />
-        </div>
-        <div class="w-px h-full bg-e5-red hidden lg:block"></div>
-        <div class="text-center px-20 my-auto text-xl opacity-70 mt-8 lg:mt-0">
-    <span>
-      Exclusively Forged in the USA for C8 Z06, ZR1, and E_Ray.
-      Engineered for extreme performance, reduced weight, and
-      maximum strength.
-    </span>
-        </div>
-    </section>
-
-    <section class="container-e5 my-16">
-        <div class="text-center px-20 my-auto text-lg opacity-50">
-            EXCLUSIVELY FORGED FOR C8 Z06, ZR1, E_RAY
-        </div>
-
-        <WheelImagesStack client:visible wheels={TALLADEGA_WHEELS} logo={TALLADEGA_LOGO} brand={DAYTONA_BRAND_NAME}/>
-
-        <div class="flex flex-col justify-center mt-8">
-            <!-- Forged In USA & Pricing -->
-            <div class="text-center space-y-2">
-                <p class="text-[16px] text-e5-red tracking-[3.2px]">
-                    FORGED IN THE USA
-                </p>
-                <p class="text-xs opacity-50 tracking-[3.2px]">
-                    STARTING AT $2,275 PER WHEEL
-                </p>
+    <section class="py-20 bg-white">
+        <div class="max-w-[1583px] mx-auto px-12">
+            <!-- Header Container -->
+            <div class="mb-16">
+                <div class="flex items-center gap-8">
+                    <div class="flex-shrink-0 pr-8 border-r-[3px] border-e5-red">
+                        <img
+                            src="/assets/images/wheels-new/02d80e5501d4b44b3e61daf67192b4fe23242b09.png"
+                            alt="E5 Forged"
+                            class="h-[54px]"
+                        />
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-[16px] text-black leading-[24px]">
+                            Exclusively Forged in the USA for C8 Z06, ZR1, and E_Ray. Engineered for extreme performance, reduced weight, and maximum strength. <a href="#" class="text-e5-red underline">LEARN MORE ABOUT E5 FORGED.</a>
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Explore Button -->
-            <Button client:load primary class="max-w-[300px] mx-auto mt-6" link={WHEELS_TALLADEGA_ROUTE}>
-                EXPLORE FORGED
-            </Button>
+            <!-- Two Wheels Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <!-- Talladega -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <img
+                            src="/assets/images/wheels-new/taladaga-c8wheel.webp"
+                            alt="Talladega"
+                            class="w-full max-w-[400px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src="/assets/images/wheels-new/3a0f898a970a7108262be2cdc91dcdde57744bd4.png"
+                        alt="Talladega"
+                        class="h-[29px] mx-auto mb-6"
+                    />
+                    <div class="space-y-2 mb-6">
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">5 PREMIUM FINISHES</p>
+                        <p class="text-[16px] text-black font-bold tracking-[3.2px] uppercase">IN STOCK</p>
+                    </div>
+                    <a
+                        href={WHEELS_TALLADEGA_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE TALLADEGA
+                    </a>
+                </div>
+
+                <!-- Sonoma -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <img
+                            src="/assets/images/wheels-new/sonoma-wheel-c8.webp"
+                            alt="Sonoma"
+                            class="w-full max-w-[400px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src="/assets/images/wheels-new/85b233dbe3893890d7939ec5aea2b7b17a0287c2.png"
+                        alt="Sonoma"
+                        class="h-[46px] mx-auto mb-6"
+                    />
+                    <div class="space-y-2 mb-6">
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                        <p class="text-[16px] text-black font-bold tracking-[3.2px] uppercase">IN STOCK</p>
+                    </div>
+                    <a
+                        href={WHEELS_SONOMA_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE SONOMA
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="container-e5 py-32 grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <ImageWithLegend client:visible image={FORM_FORGED_LOGO} alt="Form Forged Series" class="max-w-[400px] mx-auto">
-            <div class="mt-12 max-w-[480px] mx-auto text-center">
-                Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength
-                and
-                agility—without compromising daily drivability.
+    <!-- Form Forged Series Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-[1583px] mx-auto px-12">
+            <!-- Header -->
+            <div class="mb-16">
+                <div class="flex items-center gap-8">
+                    <div class="flex-shrink-0 pr-8 border-r-[3px] border-e5-red">
+                        <img
+                            src="/assets/images/wheels-new/48b34752d7bd939ae556a6e8de9fa0837077ec48.png"
+                            alt="Form Forged Series"
+                            class="h-[140px]"
+                        />
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-[16px] text-black leading-[24px]">
+                            Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability. <a href="#" class="text-e5-red underline">Click about read more about our Form Forged series</a>.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="mt-12 max-w-[480px] mx-auto text-center tracking-[3px]">
-                <p class="text-[16px] opacity-50">STARTING AT $600 PER WHEEL</p>
-                <p class="text-[16px] opacity-50">EXCLUSIVELY ENGINEERED FOR CORVETTES</p>
-                <p class="text-[16px] tracking-[3.2px]">
-                    <span class="text-e5-red">IN STOCK</span>
-                    <span class="text-[rgba(0,0,0,0.49)]"> FOR C6_C7_C8</span>
-                </p>
-            </div>
-        </ImageWithLegend>
 
-        <WheelImagesChain client:visible logo={DAYTONA_LOGO} brand={DAYTONA_BRAND_NAME} images={DAYTONA_WHEELS}
-                          btnText={`EXPLORE ${DAYTONA_BRAND_NAME}`} btnLink={WHEELS_DAYTONA_ROUTE}/>
+            <!-- Three Wheels Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Sebring -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <img
+                            src="/assets/images/wheels-new/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.png"
+                            alt="Sebring"
+                            class="w-full max-w-[300px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src="/assets/images/wheels-new/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.png"
+                        alt="Sebring"
+                        class="h-[29px] mx-auto mb-6"
+                    />
+                    <div class="space-y-2 mb-6">
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">GLOSS BLACK</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                        <p class="text-[16px] text-black font-bold tracking-[3.2px] uppercase">IN STOCK</p>
+                    </div>
+                    <a
+                        href={WHEELS_SEBRING_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE SEBRING
+                    </a>
+                </div>
+
+                <!-- Daytona -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <img
+                            src="/assets/images/wheels-new/80cf38509a5d16588f6e494cb2d89f353487504c.png"
+                            alt="Daytona"
+                            class="w-full max-w-[300px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src="/assets/images/wheels-new/bf617359a30df6e52e23d25ba89f15964c216df1.png"
+                        alt="Daytona"
+                        class="h-[27px] mx-auto mb-6"
+                    />
+                    <div class="space-y-2 mb-6">
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">GLOSS BLACK</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                        <p class="text-[16px] text-black font-bold tracking-[3.2px] uppercase">IN STOCK</p>
+                    </div>
+                    <a
+                        href={WHEELS_DAYTONA_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE DAYTONA
+                    </a>
+                </div>
+
+                <!-- Speedway -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <img
+                            src="/assets/images/wheels-new/2cb17a45657fa348958b15419df6f796aa26a518.png"
+                            alt="Speedway"
+                            class="w-full max-w-[300px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src="/assets/images/wheels-new/5a059fba9b6f32612b072a121dc09766ef507b86.png"
+                        alt="Speedway"
+                        class="h-[28px] mx-auto mb-6"
+                    />
+                    <div class="space-y-2 mb-6">
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">TITANIUM BRUSHED TINT</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                        <p class="text-[16px] text-black tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                        <p class="text-[16px] text-black font-bold tracking-[3.2px] uppercase">IN STOCK</p>
+                    </div>
+                    <a
+                        href={WHEELS_SPEEDWAY_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE SPEEDWAY
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="container-e5 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <WheelImagesChain client:visible images={SPEEDWAY_WHEELS} brand={SPEEDWAY_BRAND_NAME} logo={SPEEDWAY_LOGO}
-                          btnText={`EXPLORE ${SPEEDWAY_BRAND_NAME}`} btnLink={WHEELS_SPEEDWAY_ROUTE}/>
-        <WheelImagesChain client:visible images={SEBRING_WHEELS} brand={SEBRING_BRAND_NAME} logo={SEBRING_LOGO}
-                          btnText={`EXPLORE ${SEBRING_BRAND_NAME}`} btnLink={WHEELS_SEBRING_ROUTE}/>
+    <!-- Vette Gallery Banner -->
+    <section class="relative h-[380px] w-full">
+        <img
+            src="/assets/images/wheels-new/195456d72b224f9b92ca6b410ac88f61fad3db24.png"
+            alt="Vette Gallery"
+            class="absolute inset-0 w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 flex items-center justify-start">
+            <div class="max-w-[1583px] mx-auto px-12 w-full">
+                <div class="text-white">
+                    <h2 class="text-[48px] font-franklin-heavy tracking-[-0.96px] uppercase leading-[37px] mb-3">
+                        VETTE GALLERY
+                    </h2>
+                    <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
+                        Corvettes in their element.
+                    </p>
+                    <a
+                        href={GALLERY_VEHICLES_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        VIEW GALLERY
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <div class="container-e5 mb-12 hidden lg:block">
-        <div class="w-full h-px bg-black opacity-20"></div>
-    </div>
-
-    <BannerFullWidthWithLegend
-            client:visible
-            class="mb-12 h-[380px]"
+    <!-- Wheel Gallery Banner -->
+    <section class="relative h-[380px] w-full">
+        <img
+            src="/assets/images/wheels-new/38f473e1f45f9c800e13c02c7283b158fad81634.png"
             alt="Wheel Gallery"
-            bgColor="bg-[rgba(211,29,37,0.16)]"
-            image={WHEEL_GALLERY_STUDIO_BANNER}
-            customClassContainer="justify-center lg:justify-end pr-0 lg:pr-24"
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy tracking-[-0.96px] uppercase leading-[37px] mb-3">
-                WHEEL GALLERY
-            </h2>
-            <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
-                Our wheels, up close & personal.
-            </p>
-            <Link href={GALLERY_WHEELS_ROUTE}>VIEW GALLERY</Link>
-        </article>
-    </BannerFullWidthWithLegend>
+            class="absolute inset-0 w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 flex items-center justify-end">
+            <div class="max-w-[1583px] mx-auto px-12 w-full">
+                <div class="text-white text-right ml-auto max-w-[400px]">
+                    <h2 class="text-[48px] font-franklin-heavy tracking-[-0.96px] uppercase leading-[37px] mb-3">
+                        WHEEL GALLERY
+                    </h2>
+                    <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
+                        Our wheels, up close & personal.
+                    </p>
+                    <a
+                        href={GALLERY_WHEELS_ROUTE}
+                        class="inline-block bg-e5-red text-white px-8 py-4 text-[16px] font-franklin-demi tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        VIEW GALLERY
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 </MainLayout>
