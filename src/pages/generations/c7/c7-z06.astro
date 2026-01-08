@@ -1,0 +1,392 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Button from "@/core/components/Button.vue";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_SPEEDWAY_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    DAYTONA_LOGO,
+    DAYTONA_BRAND_NAME,
+    SPEEDWAY_LOGO,
+    SPEEDWAY_BRAND_NAME,
+    SEBRING_LOGO,
+    SEBRING_BRAND_NAME,
+} from "@/pages/wheels/constants/Wheels.ts";
+---
+
+<MainLayout title="C7 Corvette Z06 Wheels - E5 Wheels">
+    <div class="w-full bg-white -mt-107">
+        <!-- Hero Banner -->
+        <section class="relative w-full h-[799px] overflow-hidden">
+            <div class="absolute inset-0">
+                <img
+                    src="/assets/images/generations/c7/c7-z06-new/7effa23c7267f19706f5c67892383b7061a6c091.png"
+                    alt="C7 Corvette Z06"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+        </section>
+
+        <!-- Title and Description -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
+            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
+                Custom C7 CORVETTE Z06 Wheels
+            </h1>
+            <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
+                Unlike universal fitments, every E5 wheel is specifically designed around the C7 platform—its offsets, brake clearance, and body lines. The fitment is aggressive yet refined, amplifying the Z06's naturally muscular stance while keeping comfort uncompromised. Whether it's your daily drive or a track-built setup, these wheels deliver performance that meets the legend they were made for.
+            </p>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
+                SHOP FORM FORGED SERIES FOR C7 CORVETTES
+            </p>
+        </section>
+
+        <!-- Three Wheel Options -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
+                <!-- Speedway - Chrome -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c7/c7-z06-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.png" alt="Speedway Chrome" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CHROME</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 Z06</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+
+                <!-- Daytona - Titanium Brushed Tint -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c7/c7-z06-new/13015d50313f3d5f39cd2616f369d0fd2c044010.png" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 Z06</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+
+                <!-- Sebring - Gloss Black -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
+                        <img src="/assets/images/generations/c7/c7-z06-new/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png" alt="Sebring Gloss Black" class="w-full h-full object-contain" />
+                    </div>
+                    <img src={SEBRING_LOGO} alt="Sebring" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 Z06</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <Button client:visible primary link={WHEELS_ROUTE}>
+                    <span>SHOP FORM FORGED</span>
+                </Button>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                OVERVIEW
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C7 Z06, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div class="w-full h-[434px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/07eaaf7c8e53eaff8a8517993c3a40ee1a3f475e.png"
+                        alt="E5 Wheel Detail"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[435px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/4d0e8d856722833f6f0035bbeaba47696df83faa.png"
+                        alt="E5 Wheel Detail"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Finishing Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                FINISHING
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Our Form Forged Series is available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint, AND DARK BRONZE— finishes that embody the essence of timeless, modern, and bold design. Each surface is crafted to elevate the wheel's form while enduring the demands of the road, all backed by our 5-year finishing warranty.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mb-8">
+                <div class="w-full h-[575px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/7b0eb2bf712356f129743563b9cab285a89c93ba.png"
+                        alt="Bronze Brushed Tint"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[575px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/2dc258da3ef0fa3bafdc282a190b412e0a3f7aac.png"
+                        alt="Titanium Brushed Tint"
+                        class="w-full h-full object-cover object-[0%_0%]"
+                    />
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mb-12">
+                <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                    BRONZE BRUSHED TINT
+                </p>
+                <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                    TITANIUM BRUSHED TINT
+                </p>
+            </div>
+            <div class="w-full h-[611px] mb-8">
+                <img
+                    src="/assets/images/generations/c7/c7-z06-new/fb6915b500baca326333e5804080e0087421c402.png"
+                    alt="Gloss Black"
+                    class="w-full h-full object-cover object-[0%_53%]"
+                />
+            </div>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red text-center">
+                GLOSS BLACK
+            </p>
+        </section>
+
+        <!-- C7 Z06 Specifications Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[35px] md:leading-[40px] lg:leading-[43px] text-e5-red uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">
+                C7 Z06 WHEEL SPECIFICATIONS
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
+                Here is what you need to know about your C7 Z06.
+            </p>
+
+            <!-- Specifications Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-center font-['Franklin_Gothic_Book'] text-[18px] md:text-[20px] lg:text-[24px] tracking-[1.2px]">
+                    <thead>
+                        <tr class="border-b border-black/20">
+                            <th class="py-6 px-4 text-black/70 font-normal leading-[54px]">C7 VARIANT</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">BOLT<br/>PATTERN</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">CENTER<br/>BORE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT WHEEL<br/>SIZE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT<br/>OFFSET</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR WHEEL<br/>SIZE</th>
+                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR<br/>OFFSET</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">GRAND<br/>SPORT</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+40 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">20" x 12"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
+                        </tr>
+                        <tr class="border-b border-black/20">
+                            <td class="py-6 px-4 text-black/70 leading-[30px]">Z06</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+40 mm</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">20" x 12"</td>
+                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Banner Image -->
+        <section class="w-full h-[716px] overflow-hidden">
+            <img
+                src="/assets/images/generations/c7/c7-z06-new/b568c0af41aee7508d85f24e73aeaeedf605ad68.png"
+                alt="C7 Z06"
+                class="w-full h-full object-cover"
+            />
+        </section>
+
+        <!-- Wheel Detail 1: Daytona -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <div class="w-full max-w-[613px] mx-auto">
+                    <img src="/assets/images/generations/c7/c7-z06-new/77a1e54cf299ca527e8fc5695731f7a6680822fe.png" alt="Daytona" class="w-full h-auto" />
+                </div>
+                <div class="flex flex-col">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
+                            <img src={DAYTONA_LOGO} alt="Daytona" class="h-[52px] w-auto mb-4" />
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
+                                <li>Bolt Pattern: 5x120</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Gloss Black</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
+                                <span>SHOP DAYTONA</span>
+                            </Button>
+                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
+                                <span>EXPLORE DAYTONA</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner Image 2 -->
+        <section class="w-full h-[716px] overflow-hidden">
+            <img
+                src="/assets/images/generations/c7/c7-z06-new/f65b00dc6483d52a7ae7128434ee886042a7c5eb.png"
+                alt="C7 Z06"
+                class="w-full h-full object-cover"
+            />
+        </section>
+
+        <!-- Wheel Detail 2: Sebring -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <div class="w-full max-w-[613px] mx-auto">
+                    <img src="/assets/images/generations/c7/c7-z06-new/57612e656f7cb177dd66a7b9e8dbaf32845675c7.png" alt="Sebring" class="w-full h-auto" />
+                </div>
+                <div class="flex flex-col">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
+                            <img src={SEBRING_LOGO} alt="Sebring" class="h-[52px] w-auto mb-4" />
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
+                                <li>Bolt Pattern: 5x120</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Gloss Black</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                                <span>SHOP SEBRING</span>
+                            </Button>
+                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
+                                <span>EXPLORE SEBRING</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner Image 3 -->
+        <section class="w-full h-[716px] overflow-hidden">
+            <img
+                src="/assets/images/generations/c7/c7-z06-new/07aa26e10869fbf948cf9bc37372325f9fdc6b7e.png"
+                alt="C7 Z06"
+                class="w-full h-full object-cover"
+            />
+        </section>
+
+        <!-- Wheel Detail 3: Sebring (Second Section) -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <div class="w-full max-w-[613px] mx-auto">
+                    <img src="/assets/images/generations/c7/c7-z06-new/d442c91c12ba3d5e69ac89b01731b5399b849d1f.png" alt="Sebring" class="w-full h-auto" />
+                </div>
+                <div class="flex flex-col">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
+                            <img src={SEBRING_LOGO} alt="Sebring" class="h-[52px] w-auto mb-4" />
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Front: 19" x 10" / Offset +30mm</li>
+                                <li>Rear: 20" x 12" / Offset +50mm</li>
+                                <li>Bolt Pattern: 5x120</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
+                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
+                                <li>Titanium Brushed Tint</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                                <span>SHOP SEBRING</span>
+                            </Button>
+                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
+                                <span>EXPLORE SEBRING</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20">
+            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+                C7 CORVETTE GALLERY
+            </h2>
+            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
+                Explore our gallery of C7 Corvettes, showcasing a variety of styles and finishes on customer vehicles.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 md:mb-16">
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/384a010f812a0db86f4ffb292d914721e9594838.png"
+                        alt="C7 Gallery 1"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/00fd7c9ac6c2ef01e4976fea6fb2012fe6a68913.png"
+                        alt="C7 Gallery 2"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <div class="w-full h-[530px]">
+                    <img
+                        src="/assets/images/generations/c7/c7-z06-new/46fe8afbb201f8ca7be0b931c5df37ace3563b2e.png"
+                        alt="C7 Gallery 3"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+            <div class="text-center">
+                <Button client:visible primary link={`${GALLERY_VEHICLES_ROUTE}?generation=c7`}>
+                    <span>VIEW GALLERY</span>
+                </Button>
+            </div>
+        </section>
+
+        <!-- Back to Top -->
+        <div class="text-center hover:bg-black/5 transition-colors duration-300 py-4 md:py-6 text-[16px] md:text-[18px] lg:text-[20px] text-black/50 font-medium tracking-[2px] uppercase cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            BACK TO TOP
+        </div>
+    </div>
+</MainLayout>

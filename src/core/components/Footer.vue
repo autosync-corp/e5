@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Button from "@/core/components/Button.vue";
 import {
   E5_LOGO_BLACK,
   FACEBOOK_MEDIA_ICON,
@@ -11,142 +10,116 @@ import {
   CONTACT_ROUTE,
   INSTALLATION_ROUTE, MEDIA_ROUTE,
   PROCESS_ROUTE,
-  REFUND_ROUTE, REGISTRATION_ROUTE,
+  REFUND_ROUTE, REGISTRATION_ROUTE, VENDOR_REGISTRATION_ROUTE,
   WARRANTY_ROUTE
 } from "@/core/constants/Routes.ts";
 </script>
 
 <template>
-  <footer class="container-e5 bg-e5-red font-medium text-black w-full py-10 md:py-20 px-6">
-    <div class="flex justify-center mb-10 md:mb-20">
-      <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="footer-logo w-1/4 h-auto" />
-    </div>
+  <footer class="bg-e5-red w-full py-12 px-6">
+    <div class="max-w-[1518px] mx-auto">
+      <!-- Main Footer Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12 lg:gap-20 items-start mb-12">
+        <!-- Left: Links -->
+        <div class="footer-links flex flex-col space-y-2">
+          <a :href="PROCESS_ROUTE" class="footer-link">OUR PROCESS</a>
+          <a :href="CONTACT_ROUTE" class="footer-link">CONTACT US</a>
+          <a :href="REFUND_ROUTE" class="footer-link">RETURN POLICY</a>
+          <a :href="WARRANTY_ROUTE" class="footer-link">WARRANTY</a>
+          <a :href="INSTALLATION_ROUTE" class="footer-link">INSTALLATION GUIDELINES</a>
+          <a :href="REGISTRATION_ROUTE" class="footer-link">WHEEL REGISTRATION</a>
+          <a :href="VENDOR_REGISTRATION_ROUTE" class="footer-link">VENDOR REGISTRATION</a>
+          <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
+          <a class="footer-link">COMMUNITY</a>
+          <a class="footer-link">ABOUT US</a>
+        </div>
 
-    <div class="footer-grid grid grid-cols-[1fr_auto_1fr] items-start justify-between gap-2 md:gap-8">
-      <div class="footer-section footer-links flex flex-col">
-        <a :href="PROCESS_ROUTE" class="footer-link">PROCESS</a>
-        <a :href="CONTACT_ROUTE" class="footer-link">CONTACT</a>
-        <a :href="REFUND_ROUTE" class="footer-link">REFUND & RETURN POLICY</a>
-        <a :href="WARRANTY_ROUTE" class="footer-link">WARRANTY</a>
-        <a :href="INSTALLATION_ROUTE" class="footer-link">INSTALLATION</a>
-        <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
-        <a :href="REGISTRATION_ROUTE" class="footer-link">REGISTRATION</a>
-      </div>
+        <!-- Center: Logo + Social -->
+        <div class="footer-center flex flex-col items-center space-y-8">
+          <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="h-[33px] w-auto" />
 
-      <div class="footer-section footer-social h-full flex items-center justify-center">
-        <a href="https://www.instagram.com/e5wheels/" target="_blank" class="cursor-pointer">
-          <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="inline-block max-w-[70px] h-auto px-1" />
-        </a>
-        <a href="https://www.facebook.com/e5wheels/" target="_blank" class="cursor-pointer">
-          <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="inline-block max-w-[70px] h-auto px-1" />
-        </a>
-        <a href="www.youtube.com/@E5Wheels" target="_blank" class="cursor-pointer">
-          <img :src="YOUTUBE_MEDIA_ICON" alt="Youtube" class="inline-block max-w-[70px] h-auto px-1" />
-        </a>
-        <a href="https://www.tiktok.com/@e5wheels" target="_blank" class="cursor-pointer">
-          <img :src="TIKTOK_MEDIA_ICON" alt="Tiktok" class="inline-block max-w-[70px] h-auto px-1" />
-        </a>
-      </div>
+          <!-- Social Icons -->
+          <div class="flex items-center justify-center gap-4">
+            <a href="https://www.instagram.com/e5wheels/" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="w-12 h-12" />
+            </a>
+            <a href="https://www.facebook.com/e5wheels/" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="w-12 h-12" />
+            </a>
+            <a href="https://www.youtube.com/@E5Wheels" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="YOUTUBE_MEDIA_ICON" alt="Youtube" class="w-12 h-12" />
+            </a>
+            <a href="https://www.tiktok.com/@e5wheels" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="TIKTOK_MEDIA_ICON" alt="Tiktok" class="w-12 h-12" />
+            </a>
+          </div>
+        </div>
 
-      <div class="footer-section footer-contact flex flex-col items-end text-end">
-        <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank">
-          <div class="footer-link flex items-start gap-4 text-16">
-            <img :src="PIN_BLACK_ICON" alt="Location" class="w-6 h-auto mt-3 rotate-180 scale-y-[-1]" />
+        <!-- Right: Contact Info -->
+        <div class="footer-contact flex flex-col items-end text-right space-y-2">
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" class="footer-link flex items-start gap-3 justify-end">
+            <img :src="PIN_BLACK_ICON" alt="Location" class="w-[22px] h-auto mt-1 rotate-180 scale-y-[-1]" />
             <div>
               <p class="m-0">E5 WHEELS, LLC</p>
               <p class="m-0">3500 NW 77 CT</p>
               <p class="m-0">DORAL, FL 33122</p>
             </div>
-          </div>
-        </a>
-        <div class="footer-link flex items-start gap-4 text-16">
-          <img :src="PHONE_BLACK_ICON" alt="Phone" class="w-6 h-auto mt-3" />
-          <p class="m-0">
-            <a href="tel:(305)964-7429" target="_blank">(305)964-7429</a>
-          </p>
-        </div>
-        <p class="text-16 m-0 footer-link">
-          <a href="mailto:SALES@E5WHEELS.COM" target="_blank">SALES@E5WHEELS.COM</a>
-        </p>
-        <Button :link="CONTACT_ROUTE">GET IN TOUCH</Button>
-      </div>
-    </div>
+          </a>
 
-    <p class="footer-link text-16 text-center m-0 mt-12">
-      © {{ new Date().getFullYear() }} COPYRIGHT E5 WHEELS, LLC
-    </p>
+          <a href="tel:(305)964-7429" target="_blank" class="footer-link flex items-center gap-3 justify-end">
+            <img :src="PHONE_BLACK_ICON" alt="Phone" class="w-[27px] h-auto" />
+            <span>(305)964-7429</span>
+          </a>
+
+          <a href="mailto:SALES@E5WHEELS.COM" target="_blank" class="footer-link">
+            SALES@E5WHEELS.COM
+          </a>
+
+          <!-- Get In Touch Button -->
+          <a :href="CONTACT_ROUTE" class="mt-4 bg-black text-white px-8 py-3 text-[14px] tracking-[5.6px] hover:bg-black/90 transition-colors inline-block">
+            GET IN TOUCH
+          </a>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <p class="text-[16px] tracking-[6.4px] text-black text-center m-0">
+        © {{ new Date().getFullYear() }} COPYRIGHT E5 WHEELS, LLC
+      </p>
+    </div>
   </footer>
 </template>
 
 <style scoped>
 .footer-link {
-  @apply font-sans text-16 leading-10 md:leading-[48px] text-black no-underline transition-opacity hover:opacity-70;
+  @apply text-[16px] leading-[35px] tracking-[6.4px] text-black no-underline transition-opacity hover:opacity-70;
 }
 
 /* Tablet and Mobile Responsive Styles */
 @media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-section {
-    width: 100%;
-  }
-
   .footer-links {
-    order: 2;
     align-items: center;
     text-align: center;
   }
 
-  .footer-social {
-    order: 1;
-    justify-content: center;
+  .footer-center {
+    order: -1;
   }
 
   .footer-contact {
-    order: 3;
     align-items: center;
     text-align: center;
   }
 
-  .footer-contact > a,
-  .footer-contact > div {
-    align-items: center;
+  .footer-contact > a {
     justify-content: center;
-  }
-
-  .footer-logo {
-    width: 50% !important;
-    max-width: 300px;
   }
 }
 
 @media (max-width: 768px) {
-  .footer-logo {
-    width: 60% !important;
-  }
-
-  .footer-social img {
-    width: 160px !important;
-  }
-
   .footer-link {
     font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-logo {
-    width: 70% !important;
-  }
-
-  .footer-social img {
-    width: 140px !important;
-  }
-
-  .footer-link {
-    font-size: 13px;
+    letter-spacing: 4px;
   }
 }
 </style>

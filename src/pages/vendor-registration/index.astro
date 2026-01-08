@@ -1,0 +1,328 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="E5 Wheels - Become a Dealer">
+  <div class="w-full bg-white">
+    <!-- Header Section -->
+    <section class="py-20">
+      <div class="max-w-[1300px] mx-auto px-6">
+        <!-- Title -->
+        <h1 class="text-e5-red text-[48px] font-franklin-book tracking-[9.6px] uppercase text-center mb-12 leading-tight">
+          BECOME A DEALER
+        </h1>
+
+        <!-- Description -->
+        <p class="text-black/70 text-[24px] leading-[30px] text-center max-w-[1276px] mx-auto mb-12">
+          Leave us with your shop information and a brief message and we will respond to you within 24 hours! You may email us at sales@E5Wheels.com or you may also call us at (305) 964-7429 for a quicker response.
+        </p>
+
+        <!-- Red Divider -->
+        <div class="w-full h-[2px] bg-e5-red"></div>
+      </div>
+    </section>
+
+    <!-- Vendor Registration Form -->
+    <section class="pb-20">
+      <div class="max-w-[1300px] mx-auto px-6">
+        <form class="max-w-[1088px] mx-auto space-y-12">
+          <!-- Shop Info Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              SHOP INFO
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Shop Name and Shop Type -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="SHOP NAME*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">SHOP TYPE*</option>
+                    <option value="Automotive Shop">Automotive Shop</option>
+                    <option value="Performance Shop">Performance Shop</option>
+                    <option value="Tire Shop">Tire Shop</option>
+                    <option value="Detailing Shop">Detailing Shop</option>
+                    <option value="Dealership">Dealership</option>
+                    <option value="Online Retailer">Online Retailer</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Website URL -->
+              <div>
+                <input
+                  type="url"
+                  placeholder="WEBSITE URL*"
+                  required
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+
+              <!-- Shop Address -->
+              <div>
+                <input
+                  type="text"
+                  placeholder="SHOP ADDRESS*"
+                  required
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+
+              <!-- State, City, Zip Code -->
+              <div class="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] gap-6">
+                <!-- State -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">STATE</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- City -->
+                <div>
+                  <input
+                    type="text"
+                    placeholder="CITY"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+
+                <!-- Zip Code -->
+                <div>
+                  <input
+                    type="text"
+                    placeholder="ZIP CODE"
+                    required
+                    maxlength="5"
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Social Media Links -->
+              <div>
+                <input
+                  type="text"
+                  placeholder="SOCIAL MEDIA LINKS*"
+                  required
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Contact Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              PRIMARY CONTACT
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Full Name and Title/Role -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="FULL NAME*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">TITLE/ROLE*</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Sales Manager">Sales Manager</option>
+                    <option value="Parts Manager">Parts Manager</option>
+                    <option value="Service Manager">Service Manager</option>
+                    <option value="Purchasing Agent">Purchasing Agent</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email and Phone Number -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <input
+                    type="email"
+                    placeholder="EMAIL*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type="tel"
+                    placeholder="PHONE NUMBER*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Verification Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              BUSINESS VERIFICATION
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Years in Business and Retail Location -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Years in Business -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">YEARS IN BUSINESS*</option>
+                    <option value="Less than 1 year">Less than 1 year</option>
+                    <option value="1-2 years">1-2 years</option>
+                    <option value="3-5 years">3-5 years</option>
+                    <option value="6-10 years">6-10 years</option>
+                    <option value="11-20 years">11-20 years</option>
+                    <option value="20+ years">20+ years</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Retail Location -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">DO YOU HAVE A RETAIL LOCATION?*</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload Resale Certificate -->
+              <div>
+                <p class="text-[16px] text-black/70 font-excon-light text-center mb-2 opacity-80">
+                  UPLOAD RESALE CERTIF BUTTON HERE
+                </p>
+                <input
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              class="w-full bg-e5-red text-white py-3 rounded-[7px] text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors"
+            >
+              SEND
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</MainLayout>

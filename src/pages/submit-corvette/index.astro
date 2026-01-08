@@ -1,0 +1,267 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="E5 Wheels - Submit Your Corvette">
+  <div class="w-full bg-white">
+    <!-- Hero Image Section -->
+    <section class="w-full h-[432px] relative overflow-hidden">
+      <img
+        src="/assets/images/dcd46f6565de9548efdc57c3e163292341895723.png"
+        alt="E5 Corvette"
+        class="w-full h-full object-cover"
+      />
+    </section>
+
+    <!-- Header Section -->
+    <section class="py-20">
+      <div class="max-w-[1300px] mx-auto px-6">
+        <!-- Title -->
+        <h1 class="text-e5-red text-[48px] font-franklin-book tracking-[9.6px] uppercase text-center mb-12 leading-tight">
+          SHOW US YOUR E5 CORVETTE
+        </h1>
+
+        <!-- Description -->
+        <p class="text-black/70 text-[24px] leading-[30px] text-center max-w-[1276px] mx-auto mb-12">
+          Upload your best photos (or a folder link) featuring E5 wheels for a chance to be featured on our website and social channels. Clean shots, real builds, real owners—this is the culture behind the brand!
+        </p>
+
+        <!-- Red Divider -->
+        <div class="w-full h-[2px] bg-e5-red"></div>
+      </div>
+    </section>
+
+    <!-- Submit Form -->
+    <section class="pb-20">
+      <div class="max-w-[1300px] mx-auto px-6">
+        <form class="max-w-[1024px] mx-auto space-y-12">
+          <!-- Your Info Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              YOUR INFO
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Your Name and Email -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="YOUR NAME*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type="email"
+                    placeholder="EMAIL*"
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                  />
+                </div>
+              </div>
+
+              <!-- Instagram or Facebook Profile Links -->
+              <div>
+                <input
+                  type="text"
+                  placeholder="INSTAGRAM OR FACEBOOK PROFILE LINKS *OPTIONAL*"
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+
+              <!-- Other Social Media Profile Links -->
+              <div>
+                <input
+                  type="text"
+                  placeholder="OTHER SOCIAL MEDIA PROFILE LINKS *OPTIONAL*"
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Media Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              SUBMIT MEDIA
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Media Sharing Link -->
+              <div>
+                <input
+                  type="url"
+                  placeholder="MEDIA SHARING LINK*"
+                  required
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+
+              <!-- Photo Credits -->
+              <div>
+                <input
+                  type="text"
+                  placeholder="PHOTO CREDITS *OPTIONAL*"
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
+                />
+              </div>
+
+              <!-- Upload Files -->
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  required
+                  class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light focus:outline-none focus:border-e5-red file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-e5-red file:text-white hover:file:bg-e5-red/90"
+                />
+                <p class="text-[14px] text-black/70 font-excon-light mt-2 opacity-80">
+                  UPLOAD FILES*
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Corvette Info Section -->
+          <div>
+            <h2 class="text-[24px] font-franklin-demi text-black tracking-[2.88px] uppercase mb-6">
+              CORVETTE INFO
+            </h2>
+
+            <div class="space-y-6">
+              <!-- Generation/Model and Model Year -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Corvette Generation & Model -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">CORVETTE GENERATION & MODEL*</option>
+                    <option value="C5 Base">C5 Base</option>
+                    <option value="C5 Z06">C5 Z06</option>
+                    <option value="C6 Base">C6 Base</option>
+                    <option value="C6 Z06">C6 Z06</option>
+                    <option value="C6 Grand Sport">C6 Grand Sport</option>
+                    <option value="C6 ZR1">C6 ZR1</option>
+                    <option value="C7 Stingray">C7 Stingray</option>
+                    <option value="C7 Z06">C7 Z06</option>
+                    <option value="C7 Grand Sport">C7 Grand Sport</option>
+                    <option value="C7 ZR1">C7 ZR1</option>
+                    <option value="C8 Stingray">C8 Stingray</option>
+                    <option value="C8 Z06">C8 Z06</option>
+                    <option value="C8 E-Ray">C8 E-Ray</option>
+                    <option value="C8 ZR1">C8 ZR1</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Corvette Model Year -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">CORVETTE MODEL YEAR*</option>
+                    {Array.from({ length: 30 }, (_, i) => 2025 - i).map(year => (
+                      <option value={year}>{year}</option>
+                    ))}
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Color and Wheel Model -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Color -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">COLOR*</option>
+                    <option value="Arctic White">Arctic White</option>
+                    <option value="Black">Black</option>
+                    <option value="Torch Red">Torch Red</option>
+                    <option value="Sebring Orange">Sebring Orange</option>
+                    <option value="Rapid Blue">Rapid Blue</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Gray">Gray</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Wheel Model & Finish -->
+                <div class="relative">
+                  <select
+                    required
+                    class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
+                  >
+                    <option value="">WHEEL MODEL & FINISH*</option>
+                    <optgroup label="TALLADEGA">
+                      <option value="Talladega - Gloss Black">Talladega - Gloss Black</option>
+                      <option value="Talladega - Podium Bronze">Talladega - Podium Bronze</option>
+                    </optgroup>
+                    <optgroup label="DAYTONA">
+                      <option value="Daytona - Gloss Black">Daytona - Gloss Black</option>
+                      <option value="Daytona - Titanium Brushed Tint">Daytona - Titanium Brushed Tint</option>
+                      <option value="Daytona - Bronze Brushed Tint">Daytona - Bronze Brushed Tint</option>
+                    </optgroup>
+                    <optgroup label="SPEEDWAY">
+                      <option value="Speedway - Gloss Black">Speedway - Gloss Black</option>
+                      <option value="Speedway - Titanium Brushed Tint">Speedway - Titanium Brushed Tint</option>
+                      <option value="Speedway - Bronze Brushed Tint">Speedway - Bronze Brushed Tint</option>
+                    </optgroup>
+                    <optgroup label="SEBRING">
+                      <option value="Sebring - Gloss Black">Sebring - Gloss Black</option>
+                      <option value="Sebring - Titanium Brushed Tint">Sebring - Titanium Brushed Tint</option>
+                      <option value="Sebring - Bronze Brushed Tint">Sebring - Bronze Brushed Tint</option>
+                    </optgroup>
+                    <optgroup label="SONOMA">
+                      <option value="Sonoma - Gloss Black">Sonoma - Gloss Black</option>
+                      <option value="Sonoma - Titanium Brushed Tint">Sonoma - Titanium Brushed Tint</option>
+                      <option value="Sonoma - Bronze Brushed Tint">Sonoma - Bronze Brushed Tint</option>
+                      <option value="Sonoma - Dark Bronze">Sonoma - Dark Bronze</option>
+                    </optgroup>
+                  </select>
+                  <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.7" stroke-width="2"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              class="w-full bg-e5-red text-white py-3 rounded-[7px] text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors"
+            >
+              SUBMIT
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</MainLayout>

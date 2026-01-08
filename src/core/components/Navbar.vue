@@ -13,10 +13,11 @@ import {
   GENERATIONS_C6_GRAND_SPORT_ROUTE,
   GENERATIONS_C7_STINGRAY_ROUTE,
   GENERATIONS_C7_GRAND_SPORT_ROUTE,
+  GENERATIONS_C7_Z06_ROUTE,
   GENERATIONS_C8_STINGRAY_ROUTE,
   GENERATIONS_C8_Z06_ROUTE,
   GENERATIONS_C8_ZR1_ROUTE,
-  HOME_ROUTE, PROCESS_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
+  HOME_ROUTE, PROCESS_ROUTE, PROCESS_FORGED_ROUTE, PROCESS_FORM_FORGED_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
   WHEELS_ROUTE,
   WHEELS_DAYTONA_ROUTE,
   WHEELS_TALLADEGA_ROUTE,
@@ -24,16 +25,30 @@ import {
   WHEELS_SPEEDWAY_ROUTE,
   WHEELS_SONOMA_ROUTE
 } from "@/core/constants/Routes.ts";
+import { CartManager } from "@/core/services/ProductService.ts";
+import MiniCart from "@/core/components/MiniCart.vue";
 
 const currentPath = ref('');
 const isMobileMenuOpen = ref(false);
 const isWheelsDropdownOpen = ref(false);
 const isGalleryDropdownOpen = ref(false);
+const isProcessDropdownOpen = ref(false);
 const isGenerationsDropdownOpen = ref(false);
+const isMiniCartOpen = ref(false);
+const cartItemCount = ref(0);
 
 onMounted(() => {
   currentPath.value = window.location.pathname;
+  updateCartCount();
+
+  // Listen for cart updates
+  window.addEventListener('storage', updateCartCount);
+  window.addEventListener('cart-updated', updateCartCount);
 });
+
+const updateCartCount = () => {
+  cartItemCount.value = CartManager.getItemCount();
+};
 
 const isWheelsRoute = computed(() => currentPath.value.startsWith(WHEELS_ROUTE))
 const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE))
@@ -73,6 +88,22 @@ const toggleWheelsDropdown = () => {
 
 const closeWheelsDropdown = () => {
   isWheelsDropdownOpen.value = false;
+}
+
+const toggleProcessDropdown = () => {
+  isProcessDropdownOpen.value = !isProcessDropdownOpen.value;
+}
+
+const closeProcessDropdown = () => {
+  isProcessDropdownOpen.value = false;
+}
+
+const toggleMiniCart = () => {
+  isMiniCartOpen.value = !isMiniCartOpen.value;
+}
+
+const closeMiniCart = () => {
+  isMiniCartOpen.value = false;
 }
 </script>
 
@@ -118,7 +149,21 @@ const closeWheelsDropdown = () => {
             </div>
           </div>
 
-          <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}">PROCESS</a>
+          <!-- Process Dropdown -->
+          <div class="gallery-dropdown-wrapper" @mouseenter="isProcessDropdownOpen = true" @mouseleave="closeProcessDropdown">
+            <button class="nav-link" :class="{'selected': isProcessRoute}">
+              PROCESS
+              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div v-if="isProcessDropdownOpen" class="dropdown-menu">
+              <a :href="PROCESS_FORGED_ROUTE" class="dropdown-item">FORGED</a>
+              <a :href="PROCESS_FORM_FORGED_ROUTE" class="dropdown-item">FORM FORGED</a>
+            </div>
+          </div>
         </div>
 
         <!-- Center Logo -->
@@ -151,6 +196,7 @@ const closeWheelsDropdown = () => {
               <div class="generation-title">C7</div>
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
+              <a :href="GENERATIONS_C7_Z06_ROUTE" class="dropdown-item">Z06</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C6</div>
@@ -166,9 +212,12 @@ const closeWheelsDropdown = () => {
 
           <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
-          <a :href="CART_ROUTE">
+          <button @click="toggleMiniCart" class="relative">
             <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
-          </a>
+            <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {{ cartItemCount }}
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -227,7 +276,19 @@ const closeWheelsDropdown = () => {
           </div>
         </div>
 
-        <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">PROCESS</a>
+        <!-- Process Submenu for Mobile -->
+        <div class="mobile-submenu">
+          <button @click="toggleProcessDropdown" class="mobile-nav-link" :class="{'selected': isProcessRoute}">
+            PROCESS
+            <svg class="inline-block w-3 h-3 ml-1" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div v-if="isProcessDropdownOpen" class="mobile-submenu-items">
+            <a :href="PROCESS_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORGED</a>
+            <a :href="PROCESS_FORM_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORM FORGED</a>
+          </div>
+        </div>
 
         <!-- Generations Submenu for Mobile -->
         <div class="mobile-submenu">
@@ -252,6 +313,7 @@ const closeWheelsDropdown = () => {
               <div class="mobile-generation-title">C7</div>
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
+              <a :href="GENERATIONS_C7_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C6</div>
@@ -268,13 +330,19 @@ const closeWheelsDropdown = () => {
         <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
-          <a :href="CART_ROUTE" @click="closeMobileMenu">
+          <button @click="toggleMiniCart(); closeMobileMenu();" class="relative">
             <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
-          </a>
+            <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {{ cartItemCount }}
+            </span>
+          </button>
         </div>
       </div>
     </div>
   </nav>
+
+  <!-- Mini Cart Component -->
+  <MiniCart client:visible :isOpen="isMiniCartOpen" @close="closeMiniCart" />
 </template>
 
 <style scoped>
