@@ -7,6 +7,7 @@ export const TALLADEGA_PODIUM_BRONZE = "/assets/images/wheels/edd03fa4648dfa8d21
 export const TALLADEGA_GLOSS_BLACK = "/assets/images/wheels/afdec958cf713eb929ae510752b31594f43c1a4f.png";
 export const TALLADEGA_PODIUM_GOLD = "/assets/images/wheels/464d2ace3214351d17a75848ec4bddc985f8c836.png";
 export const TALLADEGA_EXO = "/assets/images/talladega-exo.png";
+export const TALLADEGA_HERO = "/assets/images/wheels/talladega/70359cfd82b50a1c47e7171df936e40fdaf000fb.png";
 export const TALLADEGA_SHOT_1 = "/assets/images/wheels/ac4f9bca958678b8de35e44893e3d5a5f294ec8b.png";
 export const TALLADEGA_SHOT_2 = "/assets/images/wheels/81b6e7a67f0ff714d31b243e6080853c26608bba.png";
 export const TALLADEGA_SHOT_3 = "/assets/images/wheels/6a649ab233804998e9706b78af02bf981a2fa348.png";

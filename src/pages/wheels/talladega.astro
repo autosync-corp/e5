@@ -2,196 +2,272 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
     TALLADEGA_LOGO,
-    TALLADEGA_PODIUM_GOLD,
-    TALLADEGA_GLOSS_BLACK,
-    TALLADEGA_SMOKED_POLISHED,
-    TALLADEGA_LOGO_WHITE, WHEEL_GALLERY_STUDIO_BANNER, TALLADEGA_BRAND_NAME, TALLADEGA_SHOT_2,
-    TALLADEGA_SHOT_1, TALLADEGA_SHOT_3
+    WHEEL_GALLERY_STUDIO_BANNER,
+    TALLADEGA_SHOT_2,
+    TALLADEGA_SHOT_1,
+    TALLADEGA_SHOT_3,
+    TALLADEGA_HERO,
+    SONOMA_LOGO
 } from "@/pages/wheels/constants/Wheels.ts";
-import Button from "@/core/components/Button.vue";
-import Hero from "@/core/components/Hero.vue";
-import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
-import DividerLine from "@/core/components/DividerLine.vue";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
-import {Orientations} from "@/core/types/App.ts";
-import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Talladega - E5 Wheels">
 
-    <Hero class="relative bg-e5-black">
-        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-            <iframe
-                    src="https://www.youtube-nocookie.com/embed/SP1rec1yG0I?autoplay=1&mute=1&loop=1&playlist=SP1rec1yG0I&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
-                    frameborder="0"
-                    allowtransparency="true"
-                    style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
-                    allow="autoplay; encrypted-media"
-                    loading="eager"
-                    title="E5 Wheels Hero Video"
-            ></iframe>
+    <!-- Hero Section -->
+    <section class="w-full bg-white">
+        <!-- Full Width Hero Image -->
+        <div class="w-full h-[600px]">
+            <img src={TALLADEGA_HERO} alt="Talladega Wheel" class="w-full h-full object-cover object-center" />
         </div>
 
-        <div class="absolute inset-0 flex items-center justify-center">
-            <div class="text-center text-white tracking-[3.2px]" style="text-shadow: 0 25px 90.6px rgba(0,0,0,0.96)">
-                <p class="text-[24px] uppercase mb-4">INTRODUCING THE ALL-NEW</p>
-                <img src={TALLADEGA_LOGO_WHITE} alt="TALLADEGA" class="mx-auto w-[660px] mb-6" />
-                <p class="text-[28px]">
-                    <span class="text-white">EXCLUSIVELY FORGED</span>
-                    <span class="text-e5-red font-medium"> FOR C8 Z06, ZR1, E_RAY</span>
-                </p>
-                <p class="text-[28px]">
-                    <span class="text-white">MADE IN THE</span>
-                    <span class="text-e5-red font-medium"> USA</span>
-                </p>
-                <div class="mt-4">
-                    <Button client:visible primary link={`${SHOP_ROUTE}?series=${TALLADEGA_BRAND_NAME}`}>
-                        SHOP FORGED
-                    </Button>
+        <!-- Content Below Image -->
+        <div class="max-w-[1100px] mx-auto px-6 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
+                <!-- Left: Talladega Logo -->
+                <div class="flex-1">
+                    <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="w-full max-w-[400px]" />
+                </div>
+
+                <!-- Right: E5 FORGED Badge -->
+                <div class="flex-shrink-0">
+                    <img src="/assets/images/e5-forged-logo.png" alt="E5 FORGED" class="h-[38px] md:h-[46px]" />
                 </div>
             </div>
-        </div>
-    </Hero>
 
-    <DividerLine />
-
-    <BannerFullWidthWithLegend
-            class="h-[582px]"
-            alt={`${TALLADEGA_BRAND_NAME} SHOTS`}
-            image={TALLADEGA_SHOT_1}
-            bg-color="bg-black/10"
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
-                CUT TO <span class="text-e5-red">PERFORM</span>
-            </h2>
-            <p class="max-w-[700px] text-[20px] tracking-[-0.48px] leading-[23px] mb-6 uppercase">
-                We carve away excess to optimize strength-to-weight, reduce inertia, and turn every ounce into performance.
+            <!-- Description Text -->
+            <p class="text-[14px] md:text-[17px] leading-[20px] md:leading-[24px] text-black/70 mb-4 max-w-[700px]">
+                The Talladega marks the foundation of the E5 Forged Series—a fully forged, performance-driven design that set the standard for everything that followed. Featuring a bold split Y-spoke, precision weight reduction, and a clean motorsport aesthetic, it delivers strength, balance, and driving confidence with unmistakable presence.
             </p>
-        </article>
-    </BannerFullWidthWithLegend>
 
-    <BannerFullWidthWithLegend
-            alt={`${TALLADEGA_BRAND_NAME} SHOTS`}
-            image={TALLADEGA_SHOT_2}
-            class="h-[582px]"
-            bg-color="bg-black/10"
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
-                Engineered <span class="text-e5-red">Depth</span>
-            </h2>
-            <p class="max-w-[700px] text-[20px] tracking-[-0.48px] leading-[23px] mb-6 uppercase">
-                engineered for performance. wider tire setups, greater grip, sharper handling, and improved brake clearance
+            <!-- Exclusively Forged For -->
+            <p class="text-[12px] md:text-[14px] tracking-[1.5px] uppercase text-black/50">
+                EXCLUSIVELY FORGED FOR C8 Z06, ZR1, E-RAY.
             </p>
-        </article>
-    </BannerFullWidthWithLegend>
-
-    <BannerFullWidthWithLegend
-            alt={`${TALLADEGA_BRAND_NAME} SHOTS`}
-            image={TALLADEGA_SHOT_3}
-            class="h-[582px]"
-            bg-color="bg-black/10"
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy uppercase leading-[37px] mb-3">
-                Our Foundation,
-                <br/>
-                Your <span class="text-e5-red">Vision</span>
-            </h2>
-            <p class="max-w-[700px] text-[20px] tracking-[-0.48px] leading-[23px] mb-6 uppercase">
-                every E5 Forged wheel begins as a foundation of strength and precision. FINISHING IS YOURS TO DEFINE.
-            </p>
-        </article>
-    </BannerFullWidthWithLegend>
-
-    <section class="container-e5">
-        <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="my-20 mx-auto max-w-[700px]" />
-
-        <div class="grid grid-cols-3 gap-12 mb-12 mx-20">
-            <!-- Podium Gold Brushed -->
-            <div class="text-center">
-                <img src={TALLADEGA_PODIUM_GOLD} alt="Podium Gold Brushed" class="w-full h-auto mb-6" />
-                <h3 class="text-[16px] tracking-[4px] mb-2">PODIUM GOLD BRUSHED</h3>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-1">20 X 10</p>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-2">21 X 13</p>
-                <p class="text-[12px] tracking-[3.2px] opacity-50">ONLY FOR Z06, ZR1, E_RAY</p>
-            </div>
-
-            <!-- Gloss Black -->
-            <div class="text-center">
-                <img src={TALLADEGA_GLOSS_BLACK} alt="Gloss Black" class="w-full h-auto mb-6" />
-                <h3 class="text-[16px] tracking-[4px] mb-2">GLOSS BLACK</h3>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-1">20 X 10</p>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-2">21 X 13</p>
-                <p class="text-[12px] tracking-[3.2px] opacity-50">ONLY FOR Z06, ZR1, E_RAY</p>
-            </div>
-
-            <!-- Smoked Titanium Brushed -->
-            <div class="text-center">
-                <img src={TALLADEGA_SMOKED_POLISHED} alt="Smoked Titanium Brushed" class="w-full h-auto mb-6" />
-                <h3 class="text-[16px] tracking-[4px] mb-2">SMOKED TITANIUM BRUSHED</h3>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-1">20 X 10</p>
-                <p class="text-e5-red text-[16px] tracking-[4px] mb-2">21 X 13</p>
-                <p class="text-[12px] tracking-[3.2px] opacity-50">ONLY FOR Z06, ZR1, E_RAY</p>
-            </div>
         </div>
 
-        <div class="w-full text-center mb-6">
-            <h3 class="text-[30px] tracking-[3.2px]"><span class="text-e5-red">CUSTOM</span> <span class="opacity-50">FINISHES AVAILABLE</span></h3>
-        </div>
+        <!-- Wheel Image with Specs Section -->
+        <div class="max-w-[1100px] mx-auto px-6 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+                <!-- Left: Wheel Image -->
+                <div class="w-full md:w-1/2">
+                    <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega Wheel" class="w-full h-auto" />
+                </div>
 
-        <div class="text-center mb-20">
-            <Button client:visible primary link={`${SHOP_ROUTE}?series=${TALLADEGA_BRAND_NAME}`}>
-                SHOP FORGED
-            </Button>
+                <!-- Right: Specs and Buttons -->
+                <div class="w-full md:w-1/2">
+                    <!-- Sizes -->
+                    <div class="mb-6">
+                        <h3 class="text-[14px] md:text-[16px] font-bold tracking-[1.5px] uppercase mb-3">SIZES</h3>
+                        <ul class="text-[13px] md:text-[15px] leading-[20px] md:leading-[22px] space-y-1">
+                            <li>• Front: 20x11 / Offset +25mm</li>
+                            <li>• Rear: 21x13 / Offset +20mm</li>
+                            <li>• Bolt Pattern: 5x130</li>
+                        </ul>
+                    </div>
+
+                    <!-- Finish -->
+                    <div class="mb-6">
+                        <h3 class="text-[14px] md:text-[16px] font-bold tracking-[1.5px] uppercase mb-3">FINISH</h3>
+                        <p class="text-[13px] md:text-[15px] leading-[20px] md:leading-[22px]">
+                            • Brushed Aluminum
+                        </p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button class="bg-e5-red text-white px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors">
+                            SHOP TALLADEGA
+                        </button>
+                        <button class="bg-white text-black border border-black px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-black/5 transition-colors">
+                            EXPLORE E5 FORGED
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <BannerFullWidthWithLegend
-            orientation={Orientations.LEFT}
-            bg-color="bg-black/10"
-            alt="Vette Gallery"
-            class="h-[582px]"
-            image={VETTE_GALLERY_IMAGE_1}
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy tracking-[-0.96px] uppercase leading-[37px] mb-3">
-                WHEEL GALLERY
+    <!-- The Forging Process -->
+    <section class="bg-white py-8 md:py-12 border-t border-gray-200">
+        <div class="max-w-[1100px] mx-auto px-6">
+            <h2 class="text-e5-red text-[24px] md:text-[28px] font-bold tracking-[2px] uppercase mb-2 text-center">
+                THE FORGING PROCESS
             </h2>
-            <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
-                A collection of builds fitted with our Talladega.
+            <p class="text-[13px] md:text-[15px] tracking-[1.5px] uppercase mb-1 text-center text-black/70">
+                FORGED IN THE USA. ENGINEERED WITHOUT COMPROMISE. <img src="/assets/images/process/forged/74e97b24bbd8f0fa93b10ef755682a46c52738c9.png" alt="USA Flag" class="inline-block h-[13px] w-[24px] ml-1" />
             </p>
-            <a href={GALLERY_WHEELS_ROUTE} class="flex mx-auto cursor-pointer">
-                <div class="text-[12px] tracking-[3.96px] uppercase border-b border-e5-red pb-2">
-                    <div class="hover:-translate-y-0.5">
-                        VIEW GALLERY
-                    </div>
-                </div>
-            </a>
-        </article>
-    </BannerFullWidthWithLegend>
+            <p class="text-[13px] md:text-[15px] leading-[19px] md:leading-[21px] max-w-[800px] mx-auto mb-8 text-center text-black/70">
+                Every E5 Forged wheel begins with purpose. Designed exclusively for Corvette platforms, our forged wheels are engineered and manufactured in the United States to meet the extreme demands of performance, precision, and strength. From aerospace-grade material selection to final finishing, each step is executed with intention—eliminating excess, reinforcing structure, and delivering uncompromising performance for the C8 Z06, ZR1, and E-Ray.
+            </p>
 
-    <BannerFullWidthWithLegend
-            alt="Wheel Gallery"
-            class="h-[582px]"
-            bg-color="bg-[rgba(211,29,37,0.16)]"
-            image={WHEEL_GALLERY_STUDIO_BANNER}
-    >
-        <article class="flex flex-col justify-center text-white text-center">
-            <h2 class="text-[48px] font-franklin-heavy tracking-[-0.96px] uppercase leading-[37px] mb-3">
-                WHEEL GALLERY
-            </h2>
-            <p class="text-[20px] tracking-[-0.48px] leading-[23px] mb-6">
-                Our wheels, up close & personal.
-            </p>
-            <a href={GALLERY_WHEELS_ROUTE} class="flex mx-auto cursor-pointer">
-                <div class="text-[12px] tracking-[3.96px] uppercase border-b border-e5-red pb-2">
-                    <div class="hover:-translate-y-0.5">
-                        VIEW GALLERY
-                    </div>
+            <!-- 5 Process Steps -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+                <div class="text-center">
+                    <img src="/assets/images/process/forged/f0f3e57be69ac17bdf5d0b88a9acbb4dd11c959e.png" alt="Material" class="w-full h-auto mb-2" />
+                    <h3 class="text-[12px] md:text-[13px] font-bold tracking-[1px] mb-1 uppercase">MATERIAL</h3>
+                    <p class="text-[10px] md:text-[11px] leading-[13px] md:leading-[14px] text-black/70 uppercase">
+                        6061 AEROSPACE-GRADE ALUMINUM BILLET SELECTED FOR STRENGTH AND CONSISTENCY.
+                    </p>
                 </div>
-            </a>
-        </article>
-    </BannerFullWidthWithLegend>
+
+                <div class="text-center">
+                    <img src="/assets/images/process/forged/809caca77164233a698d905f1d587df976aea6e3.png" alt="Forging" class="w-full h-auto mb-2" />
+                    <h3 class="text-[12px] md:text-[13px] font-bold tracking-[1px] mb-1 uppercase">FORGING</h3>
+                    <p class="text-[10px] md:text-[11px] leading-[13px] md:leading-[14px] text-black/70 uppercase">
+                        HIGH-PRESSURE FORGING REFINES GRAIN STRUCTURE FOR INCREASED DENSITY AND DURABILITY.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <img src="/assets/images/process/forged/797d5893d4a0bae48a4ccb031cafc436db1200ca.png" alt="Machine" class="w-full h-auto mb-2" />
+                    <h3 class="text-[12px] md:text-[13px] font-bold tracking-[1px] mb-1 uppercase">MACHINE</h3>
+                    <p class="text-[10px] md:text-[11px] leading-[13px] md:leading-[14px] text-black/70 uppercase">
+                        5-AXIS CNC MACHINING IN CALIFORNIA REMOVES MATERIAL WITH PRECISION AND PURPOSE.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <img src="/assets/images/process/forged/b9590fdbbe1a9e6203dbf8fe826d0dafe9f7baba.png" alt="Refine" class="w-full h-auto mb-2" />
+                    <h3 class="text-[12px] md:text-[13px] font-bold tracking-[1px] mb-1 uppercase">REFINE</h3>
+                    <p class="text-[10px] md:text-[11px] leading-[13px] md:leading-[14px] text-black/70 uppercase">
+                        HAND-FINISHED DETAILS ENSURE SYMMETRY, SHARP DEFINITION, AND VISUAL CLARITY.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <img src="/assets/images/process/forged/bb6950e1bfd656ac155d1f7e1c229877ded3a542.png" alt="Finish" class="w-full h-auto mb-2" />
+                    <h3 class="text-[12px] md:text-[13px] font-bold tracking-[1px] mb-1 uppercase">FINISH</h3>
+                    <p class="text-[10px] md:text-[11px] leading-[13px] md:leading-[14px] text-black/70 uppercase">
+                        PREMIUM FINISHES APPLIED AND INSPECTED FOR PERFORMANCE AND LONGEVITY.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="bg-e5-red text-white px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors">
+                    LEARN MORE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Finishing Section - Dark -->
+    <section class="relative bg-black py-12 md:py-16">
+        <div class="absolute inset-0 opacity-30">
+            <img src={TALLADEGA_SHOT_1} alt="Finishing Background" class="w-full h-full object-cover" />
+        </div>
+
+        <div class="max-w-[1100px] mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+                <!-- Left: FINISHING Title -->
+                <div class="w-full md:w-1/3">
+                    <h2 class="text-white text-[40px] md:text-[58px] font-bold tracking-[4px] md:tracking-[6px] uppercase">
+                        FINISHING
+                    </h2>
+                </div>
+
+                <!-- Right: Description -->
+                <div class="w-full md:w-2/3">
+                    <p class="text-white text-[13px] md:text-[16px] leading-[19px] md:leading-[22px]">
+                        Every wheel in the E5 Forged Collection is a statement beyond performance. Available in premium finishes like gloss black, brushed aluminum, and polished—with custom options upon request—each design highlights the precision of its forged construction. Every finish is executed with uncompromising attention to detail for a look that lasts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detail Images Grid -->
+    <section class="bg-white py-8 md:py-12">
+        <div class="w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <img src={TALLADEGA_SHOT_2} alt="Talladega Detail 1" class="w-full h-auto" />
+                <img src={TALLADEGA_SHOT_3} alt="Talladega Detail 2" class="w-full h-auto" />
+            </div>
+            <div class="w-full">
+                <img src={TALLADEGA_SHOT_1} alt="Talladega Detail 3" class="w-full h-auto" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Banners -->
+    <section class="w-full py-8 md:py-12">
+        <!-- Vette Gallery Banner -->
+        <div class="relative h-[350px] md:h-[400px] overflow-hidden mb-8 md:mb-12">
+            <img src={VETTE_GALLERY_IMAGE_1} alt="Vette Gallery" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 flex items-end justify-start pb-12 md:pb-16 pl-8 md:pl-16">
+                <article class="text-white">
+                    <h2 class="text-[40px] md:text-[58px] font-bold uppercase mb-3 md:mb-4 tracking-[2px] leading-[1]">
+                        VETTE GALLERY
+                    </h2>
+                    <p class="text-[15px] md:text-[18px] leading-[1.4]">
+                        A collection of builds fitted with our wheels.
+                    </p>
+                </article>
+            </div>
+        </div>
+
+        <!-- Wheel Gallery Banner -->
+        <div class="relative h-[350px] md:h-[400px] overflow-hidden">
+            <img src={WHEEL_GALLERY_STUDIO_BANNER} alt="Wheel Gallery" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 flex items-end justify-end pb-12 md:pb-16 pr-8 md:pr-16">
+                <article class="text-white text-right">
+                    <h2 class="text-[40px] md:text-[58px] font-bold uppercase mb-3 md:mb-4 tracking-[2px] leading-[1]">
+                        WHEEL GALLERY
+                    </h2>
+                    <p class="text-[15px] md:text-[18px] leading-[1.4] mb-4 md:mb-6">
+                        Our wheels, up close & personal.
+                    </p>
+                    <button class="bg-e5-red text-white px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase">
+                        VIEW GALLERY
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Wheels - Talladega + Sonoma -->
+    <section class="bg-white py-8 md:py-12">
+        <div class="max-w-[1000px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+                <!-- Talladega -->
+                <div class="text-center">
+                    <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-auto mb-4" />
+                    <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="mx-auto h-[34px] md:h-[38px] mb-4" />
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
+                    <button class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase">
+                        SHOP TALLADEGA
+                    </button>
+                </div>
+
+                <!-- Sonoma -->
+                <div class="text-center">
+                    <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto mb-4" />
+                    <img src={SONOMA_LOGO} alt="SONOMA" class="mx-auto h-[42px] md:h-[46px] mb-4" />
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
+                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
+                    <button class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase">
+                        SHOP SONOMA
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Red Section -->
+    <section class="bg-e5-red text-white py-6">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="text-center">
+                <img src="/assets/images/e5-wheels-logo-white.png" alt="E5 Wheels" class="h-[34px] md:h-[40px] mx-auto" />
+            </div>
+        </div>
+    </section>
+
 </MainLayout>

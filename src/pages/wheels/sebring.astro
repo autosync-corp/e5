@@ -19,11 +19,11 @@ import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import BannerBesideDetailArea from "@/core/components/BannerBesideDetailArea.vue";
 import {
-    PENDING_ROUTE,
     WHEELS_DAYTONA_ROUTE,
     GALLERY_WHEELS_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
-    SHOP_ROUTE
+    SHOP_ROUTE,
+    PROCESS_FORM_FORGED_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
 
@@ -99,7 +99,7 @@ import {
             </p>
 
             <div class="mt-28 px-28">
-                <Button client:visible secondary link={PENDING_ROUTE}>
+                <Button client:visible secondary link={PROCESS_FORM_FORGED_ROUTE}>
                     <span class="text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
                 </Button>
             </div>
