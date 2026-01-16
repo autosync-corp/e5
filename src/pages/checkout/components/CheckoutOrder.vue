@@ -7,6 +7,7 @@ import type { Vehicle } from '@/core/services/VehicleService';
 // Props
 const props = defineProps<{
   stripePublishableKey?: string;
+  affirmPublicKey?: string;
 }>();
 
 // State
@@ -162,9 +163,17 @@ function initializeAffirm() {
     return;
   }
 
+  // Get Affirm public key from props
+  const affirmKey = props.affirmPublicKey;
+
+  if (!affirmKey) {
+    console.error('Affirm public key is not provided');
+    return;
+  }
+
   // Configure Affirm before loading script
   window._affirm_config = {
-    public_api_key: '92CV0YXQKWVOXKDC',
+    public_api_key: affirmKey,
     script: 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js',
   };
 

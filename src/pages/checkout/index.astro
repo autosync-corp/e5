@@ -3,8 +3,9 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import CheckoutOrder from "./components/CheckoutOrder.vue";
 import AddressForm from "./components/AddressForm.vue";
 
-// Get Stripe publishable key from environment
+// Get payment API keys from environment
 const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
+const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY;
 ---
 
 <MainLayout title="Checkout - E5 Wheels">
@@ -48,7 +49,7 @@ const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
       <AddressForm client:load />
 
       <!-- Right Column - Order Summary -->
-      <CheckoutOrder client:load stripePublishableKey={stripePublishableKey} />
+      <CheckoutOrder client:load stripePublishableKey={stripePublishableKey} affirmPublicKey={affirmPublicKey} />
     </div>
   </section>
 </MainLayout>

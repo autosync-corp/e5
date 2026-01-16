@@ -4,9 +4,13 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 // Get Affirm credentials from environment variables
-const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY || '92CV0YXQKWVOXKDC';
-const affirmPrivateKey = import.meta.env.AFFIRM_PRIVATE_KEY || '8fZlIyt0zOiJin6ksdmuhr3vgBSyd1ao';
+const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY;
+const affirmPrivateKey = import.meta.env.AFFIRM_PRIVATE_KEY;
 const affirmApiUrl = import.meta.env.AFFIRM_API_URL || 'https://sandbox.affirm.com/api/v1/transactions';
+
+if (!affirmPublicKey || !affirmPrivateKey) {
+  throw new Error('Affirm API keys are not set in environment variables');
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
