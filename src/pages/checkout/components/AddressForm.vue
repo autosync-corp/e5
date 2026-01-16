@@ -126,6 +126,42 @@ function handleCountryChange() {
 function handleShippingCountryChange() {
   shippingState.value = '';
 }
+
+// Expose form data to parent component
+function getFormData() {
+  return {
+    billing: {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      companyName: companyName.value,
+      country: selectedCountry.value,
+      state: selectedState.value,
+      streetAddress1: streetAddress1.value,
+      streetAddress2: streetAddress2.value,
+      city: city.value,
+      zipCode: zipCode.value,
+      phoneNumber: phoneNumber.value,
+      emailAddress: emailAddress.value,
+    },
+    shipping: shipToDifferent.value ? {
+      firstName: shippingFirstName.value,
+      lastName: shippingLastName.value,
+      companyName: shippingCompanyName.value,
+      country: shippingCountry.value,
+      state: shippingState.value,
+      streetAddress1: shippingStreetAddress1.value,
+      streetAddress2: shippingStreetAddress2.value,
+      city: shippingCity.value,
+      zipCode: shippingZipCode.value,
+    } : null,
+    orderNotes: orderNotes.value,
+  };
+}
+
+// Make getFormData available globally
+if (typeof window !== 'undefined') {
+  (window as any).getCheckoutFormData = getFormData;
+}
 </script>
 
 <template>

@@ -2,6 +2,9 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import CheckoutOrder from "./components/CheckoutOrder.vue";
 import AddressForm from "./components/AddressForm.vue";
+
+// Get Stripe publishable key from environment
+const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
 ---
 
 <MainLayout title="Checkout - E5 Wheels">
@@ -45,7 +48,7 @@ import AddressForm from "./components/AddressForm.vue";
       <AddressForm client:load />
 
       <!-- Right Column - Order Summary -->
-      <CheckoutOrder client:load />
+      <CheckoutOrder client:load stripePublishableKey={stripePublishableKey} />
     </div>
   </section>
 </MainLayout>

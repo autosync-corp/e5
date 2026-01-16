@@ -1,0 +1,152 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Order Success - E5 Wheels">
+  <section class="e5OrderSuccessSection">
+    <div class="e5OrderSuccessContainer">
+      <div class="e5OrderSuccessCard">
+        <!-- Success Icon -->
+        <div class="e5OrderSuccessIcon">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="38" stroke="#22c55e" stroke-width="4"/>
+            <path d="M25 40L35 50L55 30" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Success Message -->
+        <h1 class="e5OrderSuccessTitle">Order Placed Successfully!</h1>
+        <p class="e5OrderSuccessText">
+          Thank you for your purchase. Your order has been received and is being processed.
+        </p>
+        <p class="e5OrderSuccessSubtext">
+          You will receive an order confirmation email shortly with your order details and tracking information.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="e5OrderSuccessActions">
+          <a href="/" class="e5OrderSuccessBtn e5OrderSuccessBtnPrimary">
+            Continue Shopping
+          </a>
+          <a href="/shop" class="e5OrderSuccessBtn e5OrderSuccessBtnSecondary">
+            Browse Wheels
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .e5OrderSuccessSection {
+    width: 100%;
+    min-height: 80vh;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 32px;
+  }
+
+  .e5OrderSuccessContainer {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .e5OrderSuccessCard {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .e5OrderSuccessIcon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .e5OrderSuccessTitle {
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #0a0a0a;
+    margin-bottom: 16px;
+  }
+
+  .e5OrderSuccessText {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 16px;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .e5OrderSuccessSubtext {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .e5OrderSuccessActions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .e5OrderSuccessBtn {
+    display: inline-block;
+    padding: 16px 32px;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s;
+    min-width: 240px;
+  }
+
+  .e5OrderSuccessBtnPrimary {
+    background: #d31d25;
+    color: #ffffff;
+  }
+
+  .e5OrderSuccessBtnPrimary:hover {
+    background: #a33a3a;
+  }
+
+  .e5OrderSuccessBtnSecondary {
+    background: #ffffff;
+    color: #0a0a0a;
+    border: 2px solid #0a0a0a;
+  }
+
+  .e5OrderSuccessBtnSecondary:hover {
+    background: #0a0a0a;
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .e5OrderSuccessCard {
+      padding: 40px 24px;
+    }
+
+    .e5OrderSuccessTitle {
+      font-size: 24px;
+    }
+
+    .e5OrderSuccessText {
+      font-size: 14px;
+    }
+
+    .e5OrderSuccessSubtext {
+      font-size: 12px;
+    }
+  }
+</style>
