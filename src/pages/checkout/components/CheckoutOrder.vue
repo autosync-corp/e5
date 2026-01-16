@@ -672,7 +672,7 @@ async function handlePlaceOrder() {
       const customerData = (window as any).getCheckoutFormData ? (window as any).getCheckoutFormData() : null;
 
       // Send order data to Go High Level webhook
-      await sendOrderToWebhook(paymentIntent.id, 'Credit Card', customerData);
+      await sendOrderToWebhook(paymentIntent.id, 'Stripe', customerData);
 
       // Clear cart
       CartManager.clearCart();
