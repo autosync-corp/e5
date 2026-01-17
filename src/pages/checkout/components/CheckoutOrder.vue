@@ -547,10 +547,12 @@ async function handleAffirmPayment() {
         isProcessing.value = false;
       },
       onSuccess: async (checkoutData: any) => {
-        console.log('Affirm checkout success:', checkoutData);
+        console.log('✅ Affirm checkout success callback triggered');
+        console.log('Checkout data received:', checkoutData);
 
         try {
           // Capture the charge
+          console.log('Sending capture request to /api/affirm-capture...');
           const captureResponse = await fetch('/api/affirm-capture', {
             method: 'POST',
             headers: {
@@ -561,15 +563,21 @@ async function handleAffirmPayment() {
             }),
           });
 
+          console.log('Capture response status:', captureResponse.status);
+
           if (!captureResponse.ok) {
-            throw new Error('Failed to capture Affirm payment');
+            const errorText = await captureResponse.text();
+            console.error('Capture failed:', errorText);
+            throw new Error(`Failed to capture Affirm payment: ${errorText}`);
           }
 
           const captureData = await captureResponse.json();
-          console.log('Affirm payment captured:', captureData);
+          console.log('✅ Affirm payment captured:', captureData);
 
           // Send to GHL webhook (same as Stripe)
+          console.log('Sending order to GHL webhook...');
           await sendOrderToWebhook(captureData.chargeId, 'Affirm', customerData);
+          console.log('✅ Webhook sent successfully');
 
           successMessage.value = 'Payment successful! Thank you for your order.';
 
@@ -582,6 +590,7 @@ async function handleAffirmPayment() {
             window.location.href = '/order-success?affirm=true';
           }, 2000);
         } catch (error: any) {
+          console.error('❌ Error in Affirm success handler:', error);
           errorMessage.value = error.message || 'Failed to process Affirm payment';
           isProcessing.value = false;
         }
