@@ -125,6 +125,10 @@ import MainLayout from "@/layouts/MainLayout.astro";
           console.warn('⚠️ No saved order data found in sessionStorage');
         }
 
+        // Clear the cart from localStorage
+        console.log('Clearing cart from localStorage...');
+        localStorage.removeItem('cart');
+
         // Show success state
         if (processingDiv) processingDiv.style.display = 'none';
         if (successDiv) successDiv.style.display = 'block';
@@ -139,6 +143,10 @@ import MainLayout from "@/layouts/MainLayout.astro";
       }
     } else {
       console.log('Regular order success (not Affirm redirect)');
+
+      // Clear the cart for Stripe payments too
+      console.log('Clearing cart from localStorage...');
+      localStorage.removeItem('cart');
     }
   }
 
