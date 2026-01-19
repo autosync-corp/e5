@@ -128,6 +128,8 @@ import MainLayout from "@/layouts/MainLayout.astro";
         // Clear the cart from localStorage
         console.log('Clearing cart from localStorage...');
         localStorage.removeItem('cart');
+        // Dispatch cart-updated event to update navbar badge
+        window.dispatchEvent(new Event('cart-updated'));
 
         // Show success state
         if (processingDiv) processingDiv.style.display = 'none';
@@ -147,6 +149,8 @@ import MainLayout from "@/layouts/MainLayout.astro";
       // Clear the cart for Stripe payments too
       console.log('Clearing cart from localStorage...');
       localStorage.removeItem('cart');
+      // Dispatch cart-updated event to update navbar badge
+      window.dispatchEvent(new Event('cart-updated'));
     }
   }
 
