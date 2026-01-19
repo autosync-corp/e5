@@ -49,10 +49,12 @@ export const POST: APIRoute = async ({ request }) => {
     // Create Basic Auth header
     const authHeader = 'Basic ' + Buffer.from(`${affirmPublicKey}:${affirmPrivateKey}`).toString('base64');
 
-    console.log('Authorizing Affirm charge...');
+    console.log('Authorizing Affirm charge with checkout token:', checkoutToken);
 
-    // Step 1: Authorize the charge
-    const authorizeResponse = await fetch(`${affirmApiUrl}`, {
+    // Step 1: Authorize the charge using the checkout token
+    // Note: The checkout was already created by the client-side SDK
+    // We just need to authorize it with the token
+    const authorizeResponse = await fetch(`https://sandbox.affirm.com/api/v2/charges`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +81,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Step 2: Capture the charge
     console.log('Capturing Affirm charge...');
 
-    const captureResponse = await fetch(`${affirmApiUrl}/${chargeId}/capture`, {
+    const captureResponse = await fetch(`https://sandbox.affirm.com/api/v2/charges/${chargeId}/capture`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
