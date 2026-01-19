@@ -482,6 +482,20 @@ async function handleAffirmPayment() {
     const shippingAddr = customerData.shipping || customerData.billing;
     const billingAddr = customerData.billing;
 
+    // Save order data to sessionStorage for when Affirm redirects back
+    const orderData = {
+      cartItems: cartItems.value,
+      customerData: customerData,
+      vehicle: selectedVehicle.value,
+      totals: {
+        subtotal: cartTotals.value.subtotal,
+        tax: cartTotals.value.tax,
+        total: cartTotals.value.total,
+      }
+    };
+    sessionStorage.setItem('pendingOrderData', JSON.stringify(orderData));
+    console.log('✅ Saved order data to sessionStorage');
+
     // Open Affirm checkout modal directly
     window.affirm.checkout({
       merchant: {

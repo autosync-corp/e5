@@ -6,22 +6,34 @@ import MainLayout from "@/layouts/MainLayout.astro";
   <section class="e5OrderSuccessSection">
     <div class="e5OrderSuccessContainer">
       <div class="e5OrderSuccessCard">
-        <!-- Success Icon -->
-        <div class="e5OrderSuccessIcon">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="40" cy="40" r="38" stroke="#22c55e" stroke-width="4"/>
-            <path d="M25 40L35 50L55 30" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <!-- Loading State (shown while processing Affirm) -->
+        <div id="affirmProcessing" class="e5OrderSuccessProcessing" style="display: none;">
+          <div class="e5OrderSuccessSpinner"></div>
+          <h1 class="e5OrderSuccessTitle">Processing Your Payment...</h1>
+          <p class="e5OrderSuccessText">
+            Please wait while we confirm your Affirm payment.
+          </p>
         </div>
 
-        <!-- Success Message -->
-        <h1 class="e5OrderSuccessTitle">Order Placed Successfully!</h1>
-        <p class="e5OrderSuccessText">
-          Thank you for your purchase. Your order has been received and is being processed.
-        </p>
-        <p class="e5OrderSuccessSubtext">
-          You will receive an order confirmation email shortly with your order details and tracking information.
-        </p>
+        <!-- Success State -->
+        <div id="orderSuccess">
+          <!-- Success Icon -->
+          <div class="e5OrderSuccessIcon">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#22c55e" stroke-width="4"/>
+              <path d="M25 40L35 50L55 30" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Success Message -->
+          <h1 class="e5OrderSuccessTitle">Order Placed Successfully!</h1>
+          <p class="e5OrderSuccessText">
+            Thank you for your purchase. Your order has been received and is being processed.
+          </p>
+          <p class="e5OrderSuccessSubtext">
+            You will receive an order confirmation email shortly with your order details and tracking information.
+          </p>
+        </div>
 
         <!-- Action Buttons -->
         <div class="e5OrderSuccessActions">
@@ -36,6 +48,107 @@ import MainLayout from "@/layouts/MainLayout.astro";
     </div>
   </section>
 </MainLayout>
+
+<script>
+  // Handle Affirm redirect
+  async function handleAffirmRedirect() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAffirm = urlParams.get('affirm');
+    const checkoutToken = urlParams.get('checkout_token');
+
+    console.log('Order success page loaded');
+    console.log('Is Affirm:', isAffirm);
+    console.log('Checkout token:', checkoutToken);
+
+    if (isAffirm === 'true' && checkoutToken) {
+      console.log('✅ Affirm redirect detected, processing...');
+
+      // Show processing state
+      const processingDiv = document.getElementById('affirmProcessing');
+      const successDiv = document.getElementById('orderSuccess');
+      if (processingDiv) processingDiv.style.display = 'block';
+      if (successDiv) successDiv.style.display = 'none';
+
+      try {
+        // Capture the Affirm payment
+        console.log('Calling /api/affirm-capture...');
+        const captureResponse = await fetch('/api/affirm-capture', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            checkoutToken: checkoutToken,
+          }),
+        });
+
+        console.log('Capture response status:', captureResponse.status);
+
+        if (!captureResponse.ok) {
+          const errorText = await captureResponse.text();
+          console.error('❌ Capture failed:', errorText);
+          throw new Error(`Failed to capture Affirm payment: ${errorText}`);
+        }
+
+        const captureData = await captureResponse.json();
+        console.log('✅ Affirm payment captured:', captureData);
+
+        // Get saved customer and cart data from sessionStorage
+        const savedOrderData = sessionStorage.getItem('pendingOrderData');
+        console.log('Saved order data:', savedOrderData);
+
+        if (savedOrderData) {
+          const orderData = JSON.parse(savedOrderData);
+
+          // Send to GHL webhook
+          console.log('Sending to GHL webhook...');
+          const webhookResponse = await fetch('/api/send-order-webhook', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              chargeId: captureData.chargeId,
+              paymentMethod: 'Affirm',
+              ...orderData
+            }),
+          });
+
+          if (webhookResponse.ok) {
+            console.log('✅ Webhook sent successfully');
+            // Clear the saved data
+            sessionStorage.removeItem('pendingOrderData');
+          } else {
+            console.error('❌ Webhook failed');
+          }
+        } else {
+          console.warn('⚠️ No saved order data found in sessionStorage');
+        }
+
+        // Show success state
+        if (processingDiv) processingDiv.style.display = 'none';
+        if (successDiv) successDiv.style.display = 'block';
+
+      } catch (error) {
+        console.error('❌ Error processing Affirm redirect:', error);
+        alert('There was an error processing your payment. Please contact support with your order details.');
+
+        // Show success anyway (payment was approved by Affirm)
+        if (processingDiv) processingDiv.style.display = 'none';
+        if (successDiv) successDiv.style.display = 'block';
+      }
+    } else {
+      console.log('Regular order success (not Affirm redirect)');
+    }
+  }
+
+  // Run when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleAffirmRedirect);
+  } else {
+    handleAffirmRedirect();
+  }
+</script>
 
 <style>
   .e5OrderSuccessSection {
@@ -89,6 +202,25 @@ import MainLayout from "@/layouts/MainLayout.astro";
     color: #999999;
     line-height: 1.6;
     margin-bottom: 40px;
+  }
+
+  .e5OrderSuccessProcessing {
+    text-align: center;
+  }
+
+  .e5OrderSuccessSpinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #d31d25;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 32px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   .e5OrderSuccessActions {
