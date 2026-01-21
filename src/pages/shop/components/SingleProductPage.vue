@@ -838,28 +838,6 @@ onMounted(() => {
 
           <!-- Configuration Options -->
           <div class="space-y-4">
-            <!-- Model & Trim -->
-            <div v-if="availableModels.length > 0">
-              <label class="block text-base font-['Excon_Variable'] font-light text-black/70 mb-2">
-                MODEL & TRIM:
-              </label>
-              <div class="relative">
-                <select
-                  v-model="selectedModel"
-                  class="w-full h-10 border border-[#ccc] rounded-lg px-4 text-base font-['Excon_Variable'] font-light text-black/80 appearance-none bg-white"
-                >
-                  <option v-for="model in availableModels" :key="model" :value="model">
-                    CORVETTE {{ model.toUpperCase() }}
-                  </option>
-                </select>
-                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" class="opacity-70">
-                    <path d="M6.5 9.75L1.625 3.25H11.375L6.5 9.75Z" fill="black"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
             <!-- Finish -->
             <div>
               <label class="block text-base font-['Excon_Variable'] font-light text-black/70 mb-2">
