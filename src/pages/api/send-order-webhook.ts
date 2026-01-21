@@ -73,7 +73,18 @@ export const POST: APIRoute = async ({ request }) => {
       },
 
       // Shipping Address
-      shippingAddress: customerData.shipping || {
+      shippingAddress: customerData.shipping ? {
+        firstName: customerData.shipping.firstName,
+        lastName: customerData.shipping.lastName,
+        company: customerData.shipping.companyName,
+        address1: customerData.shipping.streetAddress1,
+        address2: customerData.shipping.streetAddress2,
+        city: customerData.shipping.city,
+        state: customerData.shipping.state,
+        zipCode: customerData.shipping.zipCode,
+        country: customerData.shipping.country,
+        fullAddress: `${customerData.shipping.streetAddress1}${customerData.shipping.streetAddress2 ? ', ' + customerData.shipping.streetAddress2 : ''}, ${customerData.shipping.city}, ${customerData.shipping.state} ${customerData.shipping.zipCode}, ${customerData.shipping.country}`,
+      } : {
         firstName: customerData.billing.firstName,
         lastName: customerData.billing.lastName,
         company: customerData.billing.companyName,
