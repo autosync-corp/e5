@@ -84,6 +84,19 @@ const wheelImageUrl = computed(() => {
 
 const wheelFinish = computed(() => props.vehicleWheelFinish || 'N/A');
 const wheelStyle = computed(() => props.vehicleWheelStyle || 'N/A');
+
+// Generate wheel style route
+const wheelStyleRoute = computed(() => {
+  if (!props.vehicleWheelStyle) return '/wheels';
+  const style = props.vehicleWheelStyle.toLowerCase().replace(/\s+/g, '-');
+  return `/wheels/${style}`;
+});
+
+// Generate shop link with series query parameter
+const shopRoute = computed(() => {
+  if (!props.vehicleWheelStyle) return '/shop';
+  return `/shop?series=${props.vehicleWheelStyle}`;
+});
 </script>
 
 <template>
@@ -130,11 +143,11 @@ const wheelStyle = computed(() => props.vehicleWheelStyle || 'N/A');
 
     <template #actions>
       <div class="flex justify-between gap-6 w-full">
-        <Button primary link="pending">
+        <Button primary :link="shopRoute">
           SHOP {{ wheelStyle }}
         </Button>
-        <Button secondary link="/wheels">
-          EXPLORE WHEELS
+        <Button secondary :link="wheelStyleRoute">
+          EXPLORE {{ wheelStyle }}
         </Button>
       </div>
     </template>

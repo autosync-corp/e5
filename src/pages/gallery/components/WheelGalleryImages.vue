@@ -40,6 +40,13 @@ const wheelGalleryImages = computed(() => {
 });
 
 const hasImages = computed(() => wheelGalleryImages.value.length > 0);
+
+// Generate lowercase wheel style route
+const wheelStyleRoute = computed(() => {
+  if (!props.wheelStyle) return props.wheelsRoute;
+  const style = props.wheelStyle.toLowerCase().replace(/\s+/g, '-');
+  return `${props.wheelsRoute}/${style}`;
+});
 </script>
 
 <template>
@@ -58,7 +65,7 @@ const hasImages = computed(() => wheelGalleryImages.value.length > 0);
         :key="index"
         class="w-full h-auto overflow-hidden flex items-center justify-center"
       >
-        <a :href="`${wheelsRoute}/${wheelStyle}`">
+        <a :href="wheelStyleRoute">
           <img
             :src="wheel.image"
             :alt="wheel.finish"

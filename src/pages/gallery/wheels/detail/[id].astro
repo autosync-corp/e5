@@ -6,6 +6,8 @@ import WheelCard from "@/pages/gallery/components/WheelCard.vue";
 import Button from "@/core/components/Button.vue";
 import { GALLERY_WHEELS_ROUTE, GALLERY_WHEELS_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 
+export const prerender = true;
+
 export function getStaticPaths() {
   return wheelGalleryItems.map((wheel) => ({
     params: { id: wheel.id.toString() },

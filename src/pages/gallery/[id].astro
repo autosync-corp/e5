@@ -9,6 +9,8 @@ import VehicleWheelDetails from "@/pages/gallery/components/VehicleWheelDetails.
 import WheelGalleryImages from "@/pages/gallery/components/WheelGalleryImages.vue";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
+export const prerender = true;
+
 export function getStaticPaths() {
   return corvetteGalleryData.map((vehicle) => ({
     params: { id: vehicle.galleryId || '' },

@@ -23,7 +23,7 @@ export interface CorvetteGalleryItem {
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
-    "galleryId": "E5-38",
+    "galleryId": "2006-c6-stingray",
     "year": "2006",
     "submodel": "C6",
     "trim": "Grand Sport",
@@ -45,7 +45,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp"]
   },
   {
-    "galleryId": "E5-26",
+    "galleryId": "2012-corvette-c6",
     "year": "2012",
     "submodel": "C6",
     "trim": null,
@@ -67,7 +67,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp"]
   },
   {
-    "galleryId": "E5-27",
+    "galleryId": "2012-c6-corvette",
     "year": "2012",
     "submodel": "C6",
     "trim": null,
@@ -89,7 +89,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp"]
   },
   {
-    "galleryId": "E5-08",
+    "galleryId": "c6-2012-grand-sport",
     "year": "2012",
     "submodel": "C6",
     "trim": "Grand Sport",
@@ -111,7 +111,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp"]
   },
   {
-    "galleryId": "E5-16",
+    "galleryId": "2014-stingray-z51",
     "year": "2014",
     "submodel": "C7",
     "trim": null,
@@ -133,7 +133,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp"]
   },
   {
-    "galleryId": "E5-37",
+    "galleryId": "c7-white",
     "year": "2015",
     "submodel": "C7",
     "trim": "Z06",
@@ -155,7 +155,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
-    "galleryId": "E5-19",
+    "galleryId": "2016-corvette-c7-z06-white",
     "year": "2016",
     "submodel": "C7",
     "trim": "Z06",
@@ -177,7 +177,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp"]
   },
   {
-    "galleryId": "E5-33",
+    "galleryId": "2016-c7-corvette-z06",
     "year": "2016",
     "submodel": "C7",
     "trim": "Z06",
@@ -199,7 +199,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-07",
+    "galleryId": "c7-z06-sebring",
     "year": "2017",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -221,7 +221,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "E5-30",
+    "galleryId": "2017-c7-grand-sport",
     "year": "2017",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -243,7 +243,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
-    "galleryId": "E5-35",
+    "galleryId": "2017-c7-grand-sport-2",
     "year": "2017",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -265,7 +265,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "E5-18",
+    "galleryId": "2017-c7-grand-sport",
     "year": "2017",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -287,7 +287,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp"]
   },
   {
-    "galleryId": "E5-09",
+    "galleryId": "2017-c7-stingray",
     "year": "2017",
     "submodel": "C7",
     "trim": "Stingray",
@@ -309,7 +309,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
-    "galleryId": "E5-15",
+    "galleryId": "2017-c7-z06-racing-yellow",
     "year": "2017",
     "submodel": "C7",
     "trim": "Z06",
@@ -331,7 +331,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
-    "galleryId": "E5-49",
+    "galleryId": "2018-c7-corvette-grand-sport",
     "year": "2018",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -353,7 +353,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
-    "galleryId": "E5-23",
+    "galleryId": "2019-c7-grand-sport",
     "year": "2019",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -375,7 +375,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp"]
   },
   {
-    "galleryId": "E5-05",
+    "galleryId": "c7-orange-grand-sport",
     "year": "2019",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -397,7 +397,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
-    "galleryId": "E5-12",
+    "galleryId": "2019-c7-z51",
     "year": "2019",
     "submodel": "C7",
     "trim": "Z51",
@@ -419,7 +419,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "E5-43",
+    "galleryId": "2019-c7-grand-sport-2",
     "year": "2019",
     "submodel": "C7",
     "trim": "Grand Sport",
@@ -441,7 +441,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
-    "galleryId": "E5-53",
+    "galleryId": "2019-c7-z06",
     "year": "2019",
     "submodel": "C7",
     "trim": "Z06",
@@ -463,7 +463,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp","33.webp","34.webp","35.webp","36.webp","37.webp","38.webp","39.webp","40.webp","41.webp","42.webp","43.webp","44.webp","45.webp"]
   },
   {
-    "galleryId": "E5-31",
+    "galleryId": "2019-c7-z06-purple",
     "year": "2019",
     "submodel": "C7",
     "trim": "Z06",
@@ -485,7 +485,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-28",
+    "galleryId": "2020-c8-70th-anniversary-edition",
     "year": "2020",
     "submodel": "C8",
     "trim": null,
@@ -507,7 +507,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-03",
+    "galleryId": "c8-2022-yellow-stingray-c8r",
     "year": "2022",
     "submodel": "C8",
     "trim": "C8.R",
@@ -529,7 +529,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "E5-41",
+    "galleryId": "2023-c8-red-corvette",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -551,7 +551,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "E5-36",
+    "galleryId": "2023-c8-stingray-3lt",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -573,7 +573,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-20",
+    "galleryId": "2023-c8-stingray-torch-red",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -595,7 +595,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp"]
   },
   {
-    "galleryId": "E5-40",
+    "galleryId": "2023-c8-stingray-daytona",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -617,7 +617,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
-    "galleryId": "E5-06",
+    "galleryId": "c8-stingray-black-sebring",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -639,7 +639,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
   },
   {
-    "galleryId": "E5-02",
+    "galleryId": "2023-c8-green-stingray",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -661,7 +661,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
-    "galleryId": "E5-14",
+    "galleryId": "2023-c8-corvette-rapid-blue",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -683,7 +683,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-01",
+    "galleryId": "c8-2023-red-stingray-torch-red",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -705,7 +705,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "E5-04",
+    "galleryId": "2023-c8-red-corvette",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -727,7 +727,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "E5-10",
+    "galleryId": "red-corvette-c8-speedway-titanium-brushed",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -749,7 +749,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "E5-13",
+    "galleryId": "2023-c8",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -771,7 +771,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
   },
   {
-    "galleryId": "E5-17",
+    "galleryId": "2023-c8-z51-arctic-white",
     "year": "2023",
     "submodel": "C8",
     "trim": "Z51",
@@ -793,7 +793,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp"]
   },
   {
-    "galleryId": "E5-29",
+    "galleryId": "2024-c8-anderson-composite-kit",
     "year": "2024",
     "submodel": "C8",
     "trim": null,
@@ -815,7 +815,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "E5-21",
+    "galleryId": "2024-c8-corvette-stingray",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
@@ -837,7 +837,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp"]
   },
   {
-    "galleryId": "E5-50",
+    "galleryId": "2024-c8-corvette-stingray-2",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
@@ -859,7 +859,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
   },
   {
-    "galleryId": "E5-39",
+    "galleryId": "2024-c8-stingray-2",
     "year": "2024",
     "submodel": "C8",
     "trim": null,
@@ -881,7 +881,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
   },
   {
-    "galleryId": "E5-54",
+    "galleryId": "2024-c8-stingray-2",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
@@ -903,7 +903,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp"]
   },
   {
-    "galleryId": "E5-25",
+    "galleryId": "2024-c8-stingray-accelerate-yellow",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
@@ -925,7 +925,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
-    "galleryId": "E5-22",
+    "galleryId": "2024-c8-stingray-torch-red",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
@@ -947,7 +947,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp"]
   },
   {
-    "galleryId": "E5-11",
+    "galleryId": "2024-chevrolet-c8-3lt",
     "year": "2024",
     "submodel": "C8",
     "trim": "3LT",
@@ -969,7 +969,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "E5-47",
+    "galleryId": "2025-c8-corvette-z06-blessing-farms",
     "year": "2025",
     "submodel": "C8",
     "trim": "Z06",
@@ -991,7 +991,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
-    "galleryId": "E5-45",
+    "galleryId": "2025-c8-corvette-z06-cathedral",
     "year": "2025",
     "submodel": "C8",
     "trim": "Z06",
@@ -1013,7 +1013,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
-    "galleryId": "E5-46",
+    "galleryId": "2025-c8-corvette-z06-downtown",
     "year": "2025",
     "submodel": "C8",
     "trim": "Z06",
@@ -1035,7 +1035,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
-    "galleryId": "E5-48",
+    "galleryId": "2025-c8-corvette-zr1",
     "year": "2025",
     "submodel": "C8",
     "trim": "ZR1",
@@ -1057,7 +1057,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp"]
   },
   {
-    "galleryId": "E5-42",
+    "galleryId": "2025-c8-stingray",
     "year": "2025",
     "submodel": "C8",
     "trim": "Stingray",
@@ -1079,7 +1079,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
-    "galleryId": "E5-44",
+    "galleryId": "2025-c8-z06",
     "year": "2025",
     "submodel": "C8",
     "trim": "Z06",
@@ -1101,7 +1101,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
   },
   {
-    "galleryId": "E5-52",
+    "galleryId": "c8-z06-with-sonoma-wheels-e5",
     "year": "2025",
     "submodel": "C8",
     "trim": "Z06",
@@ -1123,7 +1123,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp"]
   },
   {
-    "galleryId": "E5-51",
+    "galleryId": "c6-grand-sport",
     "year": "2015",
     "submodel": "C6",
     "trim": "Grand Sport",
@@ -1145,7 +1145,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
   },
   {
-    "galleryId": "E5-34",
+    "galleryId": "c7-speedway-titanium-brushed",
     "year": null,
     "submodel": "C7",
     "trim": null,
@@ -1167,7 +1167,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp"]
   },
   {
-    "galleryId": "E5-32",
+    "galleryId": "bruce-wayne-c8-stingray-w-gloss-black-sebring",
     "year": null,
     "submodel": "C8",
     "trim": "Stingray",
@@ -1189,7 +1189,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp"]
   },
   {
-    "galleryId": "E5-24",
+    "galleryId": "c8-r-stingray",
     "year": null,
     "submodel": "C8",
     "trim": "Stingray",
