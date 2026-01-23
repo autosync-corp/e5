@@ -1,5 +1,0 @@
-# Redirect all requests to Node.js application
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]

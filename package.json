@@ -7,17 +7,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "start": "node server.js",
     "preview": "astro preview",
-    "verify-deployment": "node scripts/verify-deployment.js",
     "astro": "astro",
     "gallery:organize": "node scripts/extract-and-organize-gallery.js",
     "gallery:update-index": "node scripts/update-gallery-index.js"
   },
   "dependencies": {
-    "@astrojs/node": "^9.5.2",
     "@stripe/stripe-js": "^8.6.1",
-    "express": "^5.2.1",
     "stripe": "^20.1.2",
     "typescript": "^5.9.3",
     "vue": "^3.4.0"
