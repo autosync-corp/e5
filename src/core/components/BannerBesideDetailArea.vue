@@ -1,21 +1,22 @@
 <script setup lang="ts">
-const props = defineProps({
-  image: {
-    type: String,
-    required: true
-  },
-  alt: {
-    type: String,
-    required: true
-  },
-  height: {
-    type: String,
-  },
-})
+interface Props {
+  image: string;
+  alt: string;
+  class?: string;
+  height?: string;
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
-  <section class="w-full grid grid-cols-2 relative overflow-hidden" :class="props.height && `h-[${props.height}px]`">
+  <section
+    class="w-full grid grid-cols-2 relative overflow-hidden"
+    :class="[
+      props.class,
+      props.height && `h-[${props.height}px]`
+    ]"
+  >
     <slot name="left" />
 
     <img

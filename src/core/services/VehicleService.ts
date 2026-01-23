@@ -246,6 +246,8 @@ function checkFitmentSize(
   //   }
   // }
 
+  wheelOffset;
+
   return true;
 }
 
@@ -419,7 +421,6 @@ export function checkStaggeredFitment(
   let rearMatched = false;
   let frontMatchedFitment: VehicleFitment | undefined;
   let rearMatchedFitment: VehicleFitment | undefined;
-  let matchedFitmentType: 'standard' | 'optional' | 'plus' | undefined;
 
   // Try standard fitments
   const frontStandard = vehicle.Fitments.filter(f => f.Position === 'Front');

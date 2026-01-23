@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import {Orientations} from "@/core/types/App.ts";
 
-const props = defineProps({
-  image: {
-    type: String,
-    required: true
-  },
-  alt: {
-    type: String,
-    required: true
-  },
-  customClassContainer: String,
-  bgColor: String,
-  orientation: {
-    type: String as () => Orientations,
-    default: Orientations.RIGHT,
-  },
-  height: {
-    type: String,
-  },
+interface Props {
+  image: string;
+  alt: string;
+  class?: string;
+  customClassContainer?: string;
+  bgColor?: string;
+  orientation?: Orientations;
+  height?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  orientation: Orientations.RIGHT,
 })
 </script>
 
 <template>
-  <section class="w-full relative overflow-hidden" :class="props.height && `h-[${props.height}px]`">
+  <section
+    class="w-full relative overflow-hidden"
+    :class="[
+      props.class,
+      props.height && `h-[${props.height}px]`
+    ]"
+  >
     <img
         :src="props.image"
         :alt="props.alt"
