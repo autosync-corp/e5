@@ -1,7 +1,7 @@
 // Product Service for E5 Wheels API Integration
 
 const API_BASE_URL = 'https://api.autosyncstudio.com/wheels';
-const API_KEY = 'efive';
+const API_KEY = import.meta.env.PUBLIC_AUTOSYNC_API_KEY || 'efive';
 
 export interface WheelProduct {
   Accent: string | null;
