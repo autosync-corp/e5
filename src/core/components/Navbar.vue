@@ -2,6 +2,7 @@
 import {computed, ref, onMounted} from "vue";
 import {CART_ICON, E5_LOGO_WHITE} from "@/core/constants/App.ts";
 import {
+  ABOUT_ROUTE,
   CART_ROUTE,
   CONTACT_ROUTE,
   GALLERY_ROUTE,
@@ -56,6 +57,7 @@ const isShopRoute = computed(() => currentPath.value.startsWith(SHOP_ROUTE))
 const isProcessRoute = computed(() => currentPath.value.startsWith(PROCESS_ROUTE))
 const isVisualizeRoute = computed(() => currentPath.value.startsWith(VISUALIZE_ROUTE))
 const isGenerationRoute = computed(() => currentPath.value.startsWith(GENERATIONS_ROUTE))
+const isAboutRoute = computed(() => currentPath.value.startsWith(ABOUT_ROUTE))
 const isContactRoute = computed(() => currentPath.value.startsWith(CONTACT_ROUTE))
 
 const toggleMobileMenu = () => {
@@ -164,6 +166,8 @@ const closeMiniCart = () => {
               <a :href="PROCESS_FORM_FORGED_ROUTE" class="dropdown-item">FORM FORGED</a>
             </div>
           </div>
+
+          <a :href="SHOP_ROUTE" class="nav-link" :class="{'selected': isShopRoute}">SHOP</a>
         </div>
 
         <!-- Center Logo -->
@@ -211,6 +215,7 @@ const closeMiniCart = () => {
         </div>
 
           <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
+          <a :href="ABOUT_ROUTE" class="nav-link" :class="{'selected': isAboutRoute}">ABOUT</a>
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
           <button @click="toggleMiniCart" class="relative">
             <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
@@ -290,6 +295,8 @@ const closeMiniCart = () => {
           </div>
         </div>
 
+        <a :href="SHOP_ROUTE" class="mobile-nav-link" :class="{'selected': isShopRoute}" @click="closeMobileMenu">SHOP</a>
+
         <!-- Generations Submenu for Mobile -->
         <div class="mobile-submenu">
           <div class="flex items-center gap-2">
@@ -328,6 +335,7 @@ const closeMiniCart = () => {
         </div>
 
         <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
+        <a :href="ABOUT_ROUTE" class="mobile-nav-link" :class="{'selected': isAboutRoute}" @click="closeMobileMenu">ABOUT</a>
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative">

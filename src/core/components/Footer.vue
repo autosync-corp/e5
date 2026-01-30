@@ -7,6 +7,7 @@ import {
   PIN_BLACK_ICON, TIKTOK_MEDIA_ICON, YOUTUBE_MEDIA_ICON
 } from "@/core/constants/App.ts";
 import {
+  ABOUT_ROUTE,
   CONTACT_ROUTE,
   INSTALLATION_ROUTE, MEDIA_ROUTE,
   PROCESS_ROUTE,
@@ -31,7 +32,7 @@ import {
           <a :href="VENDOR_REGISTRATION_ROUTE" class="footer-link">VENDOR REGISTRATION</a>
           <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
           <a class="footer-link">COMMUNITY</a>
-          <a class="footer-link">ABOUT US</a>
+          <a :href="ABOUT_ROUTE" class="footer-link">ABOUT US</a>
         </div>
 
         <!-- Center: Logo + Social -->

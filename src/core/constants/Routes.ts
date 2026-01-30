@@ -1,4 +1,5 @@
 export const HOME_ROUTE = '/';
+export const ABOUT_ROUTE = '/about';
 export const PENDING_ROUTE = '/pending';
 export const PROCESS_ROUTE = '/process';
 export const PROCESS_FORGED_ROUTE = '/process/forged';
