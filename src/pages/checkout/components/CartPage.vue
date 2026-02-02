@@ -261,30 +261,10 @@ onMounted(() => {
                 <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">{{ formatPrice(cartTotals.total) }}</span>
               </div>
 
-              <!-- Affirm Text -->
-              <p class="font-['Franklin_Gothic_Book'] text-[11px] text-gray-600 text-center my-4 leading-relaxed">
-                Starting at ${{ cartTotals.affirmMonthly }}/mo or 0% APR with Affirm.
-                <a href="#" class="text-e5-red underline">See if you qualify</a>
-              </p>
-
-              <!-- Payment Buttons -->
-              <div class="flex gap-3 my-5">
-                <button class="flex-1 h-12 border border-gray-300 rounded-md bg-white cursor-pointer flex items-center justify-center hover:bg-gray-50 transition-colors">
-                  <span class="font-['Franklin_Gothic_Book'] text-lg text-black italic">affirm</span>
-                </button>
-                <button class="flex-1 h-12 border border-gray-300 rounded-md bg-white cursor-pointer flex items-center justify-center hover:bg-gray-50 transition-colors">
-                  <span class="inline-block w-10 h-6 bg-black rounded"></span>
-                </button>
-              </div>
-
-              <p class="font-['Franklin_Gothic_Book'] text-[11px] text-gray-600 text-center my-4 tracking-wide">
-                MORE QUICK PURCHASE OPTIONS
-              </p>
-
               <!-- Checkout Button -->
               <button
                 @click="proceedToCheckout"
-                class="w-full bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm font-semibold tracking-[2px] uppercase py-4 px-8 border-none rounded-md cursor-pointer hover:bg-[#a33a3a] transition-colors mt-2"
+                class="w-full bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm font-semibold tracking-[2px] uppercase py-4 px-8 border-none rounded-md cursor-pointer hover:bg-[#a33a3a] transition-colors mt-8"
               >
                 Proceed to Checkout
               </button>

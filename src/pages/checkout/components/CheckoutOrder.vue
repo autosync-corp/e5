@@ -803,7 +803,14 @@ onMounted(() => {
           <label for="card" class="e5CheckoutPaymentLabel">
             <span>Credit/Debit Cards</span>
             <div class="e5CheckoutCardIcons">
-              <img src="/assets/images/checkout/cards.png" alt="Payment Cards" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/visa.svg" alt="Visa" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/mastercard.svg" alt="Mastercard" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/amex.svg" alt="American Express" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/discover.svg" alt="Discover" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/diners.svg" alt="Diners Club" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/jcb.svg" alt="JCB" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/maestro.svg" alt="Maestro" class="e5CheckoutCardImage" />
+              <img src="/assets/images/cart/china_union_pay.svg" alt="China UnionPay" class="e5CheckoutCardImage" />
             </div>
           </label>
         </div>
@@ -868,23 +875,6 @@ onMounted(() => {
           </p>
         </div>
 
-        <!-- Google Pay -->
-        <div class="e5CheckoutPaymentOption">
-          <input type="radio" name="payment" id="googlepay" class="e5CheckoutRadio" />
-          <label for="googlepay" class="e5CheckoutPaymentLabel">
-            <span>Google Pay</span>
-            <img src="/assets/images/checkout/gpay.png" alt="Google Pay" class="e5CheckoutPaymentIcon" />
-          </label>
-        </div>
-
-        <!-- Apple Pay -->
-        <div class="e5CheckoutPaymentOption">
-          <input type="radio" name="payment" id="applepay" class="e5CheckoutRadio" />
-          <label for="applepay" class="e5CheckoutPaymentLabel">
-            <span>Apple Pay</span>
-            <img src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.png" alt="Apple Pay" class="e5CheckoutPaymentIcon" />
-          </label>
-        </div>
       </div>
 
       <!-- Error Message -->
