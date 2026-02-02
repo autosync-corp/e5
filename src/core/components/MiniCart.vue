@@ -199,34 +199,6 @@ const getItemPrice = (item: CartItem) => {
             </button>
           </div>
 
-          <!-- Express Checkout Label -->
-          <p class="font-excon-light text-[12px] text-black/70 text-center tracking-[0.96px] uppercase">
-            EXPRESS CHECKOUT
-          </p>
-
-          <!-- Apple Pay Button -->
-          <button class="w-full h-[34px] bg-black rounded-[7px] flex items-center justify-center hover:bg-black/90 transition-colors">
-            <img
-              src="/assets/images/mini-cart/53ac0b7c91c2611f93c3336f0652d00efd216192.png"
-              alt="Apple Pay"
-              class="h-[20px]"
-            />
-          </button>
-
-          <!-- Affirm Button -->
-          <button class="w-full h-[34px] bg-white border border-black rounded-[7px] flex items-center justify-center hover:bg-gray-50 transition-colors">
-            <img
-              src="/assets/images/mini-cart/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png"
-              alt="Affirm"
-              class="h-[20px]"
-            />
-          </button>
-
-          <!-- Affirm Financing Message -->
-          <p class="font-excon text-[9px] text-black/70 text-center tracking-[0.72px] uppercase">
-            ENJOY 0% FINANCING FOR THE FIRST 12 MONTHS WITH AFFIRM!
-          </p>
-
           <!-- Free Shipping Message -->
           <p class="font-excon text-[13px] text-black/70 text-center leading-[20px]">
             FREE SHIPPING ON ALL COMPLETE SETS

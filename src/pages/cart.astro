@@ -125,22 +125,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
             <span class="e5CartTotalValue">$12,840.00</span>
           </div>
 
-          <p class="e5CartAffirmText">
-            Starting at $696/mo or 0% APR with Affirm. <a href="#" class="e5CartAffirmLink">See if you qualify</a>
-          </p>
-
-          <!-- Payment Buttons -->
-          <div class="e5CartPaymentButtons">
-            <button class="e5CartAffirmButton">
-              <span class="e5CartAffirmLogo">affirm</span>
-            </button>
-            <button class="e5CartApplePayButton">
-              <span class="e5CartApplePayIcon"></span>
-            </button>
-          </div>
-
-          <p class="e5CartMoreOptions">MORE QUICK PURCHASE OPTIONS</p>
-
           <button class="e5CartCheckoutButton">PROCEED TO CHECKOUT</button>
         </div>
       </div>
@@ -497,71 +481,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
     font-family: 'Franklin Gothic Medium', sans-serif;
     font-size: 16px;
     font-weight: 600;
-  }
-
-  .e5CartAffirmText {
-    font-family: 'Franklin Gothic Book', sans-serif;
-    font-size: 11px;
-    color: #666666;
-    text-align: center;
-    margin: 16px 0;
-    line-height: 1.5;
-  }
-
-  .e5CartAffirmLink {
-    color: #d31d25;
-    text-decoration: underline;
-  }
-
-  /* Payment Buttons */
-  .e5CartPaymentButtons {
-    display: flex;
-    gap: 12px;
-    margin: 20px 0;
-  }
-
-  .e5CartAffirmButton,
-  .e5CartApplePayButton {
-    flex: 1;
-    height: 48px;
-    border: 1px solid #d5d5d5;
-    border-radius: 6px;
-    background: #ffffff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-  }
-
-  .e5CartAffirmButton:hover,
-  .e5CartApplePayButton:hover {
-    background: #f9f9f9;
-  }
-
-  .e5CartAffirmLogo {
-    font-family: 'Franklin Gothic Book', sans-serif;
-    font-size: 18px;
-    color: #0a0a0a;
-    font-style: italic;
-  }
-
-  .e5CartApplePayIcon::before {
-    content: '';
-    display: inline-block;
-    width: 40px;
-    height: 24px;
-    background: #000000;
-    border-radius: 4px;
-  }
-
-  .e5CartMoreOptions {
-    font-family: 'Franklin Gothic Book', sans-serif;
-    font-size: 11px;
-    color: #666666;
-    text-align: center;
-    margin: 16px 0;
-    letter-spacing: 1px;
   }
 
   .e5CartCheckoutButton {
