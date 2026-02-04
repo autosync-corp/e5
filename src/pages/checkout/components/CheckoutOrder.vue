@@ -858,7 +858,7 @@ onMounted(() => {
               <span>Affirm Pay Over Time</span>
               <span style="font-size: 12px; color: #666;">As low as 0% APR with Affirm</span>
             </div>
-            <img src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png" alt="Affirm" class="e5CheckoutAffirmLogo" />
+            <img src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.webp" alt="Affirm" class="e5CheckoutAffirmLogo" />
           </label>
         </div>
 

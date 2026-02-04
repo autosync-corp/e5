@@ -774,7 +774,7 @@ onMounted(() => {
           <!-- Brand Logo -->
           <div class="flex justify-end">
             <img
-              src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.png"
+              src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp"
               alt="E5 Forged"
               class="h-5 object-contain"
             />
@@ -915,7 +915,7 @@ onMounted(() => {
             <p class="text-xl font-['Excon_Variable'] font-thin text-black/70">
               From <span class="font-normal">{{ formatPrice(affirmMonthly) }}/mo</span> with
               <img
-                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png"
+                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.webp"
                 alt="Affirm"
                 class="inline h-6 w-auto mx-1"
               />
@@ -1035,7 +1035,7 @@ onMounted(() => {
             </p>
             <button class="w-full h-10 bg-black rounded-lg flex items-center justify-center hover:bg-black/90 transition-colors">
               <img
-                src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.png"
+                src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.webp"
                 alt="Apple Pay"
                 class="h-6"
               />
@@ -1049,7 +1049,7 @@ onMounted(() => {
             </p>
             <button class="w-full h-10 bg-white border border-black rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
               <img
-                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.png"
+                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.webp"
                 alt="Affirm"
                 class="h-6"
               />

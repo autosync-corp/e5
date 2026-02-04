@@ -78,7 +78,7 @@ onMounted(() => {
           <div class="relative z-10 w-1/3 flex flex-col items-center">
             <div class="w-9 h-9 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
-                src="/assets/images/cart/61cc55a16a871139a1cf4a95a7854be48b2d404d.png"
+                src="/assets/images/cart/61cc55a16a871139a1cf4a95a7854be48b2d404d.webp"
                 alt="Wheels"
                 class="w-[18px] h-[18px] object-contain"
               />
@@ -90,7 +90,7 @@ onMounted(() => {
           <div class="relative z-10 w-1/3 flex flex-col items-center">
             <div class="w-11 h-11 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
-                src="/assets/images/cart/40eb342b73462b1f996cdb7f9c9a92e0d95a45fc.png"
+                src="/assets/images/cart/40eb342b73462b1f996cdb7f9c9a92e0d95a45fc.webp"
                 alt="Cart"
                 class="w-[22px] h-[22px] object-contain"
               />
@@ -102,7 +102,7 @@ onMounted(() => {
           <div class="relative z-10 w-1/3 flex flex-col items-center">
             <div class="w-9 h-9 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
-                src="/assets/images/cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.png"
+                src="/assets/images/cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.webp"
                 alt="Checkout"
                 class="w-[18px] h-[18px] object-contain"
               />

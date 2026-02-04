@@ -99,7 +99,7 @@ const getItemPrice = (item: CartItem) => {
       <div class="flex justify-center mb-[-50px] relative z-20">
         <div class="w-[100px] h-[100px] rounded-full bg-e5-red flex items-center justify-center shadow-lg">
           <img
-            src="/assets/images/mini-cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.png"
+            src="/assets/images/mini-cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.webp"
             alt="Cart"
             class="w-[80px] h-[80px]"
           />

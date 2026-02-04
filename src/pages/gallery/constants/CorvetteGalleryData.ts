@@ -529,7 +529,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "2023-c8-red-corvette",
+    "galleryId": "2023-c8-corvette-stingray-blue",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -548,7 +548,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "305/30R20",
     "tirePartR": null,
     "tireModel": "Toyo Proxy R888R",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp"]
   },
   {
     "galleryId": "2023-c8-stingray-3lt",
@@ -683,7 +683,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
   },
   {
-    "galleryId": "c8-2023-red-stingray-torch-red",
+    "galleryId": "2023-corvette-c8-stingray-torch-red-daytona",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -705,7 +705,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "2023-c8-red-corvette",
+    "galleryId": "2023-corvette-c8-stingray-torch-red-sebring",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -749,7 +749,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
   },
   {
-    "galleryId": "2023-c8",
+    "galleryId": "2023-c8-z51-arctic-white-speedway",
     "year": "2023",
     "submodel": "C8",
     "trim": "Stingray",
@@ -859,10 +859,10 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
   },
   {
-    "galleryId": "2024-c8-stingray-2",
+    "galleryId": "2024-c8-corvette-z06",
     "year": "2024",
     "submodel": "C8",
-    "trim": null,
+    "trim": "Z06",
     "vehicleColor": null,
     "vehicleTitle": "2024 C8 Corvette Z06",
     "wheelStyle": "Talladega",
@@ -881,7 +881,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
   },
   {
-    "galleryId": "2024-c8-stingray-2",
+    "galleryId": "2024-c8-stingray",
     "year": "2024",
     "submodel": "C8",
     "trim": "Stingray",
