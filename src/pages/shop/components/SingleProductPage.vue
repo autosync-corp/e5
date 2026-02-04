@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { CART_ROUTE } from '@/core/constants/Routes';
+import { CART_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
+import VehicleSelector from '@/core/components/VehicleSelector.vue';
 
 // Props
 const props = defineProps<{
@@ -381,6 +382,45 @@ const vehicleDisplay = computed(() => {
   return `${v.Year} ${v.Make} ${v.Model} ${v.Submodel}`;
 });
 
+// Check if wheels fit the selected vehicle
+const doesWheelsFit = computed(() => {
+  if (!selectedVehicle.value) return true; // Allow purchase if no vehicle selected
+
+  if (isStaggered.value) {
+    // For staggered, check if there are ANY available sizes
+    // If no sizes available at all, it doesn't fit
+    if (availableFrontSizeOffsets.value.length === 0 || availableRearSizeOffsets.value.length === 0) {
+      return false;
+    }
+    // If sizes are available and selected, check fitment
+    return staggeredFitment.value?.frontFits && staggeredFitment.value?.rearFits;
+  } else {
+    // For non-staggered, check if there are ANY available sizes
+    if (availableSizeOffsets.value.length === 0) {
+      return false;
+    }
+    // If sizes are available and selected, check fitment
+    return vehicleFitment.value?.fits || false;
+  }
+});
+
+// Check if we should show incompatibility message
+const showIncompatibilityMessage = computed(() => {
+  if (!selectedVehicle.value) return false;
+
+  if (isStaggered.value) {
+    // Show message if no sizes are available OR if selected sizes don't fit
+    const noSizesAvailable = availableFrontSizeOffsets.value.length === 0 || availableRearSizeOffsets.value.length === 0;
+    const selectedDoesntFit = staggeredFitment.value && (!staggeredFitment.value.frontFits || !staggeredFitment.value.rearFits);
+    return noSizesAvailable || selectedDoesntFit;
+  } else {
+    // Show message if no sizes are available OR if selected size doesn't fit
+    const noSizesAvailable = availableSizeOffsets.value.length === 0;
+    const selectedDoesntFit = vehicleFitment.value && !vehicleFitment.value.fits;
+    return noSizesAvailable || selectedDoesntFit;
+  }
+});
+
 // Methods
 async function loadProducts() {
   try {
@@ -569,6 +609,28 @@ function selectImage(index: number) {
   currentImageIndex.value = index;
 }
 
+function handleVehicleSelected(vehicle: Vehicle | null) {
+  selectedVehicle.value = vehicle;
+
+  // Reset size selections when vehicle changes to trigger refitment validation
+  if (vehicle) {
+    if (hasStaggeredFitment(vehicle)) {
+      // For staggered, reset to first available options
+      if (availableFrontSizeOffsets.value.length > 0) {
+        selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+      }
+      if (availableRearSizeOffsets.value.length > 0) {
+        selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+      }
+    } else {
+      // For non-staggered, reset to first available option
+      if (availableSizeOffsets.value.length > 0) {
+        selectedSizeOffset.value = availableSizeOffsets.value[0];
+      }
+    }
+  }
+}
+
 function addToCart() {
   if (!selectedProduct.value) return;
 
@@ -641,8 +703,13 @@ onMounted(() => {
       <p class="text-xl text-red-600">{{ error }}</p>
     </div>
 
+    <!-- Vehicle Selector -->
+    <div v-else>
+      <VehicleSelector @vehicle-selected="handleVehicleSelected" />
+    </div>
+
     <!-- Main Content Container -->
-    <div v-else-if="selectedProduct" class="max-w-[1728px] mx-auto px-16 py-12">
+    <div v-if="!isLoading && !error && selectedProduct" class="max-w-[1728px] mx-auto px-16 py-12">
       <div class="grid grid-cols-2 gap-16">
         <!-- Left Column - Product Images -->
         <div class="space-y-8">
@@ -819,6 +886,22 @@ onMounted(() => {
             </div>
           </div>
 
+          <!-- Incompatible Vehicle Message -->
+          <div v-if="showIncompatibilityMessage" class="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p class="text-sm font-['Franklin_Gothic_Demi'] text-red-800 mb-2">
+              This wheel configuration does not fit your selected vehicle.
+            </p>
+            <p class="text-sm font-['Franklin_Gothic_Book'] text-red-700 mb-3">
+              Please review the fitment details above to see what doesn't match.
+            </p>
+            <a
+              :href="SHOP_ROUTE"
+              class="inline-block w-full text-center bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm tracking-[2px] uppercase px-6 py-2 rounded hover:bg-e5-red/90 transition-colors"
+            >
+              Find Compatible Wheels
+            </a>
+          </div>
+
           <!-- Price -->
           <div class="space-y-2">
             <p class="text-xl font-['Excon_Variable'] text-black/70">
@@ -935,7 +1018,8 @@ onMounted(() => {
           <!-- Add to Cart Button -->
           <button
             @click="addToCart"
-            class="w-full h-10 bg-e5-red rounded-lg text-white text-base font-['Excon_Variable'] font-light tracking-[0.32em] hover:bg-e5-red/90 transition-colors"
+            :disabled="!doesWheelsFit"
+            class="w-full h-10 bg-e5-red rounded-lg text-white text-base font-['Excon_Variable'] font-light tracking-[0.32em] hover:bg-e5-red/90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             ADD TO CART
           </button>
