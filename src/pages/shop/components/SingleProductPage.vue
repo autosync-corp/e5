@@ -329,8 +329,8 @@ const finishDisplayName = computed(() => {
 const vehicleFitment = computed(() => {
   if (!selectedProduct.value || !selectedVehicle.value) return null;
 
-  // For non-staggered vehicles or when not both front/rear products selected
-  if (!isStaggered.value || !selectedFrontProduct.value || !selectedRearProduct.value) {
+  // For non-staggered vehicles, always check fitment of selected product
+  if (!isStaggered.value) {
     return checkWheelFitment({
       LugCount: selectedProduct.value.LugCount,
       BoltCircle1: selectedProduct.value.BoltCircle1,
@@ -349,28 +349,32 @@ const vehicleFitment = computed(() => {
 
 // Check staggered fitment
 const staggeredFitment = computed(() => {
-  if (!selectedVehicle.value || !isStaggered.value || !selectedFrontProduct.value || !selectedRearProduct.value) return null;
+  if (!selectedVehicle.value || !isStaggered.value || !selectedProduct.value) return null;
+
+  // Use selected front/rear products if available, otherwise use the main selected product as fallback
+  const frontProduct = selectedFrontProduct.value || selectedProduct.value;
+  const rearProduct = selectedRearProduct.value || selectedProduct.value;
 
   return checkStaggeredFitment(
     {
-      LugCount: selectedFrontProduct.value.LugCount,
-      BoltCircle1: selectedFrontProduct.value.BoltCircle1,
-      BoltCircle2: selectedFrontProduct.value.BoltCircle2,
-      Bore: selectedFrontProduct.value.Bore,
-      LoadRating: selectedFrontProduct.value.LoadRating,
-      Diameter: selectedFrontProduct.value.Diameter,
-      Width: selectedFrontProduct.value.Width,
-      Offset: selectedFrontProduct.value.Offset,
+      LugCount: frontProduct.LugCount,
+      BoltCircle1: frontProduct.BoltCircle1,
+      BoltCircle2: frontProduct.BoltCircle2,
+      Bore: frontProduct.Bore,
+      LoadRating: frontProduct.LoadRating,
+      Diameter: frontProduct.Diameter,
+      Width: frontProduct.Width,
+      Offset: frontProduct.Offset,
     },
     {
-      LugCount: selectedRearProduct.value.LugCount,
-      BoltCircle1: selectedRearProduct.value.BoltCircle1,
-      BoltCircle2: selectedRearProduct.value.BoltCircle2,
-      Bore: selectedRearProduct.value.Bore,
-      LoadRating: selectedRearProduct.value.LoadRating,
-      Diameter: selectedRearProduct.value.Diameter,
-      Width: selectedRearProduct.value.Width,
-      Offset: selectedRearProduct.value.Offset,
+      LugCount: rearProduct.LugCount,
+      BoltCircle1: rearProduct.BoltCircle1,
+      BoltCircle2: rearProduct.BoltCircle2,
+      Bore: rearProduct.Bore,
+      LoadRating: rearProduct.LoadRating,
+      Diameter: rearProduct.Diameter,
+      Width: rearProduct.Width,
+      Offset: rearProduct.Offset,
     },
     selectedVehicle.value
   );
