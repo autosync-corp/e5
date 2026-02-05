@@ -23,7 +23,8 @@ import {
     GALLERY_WHEELS_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
     SHOP_ROUTE,
-    PROCESS_FORM_FORGED_ROUTE
+    PROCESS_FORM_FORGED_ROUTE,
+    SINGLE_PRODUCT_ROUTE
 } from "@/core/constants/Routes.ts";
 ---
 
@@ -46,32 +47,38 @@ import {
         </h2>
 
         <div class="grid grid-cols-3 gap-8">
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                </div>
-            </ImageWithLegend>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
 
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                </div>
-            </ImageWithLegend>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
 
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                </div>
-            </ImageWithLegend>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
         </div>
 
         <div class="text-center mt-12">
@@ -263,47 +270,53 @@ import {
         </h2>
 
         <div class="grid grid-cols-3 gap-8">
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <div class="mt-8">
-                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
-                            SHOP NOW
-                        </Button>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`}>
+                                SHOP NOW
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            </ImageWithLegend>
+                </ImageWithLegend>
+            </a>
 
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <div class="mt-8">
-                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
-                            SHOP NOW
-                        </Button>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`}>
+                                SHOP NOW
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            </ImageWithLegend>
+                </ImageWithLegend>
+            </a>
 
-            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
-                <div class="text-center">
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
-                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
-                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <div class="mt-8">
-                        <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
-                            SHOP NOW
-                        </Button>
+            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`}>
+                                SHOP NOW
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            </ImageWithLegend>
+                </ImageWithLegend>
+            </a>
         </div>
     </section>
 

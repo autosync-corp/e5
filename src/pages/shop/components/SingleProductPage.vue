@@ -19,6 +19,15 @@ const getProductIdFromUrl = (): number | undefined => {
   return id ? parseInt(id, 10) : undefined;
 };
 
+const getUrlParams = () => {
+  if (typeof window === 'undefined') return { series: null, finish: null };
+  const params = new URLSearchParams(window.location.search);
+  return {
+    series: params.get('series'),
+    finish: params.get('finish')
+  };
+};
+
 const actualProductId = computed(() => props.productId || getProductIdFromUrl());
 
 // State
@@ -37,9 +46,11 @@ const currentImageIndex = ref(0);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 const selectedVehicle = ref<Vehicle | null>(null);
+const vehicleDisplayFormat = ref<string | null>(null);
 
 // Storage key for localStorage
 const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
+const VEHICLE_DISPLAY_KEY = 'e5-selected-vehicle-display';
 
 // Helper function to build complete finish name in order: Finish → Color → Accent
 const getFinishName = (product: WheelProduct): string => {
@@ -378,6 +389,11 @@ const staggeredFitment = computed(() => {
 
 const vehicleDisplay = computed(() => {
   if (!selectedVehicle.value) return null;
+  // Use the generation format if available (e.g., "C8 E-Ray")
+  if (vehicleDisplayFormat.value) {
+    return vehicleDisplayFormat.value;
+  }
+  // Fallback to full details
   const v = selectedVehicle.value;
   return `${v.Year} ${v.Make} ${v.Model} ${v.Submodel}`;
 });
@@ -430,10 +446,27 @@ async function loadProducts() {
     apiResponse.value = response;
 
     const productIdToLoad = actualProductId.value;
+    const urlParams = getUrlParams();
 
     if (response.Wheels.length > 0) {
-      // Select product based on productId
-      if (productIdToLoad) {
+      // Select product based on URL parameters (series + finish) or productId
+      if (urlParams.series && urlParams.finish) {
+        // Find product matching the series (Model) and finish
+        const finishParam = (urlParams.finish || '').toLowerCase();
+        const foundProduct = response.Wheels.find(w => {
+          const matchesSeries = w.Model && w.Model.toLowerCase() === urlParams.series?.toLowerCase();
+          const finishName = getFinishName(w).toLowerCase();
+
+          // Try multiple matching strategies for better compatibility
+          const directMatch = finishName.includes(finishParam);
+          // Handle Titanium <-> Gray Brushed variations
+          const titaniumGrayMatch = (finishParam.includes('titanium') && finishName.includes('gray') && finishName.includes('brushed')) ||
+                                    (finishParam.includes('gray') && finishName.includes('titanium') && finishName.includes('brushed'));
+
+          return matchesSeries && (directMatch || titaniumGrayMatch);
+        });
+        selectedProduct.value = foundProduct || response.Wheels[0];
+      } else if (productIdToLoad) {
         const foundProduct = response.Wheels.find(w => w.Id === productIdToLoad);
         selectedProduct.value = foundProduct || response.Wheels[0];
       } else {
@@ -612,6 +645,14 @@ function selectImage(index: number) {
 function handleVehicleSelected(vehicle: Vehicle | null) {
   selectedVehicle.value = vehicle;
 
+  // Load the display format from localStorage
+  if (vehicle) {
+    const savedDisplay = localStorage.getItem(VEHICLE_DISPLAY_KEY);
+    vehicleDisplayFormat.value = savedDisplay;
+  } else {
+    vehicleDisplayFormat.value = null;
+  }
+
   // Reset size selections when vehicle changes to trigger refitment validation
   if (vehicle) {
     if (hasStaggeredFitment(vehicle)) {
@@ -684,6 +725,10 @@ onMounted(() => {
   if (savedVehicle) {
     try {
       selectedVehicle.value = JSON.parse(savedVehicle);
+
+      // Also load the display format
+      const savedDisplay = localStorage.getItem(VEHICLE_DISPLAY_KEY);
+      vehicleDisplayFormat.value = savedDisplay;
     } catch (error) {
       console.error('Error loading saved vehicle:', error);
     }
@@ -701,11 +746,6 @@ onMounted(() => {
     <!-- Error State -->
     <div v-else-if="error" class="max-w-[1728px] mx-auto px-16 py-12 text-center">
       <p class="text-xl text-red-600">{{ error }}</p>
-    </div>
-
-    <!-- Vehicle Selector -->
-    <div v-else>
-      <VehicleSelector @vehicle-selected="handleVehicleSelected" />
     </div>
 
     <!-- Main Content Container -->
@@ -917,6 +957,11 @@ onMounted(() => {
               />
               at checkout
             </p>
+          </div>
+
+          <!-- Vehicle Selector -->
+          <div class="mb-6">
+            <VehicleSelector @vehicle-selected="handleVehicleSelected" />
           </div>
 
           <!-- Configuration Options -->
