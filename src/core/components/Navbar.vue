@@ -197,24 +197,24 @@ const closeMiniCart = () => {
           <!-- Dropdown Menu -->
           <div v-if="isGenerationsDropdownOpen" class="dropdown-menu generations-dropdown">
             <div class="generation-group">
-              <div class="generation-title">C8</div>
+              <div class="generation-title">C8 2020-2025</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="dropdown-item">ZR1</a>
             </div>
             <div class="generation-group">
-              <div class="generation-title">C7</div>
+              <div class="generation-title">C7 2014-2019</div>
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
               <a :href="GENERATIONS_C7_Z06_ROUTE" class="dropdown-item">Z06</a>
             </div>
             <div class="generation-group">
-              <div class="generation-title">C6</div>
+              <div class="generation-title">C6 2005-2013</div>
               <a :href="GENERATIONS_C6_ROUTE" class="dropdown-item">Base Model</a>
               <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
             </div>
             <div class="generation-group">
-              <div class="generation-title">C5</div>
+              <div class="generation-title">C5 1997-2004</div>
               <a :href="GENERATIONS_C5_Z06_ROUTE" class="dropdown-item">Z06</a>
             </div>
           </div>
@@ -323,24 +323,24 @@ const closeMiniCart = () => {
           </div>
           <div v-if="isGenerationsDropdownOpen" class="mobile-submenu-items">
             <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C8</div>
+              <div class="mobile-generation-title">C8 2020-2025</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
             </div>
             <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C7</div>
+              <div class="mobile-generation-title">C7 2014-2019</div>
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
               <a :href="GENERATIONS_C7_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
             </div>
             <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C6</div>
+              <div class="mobile-generation-title">C6 2005-2013</div>
               <a :href="GENERATIONS_C6_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base Model</a>
               <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
             </div>
             <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C5</div>
+              <div class="mobile-generation-title">C5 1997-2004</div>
               <a :href="GENERATIONS_C5_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
             </div>
           </div>
