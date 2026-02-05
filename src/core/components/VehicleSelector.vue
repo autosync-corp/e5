@@ -8,23 +8,63 @@ const emit = defineEmits<{
 
 // Storage key for localStorage
 const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
+const VEHICLE_DISPLAY_KEY = 'e5-selected-vehicle-display';
+
+// Generation-based vehicle selection mapping
+interface VehicleOption {
+  label: string;
+  yearRange: { start: number; end: number };
+  preferredYear: number;
+  make: string;
+  model: string;
+  submodel: string;
+}
+
+interface Generation {
+  label: string;
+  options: VehicleOption[];
+}
+
+const GENERATION_MAP: Generation[] = [
+  {
+    label: 'C8',
+    options: [
+      { label: 'Stingray', yearRange: { start: 2020, end: 2025 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Stingray' },
+      { label: 'Z06', yearRange: { start: 2023, end: 2025 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
+      { label: 'ZR1', yearRange: { start: 2025, end: 2025 }, preferredYear: 2025, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
+      { label: 'E-Ray', yearRange: { start: 2024, end: 2025 }, preferredYear: 2024, make: 'Chevrolet', model: 'Corvette', submodel: 'eray' },
+    ]
+  },
+  {
+    label: 'C7',
+    options: [
+      { label: 'Stingray', yearRange: { start: 2014, end: 2019 }, preferredYear: 2018, make: 'Chevrolet', model: 'Corvette', submodel: 'Stingray' },
+      { label: 'Grand Sport', yearRange: { start: 2017, end: 2019 }, preferredYear: 2018, make: 'Chevrolet', model: 'Corvette', submodel: 'Grand Sport' },
+      { label: 'Z06', yearRange: { start: 2015, end: 2019 }, preferredYear: 2018, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
+      { label: 'ZR1', yearRange: { start: 2019, end: 2019 }, preferredYear: 2019, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
+    ]
+  },
+  {
+    label: 'C6',
+    options: [
+      { label: 'Base Model', yearRange: { start: 2005, end: 2013 }, preferredYear: 2009, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
+      { label: 'Grand Sport', yearRange: { start: 2010, end: 2013 }, preferredYear: 2011, make: 'Chevrolet', model: 'Corvette', submodel: 'Grand Sport' },
+      { label: 'Z06', yearRange: { start: 2006, end: 2013 }, preferredYear: 2009, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
+      { label: 'ZR1', yearRange: { start: 2009, end: 2013 }, preferredYear: 2011, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
+    ]
+  },
+  {
+    label: 'C5',
+    options: [
+      { label: 'Base Model', yearRange: { start: 1997, end: 2004 }, preferredYear: 2001, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
+      { label: 'Z06', yearRange: { start: 2001, end: 2004 }, preferredYear: 2002, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
+    ]
+  }
+];
 
 // Reactive state
-const selectedYear = ref<number | null>(null);
-const selectedMake = ref<string | null>(null);
-const selectedModel = ref<string | null>(null);
-const selectedSubmodel = ref<string | null>(null);
+const selectedOption = ref<string>('');
 const selectedVehicle = ref<Vehicle | null>(null);
-
-const availableYears = ref<number[]>([]);
-const availableMakes = ref<string[]>([]);
-const availableModels = ref<string[]>([]);
-const availableSubmodels = ref<string[]>([]);
-
-const isLoadingYears = ref(false);
-const isLoadingMakes = ref(false);
-const isLoadingModels = ref(false);
-const isLoadingSubmodels = ref(false);
 const isLoadingVehicle = ref(false);
 
 const API_BASE_URL = 'https://api.autosyncstudio.com/vehicles';
@@ -37,207 +77,149 @@ onMounted(async () => {
     try {
       const vehicle: Vehicle = JSON.parse(savedVehicle);
       selectedVehicle.value = vehicle;
-      selectedYear.value = vehicle.Year;
-      selectedMake.value = vehicle.Make;
-      selectedModel.value = vehicle.Model;
-      selectedSubmodel.value = vehicle.Submodel;
+
+      // Try to find matching option in generation map
+      for (const gen of GENERATION_MAP) {
+        const option = gen.options.find(opt =>
+          vehicle.Year >= opt.yearRange.start &&
+          vehicle.Year <= opt.yearRange.end &&
+          opt.make === vehicle.Make &&
+          opt.model === vehicle.Model &&
+          opt.submodel === vehicle.Submodel
+        );
+        if (option) {
+          selectedOption.value = `${gen.label}-${option.label}`;
+
+          // Save the display format to localStorage
+          localStorage.setItem(VEHICLE_DISPLAY_KEY, `${gen.label} ${option.label}`);
+          break;
+        }
+      }
+
       emit('vehicleSelected', vehicle);
     } catch (error) {
       console.error('Error loading saved vehicle:', error);
       localStorage.removeItem(VEHICLE_STORAGE_KEY);
     }
   }
-
-  // Load initial years
-  await fetchYears();
 });
 
-// Fetch available years
-async function fetchYears() {
-  isLoadingYears.value = true;
-  try {
-    const years = new Set<number>();
-    let pageNumber = 1;
-    let hasMoreItems = true;
+// Get vehicle option from generation map
+function getVehicleOption(key: string): VehicleOption | null {
+  // Split only on the first hyphen to handle labels like "E-Ray"
+  const firstDashIndex = key.indexOf('-');
+  if (firstDashIndex === -1) return null;
 
-    while (hasMoreItems) {
-      const params = new URLSearchParams({
-        key: API_KEY,
-        'p-number': pageNumber.toString(),
-        'p-size': '500',
-        'i-tags': 'true',
-      });
+  const generation = key.substring(0, firstDashIndex);
+  const trim = key.substring(firstDashIndex + 1);
 
-      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-      if (!response.ok) throw new Error('Failed to fetch years');
-
-      const data = await response.json();
-      data.Vehicles?.forEach((v: Vehicle) => years.add(v.Year));
-
-      hasMoreItems = data.MoreItems === true;
-      pageNumber++;
-    }
-
-    availableYears.value = Array.from(years).sort((a, b) => b - a); // Descending
-  } catch (error) {
-    console.error('Error fetching years:', error);
-  } finally {
-    isLoadingYears.value = false;
-  }
-}
-
-// Fetch available makes for selected year
-async function fetchMakes(year: number) {
-  isLoadingMakes.value = true;
-  availableMakes.value = [];
-  selectedMake.value = null;
-  selectedModel.value = null;
-  selectedSubmodel.value = null;
-
-  try {
-    const makes = new Set<string>();
-    let pageNumber = 1;
-    let hasMoreItems = true;
-
-    while (hasMoreItems) {
-      const params = new URLSearchParams({
-        key: API_KEY,
-        'f-year': year.toString(),
-        'p-number': pageNumber.toString(),
-        'p-size': '500',
-        'i-tags': 'true',
-      });
-
-      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-      if (!response.ok) throw new Error('Failed to fetch makes');
-
-      const data = await response.json();
-      data.Vehicles?.forEach((v: Vehicle) => makes.add(v.Make));
-
-      hasMoreItems = data.MoreItems === true;
-      pageNumber++;
-    }
-
-    availableMakes.value = Array.from(makes).sort();
-  } catch (error) {
-    console.error('Error fetching makes:', error);
-  } finally {
-    isLoadingMakes.value = false;
-  }
-}
-
-// Fetch available models for selected year and make
-async function fetchModels(year: number, make: string) {
-  isLoadingModels.value = true;
-  availableModels.value = [];
-  selectedModel.value = null;
-  selectedSubmodel.value = null;
-
-  try {
-    const models = new Set<string>();
-    let pageNumber = 1;
-    let hasMoreItems = true;
-
-    while (hasMoreItems) {
-      const params = new URLSearchParams({
-        key: API_KEY,
-        'f-year': year.toString(),
-        'f-make': make,
-        'p-number': pageNumber.toString(),
-        'p-size': '500',
-        'i-tags': 'true',
-      });
-
-      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-      if (!response.ok) throw new Error('Failed to fetch models');
-
-      const data = await response.json();
-      data.Vehicles?.forEach((v: Vehicle) => models.add(v.Model));
-
-      hasMoreItems = data.MoreItems === true;
-      pageNumber++;
-    }
-
-    availableModels.value = Array.from(models).sort();
-  } catch (error) {
-    console.error('Error fetching models:', error);
-  } finally {
-    isLoadingModels.value = false;
-  }
-}
-
-// Fetch available submodels for selected year, make, and model
-async function fetchSubmodels(year: number, make: string, model: string) {
-  isLoadingSubmodels.value = true;
-  availableSubmodels.value = [];
-  selectedSubmodel.value = null;
-
-  try {
-    const submodels = new Set<string>();
-    let pageNumber = 1;
-    let hasMoreItems = true;
-
-    while (hasMoreItems) {
-      const params = new URLSearchParams({
-        key: API_KEY,
-        'f-year': year.toString(),
-        'f-make': make,
-        'f-model': model,
-        'p-number': pageNumber.toString(),
-        'p-size': '500',
-        'i-tags': 'true',
-      });
-
-      const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-      if (!response.ok) throw new Error('Failed to fetch submodels');
-
-      const data = await response.json();
-      data.Vehicles?.forEach((v: Vehicle) => {
-        if (v.Submodel) submodels.add(v.Submodel);
-      });
-
-      hasMoreItems = data.MoreItems === true;
-      pageNumber++;
-    }
-
-    availableSubmodels.value = Array.from(submodels).sort();
-  } catch (error) {
-    console.error('Error fetching submodels:', error);
-  } finally {
-    isLoadingSubmodels.value = false;
-  }
+  const gen = GENERATION_MAP.find(g => g.label === generation);
+  if (!gen) return null;
+  return gen.options.find(opt => opt.label === trim) || null;
 }
 
 // Fetch full vehicle data with fitments
-async function fetchVehicle(year: number, make: string, model: string, submodel: string) {
+async function fetchVehicle(vehicleOpt: VehicleOption) {
+  console.log('🚗 Starting fetchVehicle for:', vehicleOpt);
   isLoadingVehicle.value = true;
 
   try {
-    const query = `${year} ${make} ${model} ${submodel}`;
-    const params = new URLSearchParams({
-      key: API_KEY,
-      'f-query': query,
-      'p-number': '1',
-      'p-size': '500',
-      'i-fitments': 'true',
-      'i-optionalFitments': 'true',
-      'i-plusSizes': 'true',
-      'i-tags': 'true',
-    });
+    // Try preferred year first, then try other years in the range
+    const yearsToTry = [vehicleOpt.preferredYear];
 
-    const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
-    if (!response.ok) throw new Error('Failed to fetch vehicle');
+    // Add other years in descending order
+    for (let year = vehicleOpt.yearRange.end; year >= vehicleOpt.yearRange.start; year--) {
+      if (year !== vehicleOpt.preferredYear) {
+        yearsToTry.push(year);
+      }
+    }
 
-    const data = await response.json();
-    if (data.Vehicles && data.Vehicles.length > 0) {
-      const vehicle = data.Vehicles[0];
-      selectedVehicle.value = vehicle;
+    console.log('📅 Years to try:', yearsToTry);
+
+    let foundVehicle = null;
+
+    // Try each year until we find a match
+    for (const year of yearsToTry) {
+      // Query without submodel first to get all vehicles for that year/make/model
+      const params = new URLSearchParams({
+        key: API_KEY,
+        'f-year': year.toString(),
+        'f-make': vehicleOpt.make,
+        'f-model': vehicleOpt.model,
+        'p-number': '1',
+        'p-size': '500',
+        'i-fitments': 'true',
+        'i-optionalFitments': 'true',
+        'i-plusSizes': 'true',
+        'i-tags': 'true',
+      });
+
+      const apiUrl = `${API_BASE_URL}?${params.toString()}`;
+      console.log(`🌐 Fetching from API (year ${year}):`, apiUrl);
+
+      const response = await fetch(apiUrl);
+      console.log(`📡 Response status:`, response.status, response.ok);
+
+      if (!response.ok) {
+        console.warn(`❌ Response not OK for year ${year}`);
+        continue;
+      }
+
+      const data = await response.json();
+      console.log(`📦 API Response data:`, data);
+      if (data.Vehicles && data.Vehicles.length > 0) {
+        // Debug logging to see what vehicles we're getting
+        console.log(`Fetching ${vehicleOpt.label} for year ${year}:`, {
+          searchingFor: vehicleOpt.submodel,
+          foundVehicles: data.Vehicles.map((v: Vehicle) => ({
+            Year: v.Year,
+            Make: v.Make,
+            Model: v.Model,
+            Submodel: v.Submodel
+          }))
+        });
+
+        // Find a vehicle that matches the submodel (flexible matching)
+        const targetSubmodel = vehicleOpt.submodel.toLowerCase().replace(/[-\s]/g, '');
+
+        foundVehicle = data.Vehicles.find((v: Vehicle) => {
+          if (!v.Submodel) return false;
+          const vehicleSubmodel = v.Submodel.toLowerCase().replace(/[-\s]/g, '');
+          const isMatch = vehicleSubmodel === targetSubmodel ||
+                 vehicleSubmodel.includes(targetSubmodel) ||
+                 targetSubmodel.includes(vehicleSubmodel);
+
+          if (isMatch) {
+            console.log(`✓ Match found:`, v.Submodel, 'matches', vehicleOpt.submodel);
+          }
+
+          return isMatch;
+        });
+
+        if (foundVehicle) break;
+      }
+    }
+
+    if (foundVehicle) {
+      selectedVehicle.value = foundVehicle;
 
       // Save to localStorage
-      localStorage.setItem(VEHICLE_STORAGE_KEY, JSON.stringify(vehicle));
+      localStorage.setItem(VEHICLE_STORAGE_KEY, JSON.stringify(foundVehicle));
+
+      // Also save the display format (generation + trim)
+      if (selectedOption.value) {
+        const firstDashIndex = selectedOption.value.indexOf('-');
+        if (firstDashIndex !== -1) {
+          const generation = selectedOption.value.substring(0, firstDashIndex);
+          const trim = selectedOption.value.substring(firstDashIndex + 1);
+          localStorage.setItem(VEHICLE_DISPLAY_KEY, `${generation} ${trim}`);
+        }
+      }
 
       // Emit to parent
-      emit('vehicleSelected', vehicle);
+      emit('vehicleSelected', foundVehicle);
+    } else {
+      console.warn(`No vehicle found for ${vehicleOpt.label} in years ${vehicleOpt.yearRange.start}-${vehicleOpt.yearRange.end}`);
     }
   } catch (error) {
     console.error('Error fetching vehicle:', error);
@@ -246,61 +228,41 @@ async function fetchVehicle(year: number, make: string, model: string, submodel:
   }
 }
 
-// Watch for year changes
-watch(selectedYear, async (newYear) => {
-  if (newYear) {
-    await fetchMakes(newYear);
-  } else {
-    availableMakes.value = [];
-    availableModels.value = [];
-    availableSubmodels.value = [];
-  }
-});
-
-// Watch for make changes
-watch(selectedMake, async (newMake) => {
-  if (newMake && selectedYear.value) {
-    await fetchModels(selectedYear.value, newMake);
-  } else {
-    availableModels.value = [];
-    availableSubmodels.value = [];
-  }
-});
-
-// Watch for model changes
-watch(selectedModel, async (newModel) => {
-  if (newModel && selectedYear.value && selectedMake.value) {
-    await fetchSubmodels(selectedYear.value, selectedMake.value, newModel);
-  } else {
-    availableSubmodels.value = [];
-  }
-});
-
-// Watch for submodel changes
-watch(selectedSubmodel, async (newSubmodel) => {
-  if (newSubmodel && selectedYear.value && selectedMake.value && selectedModel.value) {
-    await fetchVehicle(selectedYear.value, selectedMake.value, selectedModel.value, newSubmodel);
+// Watch for option changes
+watch(selectedOption, async (newOption) => {
+  console.log('👀 Selected option changed to:', newOption);
+  if (newOption) {
+    const vehicleOpt = getVehicleOption(newOption);
+    console.log('🔍 Retrieved vehicle option:', vehicleOpt);
+    if (vehicleOpt) {
+      await fetchVehicle(vehicleOpt);
+    } else {
+      console.error('❌ Could not find vehicle option for:', newOption);
+    }
   }
 });
 
 // Clear selection
 function clearVehicle() {
-  selectedYear.value = null;
-  selectedMake.value = null;
-  selectedModel.value = null;
-  selectedSubmodel.value = null;
+  selectedOption.value = '';
   selectedVehicle.value = null;
-  availableMakes.value = [];
-  availableModels.value = [];
-  availableSubmodels.value = [];
   localStorage.removeItem(VEHICLE_STORAGE_KEY);
+  localStorage.removeItem(VEHICLE_DISPLAY_KEY);
   emit('vehicleSelected', null);
 }
 
 const vehicleDisplay = computed(() => {
-  if (!selectedVehicle.value) return null;
-  const v = selectedVehicle.value;
-  return `${v.Year} ${v.Make} ${v.Model} ${v.Submodel}`;
+  if (!selectedVehicle.value || !selectedOption.value) return null;
+
+  // Extract generation and trim from selectedOption (e.g., "C8-E-Ray")
+  // Split only on the first hyphen to handle labels like "E-Ray"
+  const firstDashIndex = selectedOption.value.indexOf('-');
+  if (firstDashIndex === -1) return null;
+
+  const generation = selectedOption.value.substring(0, firstDashIndex);
+  const trim = selectedOption.value.substring(firstDashIndex + 1);
+
+  return `${generation} ${trim}`;
 });
 </script>
 
@@ -312,63 +274,28 @@ const vehicleDisplay = computed(() => {
     </div>
 
     <div v-if="!selectedVehicle" class="dropdowns-container">
-      <!-- Year Dropdown -->
+      <!-- Single Generation-Based Dropdown -->
       <div class="dropdown-wrapper">
-        <label class="dropdown-label">YEAR</label>
+        <label class="dropdown-label">SELECT YOUR CORVETTE</label>
         <select
-          v-model="selectedYear"
+          v-model="selectedOption"
           class="dropdown-select"
-          :disabled="isLoadingYears"
+          :disabled="isLoadingVehicle"
         >
-          <option :value="null">Select Year</option>
-          <option v-for="year in availableYears" :key="year" :value="year">
-            {{ year }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Make Dropdown -->
-      <div class="dropdown-wrapper">
-        <label class="dropdown-label">MAKE</label>
-        <select
-          v-model="selectedMake"
-          class="dropdown-select"
-          :disabled="!selectedYear || isLoadingMakes"
-        >
-          <option :value="null">Select Make</option>
-          <option v-for="make in availableMakes" :key="make" :value="make">
-            {{ make }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Model Dropdown -->
-      <div class="dropdown-wrapper">
-        <label class="dropdown-label">MODEL</label>
-        <select
-          v-model="selectedModel"
-          class="dropdown-select"
-          :disabled="!selectedMake || isLoadingModels"
-        >
-          <option :value="null">Select Model</option>
-          <option v-for="model in availableModels" :key="model" :value="model">
-            {{ model }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Submodel Dropdown -->
-      <div class="dropdown-wrapper">
-        <label class="dropdown-label">SUBMODEL</label>
-        <select
-          v-model="selectedSubmodel"
-          class="dropdown-select"
-          :disabled="!selectedModel || isLoadingSubmodels"
-        >
-          <option :value="null">Select Submodel</option>
-          <option v-for="submodel in availableSubmodels" :key="submodel" :value="submodel">
-            {{ submodel }}
-          </option>
+          <option value="">Select Generation & Model</option>
+          <optgroup
+            v-for="generation in GENERATION_MAP"
+            :key="generation.label"
+            :label="generation.label"
+          >
+            <option
+              v-for="option in generation.options"
+              :key="`${generation.label}-${option.label}`"
+              :value="`${generation.label}-${option.label}`"
+            >
+              {{ option.label }}
+            </option>
+          </optgroup>
         </select>
       </div>
 
@@ -392,84 +319,91 @@ const vehicleDisplay = computed(() => {
 
 <style scoped>
 .vehicle-selector {
-  @apply w-full bg-gray-900 py-8 px-6 mb-8;
+  @apply w-full bg-white mb-6;
 }
 
 .selector-header {
-  @apply text-center mb-6;
+  @apply hidden;
 }
 
 .selector-title {
-  @apply font-franklin-heavy text-xl text-white tracking-[3px] mb-2;
+  @apply hidden;
 }
 
 .selector-subtitle {
-  @apply font-franklin-book text-14 text-gray-400;
+  @apply hidden;
 }
 
 .dropdowns-container {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto;
+  @apply flex flex-col gap-0 w-full;
 }
 
 .dropdown-wrapper {
-  @apply flex flex-col;
+  @apply w-full;
 }
 
 .dropdown-label {
-  @apply font-franklin-demi text-xs text-gray-400 tracking-[2px] mb-2;
+  @apply hidden;
 }
 
 .dropdown-select {
-  @apply w-full bg-gray-800 text-white font-franklin-book text-14 px-4 py-3 border border-gray-700
-         focus:border-e5-red focus:outline-none transition-colors cursor-pointer;
+  @apply w-full h-12 px-4 border-2 border-gray-300 rounded-lg text-base font-franklin-book bg-white cursor-pointer
+         focus:border-e5-red focus:outline-none transition-colors;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.5 9.75L1.625 3.25H11.375L6.5 9.75Z' fill='black' fill-opacity='0.7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 3rem;
 }
 
 .dropdown-select:disabled {
   @apply opacity-50 cursor-not-allowed;
 }
 
+.dropdown-select optgroup {
+  @apply font-franklin-demi text-xs text-e5-red bg-white py-1;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.dropdown-select option {
+  @apply font-franklin-book text-base text-black bg-white py-2 pl-6;
+}
+
 .loading-indicator {
-  @apply col-span-full text-center text-gray-400 font-franklin-book text-14 py-4;
+  @apply w-full text-center text-gray-600 font-franklin-book text-sm py-2;
 }
 
 .selected-vehicle {
-  @apply flex flex-col md:flex-row items-center justify-between gap-4 max-w-6xl mx-auto
-         bg-gray-800 px-6 py-4 border border-e5-red;
+  @apply flex flex-col md:flex-row items-center justify-between w-full h-12 px-4
+         bg-white border-2 border-gray-300 rounded-lg;
 }
 
 .vehicle-info {
-  @apply flex flex-col md:flex-row items-center gap-2;
+  @apply flex flex-row items-center gap-2;
 }
 
 .vehicle-label {
-  @apply font-franklin-demi text-xs text-gray-400 tracking-[2px];
+  @apply font-franklin-book text-base text-black/60;
 }
 
 .vehicle-text {
-  @apply font-franklin-heavy text-16 text-white tracking-[1px];
+  @apply font-franklin-demi text-base text-black;
 }
 
 .clear-button {
-  @apply font-franklin-demi text-xs text-white tracking-[2px] px-6 py-2
-         border border-white hover:bg-white hover:text-black transition-colors;
+  @apply font-franklin-book text-sm text-e5-red transition-colors;
+  text-decoration: underline;
+}
+
+.clear-button:hover {
+  opacity: 0.8;
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
-  .vehicle-selector {
-    @apply py-6 px-4;
-  }
-
-  .selector-title {
-    @apply text-16;
-  }
-
-  .selector-subtitle {
-    @apply text-xs;
-  }
-
-  .dropdowns-container {
-    @apply gap-3;
+  .selected-vehicle {
+    @apply h-auto py-3;
   }
 }
 </style>

@@ -2,7 +2,9 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
     SONOMA_LOGO,
+    SONOMA_BRAND_NAME,
     TALLADEGA_LOGO,
+    TALLADEGA_BRAND_NAME,
     SONOMA_HERO_IMAGE,
     SONOMA_DETAIL_1,
     SONOMA_DETAIL_2,
@@ -10,6 +12,7 @@ import {
     WHEEL_GALLERY_STUDIO_BANNER
 } from "@/pages/wheels/constants/Wheels.ts";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
+import {SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 ---
 
 <MainLayout title="Sonoma - E5 Wheels">
@@ -76,9 +79,9 @@ import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 
                     <!-- Buttons -->
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <button class="bg-e5-red text-white px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors">
+                        <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver`} class="bg-e5-red text-white px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors text-center">
                             SHOP SONOMA
-                        </button>
+                        </a>
                         <button class="bg-white text-black border border-black px-8 py-3 text-[13px] md:text-[14px] tracking-[2px] font-bold hover:bg-black/5 transition-colors">
                             EXPLORE E5 FORGED
                         </button>
@@ -233,30 +236,34 @@ import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
         <div class="max-w-[1000px] mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
                 <!-- Sonoma -->
-                <div class="text-center">
-                    <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto mb-4" />
-                    <img src={SONOMA_LOGO} alt="SONOMA" class="mx-auto h-[42px] md:h-[46px] mb-4" />
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
-                    <button class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase">
-                        SHOP SONOMA
-                    </button>
-                </div>
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver`} class="block hover:opacity-80 transition-opacity">
+                    <div class="text-center">
+                        <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto mb-4" />
+                        <img src={SONOMA_LOGO} alt="SONOMA" class="mx-auto h-[42px] md:h-[46px] mb-4" />
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
+                        <div class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block">
+                            SHOP SONOMA
+                        </div>
+                    </div>
+                </a>
 
                 <!-- Talladega -->
-                <div class="text-center">
-                    <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-auto mb-4" />
-                    <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="mx-auto h-[34px] md:h-[38px] mb-4" />
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
-                    <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
-                    <button class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase">
-                        SHOP TALLADEGA
-                    </button>
-                </div>
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Silver`} class="block hover:opacity-80 transition-opacity">
+                    <div class="text-center">
+                        <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-auto mb-4" />
+                        <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="mx-auto h-[34px] md:h-[38px] mb-4" />
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
+                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
+                        <div class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block">
+                            SHOP TALLADEGA
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>

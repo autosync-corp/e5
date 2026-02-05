@@ -126,12 +126,18 @@ const closeMiniCart = () => {
             </a>
 
             <!-- Dropdown Menu -->
-            <div v-if="isWheelsDropdownOpen" class="dropdown-menu">
-              <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
-              <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
-              <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
-              <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
-              <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
+            <div v-if="isWheelsDropdownOpen" class="dropdown-menu wheels-dropdown">
+              <div class="wheel-group">
+                <div class="wheel-group-title">FORM FORGED</div>
+                <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
+                <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
+                <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
+              </div>
+              <div class="wheel-group">
+                <div class="wheel-group-title">FORGED</div>
+                <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
+                <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
+              </div>
             </div>
           </div>
 
@@ -259,11 +265,17 @@ const closeMiniCart = () => {
             </button>
           </div>
           <div v-if="isWheelsDropdownOpen" class="mobile-submenu-items">
-            <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
-            <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
-            <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
-            <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
-            <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
+            <div class="mobile-wheel-group">
+              <div class="mobile-wheel-title">FORM FORGED</div>
+              <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
+              <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
+              <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
+            </div>
+            <div class="mobile-wheel-group">
+              <div class="mobile-wheel-title">FORGED</div>
+              <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
+              <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
+            </div>
           </div>
         </div>
 
@@ -439,6 +451,35 @@ const closeMiniCart = () => {
   font-size: 13px;
 }
 
+/* Wheels Dropdown Specific Styles */
+.wheels-dropdown {
+  min-width: 220px;
+  padding: 0.5rem 0;
+}
+
+.wheel-group {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wheel-group:last-child {
+  border-bottom: none;
+}
+
+.wheel-group-title {
+  padding: 0.5rem 1.5rem 0.25rem;
+  color: #d31d25;
+  font-size: 12px;
+  font-family: 'Franklin Gothic Demi', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.wheel-group .dropdown-item {
+  padding: 0.5rem 1.5rem 0.5rem 2.5rem;
+  font-size: 13px;
+}
+
 .dropdown-item.coming-soon {
   color: rgba(255, 255, 255, 0.4);
   cursor: default;
@@ -515,6 +556,19 @@ const closeMiniCart = () => {
 }
 
 .mobile-generation-title {
+  @apply font-franklin-demi text-14 text-e5-red uppercase tracking-[2px] mb-1;
+}
+
+/* Mobile Wheel Groups */
+.mobile-wheel-group {
+  @apply flex flex-col items-center gap-2 mb-4;
+}
+
+.mobile-wheel-group:last-child {
+  @apply mb-0;
+}
+
+.mobile-wheel-title {
   @apply font-franklin-demi text-14 text-e5-red uppercase tracking-[2px] mb-1;
 }
 
