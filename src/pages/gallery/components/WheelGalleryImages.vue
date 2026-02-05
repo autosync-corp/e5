@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useWheelApi } from '@/core/composables/useWheelApi';
+import { SINGLE_PRODUCT_ROUTE } from "@/core/constants/Routes.ts";
+import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
 
 const props = defineProps<{
   partF?: string | null;
   wheelPartR?: string | null;
   wheelStyle?: string | null;
+  wheelFinish?: string | null;
   wheelsRoute: string;
+  vehicleSubmodel?: string | null;
+  vehicleTitle?: string | null;
+  vehicleTrim?: string | null;
 }>();
 
 const { loading, wheelData, imgUrlBase, fetchWheelData } = useWheelApi();
@@ -41,11 +47,33 @@ const wheelGalleryImages = computed(() => {
 
 const hasImages = computed(() => wheelGalleryImages.value.length > 0);
 
-// Generate lowercase wheel style route
+// Parse generation and trim from vehicle data
+const vehicleInfo = computed(() => {
+  return parseVehicleGenerationAndTrim(
+    props.vehicleSubmodel,
+    props.vehicleTitle,
+    props.vehicleTrim
+  );
+});
+
+// Generate single product route with generation and trim
 const wheelStyleRoute = computed(() => {
-  if (!props.wheelStyle) return props.wheelsRoute;
-  const style = props.wheelStyle.toLowerCase().replace(/\s+/g, '-');
-  return `${props.wheelsRoute}/${style}`;
+  if (!props.wheelStyle || !props.wheelFinish) {
+    return props.wheelsRoute;
+  }
+
+  const params = new URLSearchParams({
+    series: props.wheelStyle,
+    finish: props.wheelFinish
+  });
+
+  // Add generation and trim if available
+  if (vehicleInfo.value.generation) {
+    params.append('generation', vehicleInfo.value.generation);
+    params.append('trim', vehicleInfo.value.trim);
+  }
+
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
 });
 </script>
 

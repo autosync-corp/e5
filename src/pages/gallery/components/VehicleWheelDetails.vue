@@ -3,7 +3,9 @@ import { computed, onMounted } from 'vue';
 import { useWheelApi } from '@/core/composables/useWheelApi';
 import VehicleWheelSizeFit from './VehicleWheelSizeFit.vue';
 import Button from '@/core/components/Button.vue';
-import {E5_LOGO_BLACK} from "@/core/constants/App.ts";
+import { E5_LOGO_BLACK } from "@/core/constants/App.ts";
+import { SINGLE_PRODUCT_ROUTE } from "@/core/constants/Routes.ts";
+import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
 
 const props = defineProps<{
   partF?: string | null;
@@ -15,6 +17,9 @@ const props = defineProps<{
   vehicleWheelSizeRear?: string | null;
   vehicleOffsetR?: string | null;
   wheelStyleLogo: string;
+  vehicleSubmodel?: string | null;
+  vehicleTitle?: string | null;
+  vehicleTrim?: string | null;
 }>();
 
 const { loading, error, wheelData, fetchWheelData, getWheelImageUrl } = useWheelApi();
@@ -92,10 +97,31 @@ const wheelStyleRoute = computed(() => {
   return `/wheels/${style}`;
 });
 
-// Generate shop link with series query parameter
+// Parse generation and trim from vehicle data
+const vehicleInfo = computed(() => {
+  return parseVehicleGenerationAndTrim(
+    props.vehicleSubmodel,
+    props.vehicleTitle,
+    props.vehicleTrim
+  );
+});
+
+// Generate shop link with series, finish, generation, and trim parameters
 const shopRoute = computed(() => {
-  if (!props.vehicleWheelStyle) return '/shop';
-  return `/shop?series=${props.vehicleWheelStyle}`;
+  if (!props.vehicleWheelStyle || !props.vehicleWheelFinish) return '/shop';
+
+  const params = new URLSearchParams({
+    series: props.vehicleWheelStyle,
+    finish: props.vehicleWheelFinish
+  });
+
+  // Add generation and trim if available
+  if (vehicleInfo.value.generation) {
+    params.append('generation', vehicleInfo.value.generation);
+    params.append('trim', vehicleInfo.value.trim);
+  }
+
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
 });
 </script>
 
