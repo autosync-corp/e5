@@ -1,8 +1,11 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import {SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     TALLADEGA_LOGO,
+    TALLADEGA_BRAND_NAME,
     SONOMA_LOGO,
+    SONOMA_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
@@ -46,7 +49,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
 
                 <!-- Talladega -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" />
                     </div>
@@ -55,10 +58,10 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase">MADE IN USA</p>
-                </div>
+                </a>
 
                 <!-- Sonoma -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" />
                     </div>
@@ -67,7 +70,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase">MADE IN USA</p>
-                </div>
+                </a>
             </div>
         </section>
 
@@ -214,6 +217,11 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                                 <li>Brushed Aluminum</li>
                             </ul>
                         </div>
+                        <div class="mt-6">
+                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                                SHOP SONOMA
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,6 +257,11 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
                                 <li>Brushed Aluminum</li>
                             </ul>
+                        </div>
+                        <div class="mt-6">
+                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                                SHOP TALLADEGA
+                            </a>
                         </div>
                     </div>
                 </div>

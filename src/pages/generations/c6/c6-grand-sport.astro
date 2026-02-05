@@ -1,7 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
@@ -42,7 +42,7 @@ import {
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Speedway Titanium Brushed Tint -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -51,10 +51,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Daytona Gloss Black -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -63,10 +63,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Sebring Bronze Brushed Tint -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed Tint&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp" alt="Sebring Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -75,7 +75,7 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
             </div>
 
             <div class="text-center">
@@ -255,13 +255,10 @@ import {
                                 <li>Gloss Black</li>
                             </ul>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
-                                <span>SHOP DAYTONA</span>
-                            </Button>
-                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
-                                <span>EXPLORE DAYTONA</span>
-                            </Button>
+                        <div class="mt-6">
+                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C6&trim=Grand Sport`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                                SHOP DAYTONA
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -303,13 +300,10 @@ import {
                                 <li>Gloss Black</li>
                             </ul>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
-                                <span>SHOP SEBRING</span>
-                            </Button>
-                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
-                                <span>EXPLORE SEBRING</span>
-                            </Button>
+                        <div class="mt-6">
+                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black&generation=C6&trim=Grand Sport`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                                SHOP SEBRING
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -324,7 +318,7 @@ import {
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Speedway Gloss Black -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Gloss Black&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/cd19461c451031cb11b5e748b6774ae80b22a516.webp" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -333,10 +327,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Speedway Titanium Brushed Tint -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -345,10 +339,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Speedway Dark Bronze -->
-                <div class="flex flex-col items-center">
+                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Dark Bronze&generation=C6&trim=Grand Sport`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/grand-sport-figma-new/55e2dad1e72a82c3b811737504db985db4ec5353.webp" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
                     </div>
@@ -357,7 +351,7 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
             </div>
 
             <div class="text-center">

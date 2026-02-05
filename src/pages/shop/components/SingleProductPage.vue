@@ -20,11 +20,13 @@ const getProductIdFromUrl = (): number | undefined => {
 };
 
 const getUrlParams = () => {
-  if (typeof window === 'undefined') return { series: null, finish: null };
+  if (typeof window === 'undefined') return { series: null, finish: null, generation: null, trim: null };
   const params = new URLSearchParams(window.location.search);
   return {
     series: params.get('series'),
-    finish: params.get('finish')
+    finish: params.get('finish'),
+    generation: params.get('generation'),
+    trim: params.get('trim')
   };
 };
 
@@ -47,6 +49,11 @@ const isLoading = ref(true);
 const error = ref<string | null>(null);
 const selectedVehicle = ref<Vehicle | null>(null);
 const vehicleDisplayFormat = ref<string | null>(null);
+
+// Extract URL params for generation and trim
+const urlParams = getUrlParams();
+const initialGeneration = ref(urlParams.generation);
+const initialTrim = ref(urlParams.trim);
 
 // Storage key for localStorage
 const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
@@ -965,7 +972,11 @@ onMounted(() => {
 
           <!-- Vehicle Selector -->
           <div class="mb-6">
-            <VehicleSelector @vehicle-selected="handleVehicleSelected" />
+            <VehicleSelector
+              @vehicle-selected="handleVehicleSelected"
+              :initial-generation="initialGeneration"
+              :initial-trim="initialTrim"
+            />
           </div>
 
           <!-- Configuration Options -->

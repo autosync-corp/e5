@@ -6,6 +6,11 @@ const emit = defineEmits<{
   vehicleSelected: [vehicle: Vehicle | null];
 }>();
 
+const props = defineProps<{
+  initialGeneration?: string;
+  initialTrim?: string;
+}>();
+
 // Storage key for localStorage
 const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
 const VEHICLE_DISPLAY_KEY = 'e5-selected-vehicle-display';
@@ -72,6 +77,21 @@ const API_KEY = 'efive';
 
 // Load saved vehicle from localStorage on mount
 onMounted(async () => {
+  // Priority 1: Check for URL parameters from props
+  if (props.initialGeneration && props.initialTrim) {
+    const preselectedKey = `${props.initialGeneration}-${props.initialTrim}`;
+    console.log('🔗 Pre-selecting from URL parameters:', preselectedKey);
+    selectedOption.value = preselectedKey;
+
+    // Fetch vehicle data for the pre-selected option
+    const vehicleOpt = getVehicleOption(preselectedKey);
+    if (vehicleOpt) {
+      await fetchVehicle(vehicleOpt);
+    }
+    return; // Skip localStorage check
+  }
+
+  // Priority 2: Check localStorage (existing behavior)
   const savedVehicle = localStorage.getItem(VEHICLE_STORAGE_KEY);
   if (savedVehicle) {
     try {
