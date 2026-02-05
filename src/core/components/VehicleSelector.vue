@@ -118,6 +118,16 @@ function getVehicleOption(key: string): VehicleOption | null {
   return gen.options.find(opt => opt.label === trim) || null;
 }
 
+// Get year range for a generation
+function getYearRangeForGeneration(generation: Generation): string {
+  if (!generation.options || generation.options.length === 0) return '';
+
+  const minYear = Math.min(...generation.options.map(opt => opt.yearRange.start));
+  const maxYear = Math.max(...generation.options.map(opt => opt.yearRange.end));
+
+  return `${minYear}-${maxYear}`;
+}
+
 // Fetch full vehicle data with fitments
 async function fetchVehicle(vehicleOpt: VehicleOption) {
   console.log('🚗 Starting fetchVehicle for:', vehicleOpt);
@@ -286,7 +296,7 @@ const vehicleDisplay = computed(() => {
           <optgroup
             v-for="generation in GENERATION_MAP"
             :key="generation.label"
-            :label="generation.label"
+            :label="`${generation.label} ${getYearRangeForGeneration(generation)}`"
           >
             <option
               v-for="option in generation.options"
