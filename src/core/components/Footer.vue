@@ -17,10 +17,10 @@ import {
 </script>
 
 <template>
-  <footer class="bg-e5-red w-full py-12 px-6">
+  <footer class="bg-e5-red w-full py-6 px-6">
     <div class="max-w-[1518px] mx-auto">
       <!-- Main Footer Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12 lg:gap-20 items-start mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-12 items-start mb-6">
         <!-- Left: Links -->
         <div class="footer-links flex flex-col space-y-2">
           <a :href="PROCESS_ROUTE" class="footer-link">OUR PROCESS</a>
@@ -36,7 +36,7 @@ import {
         </div>
 
         <!-- Center: Logo + Social -->
-        <div class="footer-center flex flex-col items-center space-y-8">
+        <div class="footer-center flex flex-col items-center space-y-4">
           <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="h-[33px] w-auto" />
 
           <!-- Social Icons -->
@@ -77,7 +77,7 @@ import {
           </a>
 
           <!-- Get In Touch Button -->
-          <a :href="CONTACT_ROUTE" class="mt-4 bg-black text-white px-8 py-3 text-[14px] tracking-[5.6px] hover:bg-black/90 transition-colors inline-block">
+          <a :href="CONTACT_ROUTE" class="mt-2 bg-black text-white px-8 py-2 text-[14px] tracking-[5.6px] hover:bg-black/90 transition-colors inline-block">
             GET IN TOUCH
           </a>
         </div>
@@ -93,7 +93,7 @@ import {
 
 <style scoped>
 .footer-link {
-  @apply text-[16px] leading-[35px] tracking-[6.4px] text-black no-underline transition-opacity hover:opacity-70;
+  @apply text-[16px] leading-[24px] tracking-[6.4px] text-black no-underline transition-opacity hover:opacity-70;
 }
 
 /* Tablet and Mobile Responsive Styles */
