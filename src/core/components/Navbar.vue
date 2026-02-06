@@ -197,7 +197,7 @@ const closeMiniCart = () => {
           <!-- Dropdown Menu -->
           <div v-if="isGenerationsDropdownOpen" class="dropdown-menu generations-dropdown">
             <div class="generation-group">
-              <div class="generation-title">C8 2020-2025</div>
+              <div class="generation-title">C8 2020-2026</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="dropdown-item">ZR1</a>
@@ -323,7 +323,7 @@ const closeMiniCart = () => {
           </div>
           <div v-if="isGenerationsDropdownOpen" class="mobile-submenu-items">
             <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C8 2020-2025</div>
+              <div class="mobile-generation-title">C8 2020-2026</div>
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>

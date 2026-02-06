@@ -34,10 +34,10 @@ const GENERATION_MAP: Generation[] = [
   {
     label: 'C8',
     options: [
-      { label: 'Stingray', yearRange: { start: 2020, end: 2025 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Stingray' },
-      { label: 'Z06', yearRange: { start: 2023, end: 2025 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
-      { label: 'ZR1', yearRange: { start: 2025, end: 2025 }, preferredYear: 2025, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
-      { label: 'E-Ray', yearRange: { start: 2024, end: 2025 }, preferredYear: 2024, make: 'Chevrolet', model: 'Corvette', submodel: 'eray' },
+      { label: 'Stingray', yearRange: { start: 2020, end: 2026 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Stingray' },
+      { label: 'Z06', yearRange: { start: 2023, end: 2026 }, preferredYear: 2023, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
+      { label: 'ZR1', yearRange: { start: 2025, end: 2026 }, preferredYear: 2025, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
+      { label: 'E-Ray', yearRange: { start: 2024, end: 2026 }, preferredYear: 2024, make: 'Chevrolet', model: 'Corvette', submodel: 'eray' },
     ]
   },
   {
