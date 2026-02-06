@@ -172,8 +172,6 @@ const closeMiniCart = () => {
               <a :href="PROCESS_FORM_FORGED_ROUTE" class="dropdown-item">FORM FORGED</a>
             </div>
           </div>
-
-          <a :href="SHOP_ROUTE" class="nav-link" :class="{'selected': isShopRoute}">SHOP</a>
         </div>
 
         <!-- Center Logo -->
@@ -306,8 +304,6 @@ const closeMiniCart = () => {
             <a :href="PROCESS_FORM_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORM FORGED</a>
           </div>
         </div>
-
-        <a :href="SHOP_ROUTE" class="mobile-nav-link" :class="{'selected': isShopRoute}" @click="closeMobileMenu">SHOP</a>
 
         <!-- Generations Submenu for Mobile -->
         <div class="mobile-submenu">
