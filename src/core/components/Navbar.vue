@@ -112,10 +112,10 @@ const closeMiniCart = () => {
 <template>
   <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center">
     <!-- Desktop Navigation -->
-    <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-12">
-      <div class="flex items-center gap-12">
+    <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-4 xl:px-8 2xl:px-12">
+      <div class="flex items-center gap-4 xl:gap-8 2xl:gap-12">
         <!-- Left Menu Items -->
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-3 xl:gap-4 2xl:gap-6">
           <!-- Wheels Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isWheelsDropdownOpen = true" @mouseleave="closeWheelsDropdown">
             <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">
@@ -177,14 +177,14 @@ const closeMiniCart = () => {
         </div>
 
         <!-- Center Logo -->
-        <div class="flex justify-center items-center px-8">
+        <div class="flex justify-center items-center px-3 xl:px-6 2xl:px-8">
           <a :href="HOME_ROUTE">
-            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
+            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
           </a>
         </div>
 
         <!-- Right Menu Items -->
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-3 xl:gap-4 2xl:gap-6">
         <!-- Generations Dropdown -->
         <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
           <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
@@ -224,7 +224,7 @@ const closeMiniCart = () => {
           <a :href="ABOUT_ROUTE" class="nav-link" :class="{'selected': isAboutRoute}">ABOUT</a>
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
           <button @click="toggleMiniCart" class="relative">
-            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+            <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
             </span>
@@ -367,10 +367,11 @@ const closeMiniCart = () => {
 
 <style scoped>
 .nav-link {
-  @apply font-franklin-medium text-14 text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70 text-center ps-1;
+  @apply font-franklin-medium text-xs 2xl:text-sm text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70 text-center ps-1;
   border-bottom: #141414 2px solid;
   background: transparent;
   cursor: pointer;
+  letter-spacing: 3.5px;
 }
 
 .nav-link.selected {

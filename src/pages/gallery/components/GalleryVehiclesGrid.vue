@@ -61,6 +61,9 @@ const filteredVehicles = computed(() => {
     filtered = filtered.filter(item => item.year === filters.value.year);
   }
 
+  // Reverse array to show newest additions first (assumes new items are added to the end)
+  filtered = [...filtered].reverse();
+
   return filtered.map(mapVehicleData);
 });
 </script>
