@@ -170,7 +170,7 @@ const shopRoute = computed(() => {
     <template #actions>
       <div class="flex justify-between gap-6 w-full">
         <Button primary :link="shopRoute">
-          SHOP {{ wheelStyle }}
+          SHOP FITMENT
         </Button>
         <Button secondary :link="wheelStyleRoute">
           EXPLORE {{ wheelStyle }}
