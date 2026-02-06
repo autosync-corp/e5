@@ -157,6 +157,19 @@ const availableSizeOffsets = computed(() => {
   return Array.from(sizeOffsets).sort();
 });
 
+// Helper function to validate fitment - returns true if fitment is valid
+function isValidFitment(fitment: any): boolean {
+  const frontDiameter = fitment.RimDiameter;
+  const rearDiameter = fitment.RimDiameterRear;
+
+  // Check if both exist and rear is smaller than front (invalid)
+  if (frontDiameter && rearDiameter && rearDiameter < frontDiameter) {
+    console.warn(`⚠️ Invalid fitment detected and filtered out: Front ${frontDiameter}" > Rear ${rearDiameter}"`);
+    return false; // Filter out this invalid fitment
+  }
+  return true; // Valid fitment
+}
+
 // Available front size+offset combinations for staggered fitment
 const availableFrontSizeOffsets = computed(() => {
   if (!seriesProducts.value.length || !selectedFinish.value || !selectedVehicle.value) return [];
@@ -171,7 +184,7 @@ const availableFrontSizeOffsets = computed(() => {
   // For Fitments/OptionalFitments: Has RimDiameter (front) and RimDiameterRear (rear) fields
   // Create synthetic fitments for front from Fitments array
   const frontStandard = selectedVehicle.value.Fitments
-    .filter(f => f.RimDiameter !== null)
+    .filter(f => f.RimDiameter !== null && isValidFitment(f))
     .map(f => ({
       ...f,
       RimDiameter: f.RimDiameter,
@@ -185,7 +198,7 @@ const availableFrontSizeOffsets = computed(() => {
     }));
 
   const frontOptional = selectedVehicle.value.OptionalFitments
-    .filter(f => f.RimDiameter !== null)
+    .filter(f => f.RimDiameter !== null && isValidFitment(f))
     .map(f => ({
       ...f,
       RimDiameter: f.RimDiameter,
@@ -248,7 +261,7 @@ const availableRearSizeOffsets = computed(() => {
   // For Fitments/OptionalFitments: Has RimDiameter (front) and RimDiameterRear (rear) fields
   // Create synthetic fitments for rear from Fitments array
   const rearStandard = selectedVehicle.value.Fitments
-    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined)
+    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined && isValidFitment(f))
     .map(f => ({
       ...f,
       RimDiameter: (f as any).RimDiameterRear,
@@ -262,7 +275,7 @@ const availableRearSizeOffsets = computed(() => {
     }));
 
   const rearOptional = selectedVehicle.value.OptionalFitments
-    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined)
+    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined && isValidFitment(f))
     .map(f => ({
       ...f,
       RimDiameter: (f as any).RimDiameterRear,
@@ -308,7 +321,32 @@ const availableRearSizeOffsets = computed(() => {
     }
   });
 
-  return Array.from(sizeOffsets).sort();
+  // Extract selected front diameter if available
+  let selectedFrontDiameter = 0;
+  if (selectedFrontSizeOffset.value) {
+    const match = selectedFrontSizeOffset.value.match(/(\d+\.?\d*)"/);
+    if (match) {
+      selectedFrontDiameter = parseFloat(match[1]);
+    }
+  }
+
+  // Filter out rear sizes that are smaller than the selected front size
+  const filteredSizes = Array.from(sizeOffsets).filter(rearSize => {
+    const match = rearSize.match(/(\d+\.?\d*)"/);
+    if (!match) return true; // Keep if we can't parse
+
+    const rearDiameter = parseFloat(match[1]);
+
+    // If front is selected and rear is smaller, filter it out
+    if (selectedFrontDiameter > 0 && rearDiameter < selectedFrontDiameter) {
+      console.warn(`⚠️ Filtered out invalid rear option: ${rearSize} (smaller than selected front ${selectedFrontDiameter}")`);
+      return false;
+    }
+
+    return true;
+  });
+
+  return filteredSizes.sort();
 });
 
 const currentImages = computed(() => {

@@ -190,7 +190,18 @@ const productsBySeries = computed(() => {
             rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
           }
         });
-        rearSizes = Array.from(rearSizeSet).sort();
+
+        // Filter out invalid rear sizes (where rear diameter < minimum front diameter)
+        const minFrontDiameter = frontSizes.length > 0
+          ? Math.min(...frontSizes.map(s => parseFloat(s.match(/(\d+\.?\d*)"/)?.[1] || '0')))
+          : 0;
+
+        rearSizes = Array.from(rearSizeSet)
+          .filter(rearSize => {
+            const rearDiameter = parseFloat(rearSize.match(/(\d+\.?\d*)"/)?.[1] || '0');
+            return rearDiameter >= minFrontDiameter;
+          })
+          .sort();
       }
 
       return {
@@ -234,7 +245,22 @@ const productsBySeries = computed(() => {
                 rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
               }
             });
-            finishRearSizes = Array.from(rearSizeSet).sort();
+
+            // Filter out invalid rear sizes (where rear diameter < minimum front diameter)
+            const minFrontDiameter = finishFrontSizes.length > 0
+              ? Math.min(...finishFrontSizes.map(s => parseFloat(s.match(/(\d+\.?\d*)"/)?.[1] || '0')))
+              : 0;
+
+            finishRearSizes = Array.from(rearSizeSet)
+              .filter(rearSize => {
+                const rearDiameter = parseFloat(rearSize.match(/(\d+\.?\d*)"/)?.[1] || '0');
+                const isValid = rearDiameter >= minFrontDiameter;
+                if (!isValid) {
+                  console.warn(`⚠️ Filtered out invalid rear size: ${rearSize} (smaller than min front ${minFrontDiameter}")`);
+                }
+                return isValid;
+              })
+              .sort();
           }
 
           return {

@@ -212,19 +212,25 @@ async function fetchVehicle(vehicleOpt: VehicleOption) {
         // Find a vehicle that matches the submodel (flexible matching)
         const targetSubmodel = vehicleOpt.submodel.toLowerCase().replace(/[-\s]/g, '');
 
-        foundVehicle = data.Vehicles.find((v: Vehicle) => {
-          if (!v.Submodel) return false;
-          const vehicleSubmodel = v.Submodel.toLowerCase().replace(/[-\s]/g, '');
-          const isMatch = vehicleSubmodel === targetSubmodel ||
-                 vehicleSubmodel.includes(targetSubmodel) ||
-                 targetSubmodel.includes(vehicleSubmodel);
+        // Special handling for Base Model - accept the first vehicle (usually Coupe)
+        if (vehicleOpt.label === 'Base Model') {
+          foundVehicle = data.Vehicles[0];
+          console.log(`✓ Base Model - using first vehicle:`, foundVehicle?.Submodel);
+        } else {
+          foundVehicle = data.Vehicles.find((v: Vehicle) => {
+            if (!v.Submodel) return false;
+            const vehicleSubmodel = v.Submodel.toLowerCase().replace(/[-\s]/g, '');
+            const isMatch = vehicleSubmodel === targetSubmodel ||
+                   vehicleSubmodel.includes(targetSubmodel) ||
+                   targetSubmodel.includes(vehicleSubmodel);
 
-          if (isMatch) {
-            console.log(`✓ Match found:`, v.Submodel, 'matches', vehicleOpt.submodel);
-          }
+            if (isMatch) {
+              console.log(`✓ Match found:`, v.Submodel, 'matches', vehicleOpt.submodel);
+            }
 
-          return isMatch;
-        });
+            return isMatch;
+          });
+        }
 
         if (foundVehicle) break;
       }
