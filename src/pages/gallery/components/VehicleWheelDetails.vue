@@ -52,7 +52,9 @@ const sizingDetails = computed(() => {
     const frontSize = frontWheel.value?.Diameter && frontWheel.value?.Width
       ? `${frontWheel.value.Diameter}" x ${frontWheel.value.Width}"`
       : props.vehicleWheelSizeF;
-    const frontOffset = frontWheel.value?.Offset?.toString() + 'mm' || props.vehicleOffesetF;
+    const frontOffset = frontWheel.value?.Offset !== undefined && frontWheel.value?.Offset !== null
+      ? `${frontWheel.value.Offset}mm`
+      : props.vehicleOffesetF;
     if (frontSize && frontOffset) {
       details.push(`Front: ${frontSize} / Offset ${frontOffset}`);
     }
@@ -62,7 +64,9 @@ const sizingDetails = computed(() => {
     const rearSize = rearWheel.value?.Diameter && rearWheel.value?.Width
       ? `${rearWheel.value.Diameter}" x ${rearWheel.value.Width}"`
       : props.vehicleWheelSizeRear;
-    const rearOffset = rearWheel.value?.Offset?.toString() + 'mm' || props.vehicleOffsetR;
+    const rearOffset = rearWheel.value?.Offset !== undefined && rearWheel.value?.Offset !== null
+      ? `${rearWheel.value.Offset}mm`
+      : props.vehicleOffsetR;
     if (rearSize && rearOffset) {
       details.push(`Rear: ${rearSize} / Offset ${rearOffset}`);
     }
