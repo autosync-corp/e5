@@ -52,7 +52,7 @@ const GENERATION_MAP: Generation[] = [
   {
     label: 'C6',
     options: [
-      { label: 'Base Model', yearRange: { start: 2005, end: 2013 }, preferredYear: 2009, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
+      { label: 'Base', yearRange: { start: 2005, end: 2013 }, preferredYear: 2009, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
       { label: 'Grand Sport', yearRange: { start: 2010, end: 2013 }, preferredYear: 2011, make: 'Chevrolet', model: 'Corvette', submodel: 'Grand Sport' },
       { label: 'Z06', yearRange: { start: 2006, end: 2013 }, preferredYear: 2009, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
       { label: 'ZR1', yearRange: { start: 2009, end: 2013 }, preferredYear: 2011, make: 'Chevrolet', model: 'Corvette', submodel: 'ZR1' },
@@ -61,7 +61,7 @@ const GENERATION_MAP: Generation[] = [
   {
     label: 'C5',
     options: [
-      { label: 'Base Model', yearRange: { start: 1997, end: 2004 }, preferredYear: 2001, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
+      { label: 'Base', yearRange: { start: 1997, end: 2004 }, preferredYear: 2001, make: 'Chevrolet', model: 'Corvette', submodel: 'Coupe' },
       { label: 'Z06', yearRange: { start: 2001, end: 2004 }, preferredYear: 2002, make: 'Chevrolet', model: 'Corvette', submodel: 'Z06' },
     ]
   }
@@ -212,10 +212,10 @@ async function fetchVehicle(vehicleOpt: VehicleOption) {
         // Find a vehicle that matches the submodel (flexible matching)
         const targetSubmodel = vehicleOpt.submodel.toLowerCase().replace(/[-\s]/g, '');
 
-        // Special handling for Base Model - accept the first vehicle (usually Coupe)
-        if (vehicleOpt.label === 'Base Model') {
+        // Special handling for Base - accept the first vehicle (usually Coupe)
+        if (vehicleOpt.label === 'Base') {
           foundVehicle = data.Vehicles[0];
-          console.log(`✓ Base Model - using first vehicle:`, foundVehicle?.Submodel);
+          console.log(`✓ Base - using first vehicle:`, foundVehicle?.Submodel);
         } else {
           foundVehicle = data.Vehicles.find((v: Vehicle) => {
             if (!v.Submodel) return false;

@@ -20,13 +20,15 @@ const getProductIdFromUrl = (): number | undefined => {
 };
 
 const getUrlParams = () => {
-  if (typeof window === 'undefined') return { series: null, finish: null, generation: null, trim: null };
+  if (typeof window === 'undefined') return { series: null, finish: null, generation: null, trim: null, frontSize: null, rearSize: null };
   const params = new URLSearchParams(window.location.search);
   return {
     series: params.get('series'),
     finish: params.get('finish'),
     generation: params.get('generation'),
-    trim: params.get('trim')
+    trim: params.get('trim'),
+    frontSize: params.get('frontSize'),
+    rearSize: params.get('rearSize')
   };
 };
 
@@ -50,10 +52,51 @@ const error = ref<string | null>(null);
 const selectedVehicle = ref<Vehicle | null>(null);
 const vehicleDisplayFormat = ref<string | null>(null);
 
-// Extract URL params for generation and trim
+// Extract URL params for generation, trim, and sizes
 const urlParams = getUrlParams();
 const initialGeneration = ref(urlParams.generation);
 const initialTrim = ref(urlParams.trim);
+const initialFrontSize = ref(urlParams.frontSize);
+const initialRearSize = ref(urlParams.rearSize);
+
+// Helper function to check if a size matches with width and offset tolerance
+// Width: Allows up to 0.5" narrower than target, but not wider
+// Offset: Allows ±3mm tolerance
+const matchesSizeWithTolerance = (targetSize: string, availableSize: string): boolean => {
+  // Parse target size (e.g., "19\" x 9\" +35mm")
+  const targetMatch = targetSize.match(/(\d+\.?\d*)"\s*x\s*(\d+\.?\d*)"\s*([-+]\d+)mm/);
+  const availableMatch = availableSize.match(/(\d+\.?\d*)"\s*x\s*(\d+\.?\d*)"\s*([-+]\d+)mm/);
+
+  if (!targetMatch || !availableMatch) return false;
+
+  const targetDiameter = parseFloat(targetMatch[1]);
+  const targetWidth = parseFloat(targetMatch[2]);
+  const targetOffset = parseInt(targetMatch[3]);
+
+  const availableDiameter = parseFloat(availableMatch[1]);
+  const availableWidth = parseFloat(availableMatch[2]);
+  const availableOffset = parseInt(availableMatch[3]);
+
+  // Diameter must match exactly
+  if (targetDiameter !== availableDiameter) {
+    return false;
+  }
+
+  // Width can differ by up to 0.5" in either direction,
+  // but must stay within the same whole number (e.g., 9.x cannot become 10.x or 8.x)
+  // Examples: 9" matches 9" and 9.5", 9.5" matches 9" and 9.5", but not 10" or 8.5"
+  const widthDiff = Math.abs(availableWidth - targetWidth);
+  const targetWholeNumber = Math.floor(targetWidth);
+  const availableWholeNumber = Math.floor(availableWidth);
+
+  if (widthDiff > 0.5 || targetWholeNumber !== availableWholeNumber) {
+    return false;
+  }
+
+  // Offset can be ±3mm
+  const offsetDiff = Math.abs(targetOffset - availableOffset);
+  return offsetDiff <= 3;
+};
 
 // Storage key for localStorage
 const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
@@ -63,17 +106,13 @@ const VEHICLE_DISPLAY_KEY = 'e5-selected-vehicle-display';
 const getFinishName = (product: WheelProduct): string => {
   const parts: string[] = [];
 
-  // 1. Use ShortFinish or Finish first
-  if (product.ShortFinish) {
-    parts.push(product.ShortFinish);
-  } else if (product.Finish) {
+  // 1. Use Finish
+  if (product.Finish) {
     parts.push(product.Finish);
   }
 
-  // 2. Then add ShortColor or Color
-  if (product.ShortColor) {
-    parts.push(product.ShortColor);
-  } else if (product.Color) {
+  // 2. Then add Color
+  if (product.Color) {
     parts.push(product.Color);
   }
 
@@ -533,21 +572,50 @@ async function loadProducts() {
 
         // Check if this is staggered fitment
         if (selectedVehicle.value && hasStaggeredFitment(selectedVehicle.value)) {
-          // For staggered, try to auto-select first available front and rear sizes
-          // We'll let the watchers handle setting the actual products
+          // For staggered, try to auto-select sizes from URL params or first available
           if (availableFrontSizeOffsets.value.length > 0) {
-            // Check if the current product's size is in the available list
-            if (availableFrontSizeOffsets.value.includes(sizeOffsetStr)) {
+            // Priority 1: Check if initialFrontSize is provided (from gallery page)
+            if (initialFrontSize.value) {
+              const matchedSize = availableFrontSizeOffsets.value.find(size =>
+                matchesSizeWithTolerance(initialFrontSize.value!, size)
+              );
+              if (matchedSize) {
+                console.log('✅ Auto-selected front size from URL:', matchedSize);
+                selectedFrontSizeOffset.value = matchedSize;
+              } else {
+                console.log('⚠️ No matching front size found for:', initialFrontSize.value);
+                selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+              }
+            }
+            // Priority 2: Check if the current product's size is in the available list
+            else if (availableFrontSizeOffsets.value.includes(sizeOffsetStr)) {
               selectedFrontSizeOffset.value = sizeOffsetStr;
-            } else {
+            }
+            // Priority 3: Use first available
+            else {
               selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
             }
           }
           if (availableRearSizeOffsets.value.length > 0) {
-            // Check if the current product's size is in the available list
-            if (availableRearSizeOffsets.value.includes(sizeOffsetStr)) {
+            // Priority 1: Check if initialRearSize is provided (from gallery page)
+            if (initialRearSize.value) {
+              const matchedSize = availableRearSizeOffsets.value.find(size =>
+                matchesSizeWithTolerance(initialRearSize.value!, size)
+              );
+              if (matchedSize) {
+                console.log('✅ Auto-selected rear size from URL:', matchedSize);
+                selectedRearSizeOffset.value = matchedSize;
+              } else {
+                console.log('⚠️ No matching rear size found for:', initialRearSize.value);
+                selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+              }
+            }
+            // Priority 2: Check if the current product's size is in the available list
+            else if (availableRearSizeOffsets.value.includes(sizeOffsetStr)) {
               selectedRearSizeOffset.value = sizeOffsetStr;
-            } else {
+            }
+            // Priority 3: Use first available
+            else {
               selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
             }
           }
@@ -667,10 +735,36 @@ watch(selectedFinish, () => {
   } else {
     // For staggered, reset front and rear size+offsets
     if (availableFrontSizeOffsets.value.length > 0 && !availableFrontSizeOffsets.value.includes(selectedFrontSizeOffset.value)) {
-      selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
+      // Check if URL param for front size exists and find matching size with tolerance
+      if (initialFrontSize.value) {
+        const matchingSize = availableFrontSizeOffsets.value.find(size =>
+          matchesSizeWithTolerance(initialFrontSize.value!, size)
+        );
+        if (matchingSize) {
+          selectedFrontSizeOffset.value = matchingSize;
+          initialFrontSize.value = null; // Clear after using once
+        } else {
+          selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
+        }
+      } else {
+        selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
+      }
     }
     if (availableRearSizeOffsets.value.length > 0 && !availableRearSizeOffsets.value.includes(selectedRearSizeOffset.value)) {
-      selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+      // Check if URL param for rear size exists and find matching size with tolerance
+      if (initialRearSize.value) {
+        const matchingSize = availableRearSizeOffsets.value.find(size =>
+          matchesSizeWithTolerance(initialRearSize.value!, size)
+        );
+        if (matchingSize) {
+          selectedRearSizeOffset.value = matchingSize;
+          initialRearSize.value = null; // Clear after using once
+        } else {
+          selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+        }
+      } else {
+        selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+      }
     }
   }
 });
@@ -705,12 +799,42 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
   // Reset size selections when vehicle changes to trigger refitment validation
   if (vehicle) {
     if (hasStaggeredFitment(vehicle)) {
-      // For staggered, reset to first available options
+      // For staggered, check URL params first, then reset to first available options
       if (availableFrontSizeOffsets.value.length > 0) {
-        selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+        // Priority 1: Check if initialFrontSize is provided (from gallery page)
+        if (initialFrontSize.value) {
+          const matchedSize = availableFrontSizeOffsets.value.find(size =>
+            matchesSizeWithTolerance(initialFrontSize.value!, size)
+          );
+          if (matchedSize) {
+            console.log('✅ Auto-selected front size from URL:', matchedSize);
+            selectedFrontSizeOffset.value = matchedSize;
+            // DON'T clear initialFrontSize here - the watcher needs it
+          } else {
+            console.log('⚠️ No matching front size found for:', initialFrontSize.value);
+            selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+          }
+        } else {
+          selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+        }
       }
       if (availableRearSizeOffsets.value.length > 0) {
-        selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+        // Priority 1: Check if initialRearSize is provided (from gallery page)
+        if (initialRearSize.value) {
+          const matchedSize = availableRearSizeOffsets.value.find(size =>
+            matchesSizeWithTolerance(initialRearSize.value!, size)
+          );
+          if (matchedSize) {
+            console.log('✅ Auto-selected rear size from URL:', matchedSize);
+            selectedRearSizeOffset.value = matchedSize;
+            // DON'T clear initialRearSize here - the watcher needs it
+          } else {
+            console.log('⚠️ No matching rear size found for:', initialRearSize.value);
+            selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+          }
+        } else {
+          selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+        }
       }
     } else {
       // For non-staggered, reset to first available option

@@ -106,19 +106,61 @@ const vehicleInfo = computed(() => {
   );
 });
 
-// Generate shop link with series, finish, generation, and trim parameters
+// Map gallery finish names to API finish names
+const mapFinishName = (finishName: string | null | undefined): string | null => {
+  if (!finishName) return null;
+
+  const finishMap: Record<string, string> = {
+    'Titanium Brushed': 'Brushed Silver',
+    'Dark Bronze': 'Bronze'
+  };
+
+  return finishMap[finishName] || finishName;
+};
+
+// Format size and offset for URL parameter (e.g., "19\" x 9\" +35mm")
+const formatSizeOffset = (size: string | null | undefined, offset: string | null | undefined): string | null => {
+  if (!size || !offset) return null;
+
+  // Clean up size (remove extra quotes/spaces)
+  const cleanSize = size.replace(/['"]/g, '"').trim();
+
+  // Clean up offset and add + sign if positive
+  const cleanOffset = offset.replace('mm', '').trim();
+  const offsetNum = parseInt(cleanOffset);
+  const formattedOffset = offsetNum >= 0 ? `+${offsetNum}mm` : `${offsetNum}mm`;
+
+  return `${cleanSize} ${formattedOffset}`;
+};
+
+// Generate shop link with series, finish, generation, trim, and sizes
 const shopRoute = computed(() => {
   if (!props.vehicleWheelStyle || !props.vehicleWheelFinish) return '/shop';
 
+  // Map finish name to API equivalent
+  const mappedFinish = mapFinishName(props.vehicleWheelFinish) || props.vehicleWheelFinish;
+
   const params = new URLSearchParams({
     series: props.vehicleWheelStyle,
-    finish: props.vehicleWheelFinish
+    finish: mappedFinish
   });
 
   // Add generation and trim if available
   if (vehicleInfo.value.generation) {
     params.append('generation', vehicleInfo.value.generation);
     params.append('trim', vehicleInfo.value.trim);
+  }
+
+  // Add front size if available
+  const frontSize = formatSizeOffset(props.vehicleWheelSizeF, props.vehicleOffesetF);
+  if (frontSize) {
+    params.append('frontSize', frontSize);
+  }
+
+  // Add rear size if available
+  const rearSize = formatSizeOffset(props.vehicleWheelSizeRear, props.vehicleOffsetR);
+  if (rearSize) {
+    params.append('rearSize', rearSize);
   }
 
   return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;

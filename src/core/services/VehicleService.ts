@@ -224,28 +224,28 @@ function checkFitmentSize(
     return false;
   }
 
-  // Check width (range or exact)
+  // Check width (range or exact) with ±0.5" tolerance
+  const WIDTH_TOLERANCE = 0.5; // ±0.5" tolerance
+
   if (fitment.RimWidthMin !== null && fitment.RimWidthMin !== undefined &&
       fitment.RimWidthMax !== null && fitment.RimWidthMax !== undefined) {
-    // Width range provided
-    if (wheelWidth < fitment.RimWidthMin || wheelWidth > fitment.RimWidthMax) {
+    // Width range provided - extend range by tolerance
+    const minWidthWithTolerance = fitment.RimWidthMin - WIDTH_TOLERANCE;
+    const maxWidthWithTolerance = fitment.RimWidthMax + WIDTH_TOLERANCE;
+
+    if (wheelWidth < minWidthWithTolerance || wheelWidth > maxWidthWithTolerance) {
       return false;
     }
   } else if (fitment.RimWidth !== null && fitment.RimWidth !== undefined) {
-    // Exact width provided
-    if (wheelWidth !== fitment.RimWidth) {
+    // Exact width provided - check with tolerance
+    const widthDiff = Math.abs(wheelWidth - fitment.RimWidth);
+    if (widthDiff > WIDTH_TOLERANCE) {
       return false;
     }
   }
 
-  // Offset check is OPTIONAL - we don't validate offset even if range is provided
+  // Offset check is OPTIONAL - we don't validate offset
   // This allows wheels with any offset to fit as long as diameter and width match
-  // if (fitment.MinOffset !== null && fitment.MaxOffset !== null) {
-  //   if (wheelOffset < fitment.MinOffset || wheelOffset > fitment.MaxOffset) {
-  //     return false;
-  //   }
-  // }
-
   wheelOffset;
 
   return true;
