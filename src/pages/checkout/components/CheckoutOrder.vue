@@ -20,6 +20,7 @@ const cardExpiryError = ref('');
 const cardCvcError = ref('');
 const cardBrand = ref('');
 const selectedVehicle = ref<Vehicle | null>(null);
+const vehicleDisplay = ref<string>('');
 const selectedPaymentMethod = ref<'card' | 'affirm'>('card');
 
 // Stripe state
@@ -50,13 +51,20 @@ function loadCart() {
 
 function loadVehicle() {
   const VEHICLE_STORAGE_KEY = 'e5-selected-vehicle';
+  const VEHICLE_DISPLAY_KEY = 'e5-selected-vehicle-display';
   const savedVehicle = localStorage.getItem(VEHICLE_STORAGE_KEY);
+  const savedDisplay = localStorage.getItem(VEHICLE_DISPLAY_KEY);
+
   if (savedVehicle) {
     try {
       selectedVehicle.value = JSON.parse(savedVehicle);
     } catch (error) {
       console.error('Error loading saved vehicle:', error);
     }
+  }
+
+  if (savedDisplay) {
+    vehicleDisplay.value = savedDisplay;
   }
 }
 
@@ -246,6 +254,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
         model: selectedVehicle.value.Model,
         trim: selectedVehicle.value.Submodel,
         fullName: `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model} ${selectedVehicle.value.Submodel}`,
+        displayName: vehicleDisplay.value || `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model} ${selectedVehicle.value.Submodel}`,
       } : null,
 
       // Customer Information (Billing)
@@ -487,6 +496,7 @@ async function handleAffirmPayment() {
       cartItems: cartItems.value,
       customerData: customerData,
       vehicle: selectedVehicle.value,
+      vehicleDisplay: vehicleDisplay.value,
       totals: {
         subtotal: cartTotals.value.subtotal,
         tax: cartTotals.value.tax,
@@ -544,7 +554,7 @@ async function handleAffirmPayment() {
         item_url: `${window.location.origin}/wheels/${item.product.Model.toLowerCase()}`,
       })),
       metadata: {
-        vehicle: selectedVehicle.value ? `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model}` : '',
+        vehicle: vehicleDisplay.value || (selectedVehicle.value ? `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model}` : ''),
       },
       order_id: `ORDER-${Date.now()}`,
       shipping_amount: 0,

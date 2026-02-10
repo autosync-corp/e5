@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.log('Send order webhook API endpoint called');
 
     const body = await request.json();
-    const { chargeId, paymentMethod, cartItems, customerData, vehicle, totals } = body;
+    const { chargeId, paymentMethod, cartItems, customerData, vehicle, vehicleDisplay, totals } = body;
 
     console.log('Received data:', { chargeId, paymentMethod, cartItems: cartItems?.length });
 
@@ -46,6 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
         model: vehicle.Model,
         trim: vehicle.Submodel,
         fullName: `${vehicle.Year} ${vehicle.Make} ${vehicle.Model} ${vehicle.Submodel}`,
+        displayName: vehicleDisplay || vehicle.displayName || `${vehicle.Year} ${vehicle.Make} ${vehicle.Model} ${vehicle.Submodel}`,
       } : null,
 
       // Customer Information
