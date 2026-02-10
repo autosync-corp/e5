@@ -1,0 +1,135 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="Adding to Cart...">
+    <div class="container-e5 py-20">
+        <div class="max-w-[600px] mx-auto text-center">
+            <h1 class="text-e5-red text-[36px] font-['Franklin_Gothic_Book'] tracking-[7.2px] uppercase mb-8">
+                ADDING TO CART
+            </h1>
+            <div class="mb-8">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-e5-red mx-auto"></div>
+            </div>
+            <p id="status-message" class="text-lg">Processing your selection...</p>
+        </div>
+    </div>
+
+    <script>
+        import { CartManager } from '@/core/services/ProductService';
+
+        const API_BASE_URL = 'https://api.wheel-pros.com/products';
+        const API_KEY = 'efive';
+
+        async function processVisualizerData() {
+            try {
+                const statusEl = document.getElementById('status-message');
+
+                // Get query parameters from visualizer
+                const urlParams = new URLSearchParams(window.location.search);
+
+                const wheelPartNumber = urlParams.get('wheelPartNumber');
+                const wheelQuantity = parseInt(urlParams.get('wheelQuantity') || '4');
+                const vehicleYear = urlParams.get('year');
+                const vehicleMake = urlParams.get('make');
+                const vehicleModel = urlParams.get('model');
+                const vehicleTrim = urlParams.get('trim') || urlParams.get('submodel');
+
+                console.log('Visualizer callback received:', {
+                    wheelPartNumber,
+                    wheelQuantity,
+                    vehicle: { vehicleYear, vehicleMake, vehicleModel, vehicleTrim }
+                });
+
+                if (!wheelPartNumber) {
+                    console.error('No wheel part number found');
+                    if (statusEl) statusEl.textContent = 'No wheel data received. Redirecting to shop...';
+                    setTimeout(() => window.location.href = '/shop', 2000);
+                    return;
+                }
+
+                if (statusEl) statusEl.textContent = 'Fetching wheel data...';
+
+                // Fetch wheel product from API
+                const apiUrl = `${API_BASE_URL}?pn=${encodeURIComponent(wheelPartNumber)}&key=${API_KEY}`;
+                console.log('Fetching wheel from API:', apiUrl);
+
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch wheel data: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.Products || data.Products.length === 0) {
+                    throw new Error(`No product found for part number: ${wheelPartNumber}`);
+                }
+
+                const product = data.Products[0];
+
+                if (statusEl) statusEl.textContent = 'Adding to cart...';
+
+                // Add to cart
+                // Assuming wheelQuantity is total number of wheels (e.g., 4 = 2 front + 2 rear)
+                const frontWheels = Math.ceil(wheelQuantity / 2);
+                const rearWheels = Math.floor(wheelQuantity / 2);
+
+                CartManager.addItem({
+                    product: product,
+                    quantity: wheelQuantity,
+                    frontWheels: frontWheels,
+                    rearWheels: rearWheels,
+                    vehicleModel: vehicleModel || undefined,
+                    imgUrlBase: data.ImgUrlBase || undefined
+                });
+
+                console.log(`✅ Added wheel to cart: ${wheelPartNumber} (qty: ${wheelQuantity})`);
+
+                // Save vehicle data to localStorage if provided
+                if (vehicleYear && vehicleMake && vehicleModel) {
+                    const vehicleData = {
+                        Year: parseInt(vehicleYear),
+                        Make: vehicleMake,
+                        Model: vehicleModel,
+                        Submodel: vehicleTrim || ''
+                    };
+
+                    localStorage.setItem('e5-selected-vehicle', JSON.stringify(vehicleData));
+
+                    // Also save display format
+                    const generation = getGenerationFromYear(parseInt(vehicleYear));
+                    if (generation && vehicleTrim) {
+                        localStorage.setItem('e5-selected-vehicle-display', `${generation} ${vehicleTrim}`);
+                    }
+
+                    console.log('✅ Saved vehicle data:', vehicleData);
+                }
+
+                if (statusEl) statusEl.textContent = 'Success! Redirecting to cart...';
+
+                // Redirect to cart
+                setTimeout(() => {
+                    window.location.href = '/cart';
+                }, 1000);
+
+            } catch (error) {
+                console.error('Error processing visualizer data:', error);
+                const statusEl = document.getElementById('status-message');
+                if (statusEl) statusEl.textContent = 'Error adding to cart. Redirecting to shop...';
+                setTimeout(() => window.location.href = '/shop', 2000);
+            }
+        }
+
+        function getGenerationFromYear(year: number): string | null {
+            if (year >= 2020) return 'C8';
+            if (year >= 2014) return 'C7';
+            if (year >= 2005) return 'C6';
+            if (year >= 1997) return 'C5';
+            return null;
+        }
+
+        // Run on page load
+        processVisualizerData();
+    </script>
+</MainLayout>
