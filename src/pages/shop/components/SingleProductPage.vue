@@ -539,8 +539,14 @@ async function loadProducts() {
     if (response.Wheels.length > 0) {
       // Select product based on URL parameters (series + finish) or productId
       if (urlParams.series && urlParams.finish) {
+        // Normalize finish name from URL (map generation page names to API names)
+        let normalizedFinish = urlParams.finish;
+        if (normalizedFinish.toLowerCase().includes('titanium brushed tint')) {
+          normalizedFinish = 'Titanium Brushed';
+        }
+
         // Find product matching the series (Model) and finish
-        const finishParam = (urlParams.finish || '').toLowerCase();
+        const finishParam = (normalizedFinish || '').toLowerCase();
         const foundProduct = response.Wheels.find(w => {
           const matchesSeries = w.Model && w.Model.toLowerCase() === urlParams.series?.toLowerCase();
           const finishName = getFinishName(w).toLowerCase();
