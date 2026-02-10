@@ -18,7 +18,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
     <script>
         import { CartManager } from '@/core/services/ProductService';
 
-        const API_BASE_URL = 'https://api.wheel-pros.com/products';
+        const API_BASE_URL = 'https://api.autosyncstudio.com/wheels';
         const API_KEY = 'efive';
 
         async function processVisualizerData() {
@@ -74,25 +74,46 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
                     console.log(`Processing wheel ${i + 1}/${wheels.length}:`, wheelPartNumber, 'Qty:', wheelQuantity);
 
-                    // Fetch wheel product from API
-                    const apiUrl = `${API_BASE_URL}?pn=${encodeURIComponent(wheelPartNumber)}&key=${API_KEY}`;
-                    console.log('Fetching wheel from API:', apiUrl);
+                    // Fetch wheels from API (autosyncstudio format)
+                    const params = new URLSearchParams({
+                        key: API_KEY,
+                        'p-number': '1',
+                        'p-size': '100',
+                        'i-img0001': 'true',
+                        'i-img0002': 'true',
+                        'i-img0003': 'true',
+                        'i-inStock': 'true',
+                        'i-inventory': 'true',
+                        'i-price': 'true',
+                        'i-specs': 'true',
+                        'i-tags': 'true',
+                        'i-updatedAt': 'true',
+                    });
+
+                    const apiUrl = `${API_BASE_URL}?${params.toString()}`;
+                    console.log('Fetching wheels from API:', apiUrl);
 
                     const response = await fetch(apiUrl);
 
                     if (!response.ok) {
-                        console.error(`Failed to fetch wheel ${wheelPartNumber}:`, response.status);
+                        console.error(`Failed to fetch wheels:`, response.status);
                         continue;
                     }
 
                     const data = await response.json();
 
-                    if (!data.Products || data.Products.length === 0) {
-                        console.error(`No product found for part number: ${wheelPartNumber}`);
+                    if (!data.Wheels || data.Wheels.length === 0) {
+                        console.error(`No wheels found in API response`);
                         continue;
                     }
 
-                    const product = data.Products[0];
+                    // Find the wheel by part number
+                    const product = data.Wheels.find((w: any) => w.Pn === wheelPartNumber);
+
+                    if (!product) {
+                        console.error(`No wheel found with part number: ${wheelPartNumber}`);
+                        continue;
+                    }
 
                     if (statusEl) statusEl.textContent = `Adding wheel ${i + 1}/${wheels.length} to cart...`;
 
@@ -101,43 +122,52 @@ import MainLayout from '@/layouts/MainLayout.astro';
                     const isFront = i === 0;
                     const isRear = i === 1;
 
+                    // Construct proper vehicle display format (e.g., "C8 Stingray")
+                    let vehicleDisplayName;
+                    if (vehicleYear && vehicleMake && vehicleModel) {
+                        const year = parseInt(vehicleYear);
+                        let generation = '';
+                        if (year >= 2020) generation = 'C8';
+                        else if (year >= 2014) generation = 'C7';
+                        else if (year >= 2005) generation = 'C6';
+                        else if (year >= 1997) generation = 'C5';
+
+                        vehicleDisplayName = generation && vehicleTrim ? `${generation} ${vehicleTrim}` : undefined;
+                    }
+
                     CartManager.addItem({
                         product: product,
                         quantity: wheelQuantity,
                         frontWheels: isFront ? wheelQuantity : 0,
                         rearWheels: isRear ? wheelQuantity : 0,
-                        vehicleModel: vehicleModel || undefined,
+                        vehicleModel: vehicleDisplayName,
                         imgUrlBase: data.ImgUrlBase || undefined
                     });
 
                     console.log(`✅ Added wheel ${i + 1} to cart: ${wheelPartNumber} (qty: ${wheelQuantity}, ${isFront ? 'front' : isRear ? 'rear' : 'unknown'})`);
                 }
 
-                // Save vehicle data to localStorage if provided
+                // Save display format to localStorage for cart/checkout display
+                // (We don't save full vehicle data to avoid breaking shop fitment)
                 if (vehicleYear && vehicleMake && vehicleModel) {
-                    const vehicleData = {
-                        Year: parseInt(vehicleYear),
-                        Make: vehicleMake,
-                        Model: vehicleModel,
-                        Submodel: vehicleTrim || ''
-                    };
+                    const year = parseInt(vehicleYear);
+                    let generation = '';
+                    if (year >= 2020) generation = 'C8';
+                    else if (year >= 2014) generation = 'C7';
+                    else if (year >= 2005) generation = 'C6';
+                    else if (year >= 1997) generation = 'C5';
 
-                    localStorage.setItem('e5-selected-vehicle', JSON.stringify(vehicleData));
-
-                    // Also save display format
-                    const generation = getGenerationFromYear(parseInt(vehicleYear));
                     if (generation && vehicleTrim) {
                         localStorage.setItem('e5-selected-vehicle-display', `${generation} ${vehicleTrim}`);
+                        console.log('✅ Saved vehicle display format:', `${generation} ${vehicleTrim}`);
                     }
-
-                    console.log('✅ Saved vehicle data:', vehicleData);
                 }
 
                 if (statusEl) statusEl.textContent = 'Success! Redirecting to cart...';
 
                 // Redirect to cart
                 setTimeout(() => {
-                    window.location.href = '/cart';
+                    window.location.href = '/checkout/cart';
                 }, 1000);
 
             } catch (error) {
@@ -146,14 +176,6 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 if (statusEl) statusEl.textContent = 'Error adding to cart. Redirecting to shop...';
                 setTimeout(() => window.location.href = '/shop', 2000);
             }
-        }
-
-        function getGenerationFromYear(year: number): string | null {
-            if (year >= 2020) return 'C8';
-            if (year >= 2014) return 'C7';
-            if (year >= 2005) return 'C6';
-            if (year >= 1997) return 'C5';
-            return null;
         }
 
         // Run on page load

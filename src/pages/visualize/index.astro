@@ -95,125 +95,97 @@ import MainLayout from '@/layouts/MainLayout.astro';
 <MainLayout title="E5 Wheels - Configure">
     <div id="autosync-visualizer"></div>
     <script is:inline src="https://vvs.autosyncstudio.com/js/Autosync.js"></script>
-    <script is:inline>
-(function() {
-    'use strict';
+    <script>
+        // @ts-nocheck
+        import { CartManager } from '@/core/services/ProductService';
 
-    if (window.e5AutosyncInitialized) {
-        console.log('E5 Autosync already initialized');
-        return;
-    }
+        const API_BASE_URL = 'https://api.autosyncstudio.com/wheels';
+        const API_KEY = 'efive';
 
-    let bodyScrollPosition = 0;
-
-    function preventBodyScroll() {
-        if (/(iPhone|iPad)/i.test(navigator.userAgent)) {
-            bodyScrollPosition = window.pageYOffset;
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${bodyScrollPosition}px`;
-            document.body.style.width = '100%';
-        }
-    }
-
-    function restoreBodyScroll() {
-        if (/(iPhone|iPad)/i.test(navigator.userAgent)) {
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
-            window.scrollTo(0, bodyScrollPosition);
-        }
-    }
-
-    function showMessage(message, type = 'loading', duration = 0) {
-        const existingOverlay = document.querySelector('.autosync-loading-overlay');
-        if (existingOverlay) {
-            existingOverlay.remove();
-        }
-
-        preventBodyScroll();
-
-        const overlay = document.createElement('div');
-        overlay.className = 'autosync-loading-overlay';
-
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `autosync-loading-message ${type === 'success' ? 'autosync-success' : type === 'error' ? 'autosync-error' : ''}`;
-
-        if (type === 'loading') {
-            message += '<span class="autosync-spinner"></span>';
-        }
-
-        messageDiv.innerHTML = message;
-        overlay.appendChild(messageDiv);
-        document.body.appendChild(overlay);
-
-        if (duration > 0) {
-            setTimeout(() => {
-                if (overlay && overlay.parentNode) {
-                    restoreBodyScroll();
-                    overlay.remove();
-                }
-            }, duration);
-        }
-
-        return overlay;
-    }
-
-    function startCountdown(seconds = 2) {
-        const countdownElement = document.getElementById('countdown-number');
-        if (!countdownElement) return;
-
-        let remaining = seconds;
-        const timer = setInterval(() => {
-            remaining--;
-            countdownElement.textContent = remaining;
-
-            if (remaining <= 0) {
-                clearInterval(timer);
+        // Extend window type
+        declare global {
+            interface Window {
+                e5AutosyncInitialized?: boolean;
+                Autosync: any;
             }
-        }, 1000);
-    }
+        }
 
-    function initAutosync() {
-        try {
-            const autosync = new Autosync({
-                id: 'autosync-visualizer',
-                key: 'efive',
-                scrollBar: false,
-                productSegment: null,
-                homeStyle: null,
-                widget: false,
-                startPage: 'vehicles',
-                disableQuoteForm: true,
-                onEvent: ({ event, data }) => {
-                    console.log('Autosync Event:', event, data);
+        if ((window as any).e5AutosyncInitialized) {
+            console.log('E5 Autosync already initialized');
+        } else {
+            let bodyScrollPosition = 0;
 
-                    if (event === 'addToCart' ||
-                        event === 'buyNow' ||
-                        event === 'btnBuyClick' ||
-                        event === 'cartAdd' ||
-                        event === 'addCart' ||
-                        event === 'buyButton' ||
-                        event === 'purchase' ||
-                        event.toLowerCase().includes('buy') ||
-                        event.toLowerCase().includes('cart') ||
-                        event.toLowerCase().includes('add')) {
-                        console.log('Buy event detected:', event);
-                        handleCartRedirect(data);
-                        return;
-                    }
-
-                    if (event === 'submitQuote') {
-                        console.log('Submit quote event:', event);
-                        handleCartRedirect(data);
-                    }
+            function preventBodyScroll() {
+                if (/(iPhone|iPad)/i.test(navigator.userAgent)) {
+                    bodyScrollPosition = window.pageYOffset;
+                    document.body.style.position = 'fixed';
+                    document.body.style.top = `-${bodyScrollPosition}px`;
+                    document.body.style.width = '100%';
                 }
-            });
+            }
 
-            function handleCartRedirect(data) {
+            function restoreBodyScroll() {
+                if (/(iPhone|iPad)/i.test(navigator.userAgent)) {
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.width = '';
+                    window.scrollTo(0, bodyScrollPosition);
+                }
+            }
+
+            function showMessage(message: string, type: string = 'loading', duration: number = 0) {
+                const existingOverlay = document.querySelector('.autosync-loading-overlay');
+                if (existingOverlay) {
+                    existingOverlay.remove();
+                }
+
+                preventBodyScroll();
+
+                const overlay = document.createElement('div');
+                overlay.className = 'autosync-loading-overlay';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `autosync-loading-message ${type === 'success' ? 'autosync-success' : type === 'error' ? 'autosync-error' : ''}`;
+
+                if (type === 'loading') {
+                    message += '<span class="autosync-spinner"></span>';
+                }
+
+                messageDiv.innerHTML = message;
+                overlay.appendChild(messageDiv);
+                document.body.appendChild(overlay);
+
+                if (duration > 0) {
+                    setTimeout(() => {
+                        if (overlay && overlay.parentNode) {
+                            restoreBodyScroll();
+                            overlay.remove();
+                        }
+                    }, duration);
+                }
+
+                return overlay;
+            }
+
+            function startCountdown(seconds: number = 2) {
+                const countdownElement = document.getElementById('countdown-number');
+                if (!countdownElement) return;
+
+                let remaining = seconds;
+                const timer = setInterval(() => {
+                    remaining--;
+                    countdownElement.textContent = String(remaining);
+
+                    if (remaining <= 0) {
+                        clearInterval(timer);
+                    }
+                }, 1000);
+            }
+
+           async function handleCartRedirect(data: any) {
                 console.log('handleCartRedirect called with data:', data);
 
                 const wheels = data.wheels || [];
-                const tires = data.tires || [];
                 const vehicle = data.vehicle || {};
 
                 console.log('Wheels array:', wheels);
@@ -228,67 +200,190 @@ import MainLayout from '@/layouts/MainLayout.astro';
                     navigator.vibrate(50);
                 }
 
-                showMessage('Adding Items to Cart...');
+                showMessage('Fetching wheel data...');
 
-                // Build redirect URL with query parameters
-                // Support multiple wheels for staggered fitment
-                let redirectUrl = '/visualizer-callback?';
+                try {
+                    // Fetch and add each wheel to cart directly
+                    for (let i = 0; i < wheels.length; i++) {
+                        const wheel = wheels[i];
+                        const wheelPartNumber = wheel.partNumber || "";
+                        const wheelQuantity = wheel.quantity || 2;
 
-                // Add all wheels
-                wheels.forEach((wheel, index) => {
-                    const partNumber = wheel.partNumber || "";
-                    const quantity = wheel.quantity || 2;
-                    if (partNumber) {
-                        redirectUrl += `wheelPartNumber${index + 1}=${encodeURIComponent(partNumber)}`;
-                        redirectUrl += `&wheelQuantity${index + 1}=${encodeURIComponent(quantity)}`;
-                        if (index < wheels.length - 1) redirectUrl += '&';
-                        console.log(`Wheel ${index + 1}:`, partNumber, 'Qty:', quantity);
+                        console.log(`Processing wheel ${i + 1}/${wheels.length}:`, wheelPartNumber, 'Qty:', wheelQuantity);
+
+                        // Fetch wheels from API (autosyncstudio format)
+                        const params = new URLSearchParams({
+                            key: API_KEY,
+                            'p-number': '1',
+                            'p-size': '100',
+                            'i-img0001': 'true',
+                            'i-img0002': 'true',
+                            'i-img0003': 'true',
+                            'i-inStock': 'true',
+                            'i-inventory': 'true',
+                            'i-price': 'true',
+                            'i-specs': 'true',
+                            'i-tags': 'true',
+                            'i-updatedAt': 'true',
+                        });
+
+                        const apiUrl = `${API_BASE_URL}?${params.toString()}`;
+                        console.log('Fetching wheels from API:', apiUrl);
+
+                        const response = await fetch(apiUrl);
+
+                        if (!response.ok) {
+                            console.error(`Failed to fetch wheels:`, response.status);
+                            continue;
+                        }
+
+                        const apiData = await response.json();
+
+                        if (!apiData.Wheels || apiData.Wheels.length === 0) {
+                            console.error(`No wheels found in API response`);
+                            continue;
+                        }
+
+                        // Find the wheel by part number
+                        const product = apiData.Wheels.find((w: any) => w.Pn === wheelPartNumber);
+
+                        if (!product) {
+                            console.error(`No wheel found with part number: ${wheelPartNumber}`);
+                            continue;
+                        }
+
+                        showMessage(`Adding wheel ${i + 1}/${wheels.length} to cart...`);
+
+                        // Determine if this is front or rear based on index
+                        const isFront = i === 0;
+                        const isRear = i === 1;
+
+                        // Construct proper vehicle display format (e.g., "C8 Stingray")
+                        console.log('🚗 Vehicle data from visualizer:', vehicle);
+                        let vehicleDisplayName;
+                        if (vehicle.year && vehicle.make && vehicle.model) {
+                            const year = parseInt(vehicle.year);
+                            let generation = '';
+                            if (year >= 2020) generation = 'C8';
+                            else if (year >= 2014) generation = 'C7';
+                            else if (year >= 2005) generation = 'C6';
+                            else if (year >= 1997) generation = 'C5';
+
+                            const trim = vehicle.trim || vehicle.submodel || '';
+                            console.log('🏷️  Generation:', generation, 'Trim:', trim);
+                            vehicleDisplayName = generation && trim ? `${generation} ${trim}` : undefined;
+                            console.log('📝 Final vehicleDisplayName:', vehicleDisplayName);
+                        }
+
+                        CartManager.addItem({
+                            product: product,
+                            quantity: wheelQuantity,
+                            frontWheels: isFront ? wheelQuantity : 0,
+                            rearWheels: isRear ? wheelQuantity : 0,
+                            vehicleModel: vehicleDisplayName,
+                            imgUrlBase: apiData.ImgUrlBase || undefined
+                        });
+
+                        console.log(`✅ Added wheel ${i + 1} to cart: ${wheelPartNumber} (qty: ${wheelQuantity}, ${isFront ? 'front' : isRear ? 'rear' : 'unknown'})`);
                     }
-                });
 
-                // Add vehicle data if available
-                if (vehicle.year) redirectUrl += `&year=${encodeURIComponent(vehicle.year)}`;
-                if (vehicle.make) redirectUrl += `&make=${encodeURIComponent(vehicle.make)}`;
-                if (vehicle.model) redirectUrl += `&model=${encodeURIComponent(vehicle.model)}`;
-                if (vehicle.trim) redirectUrl += `&trim=${encodeURIComponent(vehicle.trim)}`;
-                if (vehicle.submodel) redirectUrl += `&submodel=${encodeURIComponent(vehicle.submodel)}`;
+                    // Save display format to localStorage for cart/checkout display
+                    // (We don't save full vehicle data to avoid breaking shop fitment)
+                    if (vehicle.year && vehicle.make && vehicle.model) {
+                        const year = parseInt(vehicle.year);
+                        let generation = '';
+                        if (year >= 2020) generation = 'C8';
+                        else if (year >= 2014) generation = 'C7';
+                        else if (year >= 2005) generation = 'C6';
+                        else if (year >= 1997) generation = 'C5';
 
-                console.log('Redirecting to:', redirectUrl);
+                        const trim = vehicle.trim || vehicle.submodel || '';
+                        if (generation && trim) {
+                            localStorage.setItem('e5-selected-vehicle-display', `${generation} ${trim}`);
+                            console.log('✅ Saved vehicle display format:', `${generation} ${trim}`);
+                        }
+                    }
 
-                // Success vibration
-                if (navigator.vibrate) {
-                    navigator.vibrate([50, 100, 50]);
+                    // Success vibration
+                    if (navigator.vibrate) {
+                        navigator.vibrate([50, 100, 50]);
+                    }
+
+                    const successMessage = `
+                        Success! Your items have been added to cart
+                        <div class="countdown-timer">
+                            Taking you to Cart in <span id="countdown-number">2</span>s
+                        </div>
+                    `;
+                    showMessage(successMessage, 'success');
+
+                    startCountdown(2);
+
+                    setTimeout(() => {
+                        window.location.href = '/checkout/cart';
+                    }, 2000);
+
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    showMessage('Error adding to cart. Please try again.', 'error', 3000);
                 }
-
-                const successMessage = `
-                    Success! Your items have been added to cart
-                    <div class="countdown-timer">
-                        Taking you to Cart in <span id="countdown-number">2</span>s
-                    </div>
-                `;
-                showMessage(successMessage, 'success');
-
-                startCountdown(2);
-
-                setTimeout(() => {
-                    window.location.href = redirectUrl;
-                }, 2000);
             }
 
-            window.e5AutosyncInitialized = true;
-            console.log('E5 Autosync initialized successfully');
+            function initAutosync() {
+                try {
+                    const Autosync = (window as any).Autosync;
+                    if (!Autosync) {
+                        console.error('Autosync not loaded');
+                        return;
+                    }
 
-        } catch (error) {
-            console.error('Failed to initialize E5 Autosync:', error);
+                    new Autosync({
+                        id: 'autosync-visualizer',
+                        key: 'efive',
+                        scrollBar: false,
+                        productSegment: null,
+                        homeStyle: null,
+                        widget: false,
+                        startPage: 'vehicles',
+                        disableQuoteForm: true,
+                        onEvent: ({ event, data }: any) => {
+                            console.log('Autosync Event:', event, data);
+
+                            if (event === 'addToCart' ||
+                                event === 'buyNow' ||
+                                event === 'btnBuyClick' ||
+                                event === 'cartAdd' ||
+                                event === 'addCart' ||
+                                event === 'buyButton' ||
+                                event === 'purchase' ||
+                                event.toLowerCase().includes('buy') ||
+                                event.toLowerCase().includes('cart') ||
+                                event.toLowerCase().includes('add')) {
+                                console.log('Buy event detected:', event);
+                                handleCartRedirect(data);
+                                return;
+                            }
+
+                            if (event === 'submitQuote') {
+                                console.log('Submit quote event:', event);
+                                handleCartRedirect(data);
+                            }
+                        }
+                    });
+
+                    (window as any).e5AutosyncInitialized = true;
+                    console.log('E5 Autosync initialized successfully');
+
+                } catch (error) {
+                    console.error('Failed to initialize E5 Autosync:', error);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAutosync);
+            } else {
+                initAutosync();
+            }
         }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAutosync);
-    } else {
-        initAutosync();
-    }
-
-})();
     </script>
 </MainLayout>

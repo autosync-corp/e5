@@ -861,7 +861,7 @@ function addToCart() {
       quantity: 2,
       frontWheels: 2,
       rearWheels: 0,
-      vehicleModel: selectedModel.value,
+      vehicleModel: vehicleDisplay.value || undefined,
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
 
@@ -871,7 +871,7 @@ function addToCart() {
       quantity: 2,
       frontWheels: 0,
       rearWheels: 2,
-      vehicleModel: selectedModel.value,
+      vehicleModel: vehicleDisplay.value || undefined,
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
   } else {
@@ -881,7 +881,7 @@ function addToCart() {
       quantity: 1,
       frontWheels: 2,
       rearWheels: 2,
-      vehicleModel: selectedModel.value,
+      vehicleModel: vehicleDisplay.value || undefined,
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
   }
