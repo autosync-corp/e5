@@ -216,17 +216,10 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 const tires = data.tires || [];
                 const vehicle = data.vehicle || {};
 
-                let wheelPartNumber = "";
-                let wheelQuantity = 4;
+                console.log('Wheels array:', wheels);
+                console.log('Number of wheels:', wheels.length);
 
-                if (wheels.length > 0) {
-                    const wheel = wheels[0];
-                    wheelPartNumber = wheel.partNumber || "";
-                    wheelQuantity = wheel.quantity || 4;
-                    console.log('Wheel:', wheelPartNumber, 'Qty:', wheelQuantity);
-                }
-
-                if (!wheelPartNumber) {
+                if (wheels.length === 0) {
                     showMessage('No wheel selected. Please select a wheel first.', 'error', 3000);
                     return;
                 }
@@ -238,7 +231,20 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 showMessage('Adding Items to Cart...');
 
                 // Build redirect URL with query parameters
-                let redirectUrl = `/visualizer-callback?wheelPartNumber=${encodeURIComponent(wheelPartNumber)}&wheelQuantity=${encodeURIComponent(wheelQuantity)}`;
+                // Support multiple wheels for staggered fitment
+                let redirectUrl = '/visualizer-callback?';
+
+                // Add all wheels
+                wheels.forEach((wheel, index) => {
+                    const partNumber = wheel.partNumber || "";
+                    const quantity = wheel.quantity || 2;
+                    if (partNumber) {
+                        redirectUrl += `wheelPartNumber${index + 1}=${encodeURIComponent(partNumber)}`;
+                        redirectUrl += `&wheelQuantity${index + 1}=${encodeURIComponent(quantity)}`;
+                        if (index < wheels.length - 1) redirectUrl += '&';
+                        console.log(`Wheel ${index + 1}:`, partNumber, 'Qty:', quantity);
+                    }
+                });
 
                 // Add vehicle data if available
                 if (vehicle.year) redirectUrl += `&year=${encodeURIComponent(vehicle.year)}`;

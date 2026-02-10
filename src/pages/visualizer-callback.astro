@@ -28,63 +28,90 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 // Get query parameters from visualizer
                 const urlParams = new URLSearchParams(window.location.search);
 
-                const wheelPartNumber = urlParams.get('wheelPartNumber');
-                const wheelQuantity = parseInt(urlParams.get('wheelQuantity') || '4');
+                // Support multiple wheels (wheelPartNumber1, wheelPartNumber2, etc.)
+                const wheels = [];
+                let index = 1;
+                while (urlParams.has(`wheelPartNumber${index}`)) {
+                    wheels.push({
+                        partNumber: urlParams.get(`wheelPartNumber${index}`),
+                        quantity: parseInt(urlParams.get(`wheelQuantity${index}`) || '2')
+                    });
+                    index++;
+                }
+
+                // Fallback to old single wheel format
+                if (wheels.length === 0 && urlParams.has('wheelPartNumber')) {
+                    wheels.push({
+                        partNumber: urlParams.get('wheelPartNumber'),
+                        quantity: parseInt(urlParams.get('wheelQuantity') || '4')
+                    });
+                }
+
                 const vehicleYear = urlParams.get('year');
                 const vehicleMake = urlParams.get('make');
                 const vehicleModel = urlParams.get('model');
                 const vehicleTrim = urlParams.get('trim') || urlParams.get('submodel');
 
                 console.log('Visualizer callback received:', {
-                    wheelPartNumber,
-                    wheelQuantity,
+                    wheels,
                     vehicle: { vehicleYear, vehicleMake, vehicleModel, vehicleTrim }
                 });
 
-                if (!wheelPartNumber) {
-                    console.error('No wheel part number found');
+                if (wheels.length === 0) {
+                    console.error('No wheel part numbers found');
                     if (statusEl) statusEl.textContent = 'No wheel data received. Redirecting to shop...';
                     setTimeout(() => window.location.href = '/shop', 2000);
                     return;
                 }
 
-                if (statusEl) statusEl.textContent = 'Fetching wheel data...';
+                if (statusEl) statusEl.textContent = `Fetching ${wheels.length} wheel product(s)...`;
 
-                // Fetch wheel product from API
-                const apiUrl = `${API_BASE_URL}?pn=${encodeURIComponent(wheelPartNumber)}&key=${API_KEY}`;
-                console.log('Fetching wheel from API:', apiUrl);
+                // Fetch and add each wheel to cart
+                for (let i = 0; i < wheels.length; i++) {
+                    const wheel = wheels[i];
+                    const wheelPartNumber = wheel.partNumber;
+                    const wheelQuantity = wheel.quantity;
 
-                const response = await fetch(apiUrl);
+                    console.log(`Processing wheel ${i + 1}/${wheels.length}:`, wheelPartNumber, 'Qty:', wheelQuantity);
 
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch wheel data: ${response.status}`);
+                    // Fetch wheel product from API
+                    const apiUrl = `${API_BASE_URL}?pn=${encodeURIComponent(wheelPartNumber)}&key=${API_KEY}`;
+                    console.log('Fetching wheel from API:', apiUrl);
+
+                    const response = await fetch(apiUrl);
+
+                    if (!response.ok) {
+                        console.error(`Failed to fetch wheel ${wheelPartNumber}:`, response.status);
+                        continue;
+                    }
+
+                    const data = await response.json();
+
+                    if (!data.Products || data.Products.length === 0) {
+                        console.error(`No product found for part number: ${wheelPartNumber}`);
+                        continue;
+                    }
+
+                    const product = data.Products[0];
+
+                    if (statusEl) statusEl.textContent = `Adding wheel ${i + 1}/${wheels.length} to cart...`;
+
+                    // Determine if this is front or rear based on index
+                    // First wheel = front, second wheel = rear (for staggered)
+                    const isFront = i === 0;
+                    const isRear = i === 1;
+
+                    CartManager.addItem({
+                        product: product,
+                        quantity: wheelQuantity,
+                        frontWheels: isFront ? wheelQuantity : 0,
+                        rearWheels: isRear ? wheelQuantity : 0,
+                        vehicleModel: vehicleModel || undefined,
+                        imgUrlBase: data.ImgUrlBase || undefined
+                    });
+
+                    console.log(`✅ Added wheel ${i + 1} to cart: ${wheelPartNumber} (qty: ${wheelQuantity}, ${isFront ? 'front' : isRear ? 'rear' : 'unknown'})`);
                 }
-
-                const data = await response.json();
-
-                if (!data.Products || data.Products.length === 0) {
-                    throw new Error(`No product found for part number: ${wheelPartNumber}`);
-                }
-
-                const product = data.Products[0];
-
-                if (statusEl) statusEl.textContent = 'Adding to cart...';
-
-                // Add to cart
-                // Assuming wheelQuantity is total number of wheels (e.g., 4 = 2 front + 2 rear)
-                const frontWheels = Math.ceil(wheelQuantity / 2);
-                const rearWheels = Math.floor(wheelQuantity / 2);
-
-                CartManager.addItem({
-                    product: product,
-                    quantity: wheelQuantity,
-                    frontWheels: frontWheels,
-                    rearWheels: rearWheels,
-                    vehicleModel: vehicleModel || undefined,
-                    imgUrlBase: data.ImgUrlBase || undefined
-                });
-
-                console.log(`✅ Added wheel to cart: ${wheelPartNumber} (qty: ${wheelQuantity})`);
 
                 // Save vehicle data to localStorage if provided
                 if (vehicleYear && vehicleMake && vehicleModel) {
