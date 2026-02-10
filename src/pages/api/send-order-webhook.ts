@@ -237,12 +237,14 @@ function generateItemsHtml(cartItems: any[], totals: any): string {
         : `${item.rearWheels} Rear`;
     const itemTotal = (item.frontWheels + item.rearWheels) * item.product.Price;
 
+    const vehicleInfo = item.vehicleModel ? `<br/><span style="color: #c41e3a; font-size: 13px; font-weight: 600;">FOR: ${item.vehicleModel}</span>` : '';
+
     return `
       <tr style="border-bottom: 1px solid #eee;">
         <td style="padding: 12px;">
           <strong>${item.product.Model}</strong><br/>
           <span style="color: #666; font-size: 13px;">${finishName}</span><br/>
-          <span style="color: #666; font-size: 13px;">${item.product.Diameter}"x${item.product.Width}"</span>
+          <span style="color: #666; font-size: 13px;">${item.product.Diameter}"x${item.product.Width}"</span>${vehicleInfo}
         </td>
         <td style="padding: 12px; color: #666;">${partNumber}</td>
         <td style="padding: 12px; text-align: center;">${configuration}</td>
