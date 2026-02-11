@@ -7,8 +7,6 @@ import YearMakeModelSelector from "@/pages/gallery/components/YearMakeModelSelec
 import GalleryPageStyleSelector from "@/pages/gallery/components/GalleryPageStyleSelector.vue";
 import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
-import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
-import { VETTER_GALLERY_BANNER } from "@/pages/gallery/constants/Images.ts";
 
 const detailedGallery = ref<boolean>(false);
 const filters = ref<{ model: string; trim: string; year: string }>({
@@ -86,7 +84,19 @@ const filteredVehicles = computed(() => {
 });
 </script>
 <template>
-  <BannerFullWidthWithLegend alt="Gallery" :image="VETTER_GALLERY_BANNER" />
+  <!-- Gallery Header -->
+  <section class="w-full bg-white pt-16 pb-8">
+    <div class="container-e5">
+      <img
+        src="/assets/images/gallery-logo.png"
+        alt="Gallery"
+        class="h-[50px] md:h-[60px] lg:h-[70px] mb-4 object-contain"
+      />
+      <p class="text-[18px] md:text-[20px] font-excon-light text-black/70 leading-[30px] max-w-[800px]">
+        Our builds our in the wild. See them for yourself, envision yours.
+      </p>
+    </div>
+  </section>
 
   <YearMakeModelSelector @filter="handleFilter" />
 
