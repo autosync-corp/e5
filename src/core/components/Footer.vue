@@ -20,7 +20,7 @@ import {
   <footer class="bg-e5-red w-full py-6 px-6">
     <div class="max-w-[1518px] mx-auto">
       <!-- Main Footer Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-12 items-start mb-6">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-12 items-center mb-6">
         <!-- Left: Links -->
         <div class="footer-links flex flex-col space-y-2">
           <a :href="PROCESS_ROUTE" class="footer-link">OUR PROCESS</a>
@@ -100,10 +100,6 @@ import {
   .footer-links {
     align-items: center;
     text-align: center;
-  }
-
-  .footer-center {
-    order: -1;
   }
 
   .footer-contact {

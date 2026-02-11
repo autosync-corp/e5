@@ -1,8 +1,35 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-import Button from "@/core/components/Button.vue"
 import Link from "@/core/components/Link.vue"
-import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    INSTALLATION_ROUTE,
+    SINGLE_PRODUCT_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GALLERY_WHEELS_ROUTE
+} from "@/core/constants/Routes.ts";
+import {
+    SEBRING_BRAND_NAME,
+    DAYTONA_BRAND_NAME,
+    SPEEDWAY_BRAND_NAME
+} from "@/pages/wheels/constants/Wheels.ts";
+
+// Helper function to build shop URLs with only series and finish
+function buildShopUrl(series: string, finish: string): string {
+  const params = new URLSearchParams({
+    series,
+    finish
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+}
+
+// Shop URLs for wheels
+const sebringGlossBlackUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black');
+const sebringBronzeUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint');
+const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint');
+const speedwayChromeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Chrome');
+
+// Hero button URL - Sebring single product page (series + Gloss Black finish)
+const sebringProductUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black');
 ---
 
 <MainLayout title="E5 Wheels - Our Process">
@@ -32,7 +59,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                             <span class="font-light">STARTING AT </span><span class="font-bold">$600</span>
                         </p>
 
-                        <Button link={WHEELS_SEBRING_ROUTE} primary>SHOP FITMENT</Button>
+                        <a href={sebringProductUrl} class="uppercase bg-e5-red border-2 border-e5-red text-white font-franklin-demi border-0 px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg inline-block">SHOP FITMENT</a>
                     </div>
                 </div>
             </div>
@@ -152,7 +179,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                 <!-- Wheel Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     <!-- Sebring Wheel -->
-                    <div class="text-center">
+                    <a href={sebringGlossBlackUrl} class="text-center hover:opacity-80 transition-opacity">
                         <img
                                 src="/assets/images/57612e656f7cb177dd66a7b9e8dbaf32845675c7.webp"
                                 alt="Sebring"
@@ -176,10 +203,10 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                         <p class="text-[18px] font-light text-black/70 leading-[23px]">
                             <span>STARTING AT </span><span class="font-bold">$600</span>
                         </p>
-                    </div>
+                    </a>
 
                     <!-- Sebring Bronze -->
-                    <div class="text-center">
+                    <a href={sebringBronzeUrl} class="text-center hover:opacity-80 transition-opacity">
                         <img
                                 src="/assets/images/wheels/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp"
                                 alt="Sebring Bronze"
@@ -203,10 +230,10 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                         <p class="text-[18px] font-light text-black/70 leading-[23px]">
                             <span>STARTING AT </span><span class="font-bold">$600</span>
                         </p>
-                    </div>
+                    </a>
 
                     <!-- Daytona -->
-                    <div class="text-center">
+                    <a href={daytonaTitaniumUrl} class="text-center hover:opacity-80 transition-opacity">
                         <img
                                 src="/assets/images/wheels/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp"
                                 alt="Daytona"
@@ -230,10 +257,10 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                         <p class="text-[18px] font-light text-black/70 leading-[23px]">
                             <span>STARTING AT </span><span class="font-bold">$600</span>
                         </p>
-                    </div>
+                    </a>
 
                     <!-- Speedway -->
-                    <div class="text-center">
+                    <a href={speedwayChromeUrl} class="text-center hover:opacity-80 transition-opacity">
                         <img
                                 src="/assets/images/wheels/71d944a2b1cbfaeed4ace56e9ca7aa671ff6253e.webp"
                                 alt="Speedway"
@@ -257,7 +284,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                         <p class="text-[18px] font-light text-black/70 leading-[23px]">
                             <span>STARTING AT </span><span class="font-bold">$600</span>
                         </p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -285,7 +312,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                             </p>
 
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Button primary link={PENDING_ROUTE}>LEARN MORE</Button>
+                                <a href={GALLERY_VEHICLES_ROUTE} class="uppercase bg-e5-red border-2 border-e5-red text-white font-franklin-demi border-0 px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">VIEW GALLERY</a>
                             </div>
                         </div>
 
@@ -310,7 +337,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                             </p>
 
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Button primary link={PENDING_ROUTE}>LEARN MORE</Button>
+                                <a href={GALLERY_WHEELS_ROUTE} class="uppercase bg-e5-red border-2 border-e5-red text-white font-franklin-demi border-0 px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">VIEW GALLERY</a>
                             </div>
                         </div>
 
@@ -329,7 +356,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C6
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link link={PENDING_ROUTE}>VIEW ALL C6 GALLERY</Link>
+                                <Link link={`${GALLERY_VEHICLES_ROUTE}?generation=C6`}>VIEW ALL C6 GALLERY</Link>
                             </div>
                         </div>
 
@@ -345,7 +372,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C7
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link link={PENDING_ROUTE}>VIEW ALL C7 GALLERY</Link>
+                                <Link link={`${GALLERY_VEHICLES_ROUTE}?generation=C7`}>VIEW ALL C7 GALLERY</Link>
                             </div>
                         </div>
 
@@ -361,7 +388,7 @@ import {INSTALLATION_ROUTE, PENDING_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/co
                                 C8
                             </h3>
                             <div class="max-w-[50%] mx-auto flex justify-center mt-10">
-                                <Link link={PENDING_ROUTE}>VIEW ALL C8 GALLERY</Link>
+                                <Link link={`${GALLERY_VEHICLES_ROUTE}?generation=C8`}>VIEW ALL C8 GALLERY</Link>
                             </div>
                         </div>
 
