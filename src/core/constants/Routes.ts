@@ -13,6 +13,7 @@ export const SHOP_ROUTE = '/shop';
 export const REFUND_ROUTE = '/refund';
 export const WARRANTY_ROUTE = '/warranty';
 export const MEDIA_ROUTE = '/media';
+export const CATALOG_ROUTE = '/catalog';
 export const REGISTRATION_ROUTE = '/registration';
 export const VENDOR_REGISTRATION_ROUTE = '/vendor-registration';
 export const SUBMIT_CORVETTE_ROUTE = '/submit-corvette';

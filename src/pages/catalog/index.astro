@@ -1,0 +1,234 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+
+const catalogPdfUrl = '/assets/E5 Catalog NEW 2026 v4.pdf';
+---
+
+<MainLayout title="Product Catalog - E5 Wheels">
+  <div class="w-full bg-white -mt-107">
+    <!-- Page Header -->
+    <section class="container-e5 pt-16 pb-8">
+      <h1 class="text-[48px] md:text-[64px] font-['Franklin_Gothic_Heavy'] text-e5-red uppercase text-center mb-4">
+        E5 Wheels Catalog
+      </h1>
+      <p class="text-[20px] md:text-[24px] font-excon-light leading-[30px] text-black/70 text-center max-w-[800px] mx-auto">
+        Browse our complete collection of Form Forged Series wheels
+      </p>
+    </section>
+
+    <!-- Book Viewer -->
+    <section class="container-e5 pb-16">
+      <div class="flex flex-col items-center">
+        <!-- Loading indicator -->
+        <div id="loading" class="text-center py-12">
+          <p class="text-[20px] font-excon-light text-black/70">Loading catalog...</p>
+        </div>
+
+        <!-- Book container -->
+        <div id="book-container" class="hidden w-full">
+          <div id="book" class="mx-auto"></div>
+
+          <!-- Controls -->
+          <div class="flex items-center justify-center gap-8 mt-8">
+            <button
+              id="prev-btn"
+              class="w-14 h-14 bg-e5-red text-white rounded-full flex items-center justify-center hover:bg-e5-red/90 transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+              aria-label="Previous page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+
+            <span id="page-info" class="text-[18px] font-excon-light text-black/70 min-w-[150px] text-center"></span>
+
+            <button
+              id="next-btn"
+              class="w-14 h-14 bg-e5-red text-white rounded-full flex items-center justify-center hover:bg-e5-red/90 transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+              aria-label="Next page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Download Button -->
+        <div class="text-center mt-8">
+          <a
+            href={catalogPdfUrl}
+            download="E5-Wheels-Catalog-2026.pdf"
+            class="inline-block bg-black text-white px-8 py-4 text-[14px] tracking-[5.6px] uppercase font-franklin-demi hover:bg-black/90 transition-colors"
+          >
+            Download Catalog
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script is:inline define:vars={{ catalogPdfUrl }}>
+    let pageFlip;
+    let totalPages = 0;
+
+    // Load PDF.js
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadCatalog() {
+      try {
+        // Load PDF.js
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Load PDF
+        const loadingTask = pdfjsLib.getDocument(catalogPdfUrl);
+        const pdf = await loadingTask.promise;
+        totalPages = pdf.numPages;
+
+        const bookContainer = document.getElementById('book');
+        const scale = 1.2;
+
+        // Load PageFlip library first
+        await loadScript('https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js');
+
+        // Get first page dimensions
+        const firstPage = await pdf.getPage(1);
+        const viewport = firstPage.getViewport({ scale });
+
+        // Initialize PageFlip FIRST
+        pageFlip = new St.PageFlip(bookContainer, {
+          width: viewport.width,
+          height: viewport.height,
+          size: 'stretch',
+          minWidth: 315,
+          maxWidth: 1000,
+          minHeight: 400,
+          maxHeight: 1350,
+          maxShadowOpacity: 0.5,
+          showCover: true,
+          mobileScrollSupport: false,
+          swipeDistance: 30,
+          clickEventForward: true,
+          usePortrait: true,
+          startPage: 0,
+          drawShadow: true,
+          flippingTime: 1000,
+          useMouseEvents: true,
+          autoSize: true,
+          showPageCorners: true,
+          disableFlipByClick: false
+        });
+
+        // Render all pages
+        const pages = [];
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          const pageViewport = page.getViewport({ scale });
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = pageViewport.height;
+          canvas.width = pageViewport.width;
+
+          await page.render({
+            canvasContext: context,
+            viewport: pageViewport
+          }).promise;
+
+          const pageDiv = document.createElement('div');
+          pageDiv.className = 'page';
+          pageDiv.appendChild(canvas);
+          pages.push(pageDiv);
+        }
+
+        pageFlip.loadFromHTML(pages);
+
+        // Show book
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('book-container').classList.remove('hidden');
+
+        // Update page info
+        pageFlip.on('flip', (e) => {
+          updatePageInfo();
+        });
+
+        updatePageInfo();
+
+        // Button controls
+        document.getElementById('prev-btn').addEventListener('click', () => {
+          pageFlip.flipPrev();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+          pageFlip.flipNext();
+        });
+
+      } catch (error) {
+        console.error('Error loading catalog:', error);
+        document.getElementById('loading').innerHTML = '<p class="text-red-600">Error loading catalog. Please try downloading instead.</p>';
+      }
+    }
+
+    function updatePageInfo() {
+      const pageInfo = document.getElementById('page-info');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      const currentPage = pageFlip.getCurrentPageIndex();
+      pageInfo.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage >= totalPages - 1;
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadCatalog);
+    } else {
+      loadCatalog();
+    }
+  </script>
+
+  <style>
+    #book-container {
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+    }
+
+    #book {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
+    }
+
+    .page {
+      background-color: white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #book {
+        max-width: 90vw;
+      }
+    }
+  </style>
+</MainLayout>
