@@ -125,13 +125,12 @@ import MainLayout from '@/layouts/MainLayout.astro';
               </select>
             </div>
             <div class="relative">
-              <select
+              <input
+                type="text"
                 name="city"
-                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 opacity-80 focus:outline-none focus:border-[#d31d25] appearance-none bg-white"
-                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23666%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1em 1em;"
-              >
-                <option value="">CITY</option>
-              </select>
+                placeholder="CITY"
+                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]"
+              />
             </div>
             <div class="relative">
               <input
@@ -187,10 +186,56 @@ import MainLayout from '@/layouts/MainLayout.astro';
   // Handle form submission
   const form = document.querySelector('form');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Add your form submission logic here
-      console.log('Form submitted');
+
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitButton.textContent || 'SEND';
+
+      try {
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'SENDING...';
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          state: formData.get('state'),
+          city: formData.get('city'),
+          zipCode: formData.get('zipCode'),
+          message: formData.get('message'),
+          smsConsent: formData.get('smsConsent') === 'on',
+        };
+
+        // Send to webhook API
+        const response = await fetch('/api/send-contact-webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+
+        // Success - show message and reset form
+        alert('Thank you for contacting us! We will respond within 1 business day.');
+        form.reset();
+
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('Sorry, there was an error sending your message. Please try again or call us at (305) 964-7429.');
+      } finally {
+        // Re-enable button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
     });
   }
 </script>

@@ -38,6 +38,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="text"
+                    name="shopName"
                     placeholder="SHOP NAME*"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -46,6 +47,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
                 <div class="relative">
                   <select
+                    name="shopType"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -70,6 +72,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="url"
+                  name="websiteUrl"
                   placeholder="WEBSITE URL*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -80,6 +83,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="shopAddress"
                   placeholder="SHOP ADDRESS*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -91,6 +95,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- State -->
                 <div class="relative">
                   <select
+                    name="state"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -157,6 +162,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="text"
+                    name="city"
                     placeholder="CITY"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -167,6 +173,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="text"
+                    name="zipCode"
                     placeholder="ZIP CODE"
                     required
                     maxlength="5"
@@ -179,6 +186,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="socialMediaLinks"
                   placeholder="SOCIAL MEDIA LINKS*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -199,6 +207,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="text"
+                    name="fullName"
                     placeholder="FULL NAME*"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -207,6 +216,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
                 <div class="relative">
                   <select
+                    name="titleRole"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -232,6 +242,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="email"
+                    name="email"
                     placeholder="EMAIL*"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -241,6 +252,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <div>
                   <input
                     type="tel"
+                    name="phone"
                     placeholder="PHONE NUMBER*"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -262,6 +274,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Years in Business -->
                 <div class="relative">
                   <select
+                    name="yearsInBusiness"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -283,6 +296,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Retail Location -->
                 <div class="relative">
                   <select
+                    name="hasRetailLocation"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -305,6 +319,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 </p>
                 <input
                   type="file"
+                  name="resaleCertificate"
                   accept=".pdf,.jpg,.jpeg,.webp"
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light focus:outline-none focus:border-e5-red"
                 />
@@ -326,3 +341,77 @@ import MainLayout from '@/layouts/MainLayout.astro';
     </section>
   </div>
 </MainLayout>
+
+<script>
+  // Handle form submission
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitButton.textContent || 'SEND';
+
+      try {
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'SENDING...';
+
+        // Get form data
+        const formData = new FormData(form);
+
+        // Handle file upload (resale certificate)
+        const file = formData.get('resaleCertificate') as File;
+        let resaleCertificateData = '';
+        if (file && file.size > 0) {
+          // In a real implementation, you would upload the file to a storage service
+          // and send the URL. For now, we'll just note that a file was uploaded.
+          resaleCertificateData = `File uploaded: ${file.name}`;
+        }
+
+        const data = {
+          shopName: formData.get('shopName'),
+          shopType: formData.get('shopType'),
+          websiteUrl: formData.get('websiteUrl'),
+          shopAddress: formData.get('shopAddress'),
+          state: formData.get('state'),
+          city: formData.get('city'),
+          zipCode: formData.get('zipCode'),
+          socialMediaLinks: formData.get('socialMediaLinks'),
+          fullName: formData.get('fullName'),
+          titleRole: formData.get('titleRole'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          yearsInBusiness: formData.get('yearsInBusiness'),
+          hasRetailLocation: formData.get('hasRetailLocation'),
+          resaleCertificate: resaleCertificateData,
+        };
+
+        // Send to webhook API
+        const response = await fetch('/api/send-vendor-webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit vendor registration');
+        }
+
+        // Success - show message and reset form
+        alert('Thank you for your interest in becoming a dealer! We will respond within 24 hours.');
+        form.reset();
+
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('Sorry, there was an error submitting your registration. Please try again or call us at (305) 964-7429.');
+      } finally {
+        // Re-enable button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+  }
+</script>

@@ -37,6 +37,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="firstName"
                   placeholder="FIRST NAME*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -47,6 +48,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="lastName"
                   placeholder="LAST NAME*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -57,6 +59,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="email"
+                  name="email"
                   placeholder="EMAIL ADDRESS*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -67,6 +70,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="tel"
+                  name="phone"
                   placeholder="PHONE NUMBER"
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
                 />
@@ -84,6 +88,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <!-- Month -->
               <div class="relative">
                 <select
+                  name="purchaseMonth"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                 >
@@ -111,6 +116,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <!-- Day -->
               <div class="relative">
                 <select
+                  name="purchaseDay"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                 >
@@ -130,6 +136,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="purchaseYear"
                   placeholder="YEAR"
                   required
                   maxlength="4"
@@ -151,6 +158,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Corvette Generation & Model -->
                 <div class="relative">
                   <select
+                    name="corvetteGeneration"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -180,6 +188,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Corvette Model Year -->
                 <div class="relative">
                   <select
+                    name="corvetteYear"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -201,6 +210,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Color -->
                 <div class="relative">
                   <select
+                    name="color"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -225,6 +235,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
                 <!-- Wheel Model & Finish -->
                 <div class="relative">
                   <select
+                    name="wheelModel"
                     required
                     class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 font-excon-light appearance-none focus:outline-none focus:border-e5-red bg-white"
                   >
@@ -267,6 +278,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
               <div>
                 <input
                   type="text"
+                  name="purchaseLocation"
                   placeholder="WHERE DID YOU PURCHASE YOUR WHEELS FROM*"
                   required
                   class="w-full h-[40px] px-4 border border-[#ccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 font-excon-light focus:outline-none focus:border-e5-red"
@@ -289,3 +301,64 @@ import MainLayout from '@/layouts/MainLayout.astro';
     </section>
   </div>
 </MainLayout>
+
+<script>
+  // Handle form submission
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitButton.textContent || 'SEND';
+
+      try {
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'SENDING...';
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          purchaseMonth: formData.get('purchaseMonth'),
+          purchaseDay: formData.get('purchaseDay'),
+          purchaseYear: formData.get('purchaseYear'),
+          corvetteGeneration: formData.get('corvetteGeneration'),
+          corvetteYear: formData.get('corvetteYear'),
+          color: formData.get('color'),
+          wheelModel: formData.get('wheelModel'),
+          purchaseLocation: formData.get('purchaseLocation'),
+        };
+
+        // Send to webhook API
+        const response = await fetch('/api/send-registration-webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit registration');
+        }
+
+        // Success - show message and reset form
+        alert('Thank you for registering your wheels! Your registration has been received.');
+        form.reset();
+
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('Sorry, there was an error submitting your registration. Please try again or call us at (305) 964-7429.');
+      } finally {
+        // Re-enable button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+  }
+</script>
