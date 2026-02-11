@@ -1,7 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
@@ -10,6 +9,29 @@ import {
     SEBRING_LOGO,
     SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+
+// Helper function to build shop URLs with proper encoding
+function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
+  const params = new URLSearchParams({
+    series,
+    finish,
+    generation,
+    trim,
+    frontSize,
+    rearSize
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+}
+
+// Shop URLs with proper sizes (Z06 uses: 19x10 +30mm / 20x12 +50mm)
+const speedwayTitaniumUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
+const daytonaBronzeUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringGlossBlackUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
+
+// Detail section URLs (using +30mm / +50mm for detail sections based on spec table)
+const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringGlossBlackDetailUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringTitaniumUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
 ---
 
 <MainLayout title="C7 Corvette Z06 Wheels - E5 Wheels">
@@ -41,32 +63,32 @@ import {
         <!-- Three Wheel Options -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Speedway - Chrome -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Chrome&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <!-- Speedway - Titanium Brushed Tint -->
+                <a href={speedwayTitaniumUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/c7-z06-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Chrome" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c7/c7-z06-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
                     <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CHROME</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 Z06</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
 
-                <!-- Daytona - Titanium Brushed Tint -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <!-- Daytona - Bronze Brushed Tint -->
+                <a href={daytonaBronzeUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/c7-z06-new/13015d50313f3d5f39cd2616f369d0fd2c044010.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c7/c7-z06-new/13015d50313f3d5f39cd2616f369d0fd2c044010.webp" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
                     <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 Z06</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
 
                 <!-- Sebring - Gloss Black -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={sebringGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c7/c7-z06-new/57612e656f7cb177dd66a7b9e8dbaf32845675c7.webp" alt="Sebring Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -79,9 +101,9 @@ import {
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={WHEELS_ROUTE}>
-                    <span>SHOP FORM FORGED</span>
-                </Button>
+                <a href={WHEELS_ROUTE} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
+                    SHOP FORM FORGED
+                </a>
             </div>
         </section>
 
@@ -237,9 +259,12 @@ import {
                                 <li>Gloss Black</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={daytonaGlossBlackUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE DAYTONA
                             </a>
                         </div>
                     </div>
@@ -282,9 +307,12 @@ import {
                                 <li>Gloss Black</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={sebringGlossBlackDetailUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/sebring`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE SEBRING
                             </a>
                         </div>
                     </div>
@@ -327,9 +355,12 @@ import {
                                 <li>Titanium Brushed Tint</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C7&trim=Z06&frontSize=19" x 10" +40mm&rearSize=20" x 12" +59mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={sebringTitaniumUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/sebring`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE SEBRING
                             </a>
                         </div>
                     </div>
@@ -369,9 +400,9 @@ import {
                 </div>
             </div>
             <div class="text-center">
-                <Button client:visible primary link={`${GALLERY_VEHICLES_ROUTE}?generation=c7`}>
-                    <span>VIEW GALLERY</span>
-                </Button>
+                <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7&trim=Z06`} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
+                    VIEW GALLERY
+                </a>
             </div>
         </section>
 

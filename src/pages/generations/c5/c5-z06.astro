@@ -1,11 +1,28 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+
+// Helper function to build shop URLs with proper encoding
+function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
+  const params = new URLSearchParams({
+    series,
+    finish,
+    generation,
+    trim,
+    frontSize,
+    rearSize
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+}
+
+// Shop URLs with proper sizes (C5 Z06 uses first detail section sizes: 18" x 10" +25mm / 19" x 11" +20mm)
+const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+const daytonaBronzeUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
 ---
 
 <MainLayout title="C5 Corvette Z06 Wheels - E5 Wheels">
@@ -38,7 +55,7 @@ import {
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Gloss Black -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c5/z06-updated/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -49,7 +66,7 @@ import {
                 </a>
 
                 <!-- Titanium Brushed Tint -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaTitaniumUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c5/z06-updated/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -60,7 +77,7 @@ import {
                 </a>
 
                 <!-- Bronze Brushed Tint -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Bronze Brushed Tint&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaBronzeUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c5/z06-updated/13015d50313f3d5f39cd2616f369d0fd2c044010.webp" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -72,9 +89,9 @@ import {
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={`${WHEELS_ROUTE}/daytona`}>
-                    <span>SHOP FITMENT</span>
-                </Button>
+                <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
+                    SHOP FITMENT
+                </a>
             </div>
         </section>
 
@@ -230,9 +247,12 @@ import {
                                 <li>Gloss Black</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={daytonaGlossBlackUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE DAYTONA
                             </a>
                         </div>
                     </div>
@@ -275,9 +295,12 @@ import {
                                 <li>Bronze Brushed Tint</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Bronze Brushed Tint&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={daytonaBronzeUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE DAYTONA
                             </a>
                         </div>
                     </div>
@@ -320,9 +343,12 @@ import {
                                 <li>Titanium Brushed Tint</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C5&trim=Z06&frontSize=17" x 9.5" +54mm&rearSize=18" x 10.5" +58mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href={daytonaTitaniumUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE DAYTONA
                             </a>
                         </div>
                     </div>
@@ -362,9 +388,9 @@ import {
                 </div>
             </div>
             <div class="text-center">
-                <Button client:visible primary link={GALLERY_WHEELS_ROUTE}>
-                    <span>VIEW GALLERY</span>
-                </Button>
+                <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5&trim=Z06`} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
+                    VIEW GALLERY
+                </a>
             </div>
         </section>
 

@@ -1,7 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SHOP_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
@@ -10,6 +10,36 @@ import {
     SPEEDWAY_LOGO,
     SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+
+// Helper function to build shop URLs with proper encoding
+const buildShopUrl = (series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string) => {
+  const params = new URLSearchParams({
+    series,
+    finish,
+    generation,
+    trim,
+    frontSize,
+    rearSize
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+};
+
+// URL variables for different sections
+// Daytona detail section (19" x 9.5" +53mm / 20" x 11" +76mm)
+const daytonaTitaniumBrushedUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
+
+// Sebring detail section (19" x 10" +30mm / 20" x 12" +50mm)
+const sebringGlossBlackUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringBronzeBrushedUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+
+// Top 3 wheels - use Sebring sizes
+const speedwayTitaniumBrushedUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+
+// Also Available section - use Sebring sizes (same as top 3)
+const speedwayGlossBlackUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+const speedwayTitaniumBrushedBaseUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
 ---
 
 <MainLayout title="C6 Corvette Wheels - E5 Wheels">
@@ -42,7 +72,7 @@ import {
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Speedway - Titanium Brushed Tint -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C6&trim=Base&frontSize=18" x 8.5" +56mm&rearSize=19" x 10" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={speedwayTitaniumBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -54,7 +84,7 @@ import {
                 </a>
 
                 <!-- Daytona - Gloss Black -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black&generation=C6&trim=Base&frontSize=18" x 8.5" +56mm&rearSize=19" x 10" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -65,12 +95,12 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
 
-                <!-- Speedway - Bronze Brushed Tint -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Bronze Brushed Tint&generation=C6&trim=Base&frontSize=18" x 8.5" +56mm&rearSize=19" x 10" +59mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <!-- Sebring - Bronze Brushed Tint -->
+                <a href={sebringBronzeBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp" alt="Speedway Bronze Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp" alt="Sebring Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <img src={SEBRING_LOGO} alt="Sebring" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
@@ -252,11 +282,11 @@ import {
                         <div>
                             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
                             <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Gloss Black</li>
+                                <li>Titanium Brushed Tint</li>
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
+                            <Button client:visible primary link={daytonaTitaniumBrushedUrl}>
                                 <span>SHOP FITMENT</span>
                             </Button>
                             <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
@@ -304,7 +334,7 @@ import {
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+                            <Button client:visible primary link={sebringGlossBlackUrl}>
                                 <span>SHOP FITMENT</span>
                             </Button>
                             <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
@@ -324,7 +354,7 @@ import {
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Gloss Black -->
-                <div class="flex flex-col items-center">
+                <a href={speedwayGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/cd19461c451031cb11b5e748b6774ae80b22a516.webp" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
                     </div>
@@ -333,10 +363,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Titanium Brushed Tint -->
-                <div class="flex flex-col items-center">
+                <a href={speedwayTitaniumBrushedBaseUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
@@ -345,10 +375,10 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
 
                 <!-- Dark Bronze -->
-                <div class="flex flex-col items-center">
+                <a href={speedwayDarkBronzeUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c6/55e2dad1e72a82c3b811737504db985db4ec5353.webp" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
                     </div>
@@ -357,11 +387,11 @@ import {
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </div>
+                </a>
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={`${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`}>
+                <Button client:visible primary link={speedwayGlossBlackUrl}>
                     <span>SHOP FITMENT</span>
                 </Button>
             </div>

@@ -31,7 +31,6 @@ import {
           <a :href="REGISTRATION_ROUTE" class="footer-link">WHEEL REGISTRATION</a>
           <a :href="VENDOR_REGISTRATION_ROUTE" class="footer-link">VENDOR REGISTRATION</a>
           <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
-          <a class="footer-link">COMMUNITY</a>
           <a :href="ABOUT_ROUTE" class="footer-link">ABOUT US</a>
         </div>
 

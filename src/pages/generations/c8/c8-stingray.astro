@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_WHEELS_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_BRAND_NAME,
     DAYTONA_LOGO,
@@ -9,6 +9,29 @@ import {
     SPEEDWAY_BRAND_NAME,
     SPEEDWAY_LOGO,
 } from "@/pages/wheels/constants/Wheels.ts";
+
+// Helper function to build shop URLs with proper encoding
+function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
+  const params = new URLSearchParams({
+    series,
+    finish,
+    generation,
+    trim,
+    frontSize,
+    rearSize
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+}
+
+// Top section URLs (19/20 staggered)
+const speedwayTopUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+const daytonaTopUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+const sebringTopUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+
+// Detail section URLs (specific sizes for each wheel)
+const daytonaDetailUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
+const sebringDetailUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
+const speedwayDetailUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
 ---
 
 <MainLayout title="C8 Corvette Stingray Wheels - E5 Wheels">
@@ -33,7 +56,7 @@ import {
         Unlike universal fitments, every E5 wheel is specifically designed around the C8 platform—its offsets, brake clearance, and body lines. The fitment is aggressive yet refined, amplifying the Stingray's naturally muscular stance while keeping comfort uncompromised. Whether it's your daily drive or a track-built setup, these wheels deliver performance that meets the legend they were made for.
       </p>
       <p class="text-[16px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
-        SHOP FORM FORGED SERIES FOR C7 CORVETTES
+        SHOP FORM FORGED SERIES FOR C8 CORVETTES
       </p>
     </section>
 
@@ -41,39 +64,39 @@ import {
     <section class="w-full bg-white py-8 md:py-12 lg:py-16">
       <div class="container-e5">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 items-start">
-          <!-- Speedway - Gloss Black -->
-          <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Chrome&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
+          <!-- Speedway - Dark Bronze -->
+          <a href={speedwayTopUrl} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
             <div class="w-full max-w-[380px] md:max-w-[420px] lg:max-w-[464px] mb-6 md:mb-8">
-              <img src="/assets/images/generations/c8/stingray-figma-new/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Gloss Black" class="w-full h-auto" />
+              <img src="https://wheels.autosyncstudio.com/png/E5/Speedway_DB_Dark-Bronze_5-lug_0001.png" alt="Speedway Dark Bronze" class="w-full h-auto" />
             </div>
             <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[24px] md:h-[28px] lg:h-[30px] w-auto mb-4 md:mb-6" />
-            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">CHROME</p>
-            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">ENJOY FREE SHIPPING</p>
+            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">DARK BRONZE</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">AVAILABLE FOR C8 STINGRAY</p>
+            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">19" / 20" & 20" / 21" SIZES</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase text-center">IN STOCK</p>
           </a>
 
           <!-- Daytona - Titanium Brushed Tint -->
-          <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
+          <a href={daytonaTopUrl} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
             <div class="w-full max-w-[380px] md:max-w-[420px] lg:max-w-[464px] mb-6 md:mb-8">
               <img src="/assets/images/generations/c8/stingray-figma-new/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-auto" />
             </div>
             <img src={DAYTONA_LOGO} alt="Daytona" class="h-[24px] md:h-[28px] lg:h-[30px] w-auto mb-4 md:mb-6" />
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">TITANIUM BRUSHED TINT</p>
-            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">SET OF 4 STARTING AT $2,500</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">AVAILABLE FOR C8 STINGRAY</p>
+            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">SET OF 4 STARTING AT $2,500</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase text-center">IN STOCK</p>
           </a>
 
-          <!-- Sebring - Bronze Brushed Tint -->
-          <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
+          <!-- Sebring - Gloss Black -->
+          <a href={sebringTopUrl} class="flex flex-col items-center px-4 hover:opacity-80 transition-opacity">
             <div class="w-full max-w-[380px] md:max-w-[420px] lg:max-w-[464px] mb-6 md:mb-8">
-              <img src="/assets/images/generations/c8/stingray-figma-new/d442c91c12ba3d5e69ac89b01731b5399b849d1f.webp" alt="Sebring Bronze Brushed Tint" class="w-full h-auto" />
+              <img src="https://wheels.autosyncstudio.com/png/E5/Sebring_BK_Gloss_Black_5-lug_0001.png" alt="Sebring Gloss Black" class="w-full h-auto" />
             </div>
             <img src={SEBRING_LOGO} alt="Sebring" class="h-[24px] md:h-[28px] lg:h-[30px] w-auto mb-4 md:mb-6" />
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">GLOSS BLACK</p>
-            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">19" / 20" & 20" / 21" SIZES</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/50 uppercase mb-2 text-center">AVAILABLE FOR C8 STINGRAY</p>
+            <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-black/60 uppercase mb-2 text-center">ENJOY FREE SHIPPING</p>
             <p class="text-[14px] md:text-[18px] lg:text-[20px] tracking-[4px] leading-[20px] text-e5-red uppercase text-center">IN STOCK</p>
           </a>
         </div>
@@ -230,8 +253,8 @@ import {
             <div>
               <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
               <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                <li>Front: 18x10 / Offset +25mm</li>
-                <li>Rear: 19x11 / Offset +20mm</li>
+                <li>Front: 19" x 9" / Offset +35mm</li>
+                <li>Rear: 20" x 11" / Offset +45mm</li>
                 <li>Bolt Pattern: 5x120</li>
               </ul>
             </div>
@@ -242,11 +265,11 @@ import {
               </ul>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
-              <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+              <a href={daytonaDetailUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                 SHOP FITMENT
               </a>
-              <a href={WHEELS_ROUTE} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
-                EXPLORE FORM FORGED
+              <a href={`${WHEELS_ROUTE}/daytona`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                EXPLORE DAYTONA
               </a>
             </div>
           </div>
@@ -278,8 +301,8 @@ import {
             <div>
               <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
               <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                <li>Front: 18x10 / Offset +25mm</li>
-                <li>Rear: 19x11 / Offset +20mm</li>
+                <li>Front: 20" x 9" / Offset +35mm</li>
+                <li>Rear: 21" x 12" / Offset +52mm</li>
                 <li>Bolt Pattern: 5x120</li>
               </ul>
             </div>
@@ -290,11 +313,11 @@ import {
               </ul>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
-              <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
-                SHOP SEBRING
+              <a href={sebringDetailUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                SHOP FITMENT
               </a>
-              <a href={WHEELS_ROUTE} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
-                EXPLORE FORM FORGED
+              <a href={`${WHEELS_ROUTE}/sebring`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                EXPLORE SEBRING
               </a>
             </div>
           </div>
@@ -326,23 +349,23 @@ import {
             <div>
               <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
               <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                <li>Front: 18x10 / Offset +25mm</li>
-                <li>Rear: 19x11 / Offset +20mm</li>
+                <li>Front: 20" x 9" / Offset +35mm</li>
+                <li>Rear: 21" x 12" / Offset +52mm</li>
                 <li>Bolt Pattern: 5x120</li>
               </ul>
             </div>
             <div>
               <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
               <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                <li>Titanium Brushed Tint</li>
+                <li>Dark Bronze</li>
               </ul>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
-              <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SPEEDWAY_BRAND_NAME}&finish=Titanium Brushed Tint&generation=C8&trim=Stingray&frontSize=19" x 8.5" +38mm&rearSize=20" x 11" +52mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
-                SHOP SPEEDWAY
+              <a href={speedwayDetailUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                SHOP FITMENT
               </a>
-              <a href={WHEELS_ROUTE} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
-                EXPLORE FORM FORGED
+              <a href={`${WHEELS_ROUTE}/speedway`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                EXPLORE SPEEDWAY
               </a>
             </div>
           </div>
@@ -353,10 +376,10 @@ import {
     <!-- Gallery Section -->
     <section class="container-e5 py-8 md:py-12 lg:py-16">
       <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-6 md:mb-8 font-['Franklin_Gothic_Book']">
-        C7 CORVETTE GALLERY
+        C8 CORVETTE GALLERY
       </h2>
       <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12">
-        Explore our gallery of C7 Corvettes, showcasing a variety of styles and finishes on customer vehicles.
+        Explore our gallery of C8 Corvettes, showcasing a variety of styles and finishes on customer vehicles.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
         <div class="w-full h-[400px] md:h-[480px] lg:h-[530px]">
@@ -382,7 +405,7 @@ import {
         </div>
       </div>
       <div class="text-center">
-        <a href={GALLERY_WHEELS_ROUTE} class="inline-block bg-e5-red text-white px-10 md:px-12 lg:px-14 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+        <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8`} class="inline-block bg-e5-red text-white px-10 md:px-12 lg:px-14 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
           VIEW GALLERY
         </a>
       </div>

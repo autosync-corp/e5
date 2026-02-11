@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {SINGLE_PRODUCT_ROUTE, WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
 import {
     TALLADEGA_LOGO,
     TALLADEGA_BRAND_NAME,
@@ -208,9 +208,12 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                                 <li>Brushed Aluminum</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
                             <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/sonoma`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE SONOMA
                             </a>
                         </div>
                     </div>
@@ -249,9 +252,12 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                                 <li>Brushed Aluminum</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
                             <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/talladega`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE TALLADEGA
                             </a>
                         </div>
                     </div>
@@ -277,6 +283,11 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                 <div class="w-full h-[530px]">
                     <img src="/assets/images/generations/c8/c8-z06-new/red-bottom.webp" alt="Red Corvette Gallery" class="w-full h-full object-cover" />
                 </div>
+            </div>
+            <div class="text-center">
+                <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=Z06`} class="inline-block bg-e5-red text-white px-10 md:px-12 lg:px-14 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                    VIEW GALLERY
+                </a>
             </div>
         </section>
 

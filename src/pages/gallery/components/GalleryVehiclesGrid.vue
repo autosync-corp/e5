@@ -5,7 +5,7 @@ import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
 import VehicleDetailedCard from "@/pages/gallery/components/VehicleDetailedCard.vue";
 import YearMakeModelSelector from "@/pages/gallery/components/YearMakeModelSelector.vue";
 import GalleryPageStyleSelector from "@/pages/gallery/components/GalleryPageStyleSelector.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import { VETTER_GALLERY_BANNER } from "@/pages/gallery/constants/Images.ts";
@@ -15,6 +15,24 @@ const filters = ref<{ model: string; trim: string; year: string }>({
   model: "",
   trim: "",
   year: "",
+});
+
+// Read URL parameters and set initial filters
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const generation = urlParams.get('generation');
+  const trim = urlParams.get('trim');
+  const year = urlParams.get('year');
+
+  if (generation) {
+    filters.value.model = generation.toUpperCase();
+  }
+  if (trim) {
+    filters.value.trim = trim;
+  }
+  if (year) {
+    filters.value.year = year;
+  }
 });
 
 // Handle filter changes from YearMakeModelSelector

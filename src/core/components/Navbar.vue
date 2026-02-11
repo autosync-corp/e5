@@ -57,7 +57,6 @@ const isShopRoute = computed(() => currentPath.value.startsWith(SHOP_ROUTE))
 const isProcessRoute = computed(() => currentPath.value.startsWith(PROCESS_ROUTE))
 const isVisualizeRoute = computed(() => currentPath.value.startsWith(VISUALIZE_ROUTE))
 const isGenerationRoute = computed(() => currentPath.value.startsWith(GENERATIONS_ROUTE))
-const isAboutRoute = computed(() => currentPath.value.startsWith(ABOUT_ROUTE))
 const isContactRoute = computed(() => currentPath.value.startsWith(CONTACT_ROUTE))
 
 const toggleMobileMenu = () => {
@@ -219,7 +218,6 @@ const closeMiniCart = () => {
         </div>
 
           <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
-          <a :href="ABOUT_ROUTE" class="nav-link" :class="{'selected': isAboutRoute}">ABOUT</a>
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
           <button @click="toggleMiniCart" class="relative">
             <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
@@ -343,7 +341,6 @@ const closeMiniCart = () => {
         </div>
 
         <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
-        <a :href="ABOUT_ROUTE" class="mobile-nav-link" :class="{'selected': isAboutRoute}" @click="closeMobileMenu">ABOUT</a>
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative">

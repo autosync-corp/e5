@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
 import {
     TALLADEGA_LOGO,
     TALLADEGA_BRAND_NAME,
@@ -9,6 +9,23 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
+
+// Helper function to build shop URLs with proper encoding
+function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
+  const params = new URLSearchParams({
+    series,
+    finish,
+    generation,
+    trim,
+    frontSize,
+    rearSize
+  });
+  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+}
+
+// Shop URLs with proper sizes
+const sonomaShopUrl = buildShopUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
+const talladegaShopUrl = buildShopUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
 ---
 
 <MainLayout title="C8 Corvette ZR1 Wheels - E5 Wheels">
@@ -49,7 +66,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
 
                 <!-- Talladega -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" />
                     </div>
@@ -61,7 +78,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                 </a>
 
                 <!-- Sonoma -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" />
                     </div>
@@ -217,9 +234,12 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                                 <li>Brushed Aluminum</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                            <a href={sonomaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/sonoma`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE SONOMA
                             </a>
                         </div>
                     </div>
@@ -258,9 +278,12 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                                 <li>Brushed Aluminum</li>
                             </ul>
                         </div>
-                        <div class="mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Silver&generation=C8&trim=ZR1`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                            <a href={talladegaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center">
                                 SHOP FITMENT
+                            </a>
+                            <a href={`${WHEELS_ROUTE}/talladega`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center">
+                                EXPLORE TALLADEGA
                             </a>
                         </div>
                     </div>
@@ -286,6 +309,11 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                 <div class="w-full h-[530px]">
                     <img src="/assets/images/generations/c8/zr1-figma/c23bd018713f82c64bfd45f4df7952db2e2436b4.webp" alt="Red Corvette Gallery" class="w-full h-full object-cover" />
                 </div>
+            </div>
+            <div class="text-center">
+                <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=ZR1`} class="inline-block bg-e5-red text-white px-10 md:px-12 lg:px-14 py-3 md:py-4 text-[16px] md:text-[20px] lg:text-[24px] tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                    VIEW GALLERY
+                </a>
             </div>
         </section>
 
