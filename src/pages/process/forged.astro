@@ -116,18 +116,19 @@ import MainLayout from '@/layouts/MainLayout.astro';
     </section>
 
     <!-- Hero Video Section 2 -->
-    <section class="relative h-[400px] md:h-[799px] w-full">
-      <img
-        src="/assets/images/process/forged/d58a7e9630e8b54bac2641294335708365a28d50.webp"
-        alt="Factory Machining"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 flex items-center">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-6 w-full">
-          <h2 class="text-white text-[24px] md:text-[48px] font-franklin-book tracking-[4.8px] md:tracking-[9.6px] uppercase leading-[28px] md:leading-[48px] max-w-[500px] md:max-w-[915px]">
-            FACTORY CLIPS OF THE MACHINING, TOOLS, AND THE DRILL POV. SHOW MACHINES AND FORGINGS
-          </h2>
-        </div>
+    <section class="relative h-[400px] md:h-[799px] w-full overflow-hidden">
+      <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/XK_d_X9LYt4?autoplay=1&mute=1&loop=1&playlist=XK_d_X9LYt4&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
+          frameborder="0"
+          allowtransparency="true"
+          style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
+          allow="autoplay; encrypted-media"
+          loading="eager"
+          title="E5 Factory Machining Process"
+        ></iframe>
+        <!-- Overlay to block all interactions -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
       </div>
     </section>
 

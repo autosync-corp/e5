@@ -20,14 +20,36 @@ export function getStaticPaths() {
 
 const { vehicleData } = Astro.props as { vehicleData: CorvetteGalleryItem };
 
-// Helper function to get images from the vehicle data
-function getGalleryImages(vehicle: CorvetteGalleryItem): string[] {
-  if (!vehicle.galleryId || !vehicle.images || vehicle.images.length === 0) {
-    return [];
+// Helper function to get media items from the vehicle data
+function getGalleryMedia(vehicle: CorvetteGalleryItem): any[] {
+  const galleryPath = `/assets/images/gallery/corvette/${vehicle.galleryId}`;
+
+  // If media array exists, use it (supports videos)
+  if (vehicle.media && vehicle.media.length > 0) {
+    return vehicle.media.map((item: any) => {
+      if (item.type === 'video') {
+        return {
+          type: 'video',
+          youtubeId: item.youtubeId,
+          thumbnail: item.thumbnail ? `${galleryPath}/${item.thumbnail}` : null
+        };
+      }
+      return {
+        type: 'image',
+        url: item.url ? `${galleryPath}/${item.url}` : ''
+      };
+    });
   }
 
-  // Map the images to full paths
-  return vehicle.images.map((file: string) => `/assets/images/gallery/corvette/${vehicle.galleryId}/${file}`);
+  // Fallback to images array for backward compatibility
+  if (vehicle.images && vehicle.images.length > 0) {
+    return vehicle.images.map((file: string) => ({
+      type: 'image',
+      url: `${galleryPath}/${file}`
+    }));
+  }
+
+  return [];
 }
 
 // Map CSV data to page format
@@ -41,7 +63,7 @@ const vehicle = {
   style: vehicleData.wheelStyle || 'N/A',
   finish: vehicleData.wheelFinish || 'N/A',
   image: `/assets/images/gallery/corvette/${vehicleData.galleryId}/0.webp`,
-  galleryImages: getGalleryImages(vehicleData),
+  galleryMedia: getGalleryMedia(vehicleData),
   wheelLogo: `/assets/images/logos/e5-${vehicleData.wheelStyle?.toLowerCase().replace(' ', '-')}.webp`,
   tires: vehicleData.tireModel || 'N/A',
 };
@@ -82,7 +104,7 @@ const corvetteGalleryImages = corvetteGalleryData
         </div>
       </div>
 
-      <VehicleImagesGallery client:only="vue" trim={vehicle.trim} images={vehicle.galleryImages} />
+      <VehicleImagesGallery client:only="vue" trim={vehicle.trim} media={vehicle.galleryMedia} />
     </div>
 
     <!-- Vehicle & Wheel Details Section -->

@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import {type Ref, ref, onMounted, onUnmounted} from "vue";
+import {type Ref, ref, computed, onMounted, onUnmounted} from "vue";
+
+interface MediaItem {
+  type: 'image' | 'video';
+  url?: string;
+  youtubeId?: string;
+  thumbnail?: string;
+}
 
 const props = defineProps({
-  images: {
-    type: Array<string>,
+  media: {
+    type: Array as () => MediaItem[],
     required: true
   },
   trim: {
@@ -45,12 +52,21 @@ const updateScrollState = () => {
   canScrollRight.value = scrollLeft < scrollWidth - clientWidth - 1;
 };
 
+// Computed properties for current media item
+const currentMediaItem = computed(() => props.media[currentImageIndex.value]);
+const isCurrentVideo = computed(() => currentMediaItem.value?.type === 'video');
+const currentYoutubeUrl = computed(() => {
+  if (!isCurrentVideo.value || !currentMediaItem.value?.youtubeId) return '';
+  // Add autoplay and other parameters similar to forged page - no controls
+  return `https://www.youtube-nocookie.com/embed/${currentMediaItem.value.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${currentMediaItem.value.youtubeId}&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1080`;
+});
+
 const goToPreviousImage = () => {
   // Circular navigation: if at first image, go to last
   if (currentImageIndex.value > 0) {
     setCurrentImage(currentImageIndex.value - 1);
   } else {
-    setCurrentImage(props.images.length - 1);
+    setCurrentImage(props.media.length - 1);
   }
 
   // Also scroll the thumbnail container
@@ -65,7 +81,7 @@ const goToPreviousImage = () => {
 
 const goToNextImage = () => {
   // Circular navigation: if at last image, go to first
-  if (currentImageIndex.value < props.images.length - 1) {
+  if (currentImageIndex.value < props.media.length - 1) {
     setCurrentImage(currentImageIndex.value + 1);
   } else {
     setCurrentImage(0);
@@ -103,21 +119,39 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <!-- Hero Image Section -->
+  <!-- Hero Image/Video Section -->
   <section class="w-full">
     <div class="relative w-full overflow-hidden group">
+      <!-- Display Image -->
       <img
-          :src="props.images[currentImageIndex]"
+          v-if="!isCurrentVideo"
+          :src="currentMediaItem.url"
           :alt="`${props.trim} ${currentImageIndex + 1}`"
           class="w-full max-h-[740px] object-cover"
       />
 
-      <!-- Navigation Controls on Main Image -->
-      <div class="absolute inset-0 flex items-center justify-between px-4 md:px-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <!-- Display YouTube Video -->
+      <div v-else class="relative w-full" style="padding-bottom: 56.25%; background: #000;">
+        <iframe
+            :src="currentYoutubeUrl"
+            frameborder="0"
+            allowtransparency="true"
+            class="absolute top-0 left-0 w-full h-full"
+            style="pointer-events: none; border: 0;"
+            allow="autoplay; encrypted-media"
+            loading="eager"
+            :title="`${props.trim} video`"
+        ></iframe>
+        <!-- Overlay to block all interactions and hide title -->
+        <div class="absolute top-0 left-0 w-full h-full" style="pointer-events: none;"></div>
+      </div>
+
+      <!-- Navigation Controls on Main Image/Video -->
+      <div class="absolute inset-0 flex items-center justify-between px-4 md:px-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
         <!-- Previous Button -->
         <button
             @click="goToPreviousImage"
-            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm"
+            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm pointer-events-auto"
             aria-label="Previous image"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,7 +162,7 @@ onUnmounted(() => {
         <!-- Next Button -->
         <button
             @click="goToNextImage"
-            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm"
+            class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm pointer-events-auto"
             aria-label="Next image"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +173,7 @@ onUnmounted(() => {
 
       <!-- Image Counter -->
       <div class="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/60 text-white text-sm backdrop-blur-sm">
-        {{ currentImageIndex + 1 }} / {{ props.images.length }}
+        {{ currentImageIndex + 1 }} / {{ props.media.length }}
       </div>
     </div>
 
@@ -168,24 +202,33 @@ onUnmounted(() => {
         >
           <div :class="['flex gap-3 md:gap-4', !hasOverflow && 'justify-center']">
             <button
-                v-for="(img, index) in props.images"
+                v-for="(item, index) in props.media"
                 :key="index"
                 @click="setCurrentImage(index)"
                 :class="[
-                  'flex-shrink-0 overflow-hidden cursor-pointer transition-all rounded-md',
+                  'relative flex-shrink-0 overflow-hidden cursor-pointer transition-all rounded-md',
                   'w-[160px] h-[107px] sm:w-[200px] sm:h-[133px] md:w-[235px] md:h-[157px]',
                   currentImageIndex === index
-                    ? 'scale-[1.02]'
+                    ? 'scale-[1.02] ring-2 ring-e5-red'
                     : 'opacity-60 hover:opacity-100 hover:scale-[1.02]'
                 ]"
-                :aria-label="`View image ${index + 1}`"
+                :aria-label="item.type === 'video' ? `View video ${index + 1}` : `View image ${index + 1}`"
             >
               <img
-                  :src="img"
+                  :src="item.type === 'video' ? item.thumbnail : item.url"
                   :alt="`Thumbnail ${index + 1}`"
                   class="w-full h-full object-cover"
                   loading="lazy"
               />
+
+              <!-- Play Icon Overlay for Videos -->
+              <div v-if="item.type === 'video'" class="absolute inset-0 flex items-center justify-center bg-black/20">
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-e5-red ml-1" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
             </button>
           </div>
         </div>

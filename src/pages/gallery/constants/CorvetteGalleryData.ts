@@ -1,3 +1,10 @@
+export interface GalleryMediaItem {
+  type: 'image' | 'video';
+  url?: string;
+  youtubeId?: string;
+  thumbnail?: string;
+}
+
 export interface CorvetteGalleryItem {
   galleryId: string | null;
   year: string | null;
@@ -19,6 +26,7 @@ export interface CorvetteGalleryItem {
   tirePartR: string | null;
   tireModel: string | null;
   images?: string[];
+  media?: GalleryMediaItem[];
 }
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
@@ -174,7 +182,26 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "tQQGmKG4i78", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" }
+    ]
   },
   {
     "galleryId": "2016-c7-corvette-z06",
@@ -196,7 +223,18 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "ky69HgmLFH8", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" }
+    ]
   },
   {
     "galleryId": "c7-z06-sebring",
@@ -262,7 +300,23 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "zaj3XzLPxdk", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" }
+    ]
   },
   {
     "galleryId": "2017-c7-grand-sport",
@@ -350,7 +404,28 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "tQQGmKG4i78", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" }
+    ]
   },
   {
     "galleryId": "2019-c7-grand-sport",
@@ -438,7 +513,24 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "eZ8RoPZG6Yo", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" }
+    ]
   },
   {
     "galleryId": "2019-c7-z06",
@@ -460,7 +552,55 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp","33.webp","34.webp","35.webp","36.webp","37.webp","38.webp","39.webp","40.webp","41.webp","42.webp","43.webp","44.webp","45.webp"]
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp","33.webp","34.webp","35.webp","36.webp","37.webp","38.webp","39.webp","40.webp","41.webp","42.webp","43.webp","44.webp","45.webp"],
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "_CoABjEOzek", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" },
+      { "type": "image", "url": "23.webp" },
+      { "type": "image", "url": "24.webp" },
+      { "type": "image", "url": "25.webp" },
+      { "type": "image", "url": "26.webp" },
+      { "type": "image", "url": "27.webp" },
+      { "type": "image", "url": "28.webp" },
+      { "type": "image", "url": "29.webp" },
+      { "type": "image", "url": "30.webp" },
+      { "type": "image", "url": "31.webp" },
+      { "type": "image", "url": "32.webp" },
+      { "type": "image", "url": "33.webp" },
+      { "type": "image", "url": "34.webp" },
+      { "type": "image", "url": "35.webp" },
+      { "type": "image", "url": "36.webp" },
+      { "type": "image", "url": "37.webp" },
+      { "type": "image", "url": "38.webp" },
+      { "type": "image", "url": "39.webp" },
+      { "type": "image", "url": "40.webp" },
+      { "type": "image", "url": "41.webp" },
+      { "type": "image", "url": "42.webp" },
+      { "type": "image", "url": "43.webp" },
+      { "type": "image", "url": "44.webp" },
+      { "type": "image", "url": "45.webp" }
+    ]
   },
   {
     "galleryId": "2019-c7-z06-purple",
@@ -482,7 +622,18 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": "Continental ExtremeContact Sport 02",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "9XkHRCzutcQ", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" }
+    ]
   },
   {
     "galleryId": "2020-c8-70th-anniversary-edition",
@@ -548,7 +699,36 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "305/30R20",
     "tirePartR": null,
     "tireModel": "Toyo Proxy R888R",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "LEi6lorr5PA", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" },
+      { "type": "image", "url": "23.webp" },
+      { "type": "image", "url": "24.webp" },
+      { "type": "image", "url": "25.webp" },
+      { "type": "image", "url": "26.webp" },
+      { "type": "image", "url": "27.webp" }
+    ]
   },
   {
     "galleryId": "2023-c8-stingray-3lt",
@@ -856,7 +1036,31 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "305/30R20",
     "tirePartR": null,
     "tireModel": "Pirelli",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "SBPJihKD9PQ", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" }
+    ]
   },
   {
     "galleryId": "2024-c8-corvette-z06",
@@ -878,7 +1082,13 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "345/25R21",
     "tirePartR": null,
     "tireModel": "Michelin Pilot Sport 4S",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "qXNLtY001zk", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" }
+    ]
   },
   {
     "galleryId": "2024-c8-stingray",
@@ -1032,7 +1242,28 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "345/25R21",
     "tirePartR": null,
     "tireModel": "Michelin Pilot Sport 4S",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "Fu5qqPtfnx0", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" }
+    ]
   },
   {
     "galleryId": "2025-c8-corvette-zr1",
@@ -1054,7 +1285,36 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "345/25R21",
     "tirePartR": null,
     "tireModel": "Michelin Pilot Sport 4S",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "WyYxPUnEpbg", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" },
+      { "type": "image", "url": "23.webp" },
+      { "type": "image", "url": "24.webp" },
+      { "type": "image", "url": "25.webp" },
+      { "type": "image", "url": "26.webp" },
+      { "type": "image", "url": "27.webp" }
+    ]
   },
   {
     "galleryId": "2025-c8-stingray",
@@ -1098,7 +1358,31 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "345/25R21",
     "tirePartR": null,
     "tireModel": "Michelin Pilot Sport 4S",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "_k8FLM-oF0k", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" }
+    ]
   },
   {
     "galleryId": "c8-z06-with-sonoma-wheels-e5",
@@ -1120,7 +1404,38 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "345/25R21",
     "tirePartR": null,
     "tireModel": "Michelin Pilot Sport 4S",
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp"]
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp"],
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "RR7pRpKJUBU", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" },
+      { "type": "image", "url": "23.webp" },
+      { "type": "image", "url": "24.webp" },
+      { "type": "image", "url": "25.webp" },
+      { "type": "image", "url": "26.webp" },
+      { "type": "image", "url": "27.webp" },
+      { "type": "image", "url": "28.webp" }
+    ]
   },
   {
     "galleryId": "c6-grand-sport",
@@ -1164,7 +1479,33 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tireSizeR": "335/25R20",
     "tirePartR": null,
     "tireModel": null,
-    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp"]
+    "media": [
+      { "type": "image", "url": "0.webp" },
+      { "type": "video", "youtubeId": "cfXmieSbOEg", "thumbnail": "1.webp" },
+      { "type": "image", "url": "2.webp" },
+      { "type": "image", "url": "3.webp" },
+      { "type": "image", "url": "4.webp" },
+      { "type": "image", "url": "5.webp" },
+      { "type": "image", "url": "6.webp" },
+      { "type": "image", "url": "7.webp" },
+      { "type": "image", "url": "8.webp" },
+      { "type": "image", "url": "9.webp" },
+      { "type": "image", "url": "10.webp" },
+      { "type": "image", "url": "11.webp" },
+      { "type": "image", "url": "12.webp" },
+      { "type": "image", "url": "13.webp" },
+      { "type": "image", "url": "14.webp" },
+      { "type": "image", "url": "15.webp" },
+      { "type": "image", "url": "16.webp" },
+      { "type": "image", "url": "17.webp" },
+      { "type": "image", "url": "18.webp" },
+      { "type": "image", "url": "19.webp" },
+      { "type": "image", "url": "20.webp" },
+      { "type": "image", "url": "21.webp" },
+      { "type": "image", "url": "22.webp" },
+      { "type": "image", "url": "23.webp" },
+      { "type": "image", "url": "24.webp" }
+    ]
   },
   {
     "galleryId": "bruce-wayne-c8-stingray-w-gloss-black-sebring",
