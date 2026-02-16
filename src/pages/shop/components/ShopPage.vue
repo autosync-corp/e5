@@ -351,7 +351,7 @@ onMounted(() => {
     <!-- Hero Section -->
     <section class="relative w-full h-[400px] bg-gradient-to-r from-black to-gray-900 flex items-center justify-center">
       <div class="text-center">
-        <h1 class="text-6xl font-['Franklin_Gothic_Demi'] text-white tracking-wider mb-4">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-['Franklin_Gothic_Demi'] text-white tracking-wider mb-4">
           E5 WHEELS SHOP
         </h1>
         <p class="text-xl font-['Franklin_Gothic_Book'] text-white/80">
@@ -423,7 +423,7 @@ onMounted(() => {
         <div v-for="series in productsBySeries" :key="series.seriesName" class="space-y-6">
           <!-- Series Header -->
           <div class="border-b-2 border-e5-red pb-3">
-            <h2 class="text-3xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
+            <h2 class="text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
               {{ series.seriesName.toUpperCase() }}
             </h2>
             <div class="mt-2 flex flex-wrap gap-3 text-sm font-['Franklin_Gothic_Book'] text-black/70">
@@ -558,7 +558,7 @@ onMounted(() => {
 
       <!-- No Results -->
       <div v-if="productsBySeries.length === 0" class="text-center py-20">
-        <p class="text-2xl font-['Franklin_Gothic_Book'] text-black/50">
+        <p class="text-xl md:text-2xl font-['Franklin_Gothic_Book'] text-black/50">
           No products found matching your filters.
         </p>
         <p v-if="selectedVehicle" class="text-lg font-['Franklin_Gothic_Book'] text-black/40 mt-4">

@@ -490,7 +490,7 @@ const closeMiniCart = () => {
 }
 
 /* Mobile Navigation */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .desktop-nav {
     display: none;
   }

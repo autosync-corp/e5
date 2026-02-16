@@ -41,7 +41,7 @@ const onClick = () => {
         class="w-full h-full object-cover"
       />
       <div v-if="props.featured" class="absolute inset-0 bg-black/35 flex items-center justify-center">
-        <span class="text-white text-2xl font-franklin-demi tracking-[5.04px] underline decoration-solid">
+        <span class="text-white text-xl md:text-2xl font-franklin-demi tracking-[5.04px] underline decoration-solid">
           VIEW {{ props.name.toUpperCase() }}
         </span>
       </div>

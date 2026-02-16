@@ -119,7 +119,7 @@ onMounted(() => {
 
         <!-- Empty Cart State -->
         <div v-if="isEmpty" class="bg-white rounded-2xl p-16 text-center">
-          <h2 class="text-3xl font-['Franklin_Gothic_Demi'] text-black mb-6">Your cart is empty</h2>
+          <h2 class="text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black mb-6">Your cart is empty</h2>
           <p class="text-lg font-['Franklin_Gothic_Book'] text-black/70 mb-8">
             Add some wheels to get started!
           </p>

@@ -79,7 +79,7 @@ const wheelStyleRoute = computed(() => {
 
 <template>
   <section v-if="hasImages" class="container-e5 py-24 px-24">
-    <h2 class="text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8 uppercase">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8 uppercase">
       {{ wheelStyle || 'WHEEL' }} GALLERY
     </h2>
 
