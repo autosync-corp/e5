@@ -18,7 +18,7 @@ const detailedGallery = ref<boolean>(false);
 <template>
   <div class="w-full">
     <!-- Hero Section -->
-    <div class="relative w-full h-[400px] md:h-[600px]">
+    <div class="relative w-full h-[300px] md:h-[450px] lg:h-[600px] xl:h-[700px]">
       <img
         :src="WHEEL_GALLERY_BANNER"
         alt="Wheel Gallery Banner"
@@ -27,16 +27,16 @@ const detailedGallery = ref<boolean>(false);
     </div>
 
     <!-- Gallery Introduction Section -->
-    <section class="container-e5 pt-16 pb-8">
-      <div class="flex justify-between items-start mb-8">
-        <div class="h-[85px] w-auto max-w-[805px]">
+    <section class="container-e5 pt-8 md:pt-12 lg:pt-16 pb-8">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0 mb-6 md:mb-8">
+        <div class="h-[50px] md:h-[65px] lg:h-[85px] w-auto max-w-[400px] md:max-w-[600px] lg:max-w-[805px]">
           <img :src="GALLERY_LOGO" alt="Gallery" class="h-full w-auto object-contain" />
         </div>
-        <div class="h-[70px] w-auto max-w-[234px]">
+        <div class="h-[40px] md:h-[55px] lg:h-[70px] w-auto max-w-[150px] md:max-w-[200px] lg:max-w-[234px]">
           <img :src="FORM_FORGED_SERIES_LOGO" alt="Form Forged Series" class="h-full w-auto object-contain" />
         </div>
       </div>
-      <p class="text-[24px] font-excon-light leading-[30px] text-black opacity-70 max-w-[1252px]">
+      <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-excon-light leading-[22px] md:leading-[26px] lg:leading-[30px] text-black opacity-70 max-w-[1252px]">
         Indulge yourself in our large collection of wheel galleries featuring our Form Forged Series wheels in all kinds of environments.
       </p>
     </section>
