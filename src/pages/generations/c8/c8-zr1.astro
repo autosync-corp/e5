@@ -102,10 +102,14 @@ const talladegaShopUrl = buildShopUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 
         </section>
 
         <!-- Two Car Images -->
-        <section class="w-full bg-black">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <img src="/assets/images/generations/c8/zr1-figma/car-mid2.webp" alt="Dark Corvette" class="w-full h-auto" />
-                <img src="/assets/images/generations/c8/zr1-figma/car-mid1.webp" alt="White Corvette" class="w-full h-auto" />
+        <section class="container-e5 py-8 md:py-12 lg:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <div class="border-2 border-gray-400 p-4 md:p-6">
+                    <img src="/assets/images/generations/c8/zr1-figma/car-mid2.webp" alt="Dark Corvette" class="w-full h-auto object-cover" />
+                </div>
+                <div class="border-2 border-gray-400 p-4 md:p-6">
+                    <img src="/assets/images/generations/c8/zr1-figma/car-mid1.webp" alt="White Corvette" class="w-full h-auto object-cover" />
+                </div>
             </div>
         </section>
 
@@ -147,59 +151,28 @@ const talladegaShopUrl = buildShopUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 
             </p>
         </section>
 
-        <!-- Specifications Section -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[35px] md:leading-[40px] lg:leading-[43px] text-e5-red uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">
-                C8 ZR1 WHEEL SPECIFICATIONS
-            </h2>
-            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
-                Here is what you need to know about your C8 ZR1.
-            </p>
+        <!-- C8 Generation Quote Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20 px-8 md:px-16 lg:px-[250px] border-t border-gray-300">
+            <!-- Logo and Quote -->
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-16">
+                <!-- C8 Logo -->
+                <div class="w-full md:w-auto flex-shrink-0">
+                    <img
+                        src="/assets/images/logos/c8.png"
+                        alt="C8 Corvette Logo"
+                        class="w-[120px] md:w-[150px] lg:w-[180px] h-auto mx-auto md:mx-0"
+                    />
+                </div>
 
-            <!-- Specifications Table -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-center font-['Franklin_Gothic_Book'] text-[18px] md:text-[20px] lg:text-[24px] tracking-[1.2px]">
-                    <thead>
-                        <tr class="border-b border-black/20">
-                            <th class="py-6 px-4 text-black/70 font-normal leading-[54px]">C8 VARIANT</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">BOLT<br/>PATTERN</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">CENTER<br/>BORE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT<br/>OFFSET</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR<br/>OFFSET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">ZR1</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">66.9 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">20" x 10.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+28 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">21" x 13"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+50 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">Z06</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">66.9 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">20" x 10"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+30 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">21" x 13"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+52 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">E-RAY</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">66.9 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">20" x 9.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+38 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">21" x 12"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+52 mm</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Quote Content -->
+                <div class="flex-1">
+                    <h2 class="text-[32px] md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 text-black text-center md:text-left">
+                        C8 (2020–Present)
+                    </h2>
+                    <p class="text-[18px] md:text-[22px] lg:text-[26px] leading-[1.6] text-black/80 italic text-center md:text-left">
+                        "I rewrote the rules. Mid-engine, dual-clutch, supercar DNA — I'm what happens when seven decades of evolution finally break free from tradition. They said Corvette would never go mid-engine. I'm the answer to every doubter who ever lived."
+                    </p>
+                </div>
             </div>
         </section>
 

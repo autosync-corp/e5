@@ -58,9 +58,6 @@ const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', '
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
                 Born from the bridge between street presence and track capability, the C6 Grand Sport demands more than a generic fitment. Our Form Forged Series is engineered around its wider stance and performance intent, using flow-formed construction rooted in forged DNA to deliver strength, reduced weight, and daily drivability. Exclusively designed for Corvettes, each wheel sharpens the Grand Sport's proportions, handling confidence, and unmistakable character.
             </p>
-            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
-                SHOP FORM FORGED FOR C6 CORVETTES
-            </p>
         </section>
 
         <!-- Three Wheel Options -->
@@ -102,12 +99,6 @@ const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', '
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
             </div>
-
-            <div class="text-center">
-                <a href={WHEELS_ROUTE} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
-                    SHOP FORM FORGED
-                </a>
-            </div>
         </section>
 
         <!-- Overview Section -->
@@ -118,20 +109,22 @@ const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', '
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
                 Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C6 Grand Sport, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <div class="w-full h-[434px]">
-                    <img
-                        src="/assets/images/generations/c6/grand-sport-figma-new/3ae3d924f20f4cb3f91caa52ba737cec2861fd34.webp"
-                        alt="E5 Wheel Detail"
-                        class="w-full h-full object-cover"
-                    />
-                </div>
-                <div class="w-full h-[435px]">
-                    <img
-                        src="/assets/images/generations/c6/grand-sport-figma-new/14d9cddaf6c883d25f65e4da7abe1e7379299063.webp"
-                        alt="E5 Wheel Detail"
-                        class="w-full h-full object-cover"
-                    />
+            <div class="border-2 border-gray-400 p-4 md:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div>
+                        <img
+                            src="/assets/images/generations/c6/grand-sport-figma-new/3ae3d924f20f4cb3f91caa52ba737cec2861fd34.webp"
+                            alt="E5 Wheel Detail"
+                            class="w-full h-auto object-cover"
+                        />
+                    </div>
+                    <div>
+                        <img
+                            src="/assets/images/generations/c6/grand-sport-figma-new/14d9cddaf6c883d25f65e4da7abe1e7379299063.webp"
+                            alt="E5 Wheel Detail"
+                            class="w-full h-auto object-cover"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
@@ -180,68 +173,28 @@ const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', '
             </p>
         </section>
 
-        <!-- C6 Specifications Section -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[35px] md:leading-[40px] lg:leading-[43px] text-e5-red uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">
-                C6 WHEEL SPECIFICATIONS
-            </h2>
-            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
-                Here is what you need to know about your C6.
-            </p>
+        <!-- C6 Generation Quote Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20 px-8 md:px-16 lg:px-[250px] border-t border-gray-300">
+            <!-- Logo and Quote -->
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-16">
+                <!-- C6 Logo -->
+                <div class="w-full md:w-auto flex-shrink-0">
+                    <img
+                        src="/assets/images/logos/C6.png"
+                        alt="C6 Corvette Logo"
+                        class="w-[120px] md:w-[150px] lg:w-[180px] h-auto mx-auto md:mx-0"
+                    />
+                </div>
 
-            <!-- Specifications Table -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-center font-['Franklin_Gothic_Book'] text-[18px] md:text-[20px] lg:text-[24px] tracking-[1.2px]">
-                    <thead>
-                        <tr class="border-b border-black/20">
-                            <th class="py-6 px-4 text-black/70 font-normal leading-[54px]">C6 VARIANT</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">BOLT<br/>PATTERN</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">CENTER<br/>BORE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT<br/>OFFSET</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR<br/>OFFSET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">BASE<br/>MODEL</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">18" x 8.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">Grand Sport</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">18" x 9.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 12"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">Z06</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">18" x 9.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+54 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 12"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+58 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">ZR1</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">20" x 12"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+59 mm</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Quote Content -->
+                <div class="flex-1">
+                    <h2 class="text-[32px] md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 text-black text-center md:text-left">
+                        C6 (2005–2013)
+                    </h2>
+                    <p class="text-[18px] md:text-[22px] lg:text-[26px] leading-[1.6] text-black/80 italic text-center md:text-left">
+                        "I took everything the C5 started and refined it with surgical precision. Exposed headlamps, a stiffer chassis, and up to 638 horsepower in my Z06 and ZR1 trims — I wasn't chasing anyone. I was the benchmark they were all trying to catch."
+                    </p>
+                </div>
             </div>
         </section>
 

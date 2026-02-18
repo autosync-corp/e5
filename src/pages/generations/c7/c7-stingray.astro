@@ -99,12 +99,6 @@ const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Ti
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
             </div>
-
-            <div class="text-center">
-                <a href={WHEELS_ROUTE} class="inline-block bg-e5-red text-white px-12 py-6 text-[16px] font-excon-light tracking-[5.12px] uppercase hover:bg-e5-red/90 transition-colors">
-                    SHOP FORM FORGED
-                </a>
-            </div>
         </section>
 
         <!-- Overview Section -->
@@ -115,19 +109,19 @@ const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Ti
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-12 md:mb-16">
                 Every E5 Form Forged wheel begins with a foundation of strength and precision. Engineered with forged DNA and crafted through advanced flow forming, we strategically remove excess material to optimize the strength-to-weight ratio and reduce rotational mass. Designed exclusively for the C8 Stingray, our Form Forged wheels enable wider tire setups, improved grip, sharper handling, and increased brake clearance—delivering confident performance on the street without sacrificing daily drivability.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <div class="w-full h-[434px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <div class="border-2 border-gray-400 p-4 md:p-6">
                     <img
                         src="/assets/images/generations/c7/stingray/56175c03c2a49a142379d2015680081565eac86a.webp"
                         alt="E5 Wheel Detail"
-                        class="w-full h-full object-cover"
+                        class="w-full h-auto object-cover"
                     />
                 </div>
-                <div class="w-full h-[435px]">
+                <div class="border-2 border-gray-400 p-4 md:p-6">
                     <img
                         src="/assets/images/generations/c7/stingray/0de347cd1597f41e669d77002b2dbfed1ef1ef34.webp"
                         alt="E5 Wheel Detail"
-                        class="w-full h-full object-cover"
+                        class="w-full h-auto object-cover"
                     />
                 </div>
             </div>
@@ -177,50 +171,28 @@ const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Ti
             </p>
         </section>
 
-        <!-- C7 Stingray Specifications Section -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[35px] md:leading-[40px] lg:leading-[43px] text-e5-red uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">
-                C7 STINGRAY WHEEL SPECIFICATIONS
-            </h2>
-            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-12 md:mb-16">
-                Here is what you need to know about your C7 STINGRAY.
-            </p>
+        <!-- C7 Generation Quote Section -->
+        <section class="container-e5 py-12 md:py-16 lg:py-20 px-8 md:px-16 lg:px-[250px] border-t border-gray-300">
+            <!-- Logo and Quote -->
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-16">
+                <!-- C7 Logo -->
+                <div class="w-full md:w-auto flex-shrink-0">
+                    <img
+                        src="/assets/images/logos/C7.png"
+                        alt="C7 Corvette Logo"
+                        class="w-[120px] md:w-[150px] lg:w-[180px] h-auto mx-auto md:mx-0"
+                    />
+                </div>
 
-            <!-- Specifications Table -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-center font-['Franklin_Gothic_Book'] text-[18px] md:text-[20px] lg:text-[24px] tracking-[1.2px]">
-                    <thead>
-                        <tr class="border-b border-black/20">
-                            <th class="py-6 px-4 text-black/70 font-normal leading-[54px]">C7 VARIANT</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">BOLT<br/>PATTERN</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">CENTER<br/>BORE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">FRONT<br/>OFFSET</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR WHEEL<br/>SIZE</th>
-                            <th class="py-6 px-4 text-black font-normal leading-[30px]">REAR<br/>OFFSET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">STINGRAY</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">18" x 8.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 10"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+79 mm</td>
-                        </tr>
-                        <tr class="border-b border-black/20">
-                            <td class="py-6 px-4 text-black/70 leading-[30px]">Z51 PACKAGE</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">5x120 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">70.3 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">19" x 8.5"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+56 mm</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">20" x 10"</td>
-                            <td class="py-6 px-4 text-black leading-[54px]">+79 mm</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Quote Content -->
+                <div class="flex-1">
+                    <h2 class="text-[32px] md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 text-black text-center md:text-left">
+                        C7 (2014–2019)
+                    </h2>
+                    <p class="text-[18px] md:text-[22px] lg:text-[26px] leading-[1.6] text-black/80 italic text-center md:text-left">
+                        "I'm the last of the front-engine legends, and I made sure the world would never forget it. With angular aggression, a supercharged LT4 in my Z06, and technology that rivaled cars costing three times my price, I closed out an era with nothing left to prove."
+                    </p>
+                </div>
             </div>
         </section>
 
