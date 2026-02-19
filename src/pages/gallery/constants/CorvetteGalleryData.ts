@@ -259,7 +259,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp"]
   },
   {
-    "galleryId": "2017-c7-grand-sport",
+    "galleryId": "2017-c7-grand-sport-long-beach-metallic-red",
     "year": "2017",
     "submodel": "C7",
     "trim": "Grand Sport",
