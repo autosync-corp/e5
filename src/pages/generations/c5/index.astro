@@ -28,7 +28,7 @@ const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5
 <MainLayout title="Custom C5 Corvette Wheels - E5 Wheels">
   <div class="w-full bg-white">
     <!-- Hero Section with Background Image -->
-    <section class="relative w-full h-[799px] overflow-hidden">
+    <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">
       <img
         src="/assets/images/76e661b873c8acdfb076c02ad1ca15b4ba8974d5.webp"
         alt="C5 Corvette"
@@ -149,46 +149,47 @@ const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5
     </section>
 
     <!-- Finishing Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20 bg-white">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-12">
+    <section class="container-e5 py-8 md:py-12 lg:py-16">
+      <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[20px] text-e5-red uppercase mb-6 md:mb-8 font-['Franklin_Gothic_Book']">
         FINISHING
       </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 max-w-[1276px] mb-12">
+      <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12">
         Every wheel in the E5 Forged Collection is more than performance—it's a statement of individuality. Available in premium finishes like gloss black, silver, brushed, or polished, each design showcases the precision of its forged construction. For those seeking something truly unique, we also offer custom powder coats and bespoke finishes to match any vision. No matter the choice, every finish is executed with uncompromising attention to detail, delivering a look that lasts as long as the engineering behind it.
       </p>
-
-      <!-- Finishing Images -->
-      <div class="grid grid-cols-2 gap-1 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mb-8 md:mb-12">
+        <div>
+          <div class="w-full h-[400px] md:h-[500px] lg:h-[575px] mb-4 md:mb-8">
+            <img
+              src="/assets/images/7b0eb2bf712356f129743563b9cab285a89c93ba.webp"
+              alt="Bronze Brushed Tint"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red/70 text-center mb-8 md:mb-0">
+            BRONZE BRUSHED TINT
+          </p>
+        </div>
+        <div>
+          <div class="w-full h-[400px] md:h-[500px] lg:h-[575px] mb-4 md:mb-8">
+            <img
+              src="/assets/images/2dc258da3ef0fa3bafdc282a190b412e0a3f7aac.webp"
+              alt="Titanium Brushed Tint"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red/70 text-center mb-8 md:mb-0">
+            TITANIUM BRUSHED TINT
+          </p>
+        </div>
+      </div>
+      <div class="w-full h-[400px] md:h-[500px] lg:h-[611px] mb-4 md:mb-8">
         <img
-          src="/assets/images/7b0eb2bf712356f129743563b9cab285a89c93ba.webp"
-          alt="Bronze Brushed Tint"
-          class="w-full h-[575px] object-cover"
-        />
-        <img
-          src="/assets/images/2dc258da3ef0fa3bafdc282a190b412e0a3f7aac.webp"
-          alt="Titanium Brushed Tint"
-          class="w-full h-[575px] object-cover"
+          src="/assets/images/fb6915b500baca326333e5804080e0087421c402.webp"
+          alt="Gloss Black"
+          class="w-full h-full object-cover"
         />
       </div>
-
-      <div class="grid grid-cols-2 gap-1 mb-4">
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-e5-red/70 text-center">
-          BRONZE BRUSHED TINT
-        </p>
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-e5-red/70 text-center">
-          TITANIUM BRUSHED TINT
-        </p>
-      </div>
-
-      <!-- Full Width Image -->
-      <img
-        src="/assets/images/fb6915b500baca326333e5804080e0087421c402.webp"
-        alt="Gloss Black Finish"
-        class="w-full h-[611px] object-cover mb-4"
-      />
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-e5-red/70 text-center">
+      <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-e5-red/70 text-center mb-8">
         GLOSS BLACK
       </p>
     </section>
@@ -325,7 +326,7 @@ const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5
       <img
         src="/assets/images/fb6915b500baca326333e5804080e0087421c402.webp"
         alt="C5 Corvette with E5 Wheels"
-        class="w-full h-[716px] object-cover"
+        class="w-full h-[400px] md:h-[550px] lg:h-[716px] object-cover"
       />
     </section>
 
@@ -386,7 +387,7 @@ const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5
       <img
         src="/assets/images/706d23556c65b2fe2cde02c3e685512eb70ab036.webp"
         alt="C5 Corvette Detail"
-        class="w-full h-[716px] object-cover"
+        class="w-full h-[400px] md:h-[550px] lg:h-[716px] object-cover"
       />
     </section>
 
@@ -447,7 +448,7 @@ const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5
       <img
         src="/assets/images/2dc258da3ef0fa3bafdc282a190b412e0a3f7aac.webp"
         alt="C5 Corvette with E5 Wheels"
-        class="w-full h-[716px] object-cover"
+        class="w-full h-[400px] md:h-[550px] lg:h-[716px] object-cover"
       />
     </section>
 
