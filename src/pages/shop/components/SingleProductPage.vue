@@ -480,6 +480,40 @@ const finishDisplayName = computed(() => {
   return getFinishName(selectedProduct.value).toUpperCase();
 });
 
+// Determine which logo to use based on SegmentTags
+const brandLogo = computed(() => {
+  if (!selectedProduct.value) return {
+    src: '/assets/images/logos/e5-forged.webp',
+    alt: 'E5 Forged'
+  };
+
+  // Form Forged wheels: Daytona, Sebring, Speedway
+  // Forged wheels: Sonoma, Talladega
+  const model = selectedProduct.value.Model?.toLowerCase() || '';
+  const formForgedModels = ['daytona', 'sebring', 'speedway'];
+
+  const isFormForged = formForgedModels.some(modelName => model.includes(modelName));
+
+  console.log('🎨 Brand Logo Check:', {
+    model: selectedProduct.value.Model,
+    isFormForged,
+    logoPath: isFormForged ? 'e5-form-forged.webp' : 'e5-forged.webp'
+  });
+
+  if (isFormForged) {
+    return {
+      src: '/assets/images/logos/e5-form-forged.webp',
+      alt: 'E5 Form Forged'
+    };
+  }
+
+  // Default to Forged logo (Sonoma, Talladega)
+  return {
+    src: '/assets/images/logos/e5-forged.webp',
+    alt: 'E5 Forged'
+  };
+});
+
 // Check fitment for selected vehicle
 const vehicleFitment = computed(() => {
   if (!selectedProduct.value || !selectedVehicle.value) return null;
@@ -1194,18 +1228,18 @@ onMounted(() => {
 <template>
   <div class="w-full bg-white">
     <!-- Loading State -->
-    <div v-if="isLoading" class="max-w-[1728px] mx-auto px-16 py-12 text-center">
+    <div v-if="isLoading" class="max-w-[1728px] mx-auto px-4 sm:px-8 md:px-16 py-6 md:py-12 text-center">
       <p class="text-xl text-black/70">Loading product...</p>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="max-w-[1728px] mx-auto px-16 py-12 text-center">
+    <div v-else-if="error" class="max-w-[1728px] mx-auto px-4 sm:px-8 md:px-16 py-6 md:py-12 text-center">
       <p class="text-xl text-red-600">{{ error }}</p>
     </div>
 
     <!-- Main Content Container -->
-    <div v-if="!isLoading && !error && selectedProduct" class="max-w-[1728px] mx-auto px-16 py-12">
-      <div class="grid grid-cols-2 gap-16">
+    <div v-if="!isLoading && !error && selectedProduct" class="max-w-[1728px] mx-auto px-4 sm:px-8 md:px-16 py-6 md:py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 lg:gap-16">
         <!-- Left Column - Product Images -->
         <div class="space-y-8">
           <!-- Main Product Image -->
@@ -1218,25 +1252,25 @@ onMounted(() => {
           </div>
 
           <!-- Thumbnail Navigation -->
-          <div class="flex items-center justify-center gap-4">
+          <div class="flex items-center justify-center gap-2 md:gap-4">
             <!-- Left Arrow -->
             <button
               @click="prevImage"
               :disabled="currentImageIndex === 0"
-              class="p-2 opacity-70 hover:opacity-100 transition-opacity disabled:opacity-30"
+              class="p-1 md:p-2 opacity-70 hover:opacity-100 transition-opacity disabled:opacity-30"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="md:w-6 md:h-6">
                 <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
 
             <!-- Thumbnails -->
-            <div class="flex gap-4">
+            <div class="flex gap-2 md:gap-4">
               <div
                 v-for="(image, index) in currentImages"
                 :key="index"
                 @click="selectImage(index)"
-                class="w-28 h-28 border-2 transition-colors cursor-pointer"
+                class="w-16 h-16 md:w-24 lg:w-28 md:h-24 lg:h-28 border-2 transition-colors cursor-pointer"
                 :class="currentImageIndex === index ? 'border-e5-red' : 'border-transparent hover:border-e5-red'"
               >
                 <img
@@ -1251,9 +1285,9 @@ onMounted(() => {
             <button
               @click="nextImage"
               :disabled="currentImageIndex === currentImages.length - 1"
-              class="p-2 opacity-70 hover:opacity-100 transition-opacity disabled:opacity-30"
+              class="p-1 md:p-2 opacity-70 hover:opacity-100 transition-opacity disabled:opacity-30"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="md:w-6 md:h-6">
                 <path d="M9 6L15 12L9 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
@@ -1262,12 +1296,12 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Brand Logo -->
-          <div class="flex justify-end">
+          <!-- Brand Logo - Left aligned on mobile, right aligned on desktop -->
+          <div class="flex justify-start lg:justify-end">
             <img
-              src="/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp"
-              alt="E5 Forged"
-              class="h-5 object-contain"
+              :src="brandLogo.src"
+              :alt="brandLogo.alt"
+              class="h-8 lg:h-12 object-contain"
             />
           </div>
 

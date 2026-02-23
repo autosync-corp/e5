@@ -119,7 +119,7 @@ const closeMiniCart = () => {
           <div class="gallery-dropdown-wrapper" @mouseenter="isWheelsDropdownOpen = true" @mouseleave="closeWheelsDropdown">
             <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">
               WHEELS
-              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
@@ -144,7 +144,7 @@ const closeMiniCart = () => {
           <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
             <button class="nav-link" :class="{'selected': isGalleryRoute}">
               GALLERY
-              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -160,7 +160,7 @@ const closeMiniCart = () => {
           <div class="gallery-dropdown-wrapper" @mouseenter="isProcessDropdownOpen = true" @mouseleave="closeProcessDropdown">
             <button class="nav-link" :class="{'selected': isProcessRoute}">
               PROCESS
-              <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -186,7 +186,7 @@ const closeMiniCart = () => {
         <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
           <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
             GENERATIONS
-            <svg class="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
@@ -255,7 +255,7 @@ const closeMiniCart = () => {
               WHEELS
             </a>
             <button @click="toggleWheelsDropdown" class="text-white p-1">
-              <svg class="inline-block w-3 h-3" :class="{'rotate-180': isWheelsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isWheelsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -279,7 +279,7 @@ const closeMiniCart = () => {
         <div class="mobile-submenu">
           <button @click="toggleGalleryDropdown" class="mobile-nav-link" :class="{'selected': isGalleryRoute}">
             GALLERY
-            <svg class="inline-block w-3 h-3 ml-1" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="inline-block w-5 h-5 ml-1" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
@@ -293,7 +293,7 @@ const closeMiniCart = () => {
         <div class="mobile-submenu">
           <button @click="toggleProcessDropdown" class="mobile-nav-link" :class="{'selected': isProcessRoute}">
             PROCESS
-            <svg class="inline-block w-3 h-3 ml-1" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="inline-block w-5 h-5 ml-1" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
@@ -310,7 +310,7 @@ const closeMiniCart = () => {
               GENERATIONS
             </a>
             <button @click="toggleGenerationsDropdown" class="text-white p-1">
-              <svg class="inline-block w-3 h-3" :class="{'rotate-180': isGenerationsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGenerationsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -511,11 +511,11 @@ const closeMiniCart = () => {
 }
 
 .mobile-menu-content {
-  @apply flex flex-col items-center justify-center gap-8 h-full px-6;
+  @apply flex flex-col items-center gap-8 h-full px-6 py-8 overflow-y-auto;
 }
 
 .mobile-nav-link {
-  @apply font-franklin-medium text-18 text-white no-underline transition-opacity hover:opacity-70;
+  @apply font-franklin-medium text-18 text-white underline transition-opacity hover:opacity-70;
 }
 
 .mobile-nav-link.selected {
