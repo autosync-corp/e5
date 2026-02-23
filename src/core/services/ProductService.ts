@@ -88,6 +88,7 @@ async function fetchWheelsPage(
     'i-specs': 'true',
     'i-tags': 'true',
     'i-updatedAt': 'true',
+    'f-imgFormat': 'webp',
   });
 
   // Add filters if provided

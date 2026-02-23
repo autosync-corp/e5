@@ -32,6 +32,9 @@ function buildQueryParams(params: WheelApiParams): URLSearchParams {
   if (params.includeSpecs) queryParams.append('i-specs', 'true');
   if (params.includeTags) queryParams.append('i-tags', 'true');
 
+  // Add image format
+  queryParams.append('f-imgFormat', 'webp');
+
   return queryParams;
 }
 

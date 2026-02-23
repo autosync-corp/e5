@@ -578,7 +578,7 @@ async function loadProducts() {
 
         // Check if this is staggered fitment
         if (selectedVehicle.value && hasStaggeredFitment(selectedVehicle.value)) {
-          // For staggered, try to auto-select sizes from URL params or first available
+          // For staggered, try to auto-select sizes from URL params or use smart defaults
           if (availableFrontSizeOffsets.value.length > 0) {
             // Priority 1: Check if initialFrontSize is provided (from gallery page)
             if (initialFrontSize.value) {
@@ -593,13 +593,30 @@ async function loadProducts() {
                 selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
               }
             }
-            // Priority 2: Check if the current product's size is in the available list
-            else if (availableFrontSizeOffsets.value.includes(sizeOffsetStr)) {
-              selectedFrontSizeOffset.value = sizeOffsetStr;
-            }
-            // Priority 3: Use first available
+            // Priority 2: Smart default - pick smallest width for front
             else {
-              selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+              // Parse all available front sizes to find the one with smallest width
+              const frontSizesWithParsed = availableFrontSizeOffsets.value.map(size => {
+                const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+                if (!match) return null;
+                return {
+                  size,
+                  diameter: parseFloat(match[1]),
+                  width: parseFloat(match[2]),
+                  offset: parseInt(match[3])
+                };
+              }).filter(Boolean);
+
+              if (frontSizesWithParsed.length > 0) {
+                // Find the size with smallest width
+                const smallestWidth = frontSizesWithParsed.reduce((min, current) =>
+                  current!.width < min!.width ? current : min
+                );
+                selectedFrontSizeOffset.value = smallestWidth!.size;
+                console.log('🎯 Smart default for front (smallest width):', smallestWidth!.size);
+              } else {
+                selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+              }
             }
           }
           if (availableRearSizeOffsets.value.length > 0) {
@@ -616,13 +633,50 @@ async function loadProducts() {
                 selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
               }
             }
-            // Priority 2: Check if the current product's size is in the available list
-            else if (availableRearSizeOffsets.value.includes(sizeOffsetStr)) {
-              selectedRearSizeOffset.value = sizeOffsetStr;
-            }
-            // Priority 3: Use first available
+            // Priority 2: Smart default - pick diameter at least 1 inch larger than front
             else {
-              selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+              // Get front diameter
+              let frontDiameter = 0;
+              if (selectedFrontSizeOffset.value) {
+                const frontMatch = selectedFrontSizeOffset.value.match(/(\d+\.?\d*)"/);
+                if (frontMatch) {
+                  frontDiameter = parseFloat(frontMatch[1]);
+                }
+              }
+
+              // Parse all available rear sizes
+              const rearSizesWithParsed = availableRearSizeOffsets.value.map(size => {
+                const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+                if (!match) return null;
+                return {
+                  size,
+                  diameter: parseFloat(match[1]),
+                  width: parseFloat(match[2]),
+                  offset: parseInt(match[3])
+                };
+              }).filter(Boolean);
+
+              if (rearSizesWithParsed.length > 0 && frontDiameter > 0) {
+                // Find sizes with diameter at least 1 inch larger than front
+                const suitableRearSizes = rearSizesWithParsed.filter(rear =>
+                  rear!.diameter >= frontDiameter + 1
+                );
+
+                if (suitableRearSizes.length > 0) {
+                  // Pick the first suitable rear size (smallest diameter >= front + 1)
+                  const bestRear = suitableRearSizes.reduce((min, current) =>
+                    current!.diameter < min!.diameter ? current : min
+                  );
+                  selectedRearSizeOffset.value = bestRear!.size;
+                  console.log('🎯 Smart default for rear (diameter >= front + 1"):', bestRear!.size);
+                } else {
+                  // No suitable size found, use first available
+                  selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+                  console.log('⚠️ No rear size with diameter >= front + 1", using first available');
+                }
+              } else {
+                selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+              }
             }
           }
         } else {
@@ -752,8 +806,28 @@ watch(selectedFinish, () => {
         } else {
           selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
         }
-      } else {
-        selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
+      }
+      // Smart default - pick smallest width for front
+      else {
+        const frontSizesWithParsed = availableFrontSizeOffsets.value.map(size => {
+          const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+          if (!match) return null;
+          return {
+            size,
+            diameter: parseFloat(match[1]),
+            width: parseFloat(match[2]),
+            offset: parseInt(match[3])
+          };
+        }).filter(Boolean);
+
+        if (frontSizesWithParsed.length > 0) {
+          const smallestWidth = frontSizesWithParsed.reduce((min, current) =>
+            current!.width < min!.width ? current : min
+          );
+          selectedFrontSizeOffset.value = smallestWidth!.size || '';
+        } else {
+          selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0] || '';
+        }
       }
     }
     if (availableRearSizeOffsets.value.length > 0 && !availableRearSizeOffsets.value.includes(selectedRearSizeOffset.value)) {
@@ -768,8 +842,44 @@ watch(selectedFinish, () => {
         } else {
           selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
         }
-      } else {
-        selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+      }
+      // Smart default - pick diameter at least 1 inch larger than front
+      else {
+        let frontDiameter = 0;
+        if (selectedFrontSizeOffset.value) {
+          const frontMatch = selectedFrontSizeOffset.value.match(/(\d+\.?\d*)"/);
+          if (frontMatch) {
+            frontDiameter = parseFloat(frontMatch[1]);
+          }
+        }
+
+        const rearSizesWithParsed = availableRearSizeOffsets.value.map(size => {
+          const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+          if (!match) return null;
+          return {
+            size,
+            diameter: parseFloat(match[1]),
+            width: parseFloat(match[2]),
+            offset: parseInt(match[3])
+          };
+        }).filter(Boolean);
+
+        if (rearSizesWithParsed.length > 0 && frontDiameter > 0) {
+          const suitableRearSizes = rearSizesWithParsed.filter(rear =>
+            rear!.diameter >= frontDiameter + 1
+          );
+
+          if (suitableRearSizes.length > 0) {
+            const bestRear = suitableRearSizes.reduce((min, current) =>
+              current!.diameter < min!.diameter ? current : min
+            );
+            selectedRearSizeOffset.value = bestRear!.size || '';
+          } else {
+            selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+          }
+        } else {
+          selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
+        }
       }
     }
   }
@@ -805,7 +915,7 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
   // Reset size selections when vehicle changes to trigger refitment validation
   if (vehicle) {
     if (hasStaggeredFitment(vehicle)) {
-      // For staggered, check URL params first, then reset to first available options
+      // For staggered, check URL params first, then use smart defaults
       if (availableFrontSizeOffsets.value.length > 0) {
         // Priority 1: Check if initialFrontSize is provided (from gallery page)
         if (initialFrontSize.value) {
@@ -820,8 +930,29 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
             console.log('⚠️ No matching front size found for:', initialFrontSize.value);
             selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
           }
-        } else {
-          selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+        }
+        // Priority 2: Smart default - pick smallest width for front
+        else {
+          const frontSizesWithParsed = availableFrontSizeOffsets.value.map(size => {
+            const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+            if (!match) return null;
+            return {
+              size,
+              diameter: parseFloat(match[1]),
+              width: parseFloat(match[2]),
+              offset: parseInt(match[3])
+            };
+          }).filter(Boolean);
+
+          if (frontSizesWithParsed.length > 0) {
+            const smallestWidth = frontSizesWithParsed.reduce((min, current) =>
+              current!.width < min!.width ? current : min
+            );
+            selectedFrontSizeOffset.value = smallestWidth!.size;
+            console.log('🎯 Smart default for front (smallest width):', smallestWidth!.size);
+          } else {
+            selectedFrontSizeOffset.value = availableFrontSizeOffsets.value[0];
+          }
         }
       }
       if (availableRearSizeOffsets.value.length > 0) {
@@ -838,8 +969,46 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
             console.log('⚠️ No matching rear size found for:', initialRearSize.value);
             selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
           }
-        } else {
-          selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+        }
+        // Priority 2: Smart default - pick diameter at least 1 inch larger than front
+        else {
+          let frontDiameter = 0;
+          if (selectedFrontSizeOffset.value) {
+            const frontMatch = selectedFrontSizeOffset.value.match(/(\d+\.?\d*)"/);
+            if (frontMatch) {
+              frontDiameter = parseFloat(frontMatch[1]);
+            }
+          }
+
+          const rearSizesWithParsed = availableRearSizeOffsets.value.map(size => {
+            const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+            if (!match) return null;
+            return {
+              size,
+              diameter: parseFloat(match[1]),
+              width: parseFloat(match[2]),
+              offset: parseInt(match[3])
+            };
+          }).filter(Boolean);
+
+          if (rearSizesWithParsed.length > 0 && frontDiameter > 0) {
+            const suitableRearSizes = rearSizesWithParsed.filter(rear =>
+              rear!.diameter >= frontDiameter + 1
+            );
+
+            if (suitableRearSizes.length > 0) {
+              const bestRear = suitableRearSizes.reduce((min, current) =>
+                current!.diameter < min!.diameter ? current : min
+              );
+              selectedRearSizeOffset.value = bestRear!.size;
+              console.log('🎯 Smart default for rear (diameter >= front + 1"):', bestRear!.size);
+            } else {
+              selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+              console.log('⚠️ No rear size with diameter >= front + 1", using first available');
+            }
+          } else {
+            selectedRearSizeOffset.value = availableRearSizeOffsets.value[0];
+          }
         }
       }
     } else {

@@ -45,6 +45,7 @@ export function useWheelApi() {
       params.append('i-price', 'true');
       params.append('i-specs', 'true');
       params.append('i-tags', 'true');
+      params.append('f-imgFormat', 'webp');
 
       const url = `${API_BASE_URL}?${params.toString()}`;
       const response = await fetch(url);
