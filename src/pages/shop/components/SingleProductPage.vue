@@ -222,8 +222,21 @@ const availableFrontSizeOffsets = computed(() => {
   // Separate front fitments - use RimDiameter (not Position which doesn't exist)
   // For Fitments/OptionalFitments: Has RimDiameter (front) and RimDiameterRear (rear) fields
   // Create synthetic fitments for front from Fitments array
+  // STRICT FILTER: Only include fitments with valid front width values to prevent rear widths from leaking in
   const frontStandard = selectedVehicle.value.Fitments
-    .filter(f => f.RimDiameter !== null && isValidFitment(f))
+    .filter(f => {
+      // Must have front diameter
+      if (f.RimDiameter === null) return false;
+      // Must have either exact front width OR front width range
+      const hasExactWidth = f.RimWidth !== null && f.RimWidth !== undefined;
+      const hasWidthRange = (f.RimWidthMin !== null && f.RimWidthMin !== undefined) ||
+                            (f.RimWidthMax !== null && f.RimWidthMax !== undefined);
+      if (!hasExactWidth && !hasWidthRange) {
+        console.warn('⚠️ Filtering out front fitment with no valid width:', f);
+        return false;
+      }
+      return isValidFitment(f);
+    })
     .map(f => ({
       ...f,
       RimDiameter: f.RimDiameter,
@@ -237,7 +250,19 @@ const availableFrontSizeOffsets = computed(() => {
     }));
 
   const frontOptional = selectedVehicle.value.OptionalFitments
-    .filter(f => f.RimDiameter !== null && isValidFitment(f))
+    .filter(f => {
+      // Must have front diameter
+      if (f.RimDiameter === null) return false;
+      // Must have either exact front width OR front width range
+      const hasExactWidth = f.RimWidth !== null && f.RimWidth !== undefined;
+      const hasWidthRange = (f.RimWidthMin !== null && f.RimWidthMin !== undefined) ||
+                            (f.RimWidthMax !== null && f.RimWidthMax !== undefined);
+      if (!hasExactWidth && !hasWidthRange) {
+        console.warn('⚠️ Filtering out front optional fitment with no valid width:', f);
+        return false;
+      }
+      return isValidFitment(f);
+    })
     .map(f => ({
       ...f,
       RimDiameter: f.RimDiameter,
@@ -279,6 +304,10 @@ const availableFrontSizeOffsets = computed(() => {
     const sizeStr = `${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`;
 
     if (fitmentCheck.fits) {
+      // Debug logging for unusual widths in front
+      if (wheel.Width >= 11) {
+        console.warn(`⚠️ FRONT: Adding unusual width ${wheel.Width}" - Fitment: ${fitmentCheck.fitmentType}, Reasons:`, fitmentCheck.reasons);
+      }
       sizeOffsets.add(sizeStr);
     }
   });
@@ -299,8 +328,21 @@ const availableRearSizeOffsets = computed(() => {
   // Separate rear fitments - use RimDiameterRear (not Position which doesn't exist)
   // For Fitments/OptionalFitments: Has RimDiameter (front) and RimDiameterRear (rear) fields
   // Create synthetic fitments for rear from Fitments array
+  // STRICT FILTER: Only include fitments with valid rear width values
   const rearStandard = selectedVehicle.value.Fitments
-    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined && isValidFitment(f))
+    .filter(f => {
+      // Must have rear diameter
+      if ((f as any).RimDiameterRear === null || (f as any).RimDiameterRear === undefined) return false;
+      // Must have either exact rear width OR rear width range
+      const hasExactWidth = (f as any).RimWidthRear !== null && (f as any).RimWidthRear !== undefined;
+      const hasWidthRange = ((f as any).RimWidthMinRear !== null && (f as any).RimWidthMinRear !== undefined) ||
+                            ((f as any).RimWidthMaxRear !== null && (f as any).RimWidthMaxRear !== undefined);
+      if (!hasExactWidth && !hasWidthRange) {
+        console.warn('⚠️ Filtering out rear fitment with no valid width:', f);
+        return false;
+      }
+      return isValidFitment(f);
+    })
     .map(f => ({
       ...f,
       RimDiameter: (f as any).RimDiameterRear,
@@ -314,7 +356,19 @@ const availableRearSizeOffsets = computed(() => {
     }));
 
   const rearOptional = selectedVehicle.value.OptionalFitments
-    .filter(f => (f as any).RimDiameterRear !== null && (f as any).RimDiameterRear !== undefined && isValidFitment(f))
+    .filter(f => {
+      // Must have rear diameter
+      if ((f as any).RimDiameterRear === null || (f as any).RimDiameterRear === undefined) return false;
+      // Must have either exact rear width OR rear width range
+      const hasExactWidth = (f as any).RimWidthRear !== null && (f as any).RimWidthRear !== undefined;
+      const hasWidthRange = ((f as any).RimWidthMinRear !== null && (f as any).RimWidthMinRear !== undefined) ||
+                            ((f as any).RimWidthMaxRear !== null && (f as any).RimWidthMaxRear !== undefined);
+      if (!hasExactWidth && !hasWidthRange) {
+        console.warn('⚠️ Filtering out rear optional fitment with no valid width:', f);
+        return false;
+      }
+      return isValidFitment(f);
+    })
     .map(f => ({
       ...f,
       RimDiameter: (f as any).RimDiameterRear,
@@ -360,25 +414,31 @@ const availableRearSizeOffsets = computed(() => {
     }
   });
 
-  // Extract selected front diameter if available
-  let selectedFrontDiameter = 0;
-  if (selectedFrontSizeOffset.value) {
-    const match = selectedFrontSizeOffset.value.match(/(\d+\.?\d*)"/);
-    if (match) {
-      selectedFrontDiameter = parseFloat(match[1]);
+  // Find the MINIMUM diameter from ALL available front options (not just selected)
+  let minFrontDiameter = 0;
+  if (availableFrontSizeOffsets.value.length > 0) {
+    const frontDiameters = availableFrontSizeOffsets.value.map(size => {
+      const match = size.match(/(\d+\.?\d*)"/);
+      return match ? parseFloat(match[1]) : 0;
+    }).filter(d => d > 0);
+
+    if (frontDiameters.length > 0) {
+      minFrontDiameter = Math.min(...frontDiameters);
+      console.log(`📏 Minimum front diameter: ${minFrontDiameter}"`);
     }
   }
 
-  // Filter out rear sizes that are smaller than the selected front size
+  // Filter out rear sizes with diameter <= minimum front diameter
+  // This ensures rear is always at least 1 size larger than the smallest front option
   const filteredSizes = Array.from(sizeOffsets).filter(rearSize => {
     const match = rearSize.match(/(\d+\.?\d*)"/);
     if (!match) return true; // Keep if we can't parse
 
     const rearDiameter = parseFloat(match[1]);
 
-    // If front is selected and rear is smaller, filter it out
-    if (selectedFrontDiameter > 0 && rearDiameter < selectedFrontDiameter) {
-      console.warn(`⚠️ Filtered out invalid rear option: ${rearSize} (smaller than selected front ${selectedFrontDiameter}")`);
+    // Exclude the minimum front diameter from rear options
+    if (minFrontDiameter > 0 && rearDiameter <= minFrontDiameter) {
+      console.warn(`⚠️ Filtered out rear option: ${rearSize} (diameter ${rearDiameter}" <= min front ${minFrontDiameter}")`);
       return false;
     }
 
@@ -881,6 +941,53 @@ watch(selectedFinish, () => {
           selectedRearSizeOffset.value = availableRearSizeOffsets.value[0] || '';
         }
       }
+    }
+  }
+});
+
+// Dynamic rear adjustment: When user changes front selection, auto-adjust rear to be >= front + 1"
+watch(selectedFrontSizeOffset, (newFrontSize) => {
+  // Only apply for staggered fitments and when we have a valid front selection
+  if (!isStaggered.value || !newFrontSize || !selectedVehicle.value) return;
+
+  // Skip if this is from URL parameter initialization (let the initial logic handle it)
+  if (initialRearSize.value) return;
+
+  // Extract the newly selected front diameter
+  const frontMatch = newFrontSize.match(/(\d+\.?\d*)"/);
+  if (!frontMatch) return;
+
+  const selectedFrontDiameter = parseFloat(frontMatch[1]);
+  console.log(`🔄 Front changed to ${selectedFrontDiameter}" - Adjusting rear selection...`);
+
+  // Parse all available rear sizes
+  const rearSizesWithParsed = availableRearSizeOffsets.value.map(size => {
+    const match = size.match(/(\d+\.?\d*)" x (\d+\.?\d*)" ([+-]?\d+)mm/);
+    if (!match) return null;
+    return {
+      size,
+      diameter: parseFloat(match[1]),
+      width: parseFloat(match[2]),
+      offset: parseInt(match[3])
+    };
+  }).filter(Boolean);
+
+  if (rearSizesWithParsed.length > 0) {
+    // Find rear sizes with diameter at least 1 inch larger than selected front
+    const suitableRearSizes = rearSizesWithParsed.filter(rear =>
+      rear!.diameter >= selectedFrontDiameter + 1
+    );
+
+    if (suitableRearSizes.length > 0) {
+      // Pick the smallest suitable rear diameter (closest to front + 1)
+      const bestRear = suitableRearSizes.reduce((min, current) =>
+        current!.diameter < min!.diameter ? current : min
+      );
+      selectedRearSizeOffset.value = bestRear!.size;
+      console.log(`✅ Auto-selected rear: ${bestRear!.size} (>= ${selectedFrontDiameter}" + 1)`);
+    } else {
+      // No suitable size found (all rear < front + 1), keep current or use first available
+      console.warn(`⚠️ No rear size >= ${selectedFrontDiameter}" + 1, keeping current selection`);
     }
   }
 });
