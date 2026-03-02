@@ -98,6 +98,9 @@ const wheelStyleRoute = computed(() => {
             :src="wheel.image"
             :alt="wheel.finish"
             class="w-full object-cover cursor-pointer"
+            width="600"
+            height="600"
+            loading="lazy"
           />
         </a>
       </div>

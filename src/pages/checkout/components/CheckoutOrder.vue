@@ -22,6 +22,7 @@ const cardBrand = ref('');
 const selectedVehicle = ref<Vehicle | null>(null);
 const vehicleDisplay = ref<string>('');
 const selectedPaymentMethod = ref<'card' | 'affirm'>('card');
+const customerState = ref<string>('');
 
 // Stripe state
 let stripe: Stripe | null = null;
@@ -40,7 +41,7 @@ declare global {
 let affirmInitialized = false;
 
 // Computed
-const cartTotals = computed(() => calculateCartTotals(cartItems.value));
+const cartTotals = computed(() => calculateCartTotals(cartItems.value, customerState.value));
 
 const isEmpty = computed(() => cartItems.value.length === 0);
 
@@ -728,6 +729,11 @@ onMounted(() => {
   loadVehicle();
   initializeStripe();
   initializeAffirm();
+
+  // Listen for billing state changes to update tax calculation
+  window.addEventListener('billing-state-changed', (event: any) => {
+    customerState.value = event.detail.state;
+  });
 });
 </script>
 
@@ -787,7 +793,7 @@ onMounted(() => {
         </div>
 
         <div class="e5CheckoutOrderRow">
-          <span class="e5CheckoutOrderLabel">FL Sales Tax</span>
+          <span class="e5CheckoutOrderLabel">Sales Tax{{ customerState ? (customerState.toUpperCase() === 'FL' || customerState.toUpperCase() === 'FLORIDA' ? ' (FL)' : '') : ' (if applicable)' }}</span>
           <span class="e5CheckoutOrderValue">{{ formatPrice(cartTotals.tax) }}</span>
         </div>
 

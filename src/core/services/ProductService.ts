@@ -206,7 +206,7 @@ export function getWheelDisplayName(wheel: WheelProduct): string {
 /**
  * Calculates cart totals
  */
-export function calculateCartTotals(items: CartItem[], taxRate: number = 0.07) {
+export function calculateCartTotals(items: CartItem[], customerState?: string) {
   const subtotal = items.reduce((sum, item) => {
     // Check if item is staggered (front-only or rear-only)
     const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
@@ -221,6 +221,9 @@ export function calculateCartTotals(items: CartItem[], taxRate: number = 0.07) {
     }
   }, 0);
 
+  // Only apply FL tax (7%) if customer is from Florida
+  const isFloridaCustomer = customerState?.toUpperCase() === 'FL' || customerState?.toUpperCase() === 'FLORIDA';
+  const taxRate = isFloridaCustomer ? 0.07 : 0;
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
 

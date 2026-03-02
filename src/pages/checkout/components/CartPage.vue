@@ -251,15 +251,16 @@ onMounted(() => {
 
               <!-- Tax -->
               <div class="flex justify-between items-start py-3">
-                <span class="font-['Franklin_Gothic_Book'] text-sm text-black">FL State Tax</span>
-                <span class="font-['Franklin_Gothic_Book'] text-sm text-black">{{ formatPrice(cartTotals.tax) }}</span>
+                <span class="font-['Franklin_Gothic_Book'] text-sm text-black">Sales Tax <span class="text-xs text-gray-500">(calculated at checkout)</span></span>
+                <span class="font-['Franklin_Gothic_Book'] text-sm text-black">$0.00</span>
               </div>
 
               <!-- Total -->
               <div class="flex justify-between items-start py-3 pt-5 border-t border-gray-300 mt-3">
-                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">Total</span>
-                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">{{ formatPrice(cartTotals.total) }}</span>
+                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">Subtotal</span>
+                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">{{ formatPrice(cartTotals.subtotal) }}</span>
               </div>
+              <p class="text-xs text-gray-500 mt-2">*Tax will be calculated at checkout based on your location</p>
 
               <!-- Checkout Button -->
               <button

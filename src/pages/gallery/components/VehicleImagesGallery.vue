@@ -128,6 +128,9 @@ onUnmounted(() => {
           :src="currentMediaItem.url"
           :alt="`${props.trim} ${currentImageIndex + 1}`"
           class="w-full max-h-[740px] object-cover"
+          width="1920"
+          height="740"
+          :fetchpriority="currentImageIndex === 0 ? 'high' : 'auto'"
       />
 
       <!-- Display YouTube Video -->
@@ -218,6 +221,8 @@ onUnmounted(() => {
                   :src="item.type === 'video' ? item.thumbnail : item.url"
                   :alt="`Thumbnail ${index + 1}`"
                   class="w-full h-full object-cover"
+                  width="235"
+                  height="157"
                   loading="lazy"
               />
 

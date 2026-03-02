@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 // Country and state data
 const countries = [
@@ -116,6 +116,15 @@ const shippingAvailableStates = computed(() => {
 
 const showShippingStateDropdown = computed(() => {
   return ['US', 'CA', 'MX'].includes(shippingCountry.value);
+});
+
+// Watch for state changes and emit event for tax calculation
+watch(selectedState, (newState) => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('billing-state-changed', {
+      detail: { state: newState }
+    }));
+  }
 });
 
 // Methods

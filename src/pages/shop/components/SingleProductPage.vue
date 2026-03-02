@@ -1562,34 +1562,6 @@ onMounted(() => {
             ADD TO CART
           </button>
 
-          <!-- Express Checkout -->
-          <div class="space-y-3">
-            <p class="text-sm font-['Excon_Variable'] font-light text-black/70 tracking-[0.08em] text-center">
-              EXPRESS CHECKOUT
-            </p>
-            <button class="w-full h-10 bg-black rounded-lg flex items-center justify-center hover:bg-black/90 transition-colors">
-              <img
-                src="/assets/images/53ac0b7c91c2611f93c3336f0652d00efd216192.webp"
-                alt="Apple Pay"
-                class="h-6"
-              />
-            </button>
-          </div>
-
-          <!-- More Purchase Options -->
-          <div class="space-y-3">
-            <p class="text-sm font-['Excon_Variable'] font-normal text-black/70 tracking-[0.08em] text-center">
-              MORE PURCHASE OPTIONS
-            </p>
-            <button class="w-full h-10 bg-white border border-black rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
-              <img
-                src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.webp"
-                alt="Affirm"
-                class="h-6"
-              />
-            </button>
-          </div>
-
           <!-- Product Info -->
           <div v-if="!isStaggered" class="space-y-2 pt-4 text-sm text-black/60">
             <p><strong>Part Number:</strong> {{ selectedProduct.Pn }}</p>
