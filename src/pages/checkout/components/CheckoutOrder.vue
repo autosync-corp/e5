@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { CartManager, calculateCartTotals, formatPrice, type CartItem } from '@/core/services/ProductService';
 import { loadStripe, type Stripe, type StripeElements, type StripeCardNumberElement, type StripeCardExpiryElement, type StripeCardCvcElement } from '@stripe/stripe-js';
 import type { Vehicle } from '@/core/services/VehicleService';
+import { TERMS_ROUTE } from '@/core/constants/Routes';
 
 // Props
 const props = defineProps<{
@@ -905,7 +906,7 @@ onMounted(() => {
 
       <!-- Privacy Notice -->
       <p class="e5CheckoutPrivacyText">
-        Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#" class="e5CheckoutPrivacyLink">Terms and Conditions</a>.
+        Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a :href="TERMS_ROUTE" class="e5CheckoutPrivacyLink">Terms and Conditions</a>.
       </p>
 
       <!-- Place Order Button -->

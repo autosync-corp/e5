@@ -10,9 +10,9 @@ import {
   ABOUT_ROUTE,
   CATALOG_ROUTE,
   CONTACT_ROUTE,
-  INSTALLATION_ROUTE, MEDIA_ROUTE,
+  INSTALLATION_ROUTE, MEDIA_ROUTE, PRIVACY_ROUTE,
   PROCESS_ROUTE,
-  REFUND_ROUTE, REGISTRATION_ROUTE, VENDOR_REGISTRATION_ROUTE,
+  REFUND_ROUTE, REGISTRATION_ROUTE, TERMS_ROUTE, VENDOR_REGISTRATION_ROUTE,
   WARRANTY_ROUTE
 } from "@/core/constants/Routes.ts";
 </script>
@@ -82,6 +82,13 @@ import {
             GET IN TOUCH
           </a>
         </div>
+      </div>
+
+      <!-- Legal Links -->
+      <div class="text-center mb-4">
+        <a :href="TERMS_ROUTE" class="text-[14px] tracking-[4px] text-black hover:opacity-70 transition-opacity">TERMS & CONDITIONS</a>
+        <span class="text-black mx-3">|</span>
+        <a :href="PRIVACY_ROUTE" class="text-[14px] tracking-[4px] text-black hover:opacity-70 transition-opacity">PRIVACY POLICY</a>
       </div>
 
       <!-- Copyright -->
