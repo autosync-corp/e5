@@ -23,9 +23,15 @@ import {
     GALLERY_WHEELS_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
     SHOP_ROUTE,
-    PROCESS_FORM_FORGED_ROUTE,
-    SINGLE_PRODUCT_ROUTE
+    PROCESS_FORM_FORGED_ROUTE
 } from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
+
+// Build product URLs
+const glossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black');
+const titaniumBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed');
+const bronzeBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed');
+const shopSebringUrl = `${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`;
 ---
 
 <MainLayout title="Sebring - E5 Wheels">
@@ -47,7 +53,7 @@ import {
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+            <a href={glossBlackUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
@@ -58,7 +64,7 @@ import {
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={titaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
@@ -69,7 +75,7 @@ import {
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={bronzeBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
@@ -82,7 +88,7 @@ import {
         </div>
 
         <div class="text-center mt-12">
-            <Button client:visible primary class="px-16" link={`${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`}>
+            <Button client:visible primary class="px-16" link={shopSebringUrl}>
                 <span>
                     SHOP {SEBRING_BRAND_NAME}
                 </span>
@@ -273,7 +279,7 @@ import {
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+            <a href={glossBlackUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
@@ -281,7 +287,7 @@ import {
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Gloss Black`}>
+                            <Button client:visible primary link={glossBlackUrl}>
                                 SHOP NOW
                             </Button>
                         </div>
@@ -289,7 +295,7 @@ import {
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={titaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_TITANIUM_BRUSHED}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
@@ -297,7 +303,7 @@ import {
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Titanium Brushed`}>
+                            <Button client:visible primary link={titaniumBrushedUrl}>
                                 SHOP NOW
                             </Button>
                         </div>
@@ -305,7 +311,7 @@ import {
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={bronzeBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_BRONZE}>
                     <div class="text-center">
                         <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
@@ -313,7 +319,7 @@ import {
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={`${SINGLE_PRODUCT_ROUTE}?series=${SEBRING_BRAND_NAME}&finish=Bronze Brushed`}>
+                            <Button client:visible primary link={bronzeBrushedUrl}>
                                 SHOP NOW
                             </Button>
                         </div>

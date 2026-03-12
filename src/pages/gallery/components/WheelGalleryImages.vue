@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useWheelApi } from '@/core/composables/useWheelApi';
-import { SINGLE_PRODUCT_ROUTE } from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
 
 const props = defineProps<{
@@ -62,18 +62,12 @@ const wheelStyleRoute = computed(() => {
     return props.wheelsRoute;
   }
 
-  const params = new URLSearchParams({
-    series: props.wheelStyle,
-    finish: props.wheelFinish
-  });
-
-  // Add generation and trim if available
-  if (vehicleInfo.value.generation) {
-    params.append('generation', vehicleInfo.value.generation);
-    params.append('trim', vehicleInfo.value.trim);
-  }
-
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+  return buildWheelUrl(
+    props.wheelStyle,
+    props.wheelFinish,
+    vehicleInfo.value.generation || undefined,
+    vehicleInfo.value.trim || undefined
+  );
 });
 </script>
 

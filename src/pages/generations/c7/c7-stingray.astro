@@ -1,6 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
@@ -10,28 +11,15 @@ import {
     SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
-// Helper function to build shop URLs with proper encoding
-function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish,
-    generation,
-    trim,
-    frontSize,
-    rearSize
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
-
 // Shop URLs with proper sizes (using shop fitment sizes - 19" x 9.5" / 20" x 11")
-const speedwayShopUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const daytonaShopUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const sebringShopUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Chrome', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const speedwayShopUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaShopUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const sebringShopUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Chrome', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
 // Detail section URLs
-const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const daytonaBronzeUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
 ---
 
 <MainLayout title="C7 Corvette Stingray Wheels - E5 Wheels">

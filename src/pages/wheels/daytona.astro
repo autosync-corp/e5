@@ -33,7 +33,14 @@ import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE, PROCESS_FORM_FORGED_ROUTE} from "@/core/constants/Routes.ts";
+import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE, PROCESS_FORM_FORGED_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
+
+// Build product URLs
+const glossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black');
+const titaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed');
+const bronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed');
+const shopDaytonaUrl = `${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`;
 ---
 
 <MainLayout title="Daytona - E5 Wheels">
@@ -55,7 +62,7 @@ import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_R
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+            <a href={glossBlackUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_GLOSS_BLACK}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
@@ -66,7 +73,7 @@ import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_R
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={titaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_TITANIUM_BRUSHED_TINT}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
@@ -77,7 +84,7 @@ import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_R
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={bronzeBrushedUrl} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_BRONZE_BRUSHED_TINT}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
@@ -90,7 +97,7 @@ import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_R
         </div>
 
         <div class="text-center mt-8 md:mt-12">
-            <Button client:visible primary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={`${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`}>
+            <Button client:visible primary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={shopDaytonaUrl}>
               <span>
                 SHOP {DAYTONA_BRAND_NAME}
               </span>
@@ -280,42 +287,42 @@ import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, SINGLE_PRODUCT_ROUTE, WHEELS_SEBRING_R
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black`} class="block hover:opacity-80 transition-opacity">
+            <a href={`{glossBlackUrl}`} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_GLOSS_BLACK}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Gloss Black`}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`{glossBlackUrl}`}>
                             SHOP NOW
                         </Button>
                     </div>
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={`{titaniumBrushedUrl}`} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_TITANIUM_BRUSHED_TINT}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Titanium Brushed`}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`{titaniumBrushedUrl}`}>
                             SHOP NOW
                         </Button>
                     </div>
                 </ImageWithLegend>
             </a>
 
-            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Bronze Brushed`} class="block hover:opacity-80 transition-opacity">
+            <a href={`{bronzeBrushedUrl}`} class="block hover:opacity-80 transition-opacity">
                 <ImageWithLegend alt={DAYTONA_BRAND_NAME} image={DAYTONA_BRONZE_BRUSHED_TINT}>
                     <div class="text-center">
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">BRONZE BRUSHED TINT</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`${SINGLE_PRODUCT_ROUTE}?series=${DAYTONA_BRAND_NAME}&finish=Bronze Brushed`}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={`{bronzeBrushedUrl}`}>
                             SHOP NOW
                         </Button>
                     </div>

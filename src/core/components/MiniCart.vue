@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { CartManager, formatPrice, getWheelImageUrl, type CartItem } from '@/core/services/ProductService.ts';
 import { CART_ROUTE, CHECKOUT_ROUTE } from '@/core/constants/Routes.ts';
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
 
 const props = defineProps<{
   isOpen: boolean;
@@ -43,7 +44,16 @@ const handleRemoveItem = (productId: number) => {
 };
 
 const handleViewItem = (item: CartItem) => {
-  window.location.href = `/shop/single-product?pn=${item.product.Pn}`;
+  // Build finish name from Finish + Color + Accent
+  const finishParts = [];
+  if (item.product.Finish) finishParts.push(item.product.Finish);
+  if (item.product.Color) finishParts.push(item.product.Color);
+  if (item.product.Accent) finishParts.push(item.product.Accent);
+  const finish = finishParts.join(' ') || 'Standard';
+
+  // Build the new wheel URL
+  const url = buildWheelUrl(item.product.Model, finish);
+  window.location.href = url;
 };
 
 const handleViewCart = () => {

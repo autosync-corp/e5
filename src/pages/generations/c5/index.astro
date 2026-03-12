@@ -1,28 +1,16 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
-// Helper function to build shop URLs with proper encoding
-function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish,
-    generation,
-    trim,
-    frontSize,
-    rearSize
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
-
 // Shop URLs with proper sizes (C5 Base uses: 17" x 8.5" +58mm / 18" x 9.5" +65mm)
-const daytonaBronzeUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
-const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
-const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
+const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
+const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
+const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
 ---
 
 <MainLayout title="Custom C5 Corvette Wheels - E5 Wheels">

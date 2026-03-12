@@ -1,0 +1,39 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import SingleProductPage from '@/pages/shop/components/SingleProductPage.vue';
+import { parseWheelUrl, fromSlug } from '@/core/utils/wheelUrl';
+
+// Get URL parameters from path
+const { series, finish, fitment } = Astro.params;
+
+// Parse the full URL to extract all components
+const fullPath = Astro.url.pathname;
+const parsedUrl = parseWheelUrl(fullPath);
+
+// Build title from series and finish
+const seriesTitle = fromSlug(series);
+const finishTitle = fromSlug(finish);
+const pageTitle = `${seriesTitle} ${finishTitle} Wheels - E5 Wheels`;
+
+// Pass parameters to component as props
+const urlParams = {
+  series: parsedUrl.series,
+  finish: parsedUrl.finish,
+  generation: parsedUrl.generation,
+  trim: parsedUrl.trim,
+  frontSize: parsedUrl.frontSize,
+  rearSize: parsedUrl.rearSize,
+};
+---
+
+<MainLayout title={pageTitle}>
+  <SingleProductPage
+    client:only="vue"
+    seriesParam={urlParams.series}
+    finishParam={urlParams.finish}
+    generationParam={urlParams.generation}
+    trimParam={urlParams.trim}
+    frontSizeParam={urlParams.frontSize}
+    rearSizeParam={urlParams.rearSize}
+  />
+</MainLayout>

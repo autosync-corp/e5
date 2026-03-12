@@ -562,7 +562,7 @@ async function handleAffirmPayment() {
         sku: item.product.Pn || item.product.Id.toString(),
         unit_price: Math.round(item.product.Price * 100),
         qty: item.frontWheels + item.rearWheels,
-        item_url: `${window.location.origin}/wheels/${item.product.Model.toLowerCase()}`,
+        item_url: `${window.location.origin}/shop/${item.product.Model.toLowerCase()}`,
       })),
       metadata: {
         vehicle: vehicleDisplay.value || (selectedVehicle.value ? `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model}` : ''),

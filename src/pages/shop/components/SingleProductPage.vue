@@ -9,6 +9,12 @@ import VehicleSelector from '@/core/components/VehicleSelector.vue';
 const props = defineProps<{
   productId?: number;
   modelParam?: string;
+  seriesParam?: string;
+  finishParam?: string;
+  generationParam?: string;
+  trimParam?: string;
+  frontSizeParam?: string;
+  rearSizeParam?: string;
 }>();
 
 // Get product ID from URL if not provided as prop
@@ -20,6 +26,19 @@ const getProductIdFromUrl = (): number | undefined => {
 };
 
 const getUrlParams = () => {
+  // First, try to use props (from new URL structure)
+  if (props.seriesParam || props.finishParam) {
+    return {
+      series: props.seriesParam || null,
+      finish: props.finishParam || null,
+      generation: props.generationParam || null,
+      trim: props.trimParam || null,
+      frontSize: props.frontSizeParam || null,
+      rearSize: props.rearSizeParam || null
+    };
+  }
+
+  // Fall back to query parameters (old URL structure for backwards compatibility)
   if (typeof window === 'undefined') return { series: null, finish: null, generation: null, trim: null, frontSize: null, rearSize: null };
   const params = new URLSearchParams(window.location.search);
   return {

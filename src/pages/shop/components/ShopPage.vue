@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { SINGLE_PRODUCT_ROUTE } from '@/core/constants/Routes';
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { filterWheelsByVehicle, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 
@@ -315,8 +315,22 @@ async function loadProducts() {
   }
 }
 
-function goToProduct(productId: number) {
-  window.location.href = `${SINGLE_PRODUCT_ROUTE}?id=${productId}`;
+function goToProduct(product: WheelProduct) {
+  // Build finish name from Finish + Color + Accent
+  const finishParts = [];
+  if (product.Finish) finishParts.push(product.Finish);
+  if (product.Color) finishParts.push(product.Color);
+  if (product.Accent) finishParts.push(product.Accent);
+  const finish = finishParts.join(' ') || 'Standard';
+
+  // Build the new wheel URL
+  const url = buildWheelUrl(
+    product.Model,        // series
+    finish                // finish
+    // generation, trim, sizes not available from product card, user will select on product page
+  );
+
+  window.location.href = url;
 }
 
 function getProductDisplayName(product: WheelProduct): string {
@@ -440,7 +454,7 @@ onMounted(() => {
             <div
               v-for="variation in series.finishVariations"
               :key="variation.product.Id"
-              @click="goToProduct(variation.product.Id)"
+              @click="goToProduct(variation.product)"
               class="group cursor-pointer bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-e5-red hover:shadow-xl transition-all duration-300"
             >
               <!-- Product Image -->

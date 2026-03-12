@@ -99,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
         unit_price: Math.round(item.product.Price * 100), // Convert to cents
         qty: item.frontWheels + item.rearWheels,
         item_image_url: item.product.ImageUrl || '',
-        item_url: `${new URL(request.url).origin}/wheels/${item.product.Model.toLowerCase()}`,
+        item_url: `${new URL(request.url).origin}/shop/${item.product.Model.toLowerCase()}`,
       })),
       metadata: {
         vehicle: vehicle ? `${vehicle.year} ${vehicle.make} ${vehicle.model} ${vehicle.trim}` : '',

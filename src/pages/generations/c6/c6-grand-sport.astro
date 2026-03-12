@@ -1,6 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
@@ -10,31 +11,18 @@ import {
     SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
-// Helper function to build shop URLs with proper encoding
-function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish,
-    generation,
-    trim,
-    frontSize,
-    rearSize
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
-
 // Shop URLs with proper sizes (Grand Sport uses first detail section sizes: 19" x 10" +30mm / 20" x 12" +50mm)
-const speedwayTitaniumUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const sebringBronzeUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringBronzeUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 
 // First detail section URL (Daytona Titanium Brushed)
-const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 
 // Second detail and Also Available section URLs
-const sebringGlossBlackUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const speedwayGlossBlackUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const speedwayDarkBronzeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+const speedwayDarkBronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 ---
 
 <MainLayout title="C6 Grand Sport Corvette Wheels - E5 Wheels">

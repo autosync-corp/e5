@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
 import {
     DAYTONA_BRAND_NAME,
     DAYTONA_LOGO,
@@ -9,29 +9,17 @@ import {
     SPEEDWAY_BRAND_NAME,
     SPEEDWAY_LOGO,
 } from "@/pages/wheels/constants/Wheels.ts";
-
-// Helper function to build shop URLs with proper encoding
-function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish,
-    generation,
-    trim,
-    frontSize,
-    rearSize
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 
 // Top section URLs (19/20 staggered)
-const speedwayTopUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
-const daytonaTopUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
-const sebringTopUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+const speedwayTopUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+const daytonaTopUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
+const sebringTopUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C8', 'Stingray', '19" x 8.5" +38mm', '20" x 11" +52mm');
 
 // Detail section URLs (specific sizes for each wheel)
-const daytonaDetailUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
-const sebringDetailUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
-const speedwayDetailUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
+const daytonaDetailUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
+const sebringDetailUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
+const speedwayDetailUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
 ---
 
 <MainLayout title="C8 Corvette Stingray Wheels - E5 Wheels">

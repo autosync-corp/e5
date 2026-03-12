@@ -1,28 +1,16 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE, SINGLE_PRODUCT_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
-// Helper function to build shop URLs with proper encoding
-function buildShopUrl(series: string, finish: string, generation: string, trim: string, frontSize: string, rearSize: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish,
-    generation,
-    trim,
-    frontSize,
-    rearSize
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
-
 // Shop URLs with proper sizes (C5 Z06 uses first detail section sizes: 18" x 10" +25mm / 19" x 11" +20mm)
-const daytonaGlossBlackUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
-const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
-const daytonaBronzeUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
 ---
 
 <MainLayout title="C5 Corvette Z06 Wheels - E5 Wheels">

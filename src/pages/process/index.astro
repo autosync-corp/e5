@@ -3,7 +3,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import Link from "@/core/components/Link.vue"
 import {
     INSTALLATION_ROUTE,
-    SINGLE_PRODUCT_ROUTE,
     GALLERY_VEHICLES_ROUTE,
     GALLERY_WHEELS_ROUTE
 } from "@/core/constants/Routes.ts";
@@ -12,24 +11,16 @@ import {
     DAYTONA_BRAND_NAME,
     SPEEDWAY_BRAND_NAME
 } from "@/pages/wheels/constants/Wheels.ts";
-
-// Helper function to build shop URLs with only series and finish
-function buildShopUrl(series: string, finish: string): string {
-  const params = new URLSearchParams({
-    series,
-    finish
-  });
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
-}
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 
 // Shop URLs for wheels
-const sebringGlossBlackUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black');
-const sebringBronzeUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint');
-const daytonaTitaniumUrl = buildShopUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint');
-const speedwayChromeUrl = buildShopUrl(SPEEDWAY_BRAND_NAME, 'Chrome');
+const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black');
+const sebringBronzeUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint');
+const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint');
+const speedwayChromeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Chrome');
 
 // Hero button URL - Sebring single product page (series + Gloss Black finish)
-const sebringProductUrl = buildShopUrl(SEBRING_BRAND_NAME, 'Gloss Black');
+const sebringProductUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black');
 ---
 
 <MainLayout title="E5 Wheels - Our Process">

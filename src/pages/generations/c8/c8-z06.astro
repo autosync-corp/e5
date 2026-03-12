@@ -1,6 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {SINGLE_PRODUCT_ROUTE, WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     TALLADEGA_LOGO,
     TALLADEGA_BRAND_NAME,
@@ -9,6 +10,10 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
+
+// Shop URLs with proper sizes
+const talladegaShopUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'Z06', '20" x 10" +25mm', '21" x 13" +20mm');
+const sonomaShopUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'Z06', '20" x 10" +25mm', '21" x 13" +20mm');
 ---
 
 <MainLayout title="C8 Corvette Z06 Wheels - E5 Wheels">
@@ -49,7 +54,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
 
                 <!-- Talladega -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" />
                     </div>
@@ -61,7 +66,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                 </a>
 
                 <!-- Sonoma -->
-                <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
                         <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" />
                     </div>
@@ -191,7 +196,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${SONOMA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap">
+                            <a href={sonomaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap">
                                 SHOP FITMENT
                             </a>
                             <a href={`${WHEELS_ROUTE}/sonoma`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center whitespace-nowrap">
@@ -235,7 +240,7 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
                             </ul>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                            <a href={`${SINGLE_PRODUCT_ROUTE}?series=${TALLADEGA_BRAND_NAME}&finish=Brushed Aluminum&generation=C8&trim=Z06&frontSize=20" x 10" +25mm&rearSize=21" x 13" +20mm`} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap">
+                            <a href={talladegaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap">
                                 SHOP FITMENT
                             </a>
                             <a href={`${WHEELS_ROUTE}/talladega`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center whitespace-nowrap">

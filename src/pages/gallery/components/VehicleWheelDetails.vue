@@ -4,7 +4,7 @@ import { useWheelApi } from '@/core/composables/useWheelApi';
 import VehicleWheelSizeFit from './VehicleWheelSizeFit.vue';
 import Button from '@/core/components/Button.vue';
 import { E5_LOGO_BLACK } from "@/core/constants/App.ts";
-import { SINGLE_PRODUCT_ROUTE } from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
 
 const props = defineProps<{
@@ -96,7 +96,9 @@ const wheelStyle = computed(() => props.vehicleWheelStyle || 'N/A');
 
 // Generate wheel style route
 const wheelStyleRoute = computed(() => {
-  if (!props.vehicleWheelStyle) return '/wheels';
+  if (!props.vehicleWheelStyle || props.vehicleWheelStyle.toLowerCase() === 'n/a') {
+    return '/wheels';
+  }
   const style = props.vehicleWheelStyle.toLowerCase().replace(/\s+/g, '-');
   return `/wheels/${style}`;
 });
@@ -115,7 +117,6 @@ const mapFinishName = (finishName: string | null | undefined): string | null => 
   if (!finishName) return null;
 
   const finishMap: Record<string, string> = {
-    'Titanium Brushed': 'Brushed Silver',
     'Dark Bronze': 'Bronze'
   };
 
@@ -139,35 +140,28 @@ const formatSizeOffset = (size: string | null | undefined, offset: string | null
 
 // Generate shop link with series, finish, generation, trim, and sizes
 const shopRoute = computed(() => {
-  if (!props.vehicleWheelStyle || !props.vehicleWheelFinish) return '/shop';
+  // Check if wheel style or finish is missing or is "N/A"
+  if (!props.vehicleWheelStyle || !props.vehicleWheelFinish ||
+      props.vehicleWheelStyle.toLowerCase() === 'n/a' ||
+      props.vehicleWheelFinish.toLowerCase() === 'n/a') {
+    return '/shop';
+  }
 
   // Map finish name to API equivalent
   const mappedFinish = mapFinishName(props.vehicleWheelFinish) || props.vehicleWheelFinish;
 
-  const params = new URLSearchParams({
-    series: props.vehicleWheelStyle,
-    finish: mappedFinish
-  });
-
-  // Add generation and trim if available
-  if (vehicleInfo.value.generation) {
-    params.append('generation', vehicleInfo.value.generation);
-    params.append('trim', vehicleInfo.value.trim);
-  }
-
-  // Add front size if available
+  // Format sizes
   const frontSize = formatSizeOffset(props.vehicleWheelSizeF, props.vehicleOffesetF);
-  if (frontSize) {
-    params.append('frontSize', frontSize);
-  }
-
-  // Add rear size if available
   const rearSize = formatSizeOffset(props.vehicleWheelSizeRear, props.vehicleOffsetR);
-  if (rearSize) {
-    params.append('rearSize', rearSize);
-  }
 
-  return `${SINGLE_PRODUCT_ROUTE}?${params.toString()}`;
+  return buildWheelUrl(
+    props.vehicleWheelStyle,
+    mappedFinish,
+    vehicleInfo.value.generation || undefined,
+    vehicleInfo.value.trim || undefined,
+    frontSize || undefined,
+    rearSize || undefined
+  );
 });
 </script>
 
