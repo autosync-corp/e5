@@ -6,6 +6,8 @@ import AddressForm from "./components/AddressForm.vue";
 // Get payment API keys from environment
 const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
 const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY;
+const affirmJsUrl = import.meta.env.PUBLIC_AFFIRM_JS_URL;
+const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL;
 ---
 
 <MainLayout title="Checkout - E5 Wheels">
@@ -49,7 +51,7 @@ const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY;
       <AddressForm client:load />
 
       <!-- Right Column - Order Summary -->
-      <CheckoutOrder client:load stripePublishableKey={stripePublishableKey} affirmPublicKey={affirmPublicKey} />
+      <CheckoutOrder client:load stripePublishableKey={stripePublishableKey} affirmPublicKey={affirmPublicKey} affirmJsUrl={affirmJsUrl} ghlWebhookUrl={ghlWebhookUrl} />
     </div>
   </section>
 </MainLayout>

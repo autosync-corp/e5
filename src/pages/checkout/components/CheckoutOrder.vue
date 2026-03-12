@@ -9,6 +9,8 @@ import { TERMS_ROUTE } from '@/core/constants/Routes';
 const props = defineProps<{
   stripePublishableKey?: string;
   affirmPublicKey?: string;
+  affirmJsUrl?: string;
+  ghlWebhookUrl?: string;
 }>();
 
 // State
@@ -182,13 +184,15 @@ function initializeAffirm() {
   }
 
   // Configure Affirm before loading script
+  const jsUrl = props.affirmJsUrl || 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js';
+
   window._affirm_config = {
     public_api_key: affirmKey,
-    script: 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js',
+    script: jsUrl,
   };
 
   const script = document.createElement('script');
-  script.src = 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js';
+  script.src = jsUrl;
   script.async = true;
   script.onload = () => {
     affirmInitialized = true;
@@ -230,7 +234,12 @@ function handlePaymentMethodChange(method: 'card' | 'affirm') {
 
 async function sendOrderToWebhook(paymentId: string, paymentMethod: string, customerData: any) {
   try {
-    const ghlWebhookUrl = 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/68181ce2-c728-4127-9f12-87c621adf287';
+    const webhookUrl = props.ghlWebhookUrl;
+
+    if (!webhookUrl) {
+      console.error('GHL Webhook URL is not configured');
+      return;
+    }
 
     // Generate sequential order number starting from 100
     const ORDER_COUNTER_KEY = 'e5-order-counter';
@@ -456,7 +465,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       },
     };
 
-    await fetch(ghlWebhookUrl, {
+    await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
