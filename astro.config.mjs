@@ -5,6 +5,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://e5wheels.com',
   output: 'server',
   adapter: vercel(),
   integrations: [

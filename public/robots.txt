@@ -1,0 +1,12 @@
+# E5 Wheels - robots.txt
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin/checkout pages
+Disallow: /checkout/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://e5wheels.com/sitemap-index.xml

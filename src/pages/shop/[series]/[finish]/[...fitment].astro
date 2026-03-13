@@ -10,10 +10,42 @@ const { series, finish, fitment } = Astro.params;
 const fullPath = Astro.url.pathname;
 const parsedUrl = parseWheelUrl(fullPath);
 
-// Build title from series and finish
+// Build dynamic title from series, finish, and optional fitment details
 const seriesTitle = fromSlug(series);
 const finishTitle = fromSlug(finish);
-const pageTitle = `${seriesTitle} ${finishTitle} Wheels - E5 Wheels`;
+
+// Build title based on available URL parameters
+let pageTitle = `${seriesTitle} ${finishTitle} Wheels`;
+
+// Add vehicle generation and trim if present
+if (parsedUrl.generation || parsedUrl.trim) {
+  const vehicleParts = [];
+  if (parsedUrl.generation) vehicleParts.push(parsedUrl.generation);
+  if (parsedUrl.trim) vehicleParts.push(parsedUrl.trim);
+  pageTitle += ` for ${vehicleParts.join(' ')}`;
+}
+
+// Add size info if present (keep it concise)
+if (parsedUrl.frontSize || parsedUrl.rearSize) {
+  const sizeParts = [];
+
+  // Extract just diameter info for brevity (e.g., "19\" x 10\"" -> "19x10")
+  if (parsedUrl.frontSize) {
+    const frontMatch = parsedUrl.frontSize.match(/(\d+)"\s*x\s*(\d+(?:\.\d+)?)/);
+    if (frontMatch) sizeParts.push(`${frontMatch[1]}x${frontMatch[2]}`);
+  }
+
+  if (parsedUrl.rearSize && parsedUrl.rearSize !== parsedUrl.frontSize) {
+    const rearMatch = parsedUrl.rearSize.match(/(\d+)"\s*x\s*(\d+(?:\.\d+)?)/);
+    if (rearMatch) sizeParts.push(`${rearMatch[1]}x${rearMatch[2]}`);
+  }
+
+  if (sizeParts.length > 0) {
+    pageTitle += ` (${sizeParts.join(' & ')})`;
+  }
+}
+
+pageTitle += ' - E5 Wheels';
 
 // Pass parameters to component as props
 const urlParams = {

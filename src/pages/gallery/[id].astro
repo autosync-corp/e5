@@ -20,6 +20,29 @@ export function getStaticPaths() {
 
 const { vehicleData } = Astro.props as { vehicleData: CorvetteGalleryItem };
 
+// Build unique page title
+const buildPageTitle = () => {
+  // If vehicleTitle exists and is not "N/A", use it
+  if (vehicleData.vehicleTitle && vehicleData.vehicleTitle !== 'N/A') {
+    return `${vehicleData.vehicleTitle} Gallery - E5 Wheels`;
+  }
+
+  // Otherwise, build from parts
+  const parts = [];
+  if (vehicleData.year && vehicleData.year !== 'N/A') parts.push(vehicleData.year);
+  if (vehicleData.submodel && vehicleData.submodel !== 'N/A') parts.push(vehicleData.submodel);
+  if (vehicleData.trim && vehicleData.trim !== 'N/A') parts.push(vehicleData.trim);
+
+  if (parts.length > 0) {
+    return `${parts.join(' ')} Corvette Gallery - E5 Wheels`;
+  }
+
+  // Fallback
+  return `Corvette Gallery - E5 Wheels`;
+};
+
+const pageTitle = buildPageTitle();
+
 // Helper function to get media items from the vehicle data
 function getGalleryMedia(vehicle: CorvetteGalleryItem): any[] {
   const galleryPath = `/assets/images/gallery/corvette/${vehicle.galleryId}`;
@@ -83,7 +106,7 @@ const corvetteGalleryImages = corvetteGalleryData
   }));
 ---
 
-<MainLayout title={`${vehicle.trim} - E5 Wheels Gallery`}>
+<MainLayout title={pageTitle}>
   <div class="w-full h-full">
     <div class="relative">
       <div class="absolute w-full bg-black/60 py-6">

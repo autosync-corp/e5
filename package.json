@@ -20,6 +20,7 @@
     "vue": "^3.4.0"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.1",
     "@astrojs/tailwind": "^6.0.2",
     "@astrojs/vue": "^5.1.4",
     "@vue/tsconfig": "latest",
