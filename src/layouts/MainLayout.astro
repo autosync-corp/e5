@@ -6,9 +6,23 @@ import '@/assets/fonts/fonts.css';
 
 export interface Props {
   title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'product';
 }
 
-const { title = 'E5 Wheels - Exclusively Engineered for Corvettes' } = Astro.props;
+const {
+  title = 'E5 Wheels - Exclusively Engineered for Corvettes',
+  description,
+  canonical,
+  ogImage = 'https://e5wheels.com/assets/images/og-default.jpg',
+  ogType = 'website'
+} = Astro.props;
+
+// Build full URL for OG tags
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!DOCTYPE html>
@@ -21,6 +35,25 @@ const { title = 'E5 Wheels - Exclusively Engineered for Corvettes' } = Astro.pro
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- SEO Meta Tags -->
+    {description && <meta name="description" content={description} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="E5 Wheels" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
+
     <title>{title}</title>
   </head>
   <body>

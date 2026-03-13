@@ -1,8 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'About E5 Wheels - The Fifth Element of Corvette Performance';
+const description = 'E5 Wheels brings 40+ years of wheel industry excellence to Corvette enthusiasts. We exclusively design and engineer forged wheels for C5, C6, C7, and C8 Corvettes.';
+const canonicalUrl = `${baseUrl}/about-us`;
+const ogImage = `${baseUrl}/assets/images/og-default.jpg`;
 ---
 
-<MainLayout title="E5 Wheels - About Us">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <div class="w-full bg-white pb-24">
     <!-- Hero Section -->
     <section class="container-e5 py-20">

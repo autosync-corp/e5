@@ -17,9 +17,13 @@ import {
     WHEELS_FORM_FORGED_ROUTE,
     WHEELS_TALLADEGA_ROUTE
 } from "@/core/constants/Routes.ts";
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const description = 'Forged and flow-formed wheels exclusively engineered for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric design, made in the USA.';
+const canonicalUrl = `${baseUrl}/`;
 ---
 
-<MainLayout>
+<MainLayout description={description} canonical={canonicalUrl}>
   <div class="w-full h-full">
     <Hero>
       <div style="position: relative; width: 100%; height: 94%; overflow: hidden;">
@@ -86,7 +90,7 @@ import {
     <section class="container-e5 relative max-w-[1500px] lg:flex justify-between mx-auto py-32">
       <div class="grid grid-cols-1 auto-rows-min text-center lg:text-start">
         <img src={E5_BLACK_RED_DRAW} alt="Asset 29" class="w-[264px] h-auto mx-auto lg:mx-0" />
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-franklin-medium mt-12">OUR PROCESS</h1>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-franklin-medium mt-12">OUR PROCESS</h2>
         <p class="lg:max-w-[700px] text-xl text-black/70 mt-6">
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>

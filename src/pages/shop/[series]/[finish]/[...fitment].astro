@@ -4,7 +4,7 @@ import SingleProductPage from '@/pages/shop/components/SingleProductPage.vue';
 import { parseWheelUrl, fromSlug } from '@/core/utils/wheelUrl';
 
 // Get URL parameters from path
-const { series, finish, fitment } = Astro.params;
+const { series, finish } = Astro.params;
 
 // Parse the full URL to extract all components
 const fullPath = Astro.url.pathname;
@@ -47,6 +47,10 @@ if (parsedUrl.frontSize || parsedUrl.rearSize) {
 
 pageTitle += ' - E5 Wheels';
 
+// Build canonical URL - always points to base product page
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const canonicalUrl = `${baseUrl}/shop/${series}/${finish}`;
+
 // Pass parameters to component as props
 const urlParams = {
   series: parsedUrl.series,
@@ -58,7 +62,7 @@ const urlParams = {
 };
 ---
 
-<MainLayout title={pageTitle}>
+<MainLayout title={pageTitle} canonical={canonicalUrl}>
   <SingleProductPage
     client:only="vue"
     seriesParam={urlParams.series}

@@ -621,6 +621,176 @@ const doesWheelsFit = computed(() => {
   }
 });
 
+// Check if fitment-specific content should be shown
+const hasFitmentParams = computed(() => {
+  return !!(props.generationParam || props.trimParam);
+});
+
+// Generation-specific data for dynamic content
+const generationData: Record<string, {
+  years: string;
+  horsepower?: string;
+  engine?: string;
+  highlights: string[];
+}> = {
+  'c5': {
+    years: '1997-2004',
+    horsepower: '345-385hp',
+    engine: 'LS1/LS6',
+    highlights: [
+      'First generation with fixed headlights and modern design',
+      'Hub-centric design for optimal balance and stability',
+      'Engineered to handle the C5\'s performance capabilities'
+    ]
+  },
+  'c5-z06': {
+    years: '2001-2004',
+    horsepower: '385hp',
+    engine: 'LS6',
+    highlights: [
+      'Fixed-roof performance variant with track-ready suspension',
+      'Built to handle increased lateral loads and track duty',
+      'Optimized for the Z06\'s lightweight, performance-focused design'
+    ]
+  },
+  'c6': {
+    years: '2005-2013',
+    horsepower: '400-430hp',
+    engine: 'LS2/LS3',
+    highlights: [
+      'Refined design with increased performance and capability',
+      'Hub-centric fitment for precision handling',
+      'Engineered for the C6\'s improved chassis dynamics'
+    ]
+  },
+  'c6-grand-sport': {
+    years: '2010-2013',
+    horsepower: '430hp',
+    engine: 'LS3',
+    highlights: [
+      'Wide-body design with enhanced aerodynamics',
+      'Engineered for the Grand Sport\'s wider track and aggressive stance',
+      'Built to complement the Grand Sport\'s racing heritage'
+    ]
+  },
+  'c6-base': {
+    years: '2005-2013',
+    horsepower: '400-430hp',
+    engine: 'LS2/LS3',
+    highlights: [
+      'Perfect balance of performance and daily drivability',
+      'Hub-centric design for smooth, vibration-free driving',
+      'Optimized for the base C6\'s handling characteristics'
+    ]
+  },
+  'c7-stingray': {
+    years: '2014-2019',
+    horsepower: '455-460hp',
+    engine: 'LT1',
+    highlights: [
+      'Modern performance with aggressive styling and advanced technology',
+      'Engineered for Magnetic Ride Control compatibility',
+      'Built to handle the Stingray\'s refined performance capability'
+    ]
+  },
+  'c7-grand-sport': {
+    years: '2017-2019',
+    horsepower: '460hp',
+    engine: 'LT1',
+    highlights: [
+      'Wide-body design combining Z06 aerodynamics with Stingray power',
+      'Engineered for the Grand Sport\'s enhanced cooling and wider stance',
+      'Built to complement the track-focused suspension setup'
+    ]
+  },
+  'c7-z06': {
+    years: '2015-2019',
+    horsepower: '650hp',
+    engine: 'Supercharged LT4',
+    highlights: [
+      'Supercharged track weapon with race-proven aerodynamics',
+      'Built to handle the Z06\'s massive power and track capability',
+      'Specifically designed to clear Brembo 6-piston front calipers',
+      'Engineered for Magnetic Ride Control and aggressive driving'
+    ]
+  },
+  'c8-stingray': {
+    years: '2020-2024',
+    horsepower: '490-495hp',
+    engine: 'LT2',
+    highlights: [
+      'Revolutionary mid-engine design with exotic car performance',
+      'Engineered for the C8\'s unique mid-engine weight distribution',
+      'Built to complement the aggressive, modern styling'
+    ]
+  },
+  'c8-z06': {
+    years: '2023-2024',
+    horsepower: '670hp',
+    engine: 'Flat-plane LT6',
+    highlights: [
+      'Naturally-aspirated flat-plane V8 with 8,600 RPM redline',
+      'Wider body with enhanced aerodynamics and cooling',
+      'Engineered for extreme track capability and carbon ceramic brakes',
+      'Built to handle the Z06\'s race-derived suspension'
+    ]
+  },
+  'c8-zr1': {
+    years: '2025+',
+    horsepower: '1,064hp',
+    engine: 'Twin-Turbo LT7',
+    highlights: [
+      'Most powerful production Corvette ever with hybrid twin-turbo power',
+      'Extreme aerodynamics and track-focused engineering',
+      'Precision-engineered for the ZR1\'s incredible performance envelope',
+      'Built to handle massive lateral loads and braking forces'
+    ]
+  },
+  'c8-e-ray': {
+    years: '2024+',
+    horsepower: '655hp',
+    engine: 'LT2 + Electric Motor',
+    highlights: [
+      'First all-wheel-drive Corvette with hybrid electric power',
+      'Electric front motor provides instant torque and improved traction',
+      'Engineered for the E-Ray\'s unique AWD weight distribution',
+      'Built to complement the hybrid\'s performance-focused design'
+    ]
+  }
+};
+
+// Get fitment-specific content
+const fitmentContent = computed(() => {
+  if (!hasFitmentParams.value || !props.seriesParam || !props.finishParam) return null;
+
+  // Build generation key (e.g., "c7-z06", "c8-stingray")
+  let generationKey = '';
+  if (props.generationParam && props.trimParam) {
+    generationKey = `${props.generationParam.toLowerCase()}-${props.trimParam.toLowerCase().replace(/\s+/g, '-')}`;
+  } else if (props.generationParam) {
+    generationKey = props.generationParam.toLowerCase();
+  }
+
+  const data = generationData[generationKey];
+  if (!data) return null;
+
+  // Build display name (e.g., "C7 Z06", "C8 Stingray")
+  let displayName = '';
+  if (props.generationParam && props.trimParam) {
+    displayName = `${props.generationParam.toUpperCase()} ${props.trimParam}`;
+  } else if (props.generationParam) {
+    displayName = props.generationParam.toUpperCase();
+  }
+
+  return {
+    displayName,
+    years: data.years,
+    horsepower: data.horsepower,
+    engine: data.engine,
+    highlights: data.highlights
+  };
+});
+
 // Check if we should show incompatibility message
 const showIncompatibilityMessage = computed(() => {
   if (!selectedVehicle.value) return false;
@@ -1623,6 +1793,69 @@ onMounted(() => {
           <p class="text-xl font-['Excon_Variable'] text-black/70 pt-8">
             FREE SHIPPING ON ALL COMPLETE SETS
           </p>
+        </div>
+      </div>
+
+      <!-- Fitment-Specific Content Section -->
+      <div v-if="fitmentContent" class="mt-12 md:mt-16 max-w-[1200px] mx-auto">
+        <div class="bg-gray-50 rounded-lg p-6 md:p-10 space-y-6">
+          <!-- Title -->
+          <h2 class="text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
+            Engineered for Your {{ fitmentContent.displayName }} Corvette
+          </h2>
+
+          <!-- Divider -->
+          <div class="w-16 h-[2px] bg-e5-red"></div>
+
+          <!-- Intro Text -->
+          <p class="text-base md:text-lg text-black/80 leading-relaxed">
+            These {{ productDisplayName }} {{ finishDisplayName }} wheels are <strong>precision-engineered specifically for your {{ fitmentContent.displayName }}</strong>,
+            combining E5's 40 years of wheel industry expertise with purpose-built design.
+          </p>
+
+          <!-- Generation Specs -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+            <div class="text-center md:text-left">
+              <p class="text-sm text-black/60 font-medium mb-1">MODEL YEARS</p>
+              <p class="text-lg font-bold text-black">{{ fitmentContent.years }}</p>
+            </div>
+            <div v-if="fitmentContent.horsepower" class="text-center md:text-left">
+              <p class="text-sm text-black/60 font-medium mb-1">POWER OUTPUT</p>
+              <p class="text-lg font-bold text-black">{{ fitmentContent.horsepower }}</p>
+            </div>
+            <div v-if="fitmentContent.engine" class="text-center md:text-left">
+              <p class="text-sm text-black/60 font-medium mb-1">ENGINE</p>
+              <p class="text-lg font-bold text-black">{{ fitmentContent.engine }}</p>
+            </div>
+          </div>
+
+          <!-- Why Section -->
+          <div class="space-y-3">
+            <h3 class="text-xl font-['Franklin_Gothic_Demi'] text-black">
+              Why Your {{ fitmentContent.displayName }} Deserves These Wheels
+            </h3>
+            <ul class="space-y-3">
+              <li v-for="(highlight, index) in fitmentContent.highlights" :key="index" class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-e5-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-base text-black/80">{{ highlight }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Closing Statement -->
+          <div class="pt-4 border-t border-gray-300">
+            <p class="text-base text-black/80 leading-relaxed">
+              Each wheel is hub-centric for optimal stability and engineered to work seamlessly with your {{ fitmentContent.displayName }}'s
+              systems, maintaining the precision and performance that defines your Corvette.
+            </p>
+            <p class="text-base text-black/80 font-medium mt-4">
+              <strong>At E5, we don't just build wheels—we build for Corvette owners who demand the best.</strong>
+              Every detail is considered, every measurement is precise, and every wheel is crafted to embody
+              Earth, Water, Air, Fire—and Corvette, the fifth element.
+            </p>
+          </div>
         </div>
       </div>
     </div>

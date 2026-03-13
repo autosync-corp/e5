@@ -39,9 +39,14 @@ const glossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black');
 const titaniumBrushedUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed');
 const bronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Bronze');
 const shopSpeedwayUrl = `${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`;
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Speedway - Form Forged Corvette Wheels | E5 Wheels';
+const description = 'The Speedway features a classic 5-spoke design refined for modern performance. Form Forged construction delivers strength and reduced weight for Corvette C5, C6, C7, and C8.';
+const canonicalUrl = `${baseUrl}/wheels/speedway`;
 ---
 
-<MainLayout title="Speedway - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SPEEDWAY_HERO_IMAGE} alt={SPEEDWAY_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->

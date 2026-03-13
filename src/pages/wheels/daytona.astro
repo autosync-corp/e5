@@ -41,9 +41,14 @@ const glossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black');
 const titaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed');
 const bronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed');
 const shopDaytonaUrl = `${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`;
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Daytona - Form Forged Corvette Wheels | E5 Wheels';
+const description = 'Lightest wheel in our Form Forged Series. 10-spoke design with bold deep profile, exclusively engineered for Corvette C5, C6, C7, and C8.';
+const canonicalUrl = `${baseUrl}/wheels/daytona`;
 ---
 
-<MainLayout title="Daytona - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={DAYTONA_HERO_IMAGE} alt={DAYTONA_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->
@@ -52,6 +57,8 @@ const shopDaytonaUrl = `${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`;
             <img src={DAYTONA_LOGO} alt="Daytona Logo" class="w-full max-w-[400px] md:max-w-[684px] h-auto" />
             <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged" class="w-[140px] md:w-[195px] h-auto mt-6 md:mt-8 lg:mt-0" />
         </div>
+
+        <h1 class="sr-only">Daytona - Form Forged Corvette Wheels</h1>
 
         <p class="text-[16px] md:text-[24px] leading-[22px] md:leading-[30px] text-black/50 mb-12 md:mb-16 max-w-[1024px]">
             The Daytona is the lightest wheel in our Form Forged Series — a 10-spoke design with a bold deep profile and precision engineering. Built exclusively  for Corvette fitments, it delivers uncompromising strength, reduced weight, and aggressive styling that's equally at home on the street or track.

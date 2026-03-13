@@ -32,9 +32,14 @@ const glossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black');
 const titaniumBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed');
 const bronzeBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed');
 const shopSebringUrl = `${SHOP_ROUTE}?series=${SEBRING_BRAND_NAME}`;
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Sebring - Form Forged Corvette Wheels | E5 Wheels';
+const description = 'The Sebring is a multi-spoke mesh wheel with intricate split-spoke design that maximizes rigidity while minimizing weight. Exclusively engineered for Corvette fitments.';
+const canonicalUrl = `${baseUrl}/wheels/sebring`;
 ---
 
-<MainLayout title="Sebring - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SEBRING_HERO_IMAGE} alt={SEBRING_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->

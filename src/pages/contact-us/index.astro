@@ -1,8 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Contact Us - E5 Wheels';
+const description = 'Get in touch with E5 Wheels for questions about our Corvette wheels. Call (305) 964-7429 or email sales@e5wheels.com. We respond within 1 business day.';
+const canonicalUrl = `${baseUrl}/contact-us`;
+const ogImage = `${baseUrl}/assets/images/og-default.jpg`;
 ---
 
-<MainLayout title="E5 Wheels - Contact Us">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <div class="w-full bg-white pb-24">
     <!-- Contact Form Section -->
     <section class="container-e5 py-20">
