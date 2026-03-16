@@ -1,9 +1,31 @@
 ---
-import GalleryVehiclesGrid from '@/pages/gallery/components/GalleryVehiclesGrid.vue';
+import GalleryVehiclesGrid from '@/pages/gallery/components/_GalleryVehiclesGrid.vue';
 import MainLayout from '@/layouts/MainLayout.astro';
+
+// Get URL parameters
+const url = new URL(Astro.request.url);
+const generation = url.searchParams.get('generation');
+const trim = url.searchParams.get('trim');
+
+// Build dynamic title
+let pageTitle = 'Corvette Gallery';
+if (generation) {
+  pageTitle = `${generation} Corvette Gallery`;
+  if (trim) {
+    pageTitle = `${generation} ${trim} Corvette Gallery`;
+  }
+}
+pageTitle += ' - E5 Wheels';
+
+// SEO metadata
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const description = generation
+  ? `Browse our gallery of ${generation}${trim ? ' ' + trim : ''} Corvettes with E5 Wheels. See real customer builds and installations.`
+  : 'Browse our complete Corvette gallery featuring C5, C6, C7, and C8 builds with E5 Wheels. Real customer installations and builds.';
+const canonicalUrl = `${baseUrl}/gallery/vehicles`;
 ---
 
-<MainLayout title="Vette Gallery - E5 Wheels">
+<MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
   <div class="w-full h-full">
       <GalleryVehiclesGrid client:only="vue" />
   </div>

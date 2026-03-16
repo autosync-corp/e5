@@ -2,11 +2,11 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
-import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
-import VehicleImagesGallery from "@/pages/gallery/components/VehicleImagesGallery.vue";
+import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
+import VehicleImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
-import VehicleWheelDetails from "@/pages/gallery/components/VehicleWheelDetails.vue";
-import WheelGalleryImages from "@/pages/gallery/components/WheelGalleryImages.vue";
+import VehicleWheelDetails from "@/pages/gallery/components/_VehicleWheelDetails.vue";
+import WheelGalleryImages from "@/pages/gallery/components/_WheelGalleryImages.vue";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 
 export const prerender = true;

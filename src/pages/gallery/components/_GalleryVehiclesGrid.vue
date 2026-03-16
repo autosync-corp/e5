@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
-import VehicleCard from "@/pages/gallery/components/VehicleCard.vue";
-import VehicleDetailedCard from "@/pages/gallery/components/VehicleDetailedCard.vue";
-import YearMakeModelSelector from "@/pages/gallery/components/YearMakeModelSelector.vue";
-import GalleryPageStyleSelector from "@/pages/gallery/components/GalleryPageStyleSelector.vue";
+import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
+import VehicleDetailedCard from "@/pages/gallery/components/_VehicleDetailedCard.vue";
+import YearMakeModelSelector from "@/pages/gallery/components/_YearMakeModelSelector.vue";
+import GalleryPageStyleSelector from "@/pages/gallery/components/_GalleryPageStyleSelector.vue";
 import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 
@@ -77,8 +77,19 @@ const filteredVehicles = computed(() => {
     filtered = filtered.filter(item => item.year === filters.value.year);
   }
 
-  // Reverse array to show newest additions first (assumes new items are added to the end)
-  filtered = [...filtered].reverse();
+  // Sort by generation (C8 → C7 → C6 → C5) and then by year (newest first)
+  const generationOrder: Record<string, number> = { 'C8': 1, 'C7': 2, 'C6': 3, 'C5': 4 };
+  filtered = [...filtered].sort((a, b) => {
+    // First, sort by generation
+    const genA = generationOrder[a.submodel || ''] || 999;
+    const genB = generationOrder[b.submodel || ''] || 999;
+    if (genA !== genB) return genA - genB;
+
+    // Within same generation, sort by year (newest first)
+    const yearA = parseInt(a.year || '0');
+    const yearB = parseInt(b.year || '0');
+    return yearB - yearA;
+  });
 
   return filtered.map(mapVehicleData);
 });

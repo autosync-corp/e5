@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useWheelApi } from '@/core/composables/useWheelApi';
-import VehicleWheelSizeFit from './VehicleWheelSizeFit.vue';
+import VehicleWheelSizeFit from './_VehicleWheelSizeFit.vue';
 import Button from '@/core/components/Button.vue';
 import { E5_LOGO_BLACK } from "@/core/constants/App.ts";
 import { buildWheelUrl } from '@/core/utils/wheelUrl';

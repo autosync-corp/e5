@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import WheelCard from './WheelCard.vue';
-import WheelDetailedCard from './WheelDetailedCard.vue';
-import GalleryPageStyleSelector from './GalleryPageStyleSelector.vue';
+import WheelCard from './_WheelCard.vue';
+import WheelDetailedCard from './_WheelDetailedCard.vue';
+import GalleryPageStyleSelector from './_GalleryPageStyleSelector.vue';
 import {
   WHEEL_GALLERY_BANNER,
   E5_FORGED_GALLERY_BANNER,
