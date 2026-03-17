@@ -164,7 +164,7 @@ onMounted(() => {
                     {{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
                   </p>
                   <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    FINISH: {{ item.product.ShortFinish || item.product.Finish || 'Standard' }}
+                    FINISH: {{ [item.product.Finish, item.product.Color, item.product.Accent].filter(Boolean).join(' ') || 'Standard' }}
                   </p>
                   <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
                     MODEL: {{ item.vehicleModel }}

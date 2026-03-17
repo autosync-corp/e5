@@ -104,7 +104,7 @@ const filteredVehicles = computed(() => {
         class="h-[50px] md:h-[60px] lg:h-[70px] mb-4 object-contain"
       />
       <p class="text-[18px] md:text-[20px] font-excon-light text-black/70 leading-[30px] max-w-[800px]">
-        Our builds our in the wild. See them for yourself, envision yours.
+        Our builds are in the wild. See them for yourself, envision yours.
       </p>
     </div>
   </section>

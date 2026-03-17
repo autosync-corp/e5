@@ -325,10 +325,8 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       items: cartItems.value.map((item, index) => {
         // Build complete finish name
         const finishParts: string[] = [];
-        if (item.product.ShortFinish) finishParts.push(item.product.ShortFinish);
-        else if (item.product.Finish) finishParts.push(item.product.Finish);
-        if (item.product.ShortColor) finishParts.push(item.product.ShortColor);
-        else if (item.product.Color) finishParts.push(item.product.Color);
+        if (item.product.Finish) finishParts.push(item.product.Finish);
+        if (item.product.Color) finishParts.push(item.product.Color);
         if (item.product.Accent) finishParts.push(item.product.Accent);
         const finishName = finishParts.length > 0 ? finishParts.join(' ') : 'Standard';
 
@@ -373,10 +371,8 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
           <tbody>
             ${cartItems.value.map((item) => {
               const finishParts: string[] = [];
-              if (item.product.ShortFinish) finishParts.push(item.product.ShortFinish);
-              else if (item.product.Finish) finishParts.push(item.product.Finish);
-              if (item.product.ShortColor) finishParts.push(item.product.ShortColor);
-              else if (item.product.Color) finishParts.push(item.product.Color);
+              if (item.product.Finish) finishParts.push(item.product.Finish);
+              if (item.product.Color) finishParts.push(item.product.Color);
               if (item.product.Accent) finishParts.push(item.product.Accent);
               const finishName = finishParts.length > 0 ? finishParts.join(' ') : 'Standard';
               const partNumber = item.product.Pn || item.product.Id || `${item.product.Model}-${item.product.Diameter}x${item.product.Width}`;
@@ -774,7 +770,7 @@ onMounted(() => {
               {{ item.frontWheels > 0 && item.rearWheels === 0 ? `${item.frontWheels} x FRONT` : item.frontWheels === 0 && item.rearWheels > 0 ? `${item.rearWheels} x REAR` : `${item.frontWheels} x FRONT + ${item.rearWheels} x REAR` }} {{ item.product.Diameter }}"x{{ item.product.Width }}"
             </p>
             <p class="e5CheckoutProductDetail">
-              FINISH: {{ item.product.ShortFinish || item.product.Finish || 'Standard' }}
+              FINISH: {{ [item.product.Finish, item.product.Color, item.product.Accent].filter(Boolean).join(' ') || 'Standard' }}
             </p>
             <p v-if="item.vehicleModel" class="e5CheckoutProductDetail">
               MODEL: {{ item.vehicleModel }}

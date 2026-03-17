@@ -14,6 +14,7 @@ import { VETTE_BLACK_ON_RIVER } from "@/pages/gallery/constants/VetteGallery.ts"
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
 import {
     GALLERY_VEHICLES_ROUTE, GALLERY_WHEELS_ROUTE,
+    PROCESS_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
     WHEELS_TALLADEGA_ROUTE
 } from "@/core/constants/Routes.ts";
@@ -95,7 +96,7 @@ const canonicalUrl = `${baseUrl}/`;
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>
         <div class="mt-20">
-          <Button client:visible primary>LEARN MORE</Button>
+          <Button client:visible primary link={PROCESS_ROUTE}>LEARN MORE</Button>
         </div>
       </div>
       <div class="h-[438px] hidden lg:block">

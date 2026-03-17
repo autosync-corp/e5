@@ -1,0 +1,49 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Button from '@/core/components/Button.vue';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Page Not Found - E5 Wheels';
+const description = 'The page you are looking for could not be found.';
+const canonicalUrl = `${baseUrl}/404`;
+---
+
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <div class="w-full min-h-[calc(100vh-107px)] bg-white flex items-center justify-center px-6">
+    <div class="max-w-[800px] text-center">
+      <!-- 404 Error Code -->
+      <h1 class="text-[120px] md:text-[180px] lg:text-[240px] font-franklin-heavy text-e5-red leading-none mb-4">
+        404
+      </h1>
+
+      <!-- Error Message -->
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-franklin-medium text-black mb-6">
+        PAGE NOT FOUND
+      </h2>
+
+      <p class="text-base md:text-lg text-black/70 font-excon-light leading-relaxed mb-12 max-w-[600px] mx-auto">
+        The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Button client:visible primary link="/">
+          GO TO HOMEPAGE
+        </Button>
+        <Button client:visible link="/wheels">
+          BROWSE WHEELS
+        </Button>
+        <Button client:visible link="/gallery/vehicles">
+          VIEW GALLERY
+        </Button>
+      </div>
+
+      <!-- Additional Help -->
+      <div class="mt-16 pt-8 border-t border-black/10">
+        <p class="text-sm text-black/60 font-excon-light">
+          Need help? <a href="/contact-us" class="text-e5-red hover:underline">Contact us</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -89,6 +89,7 @@ const getItemPrice = (item: CartItem) => {
 </script>
 
 <template>
+  <div>
   <!-- Backdrop -->
   <Transition name="fade">
     <div
@@ -217,6 +218,7 @@ const getItemPrice = (item: CartItem) => {
       </div>
     </div>
   </Transition>
+  </div>
 </template>
 
 <style scoped>
