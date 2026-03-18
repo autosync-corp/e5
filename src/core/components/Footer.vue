@@ -68,9 +68,9 @@ import {
             </div>
           </a>
 
-          <a href="tel:(305)964-7429" target="_blank" class="footer-link flex items-center gap-3 justify-end">
+          <a href="tel:+13059647429" target="_blank" class="footer-link flex items-center gap-3 justify-end">
             <img :src="PHONE_BLACK_ICON" alt="Phone" class="w-[27px] h-auto" />
-            <span>(305)964-7429</span>
+            <span>(305) 964-7429</span>
           </a>
 
           <a href="mailto:SALES@E5WHEELS.COM" target="_blank" class="footer-link">

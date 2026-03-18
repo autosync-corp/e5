@@ -28,11 +28,11 @@ const detailedGallery = ref<boolean>(false);
 
     <!-- Gallery Introduction Section -->
     <section class="container-e5 pt-8 md:pt-12 lg:pt-16 pb-8">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0 mb-6 md:mb-8">
-        <div class="h-[50px] md:h-[65px] lg:h-[85px] w-auto max-w-[400px] md:max-w-[600px] lg:max-w-[805px]">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0 mb-6 md:mb-8 overflow-hidden">
+        <div class="h-[50px] md:h-[65px] lg:h-[85px] w-auto max-w-[350px] md:max-w-[550px] lg:max-w-[700px]">
           <img :src="GALLERY_LOGO" alt="Gallery" class="h-full w-auto object-contain" />
         </div>
-        <div class="h-[40px] md:h-[55px] lg:h-[70px] w-auto max-w-[150px] md:max-w-[200px] lg:max-w-[234px]">
+        <div class="h-[40px] md:h-[55px] lg:h-[70px] w-auto max-w-[150px] md:max-w-[200px] lg:max-w-[220px]">
           <img :src="FORM_FORGED_SERIES_LOGO" alt="Form Forged Series" class="h-full w-auto object-contain" />
         </div>
       </div>
