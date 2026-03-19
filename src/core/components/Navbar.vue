@@ -113,9 +113,9 @@ const closeMiniCart = () => {
   <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center">
     <!-- Desktop Navigation -->
     <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-4 xl:px-8 2xl:px-12">
-      <div class="flex items-center gap-4 xl:gap-8 2xl:gap-12">
+      <div class="flex items-center gap-2 xl:gap-4 2xl:gap-8">
         <!-- Left Menu Items -->
-        <div class="flex items-center gap-3 xl:gap-4 2xl:gap-6">
+        <div class="flex items-center gap-2 xl:gap-3 2xl:gap-4">
           <!-- Wheels Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isWheelsDropdownOpen = true" @mouseleave="closeWheelsDropdown">
             <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">
@@ -175,14 +175,14 @@ const closeMiniCart = () => {
         </div>
 
         <!-- Center Logo -->
-        <div class="flex justify-center items-center px-3 xl:px-6 2xl:px-8">
+        <div class="flex justify-center items-center px-2 xl:px-4 2xl:px-6">
           <a :href="HOME_ROUTE">
             <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
           </a>
         </div>
 
         <!-- Right Menu Items -->
-        <div class="flex items-center gap-3 xl:gap-4 2xl:gap-6">
+        <div class="flex items-center gap-2 xl:gap-3 2xl:gap-4">
         <!-- Generations Dropdown -->
         <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
           <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
@@ -362,11 +362,11 @@ const closeMiniCart = () => {
 
 <style scoped>
 .nav-link {
-  @apply font-franklin-medium text-xs 2xl:text-sm text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70 text-center ps-1;
+  @apply font-franklin-medium text-[10px] xl:text-xs 2xl:text-sm text-white no-underline whitespace-nowrap transition-opacity hover:opacity-70 text-center ps-1;
   border-bottom: #141414 2px solid;
   background: transparent;
   cursor: pointer;
-  letter-spacing: 3.5px;
+  letter-spacing: 2px;
 }
 
 .nav-link.selected {
