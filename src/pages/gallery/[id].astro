@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
+// @ts-expect-error - Vue component with script setup has implicit default export
 import VehicleImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
 import Button from "@/core/components/Button.vue";
 import VehicleWheelDetails from "@/pages/gallery/components/_VehicleWheelDetails.vue";
