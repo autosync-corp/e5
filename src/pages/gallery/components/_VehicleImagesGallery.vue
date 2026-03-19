@@ -137,7 +137,6 @@ onUnmounted(() => {
       <div v-else class="relative w-full" style="padding-bottom: 56.25%; background: #000;">
         <iframe
             :src="currentYoutubeUrl"
-            frameborder="0"
             allowtransparency="true"
             class="absolute top-0 left-0 w-full h-full"
             style="pointer-events: none; border: 0;"

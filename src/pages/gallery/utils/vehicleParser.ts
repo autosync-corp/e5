@@ -77,7 +77,7 @@ function isValidTrimForGeneration(generation: string, trim: string): boolean {
 /**
  * Normalize trim name to match VehicleSelector options
  */
-function normalizeTrim(generation: string, trim: string): string {
+function normalizeTrim(_generation: string, trim: string): string {
   // Return trim as-is to match VehicleSelector labels exactly
   return trim;
 }
@@ -93,7 +93,7 @@ function normalizeTrim(generation: string, trim: string): string {
 export function parseVehicleGenerationAndTrim(
   submodel: string | null,
   vehicleTitle: string | null,
-  trim: string | null
+  _trim: string | null
 ): ParsedVehicleInfo {
   // Extract generation from submodel
   const generation = submodel;
