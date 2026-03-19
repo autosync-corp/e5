@@ -14,38 +14,30 @@ const parsedUrl = parseWheelUrl(fullPath);
 const seriesTitle = fromSlug(series);
 const finishTitle = fromSlug(finish);
 
-// Build title based on available URL parameters
-let pageTitle = `${seriesTitle} ${finishTitle} Wheels`;
+// Build title based on available URL parameters (keep under 60 chars for SEO)
+let pageTitle = `${seriesTitle} ${finishTitle}`;
 
 // Add vehicle generation and trim if present
 if (parsedUrl.generation || parsedUrl.trim) {
   const vehicleParts = [];
   if (parsedUrl.generation) vehicleParts.push(parsedUrl.generation);
   if (parsedUrl.trim) vehicleParts.push(parsedUrl.trim);
-  pageTitle += ` for ${vehicleParts.join(' ')}`;
-}
-
-// Add size info if present (keep it concise)
-if (parsedUrl.frontSize || parsedUrl.rearSize) {
-  const sizeParts = [];
-
-  // Extract just diameter info for brevity (e.g., "19\" x 10\"" -> "19x10")
-  if (parsedUrl.frontSize) {
-    const frontMatch = parsedUrl.frontSize.match(/(\d+)"\s*x\s*(\d+(?:\.\d+)?)/);
-    if (frontMatch) sizeParts.push(`${frontMatch[1]}x${frontMatch[2]}`);
-  }
-
-  if (parsedUrl.rearSize && parsedUrl.rearSize !== parsedUrl.frontSize) {
-    const rearMatch = parsedUrl.rearSize.match(/(\d+)"\s*x\s*(\d+(?:\.\d+)?)/);
-    if (rearMatch) sizeParts.push(`${rearMatch[1]}x${rearMatch[2]}`);
-  }
-
-  if (sizeParts.length > 0) {
-    pageTitle += ` (${sizeParts.join(' & ')})`;
-  }
+  pageTitle += ` | ${vehicleParts.join(' ')}`;
 }
 
 pageTitle += ' - E5 Wheels';
+
+// Build dynamic meta description
+let description = `Shop ${seriesTitle} ${finishTitle} wheels`;
+if (parsedUrl.generation || parsedUrl.trim) {
+  const vehicleParts = [];
+  if (parsedUrl.generation) vehicleParts.push(parsedUrl.generation);
+  if (parsedUrl.trim) vehicleParts.push(parsedUrl.trim);
+  description += ` for ${vehicleParts.join(' ')} Corvette`;
+} else {
+  description += ' for Corvette';
+}
+description += '. Precision-engineered fitment, hub-centric design. Available in multiple sizes and finishes. Made in USA.';
 
 // Build canonical URL - always points to base product page
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
@@ -62,7 +54,7 @@ const urlParams = {
 };
 ---
 
-<MainLayout title={pageTitle} canonical={canonicalUrl}>
+<MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
   <SingleProductPage
     client:only="vue"
     seriesParam={urlParams.series}

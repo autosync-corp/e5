@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Wheel Registration - Activate Your Warranty | E5 Wheels';
+const description = 'Register your E5 wheels to activate warranty coverage. Complete the registration form with your wheel details and vehicle information for warranty protection.';
+const canonicalUrl = `${baseUrl}/wheel-registration`;
 ---
 
-<MainLayout title="E5 Wheels - Wheel Registration">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white pb-24">
     <!-- Wheel Registration Section -->
     <section class="container-e5 py-20">

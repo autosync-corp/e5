@@ -14,9 +14,14 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 // Shop URLs with proper sizes
 const talladegaShopUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'Z06', '20" x 10" +25mm', '21" x 13" +20mm');
 const sonomaShopUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'Z06', '20" x 10" +25mm', '21" x 13" +20mm');
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C8 Z06 Wheels (2023+) - E5 Forged | E5 Wheels';
+const description = 'E5 Forged wheels for C8 Z06 (2023+). Fully forged in USA for the flat-plane LT6 670hp platform. Maximum strength and weight savings. 5 premium finishes.';
+const canonicalUrl = `${baseUrl}/generations/c8/c8-z06`;
 ---
 
-<MainLayout title="C8 Corvette Z06 Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <div class="w-full bg-white -mt-107">
 
         <!-- Hero Banner -->

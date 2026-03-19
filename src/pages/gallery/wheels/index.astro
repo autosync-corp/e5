@@ -1,9 +1,14 @@
 ---
 import WheelGallery from '@/pages/gallery/components/_WheelGallery.vue';
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Wheel Gallery - E5 Form Forged Series | E5 Wheels';
+const description = 'Explore our Form Forged wheel gallery featuring Daytona, Sebring, and Speedway wheels in various finishes and environments. See real-world installations and styling options.';
+const canonicalUrl = `${baseUrl}/gallery/wheels`;
 ---
 
-<MainLayout title="Wheel Gallery - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full h-full">
     <WheelGallery client:only="vue" />
   </div>

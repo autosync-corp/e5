@@ -36,6 +36,9 @@ const detailedGallery = ref<boolean>(false);
           <img :src="FORM_FORGED_SERIES_LOGO" alt="Form Forged Series" class="h-full w-auto object-contain" />
         </div>
       </div>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-franklin-heavy text-black text-center mb-6">
+        WHEEL GALLERY
+      </h1>
       <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-excon-light leading-[22px] md:leading-[26px] lg:leading-[30px] text-black opacity-70 max-w-[1200px] pr-4">
         Indulge yourself in our large collection of wheel galleries featuring our Form Forged Series wheels in all kinds of environments.
       </p>

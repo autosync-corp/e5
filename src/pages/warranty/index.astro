@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = '5-Year Warranty - Corvette Wheel Warranty | E5 Wheels';
+const description = 'E5 Wheels 5-year warranty coverage for all Corvette wheels. Comprehensive protection against manufacturing defects on E5 Forged and Form Forged wheels.';
+const canonicalUrl = `${baseUrl}/warranty`;
 ---
 
-<MainLayout title="E5 Wheels - Warranty">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Warranty Section -->
     <section class="py-20">

@@ -23,9 +23,14 @@ const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed T
 const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 const speedwayDarkBronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C6 Grand Sport Wheels (2010-2013) - Form Forged | E5 Wheels';
+const description = 'Form Forged wheels for C6 Grand Sport Corvette (2010-2013). Engineered for widebody fitment and the LS3 430hp platform. Staggered sizes, multiple finishes available.';
+const canonicalUrl = `${baseUrl}/generations/c6/c6-grand-sport`;
 ---
 
-<MainLayout title="C6 Grand Sport Corvette Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <div class="w-full bg-white -mt-107">
         <!-- Hero Banner -->
         <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">

@@ -1498,6 +1498,7 @@ onMounted(() => {
           <div>
             <h1 class="text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
               {{ productDisplayName }}
+              <span class="sr-only"> {{ finishDisplayName }} WHEELS<template v-if="generationParam || trimParam"> - {{ generationParam ? generationParam.toUpperCase() : '' }}{{ generationParam && trimParam ? ' ' : '' }}{{ trimParam || '' }}</template></span>
             </h1>
           </div>
 

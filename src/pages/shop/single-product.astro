@@ -6,8 +6,13 @@ import SingleProductPage from './components/_SingleProductPage.vue';
 const url = new URL(Astro.request.url);
 const productIdParam = url.searchParams.get('id');
 const productId = productIdParam ? parseInt(productIdParam, 10) : undefined;
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Corvette Wheel Details - E5 Wheels';
+const description = 'View detailed specifications, fitment options, and available finishes for E5 Forged and Form Forged Corvette wheels. Hub-centric design, precision-engineered in USA.';
+const canonicalUrl = `${baseUrl}/shop/single-product`;
 ---
 
-<MainLayout title="Product Details - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <SingleProductPage client:only="vue" productId={productId} />
 </MainLayout>

@@ -20,9 +20,14 @@ const sebringTopUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C8', 'St
 const daytonaDetailUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
 const sebringDetailUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed Tint', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
 const speedwayDetailUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C8 Stingray Wheels (2020+) - Form Forged | E5 Wheels';
+const description = 'Form Forged wheels for C8 Stingray (2020+). Engineered for the mid-engine LT2 490hp platform. Staggered sizing, hub-centric fitment, multiple finishes available.';
+const canonicalUrl = `${baseUrl}/generations/c8/c8-stingray`;
 ---
 
-<MainLayout title="C8 Corvette Stingray Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white -mt-107">
     <!-- Hero Banner -->
     <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">

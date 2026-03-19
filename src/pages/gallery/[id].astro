@@ -43,6 +43,25 @@ const buildPageTitle = () => {
 
 const pageTitle = buildPageTitle();
 
+// Build meta description
+const buildDescription = () => {
+  const parts = [];
+  if (vehicleData.year && vehicleData.year !== 'N/A') parts.push(vehicleData.year);
+  if (vehicleData.submodel && vehicleData.submodel !== 'N/A') parts.push(vehicleData.submodel);
+  if (vehicleData.trim && vehicleData.trim !== 'N/A') parts.push(vehicleData.trim);
+
+  const vehicleName = parts.length > 0 ? parts.join(' ') : 'Corvette';
+  const wheelInfo = vehicleData.wheelStyle && vehicleData.wheelStyle !== 'N/A' ? `${vehicleData.wheelStyle}` : 'E5';
+
+  return `View ${vehicleName} Corvette with ${wheelInfo} wheels. See detailed photos, wheel specifications, and fitment details from our customer gallery.`;
+};
+
+const description = buildDescription();
+
+// Build canonical URL
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const canonicalUrl = `${baseUrl}/gallery/${vehicleData.galleryId}`;
+
 // Helper function to get media items from the vehicle data
 function getGalleryMedia(vehicle: CorvetteGalleryItem): any[] {
   const galleryPath = `/assets/images/gallery/corvette/${vehicle.galleryId}`;
@@ -106,7 +125,7 @@ const corvetteGalleryImages = corvetteGalleryData
   }));
 ---
 
-<MainLayout title={pageTitle}>
+<MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
   <div class="w-full h-full">
     <div class="relative">
       <div class="absolute w-full bg-black/60 py-6">

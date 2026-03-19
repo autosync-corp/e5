@@ -1,9 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import { WHEELS_SEBRING_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SPEEDWAY_ROUTE } from '@/core/constants/Routes';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Form Forged Series Process - Flow-Formed Corvette Wheels | E5 Wheels';
+const description = 'Discover our Form Forged manufacturing process. Flow-formed construction with forged DNA for C5, C6, C7, and C8 Corvettes. Superior strength-to-weight ratio at accessible pricing.';
+const canonicalUrl = `${baseUrl}/process/form-forged`;
 ---
 
-<MainLayout title="E5 Wheels - Form Forged Process">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Hero Video Section 1 -->
     <section class="w-full h-[799px] relative overflow-hidden">

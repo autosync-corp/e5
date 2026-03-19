@@ -2,9 +2,14 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 
 const catalogPdfUrl = '/assets/E5 Catalog NEW 2026 v4.pdf';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Product Catalog - E5 Forged & Form Forged Wheels | E5 Wheels';
+const description = 'Browse our complete digital catalog featuring E5 Forged and Form Forged wheels for Corvette C5, C6, C7, and C8. View all styles, finishes, sizes, and specifications.';
+const canonicalUrl = `${baseUrl}/catalog`;
 ---
 
-<MainLayout title="Product Catalog - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white -mt-107">
     <!-- Page Header -->
     <section class="container-e5 pt-16 pb-8">

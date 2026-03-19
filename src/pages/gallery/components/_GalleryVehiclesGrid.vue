@@ -38,6 +38,25 @@ const handleFilter = (newFilters: { model: string; trim: string; year: string })
   filters.value = newFilters;
 };
 
+// Dynamic H1 based on active filters
+const pageHeading = computed(() => {
+  const parts = [];
+
+  if (filters.value.model) {
+    parts.push(filters.value.model);
+  }
+
+  if (filters.value.trim) {
+    parts.push(filters.value.trim.toUpperCase());
+  }
+
+  if (parts.length > 0) {
+    return `${parts.join(' ')} CORVETTE GALLERY`;
+  }
+
+  return 'VEHICLE GALLERY';
+});
+
 // Map CSV data to component format
 const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
   const sizing = item.wheelSizeF && item.wheelSizeRear
@@ -103,6 +122,9 @@ const filteredVehicles = computed(() => {
         alt="Gallery"
         class="h-[50px] md:h-[60px] lg:h-[70px] mb-4 object-contain"
       />
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-franklin-heavy text-black mb-6">
+        {{ pageHeading }}
+      </h1>
       <p class="text-[18px] md:text-[20px] font-excon-light text-black/70 leading-[30px] max-w-[800px]">
         Our builds are in the wild. See them for yourself, envision yours.
       </p>

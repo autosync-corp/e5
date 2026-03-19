@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Button from "@/core/components/Button.vue";
 
 const props = defineProps({
@@ -40,6 +41,13 @@ const props = defineProps({
   }
 })
 
+const imageSrc = ref(props.image);
+const fallbackImage = '/assets/images/placeholder-vehicle.jpg';
+
+const handleImageError = () => {
+  imageSrc.value = fallbackImage;
+}
+
 const onClick = () => {
   window.location.href = props.link;
 };
@@ -48,7 +56,7 @@ const onClick = () => {
 <template>
   <div class="flex flex-col bg-gray-100">
     <div class="w-full h-[330px] bg-gray-100 flex align-middle justify-end">
-      <img :src="props.image" :alt="props.image" class="w-full object-cover"/>
+      <img :src="imageSrc" :alt="props.title" @error="handleImageError" class="w-full object-cover"/>
     </div>
     <div class="grid grid-cols-2 gap-2 text-start mt-4 px-6">
       <div class="text-start color flex flex-col">

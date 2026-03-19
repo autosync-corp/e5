@@ -11,9 +11,14 @@ import {
 const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
 const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
 const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Z06', '18" x 10" +25mm', '19" x 11" +20mm');
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C5 Z06 Corvette Wheels (2001-2004) - Form Forged | E5 Wheels';
+const description = 'Form Forged wheels engineered for C5 Z06 Corvette (2001-2004). Precision fitment for the 385hp LS6 platform. Multiple sizes, finishes, and styles available.';
+const canonicalUrl = `${baseUrl}/generations/c5/c5-z06`;
 ---
 
-<MainLayout title="C5 Corvette Z06 Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
     <div class="w-full bg-white -mt-107">
         <!-- Hero Banner -->
         <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">

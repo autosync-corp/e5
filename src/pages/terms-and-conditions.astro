@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Terms & Conditions - E5 Wheels';
+const description = 'E5 Wheels terms and conditions. Review the terms of use, purchase agreements, and legal policies that apply when you buy Corvette wheels from E5 Wheels.';
+const canonicalUrl = `${baseUrl}/terms-and-conditions`;
 ---
 
-<MainLayout title="Terms & Conditions - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white pb-24">
     <!-- Hero Section -->
     <section class="container-e5 py-20">

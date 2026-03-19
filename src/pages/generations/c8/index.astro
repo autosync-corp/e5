@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C8 Corvette Wheels - E5 Forged & Form Forged | E5 Wheels';
+const description = 'Shop wheels for C8 Corvette (2020+). E5 Forged for Z06/ZR1/E-Ray and Form Forged for Stingray. Hub-centric fitment, forged in USA, multiple sizes and finishes.';
+const canonicalUrl = `${baseUrl}/generations/c8`;
 ---
 
-<MainLayout title="Custom Corvette C8 Z06 Forged Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Hero Section with Video Background -->
     <section class="relative w-full h-[799px] overflow-hidden">

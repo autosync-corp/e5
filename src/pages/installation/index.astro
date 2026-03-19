@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Installation Guide - Corvette Wheel Installation | E5 Wheels';
+const description = 'Complete installation instructions for E5 wheels on Corvette C5, C6, C7, and C8. Includes torque specs, safety guidelines, and Corvette-specific installation procedures.';
+const canonicalUrl = `${baseUrl}/installation`;
 ---
 
-<MainLayout title="E5 Wheels - Installation Instructions">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Hero Section with Background Image -->
     <section class="w-full relative min-h-[600px] bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/images/installation/0bff205390134dea2d6ae15265d1cb4fc9a10a4e.png');">

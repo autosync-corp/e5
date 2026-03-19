@@ -10,9 +10,14 @@ import {
 const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
 const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
 const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C5', 'Base', '17" x 8.5" +58mm', '18" x 9.5" +65mm');
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'C5 Corvette Wheels (1997-2004) - Form Forged Series | E5 Wheels';
+const description = 'Shop Form Forged wheels for C5 Corvette (1997-2004). Daytona, Sebring, and Speedway wheels precision-engineered for C5 Base and Z06. Hub-centric fitment, multiple finishes.';
+const canonicalUrl = `${baseUrl}/generations/c5`;
 ---
 
-<MainLayout title="Custom C5 Corvette Wheels - E5 Wheels">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Hero Section with Background Image -->
     <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">

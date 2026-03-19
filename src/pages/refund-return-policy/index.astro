@@ -1,8 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Return & Refund Policy - E5 Wheels';
+const description = 'E5 Wheels return and refund policy. Review our 30-day return window, conditions for returns, restocking fees, and refund process for Corvette wheels.';
+const canonicalUrl = `${baseUrl}/refund-return-policy`;
 ---
 
-<MainLayout title="E5 Wheels - Return Policy">
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white pb-24">
     <!-- Return Policy Section -->
     <section class="container-e5 py-20">
