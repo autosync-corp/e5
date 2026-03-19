@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import {type Ref, ref, computed, onMounted, onUnmounted} from "vue";
 
+defineOptions({
+  name: 'VehicleImagesGallery'
+});
+
 interface MediaItem {
   type: 'image' | 'video';
   url?: string;
