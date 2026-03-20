@@ -81,11 +81,18 @@ onMounted(async () => {
   if (props.initialGeneration && props.initialTrim) {
     const preselectedKey = `${props.initialGeneration}-${props.initialTrim}`;
     console.log('🔗 Pre-selecting from URL parameters:', preselectedKey);
-    selectedOption.value = preselectedKey;
 
-    // Fetch vehicle data for the pre-selected option
+    // Fetch vehicle data for the pre-selected option (case-insensitive)
     const vehicleOpt = getVehicleOption(preselectedKey);
     if (vehicleOpt) {
+      // Set selectedOption with properly cased version for display
+      const gen = GENERATION_MAP.find(g => g.label.toLowerCase() === props.initialGeneration?.toLowerCase());
+      if (gen) {
+        const opt = gen.options.find(o => o.label.toLowerCase() === props.initialTrim?.toLowerCase());
+        if (opt) {
+          selectedOption.value = `${gen.label}-${opt.label}`;
+        }
+      }
       await fetchVehicle(vehicleOpt);
     }
     return; // Skip localStorage check
@@ -133,9 +140,10 @@ function getVehicleOption(key: string): VehicleOption | null {
   const generation = key.substring(0, firstDashIndex);
   const trim = key.substring(firstDashIndex + 1);
 
-  const gen = GENERATION_MAP.find(g => g.label === generation);
+  // Case-insensitive matching
+  const gen = GENERATION_MAP.find(g => g.label.toLowerCase() === generation.toLowerCase());
   if (!gen) return null;
-  return gen.options.find(opt => opt.label === trim) || null;
+  return gen.options.find(opt => opt.label.toLowerCase() === trim.toLowerCase()) || null;
 }
 
 // Get year range for a generation

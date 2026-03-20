@@ -10,7 +10,7 @@ const canonicalUrl = `${baseUrl}/catalog`;
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
-  <div class="w-full bg-white -mt-107">
+  <div class="w-full bg-white">
     <!-- Page Header -->
     <section class="container-e5 pt-16 pb-8">
       <h1 class="text-[28px] md:text-[40px] lg:text-[52px] xl:text-[64px] font-['Franklin_Gothic_Heavy'] text-e5-red uppercase text-center mb-4">
@@ -26,7 +26,11 @@ const canonicalUrl = `${baseUrl}/catalog`;
       <div class="flex flex-col items-center">
         <!-- Loading indicator -->
         <div id="loading" class="text-center py-12">
-          <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-excon-light text-black/70">Loading catalog...</p>
+          <div class="inline-block">
+            <!-- Spinner -->
+            <div class="w-16 h-16 border-4 border-e5-red border-t-transparent rounded-full animate-spin mb-4 mx-auto"></div>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-excon-light text-black/70">Loading catalog...</p>
+          </div>
         </div>
 
         <!-- Book container -->
