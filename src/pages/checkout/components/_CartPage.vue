@@ -75,7 +75,7 @@ onMounted(() => {
           <div class="absolute left-0 right-0 top-[18px] h-[1px] bg-[#a33a3a] z-0"></div>
 
           <!-- Step 1: Wheels -->
-          <div class="relative z-10 w-1/3 flex flex-col items-center">
+          <div class="relative z-1 w-1/3 flex flex-col items-center">
             <div class="w-9 h-9 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
                 src="/assets/images/cart/61cc55a16a871139a1cf4a95a7854be48b2d404d.webp"
@@ -87,7 +87,7 @@ onMounted(() => {
           </div>
 
           <!-- Step 2: Cart (Active) -->
-          <div class="relative z-10 w-1/3 flex flex-col items-center">
+          <div class="relative z-1 w-1/3 flex flex-col items-center">
             <div class="w-11 h-11 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
                 src="/assets/images/cart/40eb342b73462b1f996cdb7f9c9a92e0d95a45fc.webp"
@@ -99,7 +99,7 @@ onMounted(() => {
           </div>
 
           <!-- Step 3: Checkout -->
-          <div class="relative z-10 w-1/3 flex flex-col items-center">
+          <div class="relative z-1 w-1/3 flex flex-col items-center">
             <div class="w-9 h-9 rounded-full bg-[#c94343] flex items-center justify-center">
               <img
                 src="/assets/images/cart/556a6d30f7a2b7b09444155207ee5da1a4c1ae86.webp"

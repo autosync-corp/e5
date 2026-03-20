@@ -110,7 +110,7 @@ const closeMiniCart = () => {
 
 <template>
   <div>
-  <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-10 flex justify-center">
+  <nav class="bg-e5-black font-franklin-heavy fixed top-0 left-0 w-full h-107 z-50 flex justify-center">
     <!-- Desktop Navigation -->
     <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-4 xl:px-8 2xl:px-12">
       <div class="flex items-center gap-2 xl:gap-4 2xl:gap-8">
