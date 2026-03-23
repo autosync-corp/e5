@@ -48,14 +48,23 @@ export function fromSlug(slug: string | null | undefined): string {
 export function normalizeSizeForUrl(size: string | null | undefined): string {
   if (!size) return '';
 
-  // Remove quotes, spaces, and normalize format
-  return size
+  // Remove quotes and spaces first
+  let normalized = size
     .replace(/"/g, '')              // Remove quotes
     .replace(/\s+/g, '')            // Remove spaces
     .replace(/x/gi, 'x')            // Normalize x
-    .replace(/\+/g, '-et')          // Convert +30mm to -et30
-    .replace(/mm/gi, '')            // Remove mm
     .toLowerCase();
+
+  // Handle offsets: +30mm → -et30, -25mm → -et-25
+  normalized = normalized.replace(/([+-]\d+)mm/g, (match, offset) => {
+    if (offset.startsWith('+')) {
+      return `-et${offset.substring(1)}`;
+    } else {
+      return `-et${offset}`;
+    }
+  });
+
+  return normalized;
 }
 
 /**
@@ -79,7 +88,9 @@ export function parseSizeFromUrl(urlSize: string | null | undefined): string {
 
   // Build display format
   if (offset) {
-    return `${diameter}" x ${width}" +${offset}mm`;
+    // Add + prefix for positive offsets, negative offsets already have -
+    const offsetWithSign = offset.startsWith('-') ? offset : `+${offset}`;
+    return `${diameter}" x ${width}" ${offsetWithSign}mm`;
   }
 
   return `${diameter}" x ${width}"`;
@@ -110,7 +121,8 @@ export function parseStaggeredSize(staggeredSize: string): { front: string; rear
   if (!staggeredSize) return { front: '', rear: '' };
 
   // Match pattern: {diameter}x{width}-et{offset}-{diameter}x{width}-et{offset}
-  const pattern = /^(\d+x\d+(?:-et\d+)?)-(\d+x\d+(?:-et\d+)?)$/;
+  // Support decimal widths like 9.5, 10.5 and negative offsets
+  const pattern = /^(\d+(?:\.\d+)?x\d+(?:\.\d+)?(?:-et-?\d+)?)-(\d+(?:\.\d+)?x\d+(?:\.\d+)?(?:-et-?\d+)?)$/;
   const match = staggeredSize.match(pattern);
 
   if (match) {
@@ -243,8 +255,8 @@ export function parseWheelUrl(url: string): {
 
   // Parse optional vehicle (4th segment)
   if (parts[3]) {
-    // Check if it looks like a size (contains 'x' and numbers)
-    if (/^\d+x\d+/.test(parts[3])) {
+    // Check if it looks like a size (contains 'x' and numbers, including decimals)
+    if (/^\d+(?:\.\d+)?x\d+(?:\.\d+)?/.test(parts[3])) {
       // It's a size, not a vehicle
       const sizes = parseStaggeredSize(parts[3]);
       result.frontSize = sizes.front;
