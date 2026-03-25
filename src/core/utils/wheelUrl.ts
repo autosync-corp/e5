@@ -56,7 +56,7 @@ export function normalizeSizeForUrl(size: string | null | undefined): string {
     .toLowerCase();
 
   // Handle offsets: +30mm → -et30, -25mm → -et-25
-  normalized = normalized.replace(/([+-]\d+)mm/g, (match, offset) => {
+  normalized = normalized.replace(/([+-]\d+)mm/g, (_match, offset) => {
     if (offset.startsWith('+')) {
       return `-et${offset.substring(1)}`;
     } else {
