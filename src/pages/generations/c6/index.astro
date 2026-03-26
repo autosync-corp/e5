@@ -8,8 +8,6 @@ import {
     DAYTONA_BRAND_NAME,
     SEBRING_LOGO,
     SEBRING_BRAND_NAME,
-    SPEEDWAY_LOGO,
-    SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 
 // URL variables for different sections
@@ -20,14 +18,14 @@ const daytonaTitaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Br
 const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
 const sebringBronzeBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
 
-// Top 3 wheels - use Sebring sizes
-const speedwayTitaniumBrushedUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+// Top 3 wheels - use Base sizes
+const daytonaBronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
-// Also Available section - use Sebring sizes (same as top 3)
-const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-const speedwayTitaniumBrushedBaseUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-const speedwayDarkBronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
+// Also Available section - use Base sizes (Daytona finishes)
+const daytonaGlossBlackAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaTitaniumBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
+const daytonaBronzeBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'C6 Corvette Wheels (2005-2013) - Form Forged Series | E5 Wheels';
@@ -64,13 +62,13 @@ const canonicalUrl = `${baseUrl}/generations/c6`;
         <!-- Three Wheel Options -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Speedway - Titanium Brushed Tint -->
-                <a href={speedwayTitaniumBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <!-- Daytona - Bronze Brushed Tint -->
+                <a href={daytonaBronzeBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="https://wheels.autosyncstudio.com/webp/E5/Daytona_BBT_Gloss_Bronze_Brushed-Face-Tinted-Clear_5-lug_0001.webp" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
@@ -297,7 +295,7 @@ const canonicalUrl = `${baseUrl}/generations/c6`;
             </div>
         </section>
 
-        <!-- Speedway Section -->
+        <!-- Daytona Section -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase text-center mb-12">
                 ALSO AVAILABLE FOR C6 CORVETTES
@@ -305,11 +303,11 @@ const canonicalUrl = `${baseUrl}/generations/c6`;
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
                 <!-- Gloss Black -->
-                <a href={speedwayGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaGlossBlackAltUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/cd19461c451031cb11b5e748b6774ae80b22a516.webp" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
                     </div>
-                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
@@ -317,24 +315,24 @@ const canonicalUrl = `${baseUrl}/generations/c6`;
                 </a>
 
                 <!-- Titanium Brushed Tint -->
-                <a href={speedwayTitaniumBrushedBaseUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <a href={daytonaTitaniumBrushedAltUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
+                        <img src="/assets/images/generations/c6/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
 
-                <!-- Dark Bronze -->
-                <a href={speedwayDarkBronzeUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                <!-- Bronze Brushed Tint -->
+                <a href={daytonaBronzeBrushedAltUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/55e2dad1e72a82c3b811737504db985db4ec5353.webp" alt="Speedway Dark Bronze" class="w-full h-full object-contain" />
+                        <img src="https://wheels.autosyncstudio.com/webp/E5/Daytona_BBT_Gloss_Bronze_Brushed-Face-Tinted-Clear_5-lug_0001.webp" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
                     </div>
-                    <img src={SPEEDWAY_LOGO} alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">DARK BRONZE</p>
+                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
@@ -342,7 +340,7 @@ const canonicalUrl = `${baseUrl}/generations/c6`;
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={speedwayGlossBlackUrl}>
+                <Button client:visible primary link={daytonaGlossBlackAltUrl}>
                     <span>SHOP FITMENT</span>
                 </Button>
             </div>

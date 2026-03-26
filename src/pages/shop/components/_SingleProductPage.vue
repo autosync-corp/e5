@@ -4,6 +4,7 @@ import { fetchWheels, getWheelImageUrl, formatPrice, CartManager, type WheelProd
 import { CART_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
+import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, type VehicleFitment } from '@/core/constants/CuratedFitments';
 
 // Props
 const props = defineProps<{
@@ -228,9 +229,64 @@ function isValidFitment(fitment: any): boolean {
   return true; // Valid fitment
 }
 
+// Check if current vehicle has curated fitments (E5 Recommended)
+const curatedVehicleFitments = computed((): VehicleFitment[] | null => {
+  if (!selectedVehicle.value) return null;
+
+  // Extract generation from year and trim from submodel
+  const year = selectedVehicle.value.Year;
+  const trim = selectedVehicle.value.Submodel; // "Stingray", "Z06", "Grand Sport", etc.
+
+  // Map year to generation
+  let generation = '';
+  if (year >= 2020) generation = 'C8';
+  else if (year >= 2014) generation = 'C7';
+  else if (year >= 2005) generation = 'C6';
+  else if (year >= 1997) generation = 'C5';
+
+  console.log(`✅ Vehicle: ${year} ${trim} → Generation: ${generation}`);
+
+  if (!generation || !trim) {
+    console.warn('⚠️ Could not determine generation or trim');
+    return null;
+  }
+
+  const curated = getCuratedFitment(generation, trim);
+
+  if (curated) {
+    console.log(`✨ Using E5 CURATED fitments for ${generation} ${trim}:`, curated);
+  } else {
+    console.log(`🔄 No curated fitments for ${generation} ${trim}, falling back to API`);
+  }
+
+  return curated;
+});
+
 // Available front size+offset combinations for staggered fitment
 const availableFrontSizeOffsets = computed(() => {
   if (!seriesProducts.value.length || !selectedFinish.value || !selectedVehicle.value) return [];
+
+  // ✨ E5 CURATED FITMENTS - Use curated list exclusively for this site
+  // (API fitment code preserved below for future use on other sites)
+  if (curatedVehicleFitments.value) {
+    console.log('✨ Using E5 CURATED fitments');
+    const sizeOffsets = new Set<string>();
+
+    curatedVehicleFitments.value.forEach(fitment => {
+      const formattedSize = formatFitmentSpec(fitment.front);
+      sizeOffsets.add(formattedSize);
+    });
+
+    return Array.from(sizeOffsets).sort();
+  }
+
+  // If no curated fitment available, return empty (don't fall back to API for this site)
+  console.warn('⚠️ No curated fitments available for this vehicle');
+  return [];
+
+  // 🔄 API FITMENT CODE PRESERVED BELOW (not used on this site, kept for future projects)
+  // Uncomment the code below to re-enable API-based fitments:
+  /*
 
   const finishProducts = seriesProducts.value.filter(p => getFinishName(p) === selectedFinish.value);
   const sizeOffsets = new Set<string>();
@@ -332,12 +388,35 @@ const availableFrontSizeOffsets = computed(() => {
   });
 
   return Array.from(sizeOffsets).sort();
+  */
+  // End of preserved API fitment code
 });
 
 // Available rear size+offset combinations for staggered fitment
 const availableRearSizeOffsets = computed(() => {
   if (!seriesProducts.value.length || !selectedFinish.value || !selectedVehicle.value) return [];
 
+  // ✨ E5 CURATED FITMENTS - Use curated list exclusively for this site
+  // (API fitment code preserved below for future use on other sites)
+  if (curatedVehicleFitments.value) {
+    console.log('✨ Using E5 CURATED fitments');
+    const sizeOffsets = new Set<string>();
+
+    curatedVehicleFitments.value.forEach(fitment => {
+      const formattedSize = formatFitmentSpec(fitment.rear);
+      sizeOffsets.add(formattedSize);
+    });
+
+    return Array.from(sizeOffsets).sort();
+  }
+
+  // If no curated fitment available, return empty (don't fall back to API for this site)
+  console.warn('⚠️ No curated fitments available for this vehicle');
+  return [];
+
+  // 🔄 API FITMENT CODE PRESERVED BELOW (not used on this site, kept for future projects)
+  // Uncomment the code below to re-enable API-based fitments:
+  /*
   const finishProducts = seriesProducts.value.filter(p => getFinishName(p) === selectedFinish.value);
   const sizeOffsets = new Set<string>();
 
@@ -465,6 +544,8 @@ const availableRearSizeOffsets = computed(() => {
   });
 
   return filteredSizes.sort();
+  */
+  // End of preserved API fitment code
 });
 
 const currentImages = computed(() => {
@@ -533,59 +614,96 @@ const brandLogo = computed(() => {
   };
 });
 
-// Check fitment for selected vehicle
+// Check fitment for selected vehicle (CURATED LIST ONLY - API validation disabled)
 const vehicleFitment = computed(() => {
   if (!selectedProduct.value || !selectedVehicle.value) return null;
 
-  // For non-staggered vehicles, always check fitment of selected product
+  // ✨ Use ONLY curated fitments for validation
+  if (!curatedVehicleFitments.value) {
+    return {
+      fits: false,
+      reasons: ['No E5 curated fitments available for this vehicle'],
+      fitmentType: null
+    };
+  }
+
+  // For non-staggered vehicles, check if selected product matches curated fitment
   if (!isStaggered.value) {
-    return checkWheelFitment({
-      LugCount: selectedProduct.value.LugCount,
-      BoltCircle1: selectedProduct.value.BoltCircle1,
-      BoltCircle2: selectedProduct.value.BoltCircle2,
-      Bore: selectedProduct.value.Bore,
-      LoadRating: selectedProduct.value.LoadRating,
-      Diameter: selectedProduct.value.Diameter,
-      Width: selectedProduct.value.Width,
-      Offset: selectedProduct.value.Offset,
-    }, selectedVehicle.value);
+    const productDiameter = selectedProduct.value.Diameter;
+    const productWidth = selectedProduct.value.Width;
+    const productOffset = selectedProduct.value.Offset;
+
+    // Check if this size matches any curated fitment (front or rear)
+    const matches = curatedVehicleFitments.value.some(fitment => {
+      const frontMatches =
+        fitment.front.diameter === productDiameter &&
+        fitment.front.width === productWidth &&
+        fitment.front.offset === productOffset;
+
+      const rearMatches =
+        fitment.rear.diameter === productDiameter &&
+        fitment.rear.width === productWidth &&
+        fitment.rear.offset === productOffset;
+
+      return frontMatches || rearMatches;
+    });
+
+    return {
+      fits: matches,
+      reasons: matches
+        ? [`E5 Recommended: ${productDiameter}" x ${productWidth}" ${productOffset >= 0 ? '+' : ''}${productOffset}mm`]
+        : [`Size ${productDiameter}" x ${productWidth}" ${productOffset >= 0 ? '+' : ''}${productOffset}mm not in E5 curated fitments`],
+      fitmentType: matches ? 'curated' : null
+    };
   }
 
   // For staggered vehicles, check both front and rear
   return null; // Will use staggeredFitment instead
 });
 
-// Check staggered fitment
+// Check staggered fitment (CURATED LIST ONLY - API validation disabled)
 const staggeredFitment = computed(() => {
   if (!selectedVehicle.value || !isStaggered.value || !selectedProduct.value) return null;
 
-  // Use selected front/rear products if available, otherwise use the main selected product as fallback
+  // ✨ Use ONLY curated fitments for validation
+  if (!curatedVehicleFitments.value) {
+    return {
+      frontFits: false,
+      rearFits: false,
+      frontReasons: ['No E5 curated fitments available'],
+      rearReasons: ['No E5 curated fitments available'],
+      fitmentType: null
+    };
+  }
+
+  // Use selected front/rear products if available
   const frontProduct = selectedFrontProduct.value || selectedProduct.value;
   const rearProduct = selectedRearProduct.value || selectedProduct.value;
 
-  return checkStaggeredFitment(
-    {
-      LugCount: frontProduct.LugCount,
-      BoltCircle1: frontProduct.BoltCircle1,
-      BoltCircle2: frontProduct.BoltCircle2,
-      Bore: frontProduct.Bore,
-      LoadRating: frontProduct.LoadRating,
-      Diameter: frontProduct.Diameter,
-      Width: frontProduct.Width,
-      Offset: frontProduct.Offset,
-    },
-    {
-      LugCount: rearProduct.LugCount,
-      BoltCircle1: rearProduct.BoltCircle1,
-      BoltCircle2: rearProduct.BoltCircle2,
-      Bore: rearProduct.Bore,
-      LoadRating: rearProduct.LoadRating,
-      Diameter: rearProduct.Diameter,
-      Width: rearProduct.Width,
-      Offset: rearProduct.Offset,
-    },
-    selectedVehicle.value
+  // Check if selected sizes match curated fitments
+  const frontMatches = curatedVehicleFitments.value.some(fitment =>
+    fitment.front.diameter === frontProduct.Diameter &&
+    fitment.front.width === frontProduct.Width &&
+    fitment.front.offset === frontProduct.Offset
   );
+
+  const rearMatches = curatedVehicleFitments.value.some(fitment =>
+    fitment.rear.diameter === rearProduct.Diameter &&
+    fitment.rear.width === rearProduct.Width &&
+    fitment.rear.offset === rearProduct.Offset
+  );
+
+  return {
+    frontFits: frontMatches,
+    rearFits: rearMatches,
+    frontReasons: frontMatches
+      ? [`Front: Matches E5 size fitment`]
+      : [`Front: Size incompatible - ${frontProduct.Diameter}" x ${frontProduct.Width}" ${frontProduct.Offset >= 0 ? '+' : ''}${frontProduct.Offset}mm offset does not match any fitment`],
+    rearReasons: rearMatches
+      ? [`Rear: Matches E5 size fitment`]
+      : [`Rear: Size incompatible - ${rearProduct.Diameter}" x ${rearProduct.Width}" ${rearProduct.Offset >= 0 ? '+' : ''}${rearProduct.Offset}mm offset does not match any fitment`],
+    fitmentType: (frontMatches && rearMatches) ? 'curated' : null
+  };
 });
 
 const vehicleDisplay = computed(() => {
