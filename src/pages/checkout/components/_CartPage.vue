@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { CartManager, calculateCartTotals, getWheelImageUrl, formatPrice, type CartItem } from '@/core/services/ProductService';
+import { validateCoupon } from '@/core/constants/Coupons';
 import { CHECKOUT_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 
 // State
 const cartItems = ref<CartItem[]>([]);
 const couponCode = ref('');
+const couponError = ref('');
+const couponSuccess = ref('');
+const appliedCoupon = ref<string | null>(null);
 
 // Computed
-const cartTotals = computed(() => calculateCartTotals(cartItems.value));
+const cartTotals = computed(() => calculateCartTotals(cartItems.value, undefined, appliedCoupon.value || undefined));
 
 const isEmpty = computed(() => cartItems.value.length === 0);
 
 // Methods
 function loadCart() {
   cartItems.value = CartManager.getCart();
+  // Load applied coupon if exists
+  const savedCoupon = CartManager.getAppliedCoupon();
+  if (savedCoupon) {
+    appliedCoupon.value = savedCoupon;
+    couponCode.value = savedCoupon;
+    couponSuccess.value = 'Coupon applied!';
+  }
 }
 
 function updateQuantity(productId: number, quantity: number) {
@@ -31,10 +42,33 @@ function removeItem(productId: number) {
 }
 
 function applyCoupon() {
-  if (couponCode.value.trim()) {
-    // TODO: Implement coupon validation
-    alert('Coupon functionality coming soon!');
+  couponError.value = '';
+  couponSuccess.value = '';
+
+  if (!couponCode.value.trim()) {
+    couponError.value = 'Please enter a coupon code';
+    return;
   }
+
+  const validation = validateCoupon(couponCode.value, cartTotals.value.subtotal);
+
+  if (!validation.valid) {
+    couponError.value = validation.error || 'Invalid coupon';
+    return;
+  }
+
+  // Apply coupon
+  appliedCoupon.value = couponCode.value.toUpperCase();
+  CartManager.saveCoupon(appliedCoupon.value);
+  couponSuccess.value = `Coupon "${appliedCoupon.value}" applied successfully!`;
+}
+
+function removeCoupon() {
+  appliedCoupon.value = null;
+  couponCode.value = '';
+  couponError.value = '';
+  couponSuccess.value = '';
+  CartManager.removeCoupon();
 }
 
 function proceedToCheckout() {
@@ -207,19 +241,37 @@ onMounted(() => {
             </div>
 
             <!-- Coupon Section -->
-            <div class="flex justify-end gap-3 mt-8 pt-8">
-              <input
-                v-model="couponCode"
-                type="text"
-                placeholder="COUPON CODE"
-                class="w-60 h-11 px-4 border border-gray-300 rounded font-['Franklin_Gothic_Book'] text-[13px] text-black bg-white placeholder:text-gray-400 placeholder:tracking-wide"
-              />
-              <button
-                @click="applyCoupon"
-                class="bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11"
-              >
-                Apply
-              </button>
+            <div class="mt-8 pt-8">
+              <div class="flex justify-end gap-3">
+                <input
+                  v-model="couponCode"
+                  type="text"
+                  placeholder="COUPON CODE"
+                  :disabled="!!appliedCoupon"
+                  class="w-60 h-11 px-4 border border-gray-300 rounded font-['Franklin_Gothic_Book'] text-[13px] text-black bg-white placeholder:text-gray-400 placeholder:tracking-wide disabled:bg-gray-100 disabled:cursor-not-allowed"
+                />
+                <button
+                  v-if="!appliedCoupon"
+                  @click="applyCoupon"
+                  class="bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11"
+                >
+                  Apply
+                </button>
+                <button
+                  v-else
+                  @click="removeCoupon"
+                  class="bg-gray-600 text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-gray-700 transition-colors h-11"
+                >
+                  Remove
+                </button>
+              </div>
+              <!-- Error/Success Messages -->
+              <div v-if="couponError" class="flex justify-end mt-2">
+                <p class="text-xs text-e5-red">{{ couponError }}</p>
+              </div>
+              <div v-if="couponSuccess" class="flex justify-end mt-2">
+                <p class="text-xs text-green-600">{{ couponSuccess }}</p>
+              </div>
             </div>
           </div>
 
@@ -234,6 +286,17 @@ onMounted(() => {
               <div class="flex justify-between items-start py-3">
                 <span class="font-['Franklin_Gothic_Book'] text-sm text-black">Subtotal</span>
                 <span class="font-['Franklin_Gothic_Book'] text-sm text-black">{{ formatPrice(cartTotals.subtotal) }}</span>
+              </div>
+
+              <!-- Discount (if applied) -->
+              <div v-if="cartTotals.discount > 0" class="flex justify-between items-start py-3">
+                <span class="font-['Franklin_Gothic_Book'] text-sm text-green-600">
+                  Discount ({{ appliedCoupon }})
+                  <span v-if="cartTotals.appliedCoupon" class="text-xs">
+                    - {{ cartTotals.appliedCoupon.type === 'percentage' ? `${cartTotals.appliedCoupon.discount}% off` : `$${cartTotals.appliedCoupon.discount} off` }}
+                  </span>
+                </span>
+                <span class="font-['Franklin_Gothic_Book'] text-sm text-green-600">-{{ formatPrice(cartTotals.discount) }}</span>
               </div>
 
               <!-- Shipping -->
@@ -257,8 +320,8 @@ onMounted(() => {
 
               <!-- Total -->
               <div class="flex justify-between items-start py-3 pt-5 border-t border-gray-300 mt-3">
-                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">Subtotal</span>
-                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">{{ formatPrice(cartTotals.subtotal) }}</span>
+                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">Total</span>
+                <span class="font-['Franklin_Gothic_Medium'] text-base font-semibold text-black">{{ formatPrice(cartTotals.discountedSubtotal || cartTotals.subtotal) }}</span>
               </div>
               <p class="text-xs text-gray-500 mt-2">*Tax will be calculated at checkout based on your location</p>
 

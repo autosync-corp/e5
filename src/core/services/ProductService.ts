@@ -1,4 +1,5 @@
 // Product Service for E5 Wheels API Integration
+import { validateCoupon, calculateDiscount } from '@/core/constants/Coupons';
 
 const API_BASE_URL = 'https://api.autosyncstudio.com/wheels';
 const API_KEY = import.meta.env.PUBLIC_AUTOSYNC_API_KEY || 'efive';
@@ -204,9 +205,9 @@ export function getWheelDisplayName(wheel: WheelProduct): string {
 }
 
 /**
- * Calculates cart totals
+ * Calculates cart totals with optional coupon discount
  */
-export function calculateCartTotals(items: CartItem[], customerState?: string) {
+export function calculateCartTotals(items: CartItem[], customerState?: string, couponCode?: string) {
   const subtotal = items.reduce((sum, item) => {
     // Check if item is staggered (front-only or rear-only)
     const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
@@ -221,16 +222,32 @@ export function calculateCartTotals(items: CartItem[], customerState?: string) {
     }
   }, 0);
 
+  // Apply coupon discount if valid
+  let discount = 0;
+  let appliedCoupon = null;
+  if (couponCode) {
+    const validation = validateCoupon(couponCode, subtotal);
+    if (validation.valid && validation.coupon) {
+      discount = calculateDiscount(validation.coupon, subtotal);
+      appliedCoupon = validation.coupon;
+    }
+  }
+
+  const discountedSubtotal = subtotal - discount;
+
   // Only apply FL tax (7%) if customer is from Florida
   const isFloridaCustomer = customerState?.toUpperCase() === 'FL' || customerState?.toUpperCase() === 'FLORIDA';
   const taxRate = isFloridaCustomer ? 0.07 : 0;
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax;
+  const tax = discountedSubtotal * taxRate;
+  const total = discountedSubtotal + tax;
 
   return {
     subtotal,
+    discount,
+    discountedSubtotal,
     tax,
     total,
+    appliedCoupon,
     affirmMonthly: Math.ceil(total / 18), // 18 months financing
   };
 }
@@ -290,5 +307,23 @@ export const CartManager = {
 
   getItemCount(): number {
     return this.getCart().reduce((sum, item) => sum + item.quantity, 0);
+  },
+
+  // Coupon management
+  COUPON_KEY: 'e5_coupon',
+
+  getAppliedCoupon(): string | null {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem(this.COUPON_KEY);
+  },
+
+  saveCoupon(code: string): void {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(this.COUPON_KEY, code.toUpperCase());
+  },
+
+  removeCoupon(): void {
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem(this.COUPON_KEY);
   },
 };

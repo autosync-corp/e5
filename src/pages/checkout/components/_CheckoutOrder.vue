@@ -15,6 +15,7 @@ const props = defineProps<{
 
 // State
 const cartItems = ref<CartItem[]>([]);
+const appliedCoupon = ref<string | null>(null);
 const isProcessing = ref(false);
 const errorMessage = ref('');
 const successMessage = ref('');
@@ -44,13 +45,15 @@ declare global {
 let affirmInitialized = false;
 
 // Computed
-const cartTotals = computed(() => calculateCartTotals(cartItems.value, customerState.value));
+const cartTotals = computed(() => calculateCartTotals(cartItems.value, customerState.value, appliedCoupon.value || undefined));
 
 const isEmpty = computed(() => cartItems.value.length === 0);
 
 // Methods
 function loadCart() {
   cartItems.value = CartManager.getCart();
+  // Load applied coupon from cart
+  appliedCoupon.value = CartManager.getAppliedCoupon();
 }
 
 function loadVehicle() {
@@ -791,6 +794,17 @@ onMounted(() => {
         <div class="e5CheckoutOrderRow">
           <span class="e5CheckoutOrderLabel">Subtotal</span>
           <span class="e5CheckoutOrderValue">{{ formatPrice(cartTotals.subtotal) }}</span>
+        </div>
+
+        <!-- Discount (if applied) -->
+        <div v-if="cartTotals.discount > 0" class="e5CheckoutOrderRow" style="color: #16a34a;">
+          <span class="e5CheckoutOrderLabel">
+            Discount ({{ appliedCoupon }})
+            <span v-if="cartTotals.appliedCoupon" style="font-size: 11px; opacity: 0.8;">
+              {{ cartTotals.appliedCoupon.type === 'percentage' ? `${cartTotals.appliedCoupon.discount}% off` : `$${cartTotals.appliedCoupon.discount} off` }}
+            </span>
+          </span>
+          <span class="e5CheckoutOrderValue">-{{ formatPrice(cartTotals.discount) }}</span>
         </div>
 
         <div class="e5CheckoutOrderRow">
