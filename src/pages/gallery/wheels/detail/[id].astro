@@ -4,6 +4,8 @@ import { wheelGalleryItems } from "@/pages/gallery/constants/WheelGallery.ts";
 import type { WheelGalleryItem } from "@/pages/gallery/constants/WheelGallery.ts";
 import WheelCard from "@/pages/gallery/components/_WheelCard.vue";
 import Button from "@/core/components/Button.vue";
+// @ts-expect-error - Vue component with script setup has implicit default export
+import WheelImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
 import { GALLERY_WHEELS_ROUTE, GALLERY_WHEELS_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 
 export const prerender = true;
@@ -17,6 +19,11 @@ export function getStaticPaths() {
 
 const { wheelData } = Astro.props as { wheelData: WheelGalleryItem };
 
+const galleryImages = (wheelData.images && wheelData.images.length > 0)
+  ? wheelData.images
+  : [wheelData.detailedImage || wheelData.image];
+const galleryMedia = galleryImages.map((url: string) => ({ type: 'image' as const, url }));
+
 // Get similar wheels (same name, different finishes)
 const relatedWheels = wheelGalleryItems
   .filter(w => w.name === wheelData.name && w.id !== wheelData.id)
@@ -25,6 +32,7 @@ const relatedWheels = wheelGalleryItems
 
 <MainLayout title={`${wheelData.name} ${wheelData.finish} - E5 Wheels Gallery`}>
   <div class="w-full h-full">
+    <!-- Main Wheel Image / Slider -->
     <div class="relative">
       <div class="absolute w-full bg-black/60 py-6 z-10">
         <div class="container-e5 flex items-center justify-end">
@@ -36,17 +44,11 @@ const relatedWheels = wheelGalleryItems
           </a>
         </div>
       </div>
-
-      <!-- Main Wheel Image -->
-      <section class="w-full">
-        <div class="relative w-full">
-          <img
-              src={wheelData.detailedImage || wheelData.image}
-              alt={`${wheelData.name} ${wheelData.finish}`}
-              class="w-full max-h-[740px] object-cover"
-          />
-        </div>
-      </section>
+      <WheelImagesGallery
+        client:only="vue"
+        media={galleryMedia}
+        trim={`${wheelData.name} ${wheelData.finish}`}
+      />
     </div>
 
     <!-- Wheel Details Section -->

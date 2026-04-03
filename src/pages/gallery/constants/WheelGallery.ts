@@ -12,6 +12,7 @@ export interface WheelGalleryItem {
     series: string;
     image: string;
     detailedImage?: string;
+    images?: string[];
     logo: string;
     link: string;
     featured?: boolean;
