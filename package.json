@@ -16,6 +16,7 @@
     "@astrojs/vercel": "^10.0.0",
     "@livechat/widget-vue": "^1.4.0",
     "@stripe/stripe-js": "^8.6.1",
+    "@upstash/redis": "^1.37.0",
     "stripe": "^20.1.2",
     "typescript": "^5.9.3",
     "vue": "^3.4.0"

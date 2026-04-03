@@ -43,3 +43,4 @@ Thumbs.db
 *.backup
 *.tmp
 .vercel
+.env*.local

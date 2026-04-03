@@ -1,0 +1,248 @@
+---
+export const prerender = false;
+
+const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+
+const cookie = Astro.cookies.get('admin_auth');
+const isAuthenticated = cookie?.value === adminPassword;
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const password = form.get('password');
+  if (password === adminPassword) {
+    Astro.cookies.set('admin_auth', adminPassword, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 8,
+      path: '/',
+    });
+    Astro.cookies.set('admin_token', adminPassword, {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 8,
+      path: '/',
+    });
+    return Astro.redirect('/admin');
+  }
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E5 Wheels Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; min-height: 100vh; }
+
+    /* Login */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: #1a1a1a; padding: 40px; border-radius: 8px; width: 100%; max-width: 360px; }
+    .login-box img { height: 28px; display: block; margin: 0 auto 8px; }
+    .login-box p { text-align: center; color: #888; font-size: 13px; margin-bottom: 28px; }
+    .login-box label { display: block; font-size: 13px; color: #aaa; margin-bottom: 6px; }
+    .login-box input { width: 100%; background: #2a2a2a; border: 1px solid #333; border-radius: 4px; padding: 10px 14px; color: #fff; font-size: 14px; outline: none; margin-bottom: 16px; }
+    .login-box input:focus { border-color: #c0392b; }
+    .btn-primary { width: 100%; background: #c0392b; color: #fff; border: none; padding: 10px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-primary:hover { background: #a93226; }
+
+    /* Dashboard */
+    .dashboard { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+    .header img { height: 24px; }
+    .header-right { text-align: right; }
+    .header-right small { display: block; color: #666; font-size: 12px; margin-bottom: 4px; }
+    .logout { color: #888; font-size: 13px; text-decoration: none; }
+    .logout:hover { color: #fff; }
+
+    /* Card */
+    .card { background: #1a1a1a; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 20px; color: #eee; }
+
+    /* Form grid */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+    .form-grid input, .form-grid select {
+      background: #2a2a2a; border: 1px solid #333; border-radius: 4px;
+      padding: 9px 12px; color: #fff; font-size: 13px; outline: none; width: 100%;
+    }
+    .form-grid input:focus, .form-grid select:focus { border-color: #c0392b; }
+    .form-grid select option { background: #2a2a2a; }
+    .form-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-add { background: #c0392b; color: #fff; border: none; padding: 9px 24px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-add:hover { background: #a93226; }
+    .msg { font-size: 13px; }
+    .msg.success { color: #2ecc71; }
+    .msg.error { color: #e74c3c; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 8px 12px; color: #666; border-bottom: 1px solid #2a2a2a; font-weight: 500; }
+    td { padding: 12px; border-bottom: 1px solid #222; color: #ccc; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #222; }
+    .code { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; letter-spacing: 1px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+    .badge.active { background: #1a3a2a; color: #2ecc71; }
+    .discount { color: #2ecc71; font-weight: 600; }
+    .btn-delete { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete:hover { background: #2a1a1a; }
+    .empty { color: #555; font-size: 13px; padding: 12px 0; }
+  </style>
+</head>
+<body>
+
+{!isAuthenticated && (
+  <div class="login-wrap">
+    <div class="login-box">
+      <img src="/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels" />
+      <p>Admin Panel</p>
+      <form method="POST">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter admin password" autofocus />
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+)}
+
+{isAuthenticated && (
+  <div class="dashboard">
+    <div class="header">
+      <img src="/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels" />
+      <div class="header-right">
+        <small>Coupon Manager</small>
+        <a href="/admin/logout" class="logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Add New Coupon</h2>
+      <div class="form-grid">
+        <input id="newCode" type="text" placeholder="Code (e.g. SAVE20)" />
+        <select id="newType">
+          <option value="percentage">Percentage (%)</option>
+          <option value="fixed">Fixed ($)</option>
+        </select>
+        <input id="newDiscount" type="number" placeholder="Discount amount" min="0" step="0.01" />
+        <input id="newExpires" type="date" />
+      </div>
+      <div class="form-actions">
+        <button id="btnAdd" class="btn-add">Add Coupon</button>
+        <span id="addMessage" class="msg"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Active Coupons</h2>
+      <div id="couponList"><p class="empty">Loading...</p></div>
+    </div>
+  </div>
+)}
+
+{isAuthenticated && (
+  <script>
+    // @ts-nocheck
+    const ADMIN_PASSWORD = document.cookie
+      .split('; ')
+      .find(r => r.startsWith('admin_token='))
+      ?.split('=')[1] || '';
+
+    async function loadCoupons() {
+      try {
+        const res = await fetch('/api/coupons', {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const coupons = await res.json();
+        renderCoupons(coupons);
+      } catch {
+        document.getElementById('couponList').innerHTML = '<p class="empty">Failed to load coupons.</p>';
+      }
+    }
+
+    function renderCoupons(coupons) {
+      const list = document.getElementById('couponList');
+      if (!coupons.length) {
+        list.innerHTML = '<p class="empty">No coupons yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th><th>Type</th><th>Discount</th><th>Expires</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${coupons.map(c => `
+              <tr>
+                <td class="code">${c.code}</td>
+                <td>${c.type === 'percentage' ? 'Percentage' : 'Fixed'}</td>
+                <td class="discount">${c.type === 'percentage' ? c.discount + '%' : '$' + c.discount}</td>
+                <td>${c.expires || 'Never'}</td>
+                <td><span class="badge ${c.active ? 'active' : ''}">${c.active ? 'Active' : 'Inactive'}</span></td>
+                <td><button class="btn-delete" data-code="${c.code}">Delete</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => deleteCoupon(btn.dataset.code));
+      });
+    }
+
+    async function deleteCoupon(code) {
+      if (!confirm(`Delete coupon "${code}"?`)) return;
+      await fetch('/api/coupons', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+        body: JSON.stringify({ code }),
+      });
+      loadCoupons();
+    }
+
+    document.getElementById('btnAdd').addEventListener('click', async () => {
+      const code = document.getElementById('newCode').value.trim().toUpperCase();
+      const type = document.getElementById('newType').value;
+      const discount = document.getElementById('newDiscount').value;
+      const expires = document.getElementById('newExpires').value;
+      const msg = document.getElementById('addMessage');
+
+      if (!code || !discount) {
+        msg.textContent = 'Code and discount are required.';
+        msg.className = 'msg error';
+        return;
+      }
+
+      const res = await fetch('/api/coupons', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+        body: JSON.stringify({ code, type, discount, expires }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        msg.textContent = `Coupon "${code}" added!`;
+        msg.className = 'msg success';
+        document.getElementById('newCode').value = '';
+        document.getElementById('newDiscount').value = '';
+        document.getElementById('newExpires').value = '';
+        loadCoupons();
+      } else {
+        msg.textContent = data.error || 'Failed to add coupon.';
+        msg.className = 'msg error';
+      }
+    });
+
+    loadCoupons();
+  </script>
+)}
+
+</body>
+</html>

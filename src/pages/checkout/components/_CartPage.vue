@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { CartManager, calculateCartTotals, getWheelImageUrl, formatPrice, type CartItem } from '@/core/services/ProductService';
-import { validateCoupon } from '@/core/constants/Coupons';
 import { CHECKOUT_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 
 // State
@@ -10,21 +9,46 @@ const couponCode = ref('');
 const couponError = ref('');
 const couponSuccess = ref('');
 const appliedCoupon = ref<string | null>(null);
+const appliedDiscount = ref<number>(0);
+const appliedCouponInfo = ref<{ type: string; discount: number } | null>(null);
+const isValidatingCoupon = ref(false);
 
 // Computed
-const cartTotals = computed(() => calculateCartTotals(cartItems.value, undefined, appliedCoupon.value || undefined));
+const cartTotals = computed(() => {
+  const base = calculateCartTotals(cartItems.value);
+  return {
+    ...base,
+    discount: appliedDiscount.value,
+    discountedSubtotal: base.subtotal - appliedDiscount.value,
+    total: base.subtotal - appliedDiscount.value + base.tax,
+    appliedCoupon: appliedCouponInfo.value,
+  };
+});
 
 const isEmpty = computed(() => cartItems.value.length === 0);
 
 // Methods
-function loadCart() {
+async function loadCart() {
   cartItems.value = CartManager.getCart();
-  // Load applied coupon if exists
+  // Re-validate saved coupon
   const savedCoupon = CartManager.getAppliedCoupon();
   if (savedCoupon) {
-    appliedCoupon.value = savedCoupon;
-    couponCode.value = savedCoupon;
-    couponSuccess.value = 'Coupon applied!';
+    const base = calculateCartTotals(cartItems.value);
+    const res = await fetch('/api/validate-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: savedCoupon, subtotal: base.subtotal }),
+    });
+    const data = await res.json();
+    if (data.valid) {
+      appliedCoupon.value = savedCoupon;
+      appliedDiscount.value = data.discountAmount;
+      appliedCouponInfo.value = data.coupon;
+      couponCode.value = savedCoupon;
+      couponSuccess.value = 'Coupon applied!';
+    } else {
+      CartManager.removeCoupon();
+    }
   }
 }
 
@@ -41,7 +65,7 @@ function removeItem(productId: number) {
   }
 }
 
-function applyCoupon() {
+async function applyCoupon() {
   couponError.value = '';
   couponSuccess.value = '';
 
@@ -50,21 +74,36 @@ function applyCoupon() {
     return;
   }
 
-  const validation = validateCoupon(couponCode.value, cartTotals.value.subtotal);
+  isValidatingCoupon.value = true;
+  try {
+    const res = await fetch('/api/validate-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: couponCode.value, subtotal: cartTotals.value.subtotal }),
+    });
+    const data = await res.json();
 
-  if (!validation.valid) {
-    couponError.value = validation.error || 'Invalid coupon';
-    return;
+    if (!data.valid) {
+      couponError.value = data.error || 'Invalid coupon';
+      return;
+    }
+
+    appliedCoupon.value = couponCode.value.toUpperCase();
+    appliedDiscount.value = data.discountAmount;
+    appliedCouponInfo.value = data.coupon;
+    CartManager.saveCoupon(appliedCoupon.value);
+    couponSuccess.value = `Coupon "${appliedCoupon.value}" applied successfully!`;
+  } catch {
+    couponError.value = 'Could not validate coupon. Please try again.';
+  } finally {
+    isValidatingCoupon.value = false;
   }
-
-  // Apply coupon
-  appliedCoupon.value = couponCode.value.toUpperCase();
-  CartManager.saveCoupon(appliedCoupon.value);
-  couponSuccess.value = `Coupon "${appliedCoupon.value}" applied successfully!`;
 }
 
 function removeCoupon() {
   appliedCoupon.value = null;
+  appliedDiscount.value = 0;
+  appliedCouponInfo.value = null;
   couponCode.value = '';
   couponError.value = '';
   couponSuccess.value = '';
@@ -253,9 +292,10 @@ onMounted(() => {
                 <button
                   v-if="!appliedCoupon"
                   @click="applyCoupon"
-                  class="bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11"
+                  :disabled="isValidatingCoupon"
+                  class="bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Apply
+                  {{ isValidatingCoupon ? 'Checking...' : 'Apply' }}
                 </button>
                 <button
                   v-else

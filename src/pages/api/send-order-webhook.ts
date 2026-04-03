@@ -24,9 +24,8 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Generate sequential order number
-    // Note: This is a simplified version. In production, use a database.
-    const orderNumber = Math.floor(100 + Math.random() * 900).toString();
+    // Generate unique order number from server timestamp
+    const orderNumber = Date.now().toString().slice(-6);
 
     // Build webhook data
     const webhookData = {

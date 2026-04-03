@@ -16,6 +16,8 @@ const props = defineProps<{
 // State
 const cartItems = ref<CartItem[]>([]);
 const appliedCoupon = ref<string | null>(null);
+const appliedDiscount = ref<number>(0);
+const appliedCouponInfo = ref<{ type: string; discount: number } | null>(null);
 const isProcessing = ref(false);
 const errorMessage = ref('');
 const successMessage = ref('');
@@ -45,15 +47,39 @@ declare global {
 let affirmInitialized = false;
 
 // Computed
-const cartTotals = computed(() => calculateCartTotals(cartItems.value, customerState.value, appliedCoupon.value || undefined));
+const cartTotals = computed(() => {
+  const base = calculateCartTotals(cartItems.value, customerState.value);
+  return {
+    ...base,
+    discount: appliedDiscount.value,
+    discountedSubtotal: base.subtotal - appliedDiscount.value,
+    total: base.subtotal - appliedDiscount.value + base.tax,
+    appliedCoupon: appliedCouponInfo.value,
+  };
+});
 
 const isEmpty = computed(() => cartItems.value.length === 0);
 
 // Methods
-function loadCart() {
+async function loadCart() {
   cartItems.value = CartManager.getCart();
-  // Load applied coupon from cart
-  appliedCoupon.value = CartManager.getAppliedCoupon();
+  const savedCoupon = CartManager.getAppliedCoupon();
+  if (savedCoupon) {
+    const base = calculateCartTotals(cartItems.value);
+    const res = await fetch('/api/validate-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: savedCoupon, subtotal: base.subtotal }),
+    });
+    const data = await res.json();
+    if (data.valid) {
+      appliedCoupon.value = savedCoupon;
+      appliedDiscount.value = data.discountAmount;
+      appliedCouponInfo.value = data.coupon;
+    } else {
+      CartManager.removeCoupon();
+    }
+  }
 }
 
 function loadVehicle() {
@@ -244,12 +270,8 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       return;
     }
 
-    // Generate sequential order number starting from 100
-    const ORDER_COUNTER_KEY = 'e5-order-counter';
-    let orderCounter = parseInt(localStorage.getItem(ORDER_COUNTER_KEY) || '100', 10);
-    orderCounter++;
-    localStorage.setItem(ORDER_COUNTER_KEY, orderCounter.toString());
-    const orderNumber = orderCounter.toString();
+    // Generate unique order number from timestamp
+    const orderNumber = Date.now().toString().slice(-6);
 
     const webhookData = {
       // Order Information
