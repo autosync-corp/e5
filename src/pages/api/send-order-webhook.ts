@@ -1,9 +1,27 @@
 import type { APIRoute } from 'astro';
+import { Redis } from '@upstash/redis';
 
 // Mark this page as server-rendered
 export const prerender = false;
 
 const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/68181ce2-c728-4127-9f12-87c621adf287';
+
+const redis = new Redis({
+  url: import.meta.env.KV_REST_API_URL,
+  token: import.meta.env.KV_REST_API_TOKEN,
+});
+
+const ORDER_COUNTER_KEY = 'e5:order-counter';
+
+async function getNextOrderNumber(): Promise<string> {
+  try {
+    const orderNumber = await redis.incr(ORDER_COUNTER_KEY);
+    return orderNumber.toString();
+  } catch {
+    // Fallback if Redis is unavailable
+    return Date.now().toString().slice(-6);
+  }
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -24,8 +42,8 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Generate unique order number from server timestamp
-    const orderNumber = Date.now().toString().slice(-6);
+    // Generate sequential order number from Upstash counter
+    const orderNumber = await getNextOrderNumber();
 
     // Build webhook data
     const webhookData = {

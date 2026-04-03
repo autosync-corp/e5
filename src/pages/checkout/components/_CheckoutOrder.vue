@@ -270,8 +270,17 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       return;
     }
 
-    // Generate unique order number from timestamp
-    const orderNumber = Date.now().toString().slice(-6);
+    // Get sequential order number from server (fallback to timestamp if fails)
+    let orderNumber = Date.now().toString().slice(-6);
+    try {
+      const orderNumberRes = await fetch('/api/next-order-number', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      if (orderNumberRes.ok) {
+        const data = await orderNumberRes.json();
+        if (data.orderNumber) orderNumber = data.orderNumber;
+      }
+    } catch {
+      // Keep timestamp fallback
+    }
 
     const webhookData = {
       // Order Information
