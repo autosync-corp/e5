@@ -562,6 +562,11 @@ const currentImageUrl = computed(() => {
 });
 
 const totalPrice = computed(() => {
+  if (isStaggered.value) {
+    const frontPrice = selectedFrontProduct.value?.Price ?? 0;
+    const rearPrice = selectedRearProduct.value?.Price ?? 0;
+    return (frontPrice * 2) + (rearPrice * 2);
+  }
   if (!selectedProduct.value) return 0;
   return selectedProduct.value.Price * 4; // Complete set of 4 wheels
 });
