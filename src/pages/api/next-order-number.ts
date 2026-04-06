@@ -9,7 +9,6 @@ const redis = new Redis({
 });
 
 const ORDER_COUNTER_KEY = 'e5:order-counter';
-const ORDER_START = 100;
 
 export const POST: APIRoute = async () => {
   try {
