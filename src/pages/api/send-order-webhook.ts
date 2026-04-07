@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { Redis } from '@upstash/redis';
+import { sendFbPurchaseEvent } from '@/core/utils/fbConversions';
 
 // Mark this page as server-rendered
 export const prerender = false;
@@ -217,6 +218,42 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     console.log('✅ Webhook sent successfully to GHL');
+
+    // Fire Facebook Conversions API purchase event
+    await sendFbPurchaseEvent({
+      orderNumber: webhookData.orderNumber,
+      total: webhookData.orderTotal,
+      email: webhookData.customer?.email,
+      phone: webhookData.customer?.phone,
+      firstName: webhookData.customer?.firstName,
+      lastName: webhookData.customer?.lastName,
+      sourceUrl: new URL(request.url).origin + '/checkout',
+    });
+
+    // Save order summary for admin panel
+    try {
+      const origin = new URL(request.url).origin;
+      await fetch(`${origin}/api/save-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderNumber: webhookData.orderNumber,
+          orderDate: webhookData.orderDate,
+          customer: webhookData.customer,
+          vehicle: webhookData.vehicle?.displayName || webhookData.vehicle?.fullName || null,
+          items: webhookData.items.map((item: any) => ({
+            model: item.productModel,
+            finish: item.finish,
+            config: item.configuration,
+            size: item.size,
+          })),
+          total: webhookData.orderTotal,
+          paymentMethod: webhookData.payment.paymentMethod,
+        }),
+      });
+    } catch {
+      // Non-critical
+    }
 
     return new Response(
       JSON.stringify({ success: true }),

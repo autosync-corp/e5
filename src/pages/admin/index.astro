@@ -79,19 +79,39 @@ if (Astro.request.method === 'POST') {
     .msg.success { color: #2ecc71; }
     .msg.error { color: #e74c3c; }
 
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #2a2a2a; }
+    .tab-btn { background: none; border: none; color: #666; font-size: 14px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab-btn:hover { color: #ccc; }
+    .tab-btn.active { color: #fff; border-bottom-color: #c0392b; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
     /* Table */
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { text-align: left; padding: 8px 12px; color: #666; border-bottom: 1px solid #2a2a2a; font-weight: 500; }
-    td { padding: 12px; border-bottom: 1px solid #222; color: #ccc; }
+    td { padding: 12px; border-bottom: 1px solid #222; color: #ccc; vertical-align: top; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #222; }
     .code { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; letter-spacing: 1px; }
     .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
     .badge.active { background: #1a3a2a; color: #2ecc71; }
+    .badge.stripe { background: #1a2a3a; color: #5b9bd5; }
+    .badge.affirm { background: #1a2a1a; color: #4caf50; }
     .discount { color: #2ecc71; font-weight: 600; }
     .btn-delete { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
     .btn-delete:hover { background: #2a1a1a; }
     .empty { color: #555; font-size: 13px; padding: 12px 0; }
+    .order-num { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; }
+    .order-total { color: #2ecc71; font-weight: 700; }
+    .order-items { font-size: 12px; color: #888; margin-top: 4px; }
+    .expand-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 12px; padding: 2px 6px; }
+    .expand-btn:hover { color: #fff; }
+    .order-detail { display: none; background: #111; border-radius: 4px; padding: 12px; margin-top: 8px; font-size: 12px; }
+    .order-detail.open { display: block; }
+    .detail-row { display: flex; gap: 8px; margin-bottom: 4px; }
+    .detail-label { color: #555; min-width: 80px; }
+    .detail-val { color: #ccc; }
   </style>
 </head>
 <body>
@@ -115,31 +135,85 @@ if (Astro.request.method === 'POST') {
     <div class="header">
       <img src="/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels" />
       <div class="header-right">
-        <small>Coupon Manager</small>
+        <small>Admin Panel</small>
         <a href="/admin/logout" class="logout">Logout</a>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Add New Coupon</h2>
-      <div class="form-grid">
-        <input id="newCode" type="text" placeholder="Code (e.g. SAVE20)" />
-        <select id="newType">
-          <option value="percentage">Percentage (%)</option>
-          <option value="fixed">Fixed ($)</option>
-        </select>
-        <input id="newDiscount" type="number" placeholder="Discount amount" min="0" step="0.01" />
-        <input id="newExpires" type="date" />
-      </div>
-      <div class="form-actions">
-        <button id="btnAdd" class="btn-add">Add Coupon</button>
-        <span id="addMessage" class="msg"></span>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="orders">Orders</button>
+      <button class="tab-btn" data-tab="coupons">Coupons</button>
+      <button class="tab-btn" data-tab="tracking">Tracking</button>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="tab-orders" class="tab-panel active">
+      <div class="card">
+        <h2>Order History</h2>
+        <div id="orderList"><p class="empty">Loading...</p></div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Active Coupons</h2>
-      <div id="couponList"><p class="empty">Loading...</p></div>
+    <!-- Tracking Tab -->
+    <div id="tab-tracking" class="tab-panel">
+      <div class="card">
+        <h2>Google Analytics</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Measurement ID</label>
+            <input id="gaId" type="text" placeholder="G-XXXXXXXXXX" />
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Google Tag Manager ID</label>
+            <input id="gtmId" type="text" placeholder="GTM-XXXXXXX" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Facebook</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Pixel ID</label>
+            <input id="fbPixelId" type="text" placeholder="1234567890" />
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Conversions API Token</label>
+            <input id="fbCapiToken" type="text" placeholder="EAAxxxxxxx..." />
+          </div>
+        </div>
+        <p style="font-size:12px;color:#555;margin-top:8px;">The Conversions API token fires a server-side Purchase event directly to Facebook when an order is placed — more reliable than the pixel alone.</p>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSaveTracking" class="btn-add">Save Tracking Settings</button>
+        <span id="trackingMessage" class="msg"></span>
+      </div>
+    </div>
+
+    <!-- Coupons Tab -->
+    <div id="tab-coupons" class="tab-panel">
+      <div class="card">
+        <h2>Add New Coupon</h2>
+        <div class="form-grid">
+          <input id="newCode" type="text" placeholder="Code (e.g. SAVE20)" />
+          <select id="newType">
+            <option value="percentage">Percentage (%)</option>
+            <option value="fixed">Fixed ($)</option>
+          </select>
+          <input id="newDiscount" type="number" placeholder="Discount amount" min="0" step="0.01" />
+          <input id="newExpires" type="date" />
+        </div>
+        <div class="form-actions">
+          <button id="btnAdd" class="btn-add">Add Coupon</button>
+          <span id="addMessage" class="msg"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Active Coupons</h2>
+        <div id="couponList"><p class="empty">Loading...</p></div>
+      </div>
     </div>
   </div>
 )}
@@ -151,6 +225,126 @@ if (Astro.request.method === 'POST') {
       .split('; ')
       .find(r => r.startsWith('admin_token='))
       ?.split('=')[1] || '';
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Orders
+    async function loadOrders() {
+      try {
+        const res = await fetch('/api/orders', {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const orders = await res.json();
+        renderOrders(orders);
+      } catch {
+        document.getElementById('orderList').innerHTML = '<p class="empty">Failed to load orders.</p>';
+      }
+    }
+
+    function renderOrders(orders) {
+      const list = document.getElementById('orderList');
+      if (!orders.length) {
+        list.innerHTML = '<p class="empty">No orders yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Order #</th><th>Date</th><th>Customer</th><th>Vehicle</th><th>Total</th><th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map((o, i) => {
+              const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+              const itemsSummary = (o.items || []).map(item => `${item.model} ${item.finish} (${item.config})`).join('<br>');
+              const payMethod = (o.paymentMethod || '').toLowerCase();
+              const badgeClass = payMethod === 'affirm' ? 'affirm' : 'stripe';
+              return `
+                <tr>
+                  <td>
+                    <span class="order-num">#${o.orderNumber || '—'}</span>
+                    <div class="order-items">${itemsSummary}</div>
+                    <button class="expand-btn" data-idx="${i}">▼ Details</button>
+                    <div class="order-detail" id="detail-${i}">
+                      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-val">${o.customer?.email || '—'}</span></div>
+                      <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-val">${o.customer?.phone || '—'}</span></div>
+                      ${(o.items || []).map(item => `<div class="detail-row"><span class="detail-label">Size</span><span class="detail-val">${item.size} — ${item.config}</span></div>`).join('')}
+                    </div>
+                  </td>
+                  <td>${date}</td>
+                  <td>${o.customer?.fullName || '—'}</td>
+                  <td>${o.vehicle || '—'}</td>
+                  <td class="order-total">$${o.total || '0.00'}</td>
+                  <td><span class="badge ${badgeClass}">${o.paymentMethod || '—'}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+
+      document.querySelectorAll('.expand-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const detail = document.getElementById('detail-' + btn.dataset.idx);
+          const isOpen = detail.classList.contains('open');
+          detail.classList.toggle('open', !isOpen);
+          btn.textContent = isOpen ? '▼ Details' : '▲ Hide';
+        });
+      });
+    }
+
+    loadOrders();
+
+    // Tracking
+    async function loadTracking() {
+      try {
+        const res = await fetch('/api/tracking', { headers: { 'x-admin-password': ADMIN_PASSWORD } });
+        const s = await res.json();
+        if (s.gaId) document.getElementById('gaId').value = s.gaId;
+        if (s.gtmId) document.getElementById('gtmId').value = s.gtmId;
+        if (s.fbPixelId) document.getElementById('fbPixelId').value = s.fbPixelId;
+        if (s.fbCapiToken) document.getElementById('fbCapiToken').value = s.fbCapiToken;
+      } catch {}
+    }
+
+    document.getElementById('btnSaveTracking').addEventListener('click', async () => {
+      const msg = document.getElementById('trackingMessage');
+      const settings = {
+        gaId: document.getElementById('gaId').value.trim(),
+        gtmId: document.getElementById('gtmId').value.trim(),
+        fbPixelId: document.getElementById('fbPixelId').value.trim(),
+        fbCapiToken: document.getElementById('fbCapiToken').value.trim(),
+      };
+      try {
+        const res = await fetch('/api/tracking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+          body: JSON.stringify(settings),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = 'Saved! Changes take effect on next page load.';
+          msg.className = 'msg success';
+        } else {
+          msg.textContent = 'Error: ' + (data.error || res.status);
+          msg.className = 'msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Error: ' + e.message;
+        msg.className = 'msg error';
+      }
+    });
+
+    loadTracking();
 
     async function loadCoupons() {
       try {

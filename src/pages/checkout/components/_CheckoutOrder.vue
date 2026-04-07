@@ -504,6 +504,30 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
     });
 
     console.log('Order data sent to Go High Level successfully', webhookData);
+
+    // Save order summary to admin panel
+    try {
+      await fetch('/api/save-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderNumber: webhookData.orderNumber,
+          orderDate: webhookData.orderDate,
+          customer: webhookData.customer,
+          vehicle: webhookData.vehicle?.displayName || webhookData.vehicle?.fullName || null,
+          items: webhookData.items.map((item: any) => ({
+            model: item.productModel,
+            finish: item.finish,
+            config: item.configuration,
+            size: item.size,
+          })),
+          total: webhookData.orderTotal,
+          paymentMethod: webhookData.payment.paymentMethod,
+        }),
+      });
+    } catch {
+      // Non-critical
+    }
   } catch (webhookError) {
     console.error('Failed to send to Go High Level webhook:', webhookError);
     // Don't fail the order if webhook fails
