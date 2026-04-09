@@ -213,7 +213,7 @@ function initializeAffirm() {
   }
 
   // Configure Affirm before loading script
-  const jsUrl = props.affirmJsUrl || 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js';
+  const jsUrl = props.affirmJsUrl || 'https://cdn1.affirm.com/js/v2/affirm.js';
 
   window._affirm_config = {
     public_api_key: affirmKey,
