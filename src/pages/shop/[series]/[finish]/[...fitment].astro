@@ -52,9 +52,33 @@ const urlParams = {
   frontSize: parsedUrl.frontSize,
   rearSize: parsedUrl.rearSize,
 };
+
+// Product schema — base data known at server time
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": `${seriesTitle} ${finishTitle} Wheels`,
+  "description": description,
+  "brand": {
+    "@type": "Brand",
+    "name": "E5 Wheels"
+  },
+  "url": canonicalUrl,
+  "image": `${baseUrl}/assets/images/og-default.jpg`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "E5 Wheels"
+    }
+  }
+};
 ---
 
 <MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <SingleProductPage
     client:only="vue"
     seriesParam={urlParams.series}
