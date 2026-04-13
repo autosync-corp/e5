@@ -27,9 +27,33 @@ export interface CorvetteGalleryItem {
   tireModel: string | null;
   images?: string[];
   media?: GalleryMediaItem[];
+  pinned?: boolean;
 }
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
+  {
+    "galleryId": "2025-c8-corvette-stingray-white-with-sebring-2p",
+    "year": "2025",
+    "submodel": "C8",
+    "trim": "Stingray",
+    "vehicleColor": "White",
+    "vehicleTitle": "2025 C8 Corvette Stingray White",
+    "wheelStyle": "Sebring 2P",
+    "wheelFinish": "Gray Black Lip",
+    "pinned": true,
+    "wheelSizeF": "19\" x 9\"",
+    "offesetF": null,
+    "partF": "E5SE2P1902",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "20\" x 11\"",
+    "offsetR": null,
+    "wheelPartR": "E5SE2P201102",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp"]
+  },
   {
     "galleryId": "2006-c6-stingray",
     "year": "2006",
@@ -1603,15 +1627,15 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "vehicleColor": null,
     "vehicleTitle": "2026 C8 Z06 Z07 Package",
     "wheelStyle": "Talladega",
-    "wheelFinish": "Brushed Aluminum",
+    "wheelFinish": "Gloss Black",
     "wheelSizeF": "20\" x 10\"",
     "offesetF": "25mm",
-    "partF": "E5TA22010E25520BA",
+    "partF": "E5TA2010E25520BK",
     "tireSizeF": null,
     "tirePartF": null,
     "wheelSizeRear": "21\" x 13\"",
     "offsetR": "20mm",
-    "wheelPartR": "E5TA22113E20520BA",
+    "wheelPartR": "E5TA2113E20520BK",
     "tireSizeR": null,
     "tirePartR": null,
     "tireModel": null,

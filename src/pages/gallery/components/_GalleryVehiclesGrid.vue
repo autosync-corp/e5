@@ -96,10 +96,14 @@ const filteredVehicles = computed(() => {
     filtered = filtered.filter(item => item.year === filters.value.year);
   }
 
-  // Sort by generation (C8 → C7 → C6 → C5) and then by year (newest first)
+  // Sort: pinned first, then by generation (C8 → C7 → C6 → C5), then by year (newest first)
   const generationOrder: Record<string, number> = { 'C8': 1, 'C7': 2, 'C6': 3, 'C5': 4 };
   filtered = [...filtered].sort((a, b) => {
-    // First, sort by generation
+    // Pinned entries always come first
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+
+    // Then sort by generation
     const genA = generationOrder[a.submodel || ''] || 999;
     const genB = generationOrder[b.submodel || ''] || 999;
     if (genA !== genB) return genA - genB;

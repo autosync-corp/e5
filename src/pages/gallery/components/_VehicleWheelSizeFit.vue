@@ -25,7 +25,7 @@ const props = defineProps({
         <p class="text-lg text-black/50 opacity-70 tracking-wide leading-[30px] mb-4">
           WHEEL MODEL
         </p>
-        <img :src="props.logo" alt="Logo" class="h-[60px] w-auto" />
+        <img :src="props.logo" alt="Logo" class="max-h-[80px] w-auto" />
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
