@@ -112,51 +112,62 @@ const vehicleInfo = computed(() => {
   );
 });
 
-// Map gallery finish names to API finish names
-const mapFinishName = (finishName: string | null | undefined): string | null => {
-  if (!finishName) return null;
-
-  const finishMap: Record<string, string> = {
-    'Dark Bronze': 'Bronze'
-  };
-
-  return finishMap[finishName] || finishName;
+// Build finish name from API wheel data (Finish + Color + Accent)
+const getApiFinishName = (wheel: typeof frontWheel.value): string => {
+  if (!wheel) return '';
+  const parts: string[] = [];
+  if (wheel.Finish) parts.push(wheel.Finish);
+  if (wheel.Color) parts.push(wheel.Color);
+  if (wheel.Accent) parts.push(wheel.Accent);
+  return parts.join(' ');
 };
 
-// Format size and offset for URL parameter (e.g., "19\" x 9\" +35mm")
+// Build size+offset string from API wheel data
+const getApiSizeOffset = (wheel: typeof frontWheel.value): string | null => {
+  if (!wheel || wheel.Diameter === undefined || wheel.Width === undefined || wheel.Offset === undefined) return null;
+  const offset = wheel.Offset >= 0 ? `+${wheel.Offset}mm` : `${wheel.Offset}mm`;
+  return `${wheel.Diameter}" x ${wheel.Width}" ${offset}`;
+};
+
+// Format size and offset from gallery data (fallback when API data not available)
 const formatSizeOffset = (size: string | null | undefined, offset: string | null | undefined): string | null => {
   if (!size || !offset) return null;
-
-  // Clean up size (remove extra quotes/spaces)
   const cleanSize = size.replace(/['"]/g, '"').trim();
-
-  // Clean up offset and add + sign if positive
   const cleanOffset = offset.replace('mm', '').trim();
   const offsetNum = parseInt(cleanOffset);
   const formattedOffset = offsetNum >= 0 ? `+${offsetNum}mm` : `${offsetNum}mm`;
-
   return `${cleanSize} ${formattedOffset}`;
 };
 
 // Generate shop link with series, finish, generation, trim, and sizes
 const shopRoute = computed(() => {
-  // Check if wheel style or finish is missing or is "N/A"
-  if (!props.vehicleWheelStyle || !props.vehicleWheelFinish ||
-      props.vehicleWheelStyle.toLowerCase() === 'n/a' ||
-      props.vehicleWheelFinish.toLowerCase() === 'n/a') {
+  if (!props.vehicleWheelStyle || props.vehicleWheelStyle.toLowerCase() === 'n/a') {
     return '/shop';
   }
 
-  // Map finish name to API equivalent
-  const mappedFinish = mapFinishName(props.vehicleWheelFinish) || props.vehicleWheelFinish;
+  // Use API finish name if available — avoids any mismatch between gallery data naming and API naming
+  const apiWheel = frontWheel.value || rearWheel.value;
+  let finishForUrl: string | null = apiWheel ? (getApiFinishName(apiWheel) || null) : null;
 
-  // Format sizes
-  const frontSize = formatSizeOffset(props.vehicleWheelSizeF, props.vehicleOffesetF);
-  const rearSize = formatSizeOffset(props.vehicleWheelSizeRear, props.vehicleOffsetR);
+  // Fall back to props finish name if API data not loaded
+  if (!finishForUrl) {
+    if (!props.vehicleWheelFinish || props.vehicleWheelFinish.toLowerCase() === 'n/a') {
+      return '/shop';
+    }
+    finishForUrl = props.vehicleWheelFinish;
+  }
+
+  // Use API sizes/offsets if available, fall back to gallery data props
+  const frontSize = frontWheel.value
+    ? getApiSizeOffset(frontWheel.value)
+    : formatSizeOffset(props.vehicleWheelSizeF, props.vehicleOffesetF);
+  const rearSize = rearWheel.value
+    ? getApiSizeOffset(rearWheel.value)
+    : formatSizeOffset(props.vehicleWheelSizeRear, props.vehicleOffsetR);
 
   return buildWheelUrl(
     props.vehicleWheelStyle,
-    mappedFinish,
+    finishForUrl,
     vehicleInfo.value.generation || undefined,
     vehicleInfo.value.trim || undefined,
     frontSize || undefined,
