@@ -1,0 +1,412 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import {
+    SEBRING_BRAND_NAME, SEBRING_GLOSS_BLACK, SEBRING_LOGO,
+    FORM_FORGED_LOGO_BLACK,
+    SEBRING_2P_BRAND_NAME,
+    SEBRING_2P_LOGO,
+    SEBRING_2P_HERO_IMAGE,
+    SEBRING_2P_PRECISION_FITMENT_BANNER,
+    SEBRING_2P_LIGHTWEIGHT_DESIGN_BANNER,
+    SEBRING_2P_MOTORSPORT_STYLING_BANNER,
+    SEBRING_2P_DETAILS_BANNER,
+    SEBRING_2P_VETTE_GALLERY_1,
+    SEBRING_2P_VETTE_GALLERY_2,
+    SEBRING_2P_VETTE_GALLERY_3,
+    SEBRING_2P_DETAIL_1,
+    SEBRING_2P_DETAIL_2,
+    SEBRING_2P_DETAIL_3,
+    SEBRING_2P_DETAIL_4,
+    SEBRING_2P_GLOSS_BLACK,
+    SEBRING_2P_DARK_BRONZE,
+    SEBRING_2P_TITANIUM_BRUSHED,
+    SEBRING_2P_PROCESS_DIAGRAM_1,
+    SEBRING_2P_PROCESS_DIAGRAM_2,
+    SEBRING_2P_PROCESS_DIAGRAM_3,
+    SEBRING_2P_PROCESS_DIAGRAM_4,
+    SPEEDWAY_BRAND_NAME,
+    SPEEDWAY_LOGO,
+    SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT,
+} from "@/pages/wheels/constants/Wheels.ts";
+import Button from "@/core/components/Button.vue";
+import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
+import {Orientations} from "@/core/types/App.ts";
+import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
+import {
+    GALLERY_WHEELS_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+    SHOP_ROUTE,
+    PROCESS_FORM_FORGED_ROUTE
+} from "@/core/constants/Routes.ts";
+// Build product URLs
+const glossBlackUrl = '/shop/sebring-2p/black';
+const darkBronzeUrl = '/shop/sebring-2p/bronze-black-lip';
+const titaniumBrushedUrl = '/shop/sebring-2p/titanium-black-lip';
+const shopSebring2pUrl = `${SHOP_ROUTE}?series=${SEBRING_2P_BRAND_NAME}`;
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title = 'Sebring 2P - Form Forged Two-Piece Corvette Wheels | E5 Wheels';
+const description = 'The Sebring 2-Piece is the evolution of our most popular Form Forged design — reimagined in a true two-piece configuration with a distinct outer lip. Exclusively engineered for the C8 Corvette platform.';
+const canonicalUrl = `${baseUrl}/wheels/sebring-2p`;
+---
+
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
+    <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SEBRING_2P_HERO_IMAGE} alt={SEBRING_2P_BRAND_NAME} orientation={Orientations.CENTER} />
+
+    <!-- Logo and Description -->
+    <section class="container-e5 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-6 mb-12">
+            <img src={SEBRING_2P_LOGO} alt={`${SEBRING_2P_BRAND_NAME} Logo`} class="w-full md:w-[450px] lg:w-[550px] xl:w-[684px] h-auto" />
+            <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged" class="w-[150px] md:w-[165px] lg:w-[180px] xl:w-[195px] h-auto" />
+        </div>
+
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-franklin-heavy text-black text-center mb-8">
+            SEBRING 2-PIECE FORM FORGED WHEELS
+        </h1>
+
+        <p class="text-[16px] md:text-[18px] lg:text-[20px] xl:text-[24px] leading-[24px] md:leading-[26px] lg:leading-[28px] xl:leading-[30px] text-black/50 mb-16 max-w-[1024px]">
+            The Sebring 2-Piece is the evolution of our most popular Form Forged design — now reimagined in a true two-piece configuration. The same intricate split-spoke mesh architecture, now paired with a distinct outer lip that adds depth, dimension, and an unmistakable presence. Engineered exclusively for the C8 Corvette platform, the Sebring 2-Piece delivers the rigidity and precision of the original with an elevated, motorsport-inspired aesthetic built for those who demand more.
+        </p>
+
+        <h2 class="text-center text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] xl:tracking-[4px] text-black/45 uppercase mb-8">
+            EXCLUSIVELY ENGINEERED FOR CORVETTES
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <a href={glossBlackUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_GLOSS_BLACK}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
+
+            <a href={darkBronzeUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_DARK_BRONZE}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">DARK BRONZE / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
+
+            <a href={titaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_TITANIUM_BRUSHED}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    </div>
+                </ImageWithLegend>
+            </a>
+        </div>
+
+        <div class="text-center mt-12">
+            <Button client:visible primary class="px-16" link={shopSebring2pUrl}>
+                <span>
+                    SHOP {SEBRING_2P_BRAND_NAME}
+                </span>
+            </Button>
+        </div>
+    </section>
+
+    <!-- Precision Fitment Banner -->
+    <BannerFullWidthWithLegend
+            alt={`${SEBRING_2P_BRAND_NAME} Precision Fitment`}
+            image={SEBRING_2P_PRECISION_FITMENT_BANNER}
+            orientation={Orientations.LEFT}
+            class="h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px]"
+            bgColor="bg-black/20 lg:bg-transparent"
+    >
+        <article class="max-w-[720px] h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px] flex flex-col justify-center px-4 md:px-8 lg:px-12 xl:px-20">
+            <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] uppercase tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px] mb-4">
+                <span class="text-e5-red">Precision Fitment</span>
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-gray-100 lg:text-black/60 uppercase tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px] leading-[22px] md:leading-[24px] lg:leading-[26px] xl:leading-[30px] mb-6 md:mb-8">
+                Exclusively engineered for Corvettes, the {SEBRING_2P_BRAND_NAME} locks in perfect stance, hub-centric balance, and uncompromising stability.
+            </p>
+
+            <div class="mt-4 md:mt-8 lg:mt-12">
+                <Button client:visible secondary link={PROCESS_FORM_FORGED_ROUTE}>
+                    <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
+                </Button>
+            </div>
+        </article>
+    </BannerFullWidthWithLegend>
+
+    <!-- Lightweight Design Banner -->
+    <BannerFullWidthWithLegend
+            alt={`${SEBRING_2P_BRAND_NAME} Lightweight Design`}
+            image={SEBRING_2P_LIGHTWEIGHT_DESIGN_BANNER}
+            orientation={Orientations.LEFT}
+            class="h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px]"
+            bgColor="bg-black/20 lg:bg-transparent"
+    >
+        <article class="max-w-[720px] h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px] flex flex-col justify-start pt-12 md:pt-16 lg:pt-20 xl:pt-24 px-4 md:px-8 lg:px-0">
+            <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] uppercase tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px] leading-[28px] md:leading-[36px] lg:leading-[44px] xl:leading-[52px] mb-6">
+                <span class="text-e5-red">LIGHTWEIGHT DESIGN</span>
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-gray-100 uppercase tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px] leading-[22px] md:leading-[24px] lg:leading-[26px] xl:leading-[30px]">
+                We carve away excess material with purpose. Every cut reduces weight, sharpens response, and delivers rotational performance you can feel.
+            </p>
+        </article>
+    </BannerFullWidthWithLegend>
+
+    <!-- Motorsport Styling — split layout: image left, text right -->
+    <section class="w-full flex flex-col md:flex-row">
+        <div class="w-full md:w-1/2 h-[350px] md:h-[600px] lg:h-[750px] xl:h-[874px] overflow-hidden">
+            <img src={SEBRING_2P_MOTORSPORT_STYLING_BANNER} alt={`${SEBRING_2P_BRAND_NAME} Motorsport Styling`} class="w-full h-full object-cover" />
+        </div>
+        <div class="w-full md:w-1/2 bg-white flex flex-col justify-center px-8 md:px-12 lg:px-16 xl:px-20 py-12 md:py-0 h-auto md:h-[600px] lg:h-[750px] xl:h-[874px]">
+            <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] uppercase tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px] mb-4 md:mb-6">
+                <span class="text-e5-red">MOTORSPORT STYLING</span>
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-black/60 uppercase tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px] leading-[22px] md:leading-[24px] lg:leading-[26px] xl:leading-[30px]">
+                A deep concave profile and aggressive spoke geometry bring race-bred character to the street without sacrificing refinement.
+            </p>
+        </div>
+    </section>
+
+    <BannerFullWidthWithLegend
+            alt={`${SEBRING_2P_BRAND_NAME} Details Matter`}
+            image={SEBRING_2P_DETAILS_BANNER}
+            orientation={Orientations.RIGHT}
+            class="h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px] border border-e5-red"
+            bgColor="bg-black/20 lg:bg-transparent"
+    >
+        <article class="max-w-[720px] h-[350px] sm:h-[450px] md:h-[600px] lg:h-[750px] xl:h-[874px] flex flex-col justify-end mb-12 md:mb-16 lg:mb-20 xl:mb-24 text-end px-4 md:px-8 lg:px-0">
+            <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] uppercase tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px]">
+                <span class="text-e5-red">DETAILS MATTER</span>
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-gray-100 lg:text-black/60 uppercase tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px]">
+                A CLOSER LOOK INTO E5 ENGINEERING.
+            </p>
+
+            <div class="my-8 md:my-10 lg:my-12 flex justify-end px-4 md:px-8 lg:px-12 xl:px-16">
+                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
+                    <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
+                </Button>
+            </div>
+        </article>
+    </BannerFullWidthWithLegend>
+
+    <!-- Stills Banner -->
+    <section class="w-full h-[716px] relative overflow-hidden">
+        <img src={SEBRING_2P_VETTE_GALLERY_1} alt="Sebring 2P Gallery" class="w-full h-full object-cover" />
+    </section>
+
+    <!-- Our Process Section -->
+    <section class="container-e5 text-center">
+        <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px] leading-[28px] md:leading-[36px] lg:leading-[44px] xl:leading-[52px] text-e5-red uppercase mb-6 mt-16">
+            OUR PROCESS
+        </h2>
+        <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px] leading-[22px] md:leading-[24px] lg:leading-[26px] xl:leading-[30px] text-black/50 uppercase max-w-[1485px] mx-auto my-8 md:my-10 lg:my-12 px-4">
+            Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility—without compromising daily drivability.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16 mb-16">
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 1</span>
+                </div>
+                <ImageWithLegend image={SEBRING_2P_PROCESS_DIAGRAM_1} alt="Mount & Heat">
+                    <p class="text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-franklin-heavy text-e5-red uppercase tracking-[3px] md:tracking-[4px] lg:tracking-[6px] xl:tracking-[9.6px] leading-tight mb-3">MOUNT & HEAT</p>
+                    <p class="text-[13px] md:text-[14px] lg:text-[16px] xl:text-[18px] text-black/60 uppercase tracking-[1px] md:tracking-[1.2px] leading-[20px] md:leading-[22px] lg:leading-[24px] xl:leading-[26px]">Mounted to the forming drum, the wheel blank is carefully heated to prepare the aluminum for controlled shaping and enhanced strength.</p>
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 2</span>
+                </div>
+                <ImageWithLegend image={SEBRING_2P_PROCESS_DIAGRAM_2} alt="Roll Forming">
+                    <p class="text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-franklin-heavy text-e5-red uppercase tracking-[3px] md:tracking-[4px] lg:tracking-[6px] xl:tracking-[9.6px] leading-tight mb-3">ROLL FORMING</p>
+                    <p class="text-[13px] md:text-[14px] lg:text-[16px] xl:text-[18px] text-black/60 uppercase tracking-[1px] md:tracking-[1.2px] leading-[20px] md:leading-[22px] lg:leading-[24px] xl:leading-[26px]">Hydraulic rollers apply calculated pressure to the rotating barrel, gradually shaping and extending the aluminum to form the rim profile.</p>
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 3</span>
+                </div>
+                <ImageWithLegend image={SEBRING_2P_PROCESS_DIAGRAM_3} alt="Compression & Stretch">
+                    <p class="text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-franklin-heavy text-e5-red uppercase tracking-[3px] md:tracking-[4px] lg:tracking-[6px] xl:tracking-[9.6px] leading-tight mb-3">COMPRESSION & STRETCH</p>
+                    <p class="text-[13px] md:text-[14px] lg:text-[16px] xl:text-[18px] text-black/60 uppercase tracking-[1px] md:tracking-[1.2px] leading-[20px] md:leading-[22px] lg:leading-[24px] xl:leading-[26px]">The barrel is compressed and stretched to achieve precise width and thickness, aligning the grain structure for increased strength and reduced weight.</p>
+                </ImageWithLegend>
+            </div>
+            <div>
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-e5-red"></div>
+                    </div>
+                    <span class="relative bg-white px-4 text-e5-red text-[16px] tracking-[3px] font-bold uppercase">STEP 4</span>
+                </div>
+                <ImageWithLegend image={SEBRING_2P_PROCESS_DIAGRAM_4} alt="Finalized Barrel">
+                    <p class="text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-franklin-heavy text-e5-red uppercase tracking-[3px] md:tracking-[4px] lg:tracking-[6px] xl:tracking-[9.6px] leading-tight mb-3">FINALIZED BARREL</p>
+                    <p class="text-[13px] md:text-[14px] lg:text-[16px] xl:text-[18px] text-black/60 uppercase tracking-[1px] md:tracking-[1.2px] leading-[20px] md:leading-[22px] lg:leading-[24px] xl:leading-[26px]">The result is a thinner, lighter, and stronger barrel with forged-like strength, improving durability, load capacity, and impact resistance.</p>
+                </ImageWithLegend>
+            </div>
+        </div>
+    </section>
+
+    <!-- Finishing Section -->
+    <section class="container-e5 pb-8 text-center">
+        <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px] leading-[28px] md:leading-[36px] lg:leading-[44px] xl:leading-[52px] text-e5-red uppercase mb-6">
+            FINISHING
+        </h2>
+        <p class="text-[16px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[3.2px] md:tracking-[3.6px] lg:tracking-[4px] xl:tracking-[4.8px] leading-[24px] md:leading-[26px] lg:leading-[28px] xl:leading-[30px] text-black/50 uppercase max-w-[1485px] mx-auto my-8 md:my-12 lg:my-14 xl:my-16 px-4">
+            Our Form Forged Series is available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint, AND DARK BRONZE— finishes that embody the essence of timeless, modern, and bold design. Each surface is crafted to elevate the wheel's form while enduring the demands of the road, all <span class="text-[#d31d25]/65">backed by our 5-year finishing warranty</span>.
+        </p>
+    </section>
+
+    <!-- Detail Images Grid -->
+    <section class="w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <img src={SEBRING_2P_DETAIL_1} alt="Sebring 2P Detail 1" class="w-full h-auto" />
+            <img src={SEBRING_2P_DETAIL_3} alt="Sebring 2P Detail 3" class="w-full h-auto" />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <img src={SEBRING_2P_DETAIL_2} alt="Sebring 2P Detail 2" class="w-full h-auto" />
+            <img src={SEBRING_2P_DETAIL_4} alt="Sebring 2P Detail 4" class="w-full h-auto" />
+        </div>
+    </section>
+
+    <!-- Gallery Banner 1 -->
+    <section class="w-full h-[716px] relative overflow-hidden border border-e5-red">
+        <img src={SEBRING_2P_VETTE_GALLERY_2} alt="Sebring 2P Gallery" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/5"></div>
+    </section>
+
+    <!-- Shop Section with Three Wheels -->
+    <section class="container-e5 py-16">
+        <h2 class="text-center text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] xl:tracking-[4px] text-black/45 uppercase mb-8">
+            EXCLUSIVELY ENGINEERED FOR CORVETTES
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <a href={glossBlackUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_GLOSS_BLACK}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={glossBlackUrl}>
+                                SHOP NOW
+                            </Button>
+                        </div>
+                    </div>
+                </ImageWithLegend>
+            </a>
+
+            <a href={darkBronzeUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_DARK_BRONZE}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">DARK BRONZE / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={darkBronzeUrl}>
+                                SHOP NOW
+                            </Button>
+                        </div>
+                    </div>
+                </ImageWithLegend>
+            </a>
+
+            <a href={titaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
+                <ImageWithLegend alt={SEBRING_2P_BRAND_NAME} image={SEBRING_2P_TITANIUM_BRUSHED}>
+                    <div class="text-center">
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED / GLOSS BLACK LIP</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">FOR C8 STINGRAY, Z06, E-RAY, GRAND SPORT / X</p>
+                        <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $875 PER WHEEL</p>
+                        <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                        <div class="mt-8">
+                            <Button client:visible primary link={titaniumBrushedUrl}>
+                                SHOP NOW
+                            </Button>
+                        </div>
+                    </div>
+                </ImageWithLegend>
+            </a>
+        </div>
+    </section>
+
+    <BannerFullWidthWithLegend
+            alt={`${SEBRING_2P_BRAND_NAME} GALLERY`}
+            image={SEBRING_2P_VETTE_GALLERY_3}
+            orientation={Orientations.RIGHT}
+            class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[716px] border border-e5-red"
+            bgColor="bg-black/20 lg:bg-transparent"
+    >
+        <article class="max-w-[720px] h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[716px] text-end pt-12 px-4 md:px-8 lg:px-0">
+            <h2 class="text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] uppercase tracking-[4.8px] md:tracking-[6.4px] lg:tracking-[8px] xl:tracking-[9.6px]">
+                <span class="text-e5-red">{SEBRING_2P_BRAND_NAME} GALLERY</span>
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-gray-100 lg:text-black/60 uppercase tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] xl:tracking-[4.8px]">
+                A CLOSER LOOK INTO E5 ENGINEERING.
+            </p>
+
+            <div class="my-8 md:my-10 lg:my-12 px-4 md:px-8 lg:px-12 xl:px-16">
+                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
+                    <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">VIEW SEBRING 2P<br/>GALLERY</span>
+                </Button>
+            </div>
+        </article>
+    </BannerFullWidthWithLegend>
+
+    <!-- Discover More Form Forged Series Wheels -->
+    <section class="container-e5 pt-12">
+        <h2 class="text-center text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] xl:tracking-[4px] text-black/50 uppercase mb-8">
+            DISCOVER MORE FORM FORGED SERIES WHEELS
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 mb-12">
+            <ImageWithLegend alt={SEBRING_BRAND_NAME} image={SEBRING_GLOSS_BLACK}>
+                <div class="text-center">
+                    <img src={SEBRING_LOGO} alt={SEBRING_BRAND_NAME} class="mx-auto mb-4 h-[28px]" />
+                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">GLOSS BLACK</p>
+                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
+                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
+                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    <div class="mt-8 uppercase">
+                        <Button client:visible primary link={WHEELS_SEBRING_ROUTE}> EXPLORE {SEBRING_BRAND_NAME} </Button>
+                    </div>
+                </div>
+            </ImageWithLegend>
+
+            <ImageWithLegend alt={SPEEDWAY_BRAND_NAME} image={SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT}>
+                <div class="text-center">
+                    <img src={SPEEDWAY_LOGO} alt={SPEEDWAY_BRAND_NAME} class="mx-auto mb-4 h-[28px]" />
+                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">TITANIUM BRUSHED TINT</p>
+                    <p class="text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
+                    <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
+                    <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
+                    <div class="mt-8 uppercase">
+                        <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
+                    </div>
+                </div>
+            </ImageWithLegend>
+        </div>
+    </section>
+
+    <div class="text-center hover:bg-black/5 transition-colors duration-300 py-6 text-[20px] text-black/50 font-medium tracking-[2px] uppercase]" >
+        BACK TO TOP
+    </div>
+</MainLayout>

@@ -23,6 +23,7 @@ import {
   WHEELS_DAYTONA_ROUTE,
   WHEELS_TALLADEGA_ROUTE,
   WHEELS_SEBRING_ROUTE,
+  WHEELS_SEBRING_2P_ROUTE,
   WHEELS_SPEEDWAY_ROUTE,
   WHEELS_SONOMA_ROUTE
 } from "@/core/constants/Routes.ts";
@@ -131,6 +132,7 @@ const closeMiniCart = () => {
                 <div class="wheel-group-title">FORM FORGED</div>
                 <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
                 <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
+                <a :href="WHEELS_SEBRING_2P_ROUTE" class="dropdown-item">SEBRING 2P</a>
                 <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
               </div>
               <div class="wheel-group">
@@ -266,6 +268,7 @@ const closeMiniCart = () => {
               <div class="mobile-wheel-title">FORM FORGED</div>
               <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
               <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
+              <a :href="WHEELS_SEBRING_2P_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING 2P</a>
               <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
             </div>
             <div class="mobile-wheel-group">

@@ -27,6 +27,7 @@ export const WHEELS_ROUTE = '/wheels';
 export const WHEELS_DAYTONA_ROUTE = '/wheels/daytona';
 export const WHEELS_TALLADEGA_ROUTE = '/wheels/talladega';
 export const WHEELS_SEBRING_ROUTE = '/wheels/sebring';
+export const WHEELS_SEBRING_2P_ROUTE = '/wheels/sebring-2p';
 export const WHEELS_SPEEDWAY_ROUTE = '/wheels/speedway';
 export const WHEELS_SONOMA_ROUTE = '/wheels/sonoma';
 
