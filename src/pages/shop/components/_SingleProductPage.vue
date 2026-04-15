@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { CART_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
+import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
@@ -614,14 +614,16 @@ const brandLogo = computed(() => {
   if (isFormForged) {
     return {
       src: '/assets/images/logos/e5-form-forged.webp',
-      alt: 'E5 Form Forged'
+      alt: 'E5 Form Forged',
+      href: PROCESS_FORM_FORGED_ROUTE
     };
   }
 
   // Default to Forged logo (Sonoma, Talladega)
   return {
     src: '/assets/images/logos/e5-forged.webp',
-    alt: 'E5 Forged'
+    alt: 'E5 Forged',
+    href: PROCESS_FORGED_ROUTE
   };
 });
 
@@ -1616,11 +1618,13 @@ onMounted(() => {
         <div class="space-y-6">
           <!-- Brand Logo - Left aligned on mobile, right aligned on desktop -->
           <div class="flex justify-start lg:justify-end">
-            <img
-              :src="brandLogo.src"
-              :alt="brandLogo.alt"
-              class="h-8 lg:h-12 object-contain"
-            />
+            <a :href="brandLogo.href">
+              <img
+                :src="brandLogo.src"
+                :alt="brandLogo.alt"
+                class="h-8 lg:h-12 object-contain"
+              />
+            </a>
           </div>
 
           <!-- Product Title -->
