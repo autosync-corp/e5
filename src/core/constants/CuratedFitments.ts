@@ -147,6 +147,31 @@ export function hasCuratedFitment(generation: string, trim: string): boolean {
 }
 
 /**
+ * Wheel series that are explicitly excluded from specific vehicles.
+ * These override fitment logic regardless of size/spec compatibility.
+ */
+export const WHEEL_SERIES_EXCLUSIONS: Record<string, { generation: string; trims: string[] }[]> = {
+  'sebring 2p': [
+    { generation: 'C8', trims: ['ZR1', 'ZR-1'] }
+  ]
+};
+
+/**
+ * Check if a wheel series is excluded for a specific vehicle generation/trim.
+ * Returns true if the wheel should NOT be shown as compatible.
+ */
+export function isWheelExcludedForVehicle(seriesSlug: string, generation: string, trim: string): boolean {
+  const exclusions = WHEEL_SERIES_EXCLUSIONS[seriesSlug.toLowerCase()];
+  if (!exclusions) return false;
+
+  const normalizedTrim = trim.toLowerCase();
+  return exclusions.some(exclusion =>
+    exclusion.generation.toUpperCase() === generation.toUpperCase() &&
+    exclusion.trims.some(t => t.toLowerCase() === normalizedTrim)
+  );
+}
+
+/**
  * Format fitment spec as display string (e.g., "20\" x 10\" +25mm")
  */
 export function formatFitmentSpec(spec: FitmentSpec): string {

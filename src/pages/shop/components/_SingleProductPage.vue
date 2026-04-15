@@ -4,7 +4,7 @@ import { fetchWheels, getWheelImageUrl, formatPrice, CartManager, type WheelProd
 import { CART_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
-import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, type VehicleFitment } from '@/core/constants/CuratedFitments';
+import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
 
 // Props
 const props = defineProps<{
@@ -248,6 +248,12 @@ const curatedVehicleFitments = computed((): VehicleFitment[] | null => {
 
   if (!generation || !trim) {
     console.warn('⚠️ Could not determine generation or trim');
+    return null;
+  }
+
+  // Check explicit exclusions before running fitment logic
+  if (isWheelExcludedForVehicle(props.seriesParam ?? '', generation, trim)) {
+    console.log(`🚫 ${props.seriesParam} is excluded for ${generation} ${trim}`);
     return null;
   }
 
