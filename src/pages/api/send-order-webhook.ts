@@ -7,19 +7,26 @@ export const prerender = false;
 
 const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/68181ce2-c728-4127-9f12-87c621adf287';
 
-const redis = new Redis({
-  url: import.meta.env.KV_REST_API_URL,
-  token: import.meta.env.KV_REST_API_TOKEN,
-});
+let redis: Redis | null = null;
+try {
+  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
+    redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+  }
+} catch {
+  // Redis unavailable — order numbers will fall back to timestamp
+}
 
 const ORDER_COUNTER_KEY = 'e5:order-counter';
 
 async function getNextOrderNumber(): Promise<string> {
+  if (!redis) return Date.now().toString().slice(-6);
   try {
     const orderNumber = await redis.incr(ORDER_COUNTER_KEY);
     return orderNumber.toString();
   } catch {
-    // Fallback if Redis is unavailable
     return Date.now().toString().slice(-6);
   }
 }

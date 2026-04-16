@@ -4,10 +4,15 @@ import type { StoredCoupon } from './coupons';
 
 export const prerender = false;
 
-const redis = new Redis({
-  url: import.meta.env.KV_REST_API_URL,
-  token: import.meta.env.KV_REST_API_TOKEN,
-});
+let redis: Redis | null = null;
+try {
+  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
+    redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+  }
+} catch { /* Redis unavailable */ }
 
 const COUPONS_KEY = 'e5:coupons';
 
@@ -16,6 +21,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!code) {
     return new Response(JSON.stringify({ valid: false, error: 'No code provided' }), { status: 400 });
+  }
+
+  if (!redis) {
+    return new Response(JSON.stringify({ valid: false, error: 'Service unavailable' }), { status: 503 });
   }
 
   const coupons = await redis.get<StoredCoupon[]>(COUPONS_KEY) || [];

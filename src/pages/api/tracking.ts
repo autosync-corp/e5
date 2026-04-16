@@ -3,10 +3,15 @@ import { Redis } from '@upstash/redis';
 
 export const prerender = false;
 
-const redis = new Redis({
-  url: import.meta.env.KV_REST_API_URL,
-  token: import.meta.env.KV_REST_API_TOKEN,
-});
+let redis: Redis | null = null;
+try {
+  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
+    redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+  }
+} catch { /* Redis unavailable */ }
 
 const TRACKING_KEY = 'e5:tracking';
 

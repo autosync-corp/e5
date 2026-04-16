@@ -11,6 +11,8 @@ if (!affirmPublicKey || !affirmPrivateKey) {
   throw new Error('Affirm API keys are not set in environment variables');
 }
 
+const affirmApiBase = 'https://api.affirm.com';
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     console.log('Affirm capture API endpoint called');
@@ -53,7 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Step 1: Authorize the charge using the checkout token
     // Note: The checkout was already created by the client-side SDK
     // We just need to authorize it with the token
-    const authorizeResponse = await fetch(`https://sandbox.affirm.com/api/v2/charges`, {
+    const authorizeResponse = await fetch(`${affirmApiBase}/api/v2/charges`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +82,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Step 2: Capture the charge
     console.log('Capturing Affirm charge...');
 
-    const captureResponse = await fetch(`https://sandbox.affirm.com/api/v2/charges/${chargeId}/capture`, {
+    const captureResponse = await fetch(`${affirmApiBase}/api/v2/charges/${chargeId}/capture`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

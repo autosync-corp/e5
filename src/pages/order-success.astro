@@ -15,6 +15,23 @@ import MainLayout from "@/layouts/MainLayout.astro";
           </p>
         </div>
 
+        <!-- Error State (shown when Affirm capture fails) -->
+        <div id="orderError" style="display: none;">
+          <div class="e5OrderSuccessIcon">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#d31d25" stroke-width="4"/>
+              <path d="M28 28L52 52M52 28L28 52" stroke="#d31d25" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h1 class="e5OrderSuccessTitle" style="color: #d31d25;">Payment Processing Error</h1>
+          <p class="e5OrderSuccessText">
+            There was an error processing your payment. Your Affirm application may have been approved, but your order was not created.
+          </p>
+          <p class="e5OrderSuccessSubtext">
+            Please contact us immediately at <strong>info@e5wheels.com</strong> with details of your purchase so we can resolve this for you.
+          </p>
+        </div>
+
         <!-- Success State -->
         <div id="orderSuccess">
           <!-- Success Icon -->
@@ -116,13 +133,43 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
           if (webhookResponse.ok) {
             console.log('✅ Webhook sent successfully');
-            // Clear the saved data
             sessionStorage.removeItem('pendingOrderData');
           } else {
-            console.error('❌ Webhook failed');
+            const errText = await webhookResponse.text();
+            console.error('❌ Webhook failed:', errText);
+            // Payment captured but webhook failed — throw so admin is alerted
+            throw new Error(`Payment captured (${captureData.chargeId}) but order webhook failed: ${errText}`);
           }
         } else {
-          console.warn('⚠️ No saved order data found in sessionStorage');
+          // Payment captured but no order data — alert admin via webhook with minimal info
+          console.error('⚠️ No saved order data found in sessionStorage. Charge ID:', captureData.chargeId);
+          await fetch('/api/send-order-webhook', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chargeId: captureData.chargeId,
+              paymentMethod: 'Affirm',
+              cartItems: [],
+              customerData: {
+                billing: {
+                  firstName: 'UNKNOWN',
+                  lastName: 'CUSTOMER',
+                  emailAddress: '',
+                  phoneNumber: '',
+                  companyName: '',
+                  streetAddress1: 'Order data lost — session expired',
+                  streetAddress2: '',
+                  city: '',
+                  state: '',
+                  zipCode: '',
+                  country: 'US',
+                }
+              },
+              vehicle: null,
+              vehicleDisplay: '',
+              totals: { subtotal: captureData.amount / 100, tax: 0, total: captureData.amount / 100 }
+            }),
+          }).catch(e => console.error('Failed to send fallback webhook:', e));
         }
 
         // Clear the cart from localStorage
@@ -137,11 +184,13 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
       } catch (error) {
         console.error('❌ Error processing Affirm redirect:', error);
-        alert('There was an error processing your payment. Please contact support with your order details.');
 
-        // Show success anyway (payment was approved by Affirm)
+        // Do NOT show success — capture failed, order was not created
         if (processingDiv) processingDiv.style.display = 'none';
-        if (successDiv) successDiv.style.display = 'block';
+
+        // Show an error message so customer knows to contact support
+        const errorDiv = document.getElementById('orderError');
+        if (errorDiv) errorDiv.style.display = 'block';
       }
     } else {
       console.log('Regular order success (not Affirm redirect)');

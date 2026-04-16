@@ -3,10 +3,15 @@ import { Redis } from '@upstash/redis';
 
 export const prerender = false;
 
-const redis = new Redis({
-  url: import.meta.env.KV_REST_API_URL,
-  token: import.meta.env.KV_REST_API_TOKEN,
-});
+let redis: Redis | null = null;
+try {
+  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
+    redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+  }
+} catch { /* Redis unavailable */ }
 
 const COUPONS_KEY = 'e5:coupons';
 const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
@@ -21,6 +26,7 @@ export interface StoredCoupon {
 }
 
 async function getCoupons(): Promise<StoredCoupon[]> {
+  if (!redis) return [];
   const data = await redis.get<StoredCoupon[]>(COUPONS_KEY);
   return data || [];
 }
@@ -69,7 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
   };
 
   coupons.push(newCoupon);
-  await redis.set(COUPONS_KEY, coupons);
+  if (redis) await redis.set(COUPONS_KEY, coupons);
 
   return new Response(JSON.stringify(newCoupon), { status: 201 });
 };
@@ -84,7 +90,7 @@ export const DELETE: APIRoute = async ({ request }) => {
   const { code } = await request.json();
   const coupons = await getCoupons();
   const updated = coupons.filter(c => c.code.toUpperCase() !== code.toUpperCase());
-  await redis.set(COUPONS_KEY, updated);
+  if (redis) await redis.set(COUPONS_KEY, updated);
 
   return new Response(JSON.stringify({ success: true }), { status: 200 });
 };

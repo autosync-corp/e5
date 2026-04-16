@@ -6,7 +6,7 @@ import AddressForm from "./components/_AddressForm.vue";
 // Get payment API keys from environment
 const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
 const affirmPublicKey = import.meta.env.PUBLIC_AFFIRM_PUBLIC_KEY;
-const affirmJsUrl = import.meta.env.PUBLIC_AFFIRM_JS_URL;
+const affirmJsUrl = import.meta.env.PUBLIC_AFFIRM_JS_URL || import.meta.env.AFFIRM_JS_URL;
 const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL;
 ---
 
