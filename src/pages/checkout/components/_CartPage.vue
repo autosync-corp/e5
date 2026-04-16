@@ -142,7 +142,7 @@ onMounted(() => {
   <div class="w-full bg-white">
     <!-- Progress Bar -->
     <section class="w-full bg-[#0a0a0a]">
-      <div class="max-w-[1200px] mx-auto px-8 py-7">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-7">
         <div class="relative flex items-start justify-between">
           <!-- Progress Line -->
           <div class="absolute left-0 right-0 top-[18px] h-[1px] bg-[#a33a3a] z-0"></div>
@@ -187,11 +187,11 @@ onMounted(() => {
     </section>
 
     <!-- Cart Content -->
-    <section class="w-full bg-[#f5f5f5] px-8 py-[60px] pb-20">
+    <section class="w-full bg-[#f5f5f5] px-4 md:px-8 py-10 md:py-[60px] pb-16 md:pb-20">
       <div class="max-w-[1200px] mx-auto flex flex-col gap-10">
 
         <!-- Empty Cart State -->
-        <div v-if="isEmpty" class="bg-white rounded-2xl p-16 text-center">
+        <div v-if="isEmpty" class="bg-white rounded-2xl p-8 md:p-16 text-center">
           <h2 class="text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black mb-6">Your cart is empty</h2>
           <p class="text-lg font-['Franklin_Gothic_Book'] text-black/70 mb-8">
             Add some wheels to get started!
@@ -207,9 +207,10 @@ onMounted(() => {
         <!-- Cart Items -->
         <div v-else>
           <!-- Product Table -->
-          <div class="bg-white rounded-2xl p-8">
-            <!-- Table Header -->
-            <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-6 p-4 border-b border-gray-200 mb-8">
+          <div class="bg-white rounded-2xl p-4 md:p-8">
+
+            <!-- Table Header — desktop only -->
+            <div class="hidden md:grid grid-cols-[2fr_1fr_1fr_1fr] gap-6 p-4 border-b border-gray-200 mb-8">
               <div class="text-sm font-['Franklin_Gothic_Book'] text-black">Product</div>
               <div class="text-sm font-['Franklin_Gothic_Book'] text-black text-center">Price</div>
               <div class="text-sm font-['Franklin_Gothic_Book'] text-black text-center">Quantity</div>
@@ -217,90 +218,158 @@ onMounted(() => {
             </div>
 
             <!-- Product Rows -->
-            <div v-for="item in cartItems" :key="item.product.Id" class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-6 items-center py-6 border-b border-gray-200">
-              <!-- Product Info -->
-              <div class="flex gap-6 items-start">
-                <img
-                  :src="item.product.Img0001 && item.imgUrlBase ? `${item.imgUrlBase}${item.product.Img0001}` : '/assets/images/placeholder-wheel.png'"
-                  :alt="item.product.Model"
-                  class="w-[120px] h-[120px] object-contain"
-                  @error="($event.target as HTMLImageElement).src = '/assets/images/placeholder-wheel.png'"
-                />
-                <div class="flex flex-col gap-1">
-                  <h3 class="text-lg font-['Franklin_Gothic_Demi'] text-e5-red tracking-wide mb-2">
-                    {{ item.product.Model.toUpperCase() }}
-                  </h3>
-                  <p v-if="item.frontWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    {{ item.frontWheels }} x FRONT {{ item.product.Diameter }}"x{{ item.product.Width }}"
-                  </p>
-                  <p v-if="item.rearWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    {{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
-                  </p>
-                  <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    FINISH: {{ [item.product.Finish, item.product.Color, item.product.Accent].filter(Boolean).join(' ') || 'Standard' }}
-                  </p>
-                  <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
-                    MODEL: {{ item.vehicleModel }}
-                  </p>
-                  <p v-if="(item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)" class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
-                    ({{ item.quantity }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel)
-                  </p>
-                  <p v-else class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
-                    ({{ item.frontWheels + item.rearWheels }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
-                  </p>
-                  <button
-                    @click="removeItem(item.product.Id)"
-                    class="mt-2 text-xs font-['Franklin_Gothic_Book'] text-e5-red hover:underline self-start"
-                  >
-                    Remove
-                  </button>
+            <div v-for="item in cartItems" :key="item.product.Id">
+
+              <!-- Mobile Card Layout -->
+              <div class="md:hidden py-5 border-b border-gray-200">
+                <div class="flex gap-3 mb-4">
+                  <img
+                    :src="item.product.Img0001 && item.imgUrlBase ? `${item.imgUrlBase}${item.product.Img0001}` : '/assets/images/placeholder-wheel.png'"
+                    :alt="item.product.Model"
+                    class="w-20 h-20 object-contain flex-shrink-0"
+                    @error="($event.target as HTMLImageElement).src = '/assets/images/placeholder-wheel.png'"
+                  />
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-sm font-['Franklin_Gothic_Demi'] text-e5-red tracking-wide mb-1">
+                      {{ item.product.Model.toUpperCase() }}
+                    </h3>
+                    <p v-if="item.frontWheels > 0" class="text-[11px] font-['Franklin_Gothic_Book'] text-black leading-snug">
+                      {{ item.frontWheels }} x FRONT {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                    </p>
+                    <p v-if="item.rearWheels > 0" class="text-[11px] font-['Franklin_Gothic_Book'] text-black leading-snug">
+                      {{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                    </p>
+                    <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black leading-snug">
+                      FINISH: {{ [item.product.Finish, item.product.Color, item.product.Accent].filter(Boolean).join(' ') || 'Standard' }}
+                    </p>
+                    <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black leading-snug">
+                      MODEL: {{ item.vehicleModel }}
+                    </p>
+                    <button
+                      @click="removeItem(item.product.Id)"
+                      class="mt-2 text-[11px] font-['Franklin_Gothic_Book'] text-e5-red hover:underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+                <!-- Price / Qty / Subtotal row -->
+                <div class="flex items-center justify-between gap-2">
+                  <div class="text-center">
+                    <p class="text-[10px] text-black/50 uppercase mb-1 tracking-wide">Price</p>
+                    <p class="text-sm font-['Franklin_Gothic_Book'] text-black">{{ formatPrice(item.product.Price) }}</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-[10px] text-black/50 uppercase mb-1 tracking-wide">Qty</p>
+                    <div class="flex items-center border border-gray-300 rounded">
+                      <button
+                        @click="updateQuantity(item.product.Id, item.quantity - 1)"
+                        class="w-9 h-9 flex items-center justify-center text-black hover:bg-gray-100 text-xl leading-none select-none"
+                      >−</button>
+                      <span class="w-8 text-center text-sm font-['Franklin_Gothic_Book'] text-black">{{ item.quantity }}</span>
+                      <button
+                        @click="updateQuantity(item.product.Id, item.quantity + 1)"
+                        class="w-9 h-9 flex items-center justify-center text-black hover:bg-gray-100 text-xl leading-none select-none"
+                      >+</button>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-[10px] text-black/50 uppercase mb-1 tracking-wide">Subtotal</p>
+                    <p class="text-sm font-['Franklin_Gothic_Book'] text-black">{{ formatPrice(getItemSubtotal(item)) }}</p>
+                  </div>
                 </div>
               </div>
 
-              <!-- Price -->
-              <div class="text-center text-base font-['Franklin_Gothic_Book'] text-black">
-                {{ formatPrice(item.product.Price) }}
-              </div>
+              <!-- Desktop Table Row -->
+              <div class="hidden md:grid grid-cols-[2fr_1fr_1fr_1fr] gap-6 items-center py-6 border-b border-gray-200">
+                <!-- Product Info -->
+                <div class="flex gap-6 items-start">
+                  <img
+                    :src="item.product.Img0001 && item.imgUrlBase ? `${item.imgUrlBase}${item.product.Img0001}` : '/assets/images/placeholder-wheel.png'"
+                    :alt="item.product.Model"
+                    class="w-[120px] h-[120px] object-contain"
+                    @error="($event.target as HTMLImageElement).src = '/assets/images/placeholder-wheel.png'"
+                  />
+                  <div class="flex flex-col gap-1">
+                    <h3 class="text-lg font-['Franklin_Gothic_Demi'] text-e5-red tracking-wide mb-2">
+                      {{ item.product.Model.toUpperCase() }}
+                    </h3>
+                    <p v-if="item.frontWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                      {{ item.frontWheels }} x FRONT {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                    </p>
+                    <p v-if="item.rearWheels > 0" class="text-xs font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                      {{ item.rearWheels }} x REAR {{ item.product.Diameter }}"x{{ item.product.Width }}"
+                    </p>
+                    <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                      FINISH: {{ [item.product.Finish, item.product.Color, item.product.Accent].filter(Boolean).join(' ') || 'Standard' }}
+                    </p>
+                    <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
+                      MODEL: {{ item.vehicleModel }}
+                    </p>
+                    <p v-if="(item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)" class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
+                      ({{ item.quantity }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel)
+                    </p>
+                    <p v-else class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
+                      ({{ item.frontWheels + item.rearWheels }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
+                    </p>
+                    <button
+                      @click="removeItem(item.product.Id)"
+                      class="mt-2 text-xs font-['Franklin_Gothic_Book'] text-e5-red hover:underline self-start"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
 
-              <!-- Quantity -->
-              <div class="flex justify-center">
-                <input
-                  type="number"
-                  :value="item.quantity"
-                  @input="updateQuantity(item.product.Id, Number(($event.target as HTMLInputElement).value))"
-                  min="1"
-                  class="w-[60px] h-9 text-center border border-gray-300 rounded font-['Franklin_Gothic_Book'] text-sm text-black bg-white"
-                />
-              </div>
+                <!-- Price -->
+                <div class="text-center text-base font-['Franklin_Gothic_Book'] text-black">
+                  {{ formatPrice(item.product.Price) }}
+                </div>
 
-              <!-- Subtotal -->
-              <div class="text-center text-base font-['Franklin_Gothic_Book'] text-black">
-                {{ formatPrice(getItemSubtotal(item)) }}
+                <!-- Quantity — +/− buttons -->
+                <div class="flex justify-center">
+                  <div class="flex items-center border border-gray-300 rounded">
+                    <button
+                      @click="updateQuantity(item.product.Id, item.quantity - 1)"
+                      class="w-9 h-9 flex items-center justify-center text-black hover:bg-gray-100 text-xl leading-none select-none"
+                    >−</button>
+                    <span class="w-9 text-center text-sm font-['Franklin_Gothic_Book'] text-black">{{ item.quantity }}</span>
+                    <button
+                      @click="updateQuantity(item.product.Id, item.quantity + 1)"
+                      class="w-9 h-9 flex items-center justify-center text-black hover:bg-gray-100 text-xl leading-none select-none"
+                    >+</button>
+                  </div>
+                </div>
+
+                <!-- Subtotal -->
+                <div class="text-center text-base font-['Franklin_Gothic_Book'] text-black">
+                  {{ formatPrice(getItemSubtotal(item)) }}
+                </div>
               </div>
             </div>
 
             <!-- Coupon Section -->
             <div class="mt-8 pt-8">
-              <div class="flex justify-end gap-3">
+              <div class="flex flex-col sm:flex-row sm:justify-end gap-3">
                 <input
                   v-model="couponCode"
                   type="text"
                   placeholder="COUPON CODE"
                   :disabled="!!appliedCoupon"
-                  class="w-60 h-11 px-4 border border-gray-300 rounded font-['Franklin_Gothic_Book'] text-[13px] text-black bg-white placeholder:text-gray-400 placeholder:tracking-wide disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  class="w-full sm:w-60 h-11 px-4 border border-gray-300 rounded font-['Franklin_Gothic_Book'] text-[13px] text-black bg-white placeholder:text-gray-400 placeholder:tracking-wide disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
                 <button
                   v-if="!appliedCoupon"
                   @click="applyCoupon"
                   :disabled="isValidatingCoupon"
-                  class="bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="w-full sm:w-auto bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-[#a33a3a] transition-colors h-11 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {{ isValidatingCoupon ? 'Checking...' : 'Apply' }}
                 </button>
                 <button
                   v-else
                   @click="removeCoupon"
-                  class="bg-gray-600 text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-gray-700 transition-colors h-11"
+                  class="w-full sm:w-auto bg-gray-600 text-white font-['Franklin_Gothic_Medium'] text-xs font-semibold tracking-[1.5px] uppercase px-8 border-none rounded cursor-pointer hover:bg-gray-700 transition-colors h-11"
                 >
                   Remove
                 </button>
