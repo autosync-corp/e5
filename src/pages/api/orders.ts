@@ -27,6 +27,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   try {
+    if (!redis) return new Response(JSON.stringify([]), { status: 200, headers: { 'Content-Type': 'application/json' } });
     const raw = await redis.lrange(ORDERS_KEY, 0, -1);
     const orders = (raw || []).map(o => (typeof o === 'string' ? JSON.parse(o) : o));
     return new Response(JSON.stringify(orders), {

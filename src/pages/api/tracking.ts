@@ -27,6 +27,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   try {
+    if (!redis) return new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
     const raw = await redis.get(TRACKING_KEY);
     const settings = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : {};
     return new Response(JSON.stringify(settings), {
@@ -54,6 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const settings = await request.json();
+    if (!redis) return new Response(JSON.stringify({ error: 'Redis unavailable' }), { status: 503, headers: { 'Content-Type': 'application/json' } });
     await redis.set(TRACKING_KEY, JSON.stringify(settings));
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
