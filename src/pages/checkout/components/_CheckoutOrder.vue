@@ -541,6 +541,7 @@ async function handleAffirmPayment() {
 
     if (cartItems.value.length === 0) {
       errorMessage.value = 'Your cart is empty';
+      isProcessing.value = false;
       return;
     }
 
@@ -549,6 +550,7 @@ async function handleAffirmPayment() {
 
     if (!customerData) {
       errorMessage.value = 'Please fill in your billing information';
+      isProcessing.value = false;
       return;
     }
 
@@ -611,13 +613,21 @@ async function handleAffirmPayment() {
         phone_number: billingAddr.phoneNumber,
         email: billingAddr.emailAddress,
       },
-      items: cartItems.value.map((item) => ({
-        display_name: `${item.product.Model} - ${item.product.Diameter}"x${item.product.Width}"`,
-        sku: item.product.Pn || item.product.Id.toString(),
-        unit_price: Math.round(item.product.Price * 100),
-        qty: item.frontWheels + item.rearWheels,
-        item_url: `${window.location.origin}/shop/${item.product.Model.toLowerCase()}`,
-      })),
+      items: cartItems.value.map((item) => {
+        // Staggered items: quantity IS the wheel count (e.g. 2 front or 2 rear)
+        // Non-staggered items: quantity = number of sets, total wheels = (front+rear) * sets
+        const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
+        const qty = isStaggeredItem
+          ? item.quantity
+          : (item.frontWheels + item.rearWheels) * item.quantity;
+        return {
+          display_name: `${item.product.Model} - ${item.product.Diameter}"x${item.product.Width}"`,
+          sku: item.product.Pn || item.product.Id.toString(),
+          unit_price: Math.round(item.product.Price * 100),
+          qty,
+          item_url: `${window.location.origin}/shop/${item.product.Model.toLowerCase()}`,
+        };
+      }),
       metadata: {
         vehicle: vehicleDisplay.value || (selectedVehicle.value ? `${selectedVehicle.value.Year} ${selectedVehicle.value.Make} ${selectedVehicle.value.Model}` : ''),
       },
@@ -628,14 +638,36 @@ async function handleAffirmPayment() {
       currency: 'USD',
     });
 
+    // Fallback: when the Affirm modal closes for ANY reason (including internal
+    // errors like "invalid state"), focus returns to the main window.
+    // This ensures isProcessing is always reset even if onFail/onCancel don't fire.
+    let affirmResolved = false;
+    const onWindowFocus = () => {
+      setTimeout(() => {
+        if (!affirmResolved && isProcessing.value) {
+          isProcessing.value = false;
+        }
+      }, 300);
+    };
+    window.addEventListener('focus', onWindowFocus, { once: true });
+
     // Set up callbacks
     window.affirm.checkout.open({
       onFail: (error: any) => {
+        affirmResolved = true;
+        window.removeEventListener('focus', onWindowFocus);
         console.error('Affirm checkout failed:', error);
-        errorMessage.value = 'Affirm checkout failed. Please try again.';
+        errorMessage.value = 'Affirm checkout failed. Please try again or use a card.';
+        isProcessing.value = false;
+      },
+      onCancel: () => {
+        affirmResolved = true;
+        window.removeEventListener('focus', onWindowFocus);
         isProcessing.value = false;
       },
       onSuccess: async (checkoutData: any) => {
+        affirmResolved = true;
+        window.removeEventListener('focus', onWindowFocus);
         console.log('✅ Affirm checkout success callback triggered');
         console.log('Checkout data received:', checkoutData);
 
@@ -691,6 +723,7 @@ async function handleAffirmPayment() {
     isProcessing.value = false;
   }
 }
+
 
 async function handlePlaceOrder() {
   // Route to appropriate payment handler
