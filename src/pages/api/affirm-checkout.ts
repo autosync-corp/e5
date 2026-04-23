@@ -96,7 +96,7 @@ export const POST: APIRoute = async ({ request }) => {
       items: cartItems.map((item: any) => ({
         display_name: `${item.product.Model} - ${item.product.Diameter}"x${item.product.Width}"`,
         sku: item.product.Pn || item.product.Id,
-        unit_price: Math.round(item.product.Price * 100), // Convert to cents
+        unit_price: Math.round((item.product.Price ?? 0) * 100), // Convert to cents
         qty: item.frontWheels + item.rearWheels,
         item_image_url: item.product.ImageUrl || '',
         item_url: `${new URL(request.url).origin}/shop/${item.product.Model.toLowerCase()}`,

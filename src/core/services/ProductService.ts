@@ -214,11 +214,11 @@ export function calculateCartTotals(items: CartItem[], customerState?: string, c
 
     if (isStaggeredItem) {
       // For staggered items: quantity already represents number of wheels
-      return sum + (item.product.Price * item.quantity);
+      return sum + ((item.product.Price ?? 0) * item.quantity);
     } else {
       // For non-staggered items: quantity represents number of sets
       const totalWheels = item.frontWheels + item.rearWheels;
-      return sum + (item.product.Price * totalWheels * item.quantity);
+      return sum + ((item.product.Price ?? 0) * totalWheels * item.quantity);
     }
   }, 0);
 

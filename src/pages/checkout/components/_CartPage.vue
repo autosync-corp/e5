@@ -125,11 +125,11 @@ function getItemSubtotal(item: CartItem): number {
 
   if (isStaggeredItem) {
     // Staggered: quantity = number of wheels, just multiply price × quantity
-    return item.product.Price * item.quantity;
+    return (item.product.Price ?? 0) * item.quantity;
   } else {
     // Non-staggered: quantity = number of sets, multiply by total wheels
     const totalWheels = item.frontWheels + item.rearWheels;
-    return item.product.Price * totalWheels * item.quantity;
+    return (item.product.Price ?? 0) * totalWheels * item.quantity;
   }
 }
 
@@ -307,10 +307,10 @@ onMounted(() => {
                       MODEL: {{ item.vehicleModel }}
                     </p>
                     <p v-if="(item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)" class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
-                      ({{ item.quantity }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel)
+                      ({{ item.quantity }} wheels × ${{ (item.product.Price ?? 0).toLocaleString() }} per wheel)
                     </p>
                     <p v-else class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
-                      ({{ item.frontWheels + item.rearWheels }} wheels × ${{ item.product.Price.toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
+                      ({{ item.frontWheels + item.rearWheels }} wheels × ${{ (item.product.Price ?? 0).toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
                     </p>
                     <button
                       @click="removeItem(item.product.Id)"

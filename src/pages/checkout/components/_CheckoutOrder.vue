@@ -623,7 +623,7 @@ async function handleAffirmPayment() {
         return {
           display_name: `${item.product.Model} - ${item.product.Diameter}"x${item.product.Width}"`,
           sku: item.product.Pn || item.product.Id.toString(),
-          unit_price: Math.round(item.product.Price * 100),
+          unit_price: Math.round((item.product.Price ?? 0) * 100),
           qty,
           item_url: `${window.location.origin}/shop/${item.product.Model.toLowerCase()}`,
         };
@@ -870,8 +870,8 @@ onMounted(() => {
           <span class="e5CheckoutProductPrice">
             {{ formatPrice(
               (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)
-                ? item.product.Price * item.quantity
-                : item.product.Price * (item.frontWheels + item.rearWheels) * item.quantity
+                ? (item.product.Price ?? 0) * item.quantity
+                : (item.product.Price ?? 0) * (item.frontWheels + item.rearWheels) * item.quantity
             ) }}
           </span>
         </div>

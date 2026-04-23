@@ -145,6 +145,8 @@ const getFinishName = (product: WheelProduct): string => {
   return parts.length > 0 ? parts.join(' ') : 'Standard';
 };
 
+const is2PSeries = computed(() => props.seriesParam?.toLowerCase().includes('2p') ?? false);
+
 // Get all products for the current series
 const seriesProducts = computed(() => {
   if (!apiResponse.value || !selectedProduct.value) return [];
@@ -574,7 +576,7 @@ const totalPrice = computed(() => {
     return (frontPrice * 2) + (rearPrice * 2);
   }
   if (!selectedProduct.value) return 0;
-  return selectedProduct.value.Price * 4; // Complete set of 4 wheels
+  return (selectedProduct.value.Price ?? 0) * 4; // Complete set of 4 wheels
 });
 
 const affirmMonthly = computed(() => {
@@ -1893,6 +1895,7 @@ onMounted(() => {
             <p><strong>Center Bore:</strong> {{ selectedProduct.Bore }}mm</p>
             <p><strong>Load Rating:</strong> {{ selectedProduct.LoadRating }} lbs</p>
             <p v-if="selectedProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+            <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
             <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
           </div>
 
@@ -1907,6 +1910,7 @@ onMounted(() => {
               <p><strong>Center Bore:</strong> {{ selectedFrontProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedFrontProduct.LoadRating }} lbs</p>
               <p v-if="selectedFrontProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+              <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
             </div>
 
@@ -1919,6 +1923,7 @@ onMounted(() => {
               <p><strong>Center Bore:</strong> {{ selectedRearProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedRearProduct.LoadRating }} lbs</p>
               <p v-if="selectedRearProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+              <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
             </div>
           </div>

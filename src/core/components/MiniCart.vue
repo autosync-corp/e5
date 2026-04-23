@@ -29,10 +29,10 @@ const subtotal = computed(() => {
   return cartItems.value.reduce((sum, item) => {
     const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
     if (isStaggeredItem) {
-      return sum + (item.product.Price * item.quantity);
+      return sum + ((item.product.Price ?? 0) * item.quantity);
     } else {
       const totalWheels = item.frontWheels + item.rearWheels;
-      return sum + (item.product.Price * totalWheels * item.quantity);
+      return sum + ((item.product.Price ?? 0) * totalWheels * item.quantity);
     }
   }, 0);
 });
@@ -80,10 +80,10 @@ const getWheelSize = (item: CartItem) => {
 const getItemPrice = (item: CartItem) => {
   const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
   if (isStaggeredItem) {
-    return item.product.Price * item.quantity;
+    return (item.product.Price ?? 0) * item.quantity;
   } else {
     const totalWheels = item.frontWheels + item.rearWheels;
-    return item.product.Price * totalWheels * item.quantity;
+    return (item.product.Price ?? 0) * totalWheels * item.quantity;
   }
 };
 </script>
