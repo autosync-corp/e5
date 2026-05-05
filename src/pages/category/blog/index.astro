@@ -1,0 +1,91 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import MainLayout from '@/layouts/MainLayout.astro';
+
+const posts = await getCollection('blog');
+posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+type FormattedPost = CollectionEntry<'blog'> & { formattedDate: string };
+
+const formattedPosts: FormattedPost[] = posts.map((post: CollectionEntry<'blog'>) => ({
+  ...post,
+  formattedDate: new Date(post.data.date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }),
+}));
+
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+---
+
+<MainLayout
+  title="Blog | E5 Wheels"
+  description="Tips, guides, and insights for Corvette owners. Learn about wheel upgrades, fitment, and getting the most from your Corvette."
+  canonical={`${siteUrl}/category/blog`}
+>
+  <!-- Hero -->
+  <section class="bg-e5-black py-20 px-4 text-center">
+    <p class="text-e5-red font-['Franklin_Gothic_Book'] text-[11px] tracking-[4px] uppercase mb-5">
+      E5 Wheels
+    </p>
+    <h1 class="font-['Franklin_Gothic_Heavy'] text-white text-[42px] md:text-[56px] lg:text-[68px] uppercase tracking-[6px] leading-none mb-6">
+      Blog
+    </h1>
+    <p class="font-['Franklin_Gothic_Book'] text-white/45 text-[14px] tracking-[2px] uppercase max-w-[480px] mx-auto">
+      Tips, guides, and insights for Corvette owners
+    </p>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="bg-[#f5f5f5] py-16 px-4 md:px-8">
+    <div class="max-w-[1200px] mx-auto">
+
+      {formattedPosts.length === 0 ? (
+        <p class="text-center font-['Franklin_Gothic_Book'] text-black/40 tracking-[2px] uppercase py-20">
+          No posts yet.
+        </p>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {formattedPosts.map((post) => (
+            <a
+              href={`/${post.id}`}
+              class="group bg-white flex flex-col hover:shadow-lg transition-shadow duration-300"
+            >
+              <!-- Card Image -->
+              <div class="overflow-hidden aspect-[16/10] bg-e5-black">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center">
+                    <span class="font-['Franklin_Gothic_Heavy'] text-white/10 text-[48px] uppercase tracking-[4px]">E5</span>
+                  </div>
+                )}
+              </div>
+
+              <!-- Card Body -->
+              <div class="flex flex-col flex-1 p-6">
+                <p class="text-e5-red font-['Franklin_Gothic_Book'] text-[10px] tracking-[2.5px] uppercase mb-3">
+                  {post.formattedDate}
+                </p>
+                <h2 class="font-['Franklin_Gothic_Demi'] text-black text-[18px] leading-snug tracking-wide uppercase mb-3 group-hover:text-e5-red transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="font-['Franklin_Gothic_Book'] text-black/55 text-[14px] leading-relaxed flex-1 mb-5">
+                  {post.data.description}
+                </p>
+                <span class="font-['Franklin_Gothic_Book'] text-[11px] tracking-[2.5px] uppercase text-e5-red border-b border-e5-red pb-[2px] self-start">
+                  Read More
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
