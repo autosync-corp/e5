@@ -3,12 +3,12 @@ title: "Cracked OEM C7 Corvette Wheels"
 date: 2023-11-15
 description: "Why C7 Corvette factory wheels crack and how E5 Custom Wheels offer a superior replacement in durability, design, and performance."
 author: "Troy"
-image: /assets/images/blog/cracked_c7_corvette_wheels/cracked-wheel.jpg
+image: /assets/images/blog/cracked_c7_corvette_wheels/cracked-wheel.webp
 ---
 
 The Chevrolet Corvette, an American sports car icon, has long captivated enthusiasts with its blend of performance, style, and relative affordability. The C7 Corvette, the seventh iteration of this classic, is no exception. However, owners of this model have increasingly reported issues with the factory wheels, specifically concerning cracking. This problem not only dampens the ownership experience but also raises significant safety concerns. The solution many have turned to is upgrading to E5 Custom Wheels, known for their durability, style, and performance enhancements.
 
-![Cracked OEM C7 Corvette factory wheel showing structural damage](/assets/images/blog/cracked_c7_corvette_wheels/cracked-wheel.jpg)
+![Cracked OEM C7 Corvette factory wheel showing structural damage](/assets/images/blog/cracked_c7_corvette_wheels/cracked-wheel.webp)
 
 ## The Issue with C7 Corvette Factory Wheels
 
@@ -22,7 +22,7 @@ The reasons behind the cracking of Corvette wheels are varied. Some attribute it
 
 The shift to E5 Custom Wheels addresses all of these concerns head-on.
 
-![Close-up of crack in C7 Corvette cast aluminum wheel](/assets/images/blog/cracked_c7_corvette_wheels/close-up-crack.jpg)
+![Close-up of crack in C7 Corvette cast aluminum wheel](/assets/images/blog/cracked_c7_corvette_wheels/close-up-crack.webp)
 
 ## Durability
 
