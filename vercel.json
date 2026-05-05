@@ -27,6 +27,26 @@
       "source": "/gallery/vehicles/detail/:id",
       "destination": "/gallery/:id",
       "permanent": true
+    },
+    {
+      "source": "/gallery/2023-c8-red-corvette",
+      "destination": "/gallery/2023-corvette-c8-stingray-torch-red-sebring",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/2023-c8-corvette-stingray-3lt",
+      "destination": "/gallery/2023-c8-stingray-3lt",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/c8-2023-red-stingray-torch-red",
+      "destination": "/gallery/2023-c8-stingray-torch-red",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/c8-2022-yellow-stingray",
+      "destination": "/gallery/c8-2022-yellow-stingray-c8r",
+      "permanent": true
     }
   ]
 }

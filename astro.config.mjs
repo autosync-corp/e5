@@ -7,6 +7,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://e5wheels.com',
   output: 'server',
+  trailingSlash: 'always',
   adapter: vercel(),
   integrations: [
     vue(),

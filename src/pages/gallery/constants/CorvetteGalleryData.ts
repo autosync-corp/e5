@@ -187,6 +187,28 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp"]
   },
   {
+    "galleryId": "2015-c7-z06-laguna-blue",
+    "year": "2015",
+    "submodel": "C7",
+    "trim": "Z06",
+    "vehicleColor": "Laguna Blue",
+    "vehicleTitle": "2015 C7 Corvette Z06 Laguna Blue",
+    "wheelStyle": "Sebring",
+    "wheelFinish": "Gloss Black",
+    "wheelSizeF": "19\" x 10\"",
+    "offesetF": "30mm",
+    "partF": "E5SE1910E30565BK",
+    "tireSizeF": "285/30R19",
+    "tirePartF": null,
+    "wheelSizeRear": "20\" x 12\"",
+    "offsetR": "50mm",
+    "wheelPartR": "E5SE2012E50565BK",
+    "tireSizeR": "335/25R20",
+    "tirePartR": null,
+    "tireModel": "Continental ExtremeContact Sport 2",
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp"]
+  },
+  {
     "galleryId": "2016-corvette-c7-z06-white",
     "year": "2016",
     "submodel": "C7",
