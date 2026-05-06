@@ -26,7 +26,6 @@ export default defineConfig({
           '/visualizer-callback',
           '/registration/',
           '/shop/single-product',
-          '/wheels/gallery',
         ];
         return !excludePaths.some(p => page.includes(p));
       },
