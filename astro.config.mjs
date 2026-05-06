@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import vue from '@astrojs/vue';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,27 +14,12 @@ export default defineConfig({
     vue(),
     tailwind({
       applyBaseStyles: false,
-    })
+    }),
+    sitemap(),
   ],
   redirects: {
-    // Generation pages
-    '/c8-corvette-wheels/': '/generations',
-    '/c8-stingray/': '/generations/c8/c8-stingray',
-    '/c8-z06/': '/generations/c8/c8-z06',
-    '/c8-e-ray/': '/generations',
-    '/c7-corvette-wheels/': '/generations',
-    '/c7-stingray/': '/generations/c7/c7-stingray',
-    '/c7-grand-sport/': '/generations/c7/c7-grand-sport',
-    '/c7-z06/': '/generations/c7/c7-z06',
-    '/c6-corvette-wheels/': '/generations',
-    '/c6-grand-sport/': '/generations/c6/c6-grand-sport',
-    '/c6-z06/': '/generations',
-    '/c5-corvette-wheels/': '/generations',
-    '/c5-base-coupe/': '/generations',
-
-    // Wheel series pages
-    '/sebring/': '/shop/sebring',
-    '/daytona/': '/shop/daytona',
+    // Unique redirects not covered by vercel.json
+    '/catalog-2025/': '/catalog',
 
     // Product pages - Talladega
     '/product/talladega/': '/shop/talladega/brushed-aluminum',
@@ -123,122 +109,6 @@ export default defineConfig({
     '/product/speedway-titanium-brushed/': '/shop/speedway/titanium-brushed',
     '/product/speedway-bronze-brushed-tint/': '/shop/speedway/dark-bronze',
 
-    // Other pages
-    '/catalog-2025/': '/catalog',
-    '/become-a-dealer/': '/vendor-registration',
-    '/gallery/': '/gallery/vehicles',
-    '/spun-forged-technology/': '/process',
-    '/racing/': '/shop',
-    '/downloads/': '/media',
-
-    // Year/Model-specific pages - C8 Stingray
-    '/custom-wheels-for-my-2024-c8-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2023-c8-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2022-c8-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2021-c8-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2020-c8-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2023-chevrolet-corvette-stingray-coupe/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2023-chevrolet-corvette-stingray-convertible/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2022-chevrolet-corvette-stingray-coupe/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2022-chevrolet-corvette-stingray-convertible/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2021-chevrolet-corvette-stingray/': '/generations/c8/c8-stingray',
-    '/custom-wheels-for-my-2020-chevrolet-corvette-stingray/': '/generations/c8/c8-stingray',
-
-    // Year/Model-specific pages - C7 Stingray
-    '/custom-wheels-for-my-2019-c7-corvette-stingray/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2019-c7-corvette-z51/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2017-c7-corvette-stingray/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2014-c7-corvette-stingray/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-stingray/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2016-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2016-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2015-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2015-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2014-chevrolet-corvette-stingray-coupe/': '/generations/c7/c7-stingray',
-    '/custom-wheels-for-my-2014-chevrolet-corvette-stingray-convertible/': '/generations/c7/c7-stingray',
-
-    // Year/Model-specific pages - C7 Z06
-    '/custom-wheels-for-my-2017-c7-corvette-z06/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2016-c7-corvette-z06/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2015-c7-stingray-z06/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-z06-coupe/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-z06-convertible/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-z06-coupe/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-z06-convertible/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-z06-coupe/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-z06-convertible/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2016-chevrolet-corvette-z06-coupe/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2016-chevrolet-corvette-z06-convertible/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2015-chevrolet-corvette-z06-coupe/': '/generations/c7/c7-z06',
-    '/custom-wheels-for-my-2015-chevrolet-corvette-z06-convertible/': '/generations/c7/c7-z06',
-
-    // Year/Model-specific pages - C7 Grand Sport
-    '/custom-wheels-for-my-2019-chevrolet-corvette-grand-sport-coupe/': '/generations/c7/c7-grand-sport',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-grand-sport-convertible/': '/generations/c7/c7-grand-sport',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-grand-sport-coupe/': '/generations/c7/c7-grand-sport',
-    '/custom-wheels-for-my-2018-chevrolet-corvette-grand-sport-convertible/': '/generations/c7/c7-grand-sport',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-grand-sport-coupe/': '/generations/c7/c7-grand-sport',
-    '/custom-wheels-for-my-2017-chevrolet-corvette-grand-sport-convertible/': '/generations/c7/c7-grand-sport',
-
-    // Year/Model-specific pages - C6 Grand Sport
-    '/custom-wheels-for-my-2013-chevrolet-corvette-grand-sport-hatchback/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-grand-sport-convertible/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-grand-sport-hatchback/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-grand-sport-convertible/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2012-c6-corvette-grand-sport/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-grand-sport-hatchback/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-grand-sport-convertible/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-grand-sport-hatchback/': '/generations/c6/c6-grand-sport',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-grand-sport-convertible/': '/generations/c6/c6-grand-sport',
-
-    // Year/Model-specific pages - Other variants to /generations
-    '/custom-wheels-for-my-2022-corvette-c8-r/': '/generations',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-zr1-coupe/': '/generations',
-    '/custom-wheels-for-my-2019-chevrolet-corvette-zr1-convertible/': '/generations',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-zr1-hatchback/': '/generations',
-    '/custom-wheels-for-my-2013-chevrolet-corvette-427-convertible/': '/generations',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2012-chevrolet-corvette-zr1-hatchback/': '/generations',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-z06-carbon-hatchback/': '/generations',
-    '/custom-wheels-for-my-2011-chevrolet-corvette-zr1-hatchback/': '/generations',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2010-chevrolet-corvette-zr1-hatchback/': '/generations',
-    '/custom-wheels-for-my-2009-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2009-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2009-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2009-chevrolet-corvette-zr1-hatchback/': '/generations',
-    '/custom-wheels-for-my-2008-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2008-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2008-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2008-corvette-c6-base/': '/generations',
-    '/custom-wheels-for-my-2008-corvette-c6-z06/': '/generations',
-    '/custom-wheels-for-my-2008-chevrolet-corvette-427-limited-edition-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2007-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2007-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2007-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2007-c6-z06/': '/generations',
-    '/custom-wheels-for-my-2006-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2006-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2006-chevrolet-corvette-z06-hatchback/': '/generations',
-    '/custom-wheels-for-my-2005-chevrolet-corvette-base-hatchback/': '/generations',
-    '/custom-wheels-for-my-2005-chevrolet-corvette-base-convertible/': '/generations',
-    '/custom-wheels-for-my-2005-c6-corvette/': '/generations',
   },
   server: {
     port: 8080
