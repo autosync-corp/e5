@@ -111,6 +111,29 @@ const vehicle = {
   tires: vehicleData.tireModel || 'N/A',
 };
 
+// Build ImageObject schema for Google Image Search
+const wheelDesc = vehicle.style !== 'N/A'
+  ? `E5 ${vehicle.style}${vehicle.finish !== 'N/A' ? ` ${vehicle.finish}` : ''} wheels`
+  : 'E5 custom wheels';
+
+const imageSchemaItems = vehicle.galleryMedia
+  .filter((m: any) => m.type === 'image')
+  .map((m: any, i: number) => ({
+    '@type': 'ImageObject',
+    'contentUrl': `${baseUrl}${m.url}`,
+    'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} — ${wheelDesc} — Photo ${i + 1}`,
+    'description': `${vehicle.year !== 'N/A' ? vehicle.year + ' ' : ''}${vehicle.model !== 'N/A' ? vehicle.model + ' ' : ''}Corvette with ${wheelDesc}`,
+  }));
+
+const imageGallerySchema = imageSchemaItems.length > 0 ? JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : 'Corvette'} with ${wheelDesc}`,
+  'description': description,
+  'url': canonicalUrl,
+  'associatedMedia': imageSchemaItems,
+}) : null;
+
 // Get similar corvettes (same model)
 const corvetteGalleryImages = corvetteGalleryData
   .filter(v => v.submodel === vehicleData.submodel && v.galleryId !== vehicleData.galleryId)
@@ -126,7 +149,12 @@ const corvetteGalleryImages = corvetteGalleryData
   }));
 ---
 
-<MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
+<MainLayout title={pageTitle} description={description} canonical={canonicalUrl} ogImage={`${baseUrl}${vehicle.image}`}>
+  {imageGallerySchema && (
+    <Fragment slot="head">
+      <script is:inline type="application/ld+json" set:html={imageGallerySchema}></script>
+    </Fragment>
+  )}
   <div class="w-full h-full">
     <div class="relative">
       <div class="absolute w-full bg-black/60 py-6">
