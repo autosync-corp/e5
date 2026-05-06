@@ -88,7 +88,7 @@ const fbPixelId = tracking.fbPixelId || '';
     <slot name="head" />
 
     <!-- Organization + LocalBusiness JSON-LD -->
-    <script type="application/ld+json" is:inline>{JSON.stringify({
+    <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": ["Organization", "LocalBusiness"],
       "name": "E5 Wheels",
@@ -111,7 +111,7 @@ const fbPixelId = tracking.fbPixelId || '';
         "https://www.youtube.com/@E5Wheels",
         "https://www.tiktok.com/@e5wheels"
       ]
-    })}</script>
+    })}></script>
   </head>
   <body>
     {gtmId && <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />}

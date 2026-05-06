@@ -9,4 +9,4 @@ Disallow: /checkout/
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://e5wheels.com/sitemap-index.xml
+Sitemap: https://e5wheels.com/sitemap.xml
