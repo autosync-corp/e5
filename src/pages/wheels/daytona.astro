@@ -46,9 +46,28 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Daytona - Form Forged Corvette Wheels | E5 Wheels';
 const description = 'Lightest wheel in our Form Forged Series. 10-spoke design with bold deep profile, exclusively engineered for Corvette C5, C6, C7, and C8.';
 const canonicalUrl = `${baseUrl}/wheels/daytona`;
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "E5 Daytona Form Forged Corvette Wheel",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": `${baseUrl}${DAYTONA_HERO_IMAGE}`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "600",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+  </Fragment>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={DAYTONA_HERO_IMAGE} alt={DAYTONA_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->

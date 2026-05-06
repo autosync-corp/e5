@@ -49,9 +49,27 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Sebring 2P - Form Forged Two-Piece Corvette Wheels | E5 Wheels';
 const description = 'The Sebring 2-Piece is the evolution of our most popular Form Forged design — reimagined in a true two-piece configuration with a distinct outer lip. Exclusively engineered for the C8 Corvette platform.';
 const canonicalUrl = `${baseUrl}/wheels/sebring-2p`;
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "E5 Sebring 2P Form Forged Two-Piece Corvette Wheel",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": `${baseUrl}${SEBRING_2P_HERO_IMAGE}`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+  </Fragment>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SEBRING_2P_HERO_IMAGE} alt={SEBRING_2P_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->

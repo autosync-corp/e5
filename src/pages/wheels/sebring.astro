@@ -36,9 +36,27 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Sebring - Form Forged Corvette Wheels | E5 Wheels';
 const description = 'The Sebring is a multi-spoke mesh wheel with intricate split-spoke design that maximizes rigidity while minimizing weight. Exclusively engineered for Corvette fitments.';
 const canonicalUrl = `${baseUrl}/wheels/sebring`;
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "E5 Sebring Form Forged Corvette Wheel",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": `${baseUrl}${SEBRING_HERO_IMAGE}`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+  </Fragment>
     <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SEBRING_HERO_IMAGE} alt={SEBRING_BRAND_NAME} orientation={Orientations.CENTER} />
 
     <!-- Logo and Description -->

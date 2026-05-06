@@ -23,6 +23,7 @@
     }
   ],
   "redirects": [
+    { "source": "/:path*", "has": [{"type": "host", "value": "www.e5wheels.com"}], "destination": "https://e5wheels.com/:path*", "permanent": true },
     { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": false },
     { "source": "/wheels/gallery", "destination": "/gallery/wheels", "permanent": true },
     { "source": "/wheels/gallery/", "destination": "/gallery/wheels", "permanent": true },

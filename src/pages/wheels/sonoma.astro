@@ -22,9 +22,27 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Sonoma - E5 Forged Corvette Wheels | E5 Wheels';
 const description = 'The Sonoma features a refined performance-focused mesh profile, fully forged and weight-optimized. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 3 premium finishes.';
 const canonicalUrl = `${baseUrl}/wheels/sonoma`;
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "E5 Sonoma Forged Corvette Wheel",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": `${baseUrl}${SONOMA_HERO_IMAGE}`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+  </Fragment>
 
     <!-- Hero Section -->
     <section class="w-full bg-white">

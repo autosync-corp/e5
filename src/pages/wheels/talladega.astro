@@ -22,9 +22,27 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Talladega - E5 Forged Corvette Wheels | E5 Wheels';
 const description = 'The Talladega is a fully forged wheel featuring bold split Y-spoke design. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 5 premium finishes available.';
 const canonicalUrl = `${baseUrl}/wheels/talladega`;
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "E5 Talladega Forged Corvette Wheel",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": `${baseUrl}${TALLADEGA_HERO}`,
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+  </Fragment>
 
     <!-- Hero Section -->
     <section class="w-full bg-white">
