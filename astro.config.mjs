@@ -15,7 +15,28 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => {
+        const excludePaths = [
+          '/admin',
+          '/checkout',
+          '/order-success',
+          '/pending',
+          '/visualize-test',
+          '/visualizer-callback',
+          '/registration/',
+          '/shop/single-product',
+        ];
+        return !excludePaths.some(p => page.includes(p));
+      },
+      serialize(item) {
+        // Strip trailing slashes to match canonical URLs (keep root slash)
+        if (item.url.endsWith('/') && item.url !== 'https://e5wheels.com/') {
+          item.url = item.url.slice(0, -1);
+        }
+        return item;
+      },
+    }),
   ],
   redirects: {
     // Unique redirects not covered by vercel.json

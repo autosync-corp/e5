@@ -13,6 +13,6 @@ const description = 'View detailed specifications, fitment options, and availabl
 const canonicalUrl = `${baseUrl}/shop/single-product`;
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} noindex={true}>
   <SingleProductPage client:only="vue" productId={productId} />
 </MainLayout>

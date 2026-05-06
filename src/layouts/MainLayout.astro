@@ -12,6 +12,7 @@ export interface Props {
   canonical?: string;
   ogImage?: string;
   ogType?: 'website' | 'product' | 'article';
+  noindex?: boolean;
 }
 
 const {
@@ -19,7 +20,8 @@ const {
   description,
   canonical,
   ogImage = 'https://e5wheels.com/assets/images/og-default.jpg',
-  ogType = 'website'
+  ogType = 'website',
+  noindex = false,
 } = Astro.props;
 
 // Build full URL for OG tags
@@ -67,6 +69,7 @@ const fbPixelId = tracking.fbPixelId || '';
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- SEO Meta Tags -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     {description && <meta name="description" content={description} />}
     {canonical && <link rel="canonical" href={canonical} />}
 

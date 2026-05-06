@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 
 # Disallow admin/checkout pages
+Disallow: /admin/
 Disallow: /checkout/
 Disallow: /api/
 

@@ -3,6 +3,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import CartPage from "./components/_CartPage.vue";
 ---
 
-<MainLayout title="Shopping Cart - E5 Wheels">
+<MainLayout title="Shopping Cart - E5 Wheels" noindex={true}>
   <CartPage client:load />
 </MainLayout>
