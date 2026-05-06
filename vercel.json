@@ -63,6 +63,7 @@
 
     { "source": "/about-us/", "destination": "/about-us", "permanent": true },
     { "source": "/contact-us/", "destination": "/contact-us", "permanent": true },
+    { "source": "/gallery", "destination": "/gallery/vehicles", "permanent": true },
     { "source": "/gallery/", "destination": "/gallery/vehicles", "permanent": true },
     { "source": "/wheels/", "destination": "/wheels", "permanent": true },
     { "source": "/shop/", "destination": "/shop", "permanent": true },
