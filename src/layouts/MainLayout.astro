@@ -86,6 +86,32 @@ const fbPixelId = tracking.fbPixelId || '';
 
     <title>{title}</title>
     <slot name="head" />
+
+    <!-- Organization + LocalBusiness JSON-LD -->
+    <script type="application/ld+json" is:inline>{JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["Organization", "LocalBusiness"],
+      "name": "E5 Wheels",
+      "url": "https://e5wheels.com",
+      "logo": "https://e5wheels.com/assets/images/e5-wheels-logo-white.webp",
+      "description": "Forged and flow-formed wheels exclusively engineered for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric design, made in the USA.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "3500 NW 77 CT",
+        "addressLocality": "Doral",
+        "addressRegion": "FL",
+        "postalCode": "33122",
+        "addressCountry": "US"
+      },
+      "telephone": "+13059647429",
+      "email": "SALES@E5WHEELS.COM",
+      "sameAs": [
+        "https://www.instagram.com/e5wheels/",
+        "https://www.facebook.com/e5wheels/",
+        "https://www.youtube.com/@E5Wheels",
+        "https://www.tiktok.com/@e5wheels"
+      ]
+    })}</script>
   </head>
   <body>
     {gtmId && <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />}

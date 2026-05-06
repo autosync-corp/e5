@@ -42,17 +42,17 @@ import {
 
           <!-- Social Icons -->
           <div class="flex items-center justify-center gap-4">
-            <a href="https://www.instagram.com/e5wheels/" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+            <a href="https://www.instagram.com/e5wheels/" target="_blank" rel="noopener" aria-label="E5 Wheels on Instagram" class="cursor-pointer hover:opacity-70 transition-opacity">
               <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="w-12 h-12" />
             </a>
-            <a href="https://www.facebook.com/e5wheels/" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
+            <a href="https://www.facebook.com/e5wheels/" target="_blank" rel="noopener" aria-label="E5 Wheels on Facebook" class="cursor-pointer hover:opacity-70 transition-opacity">
               <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="w-12 h-12" />
             </a>
-            <a href="https://www.youtube.com/@E5Wheels" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="YOUTUBE_MEDIA_ICON" alt="Youtube" class="w-12 h-12" />
+            <a href="https://www.youtube.com/@E5Wheels" target="_blank" rel="noopener" aria-label="E5 Wheels on YouTube" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="YOUTUBE_MEDIA_ICON" alt="YouTube" class="w-12 h-12" />
             </a>
-            <a href="https://www.tiktok.com/@e5wheels" target="_blank" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="TIKTOK_MEDIA_ICON" alt="Tiktok" class="w-12 h-12" />
+            <a href="https://www.tiktok.com/@e5wheels" target="_blank" rel="noopener" aria-label="E5 Wheels on TikTok" class="cursor-pointer hover:opacity-70 transition-opacity">
+              <img :src="TIKTOK_MEDIA_ICON" alt="TikTok" class="w-12 h-12" />
             </a>
           </div>
         </div>

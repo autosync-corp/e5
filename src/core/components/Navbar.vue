@@ -145,12 +145,12 @@ const closeMiniCart = () => {
 
           <!-- Gallery Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
-            <button class="nav-link" :class="{'selected': isGalleryRoute}">
+            <a :href="GALLERY_ROUTE" class="nav-link" :class="{'selected': isGalleryRoute}" aria-label="Gallery">
               GALLERY
               <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </a>
 
             <!-- Dropdown Menu -->
             <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
@@ -161,12 +161,12 @@ const closeMiniCart = () => {
 
           <!-- Process Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isProcessDropdownOpen = true" @mouseleave="closeProcessDropdown">
-            <button class="nav-link" :class="{'selected': isProcessRoute}">
+            <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}" aria-label="Process">
               PROCESS
               <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </a>
 
             <!-- Dropdown Menu -->
             <div v-if="isProcessDropdownOpen" class="dropdown-menu">
@@ -178,7 +178,7 @@ const closeMiniCart = () => {
 
         <!-- Center Logo -->
         <div class="flex justify-center items-center px-2 xl:px-4 2xl:px-6">
-          <a :href="HOME_ROUTE">
+          <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
             <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
           </a>
         </div>
@@ -235,7 +235,7 @@ const closeMiniCart = () => {
     <!-- Mobile Navigation -->
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
       <!-- Mobile Logo -->
-      <a :href="HOME_ROUTE">
+      <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
         <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" />
       </a>
 
@@ -281,12 +281,16 @@ const closeMiniCart = () => {
 
         <!-- Gallery Submenu for Mobile -->
         <div class="mobile-submenu">
-          <button @click="toggleGalleryDropdown" class="mobile-nav-link" :class="{'selected': isGalleryRoute}">
-            GALLERY
-            <svg class="inline-block w-5 h-5 ml-1" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+          <div class="flex items-center gap-2">
+            <a :href="GALLERY_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">
+              GALLERY
+            </a>
+            <button @click="toggleGalleryDropdown" class="text-white p-1" aria-label="Toggle Gallery submenu">
+              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
           <div v-if="isGalleryDropdownOpen" class="mobile-submenu-items">
             <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">VEHICLES</a>
             <a :href="GALLERY_WHEELS_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEELS</a>
@@ -295,12 +299,16 @@ const closeMiniCart = () => {
 
         <!-- Process Submenu for Mobile -->
         <div class="mobile-submenu">
-          <button @click="toggleProcessDropdown" class="mobile-nav-link" :class="{'selected': isProcessRoute}">
-            PROCESS
-            <svg class="inline-block w-5 h-5 ml-1" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+          <div class="flex items-center gap-2">
+            <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">
+              PROCESS
+            </a>
+            <button @click="toggleProcessDropdown" class="text-white p-1" aria-label="Toggle Process submenu">
+              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
           <div v-if="isProcessDropdownOpen" class="mobile-submenu-items">
             <a :href="PROCESS_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORGED</a>
             <a :href="PROCESS_FORM_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORM FORGED</a>
