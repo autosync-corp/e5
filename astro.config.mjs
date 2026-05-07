@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://e5wheels.com',
+  site: 'https://www.e5wheels.com',
   output: 'server',
   trailingSlash: 'ignore',
   adapter: vercel(),
