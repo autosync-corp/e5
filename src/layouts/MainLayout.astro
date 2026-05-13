@@ -15,17 +15,17 @@ export interface Props {
   noindex?: boolean;
 }
 
+// Build full URL for OG tags — defined first so it can be used in prop defaults
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+
 const {
   title = 'E5 Wheels - Exclusively Engineered for Corvettes',
   description,
   canonical,
-  ogImage = 'https://e5wheels.com/assets/images/vette-black-on-river.webp',
+  ogImage = `${siteUrl}/assets/images/vette-black-on-river.webp`,
   ogType = 'website',
   noindex = false,
 } = Astro.props;
-
-// Build full URL for OG tags
-const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
 // Load tracking settings from Redis
@@ -95,8 +95,8 @@ const fbPixelId = tracking.fbPixelId || '';
       "@context": "https://schema.org",
       "@type": ["Organization", "LocalBusiness"],
       "name": "E5 Wheels",
-      "url": "https://e5wheels.com",
-      "logo": "https://e5wheels.com/assets/images/e5-wheels-logo-white.webp",
+      "url": siteUrl,
+      "logo": `${siteUrl}/assets/images/e5-wheels-logo-white.webp`,
       "description": "Forged and flow-formed wheels exclusively engineered for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric design, made in the USA.",
       "address": {
         "@type": "PostalAddress",

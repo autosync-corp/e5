@@ -15,9 +15,12 @@ import Button from "@/core/components/Button.vue";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import {WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE} from "@/core/constants/Routes.ts";
 const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const description = 'E5 Form Forged wheels — engineered with forged DNA and crafted through flow forming. Precision-fitted for Corvette C6, C7, and C8. Available in Sebring, Daytona, and Speedway.';
+const canonicalUrl = `${baseUrl}/wheels/form-forged`;
 ---
 
-<MainLayout title="Form Forged - E5 Wheels">
+<MainLayout title="Form Forged Wheels - E5 Wheels" description={description} canonical={canonicalUrl}>
     <!--<section>-->
     <!--    <video autoplay loop muted playsinline class="w-full h-[545px] object-cover">-->
     <!--        <source src={VPS_FORGED_VIDEO} type="video/mp4" />-->
@@ -37,6 +40,15 @@ const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
     <!--        </div>-->
     <!--    </div>-->
     <!--</section>-->
+
+    <section class="container-e5 text-center py-16">
+        <h1 class="font-franklin-heavy text-4xl md:text-5xl lg:text-6xl uppercase tracking-[4px] text-black mb-4">
+            Form Forged Wheels
+        </h1>
+        <p class="text-black/60 text-lg max-w-[700px] mx-auto">
+            Engineered with forged DNA and crafted through flow forming for Corvette C6, C7, and C8.
+        </p>
+    </section>
 
     <section class="py-12 bg-gray-50">
         <div class="container-e5 grid grid-cols-1 md:grid-cols-3">

@@ -8,7 +8,7 @@ const description = 'The page you are looking for could not be found.';
 const canonicalUrl = `${baseUrl}/404`;
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} noindex={true}>
   <div class="w-full min-h-[calc(100vh-107px)] bg-white flex items-center justify-center px-6">
     <div class="max-w-[800px] text-center">
       <!-- 404 Error Code -->

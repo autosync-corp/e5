@@ -1,8 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const description = 'Explore E5 Wheels in interactive 3D. Rotate, zoom, and inspect every detail of our form forged and forged wheel designs for Corvette C5, C6, C7, and C8.';
+const canonicalUrl = `${baseUrl}/interact`;
 ---
 
-<MainLayout title="Interactive 3D Models - E5 Wheels">
+<MainLayout title="Interactive 3D Models - E5 Wheels" description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white pb-24">
     <!-- Hero Section -->
     <section class="container-e5 py-20">
