@@ -96,12 +96,20 @@ const filteredVehicles = computed(() => {
     filtered = filtered.filter(item => item.year === filters.value.year);
   }
 
-  // Sort: pinned first, then by generation (C8 → C7 → C6 → C5), then by year (newest first)
+  // Sort: pinned first, then recently added (by dateAdded desc),
+  // then by generation (C8 → C7 → C6 → C5), then by year (newest first)
   const generationOrder: Record<string, number> = { 'C8': 1, 'C7': 2, 'C6': 3, 'C5': 4 };
   filtered = [...filtered].sort((a, b) => {
     // Pinned entries always come first
     if (a.pinned && !b.pinned) return -1;
     if (!a.pinned && b.pinned) return 1;
+
+    // Then entries with dateAdded come before entries without (most recent first)
+    if (a.dateAdded && !b.dateAdded) return -1;
+    if (!a.dateAdded && b.dateAdded) return 1;
+    if (a.dateAdded && b.dateAdded) {
+      return b.dateAdded.localeCompare(a.dateAdded);
+    }
 
     // Then sort by generation
     const genA = generationOrder[a.submodel || ''] || 999;

@@ -28,9 +28,56 @@ export interface CorvetteGalleryItem {
   images?: string[];
   media?: GalleryMediaItem[];
   pinned?: boolean;
+  dateAdded?: string;
 }
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
+  {
+    "galleryId": "2026-c8-z06-white-with-sonoma-brushed-silver-wheels-night-shot",
+    "dateAdded": "2026-05-14",
+    "year": "2026",
+    "submodel": "C8",
+    "trim": "Z06",
+    "vehicleColor": "White",
+    "vehicleTitle": "2026 C8 Corvette Z06 White",
+    "wheelStyle": "Sonoma",
+    "wheelFinish": "Brushed Aluminum",
+    "wheelSizeF": "20\" x 10\"",
+    "offesetF": "25mm",
+    "partF": "E5SO2010E25520AB",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "21\" x 13\"",
+    "offsetR": "20mm",
+    "wheelPartR": "E5SO2113E20520AB",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp"]
+  },
+  {
+    "galleryId": "2025-c8-z06-black-with-talladega-brushed-silver-wheels",
+    "dateAdded": "2026-05-14",
+    "year": "2025",
+    "submodel": "C8",
+    "trim": "Z06",
+    "vehicleColor": "Black",
+    "vehicleTitle": "2025 C8 Corvette Z06 Black",
+    "wheelStyle": "Talladega",
+    "wheelFinish": "Brushed Aluminum",
+    "wheelSizeF": "20\" x 10\"",
+    "offesetF": "25mm",
+    "partF": "E5TA2010E25520AB",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "21\" x 13\"",
+    "offsetR": "20mm",
+    "wheelPartR": "E5TA2113E20520AB",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp"]
+  },
   {
     "galleryId": "2025-c8-corvette-stingray-white-with-sebring-2p",
     "year": "2025",
@@ -1684,5 +1731,28 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "tirePartR": null,
     "tireModel": null,
     "images": ["0.webp","3.webp","4.webp","6.webp","7.webp","8.webp","9.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","27.webp","29.webp","30.webp","31.webp","33.webp","34.webp","36.webp","37.webp","38.webp","40.webp","42.webp","44.webp","45.webp","46.webp","47.webp","48.webp","49.webp"]
+  },
+  {
+    "galleryId": "2023-c8-stingray-white-e5-speedway-gloss-black",
+    "dateAdded": "2026-05-14",
+    "year": "2023",
+    "submodel": "C8",
+    "trim": "Stingray",
+    "vehicleColor": "White",
+    "vehicleTitle": "2023 C8 Corvette Stingray White",
+    "wheelStyle": "Speedway",
+    "wheelFinish": "Gloss Black",
+    "wheelSizeF": "19\" x 9\"",
+    "offesetF": "35mm",
+    "partF": "E5SP1990E35520BK",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "20\" x 11\"",
+    "offsetR": "45mm",
+    "wheelPartR": "E5SP2011E45520BK",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp","31.webp","32.webp"]
   }
 ];
