@@ -53,6 +53,10 @@ const urlParams = {
   rearSize: parsedUrl.rearSize,
 };
 
+// Made-to-order series (4 week lead time)
+const madeToOrderSeries = ['talladega', 'sonoma'];
+const isMadeToOrder = madeToOrderSeries.includes((series || '').toLowerCase());
+
 // Product schema — base data known at server time
 const productSchema = {
   "@context": "https://schema.org",
@@ -68,7 +72,7 @@ const productSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
+    "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
     "seller": {
       "@type": "Organization",
       "name": "E5 Wheels"

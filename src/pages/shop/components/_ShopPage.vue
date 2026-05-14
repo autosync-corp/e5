@@ -473,12 +473,18 @@ onMounted(() => {
                 </h3>
 
                 <!-- Finish Name -->
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                   <span class="text-sm font-['Franklin_Gothic_Medium'] text-black bg-gray-100 px-3 py-1 rounded">
                     {{ variation.finish }}
                   </span>
                   <span
-                    v-if="variation.product.InStock"
+                    v-if="['talladega', 'sonoma'].includes(series.seriesName.toLowerCase())"
+                    class="text-xs font-['Franklin_Gothic_Book'] text-orange-600 bg-orange-50 px-2 py-1 rounded"
+                  >
+                    Made to Order &middot; 4 Week Lead Time
+                  </span>
+                  <span
+                    v-else-if="variation.product.InStock"
                     class="text-xs font-['Franklin_Gothic_Book'] text-green-600 bg-green-50 px-2 py-1 rounded"
                   >
                     In Stock

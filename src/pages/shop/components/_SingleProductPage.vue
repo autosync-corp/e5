@@ -146,6 +146,10 @@ const getFinishName = (product: WheelProduct): string => {
 };
 
 const is2PSeries = computed(() => props.seriesParam?.toLowerCase().includes('2p') ?? false);
+const isForgedSeries = computed(() => {
+  const s = props.seriesParam?.toLowerCase() ?? '';
+  return s === 'talladega' || s === 'sonoma';
+});
 
 // Get all products for the current series
 const seriesProducts = computed(() => {
@@ -1894,7 +1898,8 @@ onMounted(() => {
             <p><strong>Bolt Pattern:</strong> {{ selectedProduct.LugCount }}x{{ selectedProduct.BoltCircle1 }}<span v-if="selectedProduct.BoltCircle2">/{{ selectedProduct.BoltCircle2 }}</span></p>
             <p><strong>Center Bore:</strong> {{ selectedProduct.Bore }}mm</p>
             <p><strong>Load Rating:</strong> {{ selectedProduct.LoadRating }} lbs</p>
-            <p v-if="selectedProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+            <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+            <p v-else-if="selectedProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
             <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
             <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
           </div>
@@ -1909,7 +1914,8 @@ onMounted(() => {
               <p><strong>Bolt Pattern:</strong> {{ selectedFrontProduct.LugCount }}x{{ selectedFrontProduct.BoltCircle1 }}<span v-if="selectedFrontProduct.BoltCircle2">/{{ selectedFrontProduct.BoltCircle2 }}</span></p>
               <p><strong>Center Bore:</strong> {{ selectedFrontProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedFrontProduct.LoadRating }} lbs</p>
-              <p v-if="selectedFrontProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+              <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+              <p v-else-if="selectedFrontProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
               <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
             </div>
@@ -1922,7 +1928,8 @@ onMounted(() => {
               <p><strong>Bolt Pattern:</strong> {{ selectedRearProduct.LugCount }}x{{ selectedRearProduct.BoltCircle1 }}<span v-if="selectedRearProduct.BoltCircle2">/{{ selectedRearProduct.BoltCircle2 }}</span></p>
               <p><strong>Center Bore:</strong> {{ selectedRearProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedRearProduct.LoadRating }} lbs</p>
-              <p v-if="selectedRearProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
+              <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+              <p v-else-if="selectedRearProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
               <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
             </div>
