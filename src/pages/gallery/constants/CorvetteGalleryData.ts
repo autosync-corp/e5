@@ -33,6 +33,29 @@ export interface CorvetteGalleryItem {
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
+    "galleryId": "2026-c8-zr1-with-e5-talladega-brushed-silver-wheels-night-shot",
+    "dateAdded": "2026-05-15",
+    "year": "2026",
+    "submodel": "C8",
+    "trim": "ZR1",
+    "vehicleColor": "White",
+    "vehicleTitle": "2026 C8 Corvette ZR1 White",
+    "wheelStyle": "Talladega",
+    "wheelFinish": "Brushed Aluminum",
+    "wheelSizeF": "20\" x 10\"",
+    "offesetF": "25mm",
+    "partF": "E5TA2010E25520AB",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "21\" x 13\"",
+    "offsetR": "20mm",
+    "wheelPartR": "E5TA2113E20520AB",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"]
+  },
+  {
     "galleryId": "2026-c8-z06-white-with-sonoma-brushed-silver-wheels-night-shot",
     "dateAdded": "2026-05-14",
     "year": "2026",

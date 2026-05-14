@@ -1,271 +1,242 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import {
+  GALLERY_VEHICLES_ROUTE,
+  GENERATIONS_C8_STINGRAY_ROUTE,
+  GENERATIONS_C8_Z06_ROUTE,
+  GENERATIONS_C8_ZR1_ROUTE,
+  WHEELS_FORM_FORGED_ROUTE,
+  WHEELS_TALLADEGA_ROUTE,
+} from "@/core/constants/Routes.ts";
+import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
-const title = 'C8 Corvette Wheels - E5 Forged & Form Forged | E5 Wheels';
-const description = 'Shop wheels for C8 Corvette (2020+). E5 Forged for Z06/ZR1/E-Ray and Form Forged for Stingray. Hub-centric fitment, forged in USA, multiple sizes and finishes.';
+const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const title = 'C8 Corvette Wheels (2020+) - E5 Forged & Form Forged | E5 Wheels';
+const description = 'Shop wheels for C8 Corvette (2020+). Form Forged Series for Stingray and E5 Forged for Z06, ZR1, and E-Ray. Hub-centric fitment, forged in USA, multiple sizes and finishes.';
 const canonicalUrl = `${baseUrl}/generations/c8`;
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
-  <div class="w-full bg-white">
-    <!-- Hero Section with Video Background -->
-    <section class="relative w-full h-[799px] overflow-hidden">
-      <!-- Placeholder for video - will show black background -->
-      <div class="absolute inset-0 bg-black"></div>
-      <!-- You can add video here if needed -->
+  <div class="w-full bg-white -mt-107">
+
+    <!-- Hero Banner -->
+    <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">
+      <img
+        src="/assets/images/gallery/corvette/2026-c8-zr1-with-e5-talladega-brushed-silver-wheels-night-shot/0.webp"
+        alt="2026 C8 Corvette ZR1 with E5 Talladega Brushed Aluminum Wheels"
+        class="w-full h-full object-cover"
+      />
     </section>
 
     <!-- Main Title and Description -->
-    <section class="max-w-[1536px] mx-auto px-16 py-12">
-      <h1 class="font-['Franklin_Gothic_Heavy'] text-[62px] leading-[60px] text-black text-center uppercase mb-6">
-        Custom Corvette C8 Z06 Forged Wheels
+    <section class="container-e5 py-8 md:py-12 lg:py-16 text-center">
+      <h1 class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']">
+        Custom C8 Corvette Wheels
       </h1>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 text-center max-w-[1276px] mx-auto mb-16">
-        Explore our E5 Forged Collection of Corvette C8 Z06 wheels, available exclusively for the C8 Z06, ZR1, and E-Ray. Made in the USA, our C8 Z06 forged wheels are engineered for extreme performance, reduced weight, and maximum strength—delivering the perfect upgrade for Corvette owners who demand more from their vehicle.
+      <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1276px] mx-auto mb-4 md:mb-6 px-4">
+        The mid-engine C8 Corvette (2020+) represents a generational leap in American performance. From the daily-driven Stingray to the track-bred Z06 and the supercar ZR1, every C8 platform has unique wheel requirements. E5 engineers wheels precisely for each one—aggressive offsets, hub-centric fitment, and forged construction made in the USA.
       </p>
+      <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase">
+        Shop Wheels by C8 Model
+      </p>
+    </section>
 
-      <!-- Talladega Showcase -->
-      <div class="grid grid-cols-2 gap-16 items-center mb-20">
-        <div class="flex justify-center">
-          <img
-            src="/assets/images/afdec958cf713eb929ae510752b31594f43c1a4f.webp"
-            alt="Talladega Wheel"
-            class="w-full max-w-[520px] h-[477px] object-contain"
-          />
-        </div>
-        <div>
-          <img
-            src="/assets/images/3a0f898a970a7108262be2cdc91dcdde57744bd4.webp"
-            alt="Talladega Logo"
-            class="h-[52px] mb-6"
-          />
+    <!-- C8 Model Selector Grid -->
+    <section class="container-e5 py-8 md:py-12 lg:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
 
-          <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/50 mb-4">
-            FORGED FOR CORVETTE C8 Z06, ZR1, & E-RAY
-          </p>
-
-          <ul class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 list-disc pl-9 space-y-1 mb-8">
-            <li>Front: 20x10 / Offset +25mm</li>
-            <li>Rear: 21x13 / Offset +20mm</li>
-            <li>Bolt Pattern: 5x120</li>
-            <li>FITS STOCK TIRE SIZES 275/30 & 345/25</li>
-          </ul>
-
-          <div class="flex gap-4">
-            <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-              EXPLORE E5 FORGED
-            </button>
-            <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-              SHOP FITMENT
-            </button>
+        <!-- C8 Stingray -->
+        <a href={GENERATIONS_C8_STINGRAY_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+          <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+            <img
+              src="/assets/images/generations/c8/stingray-figma-new/ddf3b031aace1961a53533a1f783a84a67fb61b6.webp"
+              alt="C8 Corvette Stingray"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
           </div>
-        </div>
+          <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] md:tracking-[2.4px] lg:tracking-[3.2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+            C8 Stingray
+          </h2>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+            Form Forged Series
+          </p>
+          <p class="text-[14px] md:text-[15px] lg:text-[16px] leading-[20px] md:leading-[22px] text-black/60 mb-3">
+            Engineered for the 6.2L LT2 (490hp) base platform. Available in Daytona, Sebring, and Speedway designs across multiple finishes.
+          </p>
+          <span class="text-[12px] md:text-[14px] tracking-[2.4px] md:tracking-[2.8px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+            Explore C8 Stingray &rarr;
+          </span>
+        </a>
+
+        <!-- C8 Z06 -->
+        <a href={GENERATIONS_C8_Z06_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+          <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+            <img
+              src="/assets/images/generations/c8/c8-z06-new/712eb0d1487009b3864cb1a30e308f725770b503.webp"
+              alt="C8 Corvette Z06"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] md:tracking-[2.4px] lg:tracking-[3.2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+            C8 Z06
+          </h2>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+            E5 Forged Series
+          </p>
+          <p class="text-[14px] md:text-[15px] lg:text-[16px] leading-[20px] md:leading-[22px] text-black/60 mb-3">
+            Engineered for the flat-plane LT6 (670hp) and E-Ray hybrid platforms. Talladega and Sonoma designs in multiple premium finishes.
+          </p>
+          <span class="text-[12px] md:text-[14px] tracking-[2.4px] md:tracking-[2.8px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+            Explore C8 Z06 &rarr;
+          </span>
+        </a>
+
+        <!-- C8 ZR1 -->
+        <a href={GENERATIONS_C8_ZR1_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+          <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+            <img
+              src="/assets/images/generations/c8/zr1-figma/eda905a44366020603e226a9f33a6ee123371b79.webp"
+              alt="C8 Corvette ZR1"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] md:tracking-[2.4px] lg:tracking-[3.2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+            C8 ZR1
+          </h2>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+            E5 Forged Series
+          </p>
+          <p class="text-[14px] md:text-[15px] lg:text-[16px] leading-[20px] md:leading-[22px] text-black/60 mb-3">
+            Engineered for the twin-turbo LT7 (1064hp) flagship. Ultimate strength-to-weight ratio for the most extreme C8 platform.
+          </p>
+          <span class="text-[12px] md:text-[14px] tracking-[2.4px] md:tracking-[2.8px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+            Explore C8 ZR1 &rarr;
+          </span>
+        </a>
+
       </div>
     </section>
 
-    <!-- Overview Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20 bg-white">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-12">
-        OVERVIEW
+    <!-- Two Series Section -->
+    <section class="container-e5 py-12 md:py-16 lg:py-20 bg-[#f8f8f8]">
+      <h2 class="font-['Franklin_Gothic_Book'] text-[28px] md:text-[40px] lg:text-[48px] leading-[32px] md:leading-[40px] lg:leading-[48px] text-e5-red tracking-[5.6px] md:tracking-[8px] lg:tracking-[9.6px] uppercase mb-8 md:mb-12 text-center">
+        Two Series. One Platform.
       </h2>
 
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 max-w-[1276px] mb-12">
-        Every E5 Forged C8 Z06 wheel begins with a foundation of uncompromising strength and precision, crafted from premium 6061 aluminum. From there, we carve away excess material to optimize the strength-to-weight ratio, reduce inertia, and convert every ounce into performance. Engineered for maximum capability, our aftermarket C8 Z06 wheels unlock wider tire setups, greater grip, sharper handling, and improved brake clearance—delivering a decisive advantage on the street and the track.
-      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
 
-      <div class="grid grid-cols-2 gap-6">
-        <img
-          src="/assets/images/81b6e7a67f0ff714d31b243e6080853c26608bba.webp"
-          alt="E5 Wheel Detail 1"
-          class="w-full h-[409px] object-cover"
-        />
-        <img
-          src="/assets/images/fe1152d3114af3b0fb103a4b205dba9f02fbf841.webp"
-          alt="E5 Wheel Detail 2"
-          class="w-full h-[409px] object-cover"
-        />
+        <!-- Form Forged -->
+        <div class="flex flex-col items-center text-center px-4">
+          <img src={FORM_FORGED_LOGO} alt="Form Forged" class="h-[40px] md:h-[50px] lg:h-[60px] w-auto mb-4 md:mb-6" />
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-black/50 uppercase mb-4 font-['Franklin_Gothic_Demi']">
+            For C8 Stingray
+          </p>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] leading-[22px] md:leading-[24px] lg:leading-[28px] text-black/70 max-w-[480px] mb-6">
+            Engineered with forged DNA and crafted through flow forming, our Form Forged Series balances strength and agility—without compromising daily drivability. Available in Daytona, Sebring, and Speedway designs.
+          </p>
+          <a href={WHEELS_FORM_FORGED_ROUTE} class="inline-block bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[14px] md:text-[16px] lg:text-[18px] tracking-[1.4px] md:tracking-[1.6px] lg:tracking-[1.8px] px-8 md:px-10 lg:px-12 py-4 md:py-5 lg:py-6 hover:bg-e5-red/90 transition-colors">
+            Explore Form Forged
+          </a>
+        </div>
+
+        <!-- E5 Forged -->
+        <div class="flex flex-col items-center text-center px-4">
+          <img src={E5_FORGED_LOGO} alt="E5 Forged" class="h-[40px] md:h-[50px] lg:h-[60px] w-auto mb-4 md:mb-6" />
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-black/50 uppercase mb-4 font-['Franklin_Gothic_Demi']">
+            For C8 Z06, ZR1, &amp; E-Ray
+          </p>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] leading-[22px] md:leading-[24px] lg:leading-[28px] text-black/70 max-w-[480px] mb-6">
+            Fully forged from premium 6061 aluminum. Carved to optimize the strength-to-weight ratio and unlock wider tire setups, greater grip, and improved brake clearance. Talladega and Sonoma designs.
+          </p>
+          <a href={WHEELS_TALLADEGA_ROUTE} class="inline-block bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[14px] md:text-[16px] lg:text-[18px] tracking-[1.4px] md:tracking-[1.6px] lg:tracking-[1.8px] px-8 md:px-10 lg:px-12 py-4 md:py-5 lg:py-6 hover:bg-e5-red/90 transition-colors">
+            Explore E5 Forged
+          </a>
+        </div>
+
       </div>
     </section>
 
     <!-- Finishing Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20 bg-white">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-12">
-        FINISHING
+    <section class="container-e5 py-12 md:py-16 lg:py-20">
+      <h2 class="font-['Franklin_Gothic_Book'] text-[28px] md:text-[40px] lg:text-[48px] leading-[32px] md:leading-[40px] lg:leading-[48px] text-e5-red tracking-[5.6px] md:tracking-[8px] lg:tracking-[9.6px] uppercase mb-8 md:mb-12">
+        Finishing
       </h2>
 
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 max-w-[1276px] mb-12">
-        Every wheel in the E5 Forged Collection is more than performance—it's a statement of individuality. Available in premium finishes like gloss black, silver, brushed, or polished, each design showcases the precision of its forged construction. For those seeking something truly unique, we also offer custom powder coats and bespoke finishes to match any vision. No matter the choice, every finish is executed with uncompromising attention to detail, delivering a look that lasts as long as the engineering behind it.
+      <p class="text-[16px] md:text-[20px] lg:text-[24px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12">
+        Every wheel in the E5 Collection is more than performance—it's a statement of individuality. Available in premium finishes like gloss black, silver, brushed, or polished, each design showcases the precision of its forged construction. Custom powder coats and bespoke finishes available on request.
       </p>
 
-      <!-- Finishing Images Row 1 -->
-      <div class="grid grid-cols-2 gap-6 mb-4">
-        <img
-          src="/assets/images/635c360776d4fed06014550fb174128129f3db5d.webp"
-          alt="Gloss White"
-          class="w-full h-[259px] object-cover"
-        />
-        <img
-          src="/assets/images/594596d32c2664b60ada31f941308aa49a446810.webp"
-          alt="Brushed Aluminum"
-          class="w-full h-[259px] object-cover"
-        />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div>
+          <img
+            src="/assets/images/635c360776d4fed06014550fb174128129f3db5d.webp"
+            alt="C8 Corvette with Gloss White wheels"
+            class="w-full h-[200px] md:h-[240px] lg:h-[280px] object-cover"
+          />
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2px] leading-[24px] text-black/40 uppercase text-center mt-3 font-['Franklin_Gothic_Book']">
+            Gloss White
+          </p>
+        </div>
+        <div>
+          <img
+            src="/assets/images/594596d32c2664b60ada31f941308aa49a446810.webp"
+            alt="C8 Corvette with Brushed Aluminum wheels"
+            class="w-full h-[200px] md:h-[240px] lg:h-[280px] object-cover"
+          />
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2px] leading-[24px] text-black/40 uppercase text-center mt-3 font-['Franklin_Gothic_Book']">
+            Brushed Aluminum
+          </p>
+        </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-6 mb-12">
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center">
-          GLOSS WHITE
-        </p>
-        <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center">
-          BRUSHED ALUMINUM
+      <div>
+        <img
+          src="/assets/images/ea5c4ce9fe1dff8253a015d8213129e6dfcc0fc2.webp"
+          alt="C8 Corvette with Gloss Gold wheels"
+          class="w-full h-[280px] md:h-[400px] lg:h-[527px] object-cover"
+        />
+        <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2px] leading-[24px] text-black/40 uppercase text-center mt-3 font-['Franklin_Gothic_Book']">
+          Gloss Gold
         </p>
       </div>
-
-      <!-- Full Width Gloss Gold Image -->
-      <img
-        src="/assets/images/ea5c4ce9fe1dff8253a015d8213129e6dfcc0fc2.webp"
-        alt="Gloss Gold Finish"
-        class="w-full h-[527px] object-cover mb-4"
-      />
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/40 text-center mb-20">
-        GLOSS GOLD
-      </p>
     </section>
 
     <!-- Gallery Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-8">
-        C8 Z06 GALLERY
+    <section class="container-e5 py-12 md:py-16 lg:py-20">
+      <h2 class="font-['Franklin_Gothic_Book'] text-[28px] md:text-[40px] lg:text-[48px] leading-[32px] md:leading-[40px] lg:leading-[48px] text-e5-red tracking-[5.6px] md:tracking-[8px] lg:tracking-[9.6px] uppercase mb-6 md:mb-8">
+        C8 Gallery
       </h2>
 
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 mb-12">
-        Explore our gallery of Corvette C8 Z06 wheels, showcasing a variety of styles and finishes on customer vehicles.
+      <p class="text-[16px] md:text-[20px] lg:text-[24px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12">
+        Explore our gallery of C8 Corvettes, showcasing a variety of styles and finishes on customer vehicles across all C8 trims.
       </p>
 
-      <div class="grid grid-cols-3 gap-8 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12">
         <img
           src="/assets/images/2aa980bafdc02ffb5bb841ba963f436f9cef7ece.webp"
-          alt="C8 Z06 Gallery 1"
-          class="w-full h-[408px] object-cover"
+          alt="C8 Corvette gallery example 1"
+          class="w-full h-[260px] md:h-[320px] lg:h-[408px] object-cover"
         />
         <img
           src="/assets/images/ca9a9d5bbdcec445ae42fe0a4b5b4bbd7ac79e81.webp"
-          alt="C8 Z06 Gallery 2"
-          class="w-full h-[408px] object-cover"
+          alt="C8 Corvette gallery example 2"
+          class="w-full h-[260px] md:h-[320px] lg:h-[408px] object-cover"
         />
         <img
           src="/assets/images/571e72291039231446ba08b58aa44f3358d4886a.webp"
-          alt="C8 Z06 Gallery 3"
-          class="w-full h-[408px] object-cover"
+          alt="C8 Corvette gallery example 3"
+          class="w-full h-[260px] md:h-[320px] lg:h-[408px] object-cover"
         />
       </div>
 
-      <div class="flex justify-center mb-20">
-        <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-          SEE MORE C8 Z06
-        </button>
-      </div>
-    </section>
-
-    <!-- Shop Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-8">
-        SHOP C8 Z06 FORGED WHEELS
-      </h2>
-
-      <p class="font-['Excon_Variable'] text-[24px] leading-[30px] text-black/70 mb-16">
-        Shop through our collection of E5 Forged wheels, Exclusively Forged for C8 Z06, ZR1, and E-Ray.
-      </p>
-
-      <p class="font-['Franklin_Gothic_Book'] text-[28px] leading-[17px] text-black/60 text-center tracking-[5.6px] mb-12">
-        <span class="text-e5-red">CUSTOM</span> FINISHES AVAILABLE
-      </p>
-
-      <!-- Wheel Products Grid -->
-      <div class="grid grid-cols-3 gap-8 mb-12">
-        <!-- Product 1 - Podium Gold -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/464d2ace3214351d17a75848ec4bddc985f8c836.webp"
-            alt="Talladega - Podium Gold Brushed"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            PODIUM GOLD BRUSHED
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-
-        <!-- Product 2 - Gloss Black -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/afdec958cf713eb929ae510752b31594f43c1a4f.webp"
-            alt="Talladega - Gloss Black"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            GLOSS BLACK
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-
-        <!-- Product 3 - Smoked Titanium -->
-        <div class="flex flex-col items-center">
-          <img
-            src="/assets/images/c5130d4e56f6e2437cc78fe4904cdcbc6e716569.webp"
-            alt="Talladega - Smoked Titanium Brushed"
-            class="w-full aspect-square object-contain mb-4"
-          />
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-black tracking-[4px] mb-2 text-center">
-            SMOKED TITANIUM BRUSHED
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-1">
-            20 X 10
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[20px] leading-[20px] text-e5-red tracking-[4px] mb-2">
-            21 X 13
-          </p>
-          <p class="font-['Franklin_Gothic_Book'] text-[16px] leading-[20px] text-black/50 tracking-[3.2px] text-center">
-            ONLY FOR Z06, ZR1, E_RAY
-          </p>
-        </div>
-      </div>
-
       <div class="flex justify-center">
-        <button class="bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[18px] leading-[20px] tracking-[1.8px] px-12 py-6 hover:bg-e5-red/90 transition-colors">
-          SHOP FITMENT
-        </button>
+        <a href={GALLERY_VEHICLES_ROUTE} class="inline-block bg-e5-red text-white font-['Franklin_Gothic_Demi'] text-[14px] md:text-[16px] lg:text-[18px] tracking-[1.4px] md:tracking-[1.6px] lg:tracking-[1.8px] px-8 md:px-10 lg:px-12 py-4 md:py-5 lg:py-6 hover:bg-e5-red/90 transition-colors">
+          View Full Gallery
+        </a>
       </div>
     </section>
 
-    <!-- Specifications Section -->
-    <section class="max-w-[1728px] mx-auto px-16 py-20">
-      <h2 class="font-['Franklin_Gothic_Book'] text-[48px] leading-[20px] text-e5-red tracking-[9.6px] uppercase mb-16">
-        SPECIFICATIONS
-      </h2>
-
-      <!-- Add specifications table or content here if needed -->
-      <div class="min-h-[200px]">
-        <!-- Specifications content to be added -->
-      </div>
-    </section>
   </div>
 </MainLayout>
