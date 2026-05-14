@@ -2,6 +2,7 @@
   "buildCommand": "npm run build",
   "framework": "astro",
   "regions": ["iad1"],
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -103,11 +104,16 @@
     { "source": "/c8-2023-sebring-black-stingray/", "destination": "/gallery/vehicles", "permanent": true },
     { "source": "/c8-2023-sebring-black-stingray", "destination": "/gallery/vehicles", "permanent": true },
 
-    { "source": "/product/:slug(.*daytona.*)", "destination": "/wheels/daytona", "permanent": true },
-    { "source": "/product/:slug(.*sebring.*)", "destination": "/wheels/sebring", "permanent": true },
-    { "source": "/product/:slug(.*speedway.*)", "destination": "/wheels/speedway", "permanent": true },
-    { "source": "/product/:slug(.*talladega.*)", "destination": "/wheels/talladega", "permanent": true },
-    { "source": "/product/:slug(.*sonoma.*)", "destination": "/wheels/sonoma", "permanent": true },
+    { "source": "/product/front-:slug(.*daytona.*)", "destination": "/wheels/daytona", "permanent": true },
+    { "source": "/product/rear-:slug(.*daytona.*)", "destination": "/wheels/daytona", "permanent": true },
+    { "source": "/product/front-:slug(.*sebring.*)", "destination": "/wheels/sebring", "permanent": true },
+    { "source": "/product/rear-:slug(.*sebring.*)", "destination": "/wheels/sebring", "permanent": true },
+    { "source": "/product/front-:slug(.*speedway.*)", "destination": "/wheels/speedway", "permanent": true },
+    { "source": "/product/rear-:slug(.*speedway.*)", "destination": "/wheels/speedway", "permanent": true },
+    { "source": "/product/front-:slug(.*talladega.*)", "destination": "/wheels/talladega", "permanent": true },
+    { "source": "/product/rear-:slug(.*talladega.*)", "destination": "/wheels/talladega", "permanent": true },
+    { "source": "/product/front-:slug(.*sonoma.*)", "destination": "/wheels/sonoma", "permanent": true },
+    { "source": "/product/rear-:slug(.*sonoma.*)", "destination": "/wheels/sonoma", "permanent": true },
     { "source": "/product/:path*", "destination": "/shop", "permanent": true },
 
     { "source": "/custom-wheels-for-my-2020-:path*", "destination": "/generations/c8/c8-stingray", "permanent": true },
@@ -175,6 +181,20 @@
     { "source": "/e5-gallery/", "destination": "/gallery/vehicles", "permanent": true },
     { "source": "/e5-gallery", "destination": "/gallery/vehicles", "permanent": true },
     { "source": "/wheel-finish/:path*", "destination": "/wheels", "permanent": true },
-    { "source": "/wp-json/:path*", "destination": "/", "permanent": true }
+    { "source": "/wp-json/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-content/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-includes/:path*", "destination": "/", "permanent": true },
+    { "source": "/wc-api/:path*", "destination": "/", "permanent": true },
+    { "source": "/cart/:path*", "destination": "/checkout/cart", "permanent": true },
+    { "source": "/cart", "destination": "/checkout/cart", "permanent": true },
+    { "source": "/E5-Daytona-:slug(.*)", "destination": "/wheels/daytona", "permanent": true },
+    { "source": "/E5-Sebring-:slug(.*)", "destination": "/wheels/sebring", "permanent": true },
+    { "source": "/E5-Speedway-:slug(.*)", "destination": "/wheels/speedway", "permanent": true },
+    { "source": "/c8-Corvette-wheels/:path*", "destination": "/generations/c8", "permanent": true },
+    { "source": "/c8-Corvette-wheels", "destination": "/generations/c8", "permanent": true },
+    { "source": "/c7-Corvette-wheels/:path*", "destination": "/generations/c7", "permanent": true },
+    { "source": "/c7-Corvette-wheels", "destination": "/generations/c7", "permanent": true },
+    { "source": "/c6-Corvette-wheels/:path*", "destination": "/generations/c6", "permanent": true },
+    { "source": "/c6-Corvette-wheels", "destination": "/generations/c6", "permanent": true }
   ]
 }
