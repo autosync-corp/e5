@@ -55,7 +55,19 @@ const urlParams = {
 
 // Made-to-order series (4 week lead time)
 const madeToOrderSeries = ['talladega', 'sonoma'];
-const isMadeToOrder = madeToOrderSeries.includes((series || '').toLowerCase());
+const seriesKey = (series || '').toLowerCase();
+const isMadeToOrder = madeToOrderSeries.includes(seriesKey);
+
+// Starting price per series (floor price for AggregateOffer)
+const seriesLowPrice: Record<string, string> = {
+  'daytona': '600',
+  'sebring': '600',
+  'sebring-2p': '875',
+  'speedway': '600',
+  'talladega': '2900',
+  'sonoma': '2900',
+};
+const lowPrice = seriesLowPrice[seriesKey] || '600';
 
 // Product schema — base data known at server time
 const productSchema = {
@@ -72,6 +84,7 @@ const productSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
+    "lowPrice": lowPrice,
     "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
     "seller": {
       "@type": "Organization",
