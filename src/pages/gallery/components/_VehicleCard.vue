@@ -31,16 +31,10 @@ const fallbackImage = '/assets/images/placeholder-vehicle.jpg';
 const handleImageError = () => {
   imageSrc.value = fallbackImage;
 }
-
-const onClick = () => {
-  if (props.link) {
-    window.location.href = props.link;
-  }
-}
 </script>
 
 <template>
-  <div class="flex flex-col " @click="onClick">
+  <a :href="props.link" class="flex flex-col hover:opacity-90 transition-opacity">
     <img :src="imageSrc" :alt="props.title" @error="handleImageError" class="w-full h-[330px] object-cover bg-gray-50" width="400" height="330" loading="lazy"/>
     <div class="bg-gray-100 px-4 py-3 text-center uppercase tracking-[1.5px] text-14">
       <p class="text-black/30">{{ props.style }}</p>
@@ -48,5 +42,5 @@ const onClick = () => {
       <div class="text-black tracking-[0.8px]"></div>
       <div class="text-black tracking-[0.8px]">{{ props.style }} {{props.finish}}</div>
     </div>
-  </div>
+  </a>
 </template>

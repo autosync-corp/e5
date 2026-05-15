@@ -47,10 +47,6 @@ const fallbackImage = '/assets/images/placeholder-vehicle.jpg';
 const handleImageError = () => {
   imageSrc.value = fallbackImage;
 }
-
-const onClick = () => {
-  window.location.href = props.link;
-};
 </script>
 
 <template>
@@ -88,6 +84,6 @@ const onClick = () => {
       </p>
     </div>
 
-    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" @click="onClick">VIEW GALLERY</Button>
+    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" :link="props.link">VIEW GALLERY</Button>
   </div>
 </template>

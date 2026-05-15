@@ -25,14 +25,10 @@ const props = defineProps({
     default: false,
   }
 })
-
-const onClick = () => {
-  window.location.href = props.link;
-};
 </script>
 
 <template>
-  <div class="relative group cursor-pointer" @click="onClick">
+  <a :href="props.link" class="relative group block hover:opacity-90 transition-opacity">
     <!-- Wheel Image -->
     <div class="relative w-full h-[329px] overflow-hidden">
       <img
@@ -53,5 +49,5 @@ const onClick = () => {
       <p class="font-franklin-medium text-lg text-black">{{ props.name }}</p>
       <div class="text-black tracking-[0.8px]">{{ props.finish }}</div>
     </div>
-  </div>
+  </a>
 </template>

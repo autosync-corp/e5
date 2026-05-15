@@ -36,9 +36,6 @@ const props = defineProps({
   }
 })
 
-const onClick = () => {
-  window.location.href = props.link;
-};
 </script>
 
 <template>
@@ -89,6 +86,6 @@ const onClick = () => {
     </div>
 
     <!-- View Gallery Button -->
-    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" @click="onClick">VIEW GALLERY</Button>
+    <Button primary class="mx-auto mt-8 mb-3" style="max-width: 230px" :link="props.link">VIEW GALLERY</Button>
   </div>
 </template>
