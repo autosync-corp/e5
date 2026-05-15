@@ -315,7 +315,7 @@ async function loadProducts() {
   }
 }
 
-function goToProduct(product: WheelProduct) {
+function getProductUrl(product: WheelProduct): string {
   // Build finish name from Finish + Color + Accent
   const finishParts = [];
   if (product.Finish) finishParts.push(product.Finish);
@@ -323,14 +323,11 @@ function goToProduct(product: WheelProduct) {
   if (product.Accent) finishParts.push(product.Accent);
   const finish = finishParts.join(' ') || 'Standard';
 
-  // Build the new wheel URL
-  const url = buildWheelUrl(
+  // Build the new wheel URL (generation, trim, sizes selected on product page)
+  return buildWheelUrl(
     product.Model,        // series
     finish                // finish
-    // generation, trim, sizes not available from product card, user will select on product page
   );
-
-  window.location.href = url;
 }
 
 function getProductDisplayName(product: WheelProduct): string {
@@ -451,11 +448,11 @@ onMounted(() => {
 
           <!-- Cards for Each Finish Variation -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <div
+            <a
               v-for="variation in series.finishVariations"
               :key="variation.product.Id"
-              @click="goToProduct(variation.product)"
-              class="group cursor-pointer bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-e5-red hover:shadow-xl transition-all duration-300"
+              :href="getProductUrl(variation.product)"
+              class="group block bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-e5-red hover:shadow-xl transition-all duration-300 no-underline text-inherit"
             >
               <!-- Product Image -->
               <div class="aspect-square bg-gray-50 flex items-center justify-center p-6 overflow-hidden">
@@ -566,12 +563,12 @@ onMounted(() => {
                   </p>
                 </div>
 
-                <!-- View Details Button -->
-                <button class="w-full mt-4 h-10 bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm tracking-wider rounded-lg group-hover:bg-e5-red/90 transition-colors">
+                <!-- View Details Indicator -->
+                <span class="block w-full mt-4 h-10 bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm tracking-wider rounded-lg group-hover:bg-e5-red/90 transition-colors flex items-center justify-center">
                   VIEW OPTIONS
-                </button>
+                </span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
