@@ -2,6 +2,13 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import SingleProductPage from '@/pages/shop/components/_SingleProductPage.vue';
 import { parseWheelUrl, fromSlug } from '@/core/utils/wheelUrl';
+import {
+  DAYTONA_GLOSS_BLACK, DAYTONA_TITANIUM_BRUSHED_TINT, DAYTONA_BRONZE_BRUSHED_TINT, DAYTONA_HERO_IMAGE,
+  SEBRING_GLOSS_BLACK, SEBRING_TITANIUM_BRUSHED, SEBRING_BRONZE, SEBRING_HERO_IMAGE,
+  SPEEDWAY_GLOSS_BLACK, SPEEDWAY_TITANIUM_BRUSHED, SPEEDWAY_BRONZE, SPEEDWAY_HERO_IMAGE,
+  TALLADEGA_GLOSS_BLACK, TALLADEGA_PODIUM_GOLD, TALLADEGA_PODIUM_BRONZE, TALLADEGA_SATIN_GREY, TALLADEGA_SMOKED_POLISHED, TALLADEGA_HERO,
+  SONOMA_GLOSS_BLACK, SONOMA_TITANIUM_BRUSHED_TINT, SONOMA_BRONZE_BRUSHED_TINT, SONOMA_HERO_IMAGE,
+} from "@/pages/wheels/constants/Wheels.ts";
 
 // Get URL parameters from path
 const { series, finish } = Astro.params;
@@ -56,6 +63,7 @@ const urlParams = {
 // Made-to-order series (4 week lead time)
 const madeToOrderSeries = ['talladega', 'sonoma'];
 const seriesKey = (series || '').toLowerCase();
+const finishKey = (finish || '').toLowerCase();
 const isMadeToOrder = madeToOrderSeries.includes(seriesKey);
 
 // Starting price per series (floor price for AggregateOffer)
@@ -69,6 +77,47 @@ const seriesLowPrice: Record<string, string> = {
 };
 const lowPrice = seriesLowPrice[seriesKey] || '600';
 
+// Product image — series + finish specific, falls back to series hero
+const productImageMap: Record<string, string> = {
+  // Daytona
+  'daytona/gloss-black': DAYTONA_GLOSS_BLACK,
+  'daytona/titanium-brushed': DAYTONA_TITANIUM_BRUSHED_TINT,
+  'daytona/titanium-brushed-tint': DAYTONA_TITANIUM_BRUSHED_TINT,
+  'daytona/bronze-brushed-tint': DAYTONA_BRONZE_BRUSHED_TINT,
+  // Sebring
+  'sebring/gloss-black': SEBRING_GLOSS_BLACK,
+  'sebring/titanium-brushed': SEBRING_TITANIUM_BRUSHED,
+  'sebring/titanium-brushed-tint': SEBRING_TITANIUM_BRUSHED,
+  'sebring/bronze-brushed-tint': SEBRING_BRONZE,
+  // Speedway
+  'speedway/gloss-black': SPEEDWAY_GLOSS_BLACK,
+  'speedway/titanium-brushed': SPEEDWAY_TITANIUM_BRUSHED,
+  'speedway/titanium-brushed-tint': SPEEDWAY_TITANIUM_BRUSHED,
+  'speedway/dark-bronze': SPEEDWAY_BRONZE,
+  // Talladega
+  'talladega/gloss-black': TALLADEGA_GLOSS_BLACK,
+  'talladega/podium-gold-brushed': TALLADEGA_PODIUM_GOLD,
+  'talladega/podium-bronze': TALLADEGA_PODIUM_BRONZE,
+  'talladega/satin-grey': TALLADEGA_SATIN_GREY,
+  'talladega/smoked-titanium-brushed': TALLADEGA_SMOKED_POLISHED,
+  'talladega/brushed-aluminum': TALLADEGA_HERO,
+  // Sonoma
+  'sonoma/gloss-black': SONOMA_GLOSS_BLACK,
+  'sonoma/titanium-brushed-tint': SONOMA_TITANIUM_BRUSHED_TINT,
+  'sonoma/bronze-brushed-tint': SONOMA_BRONZE_BRUSHED_TINT,
+  'sonoma/brushed-aluminum': SONOMA_HERO_IMAGE,
+};
+const seriesFallbackImage: Record<string, string> = {
+  'daytona': DAYTONA_HERO_IMAGE,
+  'sebring': SEBRING_HERO_IMAGE,
+  'speedway': SPEEDWAY_HERO_IMAGE,
+  'talladega': TALLADEGA_HERO,
+  'sonoma': SONOMA_HERO_IMAGE,
+};
+const productImagePath = productImageMap[`${seriesKey}/${finishKey}`]
+  || seriesFallbackImage[seriesKey]
+  || '/assets/images/vette-black-on-river.webp';
+
 // Product schema — base data known at server time
 const productSchema = {
   "@context": "https://schema.org",
@@ -80,7 +129,7 @@ const productSchema = {
     "name": "E5 Wheels"
   },
   "url": canonicalUrl,
-  "image": `${baseUrl}/assets/images/og-default.jpg`,
+  "image": `${baseUrl}${productImagePath}`,
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
