@@ -131,6 +131,7 @@ const imageGallerySchema = imageSchemaItems.length > 0 ? JSON.stringify({
   'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : 'Corvette'} with ${wheelDesc}`,
   'description': description,
   'url': canonicalUrl,
+  'image': `${baseUrl}${vehicle.image}`,
   'associatedMedia': imageSchemaItems,
 }) : null;
 
