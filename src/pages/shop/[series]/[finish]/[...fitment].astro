@@ -68,14 +68,23 @@ const isMadeToOrder = madeToOrderSeries.includes(seriesKey);
 
 // Starting price per series (floor price for AggregateOffer)
 const seriesLowPrice: Record<string, string> = {
-  'daytona': '600',
+  'daytona': '550',
   'sebring': '600',
-  'sebring-2p': '875',
+  'sebring-2p': '770',
   'speedway': '600',
   'talladega': '2900',
   'sonoma': '2900',
 };
+const seriesHighPrice: Record<string, string> = {
+  'daytona': '1200',
+  'sebring': '1200',
+  'sebring-2p': '980',
+  'speedway': '1100',
+  'talladega': '3100',
+  'sonoma': '3100',
+};
 const lowPrice = seriesLowPrice[seriesKey] || '600';
+const highPrice = seriesHighPrice[seriesKey] || '1200';
 
 // Product image — series + finish specific, falls back to series hero
 const productImageMap: Record<string, string> = {
@@ -134,6 +143,7 @@ const productSchema = {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
     "lowPrice": lowPrice,
+    "highPrice": highPrice,
     "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
     "seller": {
       "@type": "Organization",

@@ -26,10 +26,21 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Our Wheel Engineering Process - E5 Wheels';
 const description = 'Learn about E5 Wheels\' engineering process. From forged and flow-formed construction to precision fitment, see how we build wheels exclusively for Corvettes.';
 const canonicalUrl = `${baseUrl}/process`;
-const ogImage = `${baseUrl}/assets/images/og-default.jpg`;
+const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "Process", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
     <div class="w-full bg-white -mt-107">
         <!-- Hero Section with Car Image -->
         <section class="relative w-full h-[792px] overflow-hidden">

@@ -6,9 +6,21 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Form Forged Series Process - Flow-Formed Corvette Wheels | E5 Wheels';
 const description = 'Discover our Form Forged manufacturing process. Flow-formed construction with forged DNA for C5, C6, C7, and C8 Corvettes. Superior strength-to-weight ratio at accessible pricing.';
 const canonicalUrl = `${baseUrl}/process/form-forged`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "Process", "item": `${baseUrl}/process` },
+    { "@type": "ListItem", "position": 3, "name": "Form Forged", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
   <div class="w-full bg-white">
     <!-- Hero Video Section 1 -->
     <section class="w-full h-[799px] relative overflow-hidden">

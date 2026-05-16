@@ -77,7 +77,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -324,7 +324,7 @@ const breadcrumbSchema = JSON.stringify({
     <!-- Shop Section with Three Wheels -->
     <section class="container-e5 py-16">
         <h2 class="text-center text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] xl:tracking-[4px] text-black/45 uppercase mb-8">
-            EXCLUSIVELY ENGINEERED FOR CORVETTES
+            Shop Sebring 2P Finishes
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

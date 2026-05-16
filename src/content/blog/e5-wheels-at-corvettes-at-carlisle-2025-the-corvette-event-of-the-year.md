@@ -1,5 +1,5 @@
 ---
-title: "E5 Wheels at Corvettes at Carlisle 2025 - The Corvette Event of the Year!"
+title: "E5 Wheels at Corvettes at Carlisle 2025"
 date: 2025-07-16
 description: "E5 Wheels will be at Corvettes at Carlisle 2025, August 21-23 in Carlisle, PA. Come see our latest premium wheels for the C6, C7, and C8 Corvette."
 author: "Dante Shadravan"

@@ -60,7 +60,7 @@ import {
 
         <!-- Right: Contact Info -->
         <div class="footer-contact flex flex-col items-end text-right space-y-2">
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" class="footer-link flex items-start gap-3 justify-end">
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" aria-label="E5 Wheels location on Google Maps" class="footer-link flex items-start gap-3 justify-end">
             <img :src="PIN_BLACK_ICON" alt="Location" class="w-[22px] h-auto mt-1 rotate-180 scale-y-[-1]" />
             <div>
               <p class="m-0">E5 WHEELS, LLC</p>

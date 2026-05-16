@@ -1,5 +1,5 @@
 ---
-title: "Elevate Your C6 Corvette: Personalize Your C6 with Aftermarket Rims from E5Wheels.com"
+title: "C6 Corvette Aftermarket Wheels: Personalize Your Ride"
 date: 2023-10-26
 description: "Discover how aftermarket C6 Corvette wheels from E5Wheels.com can transform your ride with precision fitment, lasting durability, and standout style."
 author: "Troy"
