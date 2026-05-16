@@ -29,11 +29,19 @@ export default defineConfig({
         ];
         return !excludePaths.some(p => page.includes(p));
       },
+      customPages: [
+        'https://www.e5wheels.com/e5-wheels-at-corvettes-at-carlisle-2025-the-corvette-event-of-the-year',
+        'https://www.e5wheels.com/cracked_c7_corvette_wheels',
+        'https://www.e5wheels.com/elevate-your-c6-corvette-personalize-your-c6-with-aftermarket-rims-from-e5wheels-com',
+        'https://www.e5wheels.com/e5-custom-wheels-for-your-c7-corvette',
+      ],
       serialize(item) {
         // Strip trailing slashes to match canonical URLs (keep root slash)
-        if (item.url.endsWith('/') && item.url !== 'https://e5wheels.com/') {
+        if (item.url.endsWith('/') && item.url !== 'https://www.e5wheels.com/') {
           item.url = item.url.slice(0, -1);
         }
+        // Add lastmod (set to build date for all entries — best signal Google sees)
+        item.lastmod = new Date().toISOString();
         return item;
       },
     }),

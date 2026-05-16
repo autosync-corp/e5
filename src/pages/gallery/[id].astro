@@ -135,6 +135,17 @@ const imageGallerySchema = imageSchemaItems.length > 0 ? JSON.stringify({
   'associatedMedia': imageSchemaItems,
 }) : null;
 
+const breadcrumbName = vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`;
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': `${baseUrl}/` },
+    { '@type': 'ListItem', 'position': 2, 'name': 'Gallery', 'item': `${baseUrl}/gallery/vehicles` },
+    { '@type': 'ListItem', 'position': 3, 'name': breadcrumbName, 'item': canonicalUrl }
+  ]
+});
+
 // Get similar corvettes (same model)
 const corvetteGalleryImages = corvetteGalleryData
   .filter(v => v.submodel === vehicleData.submodel && v.galleryId !== vehicleData.galleryId)
@@ -151,11 +162,10 @@ const corvetteGalleryImages = corvetteGalleryData
 ---
 
 <MainLayout title={pageTitle} description={description} canonical={canonicalUrl} ogImage={`${baseUrl}${vehicle.image}`}>
-  {imageGallerySchema && (
-    <Fragment slot="head">
-      <script is:inline type="application/ld+json" set:html={imageGallerySchema}></script>
-    </Fragment>
-  )}
+  <Fragment slot="head">
+    {imageGallerySchema && <script is:inline type="application/ld+json" set:html={imageGallerySchema}></script>}
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
   <div class="w-full h-full">
     <div class="relative">
       <div class="absolute w-full bg-black/60 py-6">
