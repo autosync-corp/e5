@@ -1,8 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const description = 'Submit your Corvette with E5 wheels for a chance to be featured in our gallery. Send us your photos and join the E5 community of Corvette enthusiasts.';
+const canonicalUrl = `${baseUrl}/submit-your-corvette`;
 ---
 
-<MainLayout title="E5 Wheels - Submit Your Corvette">
+<MainLayout title="Submit Your Corvette | E5 Wheels" description={description} canonical={canonicalUrl}>
   <div class="w-full bg-white">
     <!-- Hero Image Section -->
     <section class="w-full h-[432px] relative overflow-hidden">

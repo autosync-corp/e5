@@ -181,6 +181,9 @@ const corvetteGalleryImages = corvetteGalleryData
 
     <!-- Vehicle & Wheel Details Section -->
     <section class="container-e5 pt-4">
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-franklin-heavy uppercase tracking-[2px] text-black mb-6">
+        {vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`} with {wheelDesc}
+      </h1>
       <div class="flex items-start justify-between mb-8">
         <div></div>
         <div class="text-right">
