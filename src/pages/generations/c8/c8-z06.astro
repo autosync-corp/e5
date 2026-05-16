@@ -19,9 +19,21 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'C8 Z06 Wheels (2023+) - E5 Forged | E5 Wheels';
 const description = 'E5 Forged wheels for C8 Z06 (2023+). Fully forged in USA for the flat-plane LT6 670hp platform. Maximum strength and weight savings. 5 premium finishes.';
 const canonicalUrl = `${baseUrl}/generations/c8/c8-z06`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "C8 Corvette", "item": `${baseUrl}/generations/c8` },
+    { "@type": "ListItem", "position": 3, "name": "C8 Z06", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
     <div class="w-full bg-white -mt-107">
 
         <!-- Hero Banner -->

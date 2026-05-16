@@ -28,9 +28,21 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'C6 Grand Sport Wheels (2010-2013) - Form Forged | E5 Wheels';
 const description = 'Form Forged wheels for C6 Grand Sport Corvette (2010-2013). Engineered for widebody fitment and the LS3 430hp platform. Staggered sizes, multiple finishes available.';
 const canonicalUrl = `${baseUrl}/generations/c6/c6-grand-sport`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "C6 Corvette", "item": `${baseUrl}/generations/c6` },
+    { "@type": "ListItem", "position": 3, "name": "C6 Grand Sport", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
     <div class="w-full bg-white -mt-107">
         <!-- Hero Banner -->
         <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">

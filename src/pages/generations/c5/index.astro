@@ -11,9 +11,20 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 const title = 'C5 Corvette Wheels (1997-2004) - Form Forged Series | E5 Wheels';
 const description = 'Shop Form Forged wheels for C5 Corvette (1997-2004). Daytona, Sebring, and Speedway wheels precision-engineered for C5 Base and Z06. Hub-centric fitment, multiple finishes.';
 const canonicalUrl = `${baseUrl}/generations/c5`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "C5 Corvette", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
   <div class="w-full bg-white -mt-107">
 
     <!-- Hero Banner -->

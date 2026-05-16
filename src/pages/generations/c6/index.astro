@@ -31,9 +31,20 @@ const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'C6 Corvette Wheels (2005-2013) - Form Forged Series | E5 Wheels';
 const description = 'Shop Form Forged wheels for C6 Corvette (2005-2013). Engineered for Base, Z06, ZR1, and Grand Sport models. Hub-centric fitment, multiple finishes and sizes available.';
 const canonicalUrl = `${baseUrl}/generations/c6`;
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "C6 Corvette", "item": canonicalUrl }
+  ]
+});
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
     <div class="w-full bg-white -mt-107">
         <!-- Hero Banner -->
         <section class="relative w-full h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">
