@@ -30,10 +30,39 @@ export default defineConfig({
         return !excludePaths.some(p => page.includes(p));
       },
       customPages: [
+        // Blog posts (not auto-discovered because [slug].astro is SSR)
         'https://www.e5wheels.com/e5-wheels-at-corvettes-at-carlisle-2025-the-corvette-event-of-the-year',
         'https://www.e5wheels.com/cracked_c7_corvette_wheels',
         'https://www.e5wheels.com/elevate-your-c6-corvette-personalize-your-c6-with-aftermarket-rims-from-e5wheels-com',
         'https://www.e5wheels.com/e5-custom-wheels-for-your-c7-corvette',
+        // Shop level-2 pages: /shop/{series}/{finish} (SSR routes not auto-discovered)
+        // Daytona
+        'https://www.e5wheels.com/shop/daytona/gloss-black',
+        'https://www.e5wheels.com/shop/daytona/titanium-brushed',
+        'https://www.e5wheels.com/shop/daytona/titanium-gray-brushed',
+        'https://www.e5wheels.com/shop/daytona/bronze-brushed-tint',
+        'https://www.e5wheels.com/shop/daytona/chrome',
+        // Sebring
+        'https://www.e5wheels.com/shop/sebring/gloss-black',
+        'https://www.e5wheels.com/shop/sebring/titanium-brushed',
+        'https://www.e5wheels.com/shop/sebring/titanium-gray-brushed',
+        'https://www.e5wheels.com/shop/sebring/bronze-brushed-tint',
+        'https://www.e5wheels.com/shop/sebring/chrome',
+        // Sebring 2P
+        'https://www.e5wheels.com/shop/sebring-2p/gloss-black-polished-lip',
+        'https://www.e5wheels.com/shop/sebring-2p/gray-polished-lip',
+        'https://www.e5wheels.com/shop/sebring-2p/bronze-polished-lip',
+        // Speedway
+        'https://www.e5wheels.com/shop/speedway/gloss-black',
+        'https://www.e5wheels.com/shop/speedway/titanium-brushed',
+        'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint',
+        'https://www.e5wheels.com/shop/speedway/dark-bronze',
+        'https://www.e5wheels.com/shop/speedway/chrome',
+        // Talladega
+        'https://www.e5wheels.com/shop/talladega/brushed-aluminum',
+        'https://www.e5wheels.com/shop/talladega/gloss-black',
+        // Sonoma
+        'https://www.e5wheels.com/shop/sonoma/brushed-aluminum',
       ],
       serialize(item) {
         // Strip trailing slashes to match canonical URLs (keep root slash)
