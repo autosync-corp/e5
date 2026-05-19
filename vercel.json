@@ -114,7 +114,6 @@
     { "source": "/product/rear-:slug(.*talladega.*)", "destination": "/wheels/talladega", "permanent": true },
     { "source": "/product/front-:slug(.*sonoma.*)", "destination": "/wheels/sonoma", "permanent": true },
     { "source": "/product/rear-:slug(.*sonoma.*)", "destination": "/wheels/sonoma", "permanent": true },
-    { "source": "/product/:path*", "destination": "/shop", "permanent": true },
 
     { "source": "/custom-wheels-for-my-2020-:path*", "destination": "/generations/c8/c8-stingray", "permanent": true },
     { "source": "/custom-wheels-for-my-2021-:path*", "destination": "/generations/c8/c8-stingray", "permanent": true },

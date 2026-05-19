@@ -325,6 +325,9 @@ export default defineConfig({
 
     '/product/speedway-bronze-brushed-tint': '/shop/speedway/dark-bronze',
 
+    // Catch-all for any unmapped /product/* URL — preserves link equity from legacy WordPress URLs
+    '/product/[...slug]': '/shop',
+
   },
   server: {
     port: 8080
