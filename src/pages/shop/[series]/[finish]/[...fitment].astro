@@ -66,25 +66,95 @@ const seriesKey = (series || '').toLowerCase();
 const finishKey = (finish || '').toLowerCase();
 const isMadeToOrder = madeToOrderSeries.includes(seriesKey);
 
-// Starting price per series (floor price for AggregateOffer)
-const seriesLowPrice: Record<string, string> = {
-  'daytona': '550',
-  'sebring': '600',
-  'sebring-2p': '770',
-  'speedway': '600',
-  'talladega': '2900',
-  'sonoma': '2900',
+// Starting price per finish (floor price for AggregateOffer)
+const finishLowPrice: Record<string, string> = {
+  // Daytona
+  'daytona/gloss-black': '550',
+  'daytona/titanium-gray-brushed': '550',
+  'daytona/titanium-brushed': '550',
+  'daytona/titanium-brushed-tint': '550',
+  'daytona/bronze-brushed-tint': '550',
+  'daytona/chrome': '950',
+  // Sebring
+  'sebring/gloss-black': '600',
+  'sebring/titanium-brushed': '600',
+  'sebring/titanium-gray-brushed': '600',
+  'sebring/titanium-brushed-tint': '600',
+  'sebring/bronze-brushed-tint': '600',
+  'sebring/chrome': '950',
+  // Sebring 2P
+  'sebring-2p/gloss-black': '770',
+  'sebring-2p/gloss-black-polished-lip': '770',
+  'sebring-2p/dark-bronze': '900',
+  'sebring-2p/bronze-black-lip': '900',
+  'sebring-2p/bronze-polished-lip': '900',
+  'sebring-2p/titanium-brushed': '900',
+  'sebring-2p/gray-black-lip': '900',
+  'sebring-2p/gray-polished-lip': '900',
+  // Speedway
+  'speedway/gloss-black': '600',
+  'speedway/dark-bronze': '600',
+  'speedway/titanium-brushed': '600',
+  'speedway/titanium-brushed-tint': '600',
+  'speedway/chrome': '950',
+  // Talladega
+  'talladega/brushed-aluminum': '2900',
+  'talladega/gloss-black': '2900',
+  'talladega/podium-gold-brushed': '2900',
+  'talladega/podium-bronze': '2900',
+  'talladega/satin-grey': '2900',
+  'talladega/smoked-titanium-brushed': '2900',
+  // Sonoma
+  'sonoma/brushed-aluminum': '2900',
+  'sonoma/gloss-black': '2900',
+  'sonoma/titanium-brushed-tint': '2900',
+  'sonoma/bronze-brushed-tint': '2900',
 };
-const seriesHighPrice: Record<string, string> = {
-  'daytona': '1200',
-  'sebring': '1200',
-  'sebring-2p': '980',
-  'speedway': '1100',
-  'talladega': '3100',
-  'sonoma': '3100',
+const finishHighPrice: Record<string, string> = {
+  // Daytona
+  'daytona/gloss-black': '850',
+  'daytona/titanium-gray-brushed': '850',
+  'daytona/titanium-brushed': '850',
+  'daytona/titanium-brushed-tint': '850',
+  'daytona/bronze-brushed-tint': '850',
+  'daytona/chrome': '1200',
+  // Sebring
+  'sebring/gloss-black': '850',
+  'sebring/titanium-brushed': '850',
+  'sebring/titanium-gray-brushed': '1050',
+  'sebring/titanium-brushed-tint': '850',
+  'sebring/bronze-brushed-tint': '850',
+  'sebring/chrome': '1200',
+  // Sebring 2P
+  'sebring-2p/gloss-black': '1300',
+  'sebring-2p/gloss-black-polished-lip': '1300',
+  'sebring-2p/dark-bronze': '1300',
+  'sebring-2p/bronze-black-lip': '1300',
+  'sebring-2p/bronze-polished-lip': '1300',
+  'sebring-2p/titanium-brushed': '1300',
+  'sebring-2p/gray-black-lip': '1300',
+  'sebring-2p/gray-polished-lip': '1300',
+  // Speedway
+  'speedway/gloss-black': '850',
+  'speedway/dark-bronze': '850',
+  'speedway/titanium-brushed': '850',
+  'speedway/titanium-brushed-tint': '850',
+  'speedway/chrome': '1100',
+  // Talladega
+  'talladega/brushed-aluminum': '3100',
+  'talladega/gloss-black': '3100',
+  'talladega/podium-gold-brushed': '3100',
+  'talladega/podium-bronze': '3100',
+  'talladega/satin-grey': '3100',
+  'talladega/smoked-titanium-brushed': '3100',
+  // Sonoma
+  'sonoma/brushed-aluminum': '3100',
+  'sonoma/gloss-black': '3100',
+  'sonoma/titanium-brushed-tint': '3100',
+  'sonoma/bronze-brushed-tint': '3100',
 };
-const lowPrice = seriesLowPrice[seriesKey] || '600';
-const highPrice = seriesHighPrice[seriesKey] || '1200';
+const lowPrice = finishLowPrice[`${seriesKey}/${finishKey}`] || '600';
+const highPrice = finishHighPrice[`${seriesKey}/${finishKey}`] || '1200';
 
 // Product image — series + finish specific, falls back to series hero
 const productImageMap: Record<string, string> = {
