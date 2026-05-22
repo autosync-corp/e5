@@ -61,3 +61,32 @@
     }
   }
 }
+
+/* Unlayered — beats all @layer styles including Tailwind utilities */
+.wheel-finish-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* <a> children with display:block break grid item sizing — make them layout-transparent */
+.wheel-finish-grid > a {
+  display: contents;
+}
+
+/* Restore hover opacity since display:contents has no box to apply opacity to */
+.wheel-finish-grid > a > * {
+  transition: opacity 150ms;
+}
+
+.wheel-finish-grid > a:hover > * {
+  opacity: 0.8;
+}
+
+@media (min-width: 640px) {
+  .wheel-finish-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
