@@ -119,18 +119,8 @@ function continueShopping() {
 }
 
 function getItemSubtotal(item: CartItem): number {
-  // For staggered fitment items, quantity already represents the number of wheels
-  // For non-staggered items, quantity represents sets, so multiply by total wheels
-  const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
-
-  if (isStaggeredItem) {
-    // Staggered: quantity = number of wheels, just multiply price × quantity
-    return (item.product.Price ?? 0) * item.quantity;
-  } else {
-    // Non-staggered: quantity = number of sets, multiply by total wheels
-    const totalWheels = item.frontWheels + item.rearWheels;
-    return (item.product.Price ?? 0) * totalWheels * item.quantity;
-  }
+  // quantity always represents individual wheels
+  return (item.product.Price ?? 0) * item.quantity;
 }
 
 onMounted(() => {
@@ -310,11 +300,8 @@ onMounted(() => {
                     <p v-if="item.vehicleModel" class="text-[11px] font-['Franklin_Gothic_Book'] text-black m-0 leading-snug">
                       MODEL: {{ item.vehicleModel }}
                     </p>
-                    <p v-if="(item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)" class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
+                    <p class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
                       ({{ item.quantity }} wheels × ${{ (item.product.Price ?? 0).toLocaleString() }} per wheel)
-                    </p>
-                    <p v-else class="text-[11px] font-['Franklin_Gothic_Book'] text-black/60 m-0 leading-snug">
-                      ({{ item.frontWheels + item.rearWheels }} wheels × ${{ (item.product.Price ?? 0).toLocaleString() }} per wheel × {{ item.quantity }} set{{ item.quantity > 1 ? 's' : '' }})
                     </p>
                     <button
                       @click="removeItem(item.product.Id)"

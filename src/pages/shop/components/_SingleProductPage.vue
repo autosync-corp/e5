@@ -1517,10 +1517,10 @@ function addToCart() {
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
   } else {
-    // Non-staggered: add complete set of 4
+    // Non-staggered: quantity = total individual wheels (2 front + 2 rear = 4)
     CartManager.addItem({
       product: selectedProduct.value,
-      quantity: 1,
+      quantity: 4,
       frontWheels: 2,
       rearWheels: 2,
       vehicleModel: vehicleDisplay.value || undefined,

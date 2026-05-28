@@ -378,8 +378,8 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
               : `${item.rearWheels} Rear`,
           pricePerWheel: item.product.Price,
           pricePerWheelFormatted: `$${item.product.Price.toFixed(2)}`,
-          itemSubtotal: ((item.frontWheels + item.rearWheels) * item.product.Price).toFixed(2),
-          itemSubtotalFormatted: `$${((item.frontWheels + item.rearWheels) * item.product.Price).toFixed(2)}`,
+          itemSubtotal: (item.quantity * item.product.Price).toFixed(2),
+          itemSubtotalFormatted: `$${(item.quantity * item.product.Price).toFixed(2)}`,
           finish: finishName,
           diameter: item.product.Diameter,
           width: item.product.Width,
@@ -415,7 +415,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
                 : item.frontWheels > 0
                   ? `${item.frontWheels} Front`
                   : `${item.rearWheels} Rear`;
-              const itemTotal = (item.frontWheels + item.rearWheels) * item.product.Price;
+              const itemTotal = item.quantity * item.product.Price;
 
               return `
                 <tr style="border-bottom: 1px solid #eee;">
@@ -481,7 +481,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       // Summary
       summary: {
         itemCount: cartItems.value.length,
-        totalWheels: cartItems.value.reduce((sum, item) => sum + item.frontWheels + item.rearWheels, 0),
+        totalWheels: cartItems.value.reduce((sum, item) => sum + item.quantity, 0),
         productNames: cartItems.value.map(item => item.product.Model).join(', '),
       },
 
@@ -614,12 +614,7 @@ async function handleAffirmPayment() {
         email: billingAddr.emailAddress,
       },
       items: cartItems.value.map((item) => {
-        // Staggered items: quantity IS the wheel count (e.g. 2 front or 2 rear)
-        // Non-staggered items: quantity = number of sets, total wheels = (front+rear) * sets
-        const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
-        const qty = isStaggeredItem
-          ? item.quantity
-          : (item.frontWheels + item.rearWheels) * item.quantity;
+        const qty = item.quantity;
         return {
           display_name: `${item.product.Model} - ${item.product.Diameter}"x${item.product.Width}"`,
           sku: item.product.Pn || item.product.Id.toString(),
@@ -868,11 +863,7 @@ onMounted(() => {
             </p>
           </div>
           <span class="e5CheckoutProductPrice">
-            {{ formatPrice(
-              (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0)
-                ? (item.product.Price ?? 0) * item.quantity
-                : (item.product.Price ?? 0) * (item.frontWheels + item.rearWheels) * item.quantity
-            ) }}
+            {{ formatPrice((item.product.Price ?? 0) * item.quantity) }}
           </span>
         </div>
       </div>

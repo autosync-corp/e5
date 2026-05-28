@@ -151,8 +151,8 @@ export const POST: APIRoute = async ({ request }) => {
               : `${item.rearWheels} Rear`,
           pricePerWheel: item.product.Price,
           pricePerWheelFormatted: `$${item.product.Price.toFixed(2)}`,
-          itemSubtotal: ((item.frontWheels + item.rearWheels) * item.product.Price).toFixed(2),
-          itemSubtotalFormatted: `$${((item.frontWheels + item.rearWheels) * item.product.Price).toFixed(2)}`,
+          itemSubtotal: (item.quantity * item.product.Price).toFixed(2),
+          itemSubtotalFormatted: `$${(item.quantity * item.product.Price).toFixed(2)}`,
           finish: finishName,
           diameter: item.product.Diameter,
           width: item.product.Width,
@@ -296,7 +296,7 @@ function generateItemsHtml(cartItems: any[], totals: any): string {
       : item.frontWheels > 0
         ? `${item.frontWheels} Front`
         : `${item.rearWheels} Rear`;
-    const itemTotal = (item.frontWheels + item.rearWheels) * item.product.Price;
+    const itemTotal = item.quantity * item.product.Price;
 
     const vehicleInfo = item.vehicleModel ? `<br/><span style="color: #c41e3a; font-size: 13px; font-weight: 600;">FOR: ${item.vehicleModel}</span>` : '';
 

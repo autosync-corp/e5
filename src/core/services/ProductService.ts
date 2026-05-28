@@ -209,17 +209,8 @@ export function getWheelDisplayName(wheel: WheelProduct): string {
  */
 export function calculateCartTotals(items: CartItem[], customerState?: string, couponCode?: string) {
   const subtotal = items.reduce((sum, item) => {
-    // Check if item is staggered (front-only or rear-only)
-    const isStaggeredItem = (item.frontWheels > 0 && item.rearWheels === 0) || (item.frontWheels === 0 && item.rearWheels > 0);
-
-    if (isStaggeredItem) {
-      // For staggered items: quantity already represents number of wheels
-      return sum + ((item.product.Price ?? 0) * item.quantity);
-    } else {
-      // For non-staggered items: quantity represents number of sets
-      const totalWheels = item.frontWheels + item.rearWheels;
-      return sum + ((item.product.Price ?? 0) * totalWheels * item.quantity);
-    }
+    // quantity always represents individual wheels for all item types
+    return sum + ((item.product.Price ?? 0) * item.quantity);
   }, 0);
 
   // Apply coupon discount if valid
