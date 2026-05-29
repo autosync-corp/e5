@@ -169,6 +169,11 @@ export const POST: APIRoute = async ({ request }) => {
       // Order Totals
       subtotal: (totals.subtotal).toFixed(2),
       subtotalFormatted: `$${(totals.subtotal).toFixed(2)}`,
+      discount: totals.discount > 0 ? totals.discount.toFixed(2) : null,
+      discountFormatted: totals.discount > 0 ? `-$${totals.discount.toFixed(2)}` : null,
+      couponCode: totals.couponCode || null,
+      couponType: totals.couponInfo?.type || null,
+      couponDiscount: totals.couponInfo?.discount || null,
       tax: (totals.tax).toFixed(2),
       taxFormatted: `$${(totals.tax).toFixed(2)}`,
       taxRate: '7%',
@@ -334,6 +339,11 @@ function generateItemsHtml(cartItems: any[], totals: any): string {
           <td colspan="4" style="padding: 12px; text-align: right;"><strong>Subtotal:</strong></td>
           <td style="padding: 12px; text-align: right;"><strong>$${totals.subtotal.toFixed(2)}</strong></td>
         </tr>
+        ${totals.discount > 0 ? `
+        <tr style="color: #16a34a;">
+          <td colspan="4" style="padding: 12px; text-align: right;">Discount (${totals.couponCode}):</td>
+          <td style="padding: 12px; text-align: right;">-$${totals.discount.toFixed(2)}</td>
+        </tr>` : ''}
         <tr>
           <td colspan="4" style="padding: 12px; text-align: right;">Tax (7%):</td>
           <td style="padding: 12px; text-align: right;">$${totals.tax.toFixed(2)}</td>

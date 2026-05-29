@@ -437,6 +437,11 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
               <td colspan="4" style="padding: 12px; text-align: right;"><strong>Subtotal:</strong></td>
               <td style="padding: 12px; text-align: right;"><strong>$${cartTotals.value.subtotal.toFixed(2)}</strong></td>
             </tr>
+            ${appliedDiscount.value > 0 ? `
+            <tr style="color: #16a34a;">
+              <td colspan="4" style="padding: 12px; text-align: right;">Discount (${appliedCoupon.value}):</td>
+              <td style="padding: 12px; text-align: right;">-$${appliedDiscount.value.toFixed(2)}</td>
+            </tr>` : ''}
             <tr>
               <td colspan="4" style="padding: 12px; text-align: right;">Tax (7%):</td>
               <td style="padding: 12px; text-align: right;">$${cartTotals.value.tax.toFixed(2)}</td>
@@ -456,6 +461,11 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       // Order Totals
       subtotal: (cartTotals.value.subtotal).toFixed(2),
       subtotalFormatted: `$${(cartTotals.value.subtotal).toFixed(2)}`,
+      discount: appliedDiscount.value > 0 ? appliedDiscount.value.toFixed(2) : null,
+      discountFormatted: appliedDiscount.value > 0 ? `-$${appliedDiscount.value.toFixed(2)}` : null,
+      couponCode: appliedCoupon.value || null,
+      couponType: appliedCouponInfo.value?.type || null,
+      couponDiscount: appliedCouponInfo.value?.discount || null,
       tax: (cartTotals.value.tax).toFixed(2),
       taxFormatted: `$${(cartTotals.value.tax).toFixed(2)}`,
       taxRate: '7%',
@@ -566,6 +576,9 @@ async function handleAffirmPayment() {
       vehicleDisplay: vehicleDisplay.value,
       totals: {
         subtotal: cartTotals.value.subtotal,
+        discount: appliedDiscount.value || 0,
+        couponCode: appliedCoupon.value || null,
+        couponInfo: appliedCouponInfo.value || null,
         tax: cartTotals.value.tax,
         total: cartTotals.value.total,
       }
