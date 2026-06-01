@@ -82,7 +82,19 @@ const breadcrumbSchema = JSON.stringify({
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
-    <BannerFullWidthWithLegend class="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px]" image={SEBRING_2P_HERO_IMAGE} alt={SEBRING_2P_BRAND_NAME} orientation={Orientations.CENTER} />
+    <section class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[636px] xl:h-[750px] relative overflow-hidden">
+        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/M7fRbSGItM8?autoplay=1&mute=1&loop=1&playlist=M7fRbSGItM8&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
+                allowtransparency="true"
+                style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
+                allow="autoplay; encrypted-media"
+                loading="eager"
+                title="E5 Sebring 2P Two-Piece Form Forged Corvette Wheels"
+            ></iframe>
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+        </div>
+    </section>
 
     <!-- Logo and Description -->
     <section class="container-e5 py-20">
