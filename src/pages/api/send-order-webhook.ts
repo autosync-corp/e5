@@ -176,7 +176,7 @@ export const POST: APIRoute = async ({ request }) => {
       couponDiscount: totals.couponInfo?.discount || null,
       tax: (totals.tax).toFixed(2),
       taxFormatted: `$${(totals.tax).toFixed(2)}`,
-      taxRate: '7%',
+      taxRate: totals.tax > 0 ? '7%' : null,
       shipping: '0.00',
       shippingFormatted: '$0.00 (Free Shipping)',
       orderTotal: (totals.total).toFixed(2),
@@ -345,7 +345,7 @@ function generateItemsHtml(cartItems: any[], totals: any): string {
           <td style="padding: 12px; text-align: right;">-$${totals.discount.toFixed(2)}</td>
         </tr>` : ''}
         <tr>
-          <td colspan="4" style="padding: 12px; text-align: right;">Tax (7%):</td>
+          <td colspan="4" style="padding: 12px; text-align: right;">Tax${totals.tax > 0 ? ' (7%)' : ''}:</td>
           <td style="padding: 12px; text-align: right;">$${totals.tax.toFixed(2)}</td>
         </tr>
         <tr>

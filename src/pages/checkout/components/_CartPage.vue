@@ -16,11 +16,14 @@ const isValidatingCoupon = ref(false);
 // Computed
 const cartTotals = computed(() => {
   const base = calculateCartTotals(cartItems.value);
+  const discountedSubtotal = base.subtotal - appliedDiscount.value;
+  const tax = base.tax > 0 ? parseFloat((discountedSubtotal * 0.07).toFixed(2)) : 0;
   return {
     ...base,
     discount: appliedDiscount.value,
-    discountedSubtotal: base.subtotal - appliedDiscount.value,
-    total: base.subtotal - appliedDiscount.value + base.tax,
+    discountedSubtotal,
+    tax,
+    total: discountedSubtotal + tax,
     appliedCoupon: appliedCouponInfo.value,
   };
 });

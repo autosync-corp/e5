@@ -49,11 +49,15 @@ let affirmInitialized = false;
 // Computed
 const cartTotals = computed(() => {
   const base = calculateCartTotals(cartItems.value, customerState.value);
+  const discountedSubtotal = base.subtotal - appliedDiscount.value;
+  // Tax must be calculated on the discounted subtotal (actual amount paid)
+  const tax = base.tax > 0 ? parseFloat((discountedSubtotal * 0.07).toFixed(2)) : 0;
   return {
     ...base,
     discount: appliedDiscount.value,
-    discountedSubtotal: base.subtotal - appliedDiscount.value,
-    total: base.subtotal - appliedDiscount.value + base.tax,
+    discountedSubtotal,
+    tax,
+    total: discountedSubtotal + tax,
     appliedCoupon: appliedCouponInfo.value,
   };
 });
@@ -443,7 +447,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
               <td style="padding: 12px; text-align: right;">-$${appliedDiscount.value.toFixed(2)}</td>
             </tr>` : ''}
             <tr>
-              <td colspan="4" style="padding: 12px; text-align: right;">Tax (7%):</td>
+              <td colspan="4" style="padding: 12px; text-align: right;">Tax${cartTotals.value.tax > 0 ? ' (7%)' : ''}:</td>
               <td style="padding: 12px; text-align: right;">$${cartTotals.value.tax.toFixed(2)}</td>
             </tr>
             <tr>
@@ -468,7 +472,7 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       couponDiscount: appliedCouponInfo.value?.discount || null,
       tax: (cartTotals.value.tax).toFixed(2),
       taxFormatted: `$${(cartTotals.value.tax).toFixed(2)}`,
-      taxRate: '7%',
+      taxRate: cartTotals.value.tax > 0 ? '7%' : null,
       shipping: '0.00',
       shippingFormatted: '$0.00 (Free Shipping)',
       orderTotal: (cartTotals.value.total).toFixed(2),
