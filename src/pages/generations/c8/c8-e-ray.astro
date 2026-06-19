@@ -40,7 +40,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={`${baseUrl}${IMG_BASE}/c8-e-ray-fitment-e5-wheels-hero.webp`} ogType="product">
     <Fragment slot="head">
         <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
     </Fragment>
@@ -51,7 +51,7 @@ const breadcrumbSchema = JSON.stringify({
         <section class="relative w-full h-[300px] sm:h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">
             <img
                 src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-hero.webp`}
-                alt="2026 C8 Corvette E-Ray with E5 Wheels"
+                alt="2026 C8 Corvette E-Ray with E5 custom forged wheels"
                 class="w-full h-full object-cover"
                 loading="eager"
                 fetchpriority="high"
@@ -86,9 +86,9 @@ const breadcrumbSchema = JSON.stringify({
                 <!-- Talladega -->
                 <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" loading="lazy" />
+                        <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega forged wheel for C8 E-Ray — brushed aluminum finish" class="w-full h-full object-contain" loading="lazy" />
                     </div>
-                    <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
+                    <img src={TALLADEGA_LOGO} alt="Talladega wheel logo" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
@@ -101,9 +101,9 @@ const breadcrumbSchema = JSON.stringify({
                 <!-- Sonoma -->
                 <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
                     <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" loading="lazy" />
+                        <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma forged wheel for C8 E-Ray — brushed aluminum finish" class="w-full h-full object-contain" loading="lazy" />
                     </div>
-                    <img src={SONOMA_LOGO} alt="Sonoma" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
+                    <img src={SONOMA_LOGO} alt="Sonoma wheel logo" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
                     <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
@@ -118,9 +118,11 @@ const breadcrumbSchema = JSON.stringify({
         <!-- ── Sebring 2P Section ── -->
         <section class="container-e5 py-10 md:py-16 lg:py-20 border-t border-gray-200">
 
+            <h2 class="text-[22px] md:text-[28px] tracking-[4px] md:tracking-[6px] text-black/40 uppercase text-center mb-8 font-['Franklin_Gothic_Book']">Sebring 2P — Two-Piece Form Forged Corvette Wheels</h2>
+
             <!-- Header -->
             <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-10 md:mb-16">
-                <img src={SEBRING_2P_LOGO} alt="Sebring 2P" class="h-[30px] md:h-[44px] w-auto flex-shrink-0" loading="lazy" />
+                <img src={SEBRING_2P_LOGO} alt="Sebring 2P wheel logo" class="h-[30px] md:h-[44px] w-auto flex-shrink-0" loading="lazy" />
                 <div class="hidden md:block w-px self-stretch bg-black/20 mx-2"></div>
                 <p class="text-[15px] md:text-[17px] lg:text-[20px] leading-[22px] md:leading-[26px] lg:leading-[28px] text-black/60 max-w-[540px] text-center md:text-left">
                     The Sebring 2-Piece is the evolution of our most popular Form Forged design &mdash; now reimagined in a true two-piece configuration.
@@ -185,10 +187,10 @@ const breadcrumbSchema = JSON.stringify({
                 </div>
                 <div class="bg-white border border-gray-200 p-6 md:p-8 flex flex-col items-center justify-center text-center">
                     <p class="text-[10px] md:text-[11px] tracking-[3px] text-black/40 uppercase mb-3 md:mb-4">SHOP THIS LOOK</p>
-                    <img src={SEBRING_2P_LOGO} alt="Sebring 2P" class="h-[28px] md:h-[36px] w-auto mb-4 md:mb-6" loading="lazy" />
+                    <img src={SEBRING_2P_LOGO} alt="Sebring 2P two-piece form forged wheel logo" class="h-[28px] md:h-[36px] w-auto mb-4 md:mb-6" loading="lazy" />
                     <img
                         src="/assets/images/sebring-2p/56f3ae5409c87851cf211f3e49011b8ec199e5d8.webp"
-                        alt="Sebring 2P Dark Bronze"
+                        alt="Sebring 2P Dark Bronze Satin Polished Lip wheel 20x10 21x13 for C8 E-Ray"
                         class="w-[160px] md:w-[220px] h-auto object-contain mb-5 md:mb-8"
                         loading="lazy"
                     />
@@ -214,23 +216,23 @@ const breadcrumbSchema = JSON.stringify({
         <section class="container-e5 py-6 md:py-10">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6">
                 <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-3.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-3.webp`} alt="C8 E-Ray Corvette with E5 Sebring 2P bronze wheels — rear quarter view" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-4.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-4.webp`} alt="C8 E-Ray Corvette with E5 custom wheels — side profile" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-10.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-10.webp`} alt="C8 E-Ray Corvette with E5 wheels — front view" class="w-full h-full object-cover" loading="lazy" />
                 </div>
             </div>
         </section>
 
         <!-- ── Sonoma Detail Section ── -->
         <section class="container-e5 py-12 md:py-20 lg:py-28 border-t border-gray-200">
-            <p class="text-[12px] md:text-[14px] tracking-[3px] text-black/40 uppercase mb-8 md:mb-12 text-center">ALSO AVAILABLE EXCLUSIVELY FOR THE C8 E-RAY</p>
+            <h2 class="text-[12px] md:text-[14px] tracking-[3px] text-black/40 uppercase mb-8 md:mb-12 text-center font-['Franklin_Gothic_Book']">Sonoma &amp; Talladega — Forged Wheels Exclusively for the C8 E-Ray</h2>
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-10 md:gap-16 lg:gap-24 items-start lg:px-16">
                 <div class="flex flex-col justify-start">
-                    <img src={SONOMA_LOGO} alt="Sonoma" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
+                    <img src={SONOMA_LOGO} alt="Sonoma forged wheel logo" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
                     <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
                         The Sonoma is engineered without compromise for the Corvette C8 platform &mdash; a fully forged, weight-optimized wheel built around a refined, performance-focused mesh profile. Precision-cut pocketing and a clean, elevated aesthetic give it equal parts visual clarity and driving precision.
                     </p>
@@ -248,7 +250,7 @@ const breadcrumbSchema = JSON.stringify({
                     </a>
                 </div>
                 <div class="flex flex-col items-center text-center gap-2 md:gap-3 overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-sonoma-1.webp`} alt="Sonoma Wheel" class="w-full h-auto max-w-full" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-sonoma-1.webp`} alt="Sonoma forged wheel in brushed aluminum — 20x10 front 21x13 rear for C8 E-Ray" class="w-full h-auto max-w-full" loading="lazy" />
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase mt-2">BRUSHED ALUMINUM</p>
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">WHEEL SIZE: 20"x10" / 21"x13"</p>
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">FOR C8 Z06, ZR1, E-RAY, GRAND SPORT</p>
@@ -261,13 +263,13 @@ const breadcrumbSchema = JSON.stringify({
         <!-- ── 3 Photo Row (Sonoma) ── -->
         <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-0">
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-5.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-5.webp`} alt="C8 E-Ray Corvette with E5 Sonoma wheels at beach — rear quarter view" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-6.webp`} alt="E-Ray wheel detail" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-6.webp`} alt="Close-up of E5 Sonoma forged wheel spokes and center cap on C8 E-Ray" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-7.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-7.webp`} alt="C8 E-Ray Corvette with E5 Sonoma forged wheels — front angle" class="w-full h-full object-cover" loading="lazy" />
             </div>
         </section>
 
@@ -275,7 +277,7 @@ const breadcrumbSchema = JSON.stringify({
         <section class="container-e5 py-12 md:py-20 lg:py-28 border-t border-gray-200">
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-10 md:gap-16 lg:gap-24 items-start lg:px-16">
                 <div class="flex flex-col justify-start">
-                    <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
+                    <img src={TALLADEGA_LOGO} alt="Talladega wheel logo" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
                     <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
                         The Talladega is where the E5 Forged Series began &mdash; a fully forged, performance-driven design featuring a bold split Y-spoke and a clean motorsport aesthetic that delivers strength, balance, and unmistakable presence.
                     </p>
@@ -293,7 +295,7 @@ const breadcrumbSchema = JSON.stringify({
                     </a>
                 </div>
                 <div class="flex flex-col items-center text-center gap-2 md:gap-3 overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-talladega-brushed-0.webp`} alt="Talladega Wheel" class="w-full h-auto max-w-full" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-talladega-brushed-0.webp`} alt="Talladega forged wheel in brushed aluminum — 20x10 front 21x13 rear for C8 E-Ray" class="w-full h-auto max-w-full" loading="lazy" />
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase mt-2">BRUSHED ALUMINUM</p>
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">WHEEL SIZE: 20"x10" / 21"x13"</p>
                     <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">FOR C8 Z06, ZR1, E-RAY, GRAND SPORT</p>
@@ -306,13 +308,13 @@ const breadcrumbSchema = JSON.stringify({
         <!-- ── 3 Photo Row (Talladega) ── -->
         <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-0">
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-e-ray-white-0.webp`} alt="White E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-e-ray-white-0.webp`} alt="White C8 E-Ray Corvette with E5 Talladega forged wheels" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-8.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-8.webp`} alt="C8 E-Ray Corvette with E5 Talladega wheels on track" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-9.webp`} alt="Blue E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-9.webp`} alt="Blue C8 E-Ray Corvette with E5 Talladega forged wheels — rear view" class="w-full h-full object-cover" loading="lazy" />
             </div>
         </section>
 
@@ -332,30 +334,30 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Two full-width images -->
         <section class="w-full grid grid-cols-1 md:grid-cols-2 gap-0">
             <div class="w-full h-[250px] md:h-[380px] lg:h-[480px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-11.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-11.webp`} alt="C8 E-Ray Corvette with E5 custom forged wheels — side profile on road" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="w-full h-[250px] md:h-[380px] lg:h-[480px] overflow-hidden">
-                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-12.webp`} alt="E5 Wheel close-up" class="w-full h-full object-cover" loading="lazy" />
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-12.webp`} alt="Close-up of E5 forged wheel on C8 E-Ray — brake caliper and spoke detail" class="w-full h-full object-cover" loading="lazy" />
             </div>
         </section>
 
         <!-- ── Gallery ── -->
         <section class="container-e5 py-10 md:py-16 lg:py-20">
             <h2 class="text-[22px] md:text-[32px] lg:text-[42px] xl:text-[48px] tracking-[3px] md:tracking-[5px] lg:tracking-[7px] xl:tracking-[9.6px] leading-[28px] md:leading-[38px] lg:leading-[46px] xl:leading-[52px] text-e5-red uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Book']">
-                CB E-RAY CORVETTE GALLERY
+                C8 E-RAY CORVETTE GALLERY
             </h2>
             <p class="text-[15px] md:text-[18px] lg:text-[20px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12 lg:mb-16">
                 Explore our gallery of C8 E-Ray Corvettes, showcasing a variety of styles and finishes on customer vehicles.
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 lg:mb-16">
                 <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-13.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-13.webp`} alt="C8 E-Ray Corvette with E5 custom wheels — customer build gallery" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-0.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-0.webp`} alt="E5 Wheels on C8 E-Ray — customer showcase" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
-                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-14.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-14.webp`} alt="C8 E-Ray Corvette with forged wheels — customer gallery photo" class="w-full h-full object-cover" loading="lazy" />
                 </div>
             </div>
             <div class="text-center">
