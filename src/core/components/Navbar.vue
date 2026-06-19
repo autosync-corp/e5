@@ -18,6 +18,7 @@ import {
   GENERATIONS_C8_STINGRAY_ROUTE,
   GENERATIONS_C8_Z06_ROUTE,
   GENERATIONS_C8_ZR1_ROUTE,
+  GENERATIONS_C8_E_RAY_ROUTE,
   HOME_ROUTE, PROCESS_ROUTE, PROCESS_FORGED_ROUTE, PROCESS_FORM_FORGED_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
   WHEELS_ROUTE,
   WHEELS_DAYTONA_ROUTE,
@@ -204,6 +205,7 @@ const closeMiniCart = () => {
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="dropdown-item">ZR1</a>
+              <a :href="GENERATIONS_C8_E_RAY_ROUTE" class="dropdown-item">E-Ray</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C7 2014-2019</div>
@@ -339,6 +341,7 @@ const closeMiniCart = () => {
               <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
               <a :href="GENERATIONS_C8_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
+              <a :href="GENERATIONS_C8_E_RAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">E-Ray</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C7 2014-2019</div>

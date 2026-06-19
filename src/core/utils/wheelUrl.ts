@@ -151,11 +151,19 @@ export function buildVehicleSlug(generation: string, trim: string): string {
   return `${toSlug(generation)}-${toSlug(trim)}`;
 }
 
+// Trims whose names contain a hyphen — fromSlug() would corrupt them by turning the hyphen into a space
+const HYPHENATED_TRIMS: Record<string, string> = {
+  'e-ray':       'E-Ray',
+  'grand-sport': 'Grand Sport',
+  'zr-1':        'ZR-1',
+};
+
 /**
  * Parses vehicle slug back to generation and trim
  * Examples:
  * - 'c7-z06' → { generation: 'C7', trim: 'Z06' }
  * - 'c8-stingray' → { generation: 'C8', trim: 'Stingray' }
+ * - 'c8-e-ray' → { generation: 'C8', trim: 'E-Ray' }
  */
 export function parseVehicleSlug(vehicleSlug: string): { generation: string; trim: string } {
   if (!vehicleSlug) return { generation: '', trim: '' };
@@ -169,8 +177,9 @@ export function parseVehicleSlug(vehicleSlug: string): { generation: string; tri
   // First part is generation (C5, C6, C7, C8)
   const generation = (parts[0] || '').toUpperCase();
 
-  // Rest is trim
-  const trim = fromSlug(parts.slice(1).join('-'));
+  // Rejoin the rest and look up in the hyphenated-trim table before falling back to fromSlug
+  const trimSlug = parts.slice(1).join('-');
+  const trim = HYPHENATED_TRIMS[trimSlug.toLowerCase()] ?? fromSlug(trimSlug);
 
   return { generation, trim };
 }

@@ -1,0 +1,374 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { GALLERY_VEHICLES_ROUTE } from "@/core/constants/Routes.ts";
+import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import {
+    TALLADEGA_LOGO,
+    TALLADEGA_BRAND_NAME,
+    SONOMA_LOGO,
+    SONOMA_BRAND_NAME,
+    SEBRING_2P_BRAND_NAME,
+    SEBRING_2P_LOGO,
+    SEBRING_2P_GLOSS_BLACK,
+    SEBRING_2P_DARK_BRONZE,
+    SEBRING_2P_TITANIUM_BRUSHED,
+} from "@/pages/wheels/constants/Wheels.ts";
+
+const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
+const IMG_BASE = "/assets/images/generations/c8/c8-e-ray";
+
+const talladegaShopUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'E-Ray', '20" x 10" +25mm', '21" x 13" +20mm');
+const sonomaShopUrl    = buildWheelUrl(SONOMA_BRAND_NAME,    'Brushed Aluminum', 'C8', 'E-Ray', '20" x 10" +25mm', '21" x 13" +20mm');
+const sebring2pGlossBlackUrl      = '/shop/sebring-2p/black';
+const sebring2pDarkBronzeUrl      = '/shop/sebring-2p/bronze-black-lip';
+const sebring2pTitaniumBrushedUrl = '/shop/sebring-2p/titanium-black-lip';
+const shopThisLookUrl = buildWheelUrl(SEBRING_2P_BRAND_NAME, 'Bronze Black Lip', 'C8', 'E-Ray', '20" x 10" +25mm', '21" x 13" +20mm');
+
+const baseUrl      = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const title        = 'C8 E-Ray Wheels (2024+) - E5 Forged & Form Forged | E5 Wheels';
+const description  = 'Custom E5 wheels engineered for the C8 Corvette E-Ray. Forged and Form Forged fitments — Talladega, Sonoma, and Sebring 2P — built around the E-Ray\'s hybrid all-wheel-drive platform.';
+const canonicalUrl = `${baseUrl}/generations/c8/c8-e-ray`;
+
+const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",        "item": `${baseUrl}/` },
+        { "@type": "ListItem", "position": 2, "name": "C8 Corvette", "item": `${baseUrl}/generations/c8` },
+        { "@type": "ListItem", "position": 3, "name": "C8 E-Ray",    "item": canonicalUrl }
+    ]
+});
+---
+
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
+    <Fragment slot="head">
+        <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+    </Fragment>
+
+    <div class="w-full bg-white -mt-107">
+
+        <!-- ── Hero ── -->
+        <section class="relative w-full h-[300px] sm:h-[400px] md:h-[600px] lg:h-[799px] overflow-hidden">
+            <img
+                src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-hero.webp`}
+                alt="2026 C8 Corvette E-Ray with E5 Wheels"
+                class="w-full h-full object-cover"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </section>
+
+        <!-- ── Title & Description ── -->
+        <section class="container-e5 py-10 md:py-16 lg:py-20 text-center">
+            <h1 class="text-[28px] sm:text-[36px] md:text-[52px] lg:text-[72px] tracking-[0px] leading-[32px] sm:leading-[40px] md:leading-[56px] lg:leading-[76px] text-black uppercase mb-6 md:mb-10 font-['Franklin_Gothic_Heavy']">
+                Custom C8 Corvette E-Ray Wheels
+            </h1>
+            <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1200px] mx-auto">
+                Unlike universal fitments, every E5 Forged wheel for the C8 E-Ray is engineered around its hybrid all-wheel-drive balance, wider stance, and high-demand brake clearance. The result is a fitment that's assertive yet composed — from city cruising to full-send track sessions, these wheels are made to match the E-Ray's performance.
+            </p>
+        </section>
+
+        <!-- ── E5 Forged Badge ── -->
+        <section class="container-e5 py-10 md:py-16 lg:py-20">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+                <img src={E5_FORGED_LOGO} alt="E5 Forged" class="h-[44px] md:h-[54px] w-auto" loading="lazy" />
+                <div class="hidden md:block w-px h-[100px] lg:h-[138px] bg-black/20"></div>
+                <p class="text-[15px] md:text-[18px] lg:text-[22px] leading-[22px] md:leading-[26px] lg:leading-[30px] text-black/70 max-w-[560px] text-center md:text-left">
+                    Exclusively Forged in the USA for C8 Z06, ZR1, and E-Ray. Engineered for extreme performance, reduced weight, and maximum strength.
+                </p>
+            </div>
+        </section>
+
+        <!-- ── Talladega + Sonoma ── -->
+        <section class="container-e5 py-10 md:py-16 lg:py-20">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-16 items-start">
+
+                <!-- Talladega -->
+                <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                    <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
+                        <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" loading="lazy" />
+                    </div>
+                    <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-5 md:mb-6">MADE IN USA</p>
+                    <span class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 text-[13px] md:text-[15px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                        SHOP TALLADEGA
+                    </span>
+                </a>
+
+                <!-- Sonoma -->
+                <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+                    <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
+                        <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" loading="lazy" />
+                    </div>
+                    <img src={SONOMA_LOGO} alt="Sonoma" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
+                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-5 md:mb-6">MADE IN USA</p>
+                    <span class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 text-[13px] md:text-[15px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                        SHOP SONOMA
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ── Sebring 2P Section ── -->
+        <section class="container-e5 py-10 md:py-16 lg:py-20 border-t border-gray-200">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-10 md:mb-16">
+                <img src={SEBRING_2P_LOGO} alt="Sebring 2P" class="h-[30px] md:h-[44px] w-auto flex-shrink-0" loading="lazy" />
+                <div class="hidden md:block w-px self-stretch bg-black/20 mx-2"></div>
+                <p class="text-[15px] md:text-[17px] lg:text-[20px] leading-[22px] md:leading-[26px] lg:leading-[28px] text-black/60 max-w-[540px] text-center md:text-left">
+                    The Sebring 2-Piece is the evolution of our most popular Form Forged design &mdash; now reimagined in a true two-piece configuration.
+                </p>
+            </div>
+
+            <!-- 3 Finish Cards -->
+            <div class="wheel-finish-grid mb-10 md:mb-12">
+
+                <a href={sebring2pDarkBronzeUrl} class="block hover:opacity-80 transition-opacity">
+                    <div class="flex flex-col items-center text-center">
+                        <img src={SEBRING_2P_DARK_BRONZE} alt="Sebring 2P Dark Bronze Satin Polished Lip" class="w-full h-auto object-contain mb-4 md:mb-6" loading="lazy" />
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/50 uppercase mb-2">DARK BRONZE SATIN, POLISHED LIP</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">2-PIECE EXCLUSIVELY FOR C8 STINGRAY & Z06+</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">1-WEEK LEAD TIME</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-e5-red uppercase mb-2 font-medium">FREE SHIPPING & 5-YEAR WARRANTY</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-5 md:mb-6">AVAILABLE IN 19" / 20" / 21"</p>
+                        <span class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 text-[12px] md:text-[13px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                            SHOP THIS LOOK
+                        </span>
+                    </div>
+                </a>
+
+                <a href={sebring2pTitaniumBrushedUrl} class="block hover:opacity-80 transition-opacity">
+                    <div class="flex flex-col items-center text-center">
+                        <img src={SEBRING_2P_TITANIUM_BRUSHED} alt="Sebring 2P Titanium Brushed Polished Lip" class="w-full h-auto object-contain mb-4 md:mb-6" loading="lazy" />
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/50 uppercase mb-2">TITANIUM BRUSHED, POLISHED LIP</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">2-PIECE EXCLUSIVELY FOR C8 STINGRAY & Z06+</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">1-WEEK LEAD TIME</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-e5-red uppercase mb-2 font-medium">FREE SHIPPING & 5-YEAR WARRANTY</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-5 md:mb-6">AVAILABLE IN 19" / 20" / 21"</p>
+                        <span class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 text-[12px] md:text-[13px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                            SHOP THIS LOOK
+                        </span>
+                    </div>
+                </a>
+
+                <a href={sebring2pGlossBlackUrl} class="block hover:opacity-80 transition-opacity">
+                    <div class="flex flex-col items-center text-center">
+                        <img src={SEBRING_2P_GLOSS_BLACK} alt="Sebring 2P Gloss Black Gloss Black Lip" class="w-full h-auto object-contain mb-4 md:mb-6" loading="lazy" />
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/50 uppercase mb-2">GLOSS BLACK, GLOSS BLACK LIP</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">2-PIECE EXCLUSIVELY FOR C8 STINGRAY & Z06+</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-2">1-WEEK LEAD TIME</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-e5-red uppercase mb-2 font-medium">FREE SHIPPING & 5-YEAR WARRANTY</p>
+                        <p class="text-[12px] md:text-[14px] tracking-[1.5px] text-black/40 uppercase mb-5 md:mb-6">AVAILABLE IN 19" / 20" / 21"</p>
+                        <span class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 text-[12px] md:text-[13px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                            SHOP THIS LOOK
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Shop This Look -->
+            <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-0">
+                <div class="w-full">
+                    <img
+                        src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-shop-fitment-0.webp`}
+                        alt="C8 E-Ray with Sebring 2P Bronze Black Lip"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                    />
+                </div>
+                <div class="bg-white border border-gray-200 p-6 md:p-8 flex flex-col items-center justify-center text-center">
+                    <p class="text-[10px] md:text-[11px] tracking-[3px] text-black/40 uppercase mb-3 md:mb-4">SHOP THIS LOOK</p>
+                    <img src={SEBRING_2P_LOGO} alt="Sebring 2P" class="h-[28px] md:h-[36px] w-auto mb-4 md:mb-6" loading="lazy" />
+                    <img
+                        src="/assets/images/sebring-2p/56f3ae5409c87851cf211f3e49011b8ec199e5d8.webp"
+                        alt="Sebring 2P Dark Bronze"
+                        class="w-[160px] md:w-[220px] h-auto object-contain mb-5 md:mb-8"
+                        loading="lazy"
+                    />
+                    <div class="space-y-1 md:space-y-2 mb-6 md:mb-8 text-[11px] md:text-[13px] tracking-[1px] text-black/60 uppercase">
+                        <p>&bull; FITS YOUR STOCK TIRE</p>
+                        <p>&bull; USE YOUR OEM CENTER CAP (OPTIONAL)</p>
+                        <p>WHEEL SIZE: 20"x10" / 21"x13"</p>
+                        <p>TIRE: MICHELIN PILOT SPORT</p>
+                        <p class="pt-1">TIRE SIZES</p>
+                        <p>&bull; FRONT 275/30/20</p>
+                        <p>&bull; REAR 345/25/21</p>
+                        <p>BOLT PATTERN: 5x120</p>
+                        <p>HUB BORE: 66.9</p>
+                    </div>
+                    <a href={shopThisLookUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[14px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors w-full max-w-[280px] text-center">
+                        SHOP THIS LOOK
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 3 Car Photos Row ── -->
+        <section class="container-e5 py-6 md:py-10">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6">
+                <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-3.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-4.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="w-full h-[220px] sm:h-[240px] md:h-[280px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-10.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Sonoma Detail Section ── -->
+        <section class="container-e5 py-12 md:py-20 lg:py-28 border-t border-gray-200">
+            <p class="text-[12px] md:text-[14px] tracking-[3px] text-black/40 uppercase mb-8 md:mb-12 text-center">ALSO AVAILABLE EXCLUSIVELY FOR THE C8 E-RAY</p>
+            <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-10 md:gap-16 lg:gap-24 items-start lg:px-16">
+                <div class="flex flex-col justify-start">
+                    <img src={SONOMA_LOGO} alt="Sonoma" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        The Sonoma is engineered without compromise for the Corvette C8 platform &mdash; a fully forged, weight-optimized wheel built around a refined, performance-focused mesh profile. Precision-cut pocketing and a clean, elevated aesthetic give it equal parts visual clarity and driving precision.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        Every Sonoma starts as a billet of 6061 aerospace-grade aluminum, high-pressure forged to refine the grain structure for increased density and strength, then 5-axis CNC machined in California and hand-finished for symmetry and sharp definition. The result is a wheel that sheds weight versus OEM cast construction while adding rigidity where it counts.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        Sized at 20&times;10 front (+25mm) and 21&times;13 rear (+20mm) on a 5x120 bolt pattern, fitment is built from real-world, in-person measurements on the C8 Z06, ZR1, and E-Ray &mdash; delivering a flush, dialed-in stance with full clearance for big brake setups, including carbon-ceramic, and zero spacers required.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-8 md:mb-12">
+                        Exclusively forged for C8 Z06, ZR1, and E-Ray. Made in the USA.
+                    </p>
+                    <a href={sonomaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 md:py-4 text-[13px] md:text-[14px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors self-start">
+                        SHOP E5 FORGED
+                    </a>
+                </div>
+                <div class="flex flex-col items-center text-center gap-2 md:gap-3 overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-sonoma-1.webp`} alt="Sonoma Wheel" class="w-full h-auto max-w-full" loading="lazy" />
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase mt-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">WHEEL SIZE: 20"x10" / 21"x13"</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">FOR C8 Z06, ZR1, E-RAY, GRAND SPORT</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">4-WEEK LEAD TIME &amp; FREE SHIPPING</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">USA FORGED</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 3 Photo Row (Sonoma) ── -->
+        <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-0">
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-5.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-6.webp`} alt="E-Ray wheel detail" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-7.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+        </section>
+
+        <!-- ── Talladega Detail Section ── -->
+        <section class="container-e5 py-12 md:py-20 lg:py-28 border-t border-gray-200">
+            <div class="grid grid-cols-1 lg:grid-cols-[3fr_1.5fr] gap-10 md:gap-16 lg:gap-24 items-start lg:px-16">
+                <div class="flex flex-col justify-start">
+                    <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[36px] md:h-[44px] w-auto mb-6 md:mb-8 self-start" loading="lazy" />
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        The Talladega is where the E5 Forged Series began &mdash; a fully forged, performance-driven design featuring a bold split Y-spoke and a clean motorsport aesthetic that delivers strength, balance, and unmistakable presence.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        Every Talladega starts as a billet of 6061 aerospace-grade aluminum, high-pressure forged to refine the grain structure for increased density and durability, then 5-axis CNC machined in California and hand-finished for sharp, symmetrical definition. The fully forged monoblock construction cuts unsprung mass while reinforcing the wheel where it matters most.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-5 md:mb-6">
+                        Sized at 20&times;10 front (+25mm) and 21&times;13 rear (+20mm) on a 5x120 bolt pattern, fitment is built from real-world, in-person measurements on the C8 Z06, ZR1, and E-Ray &mdash; delivering a flush, confident stance with full clearance for big brake setups, including carbon-ceramic, and zero spacers required.
+                    </p>
+                    <p class="text-[15px] md:text-[17px] lg:text-[19px] leading-[26px] md:leading-[30px] lg:leading-[36px] text-black/60 mb-8 md:mb-12">
+                        Exclusively forged for C8 Z06, ZR1, and E-Ray. Made in the USA.
+                    </p>
+                    <a href={talladegaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 md:py-4 text-[13px] md:text-[14px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors self-start">
+                        SHOP E5 FORGED
+                    </a>
+                </div>
+                <div class="flex flex-col items-center text-center gap-2 md:gap-3 overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-talladega-brushed-0.webp`} alt="Talladega Wheel" class="w-full h-auto max-w-full" loading="lazy" />
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase mt-2">BRUSHED ALUMINUM</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">WHEEL SIZE: 20"x10" / 21"x13"</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">FOR C8 Z06, ZR1, E-RAY, GRAND SPORT</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">4-WEEK LEAD TIME &amp; FREE SHIPPING</p>
+                    <p class="text-[11px] md:text-[13px] tracking-[2px] text-black/50 uppercase">USA FORGED</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 3 Photo Row (Talladega) ── -->
+        <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-0">
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-e-ray-white-0.webp`} alt="White E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-8.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="w-full h-[220px] sm:h-[300px] md:h-[400px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-9.webp`} alt="Blue E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+        </section>
+
+        <!-- ── We Don't Settle ── -->
+        <section class="container-e5 py-10 md:py-14 lg:py-16 border-t border-gray-300">
+            <h2 class="text-[24px] md:text-[36px] lg:text-[52px] font-['Franklin_Gothic_Book'] text-e5-red uppercase tracking-[3px] md:tracking-[6px] lg:tracking-[8px] mb-5 md:mb-8">
+                WE DON'T SETTLE
+            </h2>
+            <p class="text-[14px] md:text-[16px] lg:text-[17px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[960px] mb-4">
+                Every E5 Forged C8 E-Ray wheel begins with a foundation of uncompromising strength and precision, machined from premium 6061 aluminum. From there, material is strategically removed to maximize the strength-to-weight ratio, reduce rotational mass, and translate every ounce into usable performance. Engineered to handle the E-Ray's extreme output, these wheels support wider tire configurations, increased grip, sharper response, and enhanced brake clearance&mdash;delivering confidence and control at the highest level of performance.
+            </p>
+            <p class="text-[14px] md:text-[16px] lg:text-[17px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[960px]">
+                And whether you're after the rigidity of a fully forged monoblock or the deep concave presence of a two-piece build, E5 has the right setup for the E-Ray&mdash;each engineered specifically for the platform, not adapted to it.
+            </p>
+        </section>
+
+        <!-- Two full-width images -->
+        <section class="w-full grid grid-cols-1 md:grid-cols-2 gap-0">
+            <div class="w-full h-[250px] md:h-[380px] lg:h-[480px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-11.webp`} alt="E-Ray with E5 Wheels" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="w-full h-[250px] md:h-[380px] lg:h-[480px] overflow-hidden">
+                <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-12.webp`} alt="E5 Wheel close-up" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+        </section>
+
+        <!-- ── Gallery ── -->
+        <section class="container-e5 py-10 md:py-16 lg:py-20">
+            <h2 class="text-[22px] md:text-[32px] lg:text-[42px] xl:text-[48px] tracking-[3px] md:tracking-[5px] lg:tracking-[7px] xl:tracking-[9.6px] leading-[28px] md:leading-[38px] lg:leading-[46px] xl:leading-[52px] text-e5-red uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Book']">
+                CB E-RAY CORVETTE GALLERY
+            </h2>
+            <p class="text-[15px] md:text-[18px] lg:text-[20px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[1276px] mb-8 md:mb-12 lg:mb-16">
+                Explore our gallery of C8 E-Ray Corvettes, showcasing a variety of styles and finishes on customer vehicles.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 lg:mb-16">
+                <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-13.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-0.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="w-full h-[280px] md:h-[400px] lg:h-[530px] overflow-hidden">
+                    <img src={`${IMG_BASE}/c8-e-ray-fitment-e5-wheels-14.webp`} alt="E-Ray Gallery" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+            </div>
+            <div class="text-center">
+                <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=E-Ray`} class="inline-block bg-e5-red text-white px-10 md:px-12 lg:px-14 py-3 md:py-4 text-[13px] md:text-[16px] lg:text-[20px] tracking-[1.4px] md:tracking-[2px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
+                    VIEW GALLERY
+                </a>
+            </div>
+        </section>
+
+        <!-- Back to Top -->
+        <div class="text-center hover:bg-black/5 transition-colors duration-300 py-4 md:py-6 text-[14px] md:text-[16px] lg:text-[18px] text-black/50 font-medium tracking-[2px] uppercase cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            BACK TO TOP ↑
+        </div>
+
+    </div>
+</MainLayout>
