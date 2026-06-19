@@ -33,6 +33,30 @@ export interface CorvetteGalleryItem {
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
+    "galleryId": "2026-corvette-e-ray-blue-with-sebring-2p-bronze-black-lip-wheels",
+    "dateAdded": "2026-05-23",
+    "year": "2026",
+    "submodel": "C8",
+    "trim": "E-Ray",
+    "vehicleColor": "Blue",
+    "vehicleTitle": "2026 C8 Corvette E-Ray Blue",
+    "wheelStyle": "Sebring 2P",
+    "wheelFinish": "Bronze Black Lip",
+    "wheelSizeF": "20\" x 10\"",
+    "offesetF": null,
+    "partF": "E5SE2P201003",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "21\" x 13\"",
+    "offsetR": null,
+    "wheelPartR": "E5SE2P211303",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "pinned": false,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp"]
+  },
+  {
     "galleryId": "2025-c8-z06-black-with-sebring-2p-bronze-polished-lip-wheels",
     "dateAdded": "2026-05-16",
     "year": "2025",
