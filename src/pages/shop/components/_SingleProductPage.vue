@@ -1126,8 +1126,8 @@ async function loadProducts() {
           value: parseFloat(selectedProduct.value.Price.toFixed(2)),
           items: [{
             item_id: selectedProduct.value.Pn,
-            item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
-            item_variant: selectedProduct.value.Finish,
+            item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
+            item_variant: getFinishName(selectedProduct.value),
             price: parseFloat(selectedProduct.value.Price.toFixed(2)),
             quantity: 1
           }]
@@ -1545,15 +1545,15 @@ function addToCart() {
         items: [
           {
             item_id: selectedFrontProduct.value.Pn,
-            item_name: `E5 ${selectedFrontProduct.value.Model} ${selectedFrontProduct.value.Finish}`,
-            item_variant: selectedFrontProduct.value.Finish,
+            item_name: `E5 ${selectedFrontProduct.value.Model} ${getFinishName(selectedFrontProduct.value)}`,
+            item_variant: getFinishName(selectedFrontProduct.value),
             price: parseFloat(selectedFrontProduct.value.Price.toFixed(2)),
             quantity: 2
           },
           {
             item_id: selectedRearProduct.value.Pn,
-            item_name: `E5 ${selectedRearProduct.value.Model} ${selectedRearProduct.value.Finish}`,
-            item_variant: selectedRearProduct.value.Finish,
+            item_name: `E5 ${selectedRearProduct.value.Model} ${getFinishName(selectedRearProduct.value)}`,
+            item_variant: getFinishName(selectedRearProduct.value),
             price: parseFloat(selectedRearProduct.value.Price.toFixed(2)),
             quantity: 2
           }
@@ -1581,8 +1581,8 @@ function addToCart() {
         items: [
           {
             item_id: selectedProduct.value.Pn,
-            item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
-            item_variant: selectedProduct.value.Finish,
+            item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
+            item_variant: getFinishName(selectedProduct.value),
             price: parseFloat(selectedProduct.value.Price.toFixed(2)),
             quantity: 4
           }
