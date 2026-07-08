@@ -137,11 +137,11 @@ import MainLayout from "@/layouts/MainLayout.astro";
           } else {
             const errText = await webhookResponse.text();
             console.error('❌ Webhook failed:', errText);
-            // Payment captured but webhook failed — throw so admin is alerted
+            // Payment captured but webhook failed &mdash; throw so admin is alerted
             throw new Error(`Payment captured (${captureData.chargeId}) but order webhook failed: ${errText}`);
           }
         } else {
-          // Payment captured but no order data — alert admin via webhook with minimal info
+          // Payment captured but no order data &mdash; alert admin via webhook with minimal info
           console.error('⚠️ No saved order data found in sessionStorage. Charge ID:', captureData.chargeId);
           await fetch('/api/send-order-webhook', {
             method: 'POST',
@@ -157,7 +157,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
                   emailAddress: '',
                   phoneNumber: '',
                   companyName: '',
-                  streetAddress1: 'Order data lost — session expired',
+                  streetAddress1: 'Order data lost &mdash; session expired',
                   streetAddress2: '',
                   city: '',
                   state: '',
@@ -185,7 +185,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
       } catch (error) {
         console.error('❌ Error processing Affirm redirect:', error);
 
-        // Do NOT show success — capture failed, order was not created
+        // Do NOT show success &mdash; capture failed, order was not created
         if (processingDiv) processingDiv.style.display = 'none';
 
         // Show an error message so customer knows to contact support

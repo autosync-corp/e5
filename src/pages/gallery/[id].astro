@@ -121,7 +121,7 @@ const imageSchemaItems = vehicle.galleryMedia
   .map((m: any, i: number) => ({
     '@type': 'ImageObject',
     'contentUrl': `${baseUrl}${m.url}`,
-    'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} — ${wheelDesc} — Photo ${i + 1}`,
+    'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} &mdash; ${wheelDesc} &mdash; Photo ${i + 1}`,
     'description': `${vehicle.year !== 'N/A' ? vehicle.year + ' ' : ''}${vehicle.model !== 'N/A' ? vehicle.model + ' ' : ''}Corvette with ${wheelDesc}`,
   }));
 

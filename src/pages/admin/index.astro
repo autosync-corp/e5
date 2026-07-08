@@ -183,7 +183,7 @@ if (Astro.request.method === 'POST') {
             <input id="fbCapiToken" type="text" placeholder="EAAxxxxxxx..." />
           </div>
         </div>
-        <p style="font-size:12px;color:#555;margin-top:8px;">The Conversions API token fires a server-side Purchase event directly to Facebook when an order is placed — more reliable than the pixel alone.</p>
+        <p style="font-size:12px;color:#555;margin-top:8px;">The Conversions API token fires a server-side Purchase event directly to Facebook when an order is placed &mdash; more reliable than the pixel alone.</p>
       </div>
 
       <div class="form-actions">
@@ -265,27 +265,27 @@ if (Astro.request.method === 'POST') {
           </thead>
           <tbody>
             ${orders.map((o, i) => {
-              const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+              const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '&mdash;';
               const itemsSummary = (o.items || []).map(item => `${item.model} ${item.finish} (${item.config})`).join('<br>');
               const payMethod = (o.paymentMethod || '').toLowerCase();
               const badgeClass = payMethod === 'affirm' ? 'affirm' : 'stripe';
               return `
                 <tr>
                   <td>
-                    <span class="order-num">#${o.orderNumber || '—'}</span>
+                    <span class="order-num">#${o.orderNumber || '&mdash;'}</span>
                     <div class="order-items">${itemsSummary}</div>
                     <button class="expand-btn" data-idx="${i}">▼ Details</button>
                     <div class="order-detail" id="detail-${i}">
-                      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-val">${o.customer?.email || '—'}</span></div>
-                      <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-val">${o.customer?.phone || '—'}</span></div>
-                      ${(o.items || []).map(item => `<div class="detail-row"><span class="detail-label">Size</span><span class="detail-val">${item.size} — ${item.config}</span></div>`).join('')}
+                      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-val">${o.customer?.email || '&mdash;'}</span></div>
+                      <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-val">${o.customer?.phone || '&mdash;'}</span></div>
+                      ${(o.items || []).map(item => `<div class="detail-row"><span class="detail-label">Size</span><span class="detail-val">${item.size} &mdash; ${item.config}</span></div>`).join('')}
                     </div>
                   </td>
                   <td>${date}</td>
-                  <td>${o.customer?.fullName || '—'}</td>
-                  <td>${o.vehicle || '—'}</td>
+                  <td>${o.customer?.fullName || '&mdash;'}</td>
+                  <td>${o.vehicle || '&mdash;'}</td>
                   <td class="order-total">$${o.total || '0.00'}</td>
-                  <td><span class="badge ${badgeClass}">${o.paymentMethod || '—'}</span></td>
+                  <td><span class="badge ${badgeClass}">${o.paymentMethod || '&mdash;'}</span></td>
                 </tr>
               `;
             }).join('')}

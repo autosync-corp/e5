@@ -156,7 +156,7 @@ const finishHighPrice: Record<string, string> = {
 const lowPrice = finishLowPrice[`${seriesKey}/${finishKey}`] || '600';
 const highPrice = finishHighPrice[`${seriesKey}/${finishKey}`] || '1200';
 
-// Product image — series + finish specific, falls back to series hero
+// Product image &mdash; series + finish specific, falls back to series hero
 const productImageMap: Record<string, string> = {
   // Daytona
   'daytona/gloss-black': DAYTONA_GLOSS_BLACK,
@@ -197,7 +197,7 @@ const productImagePath = productImageMap[`${seriesKey}/${finishKey}`]
   || seriesFallbackImage[seriesKey]
   || '/assets/images/vette-black-on-river.webp';
 
-// Product schema — base data known at server time
+// Product schema &mdash; base data known at server time
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
