@@ -72,12 +72,12 @@ function removeItem(productId: number) {
         event: 'remove_from_cart',
         ecommerce: {
           currency: 'USD',
-          value: item.product.Price * item.quantity,
+          value: parseFloat((item.product.Price * item.quantity).toFixed(2)),
           items: [{
             item_id: item.product.Pn,
             item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
             item_variant: item.product.Finish,
-            price: item.product.Price,
+            price: parseFloat(item.product.Price.toFixed(2)),
             quantity: item.quantity
           }]
         }
@@ -152,12 +152,12 @@ onMounted(async () => {
       event: 'view_cart',
       ecommerce: {
         currency: 'USD',
-        value: cartTotals.value.total,
+        value: parseFloat(cartTotals.value.total.toFixed(2)),
         items: cartItems.value.map(item => ({
           item_id: item.product.Pn,
           item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
           item_variant: item.product.Finish,
-          price: item.product.Price,
+          price: parseFloat(item.product.Price.toFixed(2)),
           quantity: item.quantity
         }))
       }

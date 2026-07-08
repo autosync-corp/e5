@@ -824,14 +824,14 @@ async function handlePlaceOrder() {
         ecommerce: {
           transaction_id: paymentIntent.id,
           currency: 'USD',
-          value: cartTotals.value.total,
-          tax: cartTotals.value.tax,
+          value: parseFloat(cartTotals.value.total.toFixed(2)),
+          tax: parseFloat(cartTotals.value.tax.toFixed(2)),
           coupon: appliedCoupon.value || undefined,
           items: cartItems.value.map(item => ({
             item_id: item.product.Pn,
             item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
             item_variant: item.product.Finish,
-            price: item.product.Price,
+            price: parseFloat(item.product.Price.toFixed(2)),
             quantity: item.quantity
           }))
         }
@@ -871,13 +871,13 @@ onMounted(async () => {
       event: 'begin_checkout',
       ecommerce: {
         currency: 'USD',
-        value: cartTotals.value.total,
+        value: parseFloat(cartTotals.value.total.toFixed(2)),
         coupon: appliedCoupon.value || undefined,
         items: cartItems.value.map(item => ({
           item_id: item.product.Pn,
           item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
           item_variant: item.product.Finish,
-          price: item.product.Price,
+          price: parseFloat(item.product.Price.toFixed(2)),
           quantity: item.quantity
         }))
       }

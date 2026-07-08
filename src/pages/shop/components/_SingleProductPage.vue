@@ -1123,12 +1123,12 @@ async function loadProducts() {
         event: 'view_item',
         ecommerce: {
           currency: 'USD',
-          value: selectedProduct.value.Price,
+          value: parseFloat(selectedProduct.value.Price.toFixed(2)),
           items: [{
             item_id: selectedProduct.value.Pn,
             item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
             item_variant: selectedProduct.value.Finish,
-            price: selectedProduct.value.Price,
+            price: parseFloat(selectedProduct.value.Price.toFixed(2)),
             quantity: 1
           }]
         }
@@ -1541,20 +1541,20 @@ function addToCart() {
       event: 'add_to_cart',
       ecommerce: {
         currency: 'USD',
-        value: (selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2),
+        value: parseFloat(((selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2)).toFixed(2)),
         items: [
           {
             item_id: selectedFrontProduct.value.Pn,
             item_name: `E5 ${selectedFrontProduct.value.Model} ${selectedFrontProduct.value.Finish}`,
             item_variant: selectedFrontProduct.value.Finish,
-            price: selectedFrontProduct.value.Price,
+            price: parseFloat(selectedFrontProduct.value.Price.toFixed(2)),
             quantity: 2
           },
           {
             item_id: selectedRearProduct.value.Pn,
             item_name: `E5 ${selectedRearProduct.value.Model} ${selectedRearProduct.value.Finish}`,
             item_variant: selectedRearProduct.value.Finish,
-            price: selectedRearProduct.value.Price,
+            price: parseFloat(selectedRearProduct.value.Price.toFixed(2)),
             quantity: 2
           }
         ]
@@ -1577,13 +1577,13 @@ function addToCart() {
       event: 'add_to_cart',
       ecommerce: {
         currency: 'USD',
-        value: selectedProduct.value.Price * 4,
+        value: parseFloat((selectedProduct.value.Price * 4).toFixed(2)),
         items: [
           {
             item_id: selectedProduct.value.Pn,
             item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
             item_variant: selectedProduct.value.Finish,
-            price: selectedProduct.value.Price,
+            price: parseFloat(selectedProduct.value.Price.toFixed(2)),
             quantity: 4
           }
         ]
