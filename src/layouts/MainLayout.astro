@@ -130,6 +130,18 @@ const fbPixelId = tracking.fbPixelId || '';
   </head>
   <body>
     {gtmId && <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />}
+    <script is:inline>
+      document.addEventListener('click', function(e) {
+        var el = e.target.closest('[data-gtm-event]');
+        if (!el) return;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: el.getAttribute('data-gtm-event'),
+          click_label: el.getAttribute('data-gtm-label') || el.textContent.trim(),
+          click_url: el.tagName === 'A' ? el.href : undefined
+        });
+      });
+    </script>
     <Navbar client:load transition:persist/>
     <div style="min-height: 100dvh">
       <main class="mt-107">

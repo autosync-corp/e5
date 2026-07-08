@@ -75,7 +75,7 @@ const breadcrumbSchema = JSON.stringify({
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:visible primary link={WHEELS_SEBRING_ROUTE}>EXPLORE {SEBRING_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_SEBRING_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Sebring">EXPLORE {SEBRING_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -91,7 +91,7 @@ const breadcrumbSchema = JSON.stringify({
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:visible primary link={WHEELS_DAYTONA_ROUTE}>EXPLORE {DAYTONA_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_DAYTONA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Daytona">EXPLORE {DAYTONA_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -107,7 +107,7 @@ const breadcrumbSchema = JSON.stringify({
                     <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">IN STOCK</span>
 
                     <div class="mt-6 uppercase">
-                        <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}>EXPLORE {SPEEDWAY_BRAND_NAME}</Button>
+                        <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Speedway">EXPLORE {SPEEDWAY_BRAND_NAME}</Button>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -242,7 +242,7 @@ const breadcrumbSchema = JSON.stringify({
                         <span class="text-center tracking-[3px] text-[14px] text-e5-red mt-4">{finish.stock}</span>
 
                         <div class="mt-6 uppercase">
-                            <Button client:visible primary link={WHEELS_ROUTE}>LEARN MORE</Button>
+                            <Button client:visible primary link={WHEELS_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore All Wheels">LEARN MORE</Button>
                         </div>
                     </div>
                 </ImageWithLegend>

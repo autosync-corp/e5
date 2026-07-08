@@ -63,8 +63,26 @@ function updateQuantity(productId: number, quantity: number) {
 
 function removeItem(productId: number) {
   if (confirm('Are you sure you want to remove this item from your cart?')) {
+    const item = cartItems.value.find(i => i.product.Id === productId);
     CartManager.removeItem(productId);
     loadCart();
+    if (item) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'remove_from_cart',
+        ecommerce: {
+          currency: 'USD',
+          value: item.product.Price * item.quantity,
+          items: [{
+            item_id: item.product.Pn,
+            item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+            item_variant: item.product.Finish,
+            price: item.product.Price,
+            quantity: item.quantity
+          }]
+        }
+      });
+    }
   }
 }
 
@@ -126,8 +144,25 @@ function getItemSubtotal(item: CartItem): number {
   return (item.product.Price ?? 0) * item.quantity;
 }
 
-onMounted(() => {
-  loadCart();
+onMounted(async () => {
+  await loadCart();
+  if (cartItems.value.length > 0) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'view_cart',
+      ecommerce: {
+        currency: 'USD',
+        value: cartTotals.value.total,
+        items: cartItems.value.map(item => ({
+          item_id: item.product.Pn,
+          item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+          item_variant: item.product.Finish,
+          price: item.product.Price,
+          quantity: item.quantity
+        }))
+      }
+    });
+  }
 });
 </script>
 
@@ -192,6 +227,7 @@ onMounted(() => {
           <button
             @click="continueShopping"
             class="px-12 py-4 bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm tracking-[2px] uppercase rounded-md hover:bg-[#a33a3a] transition-colors"
+            data-gtm-event="continue_shopping" data-gtm-label="Continue Shopping"
           >
             Continue Shopping
           </button>
@@ -436,6 +472,7 @@ onMounted(() => {
               <button
                 @click="proceedToCheckout"
                 class="w-full bg-e5-red text-white font-['Franklin_Gothic_Medium'] text-sm font-semibold tracking-[2px] uppercase py-4 px-8 border-none rounded-md cursor-pointer hover:bg-[#a33a3a] transition-colors mt-8"
+                data-gtm-event="proceed_checkout" data-gtm-label="Proceed to Checkout"
               >
                 Proceed to Checkout
               </button>

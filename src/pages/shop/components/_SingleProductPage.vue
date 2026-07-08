@@ -1116,6 +1116,24 @@ async function loadProducts() {
         }
       }
     }
+    // GTM: view_item
+    if (selectedProduct.value) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'view_item',
+        ecommerce: {
+          currency: 'USD',
+          value: selectedProduct.value.Price,
+          items: [{
+            item_id: selectedProduct.value.Pn,
+            item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
+            item_variant: selectedProduct.value.Finish,
+            price: selectedProduct.value.Price,
+            quantity: 1
+          }]
+        }
+      });
+    }
   } catch (err) {
     error.value = 'Failed to load products. Please try again.';
     console.error('Error loading products:', err);
@@ -1516,6 +1534,32 @@ function addToCart() {
       vehicleModel: vehicleDisplay.value || undefined,
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
+
+    // GTM: add_to_cart (staggered)
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'add_to_cart',
+      ecommerce: {
+        currency: 'USD',
+        value: (selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2),
+        items: [
+          {
+            item_id: selectedFrontProduct.value.Pn,
+            item_name: `E5 ${selectedFrontProduct.value.Model} ${selectedFrontProduct.value.Finish}`,
+            item_variant: selectedFrontProduct.value.Finish,
+            price: selectedFrontProduct.value.Price,
+            quantity: 2
+          },
+          {
+            item_id: selectedRearProduct.value.Pn,
+            item_name: `E5 ${selectedRearProduct.value.Model} ${selectedRearProduct.value.Finish}`,
+            item_variant: selectedRearProduct.value.Finish,
+            price: selectedRearProduct.value.Price,
+            quantity: 2
+          }
+        ]
+      }
+    });
   } else {
     // Non-staggered: quantity = total individual wheels (2 front + 2 rear = 4)
     CartManager.addItem({
@@ -1525,6 +1569,25 @@ function addToCart() {
       rearWheels: 2,
       vehicleModel: vehicleDisplay.value || undefined,
       imgUrlBase: apiResponse.value?.ImgUrlBase
+    });
+
+    // GTM: add_to_cart (non-staggered)
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'add_to_cart',
+      ecommerce: {
+        currency: 'USD',
+        value: selectedProduct.value.Price * 4,
+        items: [
+          {
+            item_id: selectedProduct.value.Pn,
+            item_name: `E5 ${selectedProduct.value.Model} ${selectedProduct.value.Finish}`,
+            item_variant: selectedProduct.value.Finish,
+            price: selectedProduct.value.Price,
+            quantity: 4
+          }
+        ]
+      }
     });
   }
 
@@ -1887,7 +1950,7 @@ onMounted(() => {
             @click="addToCart"
             :disabled="!doesWheelsFit"
             class="w-full h-10 bg-e5-red rounded-lg text-white text-base font-['Excon_Variable'] font-light tracking-[0.32em] hover:bg-e5-red/90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-          >
+           data-gtm-event="add_to_cart_click" data-gtm-label="Add to Cart">
             ADD TO CART
           </button>
 

@@ -65,7 +65,7 @@ const canonicalUrl = `${baseUrl}/`;
           </p>
         </div>
         <div class="col-start-1 row-start-4 flex justify-center items-center mt-6 mb-24 lg:mb-0">
-          <Button client:visible primary link={WHEELS_FORM_FORGED_ROUTE}>EXPLORE FORM FORGED</Button>
+          <Button client:visible primary link={WHEELS_FORM_FORGED_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Form Forged">EXPLORE FORM FORGED</Button>
         </div>
         <div class="lg:col-start-2 lg:row-start-1">
           <img src={E5_FORGED_LOGO} alt="Form Forged" class="w-3/5 h-auto mx-auto" />
@@ -82,7 +82,7 @@ const canonicalUrl = `${baseUrl}/`;
           </p>
         </div>
         <div class="lg:col-start-2 lg:ow-start-4 flex justify-center items-center mt-6">
-          <Button client:visible primary link={WHEELS_TALLADEGA_ROUTE}>EXPLORE E5 FORGED</Button>
+          <Button client:visible primary link={WHEELS_TALLADEGA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore E5 Forged">EXPLORE E5 FORGED</Button>
         </div>
       </div>
     </section>
@@ -95,7 +95,7 @@ const canonicalUrl = `${baseUrl}/`;
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>
         <div class="mt-20">
-          <Button client:visible primary link={PROCESS_ROUTE}>LEARN MORE</Button>
+          <Button client:visible primary link={PROCESS_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn More">LEARN MORE</Button>
         </div>
       </div>
       <div class="h-[438px] hidden lg:block">
@@ -114,7 +114,7 @@ const canonicalUrl = `${baseUrl}/`;
           <div class="flex justify-center items-center">
             <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${VETTE_BLACK_ON_RIVER})`}>
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <a href={GALLERY_VEHICLES_ROUTE}>
+                <a href={GALLERY_VEHICLES_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Vette Gallery">
                   <Button client:visible primary={true} secondary={false} disabled={false}>
                     VETTE GALLERY
                   </Button>
@@ -126,7 +126,7 @@ const canonicalUrl = `${baseUrl}/`;
           <div class="flex justify-center items-center">
             <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${WHEEL_HOME_SHOT_1})`}>
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <a href={GALLERY_WHEELS_ROUTE}>
+                <a href={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Wheel Gallery">
                   <Button client:visible primary={true} secondary={false} disabled={false}>
                     WHEEL GALLERY
                   </Button>

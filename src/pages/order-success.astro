@@ -133,6 +133,28 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
           if (webhookResponse.ok) {
             console.log('✅ Webhook sent successfully');
+
+            // GTM: purchase (Affirm)
+            const _dl = (window as any);
+            _dl.dataLayer = _dl.dataLayer || [];
+            _dl.dataLayer.push({
+              event: 'purchase',
+              ecommerce: {
+                transaction_id: captureData.chargeId,
+                currency: 'USD',
+                value: orderData.totals.total,
+                tax: orderData.totals.tax,
+                coupon: orderData.totals.couponCode || undefined,
+                items: (orderData.cartItems || []).map((item: any) => ({
+                  item_id: item.product.Pn,
+                  item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+                  item_variant: item.product.Finish,
+                  price: item.product.Price,
+                  quantity: item.quantity
+                }))
+              }
+            });
+
             sessionStorage.removeItem('pendingOrderData');
           } else {
             const errText = await webhookResponse.text();

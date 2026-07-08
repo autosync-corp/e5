@@ -136,7 +136,7 @@ const breadcrumbSchema = JSON.stringify({
         </div>
 
         <div class="text-center mt-8 md:mt-12">
-            <Button client:visible primary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={shopDaytonaUrl}>
+            <Button client:visible primary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={shopDaytonaUrl} data-gtm-event="shop_wheel">
               <span>
                 SHOP {DAYTONA_BRAND_NAME}
               </span>
@@ -160,7 +160,7 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="mt-12 md:mt-28">
-                <Button client:visible secondary class="px-12 md:px-28 text-[14px] md:text-[16px]" link={PROCESS_FORM_FORGED_ROUTE}>
+                <Button client:visible secondary class="px-12 md:px-28 text-[14px] md:text-[16px]" link={PROCESS_FORM_FORGED_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn About Our Process">
                     <span class="text-[16px] md:text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
                 </Button>
             </div>
@@ -218,7 +218,7 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="my-8 md:my-12 flex justify-start md:justify-end">
-                <Button client:visible secondary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary class="px-12 md:px-16 text-[14px] md:text-[16px]" link={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="View Wheel Gallery">
                     <span class="text-[16px] md:text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
                 </Button>
             </div>
@@ -333,7 +333,7 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $550 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={glossBlackUrl}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={glossBlackUrl} data-gtm-event="shop_now" data-gtm-label="Shop Now">
                             SHOP NOW
                         </Button>
                     </div>
@@ -347,7 +347,7 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $550 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={titaniumBrushedUrl}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={titaniumBrushedUrl} data-gtm-event="shop_now" data-gtm-label="Shop Now">
                             SHOP NOW
                         </Button>
                     </div>
@@ -361,7 +361,7 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">AVAILABLE FOR C5_C6_C7_C8</p>
                         <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $550 PER WHEEL</p>
                         <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={bronzeBrushedUrl}>
+                        <Button client:visible primary class="mt-6 md:mt-8 text-[14px] md:text-[16px]" link={bronzeBrushedUrl} data-gtm-event="shop_now" data-gtm-label="Shop Now">
                             SHOP NOW
                         </Button>
                     </div>
@@ -385,7 +385,7 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="my-8 md:my-12">
-                <Button client:visible secondary class="px-12 md:px-16 border-e5-red text-e5-red text-[14px] md:text-[16px]" link={GALLERY_WHEELS_ROUTE}>
+                <Button client:visible secondary class="px-12 md:px-16 border-e5-red text-e5-red text-[14px] md:text-[16px]" link={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="View Wheel Gallery">
                     <span class="text-[16px] md:text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
                 </Button>
             </div>
@@ -406,7 +406,7 @@ const breadcrumbSchema = JSON.stringify({
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:visible primary link={WHEELS_SEBRING_ROUTE}> EXPLORE {SEBRING_BRAND_NAME} </Button>
+                    <Button client:visible primary link={WHEELS_SEBRING_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Sebring"> EXPLORE {SEBRING_BRAND_NAME} </Button>
                 </div>
             </ImageWithLegend>
 
@@ -417,7 +417,7 @@ const breadcrumbSchema = JSON.stringify({
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/40 uppercase mb-2">EXCLUSIVELY FOR C6_C7_C8</p>
                     <p class="text-[14px] md:text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[14px] md:text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
-                    <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE}> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
+                    <Button client:visible primary link={WHEELS_SPEEDWAY_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Speedway"> EXPLORE {SPEEDWAY_BRAND_NAME} </Button>
                 </div>
             </ImageWithLegend>
         </div>

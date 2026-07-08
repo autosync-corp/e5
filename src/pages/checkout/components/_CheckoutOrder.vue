@@ -817,6 +817,26 @@ async function handlePlaceOrder() {
       // Send order data to Go High Level webhook
       await sendOrderToWebhook(paymentIntent.id, 'Stripe', customerData);
 
+      // GTM: purchase (Stripe)
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          transaction_id: paymentIntent.id,
+          currency: 'USD',
+          value: cartTotals.value.total,
+          tax: cartTotals.value.tax,
+          coupon: appliedCoupon.value || undefined,
+          items: cartItems.value.map(item => ({
+            item_id: item.product.Pn,
+            item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+            item_variant: item.product.Finish,
+            price: item.product.Price,
+            quantity: item.quantity
+          }))
+        }
+      });
+
       // Clear cart
       CartManager.clearCart();
       cartItems.value = [];
@@ -833,8 +853,8 @@ async function handlePlaceOrder() {
   }
 }
 
-onMounted(() => {
-  loadCart();
+onMounted(async () => {
+  await loadCart();
   loadVehicle();
   initializeStripe();
   initializeAffirm();
@@ -843,6 +863,26 @@ onMounted(() => {
   window.addEventListener('billing-state-changed', (event: any) => {
     customerState.value = event.detail.state;
   });
+
+  // GTM: begin_checkout
+  if (cartItems.value.length > 0) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'begin_checkout',
+      ecommerce: {
+        currency: 'USD',
+        value: cartTotals.value.total,
+        coupon: appliedCoupon.value || undefined,
+        items: cartItems.value.map(item => ({
+          item_id: item.product.Pn,
+          item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+          item_variant: item.product.Finish,
+          price: item.product.Price,
+          quantity: item.quantity
+        }))
+      }
+    });
+  }
 });
 </script>
 
@@ -1030,6 +1070,7 @@ onMounted(() => {
         :disabled="isProcessing || isEmpty"
         class="e5CheckoutPlaceOrderBtn"
         :class="{ 'e5CheckoutPlaceOrderBtnDisabled': isProcessing || isEmpty }"
+        data-gtm-event="place_order" data-gtm-label="Place Order"
       >
         {{ isProcessing ? 'PROCESSING...' : 'PLACE ORDER' }}
       </button>

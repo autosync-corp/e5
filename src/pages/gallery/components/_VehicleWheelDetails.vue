@@ -139,6 +139,22 @@ const formatSizeOffset = (size: string | null | undefined, offset: string | null
   return `${cleanSize} ${formattedOffset}`;
 };
 
+function onShopFitmentClick() {
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  (window as any).dataLayer.push({
+    event: 'shop_fitment',
+    fitment: {
+      vehicle: props.vehicleTitle,
+      generation: vehicleInfo.value.generation,
+      trim: vehicleInfo.value.trim,
+      wheel_style: props.vehicleWheelStyle,
+      wheel_finish: wheelFinish.value,
+      front_size: props.vehicleWheelSizeF,
+      rear_size: props.vehicleWheelSizeRear,
+    }
+  });
+}
+
 // Generate shop link with series, finish, generation, trim, and sizes
 const shopRoute = computed(() => {
   if (!props.vehicleWheelStyle || props.vehicleWheelStyle.toLowerCase() === 'n/a') {
@@ -220,10 +236,12 @@ const shopRoute = computed(() => {
 
     <template #actions>
       <div class="flex justify-between gap-6 w-full">
-        <Button primary :link="shopRoute">
-          SHOP FITMENT
-        </Button>
-        <Button secondary :link="wheelStyleRoute">
+        <div @click.capture="onShopFitmentClick">
+          <Button primary :link="shopRoute" data-gtm-event="shop_fitment" :data-gtm-label="`${vehicleInfo.generation} ${vehicleInfo.trim} - ${wheelStyle} ${wheelFinish}`">
+            SHOP FITMENT
+          </Button>
+        </div>
+        <Button secondary :link="wheelStyleRoute" data-gtm-event="explore_wheel" :data-gtm-label="`Explore ${wheelStyle}`">
           EXPLORE {{ wheelStyle }}
         </Button>
       </div>

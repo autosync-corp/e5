@@ -168,6 +168,7 @@ const getItemPrice = (item: CartItem) => {
                     <button
                       @click="handleRemoveItem(item.product.Id)"
                       class="font-excon text-[9px] text-[#d31d25]/60 hover:text-[#d31d25] tracking-[1.35px] uppercase transition-colors"
+                      data-gtm-event="mini_cart_remove" :data-gtm-label="`Remove ${item.product.Model}`"
                     >
                       REMOVE ITEM
                     </button>
@@ -175,6 +176,7 @@ const getItemPrice = (item: CartItem) => {
                     <button
                       @click="handleViewItem(item)"
                       class="font-excon text-[9px] text-black/70 hover:text-black tracking-[1.35px] uppercase transition-colors"
+                      data-gtm-event="mini_cart_view_item" :data-gtm-label="`View ${item.product.Model}`"
                     >
                       VIEW ITEM
                     </button>
@@ -199,12 +201,14 @@ const getItemPrice = (item: CartItem) => {
             <button
               @click="handleViewCart"
               class="flex-1 h-[34px] border border-e5-red text-e5-red font-excon text-[14px] tracking-[1.26px] uppercase hover:bg-e5-red hover:text-white transition-colors"
+              data-gtm-event="mini_cart_view_cart" data-gtm-label="View Cart"
             >
               VIEW CART
             </button>
             <button
               @click="handleCheckout"
               class="flex-1 h-[34px] bg-e5-red border border-e5-red text-white font-excon text-[14px] tracking-[1.26px] uppercase hover:bg-e5-red/90 transition-colors"
+              data-gtm-event="mini_cart_checkout" data-gtm-label="Checkout"
             >
               CHECKOUT
             </button>
