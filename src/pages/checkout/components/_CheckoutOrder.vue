@@ -249,6 +249,24 @@ function handlePaymentMethodChange(method: 'card' | 'affirm') {
   selectedPaymentMethod.value = method;
   errorMessage.value = '';
 
+  // GTM: add_payment_info (user switched payment method)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'add_payment_info',
+    ecommerce: {
+      currency: 'USD',
+      value: cartTotals.value.total.toFixed(2),
+      payment_type: method === 'affirm' ? 'Affirm' : 'Credit Card',
+      items: cartItems.value.map(item => ({
+        item_id: item.product.Pn,
+        item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+        item_variant: item.product.Finish,
+        price: item.product.Price.toFixed(2),
+        quantity: item.quantity
+      }))
+    }
+  });
+
   // Refresh Affirm promotional messaging when selected
   if (method === 'affirm' && window.affirm && window.affirm.ui) {
     setTimeout(() => {
@@ -864,22 +882,32 @@ onMounted(async () => {
     customerState.value = event.detail.state;
   });
 
-  // GTM: begin_checkout
+  // GTM: begin_checkout + add_payment_info (Credit Card is default selected)
   if (cartItems.value.length > 0) {
     window.dataLayer = window.dataLayer || [];
+    const checkoutItems = cartItems.value.map(item => ({
+      item_id: item.product.Pn,
+      item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
+      item_variant: item.product.Finish,
+      price: item.product.Price.toFixed(2),
+      quantity: item.quantity
+    }));
     window.dataLayer.push({
       event: 'begin_checkout',
       ecommerce: {
         currency: 'USD',
         value: cartTotals.value.total.toFixed(2),
         coupon: appliedCoupon.value || undefined,
-        items: cartItems.value.map(item => ({
-          item_id: item.product.Pn,
-          item_name: `E5 ${item.product.Model} ${item.product.Finish}`,
-          item_variant: item.product.Finish,
-          price: item.product.Price.toFixed(2),
-          quantity: item.quantity
-        }))
+        items: checkoutItems
+      }
+    });
+    window.dataLayer.push({
+      event: 'add_payment_info',
+      ecommerce: {
+        currency: 'USD',
+        value: cartTotals.value.total.toFixed(2),
+        payment_type: 'Credit Card',
+        items: checkoutItems
       }
     });
   }
