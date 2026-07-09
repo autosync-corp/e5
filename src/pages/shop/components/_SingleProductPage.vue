@@ -1123,12 +1123,12 @@ async function loadProducts() {
         event: 'view_item',
         ecommerce: {
           currency: 'USD',
-          value: parseFloat(selectedProduct.value.Price.toFixed(2)),
+          value: selectedProduct.value.Price.toFixed(2),
           items: [{
             item_id: selectedProduct.value.Pn,
             item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
             item_variant: getFinishName(selectedProduct.value),
-            price: parseFloat(selectedProduct.value.Price.toFixed(2)),
+            price: selectedProduct.value.Price.toFixed(2),
             quantity: 1
           }]
         }
@@ -1541,20 +1541,20 @@ function addToCart() {
       event: 'add_to_cart',
       ecommerce: {
         currency: 'USD',
-        value: parseFloat(((selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2)).toFixed(2)),
+        value: ((selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2)).toFixed(2),
         items: [
           {
             item_id: selectedFrontProduct.value.Pn,
             item_name: `E5 ${selectedFrontProduct.value.Model} ${getFinishName(selectedFrontProduct.value)}`,
             item_variant: getFinishName(selectedFrontProduct.value),
-            price: parseFloat(selectedFrontProduct.value.Price.toFixed(2)),
+            price: selectedFrontProduct.value.Price.toFixed(2),
             quantity: 2
           },
           {
             item_id: selectedRearProduct.value.Pn,
             item_name: `E5 ${selectedRearProduct.value.Model} ${getFinishName(selectedRearProduct.value)}`,
             item_variant: getFinishName(selectedRearProduct.value),
-            price: parseFloat(selectedRearProduct.value.Price.toFixed(2)),
+            price: selectedRearProduct.value.Price.toFixed(2),
             quantity: 2
           }
         ]
@@ -1577,13 +1577,13 @@ function addToCart() {
       event: 'add_to_cart',
       ecommerce: {
         currency: 'USD',
-        value: parseFloat((selectedProduct.value.Price * 4).toFixed(2)),
+        value: (selectedProduct.value.Price * 4).toFixed(2),
         items: [
           {
             item_id: selectedProduct.value.Pn,
             item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
             item_variant: getFinishName(selectedProduct.value),
-            price: parseFloat(selectedProduct.value.Price.toFixed(2)),
+            price: selectedProduct.value.Price.toFixed(2),
             quantity: 4
           }
         ]
