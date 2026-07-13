@@ -202,47 +202,50 @@ async function initializeStripe() {
 }
 
 function initializeAffirm() {
-  // Load Affirm.js script
-  if (affirmInitialized || typeof window.affirm !== 'undefined') {
-    affirmInitialized = true;
-    return;
-  }
+  if (affirmInitialized) return;
 
-  // Get Affirm public key from props
   const affirmKey = props.affirmPublicKey;
-
   if (!affirmKey) {
     console.error('Affirm public key is not provided');
     return;
   }
 
-  // Configure Affirm before loading script
   const jsUrl = props.affirmJsUrl || 'https://cdn1.affirm.com/js/v2/affirm.js';
 
+  // Set config before bootstrap runs
   window._affirm_config = {
     public_api_key: affirmKey,
     script: jsUrl,
   };
 
-  const script = document.createElement('script');
-  script.src = jsUrl;
-  script.async = true;
-  script.onload = () => {
-    affirmInitialized = true;
-    console.log('Affirm initialized');
+  // Affirm's official bootstrap — creates window.affirm.checkout as a queuing
+  // stub so calls work even before the script finishes loading
+  (function(l: any, g: any, m: string, e: string, a: string, f: string, b: string) {
+    var d: any, c: any = l[m] || {},
+        h = document.createElement(f) as HTMLScriptElement,
+        n = document.getElementsByTagName(f)[0],
+        k = function(a: any, b: string, c: string) {
+          return function() { a[b]._.push([c, arguments]); };
+        };
+    c[e] = k(c, e, 'set'); d = c[e]; c[a] = {}; c[a]._ = []; d._ = [];
+    c[a][b] = k(c, a, b);
+    c[b] = function() { d.apply(null, [].slice.call(arguments)); };
+    c[b]._ = [];
+    h.async = true; h.src = g[d('script')];
+    n!.parentNode!.insertBefore(h, n);
+    delete g[d('script')]; d('ready', 'set'); l[m] = c;
+  })(window, window._affirm_config, 'affirm', 'checkout', 'ui', 'script', 'ready');
 
-    // Refresh Affirm UI to show promotional messaging
-    if (window.affirm && window.affirm.ui && window.affirm.ui.refresh) {
-      // Set the amount for promotional messaging
-      const promoElement = document.querySelector('.affirm-as-low-as');
-      if (promoElement) {
-        promoElement.setAttribute('data-amount', (cartTotals.value.total * 100).toString());
-      }
-      window.affirm.ui.refresh();
+  affirmInitialized = true;
+
+  // Refresh Affirm promotional messaging once ready
+  window.affirm.ui.ready(() => {
+    const promoElement = document.querySelector('.affirm-as-low-as');
+    if (promoElement) {
+      promoElement.setAttribute('data-amount', (cartTotals.value.total * 100).toString());
     }
-  };
-
-  document.head.appendChild(script);
+    window.affirm.ui.refresh();
+  });
 }
 
 function handlePaymentMethodChange(method: 'card' | 'affirm') {
