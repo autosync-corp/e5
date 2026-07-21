@@ -1,0 +1,257 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+
+const { slug } = Astro.params;
+const WP_API = 'https://post.e5wheels.com/wp-json/wp/v2';
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+
+let post: any = null;
+try {
+  const res = await fetch(`${WP_API}/posts?slug=${slug}&_embed`);
+  if (res.ok) {
+    const results = await res.json();
+    post = results[0] ?? null;
+  }
+} catch (e) {
+  console.error('Failed to fetch blog post from WordPress:', e);
+}
+
+if (!post) {
+  return Astro.redirect('/blog');
+}
+
+const title: string = post.title.rendered;
+const excerpt: string = (post.excerpt?.rendered ?? '').replace(/<[^>]*>/g, '').trim();
+const featuredImage: string | null = post._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? null;
+const featuredImageAlt: string = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || title;
+const canonical = `${siteUrl}/blog/${slug}`;
+const isoDate = new Date(post.date).toISOString();
+const isoModified = new Date(post.modified).toISOString();
+
+const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": excerpt,
+  "datePublished": isoDate,
+  "dateModified": isoModified,
+  "author": {
+    "@type": "Organization",
+    "name": "E5 Wheels",
+    "url": siteUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "E5 Wheels",
+    "url": siteUrl
+  },
+  "url": canonical,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonical
+  },
+  ...(featuredImage ? { "image": featuredImage } : {})
+});
+
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${siteUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteUrl}/blog` },
+    { "@type": "ListItem", "position": 3, "name": title, "item": canonical }
+  ]
+});
+---
+
+<MainLayout
+  title={`${title} | E5 Wheels`}
+  description={excerpt}
+  canonical={canonical}
+  ogType="article"
+  ogImage={featuredImage ?? undefined}
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={isoDate} />
+    <meta property="article:modified_time" content={isoModified} />
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
+    <script type="application/ld+json" is:inline set:html={breadcrumbSchema} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="bg-e5-black pt-16 pb-14 px-4">
+    <div class="max-w-[1000px] mx-auto text-center">
+      <nav class="text-[11px] font-['Franklin_Gothic_Book'] text-white/40 tracking-[2.5px] uppercase mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-white/70 transition-colors">Home</a>
+        <span class="mx-2 text-white/20" aria-hidden="true">/</span>
+        <a href="/blog" class="hover:text-white/70 transition-colors">Blog</a>
+        <span class="mx-2 text-white/20" aria-hidden="true">/</span>
+        <span class="text-white/55" set:html={title} />
+      </nav>
+      <p class="text-e5-red font-['Franklin_Gothic_Book'] text-[11px] tracking-[3px] uppercase mb-5">
+        <time datetime={isoDate}>{formattedDate}</time>
+      </p>
+      <h1
+        class="font-['Franklin_Gothic_Heavy'] text-white text-[26px] md:text-[36px] lg:text-[44px] uppercase tracking-[2px] leading-tight mb-4"
+        set:html={title}
+      />
+    </div>
+  </section>
+
+  <!-- Article -->
+  <article class="bg-white">
+    <div class="max-w-[960px] mx-auto px-5 md:px-10 py-12 blog-content" set:html={post.content.rendered} />
+
+    <!-- Shop CTA -->
+    <div class="bg-e5-red py-16 px-4 text-center">
+      <h2 class="font-['Franklin_Gothic_Heavy'] text-white text-[26px] md:text-[34px] uppercase tracking-[4px] mb-4">
+        Upgrade Your Corvette Today
+      </h2>
+      <p class="font-['Libre_Franklin'] text-white/85 text-[15px] leading-[1.7] mb-8 max-w-[480px] mx-auto">
+        Engineered exclusively for Corvettes. Built to perform, designed to impress.
+      </p>
+      <a
+        href="/shop"
+        class="inline-block bg-white text-e5-red font-['Franklin_Gothic_Demi'] text-[12px] tracking-[3px] uppercase px-14 py-4 hover:bg-white/90 transition-colors"
+      >
+        Shop E5 Wheels
+      </a>
+    </div>
+
+    <!-- Back to Blog -->
+    <div class="bg-[#f5f5f5] py-8 px-4 text-center">
+      <a
+        href="/blog"
+        class="font-['Franklin_Gothic_Book'] text-black/50 text-[12px] tracking-[2.5px] uppercase hover:text-black/80 transition-colors"
+      >
+        &larr; Back to All Posts
+      </a>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+  .blog-content :global(h2) {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    color: var(--color-e5-red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 18px;
+    margin-top: 52px;
+    margin-bottom: 16px;
+  }
+
+  .blog-content :global(h3) {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    color: #111;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+
+  .blog-content :global(p) {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+
+  .blog-content :global(img) {
+    width: 100%;
+    height: auto;
+    margin-top: 36px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .blog-content :global(figure) {
+    margin: 2em 0;
+  }
+
+  .blog-content :global(figure img) {
+    margin: 0;
+  }
+
+  .blog-content :global(strong) {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .blog-content :global(a) {
+    color: var(--color-e5-red);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-e5-red);
+    transition: opacity 0.2s;
+  }
+
+  .blog-content :global(a:hover) {
+    opacity: 0.7;
+  }
+
+  .blog-content :global(ul) {
+    margin-bottom: 28px;
+    padding-left: 4px;
+  }
+
+  .blog-content :global(ul li) {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 12px;
+    padding-left: 22px;
+    position: relative;
+    list-style: none;
+  }
+
+  .blog-content :global(ul li::before) {
+    content: '\2014';
+    position: absolute;
+    left: 0;
+    color: var(--color-e5-red);
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Wheel image grid from WordPress HTML */
+  .blog-content :global(div[style*="display:flex"]) {
+    margin-top: 36px;
+    margin-bottom: 36px;
+  }
+
+  .blog-content :global(div[style*="display:flex"] img) {
+    margin: 0 0 8px 0;
+  }
+
+  .blog-content :global(div[style*="display:flex"] p) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 600px) {
+    .blog-content :global(h2) {
+      font-size: 16px;
+    }
+
+    .blog-content :global(p),
+    .blog-content :global(ul li) {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .blog-content :global(div[style*="display:flex"]) {
+      flex-direction: column;
+    }
+  }
+</style>
