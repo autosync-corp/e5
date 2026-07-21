@@ -23,7 +23,6 @@ if (!post) {
 const title: string = post.title.rendered;
 const excerpt: string = (post.excerpt?.rendered ?? '').replace(/<[^>]*>/g, '').trim();
 const featuredImage: string | null = post._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? null;
-const featuredImageAlt: string = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || title;
 const canonical = `${siteUrl}/blog/${slug}`;
 const isoDate = new Date(post.date).toISOString();
 const isoModified = new Date(post.modified).toISOString();
