@@ -34,7 +34,7 @@ import {
           <a :href="VENDOR_REGISTRATION_ROUTE" class="footer-link">VENDOR REGISTRATION</a>
           <a :href="MEDIA_ROUTE" class="footer-link">MEDIA</a>
           <a :href="ABOUT_ROUTE" class="footer-link">ABOUT US</a>
-          <a href="/category/blog" class="footer-link">BLOG</a>
+          <a href="/blog" class="footer-link">BLOG</a>
         </div>
 
         <!-- Center: Logo + Social -->

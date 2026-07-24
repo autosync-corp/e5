@@ -50,7 +50,7 @@ const breadcrumbSchema = JSON.stringify({
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${siteUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteUrl}/category/blog` },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteUrl}/blog` },
     { "@type": "ListItem", "position": 3, "name": post.data.title, "item": canonical }
   ]
 });
@@ -76,7 +76,7 @@ const breadcrumbSchema = JSON.stringify({
       <nav class="text-[11px] font-['Franklin_Gothic_Book'] text-white/40 tracking-[2.5px] uppercase mb-6" aria-label="Breadcrumb">
         <a href="/" class="hover:text-white/70 transition-colors">Home</a>
         <span class="mx-2 text-white/20" aria-hidden="true">/</span>
-        <a href="/category/blog" class="hover:text-white/70 transition-colors">Blog</a>
+        <a href="/blog" class="hover:text-white/70 transition-colors">Blog</a>
         <span class="mx-2 text-white/20" aria-hidden="true">/</span>
         <span class="text-white/55">{post.data.title}</span>
       </nav>
@@ -119,7 +119,7 @@ const breadcrumbSchema = JSON.stringify({
     <!-- Back to Blog -->
     <div class="bg-[#f5f5f5] py-8 px-4 text-center">
       <a
-        href="/category/blog"
+        href="/blog"
         class="font-['Franklin_Gothic_Book'] text-black/50 text-[12px] tracking-[2.5px] uppercase hover:text-black/80 transition-colors"
       >
         &larr; Back to All Posts
