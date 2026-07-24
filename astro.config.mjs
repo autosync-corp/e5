@@ -30,11 +30,12 @@ export default defineConfig({
         return !excludePaths.some(p => page.includes(p));
       },
       customPages: [
-        // Blog posts (not auto-discovered because [slug].astro is SSR)
-        'https://www.e5wheels.com/e5-wheels-at-corvettes-at-carlisle-2025-the-corvette-event-of-the-year',
-        'https://www.e5wheels.com/cracked_c7_corvette_wheels',
-        'https://www.e5wheels.com/elevate-your-c6-corvette-personalize-your-c6-with-aftermarket-rims-from-e5wheels-com',
-        'https://www.e5wheels.com/e5-custom-wheels-for-your-c7-corvette',
+        // Blog pages (WordPress headless — SSR routes not auto-discovered)
+        'https://www.e5wheels.com/blog',
+        'https://www.e5wheels.com/blog/cracked-oem-c7-corvette-wheels',
+        'https://www.e5wheels.com/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette',
+        'https://www.e5wheels.com/blog/e5-wheels-at-corvettes-at-carlisle-2025',
+        'https://www.e5wheels.com/blog/c6-corvette-aftermarket-wheels-personalize-your-ride',
         // Shop level-2 pages: /shop/{series}/{finish} (SSR routes not auto-discovered)
         // Daytona
         'https://www.e5wheels.com/shop/daytona/gloss-black',
@@ -76,6 +77,20 @@ export default defineConfig({
     }),
   ],
   redirects: {
+    // Blog listing
+    '/category/blog': '/blog',
+    '/category/blog/': '/blog',
+
+    // Old blog post URLs → new WordPress blog post URLs
+    '/cracked_c7_corvette_wheels': '/blog/cracked-oem-c7-corvette-wheels',
+    '/cracked_c7_corvette_wheels/': '/blog/cracked-oem-c7-corvette-wheels',
+    '/e5-custom-wheels-for-your-c7-corvette': '/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette',
+    '/e5-custom-wheels-for-your-c7-corvette/': '/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette',
+    '/e5-wheels-at-corvettes-at-carlisle-2025-the-corvette-event-of-the-year': '/blog/e5-wheels-at-corvettes-at-carlisle-2025',
+    '/e5-wheels-at-corvettes-at-carlisle-2025-the-corvette-event-of-the-year/': '/blog/e5-wheels-at-corvettes-at-carlisle-2025',
+    '/elevate-your-c6-corvette-personalize-your-c6-with-aftermarket-rims-from-e5wheels-com': '/blog/c6-corvette-aftermarket-wheels-personalize-your-ride',
+    '/elevate-your-c6-corvette-personalize-your-c6-with-aftermarket-rims-from-e5wheels-com/': '/blog/c6-corvette-aftermarket-wheels-personalize-your-ride',
+
     // Unique redirects not covered by vercel.json
     '/catalog-2025/': '/catalog',
 
