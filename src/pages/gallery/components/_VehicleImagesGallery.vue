@@ -21,6 +21,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  wheelDesc: {
+    type: String,
+    default: 'E5 custom wheels'
+  },
 });
 
 const currentImageIndex: Ref<number> = ref(0);
@@ -130,7 +134,7 @@ onUnmounted(() => {
       <img
           v-if="!isCurrentVideo"
           :src="currentMediaItem.url"
-          :alt="`${props.trim} ${currentImageIndex + 1}`"
+          :alt="`${props.trim} with ${props.wheelDesc} — photo ${currentImageIndex + 1}`"
           class="w-full max-h-[740px] object-cover"
           width="1920"
           height="740"
@@ -222,7 +226,7 @@ onUnmounted(() => {
             >
               <img
                   :src="item.type === 'video' ? item.thumbnail : item.url"
-                  :alt="`Thumbnail ${index + 1}`"
+                  :alt="`${props.trim} with ${props.wheelDesc} — photo ${index + 1}`"
                   class="w-full h-full object-cover"
                   width="235"
                   height="157"
