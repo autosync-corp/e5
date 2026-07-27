@@ -33,6 +33,30 @@ export interface CorvetteGalleryItem {
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
+    "galleryId": "2026-c8-zr1-green-with-e5-laguna-polished-wheels",
+    "dateAdded": "2026-07-14",
+    "year": "2026",
+    "submodel": "C8",
+    "trim": "ZR1",
+    "vehicleColor": "Green",
+    "vehicleTitle": "2026 C8 Corvette ZR1 Green",
+    "wheelStyle": "Laguna",
+    "wheelFinish": "Polished",
+    "wheelSizeF": "20\" x 10\"",
+    "offesetF": "25mm",
+    "partF": "E5LA2010E25520PO",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "21\" x 13\"",
+    "offsetR": "20mm",
+    "wheelPartR": "E5LA2113E20520PO",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "pinned": false,
+    "images": ["0.webp","1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp","10.webp","11.webp","12.webp","13.webp","14.webp","15.webp","16.webp","17.webp","18.webp","19.webp","20.webp","21.webp","22.webp","23.webp","24.webp","25.webp","26.webp","27.webp","28.webp","29.webp","30.webp"]
+  },
+  {
     "galleryId": "2026-corvette-e-ray-blue-with-sebring-2p-bronze-black-lip-wheels",
     "dateAdded": "2026-05-23",
     "year": "2026",
