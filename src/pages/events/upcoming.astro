@@ -1,0 +1,10 @@
+---
+export const prerender = false;
+import EventPage from '@/core/components/EventPage.astro';
+import { getActiveEvent } from '@/core/services/EventsService';
+import { FALLBACK_EVENT } from '@/core/constants/fallbackEvent';
+
+const event = (await getActiveEvent()) || FALLBACK_EVENT;
+---
+
+<EventPage event={event} canonicalPath="/events/upcoming" />

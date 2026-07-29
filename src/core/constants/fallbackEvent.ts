@@ -1,0 +1,30 @@
+// Used when Redis is unavailable or no event is flagged active, so the page never breaks
+export const FALLBACK_EVENT = {
+  slug: 'miami-showroom-grand-opening',
+  title: 'E5 Wheels Miami Showroom Grand Opening',
+  dateLabel: 'Saturday, September 26th, 2026.',
+  location: '3500 NW 77 CT, Miami, FL 33122',
+  timeRange: '7PM – 10PM EST',
+  heroImageUrl: '/assets/images/events/showroom-hero.webp',
+  description: [
+    "A few months ago, we cracked the doors open early, concrete still curing, walls still bare, and gave a handful of you the first look at what was coming.",
+    "That was just a preview.",
+    "Now it's built. Wheels on display, the space fully realized, and an experience to match. This isn't your typical opening — cocktails, culture, community — we're building something exclusive, and we want you there for it.",
+  ],
+  whatsInStore: [
+    'Sim Racing — presented by Shift Arcade',
+    'Wagyu Beef — by The Wagyu Haus',
+    'Cigar Lounge — by A2A Cigars',
+    'Cocktails',
+    'Indoor Car & Wheel Display',
+    'E5 Merchandise — available for purchase',
+    'Live Music',
+    'Giveaways & Raffle',
+  ],
+  hasForm: true,
+  showState: true,
+  showCorvetteGen: true,
+  showModelTrim: true,
+  showWheelDropdown: false,
+  customFields: [{ label: 'Social Media @', required: false }],
+};

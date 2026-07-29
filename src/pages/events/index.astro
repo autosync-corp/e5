@@ -1,0 +1,79 @@
+---
+export const prerender = false;
+import '@/assets/main.css';
+import '@/assets/fonts/fonts.css';
+import Footer from '@/core/components/Footer.vue';
+import EventNavHeader from '@/core/components/EventNavHeader.astro';
+import { getAllEvents } from '@/core/services/EventsService';
+import { FALLBACK_EVENT } from '@/core/constants/fallbackEvent';
+
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+
+let events = await getAllEvents();
+if (events.length === 0) events = [FALLBACK_EVENT];
+
+const now = new Date();
+const upcoming = events
+  .filter((e: any) => !e.startAt || new Date(e.startAt) >= now)
+  .sort((a: any, b: any) => new Date(a.startAt || 0).getTime() - new Date(b.startAt || 0).getTime());
+const past = events
+  .filter((e: any) => e.startAt && new Date(e.startAt) < now)
+  .sort((a: any, b: any) => new Date(b.startAt).getTime() - new Date(a.startAt).getTime());
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events Calendar — E5 Wheels</title>
+  <meta name="description" content="Browse upcoming and past E5 Wheels events." />
+  <link rel="canonical" href={`${siteUrl}/events`} />
+  <style>
+    html, body { width: 100%; margin: 0; padding: 0; }
+    .events-calendar-page { width: 100%; background: #fff; color: #111; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .calendar-content { max-width: 1200px; margin: 0 auto; padding: 72px 32px 96px; }
+    .calendar-heading { font-family: 'Franklin Gothic Heavy', sans-serif; font-size: clamp(32px, 5vw, 54px); text-transform: uppercase; text-align: center; color: #000; margin-bottom: 16px; }
+    .calendar-sub { text-align: center; color: #666; font-size: 15px; margin-bottom: 56px; }
+    .calendar-section-title { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #d31d25; margin-bottom: 24px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+    .event-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 64px; }
+    .event-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 8px; border-bottom: 1px solid #eee; text-decoration: none; color: #111; transition: background 0.15s; }
+    .event-row:hover { background: #fafafa; }
+    .event-row-title { font-size: 18px; font-weight: 600; }
+    .event-row-date { font-size: 14px; color: #666; white-space: nowrap; }
+    .empty-msg { color: #888; font-size: 14px; padding: 24px 8px; }
+  </style>
+</head>
+<body>
+<div class="events-calendar-page">
+  <EventNavHeader />
+
+  <div class="calendar-content">
+    <h1 class="calendar-heading">Events Calendar</h1>
+    <p class="calendar-sub">All upcoming and past E5 Wheels events</p>
+
+    <div class="calendar-section-title">Upcoming</div>
+    <div class="event-list">
+      {upcoming.length > 0 ? upcoming.map((e: any) => (
+        <a class="event-row" href={`/events/${e.slug}`}>
+          <span class="event-row-title">{e.title}{e.active ? ' — Active' : ''}</span>
+          <span class="event-row-date">{e.dateLabel}</span>
+        </a>
+      )) : <p class="empty-msg">No upcoming events.</p>}
+    </div>
+
+    <div class="calendar-section-title">Past</div>
+    <div class="event-list">
+      {past.length > 0 ? past.map((e: any) => (
+        <a class="event-row" href={`/events/${e.slug}`}>
+          <span class="event-row-title">{e.title}</span>
+          <span class="event-row-date">{e.dateLabel}</span>
+        </a>
+      )) : <p class="empty-msg">No past events yet.</p>}
+    </div>
+  </div>
+</div>
+
+<Footer client:only="vue" />
+</body>
+</html>

@@ -1,80 +1,31 @@
 ---
-export const prerender = false;
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
 import Footer from '@/core/components/Footer.vue';
-import { Redis } from '@upstash/redis';
+import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import { fetchWheels } from '@/core/services/ProductService';
 
-const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
-const EVENTS_KEY = 'e5:events';
-
-let redis: Redis | null = null;
-try {
-  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
-    redis = new Redis({
-      url: import.meta.env.KV_REST_API_URL,
-      token: import.meta.env.KV_REST_API_TOKEN,
-    });
-  }
-} catch { /* Redis unavailable */ }
-
-let activeEvent: any = null;
-try {
-  if (redis) {
-    const all = await redis.hgetall(EVENTS_KEY);
-    if (all) {
-      const events = Object.values(all).map(e => (typeof e === 'string' ? JSON.parse(e) : e));
-      activeEvent = events.find((e: any) => e.active) || null;
-    }
-  }
-} catch { /* fall through to fallback below */ }
-
-// Fallback so the page still renders correctly before any event is configured in the admin
-if (!activeEvent) {
-  activeEvent = {
-    slug: 'miami-showroom-grand-opening',
-    title: 'E5 Wheels Miami Showroom Grand Opening',
-    dateLabel: 'Saturday, September 26th, 2026.',
-    location: '3500 NW 77 CT, Miami, FL 33122',
-    timeRange: '7PM – 10PM EST',
-    heroImageUrl: '/assets/images/events/showroom-hero.webp',
-    description: [
-      "A few months ago, we cracked the doors open early, concrete still curing, walls still bare, and gave a handful of you the first look at what was coming.",
-      "That was just a preview.",
-      "Now it's built. Wheels on display, the space fully realized, and an experience to match. This isn't your typical opening — cocktails, culture, community — we're building something exclusive, and we want you there for it.",
-    ],
-    whatsInStore: [
-      'Sim Racing — presented by Shift Arcade',
-      'Wagyu Beef — by The Wagyu Haus',
-      'Cigar Lounge — by A2A Cigars',
-      'Cocktails',
-      'Indoor Car & Wheel Display',
-      'E5 Merchandise — available for purchase',
-      'Live Music',
-      'Giveaways & Raffle',
-    ],
-    hasForm: true,
-    showState: true,
-    showCorvetteGen: true,
-    showModelTrim: true,
-    showWheelDropdown: false,
-    customFields: [{ label: 'Social Media @', required: false }],
-  };
+export interface Props {
+  event: any;
+  canonicalPath: string;
 }
 
+const { event, canonicalPath } = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+
 let wheelModels: string[] = [];
-if (activeEvent.showWheelDropdown) {
+if (event.showWheelDropdown) {
   try {
     const response = await fetchWheels();
-    wheelModels = [...new Set(response.Wheels.map(w => w.Model))].sort();
+    wheelModels = [...new Set(response.Wheels.map((w: any) => w.Model))].sort();
   } catch {
     wheelModels = [];
   }
 }
 
-const customFields = activeEvent.customFields || [];
-const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim;
+const customFields = event.customFields || [];
+const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
 ---
 
 <!DOCTYPE html>
@@ -82,97 +33,16 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{activeEvent.title} — RSVP</title>
-  <meta name="description" content={`RSVP for ${activeEvent.title} on ${activeEvent.dateLabel}`} />
-  <link rel="canonical" href={`${siteUrl}/rsvp`} />
-  <meta property="og:title" content={`${activeEvent.title} — RSVP`} />
-  <meta property="og:description" content={`Join us ${activeEvent.dateLabel}`} />
-  <meta property="og:url" content={`${siteUrl}/rsvp`} />
+  <title>{event.title} — RSVP</title>
+  <meta name="description" content={`RSVP for ${event.title} on ${event.dateLabel}`} />
+  <link rel="canonical" href={`${siteUrl}${canonicalPath}`} />
+  <meta property="og:title" content={`${event.title} — RSVP`} />
+  <meta property="og:description" content={`Join us ${event.dateLabel}`} />
+  <meta property="og:url" content={`${siteUrl}${canonicalPath}`} />
   <meta property="og:type" content="website" />
   <style>
     html, body { width: 100%; margin: 0; padding: 0; }
     .rsvp-page { width: 100%; background: #fff; color: #111; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-
-    /* ── Header ── */
-    .rsvp-header {
-      background: #fff;
-      height: 80px;
-      max-width: 1600px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      align-items: center;
-      justify-items: center;
-      border-bottom: 2px solid #d31d25;
-    }
-    .rsvp-nav-link {
-      font-size: 16px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: color 0.2s;
-    }
-    .rsvp-nav-dark { color: #000; }
-    .rsvp-nav-dark:hover { color: #d31d25; }
-    .rsvp-nav-red { color: #d31d25; }
-    .rsvp-nav-red:hover { color: #000; }
-    .rsvp-header-logo { height: auto; max-height: 40px; width: auto; display: block; }
-    .rsvp-header-logo-link { grid-column: 3; }
-
-    .rsvp-hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 28px;
-      height: 22px;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-    }
-    .rsvp-hamburger span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: #000;
-    }
-
-    .rsvp-mobile-menu {
-      display: none;
-      flex-direction: column;
-      background: #fff;
-      border-bottom: 2px solid #d31d25;
-      position: absolute;
-      top: 56px;
-      left: 0;
-      right: 0;
-      z-index: 40;
-    }
-    .rsvp-mobile-menu.open { display: flex; }
-    .rsvp-mobile-menu a {
-      padding: 16px 24px;
-      border-bottom: 1px solid #eee;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: #000;
-    }
-    .rsvp-mobile-menu a.rsvp-nav-red { color: #d31d25; }
-    .rsvp-mobile-menu a:last-child { border-bottom: none; }
-
-    @media (max-width: 768px) {
-      .rsvp-header {
-        height: 56px;
-        grid-template-columns: 44px 1fr 44px;
-      }
-      .rsvp-header .rsvp-nav-link { display: none; }
-      .rsvp-header-logo-link { grid-column: 2; }
-      .rsvp-header-logo { max-height: 24px; }
-      .rsvp-hamburger { display: flex; grid-column: 1; }
-    }
 
     /* ── Hero ── */
     .hero {
@@ -386,32 +256,13 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
 <body>
 <div class="rsvp-page">
 
-  <!-- Header -->
-  <header class="rsvp-header">
-    <button class="rsvp-hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="/rsvp" class="rsvp-nav-link rsvp-nav-dark">Upcoming</a>
-    <a href="/rsvp" class="rsvp-nav-link rsvp-nav-dark">Calendar</a>
-    <a href="https://www.e5wheels.com" aria-label="E5 Wheels home" class="rsvp-header-logo-link">
-      <img src="/assets/images/e5-logo-black-rsvp.webp" alt="E5 Wheels" class="rsvp-header-logo" />
-    </a>
-    <a href="https://www.e5wheels.com" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
-    <a href="https://www.e5wheels.com/shop" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
-  </header>
-
-  <nav class="rsvp-mobile-menu" id="mobileMenu">
-    <a href="/rsvp">Upcoming</a>
-    <a href="/rsvp">Calendar</a>
-    <a href="https://www.e5wheels.com"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
-    <a href="https://www.e5wheels.com/shop"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
-  </nav>
+  <EventNavHeader />
 
   <!-- Hero Image -->
   <div class="hero">
     <img
-      src={activeEvent.heroImageUrl}
-      alt={activeEvent.title}
+      src={event.heroImageUrl}
+      alt={event.title}
       fetchpriority="high"
     />
   </div>
@@ -419,23 +270,23 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
   <!-- Event Details -->
   <div class="content">
     <span class="label-tag">Upcoming Event</span>
-    <h1 class="event-title">{activeEvent.title}</h1>
+    <h1 class="event-title">{event.title}</h1>
 
     <div class="event-body">
-      {(activeEvent.description || []).map((p: string) => <p>{p}</p>)}
+      {(event.description || []).map((p: string) => <p>{p}</p>)}
     </div>
 
-    <p class="event-date">{activeEvent.dateLabel}</p>
-    <p class="event-meta">{activeEvent.location}</p>
-    <p class="event-meta">{activeEvent.timeRange}</p>
+    <p class="event-date">{event.dateLabel}</p>
+    <p class="event-meta">{event.location}</p>
+    <p class="event-meta">{event.timeRange}</p>
 
-    {(activeEvent.whatsInStore || []).length > 0 && (
+    {(event.whatsInStore || []).length > 0 && (
       <>
         <div class="divider"></div>
         <div class="whats-in-store">
           <h2>What's In Store</h2>
           <ul>
-            {activeEvent.whatsInStore.map((item: string) => <li>{item}</li>)}
+            {event.whatsInStore.map((item: string) => <li>{item}</li>)}
           </ul>
         </div>
         <div class="divider"></div>
@@ -444,7 +295,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
   </div>
 
   <!-- RSVP Form -->
-  {activeEvent.hasForm !== false && (
+  {event.hasForm !== false && (
     <div class="rsvp-section">
       <div id="formWrap">
         <span class="rsvp-label">RSVP Below</span>
@@ -459,7 +310,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
             <input class="form-field" type="tel" id="phone" placeholder="Phone Number" />
           </div>
 
-          {activeEvent.showState && (
+          {event.showState && (
             <div class="form-row">
               <select class="form-field" id="state">
                 <option value="" disabled selected>State</option>
@@ -485,7 +336,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
             </div>
           )}
 
-          {showCorvetteRow && activeEvent.showCorvetteGen && activeEvent.showModelTrim && (
+          {showCorvetteRow && event.showCorvetteGen && event.showModelTrim && (
             <div class="form-row">
               <select class="form-field" id="corvetteGen">
                 <option value="" disabled selected>Corvette Generation / Year</option>
@@ -505,7 +356,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
               </select>
             </div>
           )}
-          {activeEvent.showCorvetteGen && !activeEvent.showModelTrim && (
+          {event.showCorvetteGen && !event.showModelTrim && (
             <div class="form-row full">
               <select class="form-field" id="corvetteGen">
                 <option value="" disabled selected>Corvette Generation / Year</option>
@@ -516,7 +367,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
               </select>
             </div>
           )}
-          {!activeEvent.showCorvetteGen && activeEvent.showModelTrim && (
+          {!event.showCorvetteGen && event.showModelTrim && (
             <div class="form-row full">
               <select class="form-field" id="modelTrim">
                 <option value="" disabled selected>Model / Trim</option>
@@ -530,7 +381,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
             </div>
           )}
 
-          {activeEvent.showWheelDropdown && wheelModels.length > 0 && (
+          {event.showWheelDropdown && wheelModels.length > 0 && (
             <div class="form-row full">
               <select class="form-field" id="wheelInterest">
                 <option value="" disabled selected>Wheel Interested In / Purchased</option>
@@ -568,7 +419,7 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
 
       <div class="success-msg" id="successMsg">
         <h2>You're on the list.</h2>
-        <p>We'll see you {activeEvent.dateLabel}<br />{activeEvent.location} &mdash; {activeEvent.timeRange}.</p>
+        <p>We'll see you {event.dateLabel}<br />{event.location} &mdash; {event.timeRange}.</p>
       </div>
     </div>
   )}
@@ -578,16 +429,9 @@ const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim
   <!-- Footer — global component, outside rsvp-page scope -->
   <Footer client:only="vue" />
 
-  <script define:vars={{ eventSlug: activeEvent.slug }}>
+  <script define:vars={{ eventSlug: event.slug }}>
     // @ts-nocheck
     const form = document.getElementById('rsvpForm');
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    hamburgerBtn.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
-      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
 
     // Style selects as selected when a value is chosen
     document.querySelectorAll('select.form-field').forEach(sel => {
