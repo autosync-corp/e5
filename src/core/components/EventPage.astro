@@ -44,8 +44,8 @@ if (event.showModelTrim) {
   flatTrims = [...new Set(Object.values(generationTrimMap).flat())].sort();
 }
 
-// Wheel -> Finish: Finish is a combination of Finish + Color + Accent (matches the
-// shop page's getFinishName logic), filtered to only finishes that exist per wheel.
+// Wheel -> Finish: Finish is always the raw Finish + Color + Accent fields joined
+// directly (no ShortFinish/ShortColor fallback), filtered to only finishes that exist per wheel.
 let wheelModels: string[] = [];
 let wheelFinishMap: Record<string, string[]> = {};
 let flatFinishes: string[] = [];
@@ -59,10 +59,8 @@ if (event.showWheelDropdown || event.showFinishDropdown) {
       const rawFinishMap: Record<string, Set<string>> = {};
       for (const w of response.Wheels) {
         const parts: string[] = [];
-        if (w.ShortFinish) parts.push(w.ShortFinish);
-        else if (w.Finish) parts.push(w.Finish);
-        if (w.ShortColor) parts.push(w.ShortColor);
-        else if (w.Color) parts.push(w.Color);
+        if (w.Finish) parts.push(w.Finish);
+        if (w.Color) parts.push(w.Color);
         if (w.Accent) parts.push(w.Accent);
         const finishName = parts.length > 0 ? parts.join(' ') : 'Standard';
         if (!rawFinishMap[w.Model]) rawFinishMap[w.Model] = new Set();
