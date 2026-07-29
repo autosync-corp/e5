@@ -13,13 +13,15 @@ try {
   }
 } catch { /* Redis unavailable */ }
 
-const RSVP_KEY = 'e5:rsvp';
+function rsvpKeyFor(eventSlug: string): string {
+  return `e5:rsvp:${eventSlug}`;
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
 
-    if (!data.firstName || !data.lastName || !data.email) {
+    if (!data.eventSlug || !data.firstName || !data.lastName || !data.email) {
       return new Response(JSON.stringify({ error: 'First name, last name, and email are required.' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
@@ -33,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     };
 
     if (redis) {
-      await redis.lpush(RSVP_KEY, JSON.stringify(entry));
+      await redis.lpush(rsvpKeyFor(data.eventSlug), JSON.stringify(entry));
     }
 
     const webhookUrl = import.meta.env.GHL_RSVP_WEBHOOK_URL;

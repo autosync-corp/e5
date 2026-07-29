@@ -3,8 +3,78 @@ export const prerender = false;
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
 import Footer from '@/core/components/Footer.vue';
+import { Redis } from '@upstash/redis';
+import { fetchWheels } from '@/core/services/ProductService';
 
 const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const EVENTS_KEY = 'e5:events';
+
+let redis: Redis | null = null;
+try {
+  if (import.meta.env.KV_REST_API_URL && import.meta.env.KV_REST_API_TOKEN) {
+    redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+  }
+} catch { /* Redis unavailable */ }
+
+let activeEvent: any = null;
+try {
+  if (redis) {
+    const all = await redis.hgetall(EVENTS_KEY);
+    if (all) {
+      const events = Object.values(all).map(e => (typeof e === 'string' ? JSON.parse(e) : e));
+      activeEvent = events.find((e: any) => e.active) || null;
+    }
+  }
+} catch { /* fall through to fallback below */ }
+
+// Fallback so the page still renders correctly before any event is configured in the admin
+if (!activeEvent) {
+  activeEvent = {
+    slug: 'miami-showroom-grand-opening',
+    title: 'E5 Wheels Miami Showroom Grand Opening',
+    dateLabel: 'Saturday, September 26th, 2026.',
+    location: '3500 NW 77 CT, Miami, FL 33122',
+    timeRange: '7PM – 10PM EST',
+    heroImageUrl: '/assets/images/events/showroom-hero.webp',
+    description: [
+      "A few months ago, we cracked the doors open early, concrete still curing, walls still bare, and gave a handful of you the first look at what was coming.",
+      "That was just a preview.",
+      "Now it's built. Wheels on display, the space fully realized, and an experience to match. This isn't your typical opening — cocktails, culture, community — we're building something exclusive, and we want you there for it.",
+    ],
+    whatsInStore: [
+      'Sim Racing — presented by Shift Arcade',
+      'Wagyu Beef — by The Wagyu Haus',
+      'Cigar Lounge — by A2A Cigars',
+      'Cocktails',
+      'Indoor Car & Wheel Display',
+      'E5 Merchandise — available for purchase',
+      'Live Music',
+      'Giveaways & Raffle',
+    ],
+    hasForm: true,
+    showState: true,
+    showCorvetteGen: true,
+    showModelTrim: true,
+    showWheelDropdown: false,
+    customFields: [{ label: 'Social Media @', required: false }],
+  };
+}
+
+let wheelModels: string[] = [];
+if (activeEvent.showWheelDropdown) {
+  try {
+    const response = await fetchWheels();
+    wheelModels = [...new Set(response.Wheels.map(w => w.Model))].sort();
+  } catch {
+    wheelModels = [];
+  }
+}
+
+const customFields = activeEvent.customFields || [];
+const showCorvetteRow = activeEvent.showCorvetteGen || activeEvent.showModelTrim;
 ---
 
 <!DOCTYPE html>
@@ -12,11 +82,11 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RSVP — E5 Wheels Miami Showroom Grand Opening</title>
-  <meta name="description" content="RSVP for the E5 Wheels Miami Showroom Grand Opening on Saturday, September 26th, 2026. Cocktails, Sim Racing, Wagyu Beef, Live Music and more." />
+  <title>{activeEvent.title} — RSVP</title>
+  <meta name="description" content={`RSVP for ${activeEvent.title} on ${activeEvent.dateLabel}`} />
   <link rel="canonical" href={`${siteUrl}/rsvp`} />
-  <meta property="og:title" content="E5 Wheels Miami Showroom Grand Opening — RSVP" />
-  <meta property="og:description" content="Join us September 26th, 2026. Cocktails, culture, community." />
+  <meta property="og:title" content={`${activeEvent.title} — RSVP`} />
+  <meta property="og:description" content={`Join us ${activeEvent.dateLabel}`} />
   <meta property="og:url" content={`${siteUrl}/rsvp`} />
   <meta property="og:type" content="website" />
   <style>
@@ -27,7 +97,7 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     .rsvp-header {
       background: #fff;
       height: 80px;
-      max-width: 1400px;
+      max-width: 1600px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -48,69 +118,130 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     .rsvp-nav-red { color: #d31d25; }
     .rsvp-nav-red:hover { color: #000; }
     .rsvp-header-logo { height: auto; max-height: 40px; width: auto; display: block; }
+    .rsvp-header-logo-link { grid-column: 3; }
+
+    .rsvp-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 22px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    .rsvp-hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #000;
+    }
+
+    .rsvp-mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #fff;
+      border-bottom: 2px solid #d31d25;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      z-index: 40;
+    }
+    .rsvp-mobile-menu.open { display: flex; }
+    .rsvp-mobile-menu a {
+      padding: 16px 24px;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #000;
+    }
+    .rsvp-mobile-menu a.rsvp-nav-red { color: #d31d25; }
+    .rsvp-mobile-menu a:last-child { border-bottom: none; }
+
     @media (max-width: 768px) {
-      .rsvp-header { height: 56px; }
-      .rsvp-nav-link { font-size: 9px; letter-spacing: 1.5px; }
+      .rsvp-header {
+        height: 56px;
+        grid-template-columns: 44px 1fr 44px;
+      }
+      .rsvp-header .rsvp-nav-link { display: none; }
+      .rsvp-header-logo-link { grid-column: 2; }
       .rsvp-header-logo { max-height: 24px; }
+      .rsvp-hamburger { display: flex; grid-column: 1; }
     }
 
     /* ── Hero ── */
     .hero {
       width: 100%;
-      height: 460px;
-      overflow: hidden;
       background: #111;
     }
     .hero img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
     }
-    @media (max-width: 768px) { .hero { height: 260px; } }
 
     /* ── Content ── */
     .content {
-      max-width: 780px;
+      max-width: 1600px;
       margin: 0 auto;
       padding: 72px 32px 0;
     }
     .label-tag {
-      font-size: 11px;
+      font-size: 14px;
       letter-spacing: 5px;
       text-transform: uppercase;
-      color: #999;
+      color: #555;
       display: block;
       text-align: center;
       margin-bottom: 20px;
     }
     .event-title {
-      font-family: 'Franklin Gothic Heavy', sans-serif;
-      font-size: clamp(30px, 5.5vw, 54px);
+      font-family: 'Franklin Gothic Medium', sans-serif;
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 66px;
+      letter-spacing: 22.4px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      line-height: 1.1;
+      text-align: center;
       color: #000;
       margin-bottom: 40px;
     }
+    @media (max-width: 1024px) {
+      .event-title { font-size: 44px; line-height: 1.4; letter-spacing: 12px; }
+    }
+    @media (max-width: 768px) {
+      .event-title { font-size: 34px; line-height: 1.4; letter-spacing: 8px; }
+    }
     .event-body p {
-      font-size: 16px;
+      font-size: 19px;
       line-height: 1.9;
-      color: rgba(0,0,0,0.6);
+      color: rgba(0,0,0,0.8);
       margin-bottom: 18px;
     }
     .event-date {
       font-family: 'Franklin Gothic Heavy', sans-serif;
-      font-size: clamp(26px, 4.5vw, 46px);
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 35px;
+      letter-spacing: 10.24px;
       color: #d31d25;
       text-transform: uppercase;
-      letter-spacing: 1px;
       text-align: center;
       margin: 56px 0 18px;
-      line-height: 1.1;
+    }
+    @media (max-width: 1024px) {
+      .event-date { font-size: 38px; line-height: 1.4; letter-spacing: 6px; }
+    }
+    @media (max-width: 768px) {
+      .event-date { font-size: 30px; line-height: 1.4; letter-spacing: 4px; }
     }
     .event-meta {
-      font-size: 16px;
+      font-size: 19px;
       text-align: center;
       color: #111;
       letter-spacing: 0.5px;
@@ -126,7 +257,7 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     }
     .whats-in-store { text-align: center; }
     .whats-in-store h2 {
-      font-size: 11px;
+      font-size: 14px;
       letter-spacing: 5px;
       text-transform: uppercase;
       color: #111;
@@ -134,24 +265,26 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     }
     .whats-in-store li {
       list-style: none;
-      font-size: 16px;
-      color: rgba(0,0,0,0.65);
+      font-size: 19px;
+      color: rgba(0,0,0,0.8);
       line-height: 2.2;
     }
 
     /* ── Form ── */
     .rsvp-section {
-      max-width: 780px;
+      max-width: 1600px;
       margin: 0 auto;
       padding: 0 32px 96px;
     }
     .rsvp-label {
-      font-size: 12px;
+      font-size: 15px;
       letter-spacing: 5px;
       text-transform: uppercase;
       color: #d31d25;
       text-align: center;
       display: block;
+      text-decoration: underline;
+      text-underline-offset: 6px;
       margin-bottom: 40px;
     }
     .form-row {
@@ -168,7 +301,7 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
       border: 1px solid #d0d0d0;
       background: #fff;
       padding: 0 16px;
-      font-size: 12px;
+      font-size: 15px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: #111;
@@ -191,10 +324,10 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     select.form-field.selected { color: #111; }
     select.form-field option { text-transform: none; letter-spacing: 0; font-size: 13px; color: #111; }
     .will-you-label {
-      font-size: 12px;
+      font-size: 15px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #111;
+      color: #d31d25;
       text-align: center;
       display: block;
       margin: 32px 0 12px;
@@ -244,7 +377,7 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
     }
     .success-msg p {
       font-size: 15px;
-      color: rgba(0,0,0,0.6);
+      color: rgba(0,0,0,0.8);
       line-height: 1.9;
     }
 
@@ -255,20 +388,30 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 
   <!-- Header -->
   <header class="rsvp-header">
+    <button class="rsvp-hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <a href="/rsvp" class="rsvp-nav-link rsvp-nav-dark">Upcoming</a>
     <a href="/rsvp" class="rsvp-nav-link rsvp-nav-dark">Calendar</a>
-    <a href="https://www.e5wheels.com" aria-label="E5 Wheels home">
+    <a href="https://www.e5wheels.com" aria-label="E5 Wheels home" class="rsvp-header-logo-link">
       <img src="/assets/images/e5-logo-black-rsvp.webp" alt="E5 Wheels" class="rsvp-header-logo" />
     </a>
-    <a href="https://www.e5wheels.com" class="rsvp-nav-link rsvp-nav-red">To E5Wheels.com</a>
-    <a href="https://www.e5wheels.com/shop" class="rsvp-nav-link rsvp-nav-red">To E5 Shop</a>
+    <a href="https://www.e5wheels.com" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
+    <a href="https://www.e5wheels.com/shop" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
   </header>
+
+  <nav class="rsvp-mobile-menu" id="mobileMenu">
+    <a href="/rsvp">Upcoming</a>
+    <a href="/rsvp">Calendar</a>
+    <a href="https://www.e5wheels.com"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
+    <a href="https://www.e5wheels.com/shop"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
+  </nav>
 
   <!-- Hero Image -->
   <div class="hero">
     <img
-      src="/assets/images/events/showroom-hero.webp"
-      alt="E5 Wheels Miami Showroom"
+      src={activeEvent.heroImageUrl}
+      alt={activeEvent.title}
       fetchpriority="high"
     />
   </div>
@@ -276,193 +419,255 @@ const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
   <!-- Event Details -->
   <div class="content">
     <span class="label-tag">Upcoming Event</span>
-    <h1 class="event-title">E5 Wheels Miami Showroom<br />Grand Opening</h1>
+    <h1 class="event-title">{activeEvent.title}</h1>
 
     <div class="event-body">
-      <p>A few months ago, we cracked the doors open early, concrete still curing, walls still bare, and gave a handful of you the first look at what was coming.</p>
-      <p>That was just a preview.</p>
-      <p>Now it's built. Wheels on display, the space fully realized, and an experience to match. This isn't your typical opening — cocktails, culture, community — we're building something exclusive, and we want you there for it.</p>
+      {(activeEvent.description || []).map((p: string) => <p>{p}</p>)}
     </div>
 
-    <p class="event-date">Saturday, September 26th, 2026.</p>
-    <p class="event-meta">3500 NW 77 CT, Miami, FL 33122</p>
-    <p class="event-meta">7PM – 10PM EST</p>
+    <p class="event-date">{activeEvent.dateLabel}</p>
+    <p class="event-meta">{activeEvent.location}</p>
+    <p class="event-meta">{activeEvent.timeRange}</p>
 
-    <div class="divider"></div>
-    <div class="whats-in-store">
-      <h2>What's In Store</h2>
-      <ul>
-        <li>Sim Racing — presented by Shift Arcade</li>
-        <li>Wagyu Beef — by The Wagyu Haus</li>
-        <li>Cigar Lounge — by A2A Cigars</li>
-        <li>Cocktails</li>
-        <li>Indoor Car &amp; Wheel Display</li>
-        <li>E5 Merchandise — available for purchase</li>
-        <li>Live Music</li>
-        <li>Giveaways &amp; Raffle</li>
-      </ul>
-    </div>
-    <div class="divider"></div>
+    {(activeEvent.whatsInStore || []).length > 0 && (
+      <>
+        <div class="divider"></div>
+        <div class="whats-in-store">
+          <h2>What's In Store</h2>
+          <ul>
+            {activeEvent.whatsInStore.map((item: string) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="divider"></div>
+      </>
+    )}
   </div>
 
   <!-- RSVP Form -->
-  <div class="rsvp-section">
-    <div id="formWrap">
-      <span class="rsvp-label">RSVP Below</span>
+  {activeEvent.hasForm !== false && (
+    <div class="rsvp-section">
+      <div id="formWrap">
+        <span class="rsvp-label">RSVP Below</span>
 
-      <form id="rsvpForm" novalidate>
-        <div class="form-row">
-          <input class="form-field" type="text" id="firstName" placeholder="First Name*" required />
-          <input class="form-field" type="text" id="lastName" placeholder="Last Name*" required />
-        </div>
-        <div class="form-row">
-          <input class="form-field" type="email" id="email" placeholder="Email Address*" required />
-          <input class="form-field" type="tel" id="phone" placeholder="Phone Number" />
-        </div>
-        <div class="form-row">
-          <select class="form-field" id="state">
-            <option value="" disabled selected>State</option>
-            <option>Alabama</option><option>Alaska</option><option>Arizona</option>
-            <option>Arkansas</option><option>California</option><option>Colorado</option>
-            <option>Connecticut</option><option>Delaware</option><option>Washington D.C.</option>
-            <option>Florida</option><option>Georgia</option><option>Hawaii</option>
-            <option>Idaho</option><option>Illinois</option><option>Indiana</option>
-            <option>Iowa</option><option>Kansas</option><option>Kentucky</option>
-            <option>Louisiana</option><option>Maine</option><option>Maryland</option>
-            <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
-            <option>Mississippi</option><option>Missouri</option><option>Montana</option>
-            <option>Nebraska</option><option>Nevada</option><option>New Hampshire</option>
-            <option>New Jersey</option><option>New Mexico</option><option>New York</option>
-            <option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
-            <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option>
-            <option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option>
-            <option>Tennessee</option><option>Texas</option><option>Utah</option>
-            <option>Vermont</option><option>Virginia</option><option>Washington</option>
-            <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
-          </select>
-          <input class="form-field" type="text" id="city" placeholder="City" />
-        </div>
-        <div class="form-row full">
-          <input class="form-field" type="text" id="socialMedia" placeholder="Social Media @" />
-        </div>
-        <div class="form-row">
-          <select class="form-field" id="corvetteGen">
-            <option value="" disabled selected>Corvette Generation / Year</option>
-            <option value="C8 2020-2026">C8 2020–2026</option>
-            <option value="C7 2014-2019">C7 2014–2019</option>
-            <option value="C6 2005-2013">C6 2005–2013</option>
-            <option value="C5 1997-2004">C5 1997–2004</option>
-          </select>
-          <select class="form-field" id="modelTrim">
-            <option value="" disabled selected>Model / Trim</option>
-            <option>Stingray</option>
-            <option>Z06</option>
-            <option>ZR1</option>
-            <option>Grand Sport</option>
-            <option>E-Ray</option>
-            <option>Base</option>
-          </select>
-        </div>
+        <form id="rsvpForm" novalidate>
+          <div class="form-row">
+            <input class="form-field" type="text" id="firstName" placeholder="First Name*" required />
+            <input class="form-field" type="text" id="lastName" placeholder="Last Name*" required />
+          </div>
+          <div class="form-row">
+            <input class="form-field" type="email" id="email" placeholder="Email Address*" required />
+            <input class="form-field" type="tel" id="phone" placeholder="Phone Number" />
+          </div>
 
-        <span class="will-you-label">Will You Be There?</span>
-        <div class="attending-wrap">
-          <select class="form-field" id="attending">
-            <option value="" disabled selected>Yes, Maybe, No</option>
-            <option value="YES">Yes</option>
-            <option value="MAYBE">Maybe</option>
-            <option value="NO">No</option>
-          </select>
-        </div>
+          {activeEvent.showState && (
+            <div class="form-row">
+              <select class="form-field" id="state">
+                <option value="" disabled selected>State</option>
+                <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                <option>Arkansas</option><option>California</option><option>Colorado</option>
+                <option>Connecticut</option><option>Delaware</option><option>Washington D.C.</option>
+                <option>Florida</option><option>Georgia</option><option>Hawaii</option>
+                <option>Idaho</option><option>Illinois</option><option>Indiana</option>
+                <option>Iowa</option><option>Kansas</option><option>Kentucky</option>
+                <option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
+                <option>Mississippi</option><option>Missouri</option><option>Montana</option>
+                <option>Nebraska</option><option>Nevada</option><option>New Hampshire</option>
+                <option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                <option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
+                <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option>
+                <option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option>
+                <option>Tennessee</option><option>Texas</option><option>Utah</option>
+                <option>Vermont</option><option>Virginia</option><option>Washington</option>
+                <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+              </select>
+              <input class="form-field" type="text" id="city" placeholder="City" />
+            </div>
+          )}
 
-        <p class="form-error-msg" id="formError"></p>
-        <button type="submit" class="rsvp-btn" id="rsvpBtn">RSVP</button>
-      </form>
+          {showCorvetteRow && activeEvent.showCorvetteGen && activeEvent.showModelTrim && (
+            <div class="form-row">
+              <select class="form-field" id="corvetteGen">
+                <option value="" disabled selected>Corvette Generation / Year</option>
+                <option value="C8 2020-2026">C8 2020–2026</option>
+                <option value="C7 2014-2019">C7 2014–2019</option>
+                <option value="C6 2005-2013">C6 2005–2013</option>
+                <option value="C5 1997-2004">C5 1997–2004</option>
+              </select>
+              <select class="form-field" id="modelTrim">
+                <option value="" disabled selected>Model / Trim</option>
+                <option>Stingray</option>
+                <option>Z06</option>
+                <option>ZR1</option>
+                <option>Grand Sport</option>
+                <option>E-Ray</option>
+                <option>Base</option>
+              </select>
+            </div>
+          )}
+          {activeEvent.showCorvetteGen && !activeEvent.showModelTrim && (
+            <div class="form-row full">
+              <select class="form-field" id="corvetteGen">
+                <option value="" disabled selected>Corvette Generation / Year</option>
+                <option value="C8 2020-2026">C8 2020–2026</option>
+                <option value="C7 2014-2019">C7 2014–2019</option>
+                <option value="C6 2005-2013">C6 2005–2013</option>
+                <option value="C5 1997-2004">C5 1997–2004</option>
+              </select>
+            </div>
+          )}
+          {!activeEvent.showCorvetteGen && activeEvent.showModelTrim && (
+            <div class="form-row full">
+              <select class="form-field" id="modelTrim">
+                <option value="" disabled selected>Model / Trim</option>
+                <option>Stingray</option>
+                <option>Z06</option>
+                <option>ZR1</option>
+                <option>Grand Sport</option>
+                <option>E-Ray</option>
+                <option>Base</option>
+              </select>
+            </div>
+          )}
+
+          {activeEvent.showWheelDropdown && wheelModels.length > 0 && (
+            <div class="form-row full">
+              <select class="form-field" id="wheelInterest">
+                <option value="" disabled selected>Wheel Interested In / Purchased</option>
+                {wheelModels.map((m: string) => <option value={m}>{m}</option>)}
+              </select>
+            </div>
+          )}
+
+          {customFields.map((field: { label: string; required: boolean }) => (
+            <div class="form-row full">
+              <input
+                class="form-field custom-field-input"
+                type="text"
+                data-label={field.label}
+                placeholder={field.required ? `${field.label}*` : field.label}
+                required={field.required}
+              />
+            </div>
+          ))}
+
+          <span class="will-you-label">Will You Be There?</span>
+          <div class="attending-wrap">
+            <select class="form-field" id="attending">
+              <option value="" disabled selected>Yes, Maybe, No</option>
+              <option value="YES">Yes</option>
+              <option value="MAYBE">Maybe</option>
+              <option value="NO">No</option>
+            </select>
+          </div>
+
+          <p class="form-error-msg" id="formError"></p>
+          <button type="submit" class="rsvp-btn" id="rsvpBtn">RSVP</button>
+        </form>
+      </div>
+
+      <div class="success-msg" id="successMsg">
+        <h2>You're on the list.</h2>
+        <p>We'll see you {activeEvent.dateLabel}<br />{activeEvent.location} &mdash; {activeEvent.timeRange}.</p>
+      </div>
     </div>
-
-    <div class="success-msg" id="successMsg">
-      <h2>You're on the list.</h2>
-      <p>We'll see you September 26th.<br />3500 NW 77 CT, Miami, FL 33122 &mdash; 7PM–10PM EST.</p>
-    </div>
-  </div>
+  )}
 
 </div><!-- end .rsvp-page -->
 
   <!-- Footer — global component, outside rsvp-page scope -->
   <Footer client:only="vue" />
 
-  <script>
+  <script define:vars={{ eventSlug: activeEvent.slug }}>
     // @ts-nocheck
     const form = document.getElementById('rsvpForm');
-    const btn = document.getElementById('rsvpBtn');
-    const errorMsg = document.getElementById('formError');
-    const formWrap = document.getElementById('formWrap');
-    const successMsg = document.getElementById('successMsg');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
 
     // Style selects as selected when a value is chosen
     document.querySelectorAll('select.form-field').forEach(sel => {
       sel.addEventListener('change', () => sel.classList.add('selected'));
     });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorMsg.style.display = 'none';
-      document.querySelectorAll('.form-field').forEach(f => f.classList.remove('error'));
+    if (form) {
+      const btn = document.getElementById('rsvpBtn');
+      const errorMsg = document.getElementById('formError');
+      const formWrap = document.getElementById('formWrap');
+      const successMsg = document.getElementById('successMsg');
 
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+        document.querySelectorAll('.form-field').forEach(f => f.classList.remove('error'));
 
-      let valid = true;
-      if (!firstName) { document.getElementById('firstName').classList.add('error'); valid = false; }
-      if (!lastName)  { document.getElementById('lastName').classList.add('error');  valid = false; }
-      if (!email)     { document.getElementById('email').classList.add('error');      valid = false; }
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
 
-      if (!valid) {
-        errorMsg.textContent = 'Please fill in all required fields.';
-        errorMsg.style.display = 'block';
-        return;
-      }
+        let valid = true;
+        if (!firstName) { document.getElementById('firstName').classList.add('error'); valid = false; }
+        if (!lastName)  { document.getElementById('lastName').classList.add('error');  valid = false; }
+        if (!email)     { document.getElementById('email').classList.add('error');      valid = false; }
 
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
+        if (!valid) {
+          errorMsg.textContent = 'Please fill in all required fields.';
+          errorMsg.style.display = 'block';
+          return;
+        }
 
-      const payload = {
-        firstName,
-        lastName,
-        email,
-        phone:       document.getElementById('phone').value.trim(),
-        state:       document.getElementById('state').value,
-        city:        document.getElementById('city').value.trim(),
-        socialMedia: document.getElementById('socialMedia').value.trim(),
-        corvetteGen: document.getElementById('corvetteGen').value,
-        modelTrim:   document.getElementById('modelTrim').value,
-        attending:   document.getElementById('attending').value,
-      };
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
 
-      try {
-        const res = await fetch('/api/rsvp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+        const customFieldAnswers = {};
+        document.querySelectorAll('.custom-field-input').forEach(input => {
+          customFieldAnswers[input.dataset.label] = input.value.trim();
         });
-        const data = await res.json();
-        if (res.ok) {
-          formWrap.style.display = 'none';
-          successMsg.style.display = 'block';
-          window.scrollTo({ top: document.querySelector('.rsvp-section').offsetTop - 40, behavior: 'smooth' });
-        } else {
-          errorMsg.textContent = data.error || 'Something went wrong. Please try again.';
+
+        const payload = {
+          eventSlug,
+          firstName,
+          lastName,
+          email,
+          phone:       document.getElementById('phone')?.value.trim() || '',
+          state:       document.getElementById('state')?.value || '',
+          city:        document.getElementById('city')?.value.trim() || '',
+          corvetteGen: document.getElementById('corvetteGen')?.value || '',
+          modelTrim:   document.getElementById('modelTrim')?.value || '',
+          wheelInterest: document.getElementById('wheelInterest')?.value || '',
+          attending:   document.getElementById('attending').value,
+          customFieldAnswers,
+        };
+
+        try {
+          const res = await fetch('/api/rsvp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (res.ok) {
+            formWrap.style.display = 'none';
+            successMsg.style.display = 'block';
+            window.scrollTo({ top: document.querySelector('.rsvp-section').offsetTop - 40, behavior: 'smooth' });
+          } else {
+            errorMsg.textContent = data.error || 'Something went wrong. Please try again.';
+            errorMsg.style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = 'RSVP';
+          }
+        } catch {
+          errorMsg.textContent = 'Connection error. Please try again.';
           errorMsg.style.display = 'block';
           btn.disabled = false;
           btn.textContent = 'RSVP';
         }
-      } catch {
-        errorMsg.textContent = 'Connection error. Please try again.';
-        errorMsg.style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = 'RSVP';
-      }
-    });
+      });
+    }
   </script>
 </body>
 </html>

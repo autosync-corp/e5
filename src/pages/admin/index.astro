@@ -102,6 +102,17 @@ if (Astro.request.method === 'POST') {
     .discount { color: #2ecc71; font-weight: 600; }
     .btn-delete { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
     .btn-delete:hover { background: #2a1a1a; }
+    .btn-edit-event { background: none; border: none; color: #5b9bd5; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; margin-right: 4px; }
+    .btn-edit-event:hover { background: #1a2a3a; }
+    .btn-delete-event { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete-event:hover { background: #2a1a1a; }
+    .field-label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
+    textarea.form-textarea {
+      width: 100%; background: #2a2a2a; border: 1px solid #333; border-radius: 4px;
+      padding: 9px 12px; color: #fff; font-size: 13px; outline: none; resize: vertical; font-family: Arial, sans-serif;
+    }
+    textarea.form-textarea:focus { border-color: #c0392b; }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #ccc; }
     .empty { color: #555; font-size: 13px; padding: 12px 0; }
     .order-num { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; }
     .order-total { color: #2ecc71; font-weight: 700; }
@@ -143,6 +154,7 @@ if (Astro.request.method === 'POST') {
 
     <div class="tabs">
       <button class="tab-btn active" data-tab="orders">Orders</button>
+      <button class="tab-btn" data-tab="events">Events</button>
       <button class="tab-btn" data-tab="attendees">Attendees</button>
       <button class="tab-btn" data-tab="coupons">Coupons</button>
       <button class="tab-btn" data-tab="tracking">Tracking</button>
@@ -156,10 +168,103 @@ if (Astro.request.method === 'POST') {
       </div>
     </div>
 
+    <!-- Events Tab -->
+    <div id="tab-events" class="tab-panel">
+      <div class="card">
+        <h2 id="eventFormTitle">Create New Event</h2>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Title</label>
+            <input id="evTitle" type="text" placeholder="Event Title" />
+          </div>
+          <div>
+            <label class="field-label">Slug (URL-safe, unique — can't change after creating)</label>
+            <input id="evSlug" type="text" placeholder="e.g. miami-showroom-grand-opening" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Date Label (display text)</label>
+            <input id="evDateLabel" type="text" placeholder="Saturday, September 26th, 2026." />
+          </div>
+          <div>
+            <label class="field-label">Start Date (for sorting)</label>
+            <input id="evStartAt" type="date" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Location</label>
+            <input id="evLocation" type="text" placeholder="3500 NW 77 CT, Miami, FL 33122" />
+          </div>
+          <div>
+            <label class="field-label">Time Range</label>
+            <input id="evTimeRange" type="text" placeholder="7PM – 10PM EST" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">Hero Image URL (paste from WordPress media library — upload as .webp)</label>
+            <input id="evHeroImageUrl" type="text" placeholder="https://post.e5wheels.com/wp-content/uploads/..." />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">Description (one paragraph per line)</label>
+            <textarea id="evDescription" class="form-textarea" rows="4" placeholder="A few months ago, we cracked the doors open early..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">What's In Store (one item per line)</label>
+            <textarea id="evWhatsInStore" class="form-textarea" rows="4" placeholder="Sim Racing — presented by Shift Arcade"></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 14px;">
+          <label class="checkbox-row"><input type="checkbox" id="evHasForm" checked /> Show RSVP Form</label>
+          <label class="checkbox-row"><input type="checkbox" id="evActive" /> Mark as Active (shown on /rsvp)</label>
+        </div>
+
+        <label class="field-label">Built-in Optional Dropdowns</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
+          <label class="checkbox-row"><input type="checkbox" id="evShowState" /> State</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowCorvetteGen" /> Corvette Generation</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowModelTrim" /> Model / Trim</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowWheel" /> Wheel Interested (live catalog)</label>
+        </div>
+
+        <h2>Custom Fields (optional, up to 10 — additional to Name/Email/Phone/Attending)</h2>
+        <div id="customFieldsWrap"></div>
+
+        <div class="form-actions" style="margin-top: 16px;">
+          <button id="btnSaveEvent" class="btn-add">Save Event</button>
+          <button id="btnCancelEdit" class="btn-delete-event" style="display:none;">Cancel Edit</button>
+          <span id="eventMessage" class="msg"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>All Events</h2>
+        <div id="eventList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+
     <!-- Attendees Tab -->
     <div id="tab-attendees" class="tab-panel">
       <div class="card">
-        <h2>Grand Opening RSVPs — September 26th, 2026</h2>
+        <h2>Event RSVPs</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 16px;">
+          <select id="attendeeEventPicker">
+            <option value="">Loading events...</option>
+          </select>
+        </div>
         <div id="attendeeList"><p class="empty">Loading...</p></div>
       </div>
     </div>
@@ -314,10 +419,232 @@ if (Astro.request.method === 'POST') {
 
     loadOrders();
 
-    // Attendees
-    async function loadAttendees() {
+    // Events
+    function renderCustomFieldRows() {
+      const wrap = document.getElementById('customFieldsWrap');
+      let html = '';
+      for (let i = 0; i < 10; i++) {
+        html += `
+          <div class="form-grid" style="grid-template-columns: 3fr 1fr; margin-bottom: 8px;">
+            <input type="text" class="cf-label" data-idx="${i}" placeholder="Field ${i + 1} label (leave blank to skip)" />
+            <label class="checkbox-row"><input type="checkbox" class="cf-required" data-idx="${i}" /> Required</label>
+          </div>
+        `;
+      }
+      wrap.innerHTML = html;
+    }
+    renderCustomFieldRows();
+
+    function collectCustomFields() {
+      const fields = [];
+      document.querySelectorAll('.cf-label').forEach(input => {
+        const label = input.value.trim();
+        if (!label) return;
+        const idx = input.dataset.idx;
+        const required = document.querySelector(`.cf-required[data-idx="${idx}"]`).checked;
+        fields.push({ label, required });
+      });
+      return fields;
+    }
+
+    function populateCustomFields(fields) {
+      const labels = document.querySelectorAll('.cf-label');
+      const requireds = document.querySelectorAll('.cf-required');
+      labels.forEach((input, i) => {
+        input.value = fields[i]?.label || '';
+        requireds[i].checked = fields[i]?.required || false;
+      });
+    }
+
+    function resetEventForm() {
+      document.getElementById('eventFormTitle').textContent = 'Create New Event';
+      document.getElementById('evSlug').value = '';
+      document.getElementById('evSlug').disabled = false;
+      document.getElementById('evTitle').value = '';
+      document.getElementById('evDateLabel').value = '';
+      document.getElementById('evStartAt').value = '';
+      document.getElementById('evLocation').value = '';
+      document.getElementById('evTimeRange').value = '';
+      document.getElementById('evHeroImageUrl').value = '';
+      document.getElementById('evDescription').value = '';
+      document.getElementById('evWhatsInStore').value = '';
+      document.getElementById('evHasForm').checked = true;
+      document.getElementById('evShowWheel').checked = false;
+      document.getElementById('evShowState').checked = false;
+      document.getElementById('evShowCorvetteGen').checked = false;
+      document.getElementById('evShowModelTrim').checked = false;
+      document.getElementById('evActive').checked = false;
+      populateCustomFields([]);
+      document.getElementById('btnCancelEdit').style.display = 'none';
+    }
+
+    let loadedEvents = [];
+
+    function editEvent(slug) {
+      const event = loadedEvents.find(e => e.slug === slug);
+      if (!event) return;
+      document.getElementById('eventFormTitle').textContent = 'Edit Event: ' + event.title;
+      document.getElementById('evSlug').value = event.slug;
+      document.getElementById('evSlug').disabled = true;
+      document.getElementById('evTitle').value = event.title || '';
+      document.getElementById('evDateLabel').value = event.dateLabel || '';
+      document.getElementById('evStartAt').value = event.startAt || '';
+      document.getElementById('evLocation').value = event.location || '';
+      document.getElementById('evTimeRange').value = event.timeRange || '';
+      document.getElementById('evHeroImageUrl').value = event.heroImageUrl || '';
+      document.getElementById('evDescription').value = (event.description || []).join('\n');
+      document.getElementById('evWhatsInStore').value = (event.whatsInStore || []).join('\n');
+      document.getElementById('evHasForm').checked = event.hasForm !== false;
+      document.getElementById('evShowWheel').checked = !!event.showWheelDropdown;
+      document.getElementById('evShowState').checked = !!event.showState;
+      document.getElementById('evShowCorvetteGen').checked = !!event.showCorvetteGen;
+      document.getElementById('evShowModelTrim').checked = !!event.showModelTrim;
+      document.getElementById('evActive').checked = !!event.active;
+      populateCustomFields(event.customFields || []);
+      document.getElementById('btnCancelEdit').style.display = 'inline-block';
+      window.scrollTo({ top: document.getElementById('tab-events').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    async function deleteEvent(slug) {
+      if (!confirm(`Delete event "${slug}"? This cannot be undone.`)) return;
+      await fetch('/api/events?slug=' + encodeURIComponent(slug), {
+        method: 'DELETE',
+        headers: { 'x-admin-password': ADMIN_PASSWORD },
+      });
+      loadEvents();
+    }
+
+    function renderEvents(events) {
+      const list = document.getElementById('eventList');
+      if (!events.length) {
+        list.innerHTML = '<p class="empty">No events yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <table>
+          <thead><tr><th>Title</th><th>Slug</th><th>Date</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            ${events.map(e => `
+              <tr>
+                <td>${e.title || ''}</td>
+                <td style="font-size:12px;">${e.slug}</td>
+                <td>${e.dateLabel || '&mdash;'}</td>
+                <td><span class="badge ${e.active ? 'active' : ''}">${e.active ? 'Active' : 'Inactive'}</span></td>
+                <td>
+                  <button class="btn-edit-event" data-slug="${e.slug}">Edit</button>
+                  <button class="btn-delete-event" data-slug="${e.slug}">Delete</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      list.querySelectorAll('.btn-edit-event').forEach(btn => {
+        btn.addEventListener('click', () => editEvent(btn.dataset.slug));
+      });
+      list.querySelectorAll('.btn-delete-event').forEach(btn => {
+        btn.addEventListener('click', () => deleteEvent(btn.dataset.slug));
+      });
+    }
+
+    function populateAttendeeEventPicker(events) {
+      const picker = document.getElementById('attendeeEventPicker');
+      const currentValue = picker.value;
+      if (!events.length) {
+        picker.innerHTML = '<option value="">No events yet</option>';
+        return;
+      }
+      picker.innerHTML = events.map(e => `<option value="${e.slug}">${e.title}${e.active ? ' (Active)' : ''}</option>`).join('');
+      const activeEvent = events.find(e => e.active);
+      if (currentValue && events.some(e => e.slug === currentValue)) {
+        picker.value = currentValue;
+      } else if (activeEvent) {
+        picker.value = activeEvent.slug;
+      }
+      loadAttendees(picker.value);
+    }
+
+    async function loadEvents() {
       try {
-        const res = await fetch('/api/attendees', {
+        const res = await fetch('/api/events', { headers: { 'x-admin-password': ADMIN_PASSWORD } });
+        const events = await res.json();
+        loadedEvents = events;
+        renderEvents(events);
+        populateAttendeeEventPicker(events);
+      } catch {
+        document.getElementById('eventList').innerHTML = '<p class="empty">Failed to load events.</p>';
+      }
+    }
+
+    document.getElementById('btnSaveEvent').addEventListener('click', async () => {
+      const msg = document.getElementById('eventMessage');
+      const slug = document.getElementById('evSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+      const title = document.getElementById('evTitle').value.trim();
+
+      if (!slug || !title) {
+        msg.textContent = 'Title and slug are required.';
+        msg.className = 'msg error';
+        return;
+      }
+
+      const payload = {
+        slug,
+        title,
+        dateLabel: document.getElementById('evDateLabel').value.trim(),
+        startAt: document.getElementById('evStartAt').value,
+        location: document.getElementById('evLocation').value.trim(),
+        timeRange: document.getElementById('evTimeRange').value.trim(),
+        heroImageUrl: document.getElementById('evHeroImageUrl').value.trim(),
+        description: document.getElementById('evDescription').value.split('\n').map(s => s.trim()).filter(Boolean),
+        whatsInStore: document.getElementById('evWhatsInStore').value.split('\n').map(s => s.trim()).filter(Boolean),
+        hasForm: document.getElementById('evHasForm').checked,
+        showWheelDropdown: document.getElementById('evShowWheel').checked,
+        showState: document.getElementById('evShowState').checked,
+        showCorvetteGen: document.getElementById('evShowCorvetteGen').checked,
+        showModelTrim: document.getElementById('evShowModelTrim').checked,
+        active: document.getElementById('evActive').checked,
+        customFields: collectCustomFields(),
+      };
+
+      try {
+        const res = await fetch('/api/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = 'Event saved!';
+          msg.className = 'msg success';
+          resetEventForm();
+          loadEvents();
+        } else {
+          msg.textContent = data.error || 'Failed to save event.';
+          msg.className = 'msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Error: ' + e.message;
+        msg.className = 'msg error';
+      }
+    });
+
+    document.getElementById('btnCancelEdit').addEventListener('click', resetEventForm);
+
+    loadEvents();
+
+    // Attendees
+    document.getElementById('attendeeEventPicker').addEventListener('change', (e) => {
+      loadAttendees(e.target.value);
+    });
+
+    async function loadAttendees(slug) {
+      if (!slug) {
+        document.getElementById('attendeeList').innerHTML = '<p class="empty">No event selected.</p>';
+        return;
+      }
+      try {
+        const res = await fetch('/api/attendees?slug=' + encodeURIComponent(slug), {
           headers: { 'x-admin-password': ADMIN_PASSWORD }
         });
         const attendees = await res.json();
@@ -361,8 +688,6 @@ if (Astro.request.method === 'POST') {
         </table>
       `;
     }
-
-    loadAttendees();
 
     // Tracking
     async function loadTracking() {
