@@ -143,6 +143,7 @@ if (Astro.request.method === 'POST') {
 
     <div class="tabs">
       <button class="tab-btn active" data-tab="orders">Orders</button>
+      <button class="tab-btn" data-tab="attendees">Attendees</button>
       <button class="tab-btn" data-tab="coupons">Coupons</button>
       <button class="tab-btn" data-tab="tracking">Tracking</button>
     </div>
@@ -152,6 +153,14 @@ if (Astro.request.method === 'POST') {
       <div class="card">
         <h2>Order History</h2>
         <div id="orderList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Attendees Tab -->
+    <div id="tab-attendees" class="tab-panel">
+      <div class="card">
+        <h2>Grand Opening RSVPs — September 26th, 2026</h2>
+        <div id="attendeeList"><p class="empty">Loading...</p></div>
       </div>
     </div>
 
@@ -304,6 +313,56 @@ if (Astro.request.method === 'POST') {
     }
 
     loadOrders();
+
+    // Attendees
+    async function loadAttendees() {
+      try {
+        const res = await fetch('/api/attendees', {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const attendees = await res.json();
+        renderAttendees(attendees);
+      } catch {
+        document.getElementById('attendeeList').innerHTML = '<p class="empty">Failed to load attendees.</p>';
+      }
+    }
+
+    function renderAttendees(attendees) {
+      const list = document.getElementById('attendeeList');
+      if (!attendees.length) {
+        list.innerHTML = '<p class="empty">No RSVPs yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <p style="font-size:12px;color:#666;margin-bottom:16px;">${attendees.length} total RSVP${attendees.length !== 1 ? 's' : ''}</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Phone</th><th>State</th><th>Corvette</th><th>Attending</th><th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${attendees.map(a => {
+              const date = a.timestamp ? new Date(a.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '&mdash;';
+              const attendingColor = a.attending === 'YES' ? '#2ecc71' : a.attending === 'MAYBE' ? '#f39c12' : '#e74c3c';
+              return `
+                <tr>
+                  <td>${a.firstName || ''} ${a.lastName || ''}</td>
+                  <td>${a.email || '&mdash;'}</td>
+                  <td>${a.phone || '&mdash;'}</td>
+                  <td>${a.state || '&mdash;'}${a.city ? ', ' + a.city : ''}</td>
+                  <td style="font-size:12px;">${a.corvetteGen || '&mdash;'}${a.modelTrim ? ' &mdash; ' + a.modelTrim : ''}</td>
+                  <td><span style="color:${attendingColor};font-weight:700;font-size:12px;">${a.attending || '&mdash;'}</span></td>
+                  <td>${date}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    loadAttendees();
 
     // Tracking
     async function loadTracking() {
