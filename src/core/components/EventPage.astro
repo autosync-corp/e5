@@ -15,12 +15,19 @@ const { event, canonicalPath } = Astro.props;
 const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 
 let wheelModels: string[] = [];
-if (event.showWheelDropdown) {
+let wheelFinishes: string[] = [];
+if (event.showWheelDropdown || event.showFinishDropdown) {
   try {
     const response = await fetchWheels();
-    wheelModels = [...new Set(response.Wheels.map((w: any) => w.Model))].sort();
+    if (event.showWheelDropdown) {
+      wheelModels = [...new Set(response.Wheels.map((w: any) => w.Model))].sort();
+    }
+    if (event.showFinishDropdown) {
+      wheelFinishes = [...new Set(response.Wheels.map((w: any) => w.Finish).filter(Boolean))].sort();
+    }
   } catch {
     wheelModels = [];
+    wheelFinishes = [];
   }
 }
 
@@ -381,11 +388,31 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
             </div>
           )}
 
-          {event.showWheelDropdown && wheelModels.length > 0 && (
+          {event.showWheelDropdown && wheelModels.length > 0 && event.showFinishDropdown && wheelFinishes.length > 0 && (
+            <div class="form-row">
+              <select class="form-field" id="wheelInterest">
+                <option value="" disabled selected>Wheel Interested In / Purchased</option>
+                {wheelModels.map((m: string) => <option value={m}>{m}</option>)}
+              </select>
+              <select class="form-field" id="wheelFinish">
+                <option value="" disabled selected>Wheel Finish</option>
+                {wheelFinishes.map((f: string) => <option value={f}>{f}</option>)}
+              </select>
+            </div>
+          )}
+          {event.showWheelDropdown && wheelModels.length > 0 && !(event.showFinishDropdown && wheelFinishes.length > 0) && (
             <div class="form-row full">
               <select class="form-field" id="wheelInterest">
                 <option value="" disabled selected>Wheel Interested In / Purchased</option>
                 {wheelModels.map((m: string) => <option value={m}>{m}</option>)}
+              </select>
+            </div>
+          )}
+          {!(event.showWheelDropdown && wheelModels.length > 0) && event.showFinishDropdown && wheelFinishes.length > 0 && (
+            <div class="form-row full">
+              <select class="form-field" id="wheelFinish">
+                <option value="" disabled selected>Wheel Finish</option>
+                {wheelFinishes.map((f: string) => <option value={f}>{f}</option>)}
               </select>
             </div>
           )}
@@ -483,6 +510,7 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
           corvetteGen: document.getElementById('corvetteGen')?.value || '',
           modelTrim:   document.getElementById('modelTrim')?.value || '',
           wheelInterest: document.getElementById('wheelInterest')?.value || '',
+          wheelFinish: document.getElementById('wheelFinish')?.value || '',
           attending:   document.getElementById('attending').value,
           customFieldAnswers,
         };

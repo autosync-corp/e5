@@ -233,11 +233,12 @@ if (Astro.request.method === 'POST') {
         </div>
 
         <label class="field-label">Built-in Optional Dropdowns</label>
-        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
-          <label class="checkbox-row"><input type="checkbox" id="evShowState" /> State</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
+          <label class="checkbox-row"><input type="checkbox" id="evShowState" /> State & City</label>
           <label class="checkbox-row"><input type="checkbox" id="evShowCorvetteGen" /> Corvette Generation</label>
           <label class="checkbox-row"><input type="checkbox" id="evShowModelTrim" /> Model / Trim</label>
           <label class="checkbox-row"><input type="checkbox" id="evShowWheel" /> Wheel Interested (live catalog)</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowFinish" /> Wheel Finish (live catalog)</label>
         </div>
 
         <h2>Custom Fields (optional, up to 10 — additional to Name/Email/Phone/Attending)</h2>
@@ -470,6 +471,7 @@ if (Astro.request.method === 'POST') {
       document.getElementById('evWhatsInStore').value = '';
       document.getElementById('evHasForm').checked = true;
       document.getElementById('evShowWheel').checked = false;
+      document.getElementById('evShowFinish').checked = false;
       document.getElementById('evShowState').checked = false;
       document.getElementById('evShowCorvetteGen').checked = false;
       document.getElementById('evShowModelTrim').checked = false;
@@ -496,6 +498,7 @@ if (Astro.request.method === 'POST') {
       document.getElementById('evWhatsInStore').value = (event.whatsInStore || []).join('\n');
       document.getElementById('evHasForm').checked = event.hasForm !== false;
       document.getElementById('evShowWheel').checked = !!event.showWheelDropdown;
+      document.getElementById('evShowFinish').checked = !!event.showFinishDropdown;
       document.getElementById('evShowState').checked = !!event.showState;
       document.getElementById('evShowCorvetteGen').checked = !!event.showCorvetteGen;
       document.getElementById('evShowModelTrim').checked = !!event.showModelTrim;
@@ -600,6 +603,7 @@ if (Astro.request.method === 'POST') {
         whatsInStore: document.getElementById('evWhatsInStore').value.split('\n').map(s => s.trim()).filter(Boolean),
         hasForm: document.getElementById('evHasForm').checked,
         showWheelDropdown: document.getElementById('evShowWheel').checked,
+        showFinishDropdown: document.getElementById('evShowFinish').checked,
         showState: document.getElementById('evShowState').checked,
         showCorvetteGen: document.getElementById('evShowCorvetteGen').checked,
         showModelTrim: document.getElementById('evShowModelTrim').checked,
