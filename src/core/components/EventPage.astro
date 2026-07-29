@@ -4,6 +4,7 @@ import '@/assets/fonts/fonts.css';
 import Footer from '@/core/components/Footer.vue';
 import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import { fetchWheels } from '@/core/services/ProductService';
+import { corvetteGalleryData } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 export interface Props {
   event: any;
@@ -14,8 +15,40 @@ const { event, canonicalPath } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 
+// Generation -> Trim: derived live from the gallery data (source of truth — updated
+// before the Generations pages are), not hardcoded. #LT trim-level codes (e.g. "3LT")
+// are shown combined as "Stingray 3LT" since that's how they're referred to; everything
+// else (Z51, Z06, ZR1, etc.) is called standalone.
+const GEN_VALUE_MAP: Record<string, string> = {
+  C5: 'C5 1997-2004',
+  C6: 'C6 2005-2013',
+  C7: 'C7 2014-2019',
+  C8: 'C8 2020-2026',
+};
+
+let generationTrimMap: Record<string, string[]> = {};
+let flatTrims: string[] = [];
+if (event.showModelTrim) {
+  const rawMap: Record<string, Set<string>> = {};
+  for (const item of corvetteGalleryData) {
+    if (!item.submodel || !item.trim) continue;
+    const genValue = GEN_VALUE_MAP[item.submodel];
+    if (!genValue) continue;
+    const displayTrim = /^\dLT$/i.test(item.trim) ? `Stingray ${item.trim}` : item.trim;
+    if (!rawMap[genValue]) rawMap[genValue] = new Set();
+    rawMap[genValue].add(displayTrim);
+  }
+  for (const [gen, set] of Object.entries(rawMap)) {
+    generationTrimMap[gen] = [...set].sort();
+  }
+  flatTrims = [...new Set(Object.values(generationTrimMap).flat())].sort();
+}
+
+// Wheel -> Finish: Finish is a combination of Finish + Color + Accent (matches the
+// shop page's getFinishName logic), filtered to only finishes that exist per wheel.
 let wheelModels: string[] = [];
-let wheelFinishes: string[] = [];
+let wheelFinishMap: Record<string, string[]> = {};
+let flatFinishes: string[] = [];
 if (event.showWheelDropdown || event.showFinishDropdown) {
   try {
     const response = await fetchWheels();
@@ -23,16 +56,34 @@ if (event.showWheelDropdown || event.showFinishDropdown) {
       wheelModels = [...new Set(response.Wheels.map((w: any) => w.Model))].sort();
     }
     if (event.showFinishDropdown) {
-      wheelFinishes = [...new Set(response.Wheels.map((w: any) => w.Finish).filter(Boolean))].sort();
+      const rawFinishMap: Record<string, Set<string>> = {};
+      for (const w of response.Wheels) {
+        const parts: string[] = [];
+        if (w.ShortFinish) parts.push(w.ShortFinish);
+        else if (w.Finish) parts.push(w.Finish);
+        if (w.ShortColor) parts.push(w.ShortColor);
+        else if (w.Color) parts.push(w.Color);
+        if (w.Accent) parts.push(w.Accent);
+        const finishName = parts.length > 0 ? parts.join(' ') : 'Standard';
+        if (!rawFinishMap[w.Model]) rawFinishMap[w.Model] = new Set();
+        rawFinishMap[w.Model].add(finishName);
+      }
+      for (const [model, set] of Object.entries(rawFinishMap)) {
+        wheelFinishMap[model] = [...set].sort();
+      }
+      flatFinishes = [...new Set(Object.values(wheelFinishMap).flat())].sort();
     }
   } catch {
     wheelModels = [];
-    wheelFinishes = [];
+    wheelFinishMap = {};
+    flatFinishes = [];
   }
 }
 
 const customFields = event.customFields || [];
 const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
+const cascadeCorvette = event.showCorvetteGen && event.showModelTrim;
+const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
 ---
 
 <!DOCTYPE html>
@@ -190,6 +241,7 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
     .form-field::placeholder { color: #b0b0b0; }
     .form-field:focus { border-color: #111; }
     .form-field.error { border-color: #d31d25; }
+    .form-field:disabled { background: #f7f7f7; cursor: not-allowed; color: #ccc; }
     select.form-field {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -352,15 +404,16 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
                 <option value="C6 2005-2013">C6 2005–2013</option>
                 <option value="C5 1997-2004">C5 1997–2004</option>
               </select>
-              <select class="form-field" id="modelTrim">
-                <option value="" disabled selected>Model / Trim</option>
-                <option>Stingray</option>
-                <option>Z06</option>
-                <option>ZR1</option>
-                <option>Grand Sport</option>
-                <option>E-Ray</option>
-                <option>Base</option>
-              </select>
+              {cascadeCorvette ? (
+                <select class="form-field" id="modelTrim" disabled>
+                  <option value="" disabled selected>Select Generation First</option>
+                </select>
+              ) : (
+                <select class="form-field" id="modelTrim">
+                  <option value="" disabled selected>Model / Trim</option>
+                  {flatTrims.map((t: string) => <option value={t}>{t}</option>)}
+                </select>
+              )}
             </div>
           )}
           {event.showCorvetteGen && !event.showModelTrim && (
@@ -378,29 +431,30 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
             <div class="form-row full">
               <select class="form-field" id="modelTrim">
                 <option value="" disabled selected>Model / Trim</option>
-                <option>Stingray</option>
-                <option>Z06</option>
-                <option>ZR1</option>
-                <option>Grand Sport</option>
-                <option>E-Ray</option>
-                <option>Base</option>
+                {flatTrims.map((t: string) => <option value={t}>{t}</option>)}
               </select>
             </div>
           )}
 
-          {event.showWheelDropdown && wheelModels.length > 0 && event.showFinishDropdown && wheelFinishes.length > 0 && (
+          {event.showWheelDropdown && wheelModels.length > 0 && event.showFinishDropdown && (
             <div class="form-row">
               <select class="form-field" id="wheelInterest">
                 <option value="" disabled selected>Wheel Interested In / Purchased</option>
                 {wheelModels.map((m: string) => <option value={m}>{m}</option>)}
               </select>
-              <select class="form-field" id="wheelFinish">
-                <option value="" disabled selected>Wheel Finish</option>
-                {wheelFinishes.map((f: string) => <option value={f}>{f}</option>)}
-              </select>
+              {cascadeWheel ? (
+                <select class="form-field" id="wheelFinish" disabled>
+                  <option value="" disabled selected>Select Wheel First</option>
+                </select>
+              ) : (
+                <select class="form-field" id="wheelFinish">
+                  <option value="" disabled selected>Wheel Finish</option>
+                  {flatFinishes.map((f: string) => <option value={f}>{f}</option>)}
+                </select>
+              )}
             </div>
           )}
-          {event.showWheelDropdown && wheelModels.length > 0 && !(event.showFinishDropdown && wheelFinishes.length > 0) && (
+          {event.showWheelDropdown && wheelModels.length > 0 && !event.showFinishDropdown && (
             <div class="form-row full">
               <select class="form-field" id="wheelInterest">
                 <option value="" disabled selected>Wheel Interested In / Purchased</option>
@@ -408,11 +462,11 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
               </select>
             </div>
           )}
-          {!(event.showWheelDropdown && wheelModels.length > 0) && event.showFinishDropdown && wheelFinishes.length > 0 && (
+          {!(event.showWheelDropdown && wheelModels.length > 0) && event.showFinishDropdown && flatFinishes.length > 0 && (
             <div class="form-row full">
               <select class="form-field" id="wheelFinish">
                 <option value="" disabled selected>Wheel Finish</option>
-                {wheelFinishes.map((f: string) => <option value={f}>{f}</option>)}
+                {flatFinishes.map((f: string) => <option value={f}>{f}</option>)}
               </select>
             </div>
           )}
@@ -456,7 +510,7 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
   <!-- Footer — global component, outside rsvp-page scope -->
   <Footer client:only="vue" />
 
-  <script define:vars={{ eventSlug: event.slug }}>
+  <script define:vars={{ eventSlug: event.slug, generationTrimMap, wheelFinishMap }}>
     // @ts-nocheck
     const form = document.getElementById('rsvpForm');
 
@@ -464,6 +518,32 @@ const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
     document.querySelectorAll('select.form-field').forEach(sel => {
       sel.addEventListener('change', () => sel.classList.add('selected'));
     });
+
+    // Cascading: Corvette Generation -> Model/Trim
+    const corvetteGenSel = document.getElementById('corvetteGen');
+    const modelTrimSel = document.getElementById('modelTrim');
+    if (corvetteGenSel && modelTrimSel && modelTrimSel.disabled) {
+      corvetteGenSel.addEventListener('change', () => {
+        const trims = generationTrimMap[corvetteGenSel.value] || [];
+        modelTrimSel.innerHTML = '<option value="" disabled selected>Model / Trim</option>' +
+          trims.map(t => `<option value="${t}">${t}</option>`).join('');
+        modelTrimSel.disabled = trims.length === 0;
+        modelTrimSel.classList.remove('selected');
+      });
+    }
+
+    // Cascading: Wheel Interested -> Wheel Finish
+    const wheelInterestSel = document.getElementById('wheelInterest');
+    const wheelFinishSel = document.getElementById('wheelFinish');
+    if (wheelInterestSel && wheelFinishSel && wheelFinishSel.disabled) {
+      wheelInterestSel.addEventListener('change', () => {
+        const finishes = wheelFinishMap[wheelInterestSel.value] || [];
+        wheelFinishSel.innerHTML = '<option value="" disabled selected>Wheel Finish</option>' +
+          finishes.map(f => `<option value="${f}">${f}</option>`).join('');
+        wheelFinishSel.disabled = finishes.length === 0;
+        wheelFinishSel.classList.remove('selected');
+      });
+    }
 
     if (form) {
       const btn = document.getElementById('rsvpBtn');
