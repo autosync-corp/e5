@@ -5,12 +5,10 @@ import '@/assets/fonts/fonts.css';
 import Footer from '@/core/components/Footer.vue';
 import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import { getAllEvents } from '@/core/services/EventsService';
-import { FALLBACK_EVENT } from '@/core/constants/fallbackEvent';
 
 const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 
-let events = await getAllEvents();
-if (events.length === 0) events = [FALLBACK_EVENT];
+const events = await getAllEvents();
 
 const now = new Date();
 const upcoming = events
