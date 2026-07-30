@@ -61,24 +61,9 @@ const filteredProducts = computed(() => {
 const getFinishName = (product: WheelProduct): string => {
   const parts: string[] = [];
 
-  // 1. Use ShortFinish or Finish first
-  if (product.ShortFinish) {
-    parts.push(product.ShortFinish);
-  } else if (product.Finish) {
-    parts.push(product.Finish);
-  }
-
-  // 2. Then add ShortColor or Color
-  if (product.ShortColor) {
-    parts.push(product.ShortColor);
-  } else if (product.Color) {
-    parts.push(product.Color);
-  }
-
-  // 3. Finally add Accent if available
-  if (product.Accent) {
-    parts.push(product.Accent);
-  }
+  if (product.Finish) parts.push(product.Finish);
+  if (product.Color) parts.push(product.Color);
+  if (product.Accent) parts.push(product.Accent);
 
   // If no parts, return 'Standard'
   return parts.length > 0 ? parts.join(' ') : 'Standard';
@@ -331,8 +316,8 @@ function getProductUrl(product: WheelProduct): string {
 }
 
 function getProductDisplayName(product: WheelProduct): string {
-  const finish = product.ShortFinish || product.Finish || '';
-  const color = product.ShortColor || product.Color || '';
+  const finish = product.Finish || '';
+  const color = product.Color || '';
   return `${product.Model} - ${color} ${finish}`.trim();
 }
 

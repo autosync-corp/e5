@@ -965,20 +965,33 @@ async function loadProducts() {
           normalizedFinish = 'Titanium Brushed';
         }
 
-        // Find product matching the series (Model) and finish
+        // Restrict to this series first, same as seriesProducts/availableFinishes below
         const finishParam = (normalizedFinish || '').toLowerCase();
-        const foundProduct = response.Wheels.find(w => {
-          const matchesSeries = w.Model && w.Model.toLowerCase() === urlParams.series?.toLowerCase();
-          const finishName = getFinishName(w).toLowerCase();
+        const seriesWheels = response.Wheels.filter(w =>
+          w.Model && w.Model.toLowerCase() === urlParams.series?.toLowerCase()
+        );
 
-          // Try multiple matching strategies for better compatibility
-          const directMatch = finishName.includes(finishParam);
-          // Handle Titanium <-> Gray Brushed variations
-          const titaniumGrayMatch = (finishParam.includes('titanium') && finishName.includes('gray') && finishName.includes('brushed')) ||
-                                    (finishParam.includes('gray') && finishName.includes('titanium') && finishName.includes('brushed'));
+        // Build the same discrete, deduped finish list the Finish dropdown uses —
+        // matching against this short list (not the raw hundreds of rows, which
+        // include duplicate rows per size and null Finish/Color fields) removes the
+        // ambiguity that let "black" incorrectly match "Gloss Black Polished Lip".
+        const distinctFinishes = Array.from(new Set(seriesWheels.map(w => getFinishName(w))));
 
-          return matchesSeries && (directMatch || titaniumGrayMatch);
-        });
+        let matchedFinish = distinctFinishes.find(f => f.toLowerCase() === finishParam);
+
+        // Handle Titanium <-> Gray Brushed variations, still against the discrete list
+        if (!matchedFinish) {
+          matchedFinish = distinctFinishes.find(f => {
+            const fLower = f.toLowerCase();
+            return (finishParam.includes('titanium') && fLower.includes('gray') && fLower.includes('brushed')) ||
+                   (finishParam.includes('gray') && fLower.includes('titanium') && fLower.includes('brushed'));
+          });
+        }
+
+        const foundProduct = matchedFinish
+          ? seriesWheels.find(w => getFinishName(w) === matchedFinish)
+          : undefined;
+
         selectedProduct.value = foundProduct || response.Wheels[0];
       } else if (productIdToLoad) {
         const foundProduct = response.Wheels.find(w => w.Id === productIdToLoad);
@@ -1117,7 +1130,7 @@ async function loadProducts() {
       }
     }
     // GTM: view_item
-    if (selectedProduct.value) {
+    if (selectedProduct.value && selectedProduct.value.Price != null) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'view_item',
@@ -1536,30 +1549,32 @@ function addToCart() {
     });
 
     // GTM: add_to_cart (staggered)
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'add_to_cart',
-      ecommerce: {
-        currency: 'USD',
-        value: ((selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2)).toFixed(2),
-        items: [
-          {
-            item_id: selectedFrontProduct.value.Pn,
-            item_name: `E5 ${selectedFrontProduct.value.Model} ${getFinishName(selectedFrontProduct.value)}`,
-            item_variant: getFinishName(selectedFrontProduct.value),
-            price: selectedFrontProduct.value.Price.toFixed(2),
-            quantity: 2
-          },
-          {
-            item_id: selectedRearProduct.value.Pn,
-            item_name: `E5 ${selectedRearProduct.value.Model} ${getFinishName(selectedRearProduct.value)}`,
-            item_variant: getFinishName(selectedRearProduct.value),
-            price: selectedRearProduct.value.Price.toFixed(2),
-            quantity: 2
-          }
-        ]
-      }
-    });
+    if (selectedFrontProduct.value.Price != null && selectedRearProduct.value.Price != null) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: 'USD',
+          value: ((selectedFrontProduct.value.Price * 2) + (selectedRearProduct.value.Price * 2)).toFixed(2),
+          items: [
+            {
+              item_id: selectedFrontProduct.value.Pn,
+              item_name: `E5 ${selectedFrontProduct.value.Model} ${getFinishName(selectedFrontProduct.value)}`,
+              item_variant: getFinishName(selectedFrontProduct.value),
+              price: selectedFrontProduct.value.Price.toFixed(2),
+              quantity: 2
+            },
+            {
+              item_id: selectedRearProduct.value.Pn,
+              item_name: `E5 ${selectedRearProduct.value.Model} ${getFinishName(selectedRearProduct.value)}`,
+              item_variant: getFinishName(selectedRearProduct.value),
+              price: selectedRearProduct.value.Price.toFixed(2),
+              quantity: 2
+            }
+          ]
+        }
+      });
+    }
   } else {
     // Non-staggered: quantity = total individual wheels (2 front + 2 rear = 4)
     CartManager.addItem({
@@ -1572,23 +1587,25 @@ function addToCart() {
     });
 
     // GTM: add_to_cart (non-staggered)
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'add_to_cart',
-      ecommerce: {
-        currency: 'USD',
-        value: (selectedProduct.value.Price * 4).toFixed(2),
-        items: [
-          {
-            item_id: selectedProduct.value.Pn,
-            item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
-            item_variant: getFinishName(selectedProduct.value),
-            price: selectedProduct.value.Price.toFixed(2),
-            quantity: 4
-          }
-        ]
-      }
-    });
+    if (selectedProduct.value.Price != null) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: 'USD',
+          value: (selectedProduct.value.Price * 4).toFixed(2),
+          items: [
+            {
+              item_id: selectedProduct.value.Pn,
+              item_name: `E5 ${selectedProduct.value.Model} ${getFinishName(selectedProduct.value)}`,
+              item_variant: getFinishName(selectedProduct.value),
+              price: selectedProduct.value.Price.toFixed(2),
+              quantity: 4
+            }
+          ]
+        }
+      });
+    }
   }
 
   // Redirect to cart
