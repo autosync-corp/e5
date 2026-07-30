@@ -16,7 +16,7 @@ try {
 const TRACKING_KEY = 'e5:tracking';
 
 export const GET: APIRoute = async ({ request }) => {
-  const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
   const password = request.headers.get('x-admin-password');
 
   if (password !== adminPassword) {
@@ -43,7 +43,7 @@ export const GET: APIRoute = async ({ request }) => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
-  const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
   const password = request.headers.get('x-admin-password');
 
   if (password !== adminPassword) {

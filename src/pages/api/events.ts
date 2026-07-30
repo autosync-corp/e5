@@ -16,7 +16,7 @@ try {
 const EVENTS_KEY = 'e5:events';
 
 function checkAuth(request: Request): boolean {
-  const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
   return request.headers.get('x-admin-password') === adminPassword;
 }
 

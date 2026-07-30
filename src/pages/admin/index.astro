@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+const adminPassword = import.meta.env.ADMIN_PASSWORD;
 
 const cookie = Astro.cookies.get('admin_auth');
 const isAuthenticated = cookie?.value === adminPassword;

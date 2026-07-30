@@ -16,7 +16,7 @@ try {
 const ORDERS_KEY = 'e5:orders';
 
 export const GET: APIRoute = async ({ request }) => {
-  const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
   const password = request.headers.get('x-admin-password');
 
   if (password !== adminPassword) {

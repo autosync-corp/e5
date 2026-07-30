@@ -18,7 +18,7 @@ function rsvpKeyFor(eventSlug: string): string {
 }
 
 export const GET: APIRoute = async ({ request, url }) => {
-  const adminPassword = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
   const password = request.headers.get('x-admin-password');
 
   if (password !== adminPassword) {

@@ -14,7 +14,7 @@ try {
 } catch { /* Redis unavailable */ }
 
 const COUPONS_KEY = 'e5:coupons';
-const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'e5admin2024';
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
 
 export interface StoredCoupon {
   code: string;
