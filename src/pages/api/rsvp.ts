@@ -55,6 +55,8 @@ export const POST: APIRoute = async ({ request }) => {
           .map(([label, value]) => `${label}: ${value}`)
           .join('\n');
 
+        const eventTitle = event?.title || data.eventSlug;
+
         const webhookData = {
           // RSVP Information
           rsvpId: entry.id,
@@ -64,10 +66,13 @@ export const POST: APIRoute = async ({ request }) => {
             timeStyle: 'short',
           }),
 
+          // Ready-made subject line — drop directly into the GHL email/notification subject field
+          emailSubject: `New RSVP: ${eventTitle} — ${data.firstName} ${data.lastName}`,
+
           // Event Information
           event: {
             slug: data.eventSlug,
-            title: event?.title || data.eventSlug,
+            title: eventTitle,
             dateLabel: event?.dateLabel || '',
             location: event?.location || '',
             timeRange: event?.timeRange || '',
