@@ -81,12 +81,25 @@ if (Astro.request.method === 'POST') {
     .msg.error { color: #e74c3c; }
 
     /* Tabs */
-    .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #2a2a2a; }
-    .tab-btn { background: none; border: none; color: #666; font-size: 14px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #2a2a2a; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab-btn { background: none; border: none; color: #666; font-size: 14px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; flex-shrink: 0; }
     .tab-btn:hover { color: #ccc; }
     .tab-btn.active { color: #fff; border-bottom-color: #c0392b; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+
+    /* Table scroll wrapper — lets wide tables scroll sideways on mobile instead of breaking layout */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-scroll table { min-width: 640px; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .dashboard { padding: 24px 16px; }
+      .card { padding: 16px; }
+      .header { margin-bottom: 24px; }
+      .form-grid { grid-template-columns: 1fr !important; }
+      .tab-btn { padding: 10px 14px; font-size: 13px; }
+    }
 
     /* Table */
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -372,6 +385,7 @@ if (Astro.request.method === 'POST') {
         return;
       }
       list.innerHTML = `
+        <div class="table-scroll">
         <table>
           <thead>
             <tr>
@@ -406,6 +420,7 @@ if (Astro.request.method === 'POST') {
             }).join('')}
           </tbody>
         </table>
+        </div>
       `;
 
       document.querySelectorAll('.expand-btn').forEach(btn => {
@@ -524,6 +539,7 @@ if (Astro.request.method === 'POST') {
         return;
       }
       list.innerHTML = `
+        <div class="table-scroll">
         <table>
           <thead><tr><th>Title</th><th>Slug</th><th>Date</th><th>Status</th><th></th></tr></thead>
           <tbody>
@@ -541,6 +557,7 @@ if (Astro.request.method === 'POST') {
             `).join('')}
           </tbody>
         </table>
+        </div>
       `;
 
       list.querySelectorAll('.btn-edit-event').forEach(btn => {
@@ -666,6 +683,7 @@ if (Astro.request.method === 'POST') {
       }
       list.innerHTML = `
         <p style="font-size:12px;color:#666;margin-bottom:16px;">${attendees.length} total RSVP${attendees.length !== 1 ? 's' : ''}</p>
+        <div class="table-scroll">
         <table>
           <thead>
             <tr>
@@ -690,6 +708,7 @@ if (Astro.request.method === 'POST') {
             }).join('')}
           </tbody>
         </table>
+        </div>
       `;
     }
 
@@ -754,6 +773,7 @@ if (Astro.request.method === 'POST') {
         return;
       }
       list.innerHTML = `
+        <div class="table-scroll">
         <table>
           <thead>
             <tr>
@@ -773,6 +793,7 @@ if (Astro.request.method === 'POST') {
             `).join('')}
           </tbody>
         </table>
+        </div>
       `;
 
       document.querySelectorAll('.btn-delete').forEach(btn => {
