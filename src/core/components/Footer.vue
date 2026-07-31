@@ -26,6 +26,7 @@ import {
         <div class="footer-links flex flex-col space-y-2">
           <a :href="PROCESS_ROUTE" class="footer-link">OUR PROCESS</a>
           <a :href="CONTACT_ROUTE" class="footer-link">CONTACT US</a>
+          <a href="/events/upcoming" class="footer-link">EVENTS</a>
           <a :href="CATALOG_ROUTE" class="footer-link">CATALOG</a>
           <a :href="REFUND_ROUTE" class="footer-link">RETURN POLICY</a>
           <a :href="WARRANTY_ROUTE" class="footer-link">WARRANTY</a>
