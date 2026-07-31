@@ -57,7 +57,17 @@ if (event.showWheelDropdown || event.showFinishDropdown) {
   }
 }
 
+// addressMode replaces the old showState boolean — fall back to 'stateCity' for events saved before this field existed
+const addressMode = event.addressMode || (event.showState ? 'stateCity' : 'none');
+
 const customFields = event.customFields || [];
+// First 6 custom fields render two-per-row (50% width); the rest render one-per-row (100%)
+const halfWidthFields = customFields.slice(0, 6);
+const fullWidthFields = customFields.slice(6);
+const halfWidthRows: { label: string; required: boolean }[][] = [];
+for (let i = 0; i < halfWidthFields.length; i += 2) {
+  halfWidthRows.push(halfWidthFields.slice(i, i + 2));
+}
 const showCorvetteRow = event.showCorvetteGen || event.showModelTrim;
 const cascadeCorvette = event.showCorvetteGen && event.showModelTrim;
 const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
@@ -199,7 +209,11 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
       margin-bottom: 12px;
     }
     .form-row.full { grid-template-columns: 1fr; }
-    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+    .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 560px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-row.triple { grid-template-columns: 1fr; }
+    }
     .form-field {
       width: 100%;
       height: 52px;
@@ -346,7 +360,39 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
             <input class="form-field" type="tel" id="phone" placeholder="Phone Number" />
           </div>
 
-          {event.showState && (
+          {addressMode === 'full' && (
+            <>
+              <div class="form-row full">
+                <input class="form-field" type="text" id="streetAddress" placeholder="Street Address" />
+              </div>
+              <div class="form-row triple">
+                <input class="form-field" type="text" id="city" placeholder="City" />
+                <select class="form-field" id="state">
+                  <option value="" disabled selected>State</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Washington D.C.</option>
+                  <option>Florida</option><option>Georgia</option><option>Hawaii</option>
+                  <option>Idaho</option><option>Illinois</option><option>Indiana</option>
+                  <option>Iowa</option><option>Kansas</option><option>Kentucky</option>
+                  <option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                  <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
+                  <option>Mississippi</option><option>Missouri</option><option>Montana</option>
+                  <option>Nebraska</option><option>Nevada</option><option>New Hampshire</option>
+                  <option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                  <option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
+                  <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option>
+                  <option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option>
+                  <option>Tennessee</option><option>Texas</option><option>Utah</option>
+                  <option>Vermont</option><option>Virginia</option><option>Washington</option>
+                  <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+                </select>
+                <input class="form-field" type="text" id="zipCode" placeholder="Zip Code" />
+              </div>
+            </>
+          )}
+
+          {addressMode === 'stateCity' && (
             <div class="form-row">
               <select class="form-field" id="state">
                 <option value="" disabled selected>State</option>
@@ -448,7 +494,21 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
             </div>
           )}
 
-          {customFields.map((field: { label: string; required: boolean }) => (
+          {halfWidthRows.map((row: { label: string; required: boolean }[]) => (
+            <div class="form-row">
+              {row.map((field: { label: string; required: boolean }) => (
+                <input
+                  class="form-field custom-field-input"
+                  type="text"
+                  data-label={field.label}
+                  placeholder={field.required ? `${field.label}*` : field.label}
+                  required={field.required}
+                />
+              ))}
+            </div>
+          ))}
+
+          {fullWidthFields.map((field: { label: string; required: boolean }) => (
             <div class="form-row full">
               <input
                 class="form-field custom-field-input"
@@ -562,8 +622,10 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
           lastName,
           email,
           phone:       document.getElementById('phone')?.value.trim() || '',
+          streetAddress: document.getElementById('streetAddress')?.value.trim() || '',
           state:       document.getElementById('state')?.value || '',
           city:        document.getElementById('city')?.value.trim() || '',
+          zipCode:     document.getElementById('zipCode')?.value.trim() || '',
           corvetteGen: document.getElementById('corvetteGen')?.value || '',
           modelTrim:   document.getElementById('modelTrim')?.value || '',
           wheelInterest: document.getElementById('wheelInterest')?.value || '',

@@ -51,3 +51,53 @@ export const GET: APIRoute = async ({ request, url }) => {
     });
   }
 };
+
+export const DELETE: APIRoute = async ({ request, url }) => {
+  const adminPassword = import.meta.env.ADMIN_PASSWORD;
+  const password = request.headers.get('x-admin-password');
+
+  if (password !== adminPassword) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const slug = url.searchParams.get('slug');
+  const id = url.searchParams.get('id');
+  if (!slug || !id) {
+    return new Response(JSON.stringify({ error: 'Event slug and RSVP id are required.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    if (!redis) {
+      return new Response(JSON.stringify({ error: 'Storage unavailable.' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const key = rsvpKeyFor(slug);
+    const raw = await redis.lrange(key, 0, -1);
+    const attendees = (raw || []).map(a => (typeof a === 'string' ? JSON.parse(a) : a));
+    const remaining = attendees.filter(a => a.id !== id);
+
+    await redis.del(key);
+    if (remaining.length > 0) {
+      await redis.rpush(key, ...remaining.map(a => JSON.stringify(a)));
+    }
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Something went wrong. Please try again.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+};

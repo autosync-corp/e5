@@ -119,6 +119,8 @@ if (Astro.request.method === 'POST') {
     .btn-edit-event:hover { background: #1a2a3a; }
     .btn-delete-event { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
     .btn-delete-event:hover { background: #2a1a1a; }
+    .btn-delete-attendee { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete-attendee:hover { background: #2a1a1a; }
     .field-label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
     textarea.form-textarea {
       width: 100%; background: #2a2a2a; border: 1px solid #333; border-radius: 4px;
@@ -250,9 +252,15 @@ if (Astro.request.method === 'POST') {
           <label class="checkbox-row"><input type="checkbox" id="evActive" /> Mark as Active (shown on /events/upcoming)</label>
         </div>
 
+        <label class="field-label">Address</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 20px;">
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressNone" value="none" checked /> None</label>
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressStateCity" value="stateCity" /> State & City</label>
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressFull" value="full" /> Full Address (Street, City, State, Zip)</label>
+        </div>
+
         <label class="field-label">Built-in Optional Dropdowns</label>
-        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
-          <label class="checkbox-row"><input type="checkbox" id="evShowState" /> State & City</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
           <label class="checkbox-row"><input type="checkbox" id="evShowCorvetteGen" /> Corvette Generation</label>
           <label class="checkbox-row"><input type="checkbox" id="evShowModelTrim" /> Model / Trim</label>
           <label class="checkbox-row"><input type="checkbox" id="evShowWheel" /> Wheel Interested (live catalog)</label>
@@ -492,7 +500,7 @@ if (Astro.request.method === 'POST') {
       document.getElementById('evHasForm').checked = true;
       document.getElementById('evShowWheel').checked = false;
       document.getElementById('evShowFinish').checked = false;
-      document.getElementById('evShowState').checked = false;
+      document.getElementById('evAddressNone').checked = true;
       document.getElementById('evShowCorvetteGen').checked = false;
       document.getElementById('evShowModelTrim').checked = false;
       document.getElementById('evActive').checked = false;
@@ -519,7 +527,9 @@ if (Astro.request.method === 'POST') {
       document.getElementById('evHasForm').checked = event.hasForm !== false;
       document.getElementById('evShowWheel').checked = !!event.showWheelDropdown;
       document.getElementById('evShowFinish').checked = !!event.showFinishDropdown;
-      document.getElementById('evShowState').checked = !!event.showState;
+      // addressMode replaces the old showState boolean — fall back to 'stateCity' for older events saved before this field existed
+      const addressMode = event.addressMode || (event.showState ? 'stateCity' : 'none');
+      document.getElementById('evAddress' + addressMode.charAt(0).toUpperCase() + addressMode.slice(1)).checked = true;
       document.getElementById('evShowCorvetteGen').checked = !!event.showCorvetteGen;
       document.getElementById('evShowModelTrim').checked = !!event.showModelTrim;
       document.getElementById('evActive').checked = !!event.active;
@@ -532,7 +542,7 @@ if (Astro.request.method === 'POST') {
       if (!confirm(`Delete event "${slug}"? This cannot be undone.`)) return;
       await fetch('/api/events?slug=' + encodeURIComponent(slug), {
         method: 'DELETE',
-        headers: { 'x-admin-password': ADMIN_PASSWORD },
+        headers: { 'x-admin-password': ADMIN_PASSWORD, 'Content-Type': 'application/json' },
       });
       loadEvents();
     }
@@ -626,7 +636,7 @@ if (Astro.request.method === 'POST') {
         hasForm: document.getElementById('evHasForm').checked,
         showWheelDropdown: document.getElementById('evShowWheel').checked,
         showFinishDropdown: document.getElementById('evShowFinish').checked,
-        showState: document.getElementById('evShowState').checked,
+        addressMode: document.querySelector('input[name="addressMode"]:checked').value,
         showCorvetteGen: document.getElementById('evShowCorvetteGen').checked,
         showModelTrim: document.getElementById('evShowModelTrim').checked,
         active: document.getElementById('evActive').checked,
@@ -692,7 +702,7 @@ if (Astro.request.method === 'POST') {
         <table>
           <thead>
             <tr>
-              <th>Name</th><th>Email</th><th>Phone</th><th>State</th><th>Corvette</th><th>Attending</th><th>Date</th>
+              <th>Name</th><th>Email</th><th>Phone</th><th>State</th><th>Corvette</th><th>Attending</th><th>Date</th><th></th>
             </tr>
           </thead>
           <tbody>
@@ -708,6 +718,7 @@ if (Astro.request.method === 'POST') {
                   <td style="font-size:12px;">${a.corvetteGen || '&mdash;'}${a.modelTrim ? ' &mdash; ' + a.modelTrim : ''}</td>
                   <td><span style="color:${attendingColor};font-weight:700;font-size:12px;">${a.attending || '&mdash;'}</span></td>
                   <td>${date}</td>
+                  <td><button class="btn-delete-attendee" data-id="${a.id}">Delete</button></td>
                 </tr>
               `;
             }).join('')}
@@ -715,6 +726,20 @@ if (Astro.request.method === 'POST') {
         </table>
         </div>
       `;
+
+      list.querySelectorAll('.btn-delete-attendee').forEach(btn => {
+        btn.addEventListener('click', () => deleteAttendee(btn.dataset.id));
+      });
+    }
+
+    async function deleteAttendee(id) {
+      if (!confirm('Delete this RSVP? This cannot be undone.')) return;
+      const slug = document.getElementById('attendeeEventPicker').value;
+      await fetch('/api/attendees?slug=' + encodeURIComponent(slug) + '&id=' + encodeURIComponent(id), {
+        method: 'DELETE',
+        headers: { 'x-admin-password': ADMIN_PASSWORD, 'Content-Type': 'application/json' },
+      });
+      loadAttendees(slug);
     }
 
     // Tracking

@@ -20,6 +20,15 @@ function rsvpKeyFor(eventSlug: string): string {
 
 const ATTENDING_LABELS: Record<string, string> = { YES: 'Yes', MAYBE: 'Maybe', NO: 'No' };
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
@@ -49,15 +58,22 @@ export const POST: APIRoute = async ({ request }) => {
         const vehicleParts = [data.corvetteGen, data.modelTrim].filter(Boolean);
         const wheelParts = [data.wheelInterest, data.wheelFinish].filter(Boolean);
 
-        const customFieldAnswers = data.customFieldAnswers || {};
-        const customFieldsText = Object.entries(customFieldAnswers)
-          .filter(([, value]) => value)
+        const customFieldAnswers: Record<string, string> = data.customFieldAnswers || {};
+        const filledCustomFields = Object.entries(customFieldAnswers).filter(([, value]) => value);
+        const customFieldsText = filledCustomFields
           .map(([label, value]) => `${label}: ${value}`)
           .join('\n');
+        const customFieldsHtml = filledCustomFields
+          .map(([label, value]) => `<strong>${escapeHtml(label)}:</strong> ${escapeHtml(String(value))}`)
+          .join('<br>');
 
         const eventTitle = event?.title || data.eventSlug;
 
-        const webhookData = {
+        const fullLocation = [data.streetAddress, data.city, data.state, data.zipCode]
+          .filter(Boolean)
+          .join(', ');
+
+        const webhookData: Record<string, any> = {
           // RSVP Information
           rsvpId: entry.id,
           timestamp: entry.timestamp,
@@ -66,8 +82,9 @@ export const POST: APIRoute = async ({ request }) => {
             timeStyle: 'short',
           }),
 
-          // Ready-made subject line — drop directly into the GHL email/notification subject field
-          emailSubject: `New RSVP: ${eventTitle} — ${data.firstName} ${data.lastName}`,
+          // Ready-made subject lines — drop directly into GHL's subject fields
+          emailSubject: `New RSVP: ${eventTitle} — ${data.firstName} ${data.lastName}`, // internal staff notification
+          customerEmailSubject: `We received your RSVP — ${eventTitle}`, // attendee confirmation
 
           // Event Information
           event: {
@@ -89,9 +106,11 @@ export const POST: APIRoute = async ({ request }) => {
 
           // Location
           location: {
-            state: data.state || '',
+            streetAddress: data.streetAddress || '',
             city: data.city || '',
-            fullLocation: [data.city, data.state].filter(Boolean).join(', '),
+            state: data.state || '',
+            zipCode: data.zipCode || '',
+            fullLocation,
           },
 
           // Vehicle Interest
@@ -101,20 +120,9 @@ export const POST: APIRoute = async ({ request }) => {
             display: vehicleParts.join(' '),
           },
 
-          // Wheel Interest
-          wheel: {
-            model: data.wheelInterest || '',
-            finish: data.wheelFinish || '',
-            display: wheelParts.join(' - '),
-          },
-
           // Attending
           attending: data.attending || '',
           attendingLabel: ATTENDING_LABELS[data.attending] || data.attending || '',
-
-          // Custom Fields
-          customFieldAnswers,
-          customFieldsText,
 
           // Metadata
           metadata: {
@@ -122,6 +130,22 @@ export const POST: APIRoute = async ({ request }) => {
             sourceUrl: new URL(request.url).origin + `/events/${data.eventSlug}`,
           },
         };
+
+        // Only included when the event actually uses these — keeps the payload free of
+        // empty sections for events that don't have the wheel dropdown or custom fields on
+        if (wheelParts.length > 0) {
+          webhookData.wheel = {
+            model: data.wheelInterest || '',
+            finish: data.wheelFinish || '',
+            display: wheelParts.join(' - '),
+          };
+        }
+
+        if (filledCustomFields.length > 0) {
+          webhookData.customFieldAnswers = customFieldAnswers;
+          webhookData.customFieldsText = customFieldsText;
+          webhookData.customFieldsHtml = customFieldsHtml;
+        }
 
         await fetch(webhookUrl, {
           method: 'POST',
