@@ -29,6 +29,25 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
+// One full-width rounded row per optional field — returns '' if there's no value,
+// so the caller can filter it out instead of rendering an empty labeled box.
+function createOptionalRow(label: string, value: string): string {
+  if (!value) return '';
+  return `<tr><td style="padding:0 0 12px 0;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;background-color:#f4f4f4;border:1px solid #dddddd;border-collapse:separate;border-spacing:0;border-radius:10px;"><tr><td style="width:165px;padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#777777;vertical-align:top;">${escapeHtml(label)}</td><td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;color:#111111;vertical-align:top;">${escapeHtml(value)}</td></tr></table></td></tr>`;
+}
+
+// Wraps whatever rows have data in a titled section — returns '' entirely if nothing
+// optional was submitted, so the GHL template shows no heading, box, or spacing at all.
+function wrapOptionalDetails(rows: string[]): string {
+  const availableRows = rows.filter(Boolean);
+  if (availableRows.length === 0) return '';
+  return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr><td style="padding:0 0 12px 0;"><div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#d31d25;font-weight:700;">Additional Details</div></td></tr><tr><td><table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;">${availableRows.join('')}</table></td></tr></table>`;
+}
+
+function buildOptionalDetailsText(pairs: [string, string][]): string {
+  return pairs.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`).join('\n');
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
@@ -146,6 +165,42 @@ export const POST: APIRoute = async ({ request }) => {
           webhookData.customFieldsText = customFieldsText;
           webhookData.customFieldsHtml = customFieldsHtml;
         }
+
+        // Combined optional-details blocks — generated server-side so the GHL template
+        // only needs one merge tag with no surrounding wrapper. Internal gets everything;
+        // customer gets a trimmed version (no custom field answers echoed back to them).
+        const attendingValue = ATTENDING_LABELS[data.attending] || data.attending || '';
+        const vehicleValue = vehicleParts.join(' ');
+        const wheelValue = wheelParts.join(' - ');
+
+        const internalRows = [
+          createOptionalRow('Attending', attendingValue),
+          createOptionalRow('Corvette', vehicleValue),
+          createOptionalRow('Wheel Interest', wheelValue),
+          ...filledCustomFields.map(([label, value]) => createOptionalRow(label, String(value))),
+        ];
+        const customerRows = [
+          createOptionalRow('Attending', attendingValue),
+          createOptionalRow('Corvette', vehicleValue),
+          createOptionalRow('Wheel Interest', wheelValue),
+        ];
+
+        webhookData.internalOptionalDetailsHtml = wrapOptionalDetails(internalRows);
+        webhookData.hasInternalOptionalDetails = webhookData.internalOptionalDetailsHtml !== '';
+        webhookData.internalOptionalDetailsText = buildOptionalDetailsText([
+          ['Attending', attendingValue],
+          ['Corvette', vehicleValue],
+          ['Wheel Interest', wheelValue],
+          ...filledCustomFields.map(([label, value]) => [label, String(value)] as [string, string]),
+        ]);
+
+        webhookData.customerOptionalDetailsHtml = wrapOptionalDetails(customerRows);
+        webhookData.hasCustomerOptionalDetails = webhookData.customerOptionalDetailsHtml !== '';
+        webhookData.customerOptionalDetailsText = buildOptionalDetailsText([
+          ['Attending', attendingValue],
+          ['Corvette', vehicleValue],
+          ['Wheel Interest', wheelValue],
+        ]);
 
         await fetch(webhookUrl, {
           method: 'POST',
