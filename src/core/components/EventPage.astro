@@ -302,6 +302,7 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
     }
 
   </style>
+  <script is:inline src={`https://www.google.com/recaptcha/enterprise.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}></script>
 </head>
 <body>
 <div class="rsvp-page">
@@ -547,9 +548,22 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
   <!-- Footer — global component, outside rsvp-page scope -->
   <Footer client:only="vue" />
 
-  <script define:vars={{ eventSlug: event.slug, generationTrimMap, wheelFinishMap }}>
+  <script define:vars={{ eventSlug: event.slug, generationTrimMap, wheelFinishMap, recaptchaSiteKey: import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY }}>
     // @ts-nocheck
     const form = document.getElementById('rsvpForm');
+
+    function getRecaptchaToken(action) {
+      return new Promise((resolve, reject) => {
+        grecaptcha.enterprise.ready(async () => {
+          try {
+            const token = await grecaptcha.enterprise.execute(recaptchaSiteKey, { action });
+            resolve(token);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      });
+    }
 
     // Style selects as selected when a value is chosen
     document.querySelectorAll('select.form-field').forEach(sel => {
@@ -611,6 +625,17 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
         btn.disabled = true;
         btn.textContent = 'Sending...';
 
+        let recaptchaToken = '';
+        try {
+          recaptchaToken = await getRecaptchaToken('rsvp_submit');
+        } catch {
+          errorMsg.textContent = 'Something went wrong. Please try again.';
+          errorMsg.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'RSVP';
+          return;
+        }
+
         const customFieldAnswers = {};
         document.querySelectorAll('.custom-field-input').forEach(input => {
           customFieldAnswers[input.dataset.label] = input.value.trim();
@@ -632,6 +657,7 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
           wheelFinish: document.getElementById('wheelFinish')?.value || '',
           attending:   document.getElementById('attending').value,
           customFieldAnswers,
+          recaptchaToken,
         };
 
         try {

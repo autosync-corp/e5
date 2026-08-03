@@ -48,12 +48,50 @@ function buildOptionalDetailsText(pairs: [string, string][]): string {
   return pairs.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`).join('\n');
 }
 
+const RECAPTCHA_SCORE_THRESHOLD = 0.5;
+
+// Returns true if the submission should proceed. Skips the check entirely when the
+// feature isn't configured (matches the optional-webhook pattern used elsewhere here),
+// but blocks once a project/API key is set and the token is missing, invalid, or low-scoring.
+async function verifyRecaptcha(token: string, expectedAction: string): Promise<boolean> {
+  const projectId = import.meta.env.RECAPTCHA_PROJECT_ID;
+  const apiKey = import.meta.env.RECAPTCHA_API_KEY;
+  const siteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+  if (!projectId || !apiKey || !siteKey) return true;
+  if (!token) return false;
+
+  try {
+    const res = await fetch(
+      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: { token, expectedAction, siteKey } }),
+      }
+    );
+    const result = await res.json();
+    if (!result.tokenProperties?.valid) return false;
+    if (result.tokenProperties.action !== expectedAction) return false;
+    return (result.riskAnalysis?.score ?? 0) >= RECAPTCHA_SCORE_THRESHOLD;
+  } catch {
+    return false;
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
 
     if (!data.eventSlug || !data.firstName || !data.lastName || !data.email) {
       return new Response(JSON.stringify({ error: 'First name, last name, and email are required.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const recaptchaOk = await verifyRecaptcha(data.recaptchaToken, 'rsvp_submit');
+    if (!recaptchaOk) {
+      return new Response(JSON.stringify({ error: 'Something went wrong. Please try again.' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
