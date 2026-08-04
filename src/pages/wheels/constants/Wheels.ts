@@ -280,6 +280,19 @@ export const FORM_FORGED_STUDIO_IMAGES = [
     "/assets/images/wheels/98db048dcecd1622510f41b23f78243bfe17a526.webp"
 ];
 
+// Laguna Wheels
+export const LAGUNA_BRAND_NAME = "Laguna";
+export const LAGUNA_LOGO = "/assets/images/logos/e5-laguna.webp";
+export const LAGUNA_HERO = "/assets/images/wheels/laguna/laguna-hero.webp";
+export const LAGUNA_WHEEL_RENDER = "https://wheels.autosyncstudio.com/webp/E5/Laguna_AB_Brushed_Aluminum_Front_5-lug_0001.webp";
+export const LAGUNA_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/Laguna_SB_Satin_Black_Front_5-lug_0001.webp";
+export const LAGUNA_POLISHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/Laguna_PO_Polished_Front_5-lug_0001.webp";
+export const LAGUNA_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/Laguna_BK_Gloss_Black_Front_5-lug_0001.webp";
+export const LAGUNA_SHOT_1 = "/assets/images/wheels/laguna/lagunacar3.webp";
+export const LAGUNA_SHOT_2 = "/assets/images/wheels/laguna/lagunacar1.webp";
+export const LAGUNA_SHOT_3 = "/assets/images/wheels/laguna/lagunacar2.webp";
+export const LAGUNA_VETTE_GALLERY = "/assets/images/wheels/laguna/lagunacar4.webp";
+
 // Shop Section - Bottom 3 finishes
 export const SHOP_FINISHES = [
     {
