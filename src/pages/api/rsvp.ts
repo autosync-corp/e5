@@ -48,7 +48,8 @@ function buildOptionalDetailsText(pairs: [string, string][]): string {
   return pairs.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`).join('\n');
 }
 
-const RECAPTCHA_SCORE_THRESHOLD = 0.5;
+const RECAPTCHA_SCORE_THRESHOLD = 0.7;
+const NOMINATIM_USER_AGENT = 'E5Wheels-RSVP/1.0 (https://e5wheels.com)';
 
 // Returns true if the submission should proceed. Skips the check entirely when the
 // feature isn't configured (matches the optional-webhook pattern used elsewhere here),
@@ -78,6 +79,37 @@ async function verifyRecaptcha(token: string, expectedAction: string): Promise<b
   }
 }
 
+// Verifies the submitted city genuinely exists in the given state via OpenStreetMap's free
+// Nominatim geocoder. Fails OPEN (allows the submission through) on network/timeout/service
+// errors — this is a community-run public service with no SLA, an outage there should never
+// block a real RSVP. Only fails CLOSED when Nominatim actually returns zero matches, meaning
+// the city/state pair doesn't resolve to any real place.
+async function verifyCity(city: string, state: string): Promise<boolean> {
+  if (!city || !state) return true;
+
+  try {
+    const params = new URLSearchParams({
+      city,
+      state,
+      country: 'USA',
+      format: 'json',
+      limit: '1',
+    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?${params.toString()}`, {
+      headers: { 'User-Agent': NOMINATIM_USER_AGENT },
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return true;
+    const results = await res.json();
+    return Array.isArray(results) && results.length > 0;
+  } catch {
+    return true;
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
@@ -92,6 +124,14 @@ export const POST: APIRoute = async ({ request }) => {
     const recaptchaOk = await verifyRecaptcha(data.recaptchaToken, 'rsvp_submit');
     if (!recaptchaOk) {
       return new Response(JSON.stringify({ error: 'Something went wrong. Please try again.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const cityOk = await verifyCity(data.city, data.state);
+    if (!cityOk) {
+      return new Response(JSON.stringify({ error: "We couldn't verify that City/State combination. Please double check and try again." }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
