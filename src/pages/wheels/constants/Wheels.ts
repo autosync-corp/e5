@@ -292,6 +292,7 @@ export const LAGUNA_SHOT_1 = "/assets/images/wheels/laguna/lagunacar3.webp";
 export const LAGUNA_SHOT_2 = "/assets/images/wheels/laguna/lagunacar1.webp";
 export const LAGUNA_SHOT_3 = "/assets/images/wheels/laguna/lagunacar2.webp";
 export const LAGUNA_VETTE_GALLERY = "/assets/images/wheels/laguna/lagunacar4.webp";
+export const LAGUNA_WHEEL_GALLERY_BANNER = "/assets/images/wheels/laguna/laguna-shop-wheels.webp";
 
 // Shop Section - Bottom 3 finishes
 export const SHOP_FINISHES = [
