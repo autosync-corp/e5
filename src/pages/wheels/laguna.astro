@@ -32,10 +32,14 @@ const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed
 const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
-// TODO: placeholder title/description — replace with real marketing copy
 const title = 'Laguna - E5 Forged Corvette Wheels | E5 Wheels';
-const description = 'The Laguna is a fully forged wheel featuring a bold split-spoke design. Exclusively forged in the USA for the C8 Corvette platform. 4 premium finishes available.';
+const description = 'The Laguna is a fully forged wheel featuring a bold multi-spoke design. Exclusively forged in the USA for the C8 Corvette platform. 4 premium finishes available.';
 const canonicalUrl = `${baseUrl}/wheels/laguna`;
+const ogImage = `${baseUrl}${LAGUNA_HERO}`;
+// No "offers" block: every Laguna entry in the AutoSync catalog still has Price: null.
+// Publishing a placeholder price (e.g. "0") in Product schema risks Google flagging it as
+// invalid, or literally displaying "$0" in search results — add "offers" back once real
+// pricing is confirmed.
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -43,19 +47,7 @@ const productSchema = JSON.stringify({
   "brand": { "@type": "Brand", "name": "E5 Wheels" },
   "description": description,
   "url": canonicalUrl,
-  "image": `${baseUrl}${LAGUNA_HERO}`,
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "USD",
-    // TODO: no price set in the AutoSync catalog yet (Price: null on every Laguna entry) —
-    // replace lowPrice/highPrice once pricing is confirmed
-    "lowPrice": "0",
-    "highPrice": "0",
-    // Every Laguna entry currently has InStock: false — using PreOrder rather than InStock
-    // until real availability is confirmed
-    "availability": "https://schema.org/PreOrder",
-    "seller": { "@type": "Organization", "name": "E5 Wheels" }
-  }
+  "image": ogImage
 });
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
@@ -68,7 +60,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -78,11 +70,11 @@ const breadcrumbSchema = JSON.stringify({
     <section class="w-full bg-white">
         <!-- Full Width Hero Image -->
         <div class="w-full h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px]">
-            <img src={LAGUNA_HERO} alt="Laguna Wheel" class="w-full h-full object-cover object-center" />
+            <img src={LAGUNA_HERO} alt="C8 Corvette fitted with E5 Laguna forged wheels" class="w-full h-full object-cover object-center" />
         </div>
 
         <!-- Content Below Image -->
-        <div class="max-w-[1100px] mx-auto px-6 py-8 md:py-12">
+        <div class="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
             <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                 <!-- Left: Laguna Logo -->
                 <div class="flex-1">
@@ -106,21 +98,21 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <!-- Exclusively Forged For -->
-            <p class="text-[12px] md:text-[14px] tracking-[1.5px] uppercase text-black/50">
+            <p class="text-[12px] md:text-[14px] tracking-[1.5px] uppercase text-black/50 text-center mt-8 md:mt-12">
                 EXCLUSIVELY FORGED FOR C8 Z06, ZR1 / X, E-RAY, GRAND SPORT / X
             </p>
         </div>
 
         <!-- Wheel Image with Specs Section -->
-        <div class="max-w-[1100px] mx-auto px-6 py-8 md:py-12">
+        <div class="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
             <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
                 <!-- Left: Wheel Image -->
-                <div class="w-full md:w-1/2">
-                    <img src={LAGUNA_WHEEL_RENDER} alt="Laguna Wheel" class="w-full h-auto" />
+                <div class="w-full md:w-[40%]">
+                    <img src={LAGUNA_WHEEL_RENDER} alt="E5 Laguna forged wheel in Brushed Aluminum finish" class="w-full h-auto" />
                 </div>
 
                 <!-- Right: Specs and Buttons -->
-                <div class="w-full md:w-1/2">
+                <div class="w-full md:w-[60%]">
                     <!-- Sizes -->
                     <div class="mb-6">
                         <h3 class="text-[14px] md:text-[16px] font-bold tracking-[1.5px] uppercase mb-3">SIZES</h3>
@@ -155,7 +147,7 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- Available Finishes -->
     <section class="bg-white py-8 md:py-12 border-t border-gray-200">
-        <div class="max-w-[1100px] mx-auto px-6">
+        <div class="max-w-[1400px] mx-auto px-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
                 <a href={satinBlackUrl} class="block hover:opacity-80 transition-opacity">
                     <ImageWithLegend image={LAGUNA_SATIN_BLACK} alt="Laguna Satin Black">
@@ -178,7 +170,7 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- The Forging Process -->
     <section class="bg-white py-8 md:py-12 border-t border-gray-200">
-        <div class="max-w-[1100px] mx-auto px-6">
+        <div class="max-w-[1400px] mx-auto px-6">
             <h2 class="text-e5-red text-[24px] md:text-[28px] font-bold tracking-[2px] uppercase mb-2 text-center">
                 THE FORGING PROCESS
             </h2>
@@ -243,10 +235,10 @@ const breadcrumbSchema = JSON.stringify({
     <!-- Finishing Section - Dark -->
     <section class="relative bg-black py-12 md:py-16">
         <div class="absolute inset-0 opacity-30">
-            <img src={LAGUNA_FINISHING_BG} alt="Finishing Background" class="w-full h-full object-cover" />
+            <img src={LAGUNA_FINISHING_BG} alt="E5 Laguna wheel finish close-up" class="w-full h-full object-cover" />
         </div>
 
-        <div class="max-w-[1100px] mx-auto px-6 relative z-10">
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
             <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
                 <!-- Left: FINISHING Title -->
                 <div class="w-full md:w-1/3">
@@ -269,11 +261,11 @@ const breadcrumbSchema = JSON.stringify({
     <section class="bg-white py-8 md:py-12">
         <div class="w-full">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <img src={LAGUNA_SHOT_2} alt="Laguna Detail 1" class="w-full h-auto" />
-                <img src={LAGUNA_SHOT_3} alt="Laguna Detail 2" class="w-full h-auto" />
+                <img src={LAGUNA_SHOT_2} alt="E5 Laguna wheel spoke detail" class="w-full h-auto" />
+                <img src={LAGUNA_SHOT_3} alt="E5 Laguna wheel barrel detail" class="w-full h-auto" />
             </div>
             <div class="w-full">
-                <img src={LAGUNA_SHOT_1} alt="Laguna Detail 3" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover object-center" />
+                <img src={LAGUNA_SHOT_1} alt="Corvette fitted with E5 Laguna wheels, close-up" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover object-center" />
             </div>
         </div>
     </section>
@@ -282,7 +274,7 @@ const breadcrumbSchema = JSON.stringify({
     <section class="w-full py-8 md:py-12">
         <!-- Vette Gallery Banner -->
         <div class="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden mb-8 md:mb-12">
-            <img src={LAGUNA_VETTE_GALLERY} alt="Vette Gallery" class="w-full h-full object-cover" />
+            <img src={LAGUNA_VETTE_GALLERY} alt="Corvette builds fitted with E5 Laguna wheels" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="absolute inset-0 flex items-end justify-start pb-12 md:pb-16 pl-8 md:pl-16">
                 <article class="text-white">
@@ -301,7 +293,7 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Wheel Gallery Banner -->
         <div class="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden">
-            <img src={LAGUNA_WHEEL_GALLERY_BANNER} alt="Wheel Gallery" class="w-full h-full object-cover" />
+            <img src={LAGUNA_WHEEL_GALLERY_BANNER} alt="E5 Laguna wheel detail gallery" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="absolute inset-0 flex items-end justify-end pb-12 md:pb-16 pr-8 md:pr-16">
                 <article class="text-white text-right">
@@ -321,11 +313,11 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- Related Wheels - Talladega + Sonoma (same E5 Forged family) -->
     <section class="bg-white py-8 md:py-12">
-        <div class="max-w-[1000px] mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Talladega -->
                 <a href={talladegaBrushedAluminumUrl} class="block hover:opacity-80 transition-opacity">
-                    <div class="text-center">
+                    <div class="text-center w-full md:w-[70%] mx-auto">
                         <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-auto mb-4" />
                         <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="mx-auto h-[34px] md:h-[38px] mb-4" />
                         <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
@@ -340,7 +332,7 @@ const breadcrumbSchema = JSON.stringify({
 
                 <!-- Sonoma -->
                 <a href={sonomaBrushedAluminumUrl} class="block hover:opacity-80 transition-opacity">
-                    <div class="text-center">
+                    <div class="text-center w-full md:w-[70%] mx-auto">
                         <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto mb-4" />
                         <img src={SONOMA_LOGO} alt="SONOMA" class="mx-auto h-[42px] md:h-[46px] mb-4" />
                         <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>

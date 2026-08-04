@@ -7,8 +7,10 @@ import {
     WHEELS_SEBRING_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
     WHEELS_TALLADEGA_ROUTE,
-    WHEELS_SONOMA_ROUTE
+    WHEELS_SONOMA_ROUTE,
+    WHEELS_LAGUNA_ROUTE
 } from "@/core/constants/Routes.ts";
+import { LAGUNA_LOGO, LAGUNA_WHEEL_RENDER } from "@/pages/wheels/constants/Wheels.ts";
 
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Corvette Wheels Collection | E5 Wheels';
@@ -48,8 +50,8 @@ const canonicalUrl = `${baseUrl}/wheels`;
                 </div>
             </div>
 
-            <!-- Two Wheels Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
+            <!-- Three Wheels Grid -->
+            <div class="wheel-finish-grid mb-8 md:mb-12">
                 <!-- Talladega -->
                 <div class="text-center">
                     <div class="mb-4 md:mb-6">
@@ -103,6 +105,33 @@ const canonicalUrl = `${baseUrl}/wheels`;
                         class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
                     >
                         EXPLORE SONOMA
+                    </a>
+                </div>
+
+                <!-- Laguna -->
+                <div class="text-center">
+                    <div class="mb-4 md:mb-6">
+                        <img
+                            src={LAGUNA_WHEEL_RENDER}
+                            alt="Laguna"
+                            class="w-full max-w-[300px] md:max-w-[400px] mx-auto"
+                        />
+                    </div>
+                    <img
+                        src={LAGUNA_LOGO}
+                        alt="Laguna"
+                        class="h-[24px] md:h-[29px] mx-auto mb-4 md:mb-6"
+                    />
+                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
+                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY, GRAND SPORT</p>
+                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">4 PREMIUM FINISHES</p>
+                    </div>
+                    <a
+                        href={WHEELS_LAGUNA_ROUTE}
+                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                    >
+                        EXPLORE LAGUNA
                     </a>
                 </div>
             </div>
