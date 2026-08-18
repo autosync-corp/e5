@@ -961,9 +961,12 @@ async function loadProducts() {
       if (urlParams.series && urlParams.finish) {
         // Normalize finish name from URL (map generation page names to API names)
         let normalizedFinish = urlParams.finish;
-        if (normalizedFinish.toLowerCase().includes('titanium brushed tint')) {
-          normalizedFinish = 'Titanium Brushed';
-        }
+        // TEMP: commented out for local testing — this unconditionally strips "Tint" for
+        // ANY series, which breaks Speedway (whose real name keeps "Tint") even though it's
+        // correct for Daytona/Sebring generation-page links.
+        // if (normalizedFinish.toLowerCase().includes('titanium brushed tint')) {
+        //   normalizedFinish = 'Titanium Brushed';
+        // }
 
         // Restrict to this series first, same as seriesProducts/availableFinishes below
         const finishParam = (normalizedFinish || '').toLowerCase();
