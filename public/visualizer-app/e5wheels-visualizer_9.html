@@ -296,25 +296,10 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 </head>
 <body>
 
-<!-- E5 NAV -->
-<nav class="e5-nav">
-  <div class="nav-side">
-    <a href="https://www.e5wheels.com/wheels">WHEELS</a>
-    <a href="https://www.e5wheels.com/gallery">GALLERY</a>
-    <a href="https://www.e5wheels.com/process">PROCESS</a>
-  </div>
-  <a href="https://www.e5wheels.com/" class="nav-logo">
-    <img src="https://www.e5wheels.com/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels">
-  </a>
-  <div class="nav-side">
-    <a href="https://www.e5wheels.com/generations">GENERATIONS</a>
-    <a href="https://www.e5wheels.com/visualizer">VISUALIZE</a>
-    <a href="https://www.e5wheels.com/contact-us">CONTACT</a>
-    <a href="https://www.e5wheels.com/cart" class="nav-cart">
-      <img src="https://www.e5wheels.com/assets/images/asset-18.webp" alt="Cart">
-    </a>
-  </div>
-</nav>
+<!-- E5 NAV removed: this page is now embedded on e5wheels.com under the
+     main site's own header/footer (see /e5-visualizer), which made this
+     tool's own nav redundant. navEl lookups below already null-check, so
+     removing this element outright (rather than hiding it) is safe. -->
 
 <!-- GEN TABS -->
 <div class="gen-bar">
