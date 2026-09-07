@@ -1,12 +1,38 @@
 ---
 // E5's own custom-built visualizer (ported from the `testground` staging
-// repo — see ai/VISUALIZER_MIGRATION_NOTES.md). It's a standalone static app
-// with its own full nav bar matching the main site's look, so it's served as
-// a real page of its own rather than wrapped in MainLayout (which would
-// duplicate the nav/footer around it).
+// repo — see ai/VISUALIZER_MIGRATION_NOTES.md). The ported app's internal
+// paths (its nested iframe, css, images) are all relative to its own
+// directory (public/visualizer-app/), so it's embedded here via iframe
+// rather than redirected to directly — a redirect would change the address
+// bar to /visualizer-app/e5wheels-visualizer_9.html, which is not wanted.
+// This way /e5-visualizer stays in the address bar and the app's own
+// relative paths keep resolving against its real directory, untouched.
 //
 // This is a NEW, separate tool from /visualizer (which stays on the AutoSync
 // widget). Not linked from anywhere on the site yet — accessible only via
 // direct link until the user decides where it should live.
-return Astro.redirect('/visualizer-app/e5wheels-visualizer_9.html', 302);
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const canonicalUrl = `${baseUrl}/e5-visualizer`;
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href={canonicalUrl}>
+  <title>Wheel Visualizer | E5 Wheels</title>
+  <style is:global>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+  </style>
+</head>
+<body>
+  <iframe
+    src="/visualizer-app/e5wheels-visualizer_9.html"
+    title="E5 Wheels Visualizer"
+    style="display: block; width: 100%; height: 100vh; border: 0;"
+  ></iframe>
+</body>
+</html>
