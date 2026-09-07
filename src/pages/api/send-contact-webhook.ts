@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.log('Send contact webhook API endpoint called');
 
     const body = await request.json();
-    const { firstName, lastName, email, phone, state, city, zipCode, message, smsConsent } = body;
+    const { firstName, lastName, email, phone, state, city, zipCode, message, smsConsent, formType, source } = body;
 
     console.log('Received contact data:', { firstName, lastName, email });
 
@@ -53,8 +53,8 @@ export const POST: APIRoute = async ({ request }) => {
         dateStyle: 'full',
         timeStyle: 'short'
       }),
-      formType: 'Contact Us',
-      source: 'E5 Wheels Website - Contact Form',
+      formType: formType || 'Contact Us',
+      source: source || 'E5 Wheels Website - Contact Form',
       sourceUrl: new URL(request.url).origin,
     };
 

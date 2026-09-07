@@ -175,6 +175,10 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   transition:background .2s;margin-top:14px;
 }
 .d-shop:hover{background:var(--gold-dim)}
+/* Shown instead of .d-shop when the current style/finish/generation combo
+   has no real product yet - links to a quote-request form instead. */
+.d-shop.d-shop-quote{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.d-shop.d-shop-quote:hover{background:rgba(198,161,91,.12)}
 
 /* ── THUMBNAIL STRIP — full width below both columns ──
    Same layered-image + luminance-mask technique index.php's own thumbnails
@@ -303,14 +307,14 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 
 <!-- GEN TABS -->
 <div class="gen-bar">
-  <button class="gtab active" data-gen="C5" data-label="C5 Z06" data-shop="https://www.e5wheels.com/shop/daytona/gloss-black/c5-z06/18x10-et25-19x11-et20">C5 Z06</button>
-  <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport" data-shop="https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50">C6 Grand Sport</button>
-  <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06" data-shop="https://www.e5wheels.com/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76">C6 Base / Z06</button>
-  <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport" data-shop="https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50">C7 Grand Sport</button>
-  <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray" data-shop="https://www.e5wheels.com/shop/speedway/gloss-black/c7-stingray/19x9.5-et53-20x11-et76">C7 Stingray</button>
-  <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06" data-shop="https://www.e5wheels.com/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50">C7 Z06</button>
-  <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06" data-shop="https://www.e5wheels.com/shop/talladega/brushed-aluminum/c8-z06/20x10-et25-21x13-et20">C8 Z06</button>
-  <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray" data-shop="https://www.e5wheels.com/shop/speedway/dark-bronze/c8-stingray/19x8.5-et38-20x11-et52">C8 Stingray</button>
+  <button class="gtab active" data-gen="C5" data-label="C5 Z06">C5 Z06</button>
+  <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport">C6 Grand Sport</button>
+  <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06">C6 Base / Z06</button>
+  <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport">C7 Grand Sport</button>
+  <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray">C7 Stingray</button>
+  <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06">C7 Z06</button>
+  <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06">C8 Z06</button>
+  <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray">C8 Stingray</button>
 </div>
 
 <!-- MAIN -->
@@ -381,56 +385,113 @@ const GENS={
     paints:['50th Anniversary Red','Arctic White','Black','Competition Yellow','Bowling Green Metallic','Fairway Green Metallic','LeMans Blue Metallic','Pewter Metallic','Magnetic Red Metallic','Spiral Gray Metallic','Millennium Yellow','Nassau Blue','Navy Blue Metallic','Quicksilver Metallic','Sebring Silver Metallic','Torch Red'],
     calipers:['50th Anniversary Red','Arctic White','Black','Competition Yellow','Bowling Green Metallic','Fairway Green Metallic','LeMans Blue Metallic','Pewter Metallic','Magnetic Red Metallic','Spiral Gray Metallic','Millennium Yellow','Nassau Blue','Navy Blue Metallic','Quicksilver Metallic','Sebring Silver Metallic','Torch Red'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/daytona/gloss-black/c5-z06/18x10-et25-19x11-et20'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C6_Grand_Sport:{label:'C6 Grand Sport',slides:[1,2,3,4,5,6,7,8,9,10],
     paints:['Arctic White','Black','Blade Silver Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat'],
     calipers:['Arctic White','Black','Blade Silver Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C6_Z06:{label:'C6 Base / Z06',slides:[1,2,3,4,5,6,7,8,9,10],
     paints:['Arctic White','Atomic Orange Metallic','Black','Blade Silver Metallic','Carbon Flash Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunset Orange Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','LeMans Blue Metallic','Machine Silver Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Victory Red'],
     calipers:['Arctic White','Atomic Orange Metallic','Black','Blade Silver Metallic','Carbon Flash Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunset Orange Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','LeMans Blue Metallic','Machine Silver Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Victory Red'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C7_Grand_Sport:{label:'C7 Grand Sport',slides:[1,2,4,5,7,8,9,10],
     paints:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Elkhart Lake Blue Metallic','Long Beach Red Metallic Tintcoat','Sebring Orange Tintcoat','Shadow Grey Metallic','Sterling Blue Metallic','Torch Red','Watkins Glen Gray Metallic'],
     calipers:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Elkhart Lake Blue Metallic','Long Beach Red Metallic Tintcoat','Sebring Orange Tintcoat','Shadow Grey Metallic','Sterling Blue Metallic','Torch Red','Watkins Glen Gray Metallic'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C7_Stingray:{label:'C7 Stingray',slides:[1,4,2,5,6,3,9],
     paints:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Lime Rock Green Metallic','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Gray Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
     calipers:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Lime Rock Green Metallic','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Gray Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/speedway/gloss-black/c7-stingray/19x9.5-et53-20x11-et76'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C7_Z06:{label:'C7 Z06',slides:[1,2,3,4,5,7,8,9,10],
     paints:['Admiral Blue','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Grey Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
     calipers:['Admiral Blue','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Grey Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C8_Z06:{label:'C8 Z06',slides:[3,1,2,4,6,7,5,10,8,9],
     paints:['Accelerate Yellow','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricoat','Silver Flare Metallic','Torch Red'],
     calipers:['Accelerate Yellow','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricoat','Silver Flare Metallic','Torch Red'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/talladega/brushed-aluminum/c8-z06/20x10-et25-21x13-et20'},
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'},
   C8_Stingray:{label:'C8 Stingray',slides:[5,1,7,2,8,3,9],
     paints:['Accelerate Yellow Metallic','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue metallic','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricaot','Sebring Orange Tintcoat','Silver Flare Metallic','Torch Red'],
     calipers:['Accelerate Yellow Metallic','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue metallic','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricaot','Sebring Orange Tintcoat','Silver Flare Metallic','Torch Red'],
     wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
-    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
-    shop:'https://www.e5wheels.com/shop/speedway/dark-bronze/c8-stingray/19x8.5-et38-20x11-et52'}
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint'}
 };
 const WMAIN={
   Daytona:{'Bronze Brushed Tint':'Daytona/Bronze Brushed Tint','Chrome':'Daytona/Chrome','Gloss Black':'Daytona/Gloss Black','Gloss Gunmetal':'Daytona/Gloss Gunmetal','Gloss White':'Daytona/Gloss White','Hyper Silver':'Daytona/Hyper Silver','Satin Black':'Daytona/Satin Black','Satin Gunmetal':'Daytona/Satin Gunmetal','Titanium':'Daytona/Titanium'},
   Sebring:{'Bronze Brushed Tint':'Sebring/Bronze Brushed Tint','Chrome':'Sebring/Chrome','Gloss Black':'Sebring/Gloss Black','Gloss Gunmetal':'Sebring/Gloss Gunmetal','Gloss White':'Sebring/Gloss White','Hyper Silver':'Sebring/Hyper Silver','Satin Black':'Sebring/Satin Black','Satin Gunmetal':'Sebring/Satin Gunmetal','Titanium':'Sebring/Titanium'},
   Speedway:{'Bronze Brushed Tint':'Speedway/Bronze','Chrome':'Speedway/Chrome','Gloss Black':'Speedway/Gloss Black','Gloss Gunmetal':'Speedway/Gloss Gunmetal','Gloss White':'Speedway/Gloss White','Hyper Silver':'Speedway/Hyper Silver','Satin Black':'Speedway/Satin Black','Satin Gunmetal':'Speedway/Satin Gunmetal','Titanium':'Speedway/Titanium'}
 };
+
+/*
+ * Real shop links per generation/style/finish, sourced from the actual
+ * buildWheelUrl() calls already documented on the site's own generation
+ * pages (src/pages/generations/**) - see ai/VISUALIZER_MIGRATION_NOTES.md.
+ * Loaded from fitment-catalog.json rather than hardcoded here so it can be
+ * regenerated without touching this file. Empty/missing entries (e.g.
+ * C8_Z06, whose real products are Talladega/Sonoma, not Daytona/Sebring/
+ * Speedway) mean every combo for that generation falls through to the
+ * quote-request form below.
+ */
+let FITMENT_CATALOG={};
+async function loadFitmentCatalog(){
+  try{
+    const res=await fetch('fitment-catalog.json');
+    if(res.ok)FITMENT_CATALOG=await res.json();
+  }catch(e){console.warn('Failed to load fitment-catalog.json; shop links will fall back to quote requests.',e);}
+}
+
+/*
+ * The finish dropdown uses one simplified label per swatch across every
+ * wheel style, but the real catalog sometimes uses a different name for
+ * the same physical finish on a specific style (e.g. Speedway's bronze
+ * finish is a distinct "Dark Bronze" product, and "Titanium" here can be
+ * either "Titanium Brushed" or "Titanium Brushed Tint" depending on
+ * generation) - same root cause as the finish-name-mismatch bugs already
+ * fixed on the shop pages themselves. Try each candidate name in order.
+ */
+const FINISH_ALIASES={
+  'Titanium':['Titanium Brushed','Titanium Brushed Tint'],
+  'Bronze Brushed Tint':['Bronze Brushed Tint','Dark Bronze'],
+};
+function candidateFinishes(finish){
+  return FINISH_ALIASES[finish]||[finish];
+}
+function findShopUrl(genKey,style,finish){
+  const entry=FITMENT_CATALOG[genKey];
+  if(!entry)return null;
+  for(const candidate of candidateFinishes(finish)){
+    const match=entry.combos.find(c=>c.style===style&&c.finish===candidate);
+    if(match)return match.url;
+  }
+  return null;
+}
+function updateShopLink(){
+  const url=findShopUrl(curGen,curWheel,curWC);
+  if(url){
+    cpShop.href=url;
+    cpShop.textContent='SHOP THIS FITMENT →';
+    cpShop.classList.remove('d-shop-quote');
+    return;
+  }
+  const entry=FITMENT_CATALOG[curGen];
+  const gd=GENS[curGen];
+  const params=new URLSearchParams({
+    series:curWheel,
+    finish:curWC,
+    generation:entry?entry.generation:'',
+    trim:entry?entry.trim:'',
+    label:gd?gd.label:'',
+  });
+  cpShop.href='https://www.e5wheels.com/request-quote?'+params.toString();
+  cpShop.textContent='REQUEST A QUOTE →';
+  cpShop.classList.add('d-shop-quote');
+}
 
 let curGen='C5', curWheel='Daytona', curWC='Bronze Brushed Tint', curPaint='Torch Red', curCal='Torch Red';
 const $=id=>document.getElementById(id);
@@ -559,6 +620,7 @@ function buildWsGrid(wheels){
       wheelPrev.src=mUrl(curWheel,curWC);
       refreshThumbs();
       driveWheelBtn(w);
+      updateShopLink();
     });
     wsGrid.appendChild(btn);
   });
@@ -575,7 +637,7 @@ function fillSel(el,opts,val){
 }
 
 // Events
-cpWC.addEventListener('change',e=>{curWC=e.target.value;refreshWsImgs();refreshThumbs();drive('wheelColor',wcForStyle(curWheel,curWC));});
+cpWC.addEventListener('change',e=>{curWC=e.target.value;refreshWsImgs();refreshThumbs();drive('wheelColor',wcForStyle(curWheel,curWC));updateShopLink();});
 cpPaint.addEventListener('change',e=>{curPaint=e.target.value;refreshThumbs();drive('exteriorPaint',curPaint);});
 cpCal.addEventListener('change',e=>{curCal=e.target.value;refreshThumbs();drive('brakeCalipers',curCal);});
 
@@ -587,7 +649,7 @@ function loadGen(key){
   fillSel(cpWC,gd.wcs,curWC);
   fillSel(cpPaint,gd.paints,curPaint);
   fillSel(cpCal,gd.calipers,curCal);
-  cpShop.href=gd.shop;
+  updateShopLink();
   buildWsGrid(gd.wheels);
   buildThumbs();
   layoutTopRow();
@@ -704,7 +766,10 @@ frame.addEventListener('load',()=>{
 setTimeout(()=>loader.classList.add('hidden'),6000);
 
 document.querySelectorAll('.gtab').forEach(b=>b.addEventListener('click',()=>loadGen(b.dataset.gen)));
-loadGen('C5');
+(async()=>{
+  await loadFitmentCatalog();
+  loadGen('C5');
+})();
 <\/script>
 </body>
 </html>`;
