@@ -1,0 +1,22 @@
+{
+  "paints": [
+    "50th Anniversary Red",
+    "Arctic White",
+    "Black",
+    "Competition Yellow",
+    "Bowling Green Metallic",
+    "Fairway Green Metallic",
+    "LeMans Blue Metallic",
+    "Pewter Metallic",
+    "Magnetic Red Metallic",
+    "Spiral Gray Metallic",
+    "Millennium Yellow",
+    "Nassau Blue",
+    "Navy Blue Metallic",
+    "Quicksilver Metallic",
+    "Sebring Silver Metallic",
+    "Torch Red"
+  ],
+  "defaultPaint": "Torch Red",
+  "galleryOrder": [1, 2, 3, 4, 10, 6, 7, 5]
+}

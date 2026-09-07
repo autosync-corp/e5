@@ -1,0 +1,28 @@
+{
+  "paints": [
+    "Admiral Blue Metallic",
+    "Arctic White",
+    "Black",
+    "Black Rose Metallic",
+    "Blade Silver Metallic",
+    "Ceramic Matrix Gray Metallic",
+    "Corvette Racing Yellow Tintcoat",
+    "Crystal Red Tintcoat",
+    "Cyber Gray Metallic",
+    "Daytona Sunrise Orange Metallic",
+    "Elkhart Lake Blue Metallic",
+    "Laguna Blue Tintcoat",
+    "Lime Rock Green Metallic",
+    "Long Beach Red Metallic",
+    "Night Race Blue Metallic",
+    "Sebring Orange Tintcoat",
+    "Shadow Gray Metallic",
+    "Shark Gray Metallic",
+    "Sterling Blue Metallic",
+    "Torch Red",
+    "Velocity Yellow Tintcoat",
+    "Watkins Glen Gray Metallic"
+  ],
+  "defaultPaint": "Torch Red",
+  "galleryOrder": [1, 4, 2, 5, 6, 3, 9]
+}

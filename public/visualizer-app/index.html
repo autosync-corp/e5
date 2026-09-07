@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C5 Gallery</title>
+  <script>
+    (function () {
+      var DEFAULT_CAR = 'C5';
+      var ALLOWED = ['C5','C6_Grand_Sport','C6_Z06','C7_Grand_Sport','C7_Stingray','C7_Z06','C8_Stingray','C8_Z06'];
+      var raw = new URLSearchParams(location.search).get('car');
+      var car = raw && ALLOWED.indexOf(decodeURIComponent(raw).trim()) >= 0 ? decodeURIComponent(raw).trim() : DEFAULT_CAR;
+      document.title = car.replace(/_/g, ' ') + ' Gallery';
+
+      /*
+       * When embedded in another page's iframe (e.g. e5wheels-visualizer_9.html's
+       * branded wrapper, which supplies its own config panel), hide this page's
+       * own configurator panel and mobile dock instead of relying on the host
+       * clipping/widening the iframe to hide them - that technique decouples the
+       * iframe's height from this page's actual (aspect-ratio-driven) content
+       * height and is what caused the car viewport to scroll.
+       */
+      if (window.self !== window.top) {
+        document.documentElement.classList.add('is-embedded');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/gallery.css?v=20260714-alpha">
+</head>
+<body>
+  <div class="container">
+    <!-- Left Column -->
+    <section class="image-section">
+      <div class="main-image-wrapper">
+        <div class="main-image-container">
+          <div class="gallery-layer gallery-layer-body" id="bodyColorLayer">
+            <img id="bodyColorImage" src="" alt="">
+          </div>
+          <div class="gallery-layer gallery-layer-caliper" id="caliperLayer">
+            <img id="caliperLayerImage" src="" alt="">
+          </div>
+          <div class="gallery-layer gallery-layer-wheel" id="wheelLayer">
+            <img id="wheelLayerImage" src="" alt="">
+          </div>
+          <span class="image-counter" id="imageCounter">1/10</span>
+        </div>
+        <button class="nav-arrow prev" id="prevArrow" aria-label="Previous image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="nav-arrow next" id="nextArrow" aria-label="Next image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots"></div>
+
+      <div class="thumbnail-gallery" id="thumbnailGallery"></div>
+    </section>
+
+    <!-- Mobile: wheel style dock (replaces arrow toggle) -->
+    <div class="mobile-wheel-dock" id="mobileWheelDock" role="group" aria-label="Wheel styles">
+      <button type="button" class="mobile-wheel-btn is-selected" data-style="Daytona" aria-pressed="true" aria-label="Daytona">
+        <img src="" alt="" data-wheel-preview="Daytona">
+      </button>
+      <button type="button" class="mobile-wheel-btn" data-style="Sebring" aria-pressed="false" aria-label="Sebring">
+        <img src="" alt="" data-wheel-preview="Sebring">
+      </button>
+      <button type="button" class="mobile-wheel-btn" data-style="Speedway" aria-pressed="false" aria-label="Speedway">
+        <img src="" alt="" data-wheel-preview="Speedway">
+      </button>
+    </div>
+
+    <!-- Right Column -->
+    <section class="configurator-section" id="configuratorSection">
+      <div class="configurator-card">
+        <button class="config-panel-close" id="configPanelClose" aria-label="Close configurator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <input type="hidden" id="wheelModel" value="Daytona">
+        <div class="wheel-style-picker" role="group" aria-label="Wheel line">
+          <div class="wheel-style-option">
+            <span class="wheel-style-label" id="wheelStyleLblDaytona">Daytona</span>
+            <button type="button" class="wheel-style-btn is-selected" data-style="Daytona" aria-pressed="true" aria-labelledby="wheelStyleLblDaytona">
+              <img src="" alt="" data-wheel-preview="Daytona">
+            </button>
+          </div>
+          <div class="wheel-style-option">
+            <span class="wheel-style-label" id="wheelStyleLblSebring">Sebring</span>
+            <button type="button" class="wheel-style-btn" data-style="Sebring" aria-pressed="false" aria-labelledby="wheelStyleLblSebring">
+              <img src="" alt="" data-wheel-preview="Sebring">
+            </button>
+          </div>
+          <div class="wheel-style-option">
+            <span class="wheel-style-label" id="wheelStyleLblSpeedway">Speedway</span>
+            <button type="button" class="wheel-style-btn" data-style="Speedway" aria-pressed="false" aria-labelledby="wheelStyleLblSpeedway">
+              <img src="" alt="" data-wheel-preview="Speedway">
+            </button>
+          </div>
+        </div>
+        <img class="configurator-image" id="wheelMainImage" src="" alt="Selected wheel">
+
+        <div class="config-option">
+          <label class="config-label" for="wheelColor">WHEEL COLOR</label>
+          <select class="config-select" id="wheelColor">
+            <!-- Populated from wheelColors -->
+          </select>
+        </div>
+
+        <div class="config-option">
+          <label class="config-label" for="exteriorPaint">EXTERIOR PAINT</label>
+          <select class="config-select" id="exteriorPaint">
+            <!-- Populated from paintArray -->
+          </select>
+        </div>
+
+        <div class="config-option">
+          <label class="config-label" for="brakeCalipers">BRAKE CALIPERS</label>
+          <select class="config-select" id="brakeCalipers">
+            <!-- Populated from paintArray -->
+          </select>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <p>All images are AI generated and are for visual reference only.</p>
+  </footer>
+
+  <script>
+    /**
+     * Vehicle + gallery config:
+     *   ?car=C5                 → loads images/C5/config.json
+     *   ?car=C5&order=1,2,3,... → same paints; URL order overrides JSON galleryOrder
+     */
+    const DEFAULT_CAR = 'C5';
+    const DEFAULT_GALLERY_ORDER = [1, 2, 3, 4, 10, 6, 7, 5];
+    const DEFAULT_PAINTS = [
+      '50th Anniversary Red',
+      'Arctic White',
+      'Black',
+      'Competition Yellow',
+      'Bowling Green Metallic',
+      'Fairway Green Metallic',
+      'LeMans Blue Metallic',
+      'Pewter Metallic',
+      'Magnetic Red Metallic',
+      'Spiral Gray Metallic',
+      'Millennium Yellow',
+      'Nassau Blue',
+      'Navy Blue Metallic',
+      'Quicksilver Metallic',
+      'Sebring Silver Metallic',
+      'Torch Red'
+    ];
+    const DEFAULT_PAINT = 'Torch Red';
+    const ALLOWED_CARS = [
+      'C5',
+      'C6_Grand_Sport',
+      'C6_Z06',
+      'C7_Grand_Sport',
+      'C7_Stingray',
+      'C7_Z06',
+      'C8_Stingray',
+      'C8_Z06'
+    ];
+    /** URL slug → actual folder under images/ when names differ. */
+    const CAR_DISK_FOLDER = {};
+
+    function parseCar(raw) {
+      if (!raw) return null;
+      const car = decodeURIComponent(String(raw)).trim();
+      return ALLOWED_CARS.includes(car) ? car : null;
+    }
+
+    function diskFolderForCar(carSlug) {
+      return CAR_DISK_FOLDER[carSlug] || carSlug;
+    }
+
+    function parseOrder(raw) {
+      if (raw == null || String(raw).trim() === '') return null;
+      const nums = String(raw)
+        .split(',')
+        .map((s) => parseInt(s.trim(), 10))
+        .filter((n) => Number.isInteger(n) && n > 0);
+      return nums.length > 0 ? nums : null;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const carSlug = parseCar(urlParams.get('car')) || DEFAULT_CAR;
+    let CAR_IMAGE_FOLDER = diskFolderForCar(carSlug);
+    let carImagesRoot = `images/${CAR_IMAGE_FOLDER}`;
+    let carWheelsBasePath = `${carImagesRoot}/Wheels`.replace(/\/+/g, '/');
+    let caliperMaskBasePath = `${carImagesRoot}/Masks`.replace(/\/+/g, '/');
+    let GALLERY_ORDER = DEFAULT_GALLERY_ORDER.slice();
+    let paintArray = DEFAULT_PAINTS.slice();
+    let defaultPaint = DEFAULT_PAINT;
+
+    function setVehiclePageTitle(slug) {
+      document.title = `${String(slug).replace(/_/g, ' ')} Gallery`;
+    }
+    setVehiclePageTitle(carSlug);
+
+    let images = [];
+    let currentIndex = 0;
+
+    const bodyColorImage = document.getElementById('bodyColorImage');
+    const wheelLayerImage = document.getElementById('wheelLayerImage');
+    const caliperLayerImage = document.getElementById('caliperLayerImage');
+    const imageCounter = document.getElementById('imageCounter');
+    const carouselDots = document.getElementById('carouselDots');
+    const thumbnailGallery = document.getElementById('thumbnailGallery');
+    const exteriorPaint = document.getElementById('exteriorPaint');
+    const wheelColor = document.getElementById('wheelColor');
+    const wheelModel = document.getElementById('wheelModel');
+    const wheelMainImage = document.getElementById('wheelMainImage');
+    const brakeCalipers = document.getElementById('brakeCalipers');
+
+    /**
+     * A handful of source renders are missing/broken for specific
+     * paint/wheel/finish combinations. Rather than show a broken-image icon,
+     * hide that layer until a working src loads again.
+     */
+    function attachImgFallback(imgEl) {
+      imgEl.addEventListener('error', () => {
+        imgEl.style.visibility = 'hidden';
+      });
+      imgEl.addEventListener('load', () => {
+        imgEl.style.visibility = '';
+      });
+    }
+    attachImgFallback(bodyColorImage);
+    attachImgFallback(wheelLayerImage);
+    attachImgFallback(caliperLayerImage);
+
+    const wheelColors = [
+      'Bronze Brushed Tint',
+      'Chrome',
+      'Gloss Black',
+      'Gloss Gunmetal',
+      'Gloss White',
+      'Hyper Silver',
+      'Satin Black',
+      'Satin Gunmetal',
+      'Titanium'
+    ];
+
+    function applyVehiclePaths(carSlug) {
+      CAR_IMAGE_FOLDER = diskFolderForCar(carSlug);
+      carImagesRoot = `images/${CAR_IMAGE_FOLDER}`;
+      carWheelsBasePath = `${carImagesRoot}/Wheels`.replace(/\/+/g, '/');
+      caliperMaskBasePath = `${carImagesRoot}/Masks`.replace(/\/+/g, '/');
+    }
+
+    async function loadVehicleConfig() {
+      applyVehiclePaths(carSlug);
+      try {
+        const res = await fetch(`${carImagesRoot}/config.json`);
+        if (!res.ok) throw new Error(`config.json ${res.status}`);
+        const data = await res.json();
+        if (Array.isArray(data.paints) && data.paints.length > 0) {
+          paintArray = data.paints.map(String);
+        }
+        if (data.defaultPaint && paintArray.includes(String(data.defaultPaint))) {
+          defaultPaint = String(data.defaultPaint);
+        } else if (paintArray.length > 0) {
+          defaultPaint = paintArray[0];
+        }
+        const jsonOrder = Array.isArray(data.galleryOrder)
+          ? data.galleryOrder.map((n) => parseInt(n, 10)).filter((n) => Number.isInteger(n) && n > 0)
+          : [];
+        const urlOrder = parseOrder(urlParams.get('order'));
+        GALLERY_ORDER = urlOrder || (jsonOrder.length > 0 ? jsonOrder : DEFAULT_GALLERY_ORDER.slice());
+      } catch (err) {
+        console.warn(`Failed to load ${carImagesRoot}/config.json; using defaults.`, err);
+        const urlOrder = parseOrder(urlParams.get('order'));
+        GALLERY_ORDER = urlOrder || DEFAULT_GALLERY_ORDER.slice();
+        paintArray = DEFAULT_PAINTS.slice();
+        defaultPaint = DEFAULT_PAINT;
+      }
+    }
+
+    function populatePaintSelects() {
+      exteriorPaint.innerHTML = '';
+      brakeCalipers.innerHTML = '';
+      paintArray.forEach((name) => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        if (name === defaultPaint) opt.selected = true;
+        exteriorPaint.appendChild(opt);
+      });
+      paintArray.forEach((name) => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        if (name === defaultPaint) opt.selected = true;
+        brakeCalipers.appendChild(opt);
+      });
+    }
+
+    function getImagePath(folderName) {
+      return `${carImagesRoot}/Body/${folderName}`.replace(/\/+/g, '/');
+    }
+
+    const wheelMainBasePath = 'images/wheelsMain';
+
+    /** Map dropdown finish names to wheelsMain filenames when they differ. */
+    function wheelMainFinishFileName(color) {
+      if (color === 'Gloss Gun Metal') return 'Gloss Gunmetal';
+      if (color === 'Satin Gun Metal') return 'Satin Gunmetal';
+      return color;
+    }
+
+    /** Map dropdown finish names to car wheel folder names (C8_Z06 Daytona uses "Hypee Silver"). */
+    function wheelColorForCarPaths() {
+      const color = wheelColorForPaths();
+      if (
+        getWheelStyle() === 'Daytona' &&
+        color === 'Hyper Silver' &&
+        CAR_IMAGE_FOLDER === 'C8_Z06'
+      ) {
+        return 'Hypee Silver';
+      }
+      return color;
+    }
+
+    /** Finish filename for wheelsMain preview, per line (Speedway uses Bronze vs Bronze Brushed Tint). */
+    function previewFinishFileForStyle(lineStyle) {
+      const v = wheelColor.value;
+      if (lineStyle === 'Speedway') {
+        if (v === 'Bronze Brushed Tint' || v === 'Bronze') return 'Bronze';
+        if (v) return v;
+        return 'Bronze';
+      }
+      if (v === 'Bronze') return 'Bronze Brushed Tint';
+      if (v) return v;
+      return 'Bronze Brushed Tint';
+    }
+
+    function wheelMainPreviewSrc(lineStyle) {
+      const color = wheelMainFinishFileName(previewFinishFileForStyle(lineStyle));
+      return `${wheelMainBasePath}/${lineStyle}/${color}.webp`.replace(/\/+/g, '/');
+    }
+
+    function updateWheelStylePreviewImages() {
+      document.querySelectorAll('.wheel-style-btn, .mobile-wheel-btn').forEach((btn) => {
+        const lineStyle = btn.dataset.style;
+        const img = btn.querySelector('img');
+        if (!img) return;
+        const color = previewFinishFileForStyle(lineStyle);
+        img.src = wheelMainPreviewSrc(lineStyle);
+        img.alt = `${lineStyle} wheel, ${color}`;
+      });
+    }
+
+    function getWheelStyle() {
+      return wheelModel.value || 'Daytona';
+    }
+
+    function syncWheelStyleButtons() {
+      const current = getWheelStyle();
+      document.querySelectorAll('.wheel-style-btn, .mobile-wheel-btn').forEach((btn) => {
+        const on = btn.dataset.style === current;
+        btn.classList.toggle('is-selected', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    function setWheelStyle(style) {
+      wheelModel.value = style;
+      const prevWheelColor = wheelColor.value;
+      populateWheelColorOptions(prevWheelColor);
+      syncWheelStyleButtons();
+      updateWheelStylePreviewImages();
+      wheelMainImage.src = getWheelMainImageSrc();
+      updateAllWheelLayers();
+    }
+
+    function openConfigPanel() {
+      document.getElementById('configuratorSection').classList.add('panel-open');
+      document.body.classList.add('config-panel-open');
+    }
+
+    function closeConfigPanel() {
+      document.getElementById('configuratorSection').classList.remove('panel-open');
+      document.body.classList.remove('config-panel-open');
+    }
+
+    function wheelColorForPaths() {
+      const v = wheelColor.value;
+      if (v) return v;
+      return getWheelStyle() === 'Speedway' ? 'Bronze' : 'Bronze Brushed Tint';
+    }
+
+    function populateWheelColorOptions(previousSelection) {
+      const style = getWheelStyle();
+      const prev =
+        previousSelection !== undefined && previousSelection !== null
+          ? previousSelection
+          : '';
+      wheelColor.innerHTML = '';
+      wheelColors.forEach((name) => {
+        const opt = document.createElement('option');
+        if (name === 'Bronze Brushed Tint' && style === 'Speedway') {
+          opt.value = 'Bronze';
+          opt.textContent = 'Bronze';
+        } else {
+          opt.value = name;
+          opt.textContent = name;
+        }
+        wheelColor.appendChild(opt);
+      });
+      let target;
+      if (prev === '') {
+        target = style === 'Speedway' ? 'Bronze' : 'Bronze Brushed Tint';
+      } else {
+        let mapped = prev;
+        if (prev === 'Bronze Brushed Tint' && style === 'Speedway') mapped = 'Bronze';
+        if (prev === 'Bronze' && style !== 'Speedway') mapped = 'Bronze Brushed Tint';
+        target = [...wheelColor.options].some((o) => o.value === mapped)
+          ? mapped
+          : style === 'Speedway'
+            ? 'Bronze'
+            : 'Bronze Brushed Tint';
+      }
+      wheelColor.value = target;
+    }
+
+    function getWheelMainImageSrc() {
+      const style = getWheelStyle();
+      const color = wheelMainFinishFileName(wheelColorForPaths());
+      return `${wheelMainBasePath}/${style}/${color}.webp`.replace(/\/+/g, '/');
+    }
+
+    function getWheelLayerSrc(bodyImagePath) {
+      const filename = bodyImagePath.split('/').pop();
+      const color = wheelColorForCarPaths();
+      const style = getWheelStyle();
+      const basePath = `${carWheelsBasePath}/${style}/${color}`.replace(/\/+/g, '/');
+      return `${basePath}/${filename}`.replace(/\/+/g, '/');
+    }
+
+    const DEBUG_SHOW_WHEEL_MASK = false;
+    /** Set to false to show brake calipers again (main gallery + thumbnails). */
+    const DEBUG_HIDE_CALIPERS = false;
+
+    function getWheelMaskSrc(bodyImagePath) {
+      const filename = bodyImagePath.split('/').pop();
+      const style = getWheelStyle();
+      return `${carWheelsBasePath}/${style}/Masks/${filename}`.replace(/\/+/g, '/');
+    }
+
+    /** Thumbnails: keep CSS luminance masks (small size works on iOS). */
+    function applyWheelMaskToImg(imgEl, bodyImagePath) {
+      const maskSrc = getWheelMaskSrc(bodyImagePath);
+      if (DEBUG_SHOW_WHEEL_MASK) {
+        imgEl.style.webkitMaskImage = 'none';
+        imgEl.style.maskImage = 'none';
+        return;
+      }
+      if (maskInvert) {
+        imgEl.style.webkitMaskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+        imgEl.style.maskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+        imgEl.style.webkitMaskComposite = 'xor';
+        imgEl.style.maskComposite = 'exclude';
+      } else {
+        imgEl.style.webkitMaskImage = `url('${maskSrc}')`;
+        imgEl.style.maskImage = `url('${maskSrc}')`;
+        imgEl.style.webkitMaskComposite = '';
+        imgEl.style.maskComposite = '';
+      }
+    }
+
+    const maskInvert = false;
+
+    const alphaMaskUrlCache = new Map();
+    const MAIN_MASK_LONG_EDGE_CAP = 1280;
+
+    function getMainMaskPixelSize() {
+      const box = document.querySelector('.main-image-container');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let w = Math.max(1, Math.round((box && box.clientWidth ? box.clientWidth : 390) * dpr));
+      let h = Math.max(1, Math.round((box && box.clientHeight ? box.clientHeight : 220) * dpr));
+      const longEdge = Math.max(w, h);
+      if (longEdge > MAIN_MASK_LONG_EDGE_CAP) {
+        const scale = MAIN_MASK_LONG_EDGE_CAP / longEdge;
+        w = Math.max(1, Math.round(w * scale));
+        h = Math.max(1, Math.round(h * scale));
+      }
+      return { width: w, height: h };
+    }
+
+    function loadMaskImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.decoding = 'async';
+        img.onload = () => resolve(img);
+        img.onerror = () => {
+          const fallback = new Image();
+          fallback.decoding = 'async';
+          fallback.onload = () => resolve(fallback);
+          fallback.onerror = () => reject(new Error(`Failed to load mask ${src}`));
+          fallback.src = src;
+        };
+        img.src = src;
+      });
+    }
+
+    async function getAlphaMaskUrl(maskSrc, width, height) {
+      const key = `${maskSrc}|${width}x${height}`;
+      if (alphaMaskUrlCache.has(key)) {
+        return alphaMaskUrlCache.get(key);
+      }
+      const promise = (async () => {
+        const maskImg = await loadMaskImage(maskSrc);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        /*
+         * The visible wheel photo is rendered with object-fit:cover, which
+         * scales to cover the box and crops the overflow, centered. A plain
+         * drawImage(img,0,0,width,height) here would stretch the mask to
+         * fill the box instead, which only matches cover when the box
+         * happens to be the source photo's own aspect ratio - any other
+         * ratio shifts the wheel cutout off the wheel it's meant to color.
+         * Replicate cover's scale+crop so the mask stays pixel-aligned with
+         * the photo regardless of the box's aspect ratio.
+         */
+        const srcW = maskImg.naturalWidth || maskImg.width;
+        const srcH = maskImg.naturalHeight || maskImg.height;
+        const coverScale = Math.max(width / srcW, height / srcH);
+        const drawW = srcW * coverScale;
+        const drawH = srcH * coverScale;
+        const dx = (width - drawW) / 2;
+        const dy = (height - drawH) / 2;
+        ctx.drawImage(maskImg, dx, dy, drawW, drawH);
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        let sum = 0;
+        const pixels = width * height;
+        for (let i = 0; i < data.length; i += 4) {
+          const lum = (data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722) | 0;
+          sum += lum;
+          data[i] = 255;
+          data[i + 1] = 255;
+          data[i + 2] = 255;
+          data[i + 3] = lum;
+        }
+        if (sum / pixels > 127) {
+          for (let i = 0; i < data.length; i += 4) {
+            data[i + 3] = 255 - data[i + 3];
+          }
+        }
+        ctx.putImageData(imageData, 0, 0);
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob failed'))), 'image/png');
+        });
+        return URL.createObjectURL(blob);
+      })();
+      alphaMaskUrlCache.set(key, promise);
+      try {
+        return await promise;
+      } catch (err) {
+        alphaMaskUrlCache.delete(key);
+        throw err;
+      }
+    }
+
+    async function applyAlphaMaskToMainImg(imgEl, maskSrc, invert) {
+      const token = (imgEl._maskToken = (imgEl._maskToken || 0) + 1);
+      const { width, height } = getMainMaskPixelSize();
+      try {
+        const url = await getAlphaMaskUrl(maskSrc, width, height);
+        if (imgEl._maskToken !== token) return;
+        if (invert) {
+          imgEl.style.webkitMaskImage = `linear-gradient(white, white), url('${url}')`;
+          imgEl.style.maskImage = `linear-gradient(white, white), url('${url}')`;
+          imgEl.style.webkitMaskComposite = 'xor';
+          imgEl.style.maskComposite = 'exclude';
+        } else {
+          imgEl.style.webkitMaskImage = `url('${url}')`;
+          imgEl.style.maskImage = `url('${url}')`;
+          imgEl.style.webkitMaskComposite = '';
+          imgEl.style.maskComposite = '';
+        }
+      } catch (err) {
+        console.warn('Alpha mask bake failed; falling back to source mask URL.', err);
+        if (imgEl._maskToken !== token) return;
+        if (invert) {
+          imgEl.style.webkitMaskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+          imgEl.style.maskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+          imgEl.style.webkitMaskComposite = 'xor';
+          imgEl.style.maskComposite = 'exclude';
+        } else {
+          imgEl.style.webkitMaskImage = `url('${maskSrc}')`;
+          imgEl.style.maskImage = `url('${maskSrc}')`;
+          imgEl.style.webkitMaskComposite = '';
+          imgEl.style.maskComposite = '';
+        }
+      }
+    }
+
+    /** Main wheel layer: bake luminance → alpha for Safari. */
+    function applyWheelMask(bodyImagePath) {
+      if (DEBUG_SHOW_WHEEL_MASK) {
+        wheelLayerImage.style.webkitMaskImage = 'none';
+        wheelLayerImage.style.maskImage = 'none';
+        return Promise.resolve();
+      }
+      return applyAlphaMaskToMainImg(wheelLayerImage, getWheelMaskSrc(bodyImagePath), maskInvert);
+    }
+
+    function updateAllWheelLayers() {
+      if (images.length === 0) return;
+      wheelLayerImage.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[currentIndex]) : getWheelLayerSrc(images[currentIndex]);
+      void applyWheelMask(images[currentIndex]);
+      document.querySelectorAll('.thumbnail').forEach((thumb) => {
+        const i = parseInt(thumb.dataset.index, 10);
+        if (i < 0 || i >= images.length) return;
+        const wheelImg = thumb.querySelector('.thumbnail-layer-wheel img');
+        if (wheelImg) {
+          wheelImg.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[i]) : getWheelLayerSrc(images[i]);
+          applyWheelMaskToImg(wheelImg, images[i]);
+        }
+      });
+    }
+
+    function getPaintImagesForColor(folderName) {
+      const basePath = getImagePath(folderName);
+      return GALLERY_ORDER.map((n) => `${basePath}/${n}.webp`);
+    }
+
+    function buildGalleryElements() {
+      carouselDots.innerHTML = '';
+      thumbnailGallery.innerHTML = '';
+      images.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = `dot${i === 0 ? ' active' : ''}`;
+        dot.setAttribute('aria-label', `View image ${i + 1}`);
+        dot.addEventListener('click', () => updateMainImage(i));
+        carouselDots.appendChild(dot);
+      });
+      images.forEach((_, i) => {
+        const thumb = document.createElement('div');
+        thumb.className = `thumbnail${i === 0 ? ' active' : ''}`;
+        thumb.dataset.index = i;
+
+        const bodyLayer = document.createElement('div');
+        bodyLayer.className = 'thumbnail-layer thumbnail-layer-body';
+        const bodyImg = document.createElement('img');
+        attachImgFallback(bodyImg);
+        bodyImg.src = images[i];
+        bodyImg.alt = `View ${i + 1}`;
+        bodyLayer.appendChild(bodyImg);
+
+        const caliperLayer = document.createElement('div');
+        caliperLayer.className = 'thumbnail-layer thumbnail-layer-caliper';
+        const caliperImg = document.createElement('img');
+        attachImgFallback(caliperImg);
+        caliperImg.src = getCaliperLayerSrc(images[i]);
+        applyCaliperMaskToImg(caliperImg, images[i]);
+        caliperLayer.appendChild(caliperImg);
+
+        const wheelLayer = document.createElement('div');
+        wheelLayer.className = 'thumbnail-layer thumbnail-layer-wheel';
+        const wheelImg = document.createElement('img');
+        attachImgFallback(wheelImg);
+        wheelImg.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[i]) : getWheelLayerSrc(images[i]);
+        applyWheelMaskToImg(wheelImg, images[i]);
+        wheelLayer.appendChild(wheelImg);
+
+        thumb.appendChild(bodyLayer);
+        thumb.appendChild(caliperLayer);
+        thumb.appendChild(wheelLayer);
+        thumb.addEventListener('click', () => updateMainImage(i));
+        thumbnailGallery.appendChild(thumb);
+      });
+    }
+
+    function updateThumbnailLayers() {
+      document.querySelectorAll('.thumbnail').forEach((thumb) => {
+        const i = parseInt(thumb.dataset.index, 10);
+        if (i < 0 || i >= images.length) return;
+        const bodyPath = images[i];
+        const bodyImg = thumb.querySelector('.thumbnail-layer-body img');
+        const wheelImg = thumb.querySelector('.thumbnail-layer-wheel img');
+        const caliperImg = thumb.querySelector('.thumbnail-layer-caliper img');
+        if (bodyImg) bodyImg.src = bodyPath;
+        if (wheelImg) {
+          wheelImg.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(bodyPath) : getWheelLayerSrc(bodyPath);
+          applyWheelMaskToImg(wheelImg, bodyPath);
+        }
+        if (caliperImg) {
+          caliperImg.src = getCaliperLayerSrc(bodyPath);
+          applyCaliperMaskToImg(caliperImg, bodyPath);
+        }
+      });
+    }
+
+    function getCaliperLayerSrc(bodyImagePath) {
+      const filename = bodyImagePath.split('/').pop();
+      const color = brakeCalipers.value;
+      return `${carImagesRoot}/Body/${color}/${filename}`.replace(/\/+/g, '/');
+    }
+
+    function getCaliperMaskSrc(bodyImagePath) {
+      const filename = bodyImagePath.split('/').pop();
+      return `${caliperMaskBasePath}/${filename}`;
+    }
+
+    const caliperMaskInvert = false;
+
+    function applyCaliperMaskToImg(imgEl, bodyImagePath) {
+      const maskSrc = getCaliperMaskSrc(bodyImagePath);
+      if (caliperMaskInvert) {
+        imgEl.style.webkitMaskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+        imgEl.style.maskImage = `linear-gradient(white, white), url('${maskSrc}')`;
+        imgEl.style.webkitMaskComposite = 'xor';
+        imgEl.style.maskComposite = 'exclude';
+      } else {
+        imgEl.style.webkitMaskImage = `url('${maskSrc}')`;
+        imgEl.style.maskImage = `url('${maskSrc}')`;
+        imgEl.style.webkitMaskComposite = '';
+        imgEl.style.maskComposite = '';
+      }
+    }
+
+    /** Main caliper layer: bake luminance → alpha for Safari. */
+    function applyCaliperMask(bodyImagePath) {
+      return applyAlphaMaskToMainImg(
+        caliperLayerImage,
+        getCaliperMaskSrc(bodyImagePath),
+        caliperMaskInvert
+      );
+    }
+
+    function updateCaliperLayer() {
+      if (images.length > 0 && brakeCalipers.value) {
+        caliperLayerImage.src = getCaliperLayerSrc(images[currentIndex]);
+        void applyCaliperMask(images[currentIndex]);
+      }
+    }
+
+    function loadPaintImages(folderName) {
+      images = getPaintImagesForColor(folderName);
+      currentIndex = Math.min(currentIndex, Math.max(0, images.length - 1));
+
+      buildGalleryElements();
+
+      if (images.length > 0) {
+        bodyColorImage.src = images[currentIndex];
+        wheelLayerImage.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[currentIndex]) : getWheelLayerSrc(images[currentIndex]);
+        void applyWheelMask(images[currentIndex]);
+        updateCaliperLayer();
+        imageCounter.textContent = `${currentIndex + 1}/${images.length}`;
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        document.querySelectorAll('.thumbnail').forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+      }
+    }
+
+    function updateMainImage(index) {
+      currentIndex = index;
+      bodyColorImage.src = images[index];
+      wheelLayerImage.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[index]) : getWheelLayerSrc(images[index]);
+      void applyWheelMask(images[index]);
+      updateCaliperLayer();
+      imageCounter.textContent = `${index + 1}/${images.length}`;
+
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+      });
+    }
+
+    async function init() {
+      if (DEBUG_HIDE_CALIPERS) document.body.classList.add('hide-brake-calipers');
+
+      await loadVehicleConfig();
+      setVehiclePageTitle(carSlug);
+      populatePaintSelects();
+      loadPaintImages(exteriorPaint.value);
+
+      populateWheelColorOptions();
+
+      document.querySelectorAll('.wheel-style-btn').forEach((btn) => {
+        const style = btn.dataset.style;
+        btn.addEventListener('click', () => setWheelStyle(style));
+      });
+      syncWheelStyleButtons();
+      updateWheelStylePreviewImages();
+
+      wheelMainImage.src = getWheelMainImageSrc();
+      if (images.length > 0) {
+        wheelLayerImage.src = DEBUG_SHOW_WHEEL_MASK ? getWheelMaskSrc(images[currentIndex]) : getWheelLayerSrc(images[currentIndex]);
+      }
+      wheelColor.addEventListener('change', () => {
+        updateWheelStylePreviewImages();
+        wheelMainImage.src = getWheelMainImageSrc();
+        updateAllWheelLayers();
+      });
+
+      updateCaliperLayer();
+      brakeCalipers.addEventListener('change', () => {
+        updateCaliperLayer();
+        updateThumbnailLayers();
+      });
+
+      // Prev/Next arrow handlers
+      function goToPreviousImage() {
+        if (images.length === 0) return;
+        const prev = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+        updateMainImage(prev);
+      }
+      function goToNextImage() {
+        if (images.length === 0) return;
+        const next = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+        updateMainImage(next);
+      }
+
+      document.getElementById('prevArrow').addEventListener('click', goToPreviousImage);
+      document.getElementById('nextArrow').addEventListener('click', goToNextImage);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const tag = (e.target && e.target.tagName) || '';
+        if (tag === 'SELECT' || tag === 'INPUT' || tag === 'TEXTAREA') return;
+        e.preventDefault();
+        if (e.key === 'ArrowLeft') goToPreviousImage();
+        else goToNextImage();
+      });
+
+      // Exterior paint - change image source folder
+      exteriorPaint.addEventListener('change', (e) => {
+        loadPaintImages(e.target.value);
+      });
+
+      // Other configurator dropdowns
+      document.querySelectorAll('.config-select:not(#exteriorPaint):not(#wheelColor):not(#brakeCalipers)').forEach(select => {
+        select.addEventListener('change', (e) => {
+          console.log(`${e.target.id}: ${e.target.value}`);
+        });
+      });
+
+      // Mobile wheel dock: current style opens panel; other styles switch wheel only
+      document.querySelectorAll('.mobile-wheel-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const style = btn.dataset.style;
+          if (style === getWheelStyle()) {
+            openConfigPanel();
+          } else {
+            setWheelStyle(style);
+          }
+        });
+      });
+      document.getElementById('configPanelClose').addEventListener('click', () => {
+        closeConfigPanel();
+      });
+    }
+
+    init().catch((err) => console.error('Gallery init failed:', err));
+  </script>
+</body>
+</html>

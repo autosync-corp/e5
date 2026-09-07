@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E5 Wheels Visualizer</title>
+</head>
+<body style="margin:0;padding:0;height:100vh;overflow:hidden;background:#000;">
+<iframe id="shell" style="position:fixed;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
+<script>
+try {
+const HTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;}
+:root{
+  --black:#0a0a0a;--dark:#111;--panel:#161616;--border:#2a2a2a;
+  --muted:#555;--light:#999;--white:#f2f2f2;
+  --gold:#c8a84b;--gold-dim:#9a7e35;
+  --fd:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
+  --nav-h:64px;
+  --tabs-h:44px;
+  --config-w:320px;
+  --thumb-h:90px;
+  --page-max-w:1920px;
+}
+body{font-family:var(--fb);background:var(--black);color:var(--white);display:flex;flex-direction:column;min-height:100vh;}
+
+/* Cap the whole layout at a "designed for 1920" width instead of letting it
+   stretch edge-to-edge on wider/ultrawide monitors, which read as oversized. */
+.e5-nav,.gen-bar,.top-row,.thumb-strip{max-width:var(--page-max-w);margin-left:auto;margin-right:auto;width:100%;}
+
+/* ── E5 NAV ── */
+.e5-nav{flex-shrink:0;height:var(--nav-h);background:var(--dark);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
+.nav-side{display:flex;align-items:center;gap:28px;}
+.e5-nav a{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--light);text-decoration:none;transition:color .2s;}
+.e5-nav a:hover{color:var(--white)}
+.nav-logo img{height:32px}
+.nav-cart img{height:22px;opacity:.7}
+
+/* ── GEN TABS ── */
+.gen-bar{flex-shrink:0;height:var(--tabs-h);background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;}
+.gen-bar::-webkit-scrollbar{display:none}
+.gtab{flex-shrink:0;padding:0 18px;background:none;border:none;border-bottom:2px solid transparent;font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;}
+.gtab:hover{color:var(--white)}
+.gtab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── BODY ── */
+.viz-body{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Top row: car image left, config panel right. On desktop widths, JS caps
+   this row's height to whatever actually fits under the nav/tabs/thumb
+   strip within the real viewport (see layoutTopRow()) - config-col's own
+   content can be taller than that on a short screen, in which case it
+   scrolls internally (see .config-col overflow-y below) instead of
+   pushing the whole page taller than the viewport. On stacked/mobile
+   widths JS leaves this unset and the page scrolls normally instead. */
+.top-row{
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+}
+
+/* Wraps .iframe-wrap (and, on mobile, the wheel-style rail beside it - see
+   placeWsGrid()). A transparent pass-through on desktop: flex:1 in place of
+   where .iframe-wrap used to sit directly, no layout effect of its own. */
+.mobile-hero-row{
+  display:flex;
+  flex-direction:row;
+  flex:1;
+  min-width:0;
+}
+
+/* Car image area. index.php hides its own config panel when embedded
+   (see its is-embedded class), so the iframe no longer needs to be
+   oversized+clipped to hide it - that was what decoupled the iframe's
+   height from its actual content height and caused it to scroll
+   internally. Its height is set in JS to match content instead. */
+.iframe-wrap{
+  flex:1;
+  position:relative;
+  min-width:0;
+  background:var(--black);
+}
+.viz-iframe{
+  display:block;
+  width:100%;
+  border:none;
+  background:#000;
+}
+
+/* Loading */
+.iframe-loading{position:absolute;inset:0;z-index:50;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .4s;}
+.iframe-loading.hidden{opacity:0;pointer-events:none;}
+.spin{width:34px;height:34px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+
+/* ── RIGHT CONFIG PANEL — always open ── */
+.config-col{
+  flex-shrink:0;
+  width:var(--config-w);
+  background:#111;
+  border-left:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.d-sec{padding:12px 16px;border-bottom:1px solid var(--border);}
+.d-sec:last-child{border-bottom:none}
+.d-lbl{
+  font-family:var(--fd);font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:8px;
+}
+
+/* Wheel style — 3 buttons with images */
+.ws-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
+.ws-btn{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:10px 4px 8px;background:#1a1a1a;
+  border:2px solid transparent;border-radius:3px;
+  cursor:pointer;transition:border-color .15s,background .15s;
+}
+.ws-btn:hover{border-color:var(--light)}
+.ws-btn.active{border-color:var(--gold);background:rgba(200,168,75,.07)}
+.ws-crop{width:100%;aspect-ratio:1;overflow:hidden;border-radius:2px;background:#000;position:relative;}.ws-crop img{position:absolute;left:-130%;top:-30%;width:260%;height:260%;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.9));}
+.ws-btn span{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);}
+.ws-btn.active span{color:var(--gold)}
+
+/* Large wheel preview - capped so it can't grow into the page's main
+   height budget just because the sidebar column is wide. */
+.wheel-prev{
+  width:100%;
+  max-width:220px;
+  aspect-ratio:1;
+  object-fit:contain;
+  display:block;
+  margin:0 auto;
+  filter:drop-shadow(0 6px 20px rgba(0,0,0,.95));
+}
+
+/* Dropdowns */
+.d-sel{
+  width:100%;background:#1a1a1a;border:1px solid var(--border);
+  border-radius:3px;color:var(--white);
+  font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.04em;
+  padding:11px 32px 11px 12px;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  transition:border-color .15s;
+}
+.d-sel:focus{outline:none;border-color:var(--gold)}
+.d-sel option{background:#111}
+
+/* Shop */
+.d-shop{
+  display:block;width:100%;padding:13px;
+  background:var(--gold);color:var(--black);
+  font-family:var(--fd);font-size:13px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;text-align:center;text-decoration:none;
+  border-radius:3px;border:none;cursor:pointer;
+  transition:background .2s;margin-top:14px;
+}
+.d-shop:hover{background:var(--gold-dim)}
+
+/* ── THUMBNAIL STRIP — full width below both columns ──
+   Same layered-image + luminance-mask technique index.php's own thumbnails
+   use (see gallery.css .thumbnail-layer-wheel/-caliper img), reimplemented
+   here so this bar can span the full page width including the sidebar,
+   which a thumbnail row living inside the car iframe never could. */
+.thumb-strip{
+  flex-shrink:0;
+  height:var(--thumb-h);
+  background:#0d0d0d;
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 10px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.thumb{
+  flex-shrink:0;
+  width:120px;height:71px;
+  position:relative;
+  overflow:hidden;
+  border-radius:2px;
+  border:2px solid var(--border);
+  cursor:pointer;
+  background:#000;
+  transition:border-color .15s;
+}
+.thumb:hover{border-color:var(--light)}
+.thumb.active{border-color:var(--gold)}
+.thumb img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  pointer-events:none;
+}
+.tl-body{z-index:1}
+.tl-cal{z-index:2}
+.tl-whl{z-index:3}
+.tl-cal,.tl-whl{
+  -webkit-mask-size:cover;mask-size:cover;
+  -webkit-mask-position:center;mask-position:center;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-mode:luminance;mask-mode:luminance;
+}
+
+/*
+ * ── RESPONSIVE ──
+ * 5 breakpoints, largest to smallest, each narrowing progressively rather
+ * than jumping straight from desktop to a single mobile layout:
+ *   1280px - small laptop / large tablet landscape: tighten the side-by-side
+ *            layout a bit before it needs to stack.
+ *   1024px - tablet landscape: narrower config column still side-by-side.
+ *   768px  - tablet portrait / large phone: stack car above config panel.
+ *   480px  - phone: tighter paddings/type for the stacked layout.
+ *   360px  - small/older phones: minimum viable sizing.
+ */
+@media(max-width:1280px){
+  :root{--config-w:300px;}
+  .e5-nav{padding:0 24px;}
+  .nav-side{gap:20px;}
+}
+
+@media(max-width:1024px){
+  :root{--config-w:270px;}
+  .e5-nav{padding:0 16px;}
+  .nav-side{gap:14px;}
+  .d-sec{padding:10px 12px;}
+}
+
+@media(max-width:768px){
+  :root{--nav-h:52px;--tabs-h:40px;--config-w:100%;}
+  .e5-nav{padding:0 16px;}
+  .nav-side a:not(.nav-logo){display:none}
+  .nav-logo img{height:26px}
+  .top-row{flex-direction:column;}
+  .config-col{
+    width:100%;
+    border-left:none;
+    border-top:1px solid var(--border);
+  }
+  .thumb{width:101px;height:64px;}
+
+  /* Wheel style becomes a narrow vertical rail beside the image instead of
+     a row under the whole config panel below (see placeWsGrid()) - smaller
+     thumbnails than the desktop 3-across grid since the rail is narrow. */
+  .mobile-hero-row{gap:6px;}
+  .mobile-hero-row .ws-grid{
+    display:flex;
+    flex-direction:column;
+    flex-shrink:0;
+    width:52px;
+    gap:5px;
+    margin-bottom:0;
+  }
+  .mobile-hero-row .ws-btn{padding:4px 2px 3px;gap:3px;}
+  .mobile-hero-row .ws-btn span{font-size:7px;letter-spacing:.04em;}
+}
+
+@media(max-width:480px){
+  :root{--nav-h:48px;--tabs-h:36px;}
+  .nav-logo img{height:22px}
+  .gtab{padding:0 12px;font-size:10px;}
+  .d-sec{padding:12px;}
+  .d-lbl{font-size:10px;margin-bottom:8px;}
+  .ws-btn span{font-size:10px;}
+  .d-sel{padding:9px 28px 9px 10px;font-size:13px;}
+  .d-shop{padding:11px;font-size:12px;}
+}
+
+@media(max-width:360px){
+  .gtab{padding:0 10px;font-size:9px;}
+  .ws-grid{gap:4px;}
+  .d-sec{padding:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- E5 NAV -->
+<nav class="e5-nav">
+  <div class="nav-side">
+    <a href="https://www.e5wheels.com/wheels">WHEELS</a>
+    <a href="https://www.e5wheels.com/gallery">GALLERY</a>
+    <a href="https://www.e5wheels.com/process">PROCESS</a>
+  </div>
+  <a href="https://www.e5wheels.com/" class="nav-logo">
+    <img src="https://www.e5wheels.com/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels">
+  </a>
+  <div class="nav-side">
+    <a href="https://www.e5wheels.com/generations">GENERATIONS</a>
+    <a href="https://www.e5wheels.com/visualizer">VISUALIZE</a>
+    <a href="https://www.e5wheels.com/contact-us">CONTACT</a>
+    <a href="https://www.e5wheels.com/cart" class="nav-cart">
+      <img src="https://www.e5wheels.com/assets/images/asset-18.webp" alt="Cart">
+    </a>
+  </div>
+</nav>
+
+<!-- GEN TABS -->
+<div class="gen-bar">
+  <button class="gtab active" data-gen="C5" data-label="C5 Z06" data-shop="https://www.e5wheels.com/shop/daytona/gloss-black/c5-z06/18x10-et25-19x11-et20">C5 Z06</button>
+  <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport" data-shop="https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50">C6 Grand Sport</button>
+  <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06" data-shop="https://www.e5wheels.com/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76">C6 Base / Z06</button>
+  <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport" data-shop="https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50">C7 Grand Sport</button>
+  <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray" data-shop="https://www.e5wheels.com/shop/speedway/gloss-black/c7-stingray/19x9.5-et53-20x11-et76">C7 Stingray</button>
+  <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06" data-shop="https://www.e5wheels.com/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50">C7 Z06</button>
+  <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06" data-shop="https://www.e5wheels.com/shop/talladega/brushed-aluminum/c8-z06/20x10-et25-21x13-et20">C8 Z06</button>
+  <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray" data-shop="https://www.e5wheels.com/shop/speedway/dark-bronze/c8-stingray/19x8.5-et38-20x11-et52">C8 Stingray</button>
+</div>
+
+<!-- MAIN -->
+<div class="viz-body">
+
+  <!-- TOP ROW: car + config -->
+  <div class="top-row">
+
+    <!-- On mobile, JS moves #wsGrid in here (before .iframe-wrap) so the
+         wheel style thumbnails become a vertical rail beside the image
+         instead of a row under the whole config panel - see placeWsGrid().
+         On desktop this wraps only .iframe-wrap and is a transparent
+         pass-through (flex:1, no visual effect of its own). -->
+    <div class="mobile-hero-row">
+      <!-- Car image (iframe, CH panel clipped off right) -->
+      <div class="iframe-wrap">
+        <div class="iframe-loading" id="iframeLoading">
+          <div class="spin"></div>
+          <div class="loading-txt">Loading</div>
+        </div>
+        <iframe class="viz-iframe" id="vizFrame"
+          src="index.html?car=C5"
+          title="E5 Wheels Visualizer">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Config panel — always open -->
+    <div class="config-col">
+
+      <div class="d-sec">
+        <label class="d-lbl">Wheel Style</label>
+        <div class="ws-grid" id="wsGrid"></div>
+        <img class="wheel-prev" id="wheelPrev" src="" alt="Selected wheel">
+      </div>
+
+      <div class="d-sec">
+        <label class="d-lbl">Finish</label>
+        <select class="d-sel" id="cpWC"></select>
+      </div>
+
+      <div class="d-sec">
+        <label class="d-lbl">Paint</label>
+        <select class="d-sel" id="cpPaint"></select>
+      </div>
+
+      <div class="d-sec">
+        <label class="d-lbl">Caliper</label>
+        <select class="d-sel" id="cpCal"></select>
+      </div>
+
+      <div class="d-sec">
+        <a class="d-shop" id="cpShop" href="#" target="_blank">SHOP THIS FITMENT &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- THUMBNAIL STRIP — full width, below both columns -->
+  <div class="thumb-strip" id="thumbStrip"></div>
+
+</div>
+
+<script>
+const BASE='images';
+const GENS={
+  C5:{label:'C5 Z06',slides:[1,2,3,4,10,6,7,5],
+    paints:['50th Anniversary Red','Arctic White','Black','Competition Yellow','Bowling Green Metallic','Fairway Green Metallic','LeMans Blue Metallic','Pewter Metallic','Magnetic Red Metallic','Spiral Gray Metallic','Millennium Yellow','Nassau Blue','Navy Blue Metallic','Quicksilver Metallic','Sebring Silver Metallic','Torch Red'],
+    calipers:['50th Anniversary Red','Arctic White','Black','Competition Yellow','Bowling Green Metallic','Fairway Green Metallic','LeMans Blue Metallic','Pewter Metallic','Magnetic Red Metallic','Spiral Gray Metallic','Millennium Yellow','Nassau Blue','Navy Blue Metallic','Quicksilver Metallic','Sebring Silver Metallic','Torch Red'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/daytona/gloss-black/c5-z06/18x10-et25-19x11-et20'},
+  C6_Grand_Sport:{label:'C6 Grand Sport',slides:[1,2,3,4,5,6,7,8,9,10],
+    paints:['Arctic White','Black','Blade Silver Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat'],
+    calipers:['Arctic White','Black','Blade Silver Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50'},
+  C6_Z06:{label:'C6 Base / Z06',slides:[1,2,3,4,5,6,7,8,9,10],
+    paints:['Arctic White','Atomic Orange Metallic','Black','Blade Silver Metallic','Carbon Flash Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunset Orange Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','LeMans Blue Metallic','Machine Silver Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Victory Red'],
+    calipers:['Arctic White','Atomic Orange Metallic','Black','Blade Silver Metallic','Carbon Flash Metallic','Carlisle Blue Metallic','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunset Orange Metallic','Inferno Orange Metallic','Jetstream Blue Metallic','LeMans Blue Metallic','Machine Silver Metallic','Night Race Blue Metallic','Supersonic Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Victory Red'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76'},
+  C7_Grand_Sport:{label:'C7 Grand Sport',slides:[1,2,4,5,7,8,9,10],
+    paints:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Elkhart Lake Blue Metallic','Long Beach Red Metallic Tintcoat','Sebring Orange Tintcoat','Shadow Grey Metallic','Sterling Blue Metallic','Torch Red','Watkins Glen Gray Metallic'],
+    calipers:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Elkhart Lake Blue Metallic','Long Beach Red Metallic Tintcoat','Sebring Orange Tintcoat','Shadow Grey Metallic','Sterling Blue Metallic','Torch Red','Watkins Glen Gray Metallic'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50'},
+  C7_Stingray:{label:'C7 Stingray',slides:[1,4,2,5,6,3,9],
+    paints:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Lime Rock Green Metallic','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Gray Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
+    calipers:['Admiral Blue Metallic','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Ceramic Matrix Gray Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Cyber Gray Metallic','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Lime Rock Green Metallic','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Gray Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/speedway/gloss-black/c7-stingray/19x9.5-et53-20x11-et76'},
+  C7_Z06:{label:'C7 Z06',slides:[1,2,3,4,5,7,8,9,10],
+    paints:['Admiral Blue','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Grey Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
+    calipers:['Admiral Blue','Arctic White','Black','Black Rose Metallic','Blade Silver Metallic','Corvette Racing Yellow Tintcoat','Crystal Red Tintcoat','Daytona Sunrise Orange Metallic','Elkhart Lake Blue Metallic','Laguna Blue Tintcoat','Long Beach Red Metallic','Night Race Blue Metallic','Sebring Orange Tintcoat','Shadow Gray Metallic','Shark Grey Metallic','Sterling Blue Metallic','Torch Red','Velocity Yellow Tintcoat','Watkins Glen Gray Metallic'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50'},
+  C8_Z06:{label:'C8 Z06',slides:[3,1,2,4,6,7,5,10,8,9],
+    paints:['Accelerate Yellow','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricoat','Silver Flare Metallic','Torch Red'],
+    calipers:['Accelerate Yellow','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricoat','Silver Flare Metallic','Torch Red'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/talladega/brushed-aluminum/c8-z06/20x10-et25-21x13-et20'},
+  C8_Stingray:{label:'C8 Stingray',slides:[5,1,7,2,8,3,9],
+    paints:['Accelerate Yellow Metallic','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue metallic','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricaot','Sebring Orange Tintcoat','Silver Flare Metallic','Torch Red'],
+    calipers:['Accelerate Yellow Metallic','Amplify Orange Tintcoat','Arctic White','Black','Cacti Green','Carbon Flash Metallic','Ceramic Matrix Gray Metallic','Hypersonic Gray Metallic','Rapid Blue metallic','Red Mist Metallic Tintcoat','Riptide Blue Metallic','Sea Wolf Gray Tricaot','Sebring Orange Tintcoat','Silver Flare Metallic','Torch Red'],
+    wcs:['Bronze Brushed Tint','Chrome','Gloss Black','Gloss Gunmetal','Gloss White','Hyper Silver','Satin Black','Satin Gunmetal','Titanium'],
+    wheels:['Daytona','Sebring','Speedway'],dp:'Torch Red',dc:'Torch Red',dw:'Daytona',dwc:'Bronze Brushed Tint',
+    shop:'https://www.e5wheels.com/shop/speedway/dark-bronze/c8-stingray/19x8.5-et38-20x11-et52'}
+};
+const WMAIN={
+  Daytona:{'Bronze Brushed Tint':'Daytona/Bronze Brushed Tint','Chrome':'Daytona/Chrome','Gloss Black':'Daytona/Gloss Black','Gloss Gunmetal':'Daytona/Gloss Gunmetal','Gloss White':'Daytona/Gloss White','Hyper Silver':'Daytona/Hyper Silver','Satin Black':'Daytona/Satin Black','Satin Gunmetal':'Daytona/Satin Gunmetal','Titanium':'Daytona/Titanium'},
+  Sebring:{'Bronze Brushed Tint':'Sebring/Bronze Brushed Tint','Chrome':'Sebring/Chrome','Gloss Black':'Sebring/Gloss Black','Gloss Gunmetal':'Sebring/Gloss Gunmetal','Gloss White':'Sebring/Gloss White','Hyper Silver':'Sebring/Hyper Silver','Satin Black':'Sebring/Satin Black','Satin Gunmetal':'Sebring/Satin Gunmetal','Titanium':'Sebring/Titanium'},
+  Speedway:{'Bronze Brushed Tint':'Speedway/Bronze','Chrome':'Speedway/Chrome','Gloss Black':'Speedway/Gloss Black','Gloss Gunmetal':'Speedway/Gloss Gunmetal','Gloss White':'Speedway/Gloss White','Hyper Silver':'Speedway/Hyper Silver','Satin Black':'Speedway/Satin Black','Satin Gunmetal':'Speedway/Satin Gunmetal','Titanium':'Speedway/Titanium'}
+};
+
+let curGen='C5', curWheel='Daytona', curWC='Bronze Brushed Tint', curPaint='Torch Red', curCal='Torch Red';
+const $=id=>document.getElementById(id);
+const frame=$('vizFrame'), loader=$('iframeLoading'), thumbStrip=$('thumbStrip');
+const cpWC=$('cpWC'), cpPaint=$('cpPaint'), cpCal=$('cpCal'), cpShop=$('cpShop');
+const wsGrid=$('wsGrid'), wheelPrev=$('wheelPrev');
+
+const enc=s=>s.split('/').map(encodeURIComponent).join('/');
+/*
+ * index.php's own color dropdown/path logic remaps a couple of dropdown
+ * names to different actual folder names on disk, but in two different
+ * ways that must not be conflated:
+ *  - Every generation's Speedway folder is plain "Bronze", not "Bronze
+ *    Brushed Tint" like Daytona/Sebring. index.php's own <select> actually
+ *    swaps its option value to "Bronze" for Speedway (see
+ *    populateWheelColorOptions), so both the file path AND whatever value
+ *    we drive() into that <select> need this mapping.
+ *  - C8_Z06's Daytona folder is misspelled "Hypee Silver" instead of
+ *    "Hyper Silver", but index.php's <select> keeps the option value as
+ *    "Hyper Silver" always - only the file-path builder
+ *    (wheelColorForCarPaths) substitutes the typo'd name afterward. Driving
+ *    the iframe's dropdown with "Hypee Silver" would set it to a
+ *    nonexistent option and desync it (silently falling back to Bronze),
+ *    so this correction belongs ONLY in the path builder, never in drive().
+ */
+function wcForStyle(w,wc){return (w==='Speedway'&&wc==='Bronze Brushed Tint')?'Bronze':wc;}
+function wcForPath(g,w,wc){
+  const styled=wcForStyle(w,wc);
+  if(g==='C8_Z06'&&w==='Daytona'&&styled==='Hyper Silver')return 'Hypee Silver';
+  return styled;
+}
+function mUrl(w,wc){const p=WMAIN[w]&&WMAIN[w][wc];return p?BASE+'/wheelsMain/'+enc(p)+'.webp':'';}
+function bUrl(g,c,n){return BASE+'/'+g+'/Body/'+enc(c)+'/'+n+'.webp';}
+function wUrl(g,w,wc,n){return BASE+'/'+g+'/Wheels/'+enc(w)+'/'+enc(wcForPath(g,w,wc))+'/'+n+'.webp';}
+function wheelMaskUrl(g,w,n){return BASE+'/'+g+'/Wheels/'+enc(w)+'/Masks/'+n+'.webp';}
+function caliperMaskUrl(g,n){return BASE+'/'+g+'/Masks/'+n+'.webp';}
+
+// Drive iframe (relative src keeps this same-origin as long as index.php
+// ships alongside this file - do not change vizFrame's src back to an
+// absolute cross-origin URL, or every control below silently stops working)
+function drive(id,val){
+  try{const d=frame.contentDocument||frame.contentWindow.document;const e=d.getElementById(id);if(e){e.value=val;e.dispatchEvent(new Event('change',{bubbles:true}));}}catch(e){}
+}
+function driveWheelBtn(style){
+  try{const d=frame.contentDocument||frame.contentWindow.document;const b=d.querySelector('.wheel-style-btn[data-style="'+style+'"]');if(b)b.click();}catch(e){}
+}
+
+// Thumbnails - full-width bottom bar, driven by clicking the corresponding
+// (hidden but still functional) thumbnail inside index.php via cross-frame
+// access. Layered + luminance-masked the same way index.php's own
+// thumbnails are, so caliper/wheel color changes actually show here.
+function buildThumbs(){
+  const gd=GENS[curGen];
+  thumbStrip.innerHTML='';
+  gd.slides.forEach((n,i)=>{
+    const div=document.createElement('div');
+    div.className='thumb'+(i===0?' active':'');
+
+    const bodyImg=document.createElement('img');
+    bodyImg.className='tl-body';
+    bodyImg.src=bUrl(curGen,curPaint,n);
+    bodyImg.alt='';
+    div.appendChild(bodyImg);
+
+    const calImg=document.createElement('img');
+    calImg.className='tl-cal';
+    calImg.src=bUrl(curGen,curCal,n);
+    const calMask="url('"+caliperMaskUrl(curGen,n)+"')";
+    calImg.style.webkitMaskImage=calMask;
+    calImg.style.maskImage=calMask;
+    div.appendChild(calImg);
+
+    const whlImg=document.createElement('img');
+    whlImg.className='tl-whl';
+    whlImg.src=wUrl(curGen,curWheel,curWC,n);
+    const whlMask="url('"+wheelMaskUrl(curGen,curWheel,n)+"')";
+    whlImg.style.webkitMaskImage=whlMask;
+    whlImg.style.maskImage=whlMask;
+    div.appendChild(whlImg);
+
+    div.addEventListener('click',()=>{
+      try{
+        const d=frame.contentDocument||frame.contentWindow.document;
+        const t=d.querySelectorAll('.thumbnail[data-index]');
+        if(t[i])t[i].click();
+      }catch(e){}
+      thumbStrip.querySelectorAll('.thumb').forEach((t,j)=>t.classList.toggle('active',j===i));
+    });
+    thumbStrip.appendChild(div);
+  });
+}
+function refreshThumbs(){
+  const gd=GENS[curGen];
+  Array.from(thumbStrip.querySelectorAll('.thumb')).forEach((div,i)=>{
+    const n=gd.slides[i];
+    const bodyImg=div.querySelector('.tl-body');
+    const calImg=div.querySelector('.tl-cal');
+    const whlImg=div.querySelector('.tl-whl');
+    if(bodyImg)bodyImg.src=bUrl(curGen,curPaint,n);
+    if(calImg){
+      calImg.src=bUrl(curGen,curCal,n);
+      const calMask="url('"+caliperMaskUrl(curGen,n)+"')";
+      calImg.style.webkitMaskImage=calMask;
+      calImg.style.maskImage=calMask;
+    }
+    if(whlImg){
+      whlImg.src=wUrl(curGen,curWheel,curWC,n);
+      const whlMask="url('"+wheelMaskUrl(curGen,curWheel,n)+"')";
+      whlImg.style.webkitMaskImage=whlMask;
+      whlImg.style.maskImage=whlMask;
+    }
+  });
+}
+
+// Wheel grid
+function buildWsGrid(wheels){
+  wsGrid.innerHTML='';
+  wheels.forEach(w=>{
+    const btn=document.createElement('button');
+    btn.className='ws-btn'+(w===curWheel?' active':'');
+    btn.dataset.style=w;
+    const crop=document.createElement('div');crop.className='ws-crop';const img=document.createElement('img');img.src=mUrl(w,curWC);img.alt=w;img.onerror=()=>img.style.opacity='.3';crop.appendChild(img);const lbl=document.createElement('span');lbl.textContent=w;btn.appendChild(crop);btn.appendChild(lbl);
+    btn.addEventListener('click',()=>{
+      curWheel=w;
+      wsGrid.querySelectorAll('.ws-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===w));
+      wheelPrev.src=mUrl(curWheel,curWC);
+      refreshThumbs();
+      driveWheelBtn(w);
+    });
+    wsGrid.appendChild(btn);
+  });
+  wheelPrev.src=mUrl(curWheel,curWC);
+}
+function refreshWsImgs(){
+  wsGrid.querySelectorAll('.ws-btn').forEach(b=>{const img=b.querySelector('img');if(img)img.src=mUrl(b.dataset.style,curWC);});
+  wheelPrev.src=mUrl(curWheel,curWC);
+}
+
+function fillSel(el,opts,val){
+  el.innerHTML='';
+  opts.forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;if(o===val)opt.selected=true;el.appendChild(opt);});
+}
+
+// Events
+cpWC.addEventListener('change',e=>{curWC=e.target.value;refreshWsImgs();refreshThumbs();drive('wheelColor',wcForStyle(curWheel,curWC));});
+cpPaint.addEventListener('change',e=>{curPaint=e.target.value;refreshThumbs();drive('exteriorPaint',curPaint);});
+cpCal.addEventListener('change',e=>{curCal=e.target.value;refreshThumbs();drive('brakeCalipers',curCal);});
+
+// Load gen
+function loadGen(key){
+  const gd=GENS[key];
+  curGen=key;curWheel=gd.dw;curWC=gd.dwc;curPaint=gd.dp;curCal=gd.dc;
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.toggle('active',t.dataset.gen===key));
+  fillSel(cpWC,gd.wcs,curWC);
+  fillSel(cpPaint,gd.paints,curPaint);
+  fillSel(cpCal,gd.calipers,curCal);
+  cpShop.href=gd.shop;
+  buildWsGrid(gd.wheels);
+  buildThumbs();
+  layoutTopRow();
+  loader.classList.remove('hidden');
+  frame.src='index.html?car='+key;
+}
+
+/*
+ * Size the car image column from the sidebar's own natural height instead
+ * of the iframe's own content height - sizing from content left the image
+ * capped at a guessed number, with the sidebar (usually taller) leaving its
+ * own extra height as a dead black gap below the image (see
+ * "is-embedded .main-image-container" in gallery.css, which fills 100% of
+ * whatever height this gives it).
+ *
+ * On desktop (side-by-side) widths that natural sidebar height can still
+ * exceed what actually fits under the nav/tabs/thumb strip on a real,
+ * chrome-shrunk browser viewport, which used to force the whole page to
+ * scroll a little even though the design's whole point was "no scroll
+ * needed". Cap the row to whatever height truly fits and let the sidebar's
+ * OWN content scroll internally instead (.config-col has overflow-y:auto)
+ * - config-col.scrollHeight always reports the content's real wanted
+ * height regardless of any constraint already applied, so this is safe to
+ * recompute repeatedly. On stacked/mobile widths (top-row is column, not
+ * row) a full-page scroll is the normal, expected pattern, so this leaves
+ * the row unconstrained there and only sizes the image from the sidebar's
+ * natural height like before.
+ */
+const configCol=document.querySelector('.config-col');
+const topRowEl=document.querySelector('.top-row');
+const heroRowEl=document.querySelector('.mobile-hero-row');
+const iframeWrapEl=document.querySelector('.iframe-wrap');
+const navEl=document.querySelector('.e5-nav');
+const tabsEl=document.querySelector('.gen-bar');
+
+/*
+ * On stacked/mobile widths the thumb strip should sit right under the car
+ * image, not after the whole config panel - but on desktop it needs to
+ * stay a full-width strip below BOTH columns, which only works as a
+ * sibling of .top-row (a child of .top-row would render as a third
+ * side-by-side column there instead). CSS alone can't reorder across that
+ * different-parent boundary, so move the actual DOM node between the two
+ * positions based on the same breakpoint top-row's own stacking uses.
+ */
+const mobileLayoutQuery=window.matchMedia('(max-width:768px)');
+function placeThumbStrip(){
+  if(!thumbStrip||!heroRowEl||!topRowEl)return;
+  if(mobileLayoutQuery.matches){
+    if(thumbStrip.previousElementSibling!==heroRowEl)heroRowEl.insertAdjacentElement('afterend',thumbStrip);
+  } else if(thumbStrip.previousElementSibling!==topRowEl){
+    topRowEl.insertAdjacentElement('afterend',thumbStrip);
+  }
+}
+
+/*
+ * On mobile, #wsGrid (the wheel style thumbnails) moves into .mobile-hero-row
+ * ahead of .iframe-wrap, becoming a narrow vertical rail beside the image
+ * instead of a row sitting under the whole config panel below. On desktop
+ * it moves back to its original spot ahead of the wheel-prev image inside
+ * config-col's first .d-sec.
+ */
+function placeWsGrid(){
+  if(!wsGrid||!heroRowEl||!iframeWrapEl||!wheelPrev)return;
+  if(mobileLayoutQuery.matches){
+    if(wsGrid.parentElement!==heroRowEl)heroRowEl.insertBefore(wsGrid,iframeWrapEl);
+  } else if(wsGrid.nextElementSibling!==wheelPrev||wsGrid.parentElement!==wheelPrev.parentElement){
+    wheelPrev.parentElement.insertBefore(wsGrid,wheelPrev);
+  }
+}
+
+function layoutTopRow(){
+  if(!configCol||!topRowEl)return;
+  placeThumbStrip();
+  placeWsGrid();
+  const natural=configCol.scrollHeight;
+  const isRow=getComputedStyle(topRowEl).flexDirection==='row';
+  if(!isRow){
+    /*
+     * Stacked/mobile: the image is now its own full-width strip, unrelated
+     * to the sidebar sitting below it, so sizing its height from the
+     * sidebar's height (as the side-by-side desktop case does) produced a
+     * tall, narrow box on a narrow phone screen. object-fit:cover then had
+     * to zoom in heavily to fill that box, cropping past the wheels
+     * entirely. Use the car photos' actual 16:9 ratio against the image
+     * column's own current width instead, same as the page's un-embedded
+     * default ratio - cover then only trims a little off the sides/top
+     * instead of zooming in.
+     */
+    topRowEl.style.height='';
+    const w=iframeWrapEl?iframeWrapEl.clientWidth:window.innerWidth;
+    if(w>0)frame.style.height=Math.round(w*9/16)+'px';
+    return;
+  }
+  const chrome=(navEl?navEl.offsetHeight:0)+(tabsEl?tabsEl.offsetHeight:0)+(thumbStrip?thumbStrip.offsetHeight:0);
+  const available=Math.max(320,window.innerHeight-chrome);
+  const h=Math.max(400,Math.min(natural||available,available));
+  topRowEl.style.height=h+'px';
+  frame.style.height=h+'px';
+}
+let resizeRaf=null;
+window.addEventListener('resize',()=>{
+  if(resizeRaf)cancelAnimationFrame(resizeRaf);
+  resizeRaf=requestAnimationFrame(layoutTopRow);
+});
+
+frame.addEventListener('load',()=>{
+  layoutTopRow();
+  setTimeout(()=>loader.classList.add('hidden'),300);
+  drive('wheelColor',wcForStyle(curWheel,curWC));
+  drive('exteriorPaint',curPaint);
+  drive('brakeCalipers',curCal);
+  driveWheelBtn(curWheel);
+});
+setTimeout(()=>loader.classList.add('hidden'),6000);
+
+document.querySelectorAll('.gtab').forEach(b=>b.addEventListener('click',()=>loadGen(b.dataset.gen)));
+loadGen('C5');
+<\/script>
+</body>
+</html>`;
+  var shellDoc = document.getElementById('shell').contentWindow.document;
+  shellDoc.open();
+  shellDoc.write(HTML);
+  shellDoc.close();
+} catch (e) {
+  document.body.style.background = '#3a0000';
+  document.body.innerHTML =
+    '<div style="color:#fff;font-family:monospace;padding:24px;white-space:pre-wrap;">' +
+    'E5 Wheels Visualizer failed to load.\n\n' +
+    (e && e.stack ? e.stack : String(e)) +
+    '</div>';
+}
+</script>
+</body>
+</html>

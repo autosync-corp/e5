@@ -1,0 +1,21 @@
+{
+  "paints": [
+    "Accelerate Yellow Metallic",
+    "Amplify Orange Tintcoat",
+    "Arctic White",
+    "Black",
+    "Cacti Green",
+    "Carbon Flash Metallic",
+    "Ceramic Matrix Gray Metallic",
+    "Hypersonic Gray Metallic",
+    "Rapid Blue metallic",
+    "Red Mist Metallic Tintcoat",
+    "Riptide Blue Metallic",
+    "Sea Wolf Gray Tricaot",
+    "Sebring Orange Tintcoat",
+    "Silver Flare Metallic",
+    "Torch Red"
+  ],
+  "defaultPaint": "Torch Red",
+  "galleryOrder": [5, 1, 7, 2, 8, 3, 9]
+}

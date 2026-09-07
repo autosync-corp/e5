@@ -1,0 +1,610 @@
+@font-face {
+      font-family: 'Eurostile Condensed';
+      src: url('../Fonts/Eurostile Condensed Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      display: flex;
+      max-width: 2500px;
+      margin: 0 auto;
+      flex: 1;
+      width: 100%;
+    }
+
+    /*
+     * Embedded mode (see the head script): a host page is supplying its own
+     * config panel AND its own full-width thumbnail bar around this iframe,
+     * so this page should render as just the main image + nav arrows. The
+     * host drives image changes by clicking these (hidden but still
+     * functional - .click() works on display:none elements) thumbnail/dot
+     * elements via cross-frame access, so they stay in the DOM.
+     */
+    html.is-embedded .configurator-section,
+    html.is-embedded .mobile-wheel-dock,
+    html.is-embedded .site-footer,
+    html.is-embedded .carousel-dots,
+    html.is-embedded .thumbnail-gallery {
+      display: none !important;
+    }
+
+    /*
+     * The host page sets this iframe's element height to match its own
+     * sidebar's real rendered height (see e5wheels-visualizer_9.php), so the
+     * image should fill 100% of whatever height that turns out to be rather
+     * than stopping at a fixed guess - a fixed max-height left the sidebar's
+     * extra height as a dead black gap below the image (iframe-wrap's own
+     * background) instead of letting the car image use it. object-fit:cover
+     * on .gallery-layer img (already set) crops the resulting frame cleanly
+     * instead of distorting, no matter what ratio this height/width ends up
+     * being.
+     *
+     * height:100% only resolves against an ancestor with a truly definite
+     * height (not just flex:1/min-height), so every level from html down
+     * needs an explicit height:100% - skipping one collapses everything
+     * below it to auto (0, since the gallery-layer images are absolutely
+     * positioned and contribute no in-flow height), leaving a blank box.
+     */
+    html.is-embedded,
+    html.is-embedded body,
+    html.is-embedded .container {
+      height: 100%;
+    }
+
+    html.is-embedded .image-section {
+      /* Not 0: the prev/next arrows are deliberately positioned half
+         outside main-image-wrapper's edges (see .nav-arrow below) and get
+         clipped without room to render into. */
+      padding: 16px 28px;
+      gap: 12px;
+      height: 100%;
+    }
+
+    html.is-embedded .main-image-wrapper {
+      height: 100%;
+      width: 100%;
+    }
+
+    html.is-embedded .main-image-container {
+      height: 100%;
+      max-height: none;
+      aspect-ratio: auto;
+    }
+
+    .site-footer {
+      width: 100%;
+      padding: 16px 24px 20px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+      background: #f5f5f5;
+    }
+
+    .site-footer p {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      color: #6b7280;
+    }
+
+    /* Left Column - Image Display */
+    .image-section {
+      flex: 1;
+      padding: 40px 22px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .main-image-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      max-width: 1920px;
+      max-height: 1080px;
+      background: #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .gallery-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .gallery-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-layer-body { z-index: 1; }
+    .gallery-layer-caliper { z-index: 2; }
+    .gallery-layer-wheel { z-index: 3; }
+
+    .gallery-layer-wheel img {
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      /* Main layers use runtime-baked alpha masks (Safari). */
+      -webkit-mask-mode: alpha;
+      mask-mode: alpha;
+    }
+    .gallery-layer-caliper img {
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-mode: alpha;
+      mask-mode: alpha;
+    }
+
+    body.hide-brake-calipers .gallery-layer-caliper,
+    body.hide-brake-calipers .thumbnail-layer-caliper {
+      display: none !important;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #000;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      z-index: 15;
+    }
+
+    .nav-arrow:hover {
+      background: #dc2626;
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-arrow:hover svg {
+      stroke: #000;
+    }
+
+    .nav-arrow svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .main-image-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .nav-arrow.prev {
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .nav-arrow.next {
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+    .image-counter {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .dot.active {
+      background: #333;
+    }
+
+    .thumbnail-gallery {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .thumbnail {
+      position: relative;
+      width: 120px;
+      height: 90px;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, opacity 0.2s;
+    }
+
+    .thumbnail:hover {
+      opacity: 0.9;
+    }
+
+    .thumbnail.active {
+      border-color: #2563eb;
+    }
+
+    .thumbnail-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .thumbnail-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumbnail-layer-body { z-index: 1; }
+    .thumbnail-layer-caliper { z-index: 2; }
+    .thumbnail-layer-wheel { z-index: 3; }
+
+    .thumbnail-layer-wheel img,
+    .thumbnail-layer-caliper img {
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-mode: luminance;
+      mask-mode: luminance;
+    }
+
+    /* Right Column - Configurator */
+    .configurator-section {
+      width: 420px;
+      padding: 40px 18px 40px 18px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .configurator-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      padding: 40px 16px;
+      width: 100%;
+    }
+
+    .wheel-style-picker {
+      display: flex;
+      gap: 4px;
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    .wheel-style-option {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      min-width: 0;
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .wheel-style-label {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: #dc2626;
+      background: transparent;
+      text-align: center;
+      line-height: 1.2;
+      min-height: 44px;
+      padding: 0 8px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+    }
+
+    .wheel-style-option:has(.wheel-style-btn.is-selected) .wheel-style-label {
+      color: #fff;
+      background: #dc2626;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .wheel-style-btn {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      min-height: 0;
+      padding: 0;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .wheel-style-btn:not(.is-selected):hover {
+      border-color: #fca5a5;
+    }
+
+    .wheel-style-btn:focus-visible {
+      outline: 2px solid #dc2626;
+      outline-offset: 2px;
+    }
+
+    .wheel-style-btn.is-selected {
+      background: #fff;
+      border: 3px solid #dc2626;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      box-shadow: none;
+    }
+
+    /* Top-right quarter of the wheel: 2Ã— image anchored top-right, clipped by button */
+    .wheel-style-btn img {
+      position: absolute;
+      top: calc(-10% - 10px);
+      right: -20px;
+      width: 206%;
+      height: 206%;
+      object-fit: cover;
+      object-position: 100% 0%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .configurator-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .config-option {
+      margin-bottom: 24px;
+    }
+
+    .config-option:last-child {
+      margin-bottom: 0;
+    }
+
+    .config-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .config-select {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 14px center;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .config-select:hover {
+      border-color: #9ca3af;
+    }
+
+    .config-select:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
+    /* Mobile wheel style dock - replaces arrow toggle */
+    .mobile-wheel-dock {
+      display: none;
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      gap: 6px;
+      padding: 6px 6px 6px 8px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #e5e7eb;
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      z-index: 999;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-wheel-btn {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      padding: 0;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .mobile-wheel-btn.is-selected {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 1px #dc2626;
+    }
+
+    .mobile-wheel-btn img {
+      position: absolute;
+      top: calc(-10% - 4px);
+      right: -8px;
+      width: 206%;
+      height: 206%;
+      object-fit: cover;
+      object-position: 100% 0%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .config-panel-close {
+      display: none;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #333;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .config-panel-close:hover {
+      background: #dc2626;
+    }
+
+    .config-panel-close svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .image-section {
+        padding: 16px;
+      }
+
+      .configurator-section {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 320px;
+        max-width: 90vw;
+        height: 100vh;
+        padding: 40px 24px 40px 40px;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        align-items: stretch;
+      }
+
+      .configurator-section.panel-open {
+        transform: translateX(0);
+      }
+
+      .configurator-card {
+        position: relative;
+      }
+
+      .mobile-wheel-dock {
+        display: flex;
+      }
+
+      body.config-panel-open .mobile-wheel-dock {
+        display: none;
+      }
+
+      body.config-panel-open .config-panel-close {
+        display: flex;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-wheel-dock {
+        display: none !important;
+      }
+
+      .config-panel-close {
+        display: none !important;
+      }
+    }
+
+    /* Legacy static title (e.g. C5_gallery.html) */
+    .configurator-title {
+      font-family: 'Eurostile Condensed', 'Arial Narrow', sans-serif;
+      font-size: 42px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .configurator-title-accent {
+      color: #dc2626;
+    }
