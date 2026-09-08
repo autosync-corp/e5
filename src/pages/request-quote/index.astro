@@ -4,8 +4,9 @@ import MainLayout from '@/layouts/MainLayout.astro';
 // Reached from the visualizers (/visualizer, /e5-visualizer) when the
 // wheel/finish/vehicle combo someone is looking at doesn't have a real
 // product yet - see task_shop_fitment_quote_flow.md. Query params drive the
-// on-page summary text ("Speedway — Satin Gunmetal — C7 Stingray") but the
-// form itself is GHL-hosted (embedded below) and isn't pre-filled from them.
+// on-page summary text and pre-fill the embedded GHL form below via its
+// field keys (snake_case, except the vehicle field which the form calls
+// just "corvette").
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Request a Quote - E5 Wheels';
 const description = 'Request a custom quote for E5 Wheels not yet available in our online shop.';
@@ -21,6 +22,14 @@ const label = params.get('label') || [generation, trim].filter(Boolean).join(' '
 const hasSelection = Boolean(series || finish || label);
 const summaryParts = [series, finish, label].filter(Boolean);
 const summaryLine = summaryParts.join(' — ');
+
+// Pre-fill the embedded GHL form via its own field keys
+const ghlFormBaseUrl = 'https://api.leadconnectorhq.com/widget/form/vQq8atYg8spZ8xIrbsLf';
+const ghlPrefill = new URLSearchParams();
+if (series) ghlPrefill.set('wheel_model', series);
+if (finish) ghlPrefill.set('wheel_finish', finish);
+if (label) ghlPrefill.set('corvette', label);
+const ghlFormUrl = ghlPrefill.toString() ? `${ghlFormBaseUrl}?${ghlPrefill.toString()}` : ghlFormBaseUrl;
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} noindex={true}>
@@ -48,7 +57,7 @@ const summaryLine = summaryParts.join(' — ');
 
         <div class="mt-12" style="min-height: 1002px;">
           <iframe
-            src="https://api.leadconnectorhq.com/widget/form/vQq8atYg8spZ8xIrbsLf"
+            src={ghlFormUrl}
             style="width:100%;height:100%;border:none;border-radius:8px"
             id="inline-vQq8atYg8spZ8xIrbsLf"
             data-layout="{'id':'INLINE'}"
