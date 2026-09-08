@@ -33,7 +33,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 
 /* Cap the whole layout at a "designed for 1920" width instead of letting it
    stretch edge-to-edge on wider/ultrawide monitors, which read as oversized. */
-.e5-nav,.gen-bar,.top-row,.thumb-strip{max-width:var(--page-max-w);margin-left:auto;margin-right:auto;width:100%;}
+.e5-nav,.gen-bar,.top-row,.thumb-strip,.scroll-fade-wrap{max-width:var(--page-max-w);margin-left:auto;margin-right:auto;width:100%;}
 
 /* ── E5 NAV ── */
 .e5-nav{flex-shrink:0;height:var(--nav-h);background:var(--dark);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
@@ -150,6 +150,38 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   margin:0 auto;
   filter:drop-shadow(0 6px 20px rgba(0,0,0,.95));
 }
+
+/* Finish/Paint/Caliper are grouped into their own #fpcRow so they can be
+   moved (via placeFpcRow()) to sit right after the thumbnail strip on
+   mobile, shown as one horizontal row instead of 3 stacked full-width
+   sections - otherwise a mobile visitor has to scroll past the whole
+   Wheel Style section just to change the finish. display:contents keeps
+   desktop's appearance byte-for-byte identical to the 3 plain .d-sec
+   blocks this replaced. */
+.fpc-row{display:contents;}
+/* :last-child now matches Caliper (the last child of #fpcRow, not of
+   .config-col), which would otherwise lose the border-bottom every other
+   middle .d-sec keeps - restore it here since #fpcRow's own display:contents
+   means this needs a specific override, not the plain .d-sec:last-child rule. */
+#fpcRow .d-sec:last-child{border-bottom:1px solid var(--border);}
+
+/* Scroll-fade hint: shown only while a horizontally-scrolling row (gen
+   tabs, thumbnails) actually has more content past the visible edge - a
+   plain overflow-x:auto row gives no clue there's more to scroll to on
+   mobile, where browsers hide scrollbars entirely. Lives in a wrapping,
+   non-scrolling parent so it stays pinned to the real edge of the visible
+   box regardless of scroll position (a child of the scrolling element
+   itself would just scroll away with the content). */
+.scroll-fade-wrap{position:relative;}
+.scroll-fade{
+  position:absolute;top:0;bottom:0;right:0;width:40px;
+  display:flex;align-items:center;justify-content:flex-end;
+  padding-right:4px;font-size:20px;line-height:1;color:var(--gold);
+  opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.scroll-fade.visible{opacity:1;}
+.scroll-fade-panel{background:linear-gradient(to right, transparent, var(--panel) 65%);}
+.scroll-fade-dark{background:linear-gradient(to right, transparent, #0d0d0d 65%);}
 
 /* Dropdowns */
 .d-sel{
@@ -278,6 +310,13 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   }
   .mobile-hero-row .ws-btn{padding:4px 2px 3px;gap:3px;}
   .mobile-hero-row .ws-btn span{font-size:7px;letter-spacing:.04em;}
+
+  /* Finish/Paint/Caliper: side-by-side row instead of stacked, moved via
+     JS to sit right after the thumbnail strip (see placeFpcRow()). */
+  #fpcRow{display:flex;gap:6px;border-bottom:1px solid var(--border);}
+  #fpcRow .fpc-item{flex:1;min-width:0;padding:10px 8px;border-bottom:none;}
+  #fpcRow .d-lbl{font-size:9px;margin-bottom:6px;}
+  #fpcRow .d-sel{padding:9px 22px 9px 8px;font-size:12px;background-position:right 8px center;}
 }
 
 @media(max-width:480px){
@@ -306,15 +345,18 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
      removing this element outright (rather than hiding it) is safe. -->
 
 <!-- GEN TABS -->
-<div class="gen-bar">
-  <button class="gtab active" data-gen="C5" data-label="C5 Z06">C5 Z06</button>
-  <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport">C6 Grand Sport</button>
-  <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06">C6 Base / Z06</button>
-  <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport">C7 Grand Sport</button>
-  <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray">C7 Stingray</button>
-  <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06">C7 Z06</button>
-  <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06">C8 Z06</button>
-  <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray">C8 Stingray</button>
+<div class="scroll-fade-wrap">
+  <div class="gen-bar" id="genBar">
+    <button class="gtab active" data-gen="C5" data-label="C5 Z06">C5 Z06</button>
+    <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport">C6 Grand Sport</button>
+    <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06">C6 Base / Z06</button>
+    <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport">C7 Grand Sport</button>
+    <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray">C7 Stingray</button>
+    <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06">C7 Z06</button>
+    <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06">C8 Z06</button>
+    <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray">C8 Stingray</button>
+  </div>
+  <div class="scroll-fade scroll-fade-panel" id="genBarFade" aria-hidden="true">&#8250;</div>
 </div>
 
 <!-- MAIN -->
@@ -351,19 +393,21 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
         <img class="wheel-prev" id="wheelPrev" src="" alt="Selected wheel">
       </div>
 
-      <div class="d-sec">
-        <label class="d-lbl">Finish</label>
-        <select class="d-sel" id="cpWC"></select>
-      </div>
+      <div class="fpc-row" id="fpcRow">
+        <div class="d-sec fpc-item">
+          <label class="d-lbl">Finish</label>
+          <select class="d-sel" id="cpWC"></select>
+        </div>
 
-      <div class="d-sec">
-        <label class="d-lbl">Paint</label>
-        <select class="d-sel" id="cpPaint"></select>
-      </div>
+        <div class="d-sec fpc-item">
+          <label class="d-lbl">Paint</label>
+          <select class="d-sel" id="cpPaint"></select>
+        </div>
 
-      <div class="d-sec">
-        <label class="d-lbl">Caliper</label>
-        <select class="d-sel" id="cpCal"></select>
+        <div class="d-sec fpc-item">
+          <label class="d-lbl">Caliper</label>
+          <select class="d-sel" id="cpCal"></select>
+        </div>
       </div>
 
       <div class="d-sec">
@@ -374,7 +418,10 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   </div>
 
   <!-- THUMBNAIL STRIP — full width, below both columns -->
-  <div class="thumb-strip" id="thumbStrip"></div>
+  <div class="scroll-fade-wrap" id="thumbStripWrap">
+    <div class="thumb-strip" id="thumbStrip"></div>
+    <div class="scroll-fade scroll-fade-dark" id="thumbFade" aria-hidden="true">&#8250;</div>
+  </div>
 
 </div>
 
@@ -498,6 +545,8 @@ const $=id=>document.getElementById(id);
 const frame=$('vizFrame'), loader=$('iframeLoading'), thumbStrip=$('thumbStrip');
 const cpWC=$('cpWC'), cpPaint=$('cpPaint'), cpCal=$('cpCal'), cpShop=$('cpShop');
 const wsGrid=$('wsGrid'), wheelPrev=$('wheelPrev');
+const thumbStripWrap=$('thumbStripWrap'), fpcRow=$('fpcRow');
+const genBar=$('genBar'), genBarFade=$('genBarFade'), thumbFade=$('thumbFade');
 
 const enc=s=>s.split('/').map(encodeURIComponent).join('/');
 /*
@@ -696,11 +745,11 @@ const tabsEl=document.querySelector('.gen-bar');
  */
 const mobileLayoutQuery=window.matchMedia('(max-width:768px)');
 function placeThumbStrip(){
-  if(!thumbStrip||!heroRowEl||!topRowEl)return;
+  if(!thumbStripWrap||!heroRowEl||!topRowEl)return;
   if(mobileLayoutQuery.matches){
-    if(thumbStrip.previousElementSibling!==heroRowEl)heroRowEl.insertAdjacentElement('afterend',thumbStrip);
-  } else if(thumbStrip.previousElementSibling!==topRowEl){
-    topRowEl.insertAdjacentElement('afterend',thumbStrip);
+    if(thumbStripWrap.previousElementSibling!==heroRowEl)heroRowEl.insertAdjacentElement('afterend',thumbStripWrap);
+  } else if(thumbStripWrap.previousElementSibling!==topRowEl){
+    topRowEl.insertAdjacentElement('afterend',thumbStripWrap);
   }
 }
 
@@ -720,10 +769,52 @@ function placeWsGrid(){
   }
 }
 
+/*
+ * On mobile, #fpcRow (Finish/Paint/Caliper) moves out of .config-col to sit
+ * right after the thumbnail strip, ahead of the Wheel Style section - so a
+ * visitor can change finish/paint/caliper without first scrolling past the
+ * whole wheel-style preview. On desktop it moves back to its original spot
+ * inside .config-col, right before the Shop button's .d-sec.
+ */
+function placeFpcRow(){
+  if(!fpcRow||!thumbStripWrap||!configCol||!cpShop)return;
+  const shopSection=cpShop.closest('.d-sec');
+  if(mobileLayoutQuery.matches){
+    if(fpcRow.previousElementSibling!==thumbStripWrap)thumbStripWrap.insertAdjacentElement('afterend',fpcRow);
+  } else if(shopSection && fpcRow.nextElementSibling!==shopSection){
+    configCol.insertBefore(fpcRow,shopSection);
+  }
+}
+
+/*
+ * Fade + arrow hint over the right edge of a horizontally-scrolling row
+ * (gen tabs, thumbnails) - shown only while there's actually more content
+ * past the visible edge, hidden once scrolled to the end. Returns the
+ * update function so callers can re-check it after content that affects
+ * scrollWidth changes (e.g. rebuilding thumbnails for a new generation).
+ */
+function initScrollFade(scrollEl,fadeEl){
+  if(!scrollEl||!fadeEl)return()=>{};
+  function update(){
+    const hasOverflow=scrollEl.scrollWidth>scrollEl.clientWidth+2;
+    const atEnd=scrollEl.scrollLeft+scrollEl.clientWidth>=scrollEl.scrollWidth-2;
+    fadeEl.classList.toggle('visible',hasOverflow&&!atEnd);
+  }
+  scrollEl.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+  return update;
+}
+const updateGenBarFade=initScrollFade(genBar,genBarFade);
+const updateThumbFade=initScrollFade(thumbStrip,thumbFade);
+
 function layoutTopRow(){
   if(!configCol||!topRowEl)return;
   placeThumbStrip();
+  placeFpcRow();
   placeWsGrid();
+  updateGenBarFade();
+  updateThumbFade();
   const natural=configCol.scrollHeight;
   const isRow=getComputedStyle(topRowEl).flexDirection==='row';
   if(!isRow){
