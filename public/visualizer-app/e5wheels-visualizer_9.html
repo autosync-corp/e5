@@ -211,6 +211,9 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
    has no real product yet - links to a quote-request form instead. */
 .d-shop.d-shop-quote{background:transparent;color:var(--gold);border:1px solid var(--gold)}
 .d-shop.d-shop-quote:hover{background:rgba(198,161,91,.12)}
+/* Shown when the style/finish is a real product but not manufactured in
+   this generation's fitment size - informational only, not clickable. */
+.d-shop.d-shop-nofit{background:transparent;color:var(--muted);border:1px solid var(--border);cursor:default;pointer-events:none}
 
 /* ── THUMBNAIL STRIP — full width below both columns ──
    Same layered-image + luminance-mask technique index.php's own thumbnails
@@ -476,14 +479,20 @@ const WMAIN={
 };
 
 /*
- * Real shop links per generation/style/finish, sourced from the actual
- * buildWheelUrl() calls already documented on the site's own generation
- * pages (src/pages/generations/**) - see ai/VISUALIZER_MIGRATION_NOTES.md.
+ * Real shop-fitment status per generation/style/finish, computed against
+ * the LIVE product catalog (api.autosyncstudio.com/wheels) cross-referenced
+ * with src/core/constants/CuratedFitments.ts's approved sizes per
+ * generation/trim - not just whatever a generation page happened to
+ * document. Three states per (style, finish):
+ *   'fit'    - a real product exists at this generation's curated size ->
+ *              link straight to it.
+ *   'no-fit' - the style/finish is a real product, just not manufactured
+ *              in this generation's size (e.g. Speedway doesn't come in
+ *              C7 Stingray's specific fitment) -> "DOES NOT FIT", no link.
+ *   'quote'  - no product exists for this style/finish at all, in any
+ *              size -> route to the quote-request form.
  * Loaded from fitment-catalog.json rather than hardcoded here so it can be
- * regenerated without touching this file. Empty/missing entries (e.g.
- * C8_Z06, whose real products are Talladega/Sonoma, not Daytona/Sebring/
- * Speedway) mean every combo for that generation falls through to the
- * quote-request form below.
+ * regenerated without touching this file.
  */
 let FITMENT_CATALOG={};
 async function loadFitmentCatalog(){
@@ -492,40 +501,28 @@ async function loadFitmentCatalog(){
     if(res.ok)FITMENT_CATALOG=await res.json();
   }catch(e){console.warn('Failed to load fitment-catalog.json; shop links will fall back to quote requests.',e);}
 }
-
-/*
- * The finish dropdown uses one simplified label per swatch across every
- * wheel style, but the real catalog sometimes uses a different name for
- * the same physical finish on a specific style (e.g. Speedway's bronze
- * finish is a distinct "Dark Bronze" product, and "Titanium" here can be
- * either "Titanium Brushed" or "Titanium Brushed Tint" depending on
- * generation) - same root cause as the finish-name-mismatch bugs already
- * fixed on the shop pages themselves. Try each candidate name in order.
- */
-const FINISH_ALIASES={
-  'Titanium':['Titanium Brushed','Titanium Brushed Tint'],
-  'Bronze Brushed Tint':['Bronze Brushed Tint','Dark Bronze'],
-};
-function candidateFinishes(finish){
-  return FINISH_ALIASES[finish]||[finish];
-}
-function findShopUrl(genKey,style,finish){
+function getFitmentInfo(genKey,style,finish){
   const entry=FITMENT_CATALOG[genKey];
-  if(!entry)return null;
-  for(const candidate of candidateFinishes(finish)){
-    const match=entry.combos.find(c=>c.style===style&&c.finish===candidate);
-    if(match)return match.url;
-  }
-  return null;
+  const styleMap=entry&&entry.styles&&entry.styles[style];
+  return (styleMap&&styleMap[finish])||{status:'quote'};
 }
 function updateShopLink(){
-  const url=findShopUrl(curGen,curWheel,curWC);
-  if(url){
-    cpShop.href=url;
+  const info=getFitmentInfo(curGen,curWheel,curWC);
+  cpShop.classList.remove('d-shop-quote','d-shop-nofit');
+
+  if(info.status==='fit'&&info.url){
+    cpShop.href=info.url;
     cpShop.textContent='SHOP THIS FITMENT →';
-    cpShop.classList.remove('d-shop-quote');
     return;
   }
+
+  if(info.status==='no-fit'){
+    cpShop.href='#';
+    cpShop.textContent='DOES NOT FIT THIS VEHICLE';
+    cpShop.classList.add('d-shop-nofit');
+    return;
+  }
+
   const entry=FITMENT_CATALOG[curGen];
   const gd=GENS[curGen];
   const params=new URLSearchParams({

@@ -2,293 +2,812 @@
   "C5": {
     "generation": "C5",
     "trim": "Z06",
-    "combos": [
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c5-z06/18x10-et58-19x11-et59"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c5-z06/18x10-et58-19x11-et59"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c5-z06/18x10-et58-19x11-et59"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c5-z06/18x10-et58-19x11-et59"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Titanium Brushed",
-        "url": "/shop/daytona/titanium-brushed/c5-z06/18x10-et58-19x11-et59"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/daytona/bronze-brushed-tint/c5-z06/18x10-et58-19x11-et59"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
       }
-    ]
+    }
   },
   "C6_Grand_Sport": {
     "generation": "C6",
     "trim": "Grand Sport",
-    "combos": [
-      {
-        "style": "Speedway",
-        "finish": "Titanium Brushed Tint",
-        "url": "/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c6-grand-sport/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c6-grand-sport/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/sebring/bronze-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Titanium Brushed",
-        "url": "/shop/daytona/titanium-brushed/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Gloss Black",
-        "url": "/shop/sebring/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Gloss Black",
-        "url": "/shop/speedway/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Dark Bronze",
-        "url": "/shop/speedway/dark-bronze/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Chrome",
-        "url": "/shop/speedway/chrome/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c6-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c6-grand-sport/19x10-et30-20x12-et50"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/speedway/dark-bronze/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/speedway/chrome/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/speedway/gloss-black/c6-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/speedway/titanium-brushed-tint/c6-grand-sport/19x10-et30-20x12-et50"
+        }
       }
-    ]
+    }
   },
   "C6_Z06": {
     "generation": "C6",
     "trim": "Base",
-    "combos": [
-      {
-        "style": "Daytona",
-        "finish": "Titanium Brushed",
-        "url": "/shop/daytona/titanium-brushed/c6-base/19x9.5-et53-20x11-et76"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c6-base/19x9.5-et53-20x11-et76"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Gloss Black",
-        "url": "/shop/sebring/gloss-black/c6-base/19x10-et30-20x12-et50"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c6-base/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c6-base/19x9.5-et53-20x11-et76"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/sebring/bronze-brushed-tint/c6-base/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/daytona/bronze-brushed-tint/c6-base/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c6-base/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c6-base/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c6-base/19x10-et30-20x12-et50"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
       }
-    ]
+    }
   },
   "C7_Grand_Sport": {
     "generation": "C7",
     "trim": "Grand Sport",
-    "combos": [
-      {
-        "style": "Speedway",
-        "finish": "Titanium Brushed Tint",
-        "url": "/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c7-grand-sport/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c7-grand-sport/19x10-et30-20x12-et50"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c7-grand-sport/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/sebring/bronze-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Gloss Black",
-        "url": "/shop/speedway/gloss-black/c7-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Titanium Brushed",
-        "url": "/shop/sebring/titanium-brushed/c7-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Chrome",
-        "url": "/shop/speedway/chrome/c7-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c7-grand-sport/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c7-grand-sport/19x10-et30-20x12-et50"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/speedway/dark-bronze/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/speedway/chrome/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/speedway/gloss-black/c7-grand-sport/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/speedway/titanium-brushed-tint/c7-grand-sport/19x10-et30-20x12-et50"
+        }
       }
-    ]
+    }
   },
   "C7_Stingray": {
     "generation": "C7",
     "trim": "Stingray",
-    "combos": [
-      {
-        "style": "Speedway",
-        "finish": "Gloss Black",
-        "url": "/shop/speedway/gloss-black/c7-stingray/19x9.5-et53-20x11-et76"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c7-stingray/19x9.5-et53-20x11-et76"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Titanium Brushed",
-        "url": "/shop/daytona/titanium-brushed/c7-stingray/19x9.5-et53-20x11-et76"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c7-stingray/19x9.5-et53-20x11-et76"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c7-stingray/19x9.5-et53-20x11-et76"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c7-stingray/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c7-stingray/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/daytona/bronze-brushed-tint/c7-stingray/19x9.5-et53-20x11-et76"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c7-stingray/19x9.5-et53-20x11-et76"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
       }
-    ]
+    }
   },
   "C7_Z06": {
     "generation": "C7",
     "trim": "Z06",
-    "combos": [
-      {
-        "style": "Speedway",
-        "finish": "Titanium Brushed Tint",
-        "url": "/shop/speedway/titanium-brushed-tint/c7-z06/19x10-et30-20x12-et50"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c7-z06/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Bronze Brushed Tint",
-        "url": "/shop/daytona/bronze-brushed-tint/c7-z06/19x10-et30-20x12-et50"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c7-z06/19x10-et30-20x12-et50"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Gloss Black",
-        "url": "/shop/sebring/gloss-black/c7-z06/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Gloss Black",
-        "url": "/shop/daytona/gloss-black/c7-z06/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Titanium Brushed",
-        "url": "/shop/sebring/titanium-brushed/c7-z06/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Chrome",
-        "url": "/shop/speedway/chrome/c7-z06/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c7-z06/19x10-et30-20x12-et50"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c7-z06/19x10-et30-20x12-et50"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/speedway/dark-bronze/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/speedway/chrome/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/speedway/gloss-black/c7-z06/19x10-et30-20x12-et50"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/speedway/titanium-brushed-tint/c7-z06/19x10-et30-20x12-et50"
+        }
       }
-    ]
+    }
   },
   "C8_Z06": {
     "generation": "C8",
     "trim": "Z06",
-    "combos": []
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
+      },
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
+      },
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "no-fit"
+        },
+        "Chrome": {
+          "status": "no-fit"
+        },
+        "Gloss Black": {
+          "status": "no-fit"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "no-fit"
+        }
+      }
+    }
   },
   "C8_Stingray": {
     "generation": "C8",
     "trim": "Stingray",
-    "combos": [
-      {
-        "style": "Speedway",
-        "finish": "Dark Bronze",
-        "url": "/shop/speedway/dark-bronze/c8-stingray/19x9-et35-20x11-et45"
+    "styles": {
+      "Daytona": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/daytona/bronze-brushed-tint/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/daytona/chrome/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/daytona/gloss-black/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/daytona/titanium-brushed/c8-stingray/19x9-et35-20x11-et45"
+        }
       },
-      {
-        "style": "Daytona",
-        "finish": "Titanium Brushed",
-        "url": "/shop/daytona/titanium-brushed/c8-stingray/19x9-et35-20x11-et45"
+      "Sebring": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/sebring/bronze-brushed-tint/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/sebring/chrome/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/sebring/gloss-black/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/sebring/titanium-brushed/c8-stingray/19x9-et35-20x11-et45"
+        }
       },
-      {
-        "style": "Sebring",
-        "finish": "Gloss Black",
-        "url": "/shop/sebring/gloss-black/c8-stingray/19x9-et35-20x11-et45"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Titanium Brushed",
-        "url": "/shop/sebring/titanium-brushed/c8-stingray/20x9-et35-21x12-et52"
-      },
-      {
-        "style": "Speedway",
-        "finish": "Chrome",
-        "url": "/shop/speedway/chrome/c8-stingray/19x9-et35-20x11-et45"
-      },
-      {
-        "style": "Daytona",
-        "finish": "Chrome",
-        "url": "/shop/daytona/chrome/c8-stingray/19x9-et35-20x11-et45"
-      },
-      {
-        "style": "Sebring",
-        "finish": "Chrome",
-        "url": "/shop/sebring/chrome/c8-stingray/19x9-et35-20x11-et45"
+      "Speedway": {
+        "Bronze Brushed Tint": {
+          "status": "fit",
+          "url": "/shop/speedway/dark-bronze/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Chrome": {
+          "status": "fit",
+          "url": "/shop/speedway/chrome/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Black": {
+          "status": "fit",
+          "url": "/shop/speedway/gloss-black/c8-stingray/19x9-et35-20x11-et45"
+        },
+        "Gloss Gunmetal": {
+          "status": "quote"
+        },
+        "Gloss White": {
+          "status": "quote"
+        },
+        "Hyper Silver": {
+          "status": "quote"
+        },
+        "Satin Black": {
+          "status": "quote"
+        },
+        "Satin Gunmetal": {
+          "status": "quote"
+        },
+        "Titanium": {
+          "status": "fit",
+          "url": "/shop/speedway/titanium-brushed-tint/c8-stingray/19x9-et35-20x11-et45"
+        }
       }
-    ]
+    }
   }
 }
