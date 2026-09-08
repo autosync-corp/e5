@@ -3,8 +3,9 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
 // Reached from the visualizers (/visualizer, /e5-visualizer) when the
 // wheel/finish/vehicle combo someone is looking at doesn't have a real
-// product yet - see task_shop_fitment_quote_flow.md. Pre-fills from query
-// params so the sales team knows exactly what was being viewed.
+// product yet - see task_shop_fitment_quote_flow.md. Query params drive the
+// on-page summary text ("Speedway — Satin Gunmetal — C7 Stingray") but the
+// form itself is GHL-hosted (embedded below) and isn't pre-filled from them.
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
 const title = 'Request a Quote - E5 Wheels';
 const description = 'Request a custom quote for E5 Wheels not yet available in our online shop.';
@@ -45,112 +46,30 @@ const summaryLine = summaryParts.join(' — ');
           )}
         </div>
 
-        <form class="space-y-6 mt-12">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
-              <input type="text" name="firstName" placeholder="FIRST NAME*" required
-                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]" />
-            </div>
-            <div class="relative">
-              <input type="text" name="lastName" placeholder="LAST NAME*" required
-                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]" />
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
-              <input type="email" name="email" placeholder="EMAIL ADDRESS*" required
-                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]" />
-            </div>
-            <div class="relative">
-              <input type="tel" name="phone" placeholder="PHONE NUMBER"
-                class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]" />
-            </div>
-          </div>
-
-          <div class="relative">
-            <input type="text" name="vehicle" placeholder="YOUR CORVETTE (E.G. 2019 C7 STINGRAY)" value={label}
-              class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25]" />
-          </div>
-
-          <div class="relative">
-            <textarea name="message" placeholder="ANYTHING ELSE WE SHOULD KNOW?" rows="6"
-              class="w-full px-4 py-3 border border-[#cccccc] rounded-[7px] text-[16px] text-black/70 placeholder:text-black/70 placeholder:opacity-80 focus:outline-none focus:border-[#d31d25] resize-none"></textarea>
-          </div>
-
-          <div class="flex items-start gap-3">
-            <input type="checkbox" name="smsConsent" id="smsConsent"
-              class="mt-1.5 h-[19.5px] w-[17px] rounded-[6px] border-2 border-[#939393] bg-[#d9d9d9] text-[#d31d25] focus:ring-[#d31d25] cursor-pointer" />
-            <label for="smsConsent" class="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] text-black/50 leading-[24px] md:leading-[28px] cursor-pointer">
-              I agree to receive SMS messages from E5 wheels at the number provided.
-              Msg &amp; data rates may apply. Reply STOP to unsubscribe.
-            </label>
-          </div>
-
-          <div class="pt-4">
-            <button type="submit"
-              class="w-full bg-[#d31d25] text-white rounded-[7px] py-3 text-[16px] tracking-[5.12px] hover:bg-[#b11a21] transition-colors">
-              REQUEST QUOTE
-            </button>
-          </div>
-        </form>
+        <div class="mt-12" style="min-height: 1002px;">
+          <iframe
+            src="https://api.leadconnectorhq.com/widget/form/vQq8atYg8spZ8xIrbsLf"
+            style="width:100%;height:100%;border:none;border-radius:8px"
+            id="inline-vQq8atYg8spZ8xIrbsLf"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Request A Quote Form"
+            data-height="1002"
+            data-layout-iframe-id="inline-vQq8atYg8spZ8xIrbsLf"
+            data-form-id="vQq8atYg8spZ8xIrbsLf"
+            data-cookie-consent="true"
+            data-cookie-consent-provider="auto"
+            title="Request A Quote Form"
+          ></iframe>
+        </div>
       </div>
     </section>
   </div>
 </MainLayout>
 
-<script define:vars={{ series, finish, generation, trim, label, summaryLine, hasSelection }}>
-  const form = document.querySelector('form');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const submitButton = form.querySelector('button[type="submit"]');
-      const originalText = submitButton.textContent || 'REQUEST QUOTE';
-
-      try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'SENDING...';
-
-        const formData = new FormData(form);
-        const vehicle = formData.get('vehicle') || label;
-        const detailLines = [
-          hasSelection ? `Wheel: ${series || 'N/A'}` : null,
-          hasSelection ? `Finish: ${finish || 'N/A'}` : null,
-          vehicle ? `Vehicle: ${vehicle}` : null,
-        ].filter(Boolean);
-        const userMessage = (formData.get('message') || '').toString().trim();
-        const message = [detailLines.join(' | '), userMessage].filter(Boolean).join('\n\n');
-
-        const data = {
-          firstName: formData.get('firstName'),
-          lastName: formData.get('lastName'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          message,
-          smsConsent: formData.get('smsConsent') === 'on',
-          formType: 'Wheel Quote Request',
-          source: 'E5 Wheels Website - Visualizer Quote Request',
-        };
-
-        const response = await fetch('/api/send-contact-webhook', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-
-        if (!response.ok) throw new Error('Failed to send quote request');
-
-        alert('Thank you! We will follow up with pricing and availability within 1 business day.');
-        form.reset();
-
-      } catch (error) {
-        console.error('Quote request submission error:', error);
-        alert('Sorry, there was an error sending your request. Please try again or call us at (305) 964-7429.');
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-      }
-    });
-  }
-</script>
+<script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
