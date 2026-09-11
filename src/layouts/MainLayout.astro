@@ -158,8 +158,13 @@ const fbPixelId = tracking.fbPixelId || '';
 body {
   margin: auto;
   padding: 0;
-  width: 100dvw;
-  min-width: 100dvw;
+  /* Percentage, not dvw: viewport units include the classic scrollbar's
+     gutter, so 100dvw made the body ~15px wider than the actual content
+     area whenever a scrollbar was present. overflow-x:hidden then swallowed
+     that overflow instead of scrolling it, so full-bleed content (the
+     AutoSync visualizer especially) ran underneath the scrollbar. */
+  width: 100%;
+  min-width: 100%;
   max-width: 1920px;
   min-height: 100dvh;
   overflow-x: hidden;
