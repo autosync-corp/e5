@@ -174,7 +174,7 @@ const closeMiniCart = () => {
             <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
               <a :href="GALLERY_VEHICLES_ROUTE" class="dropdown-item">VEHICLES</a>
               <a :href="GALLERY_WHEELS_ROUTE" class="dropdown-item">WHEELS</a>
-              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">INTERACTIVE GALLERY</a>
+              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">AI GALLERY<span class="new-badge">NEW</span></a>
             </div>
           </div>
 
@@ -333,7 +333,7 @@ const closeMiniCart = () => {
           <div v-if="isGalleryDropdownOpen" class="mobile-submenu-items">
             <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">VEHICLES</a>
             <a :href="GALLERY_WHEELS_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEELS</a>
-            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">INTERACTIVE GALLERY</a>
+            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">AI GALLERY<span class="new-badge">NEW</span></a>
           </div>
         </div>
 
@@ -485,6 +485,22 @@ const closeMiniCart = () => {
 .dropdown-item:hover {
   background-color: rgba(211, 29, 37, 0.1);
   color: #d31d25;
+}
+
+/* "NEW" flag on the AI Gallery entry. Sets its own color so the parent
+   link's red hover state can't recolor it against the red pill. */
+.new-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 5px;
+  background-color: #d31d25;
+  color: #ffffff;
+  font-family: 'Franklin Gothic Demi', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  line-height: 1.3;
+  border-radius: 2px;
+  vertical-align: middle;
 }
 
 /* Visualize sits near the right edge of the nav, so its menu is anchored to
