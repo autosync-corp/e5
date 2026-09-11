@@ -251,7 +251,7 @@ const closeMiniCart = () => {
 
             <!-- Dropdown Menu -->
             <div v-if="isVisualizeDropdownOpen" class="dropdown-menu visualize-dropdown">
-              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">INTERACTIVE GALLERY</a>
+              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">AI GALLERY<span class="new-badge">NEW</span></a>
               <a :href="VISUALIZE_ROUTE" class="dropdown-item whitespace-nowrap">WHEEL VISUALIZER</a>
             </div>
           </div>
@@ -406,7 +406,7 @@ const closeMiniCart = () => {
             </button>
           </div>
           <div v-if="isVisualizeDropdownOpen" class="mobile-submenu-items">
-            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">INTERACTIVE GALLERY</a>
+            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">AI GALLERY<span class="new-badge">NEW</span></a>
             <a :href="VISUALIZE_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEEL VISUALIZER</a>
           </div>
         </div>
