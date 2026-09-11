@@ -20,6 +20,7 @@ import {
   GENERATIONS_C8_ZR1_ROUTE,
   GENERATIONS_C8_E_RAY_ROUTE,
   HOME_ROUTE, PROCESS_ROUTE, PROCESS_FORGED_ROUTE, PROCESS_FORM_FORGED_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
+  INTERACTIVE_GALLERY_ROUTE,
   WHEELS_ROUTE,
   WHEELS_DAYTONA_ROUTE,
   WHEELS_TALLADEGA_ROUTE,
@@ -38,6 +39,7 @@ const isWheelsDropdownOpen = ref(false);
 const isGalleryDropdownOpen = ref(false);
 const isProcessDropdownOpen = ref(false);
 const isGenerationsDropdownOpen = ref(false);
+const isVisualizeDropdownOpen = ref(false);
 const isMiniCartOpen = ref(false);
 const cartItemCount = ref(0);
 
@@ -58,7 +60,9 @@ const isWheelsRoute = computed(() => currentPath.value.startsWith(WHEELS_ROUTE))
 const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE))
 const isShopRoute = computed(() => currentPath.value.startsWith(SHOP_ROUTE))
 const isProcessRoute = computed(() => currentPath.value.startsWith(PROCESS_ROUTE))
-const isVisualizeRoute = computed(() => currentPath.value.startsWith(VISUALIZE_ROUTE))
+const isVisualizeRoute = computed(() =>
+  currentPath.value.startsWith(VISUALIZE_ROUTE) || currentPath.value.startsWith(INTERACTIVE_GALLERY_ROUTE)
+)
 const isGenerationRoute = computed(() => currentPath.value.startsWith(GENERATIONS_ROUTE))
 const isContactRoute = computed(() => currentPath.value.startsWith(CONTACT_ROUTE))
 
@@ -100,6 +104,14 @@ const toggleProcessDropdown = () => {
 
 const closeProcessDropdown = () => {
   isProcessDropdownOpen.value = false;
+}
+
+const toggleVisualizeDropdown = () => {
+  isVisualizeDropdownOpen.value = !isVisualizeDropdownOpen.value;
+}
+
+const closeVisualizeDropdown = () => {
+  isVisualizeDropdownOpen.value = false;
 }
 
 const toggleMiniCart = () => {
@@ -162,6 +174,7 @@ const closeMiniCart = () => {
             <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
               <a :href="GALLERY_VEHICLES_ROUTE" class="dropdown-item">VEHICLES</a>
               <a :href="GALLERY_WHEELS_ROUTE" class="dropdown-item">WHEELS</a>
+              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">INTERACTIVE GALLERY</a>
             </div>
           </div>
 
@@ -227,7 +240,22 @@ const closeMiniCart = () => {
           </div>
         </div>
 
-          <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">VISUALIZE</a>
+          <!-- Visualize Dropdown -->
+          <div class="gallery-dropdown-wrapper" @mouseenter="isVisualizeDropdownOpen = true" @mouseleave="closeVisualizeDropdown">
+            <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">
+              VISUALIZE
+              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+
+            <!-- Dropdown Menu -->
+            <div v-if="isVisualizeDropdownOpen" class="dropdown-menu visualize-dropdown">
+              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">INTERACTIVE GALLERY</a>
+              <a :href="VISUALIZE_ROUTE" class="dropdown-item whitespace-nowrap">WHEEL VISUALIZER</a>
+            </div>
+          </div>
+
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
           <button @click="toggleMiniCart" class="relative">
             <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
@@ -305,6 +333,7 @@ const closeMiniCart = () => {
           <div v-if="isGalleryDropdownOpen" class="mobile-submenu-items">
             <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">VEHICLES</a>
             <a :href="GALLERY_WHEELS_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEELS</a>
+            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">INTERACTIVE GALLERY</a>
           </div>
         </div>
 
@@ -364,7 +393,24 @@ const closeMiniCart = () => {
           </div>
         </div>
 
-        <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">VISUALIZE</a>
+        <!-- Visualize Submenu for Mobile -->
+        <div class="mobile-submenu">
+          <div class="flex items-center gap-2">
+            <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">
+              VISUALIZE
+            </a>
+            <button @click="toggleVisualizeDropdown" class="text-white p-1" aria-label="Toggle Visualize submenu">
+              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isVisualizeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div v-if="isVisualizeDropdownOpen" class="mobile-submenu-items">
+            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">INTERACTIVE GALLERY</a>
+            <a :href="VISUALIZE_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEEL VISUALIZER</a>
+          </div>
+        </div>
+
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative">
@@ -439,6 +485,13 @@ const closeMiniCart = () => {
 .dropdown-item:hover {
   background-color: rgba(211, 29, 37, 0.1);
   color: #d31d25;
+}
+
+/* Visualize sits near the right edge of the nav, so its menu is anchored to
+   the right — left-aligned it would run off-screen on narrower desktops. */
+.visualize-dropdown {
+  left: auto;
+  right: 0;
 }
 
 /* Generations Dropdown Specific Styles */

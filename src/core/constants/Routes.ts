@@ -22,6 +22,7 @@ export const VENDOR_REGISTRATION_ROUTE = '/vendor-registration';
 export const SUBMIT_CORVETTE_ROUTE = '/submit-your-corvette';
 export const COMMUNITY_ROUTE = '/community';
 export const VISUALIZE_ROUTE = '/visualizer';
+export const INTERACTIVE_GALLERY_ROUTE = '/e5-visualizer';
 export const INTERACT_ROUTE = '/interact';
 export const WHEELS_ROUTE = '/wheels';
 export const WHEELS_DAYTONA_ROUTE = '/wheels/daytona';
