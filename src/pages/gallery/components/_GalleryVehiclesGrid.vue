@@ -110,7 +110,9 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
     title: item.vehicleTitle || item.trim || 'N/A',
     style: item.wheelStyle || resolved?.style || WHEELS_COMING_SOON,
     finish: item.wheelFinish || resolved?.finish || WHEELS_COMING_SOON,
-    tires: item.tireModel || WHEELS_COMING_SOON,
+    // Blank, not "coming soon" — half the gallery has no tire model recorded
+    // and those tires aren't pending, the data just was never captured.
+    tires: item.tireModel || '',
     sizing,
     link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId || index}`,
   };

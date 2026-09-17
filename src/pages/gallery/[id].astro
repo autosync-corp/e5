@@ -112,7 +112,9 @@ const vehicle = {
   wheelLogo: vehicleData.wheelStyle
     ? `/assets/images/logos/e5-${vehicleData.wheelStyle.toLowerCase().replace(' ', '-')}.webp`
     : '',
-  tires: vehicleData.tireModel || WHEELS_COMING_SOON,
+  // Blank rather than "coming soon" — half the gallery has no tire model
+  // recorded, and those aren't pending, they were just never captured.
+  tires: vehicleData.tireModel || '',
 };
 
 // Build ImageObject schema for Google Image Search

@@ -2,7 +2,7 @@
 // photographed and published before its wheels are in the catalog. Also acts
 // as the sentinel the wheel-dependent links/copy check, so keep comparisons
 // pointed at this constant rather than at a literal string.
-export const WHEELS_COMING_SOON = 'Coming Soon';
+export const WHEELS_COMING_SOON = 'Wheels coming soon';
 
 export interface GalleryMediaItem {
   type: 'image' | 'video';
