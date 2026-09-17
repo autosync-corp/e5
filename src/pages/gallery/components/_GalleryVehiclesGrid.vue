@@ -7,6 +7,7 @@ import YearMakeModelSelector from "@/pages/gallery/components/_YearMakeModelSele
 import GalleryPageStyleSelector from "@/pages/gallery/components/_GalleryPageStyleSelector.vue";
 import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
+import { useWheelApi } from "@/core/composables/useWheelApi";
 
 const detailedGallery = ref<boolean>(false);
 const filters = ref<{ model: string; trim: string; year: string }>({
@@ -31,7 +32,41 @@ onMounted(() => {
   if (year) {
     filters.value.year = year;
   }
+
+  resolvePendingWheels();
 });
+
+/*
+ * Entries can be published before their wheels reach the catalog: they carry
+ * part numbers but no style/finish, and read "Coming Soon". The API answers
+ * 200 with an empty list until those wheels launch, at which point this one
+ * batched lookup fills the cards in with no data edit. Skipped entirely when
+ * nothing is pending, which is the normal case.
+ */
+const { wheelData, fetchWheelData } = useWheelApi();
+
+const pendingWheelEntries = computed(() =>
+  corvetteGalleryData.filter(item => !item.wheelStyle && (item.partF || item.wheelPartR))
+);
+
+async function resolvePendingWheels() {
+  const partNumbers = pendingWheelEntries.value
+    .flatMap(item => [item.partF, item.wheelPartR])
+    .filter((pn): pn is string => !!pn);
+
+  if (partNumbers.length > 0) {
+    await fetchWheelData(Array.from(new Set(partNumbers)));
+  }
+}
+
+// Style/finish resolved from the API for an entry whose gallery data has none
+const resolvedWheel = (item: CorvetteGalleryItem) => {
+  if (item.wheelStyle || wheelData.value.length === 0) return null;
+  const wheel = wheelData.value.find(w => w.Pn === item.partF || w.Pn === item.wheelPartR);
+  if (!wheel) return null;
+  const finish = [wheel.Finish, wheel.Color, wheel.Accent].filter(Boolean).join(' ');
+  return { style: wheel.Model || null, finish: finish || null };
+};
 
 // Handle filter changes from YearMakeModelSelector
 const handleFilter = (newFilters: { model: string; trim: string; year: string }) => {
@@ -59,6 +94,7 @@ const pageHeading = computed(() => {
 
 // Map CSV data to component format
 const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
+  const resolved = resolvedWheel(item);
   const sizing = item.wheelSizeF && item.wheelSizeRear
     ? `${item.wheelSizeF} / ${item.wheelSizeRear}`
     : item.wheelSizeF || item.wheelSizeRear || WHEELS_COMING_SOON;
@@ -72,8 +108,8 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
     model: item.submodel || 'N/A',
     trim: item.trim || 'N/A',
     title: item.vehicleTitle || item.trim || 'N/A',
-    style: item.wheelStyle || WHEELS_COMING_SOON,
-    finish: item.wheelFinish || WHEELS_COMING_SOON,
+    style: item.wheelStyle || resolved?.style || WHEELS_COMING_SOON,
+    finish: item.wheelFinish || resolved?.finish || WHEELS_COMING_SOON,
     tires: item.tireModel || WHEELS_COMING_SOON,
     sizing,
     link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId || index}`,

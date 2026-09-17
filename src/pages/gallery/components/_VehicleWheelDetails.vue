@@ -92,16 +92,37 @@ const wheelImageUrl = computed(() => {
   return E5_LOGO_BLACK;
 });
 
-const wheelFinish = computed(() => props.vehicleWheelFinish || WHEELS_COMING_SOON);
-const wheelStyle = computed(() => props.vehicleWheelStyle || WHEELS_COMING_SOON);
+const isPlaceholder = (value?: string | null) => {
+  if (!value) return true;
+  const v = value.toLowerCase();
+  return v === 'n/a' || v === WHEELS_COMING_SOON.toLowerCase();
+};
 
-// True only when a real wheel is attached — drives the logo, the sizes list
-// and the Explore button label.
-const hasWheelInfo = computed(() => {
-  const style = props.vehicleWheelStyle;
-  if (!style) return false;
-  const s = style.toLowerCase();
-  return s !== 'n/a' && s !== WHEELS_COMING_SOON.toLowerCase();
+// An entry can carry part numbers before its wheels exist in the catalog — the
+// API answers 200 with an empty list until they launch. Once it starts
+// returning them, style and finish resolve from the API with no data edit.
+const apiWheel = computed(() => frontWheel.value || rearWheel.value);
+
+const wheelStyle = computed(() => {
+  if (!isPlaceholder(props.vehicleWheelStyle)) return props.vehicleWheelStyle as string;
+  return apiWheel.value?.Model || WHEELS_COMING_SOON;
+});
+
+const wheelFinish = computed(() => {
+  if (!isPlaceholder(props.vehicleWheelFinish)) return props.vehicleWheelFinish as string;
+  return getApiFinishName(apiWheel.value) || WHEELS_COMING_SOON;
+});
+
+// True once a real wheel is known, from either source — drives the logo, the
+// Explore button label and the wheel/shop links.
+const hasWheelInfo = computed(() => !isPlaceholder(wheelStyle.value));
+
+// The logo prop is built from gallery data, so it's empty when the style came
+// from the API instead — derive it from the resolved style in that case.
+const resolvedLogo = computed(() => {
+  if (props.wheelStyleLogo) return props.wheelStyleLogo;
+  if (!hasWheelInfo.value) return '';
+  return `/assets/images/logos/e5-${wheelStyle.value.toLowerCase().replace(/\s+/g, '-')}.webp`;
 });
 
 // Generate wheel style route
@@ -109,7 +130,7 @@ const wheelStyleRoute = computed(() => {
   if (!hasWheelInfo.value) {
     return '/wheels';
   }
-  const style = props.vehicleWheelStyle.toLowerCase().replace(/\s+/g, '-');
+  const style = wheelStyle.value.toLowerCase().replace(/\s+/g, '-');
   return `/wheels/${style}`;
 });
 
@@ -172,15 +193,14 @@ const shopRoute = computed(() => {
   }
 
   // Use API finish name if available — avoids any mismatch between gallery data naming and API naming
-  const apiWheel = frontWheel.value || rearWheel.value;
-  let finishForUrl: string | null = apiWheel ? (getApiFinishName(apiWheel) || null) : null;
+  let finishForUrl: string | null = apiWheel.value ? (getApiFinishName(apiWheel.value) || null) : null;
 
   // Fall back to props finish name if API data not loaded
   if (!finishForUrl) {
-    if (!props.vehicleWheelFinish || props.vehicleWheelFinish.toLowerCase() === 'n/a') {
+    if (isPlaceholder(props.vehicleWheelFinish)) {
       return '/shop';
     }
-    finishForUrl = props.vehicleWheelFinish;
+    finishForUrl = props.vehicleWheelFinish as string;
   }
 
   // Use API sizes/offsets if available, fall back to gallery data props
@@ -192,7 +212,7 @@ const shopRoute = computed(() => {
     : formatSizeOffset(props.vehicleWheelSizeRear, props.vehicleOffsetR);
 
   return buildWheelUrl(
-    props.vehicleWheelStyle,
+    wheelStyle.value,
     finishForUrl,
     vehicleInfo.value.generation || undefined,
     vehicleInfo.value.trim || undefined,
@@ -215,7 +235,7 @@ const shopRoute = computed(() => {
     v-else
     :image="wheelImageUrl"
     :alt="wheelStyle"
-    :logo="wheelStyleLogo"
+    :logo="resolvedLogo"
   >
     <template #details>
       <div>
