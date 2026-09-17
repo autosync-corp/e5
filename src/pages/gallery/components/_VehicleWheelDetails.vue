@@ -6,6 +6,7 @@ import Button from '@/core/components/Button.vue';
 import { E5_LOGO_BLACK } from "@/core/constants/App.ts";
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
+import { WHEELS_COMING_SOON } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 const props = defineProps<{
   partF?: string | null;
@@ -91,12 +92,21 @@ const wheelImageUrl = computed(() => {
   return E5_LOGO_BLACK;
 });
 
-const wheelFinish = computed(() => props.vehicleWheelFinish || 'N/A');
-const wheelStyle = computed(() => props.vehicleWheelStyle || 'N/A');
+const wheelFinish = computed(() => props.vehicleWheelFinish || WHEELS_COMING_SOON);
+const wheelStyle = computed(() => props.vehicleWheelStyle || WHEELS_COMING_SOON);
+
+// True only when a real wheel is attached — drives the logo, the sizes list
+// and the Explore button label.
+const hasWheelInfo = computed(() => {
+  const style = props.vehicleWheelStyle;
+  if (!style) return false;
+  const s = style.toLowerCase();
+  return s !== 'n/a' && s !== WHEELS_COMING_SOON.toLowerCase();
+});
 
 // Generate wheel style route
 const wheelStyleRoute = computed(() => {
-  if (!props.vehicleWheelStyle || props.vehicleWheelStyle.toLowerCase() === 'n/a') {
+  if (!hasWheelInfo.value) {
     return '/wheels';
   }
   const style = props.vehicleWheelStyle.toLowerCase().replace(/\s+/g, '-');
@@ -157,7 +167,7 @@ function onShopFitmentClick() {
 
 // Generate shop link with series, finish, generation, trim, and sizes
 const shopRoute = computed(() => {
-  if (!props.vehicleWheelStyle || props.vehicleWheelStyle.toLowerCase() === 'n/a') {
+  if (!hasWheelInfo.value) {
     return '/shop';
   }
 
@@ -242,7 +252,7 @@ const shopRoute = computed(() => {
           </Button>
         </div>
         <Button secondary :link="wheelStyleRoute" data-gtm-event="explore_wheel" :data-gtm-label="`Explore ${wheelStyle}`">
-          EXPLORE {{ wheelStyle }}
+          EXPLORE {{ hasWheelInfo ? wheelStyle : 'WHEELS' }}
         </Button>
       </div>
     </template>

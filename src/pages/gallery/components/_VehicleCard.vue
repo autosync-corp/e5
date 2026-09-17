@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { WHEELS_COMING_SOON } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 const props = defineProps({
   image: {
@@ -28,6 +29,11 @@ const props = defineProps({
 const imageSrc = ref(props.image);
 const fallbackImage = '/assets/images/placeholder-vehicle.jpg';
 
+// With no wheel data the style already reads "Coming Soon" — repeating it on
+// the second line would render "Coming Soon Coming Soon", so blank that line.
+const hasWheelInfo = computed(() => props.style && props.style !== WHEELS_COMING_SOON);
+const wheelLine = computed(() => hasWheelInfo.value ? `${props.style} ${props.finish}` : '');
+
 const handleImageError = () => {
   imageSrc.value = fallbackImage;
 }
@@ -40,7 +46,7 @@ const handleImageError = () => {
       <p class="text-black/30">{{ props.style }}</p>
       <p class="font-franklin-medium text-lg text-black">{{props.title}}</p>
       <div class="text-black tracking-[0.8px]"></div>
-      <div class="text-black tracking-[0.8px]">{{ props.style }} {{props.finish}}</div>
+      <div class="text-black tracking-[0.8px]">{{ wheelLine }}</div>
     </div>
   </a>
 </template>

@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+import { corvetteGalleryData, WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
 // @ts-expect-error - Vue component with script setup has implicit default export
@@ -103,17 +103,21 @@ const vehicle = {
   model: vehicleData.submodel || 'N/A',
   trim: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
   title: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
-  style: vehicleData.wheelStyle || 'N/A',
-  finish: vehicleData.wheelFinish || 'N/A',
+  style: vehicleData.wheelStyle || WHEELS_COMING_SOON,
+  finish: vehicleData.wheelFinish || WHEELS_COMING_SOON,
   image: `/assets/images/gallery/corvette/${vehicleData.galleryId}/0.webp`,
   galleryMedia: getGalleryMedia(vehicleData),
-  wheelLogo: `/assets/images/logos/e5-${vehicleData.wheelStyle?.toLowerCase().replace(' ', '-')}.webp`,
-  tires: vehicleData.tireModel || 'N/A',
+  // Empty rather than a guessed filename — without a style this used to build
+  // "e5-undefined.webp" and render as a broken image.
+  wheelLogo: vehicleData.wheelStyle
+    ? `/assets/images/logos/e5-${vehicleData.wheelStyle.toLowerCase().replace(' ', '-')}.webp`
+    : '',
+  tires: vehicleData.tireModel || WHEELS_COMING_SOON,
 };
 
 // Build ImageObject schema for Google Image Search
-const wheelDesc = vehicle.style !== 'N/A'
-  ? `E5 ${vehicle.style}${vehicle.finish !== 'N/A' ? ` ${vehicle.finish}` : ''} wheels`
+const wheelDesc = vehicle.style !== WHEELS_COMING_SOON
+  ? `E5 ${vehicle.style}${vehicle.finish !== WHEELS_COMING_SOON ? ` ${vehicle.finish}` : ''} wheels`
   : 'E5 custom wheels';
 
 const imageSchemaItems = vehicle.galleryMedia
@@ -156,8 +160,8 @@ const corvetteGalleryImages = corvetteGalleryData
     year: item.year || 'N/A',
     trim: item.vehicleTitle || item.trim || 'N/A',
     title: item.vehicleTitle || item.trim || 'N/A',
-    wheelModel: item.wheelStyle || 'N/A',
-    wheelFinish: item.wheelFinish || 'N/A',
+    wheelModel: item.wheelStyle || WHEELS_COMING_SOON,
+    wheelFinish: item.wheelFinish || WHEELS_COMING_SOON,
   }));
 ---
 

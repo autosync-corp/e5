@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+import { corvetteGalleryData, WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
 import VehicleDetailedCard from "@/pages/gallery/components/_VehicleDetailedCard.vue";
@@ -61,7 +61,7 @@ const pageHeading = computed(() => {
 const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
   const sizing = item.wheelSizeF && item.wheelSizeRear
     ? `${item.wheelSizeF} / ${item.wheelSizeRear}`
-    : item.wheelSizeF || item.wheelSizeRear || 'N/A';
+    : item.wheelSizeF || item.wheelSizeRear || WHEELS_COMING_SOON;
 
   return {
     id: item.galleryId || `vehicle-${index}`,
@@ -72,9 +72,9 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
     model: item.submodel || 'N/A',
     trim: item.trim || 'N/A',
     title: item.vehicleTitle || item.trim || 'N/A',
-    style: item.wheelStyle || 'N/A',
-    finish: item.wheelFinish || 'N/A',
-    tires: item.tireModel || 'N/A',
+    style: item.wheelStyle || WHEELS_COMING_SOON,
+    finish: item.wheelFinish || WHEELS_COMING_SOON,
+    tires: item.tireModel || WHEELS_COMING_SOON,
     sizing,
     link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId || index}`,
   };
