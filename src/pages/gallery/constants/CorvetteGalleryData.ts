@@ -39,6 +39,30 @@ export interface CorvetteGalleryItem {
 
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
+    "galleryId": "2007-c6-base-black",
+    "dateAdded": "2026-09-24",
+    "year": "2007",
+    "submodel": "C6",
+    "trim": "Base",
+    "vehicleColor": "Black",
+    "vehicleTitle": "2007 C6 Corvette Base Black",
+    "wheelStyle": "Sebring",
+    "wheelFinish": "Titanium Brushed",
+    "wheelSizeF": "19\" x 9.5\"",
+    "offesetF": "53mm",
+    "partF": "E5SE1995E53565TIU",
+    "tireSizeF": null,
+    "tirePartF": null,
+    "wheelSizeRear": "20\" x 11\"",
+    "offsetR": "76mm",
+    "wheelPartR": "E5SE2011E76565TIU",
+    "tireSizeR": null,
+    "tirePartR": null,
+    "tireModel": null,
+    "pinned": false,
+    "images": ["0.webp","1.webp","2.webp"]
+  },
+  {
     "galleryId": "2025-c8-z06-black",
     "dateAdded": "2026-09-18",
     "year": "2025",
