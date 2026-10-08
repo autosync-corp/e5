@@ -5,6 +5,8 @@ import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
+import { toSlug } from '@/core/utils/wheelUrl';
+import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 
 // Props
 const props = defineProps<{
@@ -146,10 +148,10 @@ const getFinishName = (product: WheelProduct): string => {
 };
 
 const is2PSeries = computed(() => props.seriesParam?.toLowerCase().includes('2p') ?? false);
-const isForgedSeries = computed(() => {
-  const s = props.seriesParam?.toLowerCase() ?? '';
-  return s === 'talladega' || s === 'sonoma';
-});
+// Made-to-order lead time for this series, or null when it's stocked normally.
+// Sourced from SeriesLeadTimes.ts so this page, the shop listing and the product
+// JSON-LD can't disagree about which series are made to order or how long they take.
+const seriesLeadTime = computed(() => getSeriesLeadTime(props.seriesParam));
 
 // Get all products for the current series
 const seriesProducts = computed(() => {
@@ -970,8 +972,13 @@ async function loadProducts() {
 
         // Restrict to this series first, same as seriesProducts/availableFinishes below
         const finishParam = (normalizedFinish || '').toLowerCase();
+        // Match on slugs, not raw names. The URL segment has already lost any
+        // punctuation the catalog name carries ("GT.03" -> "gt03"), so comparing the
+        // names directly never matched for those series and fell through to the
+        // wrong-product fallback below.
+        const seriesSlug = toSlug(urlParams.series);
         const seriesWheels = response.Wheels.filter(w =>
-          w.Model && w.Model.toLowerCase() === urlParams.series?.toLowerCase()
+          w.Model && toSlug(w.Model) === seriesSlug
         );
 
         // Build the same discrete, deduped finish list the Finish dropdown uses —
@@ -995,7 +1002,14 @@ async function loadProducts() {
           ? seriesWheels.find(w => getFinishName(w) === matchedFinish)
           : undefined;
 
-        selectedProduct.value = foundProduct || response.Wheels[0];
+        // Fall back *within the requested series* rather than to the catalog's first
+        // wheel. The old global fallback is what let an unmatched series render a
+        // completely unrelated product (every GT url showed a Daytona) instead of
+        // merely the wrong finish.
+        if (seriesWheels.length === 0) {
+          console.error(`No products found for series "${urlParams.series}" - check SERIES_DISPLAY_NAMES in wheelUrl.ts`);
+        }
+        selectedProduct.value = foundProduct || seriesWheels[0] || response.Wheels[0];
       } else if (productIdToLoad) {
         const foundProduct = response.Wheels.find(w => w.Id === productIdToLoad);
         selectedProduct.value = foundProduct || response.Wheels[0];
@@ -1981,7 +1995,7 @@ onMounted(() => {
             <p><strong>Bolt Pattern:</strong> {{ selectedProduct.LugCount }}x{{ selectedProduct.BoltCircle1 }}<span v-if="selectedProduct.BoltCircle2">/{{ selectedProduct.BoltCircle2 }}</span></p>
             <p><strong>Center Bore:</strong> {{ selectedProduct.Bore }}mm</p>
             <p><strong>Load Rating:</strong> {{ selectedProduct.LoadRating }} lbs</p>
-            <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+            <p v-if="seriesLeadTime" class="text-orange-600"><strong>{{ seriesLeadTime }}</strong></p>
             <p v-else-if="selectedProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
             <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
             <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
@@ -1997,7 +2011,7 @@ onMounted(() => {
               <p><strong>Bolt Pattern:</strong> {{ selectedFrontProduct.LugCount }}x{{ selectedFrontProduct.BoltCircle1 }}<span v-if="selectedFrontProduct.BoltCircle2">/{{ selectedFrontProduct.BoltCircle2 }}</span></p>
               <p><strong>Center Bore:</strong> {{ selectedFrontProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedFrontProduct.LoadRating }} lbs</p>
-              <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+              <p v-if="seriesLeadTime" class="text-orange-600"><strong>{{ seriesLeadTime }}</strong></p>
               <p v-else-if="selectedFrontProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
               <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>
@@ -2011,7 +2025,7 @@ onMounted(() => {
               <p><strong>Bolt Pattern:</strong> {{ selectedRearProduct.LugCount }}x{{ selectedRearProduct.BoltCircle1 }}<span v-if="selectedRearProduct.BoltCircle2">/{{ selectedRearProduct.BoltCircle2 }}</span></p>
               <p><strong>Center Bore:</strong> {{ selectedRearProduct.Bore }}mm</p>
               <p><strong>Load Rating:</strong> {{ selectedRearProduct.LoadRating }} lbs</p>
-              <p v-if="isForgedSeries" class="text-orange-600"><strong>Made to Order &middot; 4 Week Lead Time</strong></p>
+              <p v-if="seriesLeadTime" class="text-orange-600"><strong>{{ seriesLeadTime }}</strong></p>
               <p v-else-if="selectedRearProduct.InStock" class="text-green-600"><strong>✓ In Stock</strong></p>
               <p v-else-if="is2PSeries" class="text-orange-600"><strong>Made to Order, 2-3 Day Assembly Lead Time</strong></p>
               <p v-else class="text-red-600"><strong>Out of Stock</strong></p>

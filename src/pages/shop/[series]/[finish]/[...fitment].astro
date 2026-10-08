@@ -1,13 +1,18 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import SingleProductPage from '@/pages/shop/components/_SingleProductPage.vue';
-import { parseWheelUrl, fromSlug } from '@/core/utils/wheelUrl';
+import { parseWheelUrl, fromSlug, seriesFromSlug } from '@/core/utils/wheelUrl';
+import { isMadeToOrderSeries } from '@/core/constants/SeriesLeadTimes';
 import {
   DAYTONA_GLOSS_BLACK, DAYTONA_TITANIUM_BRUSHED_TINT, DAYTONA_BRONZE_BRUSHED_TINT, DAYTONA_HERO_IMAGE,
   SEBRING_GLOSS_BLACK, SEBRING_TITANIUM_BRUSHED, SEBRING_BRONZE, SEBRING_HERO_IMAGE,
   SPEEDWAY_GLOSS_BLACK, SPEEDWAY_TITANIUM_BRUSHED, SPEEDWAY_BRONZE, SPEEDWAY_HERO_IMAGE,
   TALLADEGA_GLOSS_BLACK, TALLADEGA_PODIUM_GOLD, TALLADEGA_PODIUM_BRONZE, TALLADEGA_SATIN_GREY, TALLADEGA_SMOKED_POLISHED, TALLADEGA_HERO,
   SONOMA_GLOSS_BLACK, SONOMA_TITANIUM_BRUSHED_TINT, SONOMA_BRONZE_BRUSHED_TINT, SONOMA_HERO_IMAGE,
+  GT01_BRUSHED_ALUMINUM, GT01_GLOSS_BLACK, GT01_SATIN_BLACK,
+  GT02_BRUSHED_ALUMINUM, GT02_GLOSS_BLACK, GT02_SATIN_BLACK,
+  GT03_BRUSHED_ALUMINUM, GT03_GLOSS_BLACK, GT03_SATIN_BLACK,
+  GT04_BRUSHED_ALUMINUM, GT04_GLOSS_BLACK, GT04_SATIN_BLACK,
 } from "@/pages/wheels/constants/Wheels.ts";
 
 // Get URL parameters from path
@@ -18,7 +23,7 @@ const fullPath = Astro.url.pathname;
 const parsedUrl = parseWheelUrl(fullPath);
 
 // Build dynamic title from series, finish, and optional fitment details
-const seriesTitle = fromSlug(series);
+const seriesTitle = seriesFromSlug(series);
 const finishTitle = fromSlug(finish);
 
 // Build title based on available URL parameters (keep under 60 chars for SEO)
@@ -60,11 +65,10 @@ const urlParams = {
   rearSize: parsedUrl.rearSize,
 };
 
-// Made-to-order series (4 week lead time)
-const madeToOrderSeries = ['talladega', 'sonoma'];
 const seriesKey = (series || '').toLowerCase();
 const finishKey = (finish || '').toLowerCase();
-const isMadeToOrder = madeToOrderSeries.includes(seriesKey);
+// Lead times live in SeriesLeadTimes.ts, shared with the shop listing and product page
+const isMadeToOrder = isMadeToOrderSeries(series);
 
 // Starting price per finish (floor price for AggregateOffer)
 const finishLowPrice: Record<string, string> = {
@@ -91,6 +95,9 @@ const finishLowPrice: Record<string, string> = {
   'sebring-2p/titanium-brushed': '900',
   'sebring-2p/gray-black-lip': '900',
   'sebring-2p/gray-polished-lip': '900',
+  'sebring-2p/black': '900',
+  'sebring-2p/titanium-black-lip': '900',
+  'sebring-2p/titanium-polished-lip': '900',
   // Speedway
   'speedway/gloss-black': '600',
   'speedway/dark-bronze': '600',
@@ -134,6 +141,9 @@ const finishHighPrice: Record<string, string> = {
   'sebring-2p/titanium-brushed': '1300',
   'sebring-2p/gray-black-lip': '1300',
   'sebring-2p/gray-polished-lip': '1300',
+  'sebring-2p/black': '1300',
+  'sebring-2p/titanium-black-lip': '1300',
+  'sebring-2p/titanium-polished-lip': '1300',
   // Speedway
   'speedway/gloss-black': '850',
   'speedway/dark-bronze': '850',
@@ -153,8 +163,14 @@ const finishHighPrice: Record<string, string> = {
   'sonoma/titanium-brushed-tint': '3100',
   'sonoma/bronze-brushed-tint': '3100',
 };
-const lowPrice = finishLowPrice[`${seriesKey}/${finishKey}`] || '600';
-const highPrice = finishHighPrice[`${seriesKey}/${finishKey}`] || '1200';
+// Only publish a price when one actually exists for this series/finish. The old
+// `|| '600'` / `|| '1200'` defaults silently invented a range for any wheel missing
+// from the tables above - GT has no pricing in the AutoSync catalog yet (every variant
+// returns Price: null), so it would have shipped a made-up $600-$1200 in structured data.
+// TODO: add GT.01-GT.04 prices to the tables above once they're confirmed.
+const lowPrice = finishLowPrice[`${seriesKey}/${finishKey}`];
+const highPrice = finishHighPrice[`${seriesKey}/${finishKey}`];
+const hasKnownPrice = Boolean(lowPrice && highPrice);
 
 // Product image &mdash; series + finish specific, falls back to series hero
 const productImageMap: Record<string, string> = {
@@ -185,6 +201,19 @@ const productImageMap: Record<string, string> = {
   'sonoma/titanium-brushed-tint': SONOMA_TITANIUM_BRUSHED_TINT,
   'sonoma/bronze-brushed-tint': SONOMA_BRONZE_BRUSHED_TINT,
   'sonoma/brushed-aluminum': SONOMA_HERO_IMAGE,
+  // GT - catalog render urls (absolute CDN paths, see note below)
+  'gt01/brushed-aluminum': GT01_BRUSHED_ALUMINUM,
+  'gt01/gloss-black': GT01_GLOSS_BLACK,
+  'gt01/satin-black': GT01_SATIN_BLACK,
+  'gt02/brushed-aluminum': GT02_BRUSHED_ALUMINUM,
+  'gt02/gloss-black': GT02_GLOSS_BLACK,
+  'gt02/satin-black': GT02_SATIN_BLACK,
+  'gt03/brushed-aluminum': GT03_BRUSHED_ALUMINUM,
+  'gt03/gloss-black': GT03_GLOSS_BLACK,
+  'gt03/satin-black': GT03_SATIN_BLACK,
+  'gt04/brushed-aluminum': GT04_BRUSHED_ALUMINUM,
+  'gt04/gloss-black': GT04_GLOSS_BLACK,
+  'gt04/satin-black': GT04_SATIN_BLACK,
 };
 const seriesFallbackImage: Record<string, string> = {
   'daytona': DAYTONA_HERO_IMAGE,
@@ -192,10 +221,19 @@ const seriesFallbackImage: Record<string, string> = {
   'speedway': SPEEDWAY_HERO_IMAGE,
   'talladega': TALLADEGA_HERO,
   'sonoma': SONOMA_HERO_IMAGE,
+  'gt01': GT01_BRUSHED_ALUMINUM,
+  'gt02': GT02_BRUSHED_ALUMINUM,
+  'gt03': GT03_BRUSHED_ALUMINUM,
+  'gt04': GT04_BRUSHED_ALUMINUM,
 };
 const productImagePath = productImageMap[`${seriesKey}/${finishKey}`]
   || seriesFallbackImage[seriesKey]
   || '/assets/images/vette-black-on-river.webp';
+
+// GT renders are absolute CDN urls; the local ones still need the site origin prefixed
+const productImageUrl = productImagePath.startsWith('http')
+  ? productImagePath
+  : `${baseUrl}${productImagePath}`;
 
 // Product schema &mdash; base data known at server time
 const productSchema = {
@@ -208,12 +246,11 @@ const productSchema = {
     "name": "E5 Wheels"
   },
   "url": canonicalUrl,
-  "image": `${baseUrl}${productImagePath}`,
+  "image": productImageUrl,
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": lowPrice,
-    "highPrice": highPrice,
+    ...(hasKnownPrice ? { lowPrice, highPrice } : {}),
     "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
     "seller": {
       "@type": "Organization",

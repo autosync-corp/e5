@@ -151,6 +151,27 @@ export function buildVehicleSlug(generation: string, trim: string): string {
   return `${toSlug(generation)}-${toSlug(trim)}`;
 }
 
+// Series whose real catalog name contains characters toSlug() strips, so fromSlug() can't
+// restore them. "GT.03" slugs to "gt03", and fromSlug("gt03") would give "Gt03" - which
+// matches no product and silently loaded the wrong wheel. Same idea as HYPHENATED_TRIMS below.
+const SERIES_DISPLAY_NAMES: Record<string, string> = {
+  'gt01': 'GT.01',
+  'gt02': 'GT.02',
+  'gt03': 'GT.03',
+  'gt04': 'GT.04',
+};
+
+/**
+ * Converts a series slug back to its real catalog name.
+ * Examples:
+ * - "sebring" -> "Sebring"
+ * - "gt03" -> "GT.03"   (fromSlug alone would give the unusable "Gt03")
+ */
+export function seriesFromSlug(slug: string | null | undefined): string {
+  if (!slug) return '';
+  return SERIES_DISPLAY_NAMES[slug.toLowerCase()] ?? fromSlug(slug);
+}
+
 // Trims whose names contain a hyphen — fromSlug() would corrupt them by turning the hyphen into a space
 const HYPHENATED_TRIMS: Record<string, string> = {
   'e-ray':       'E-Ray',
@@ -254,7 +275,7 @@ export function parseWheelUrl(url: string): {
   }
 
   const result = {
-    series: fromSlug(parts[1]),
+    series: seriesFromSlug(parts[1]),
     finish: fromSlug(parts[2]),
     generation: undefined as string | undefined,
     trim: undefined as string | undefined,

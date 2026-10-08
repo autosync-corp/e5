@@ -164,6 +164,9 @@ const corvetteGalleryImages = corvetteGalleryData
     title: item.vehicleTitle || item.trim || 'N/A',
     wheelModel: item.wheelStyle || WHEELS_COMING_SOON,
     wheelFinish: item.wheelFinish || WHEELS_COMING_SOON,
+    // Passed through so a card whose wheels have since launched can resolve them
+    partF: item.partF || undefined,
+    partR: item.wheelPartR || undefined,
   }));
 ---
 
@@ -242,6 +245,8 @@ const corvetteGalleryImages = corvetteGalleryData
             title={item.title}
             style={item.wheelModel}
             finish={item.wheelFinish}
+            partF={item.partF}
+            partR={item.partR}
             link={`${GALLERY_DETAIL_ROUTE}/${item.id}`}
           />
         ))}

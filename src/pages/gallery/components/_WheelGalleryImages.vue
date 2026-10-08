@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useWheelApi } from '@/core/composables/useWheelApi';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { parseVehicleGenerationAndTrim } from '@/pages/gallery/utils/vehicleParser';
+import { WHEELS_COMING_SOON } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 const props = defineProps<{
   partF?: string | null;
@@ -56,15 +57,41 @@ const vehicleInfo = computed(() => {
   );
 });
 
+const isPlaceholder = (value?: string | null) => {
+  if (!value) return true;
+  const v = value.toLowerCase();
+  return v === 'n/a' || v === WHEELS_COMING_SOON.toLowerCase();
+};
+
+// Same self-healing rule as _VehicleWheelDetails: an entry can carry part numbers
+// before its wheels exist in the catalog, so when the gallery data has no style or
+// finish yet, resolve them from the API response this component already fetched.
+const apiWheel = computed(() => wheelData.value[0] ?? null);
+
+const resolvedStyle = computed(() => {
+  if (!isPlaceholder(props.wheelStyle)) return props.wheelStyle as string;
+  return apiWheel.value?.Model || '';
+});
+
+const resolvedFinish = computed(() => {
+  if (!isPlaceholder(props.wheelFinish)) return props.wheelFinish as string;
+  const w = apiWheel.value;
+  if (!w) return '';
+  return [w.Finish, w.Color, w.Accent].filter(Boolean).join(' ');
+});
+
 // Generate single product route with generation and trim
 const wheelStyleRoute = computed(() => {
-  if (!props.wheelStyle || !props.wheelFinish) {
+  // Without a real style AND finish, link to the wheels index rather than building a
+  // url out of the placeholder text - that produced dead links such as
+  // /shop/wheels-coming-soon/wheels-coming-soon/c8-z06.
+  if (!resolvedStyle.value || !resolvedFinish.value) {
     return props.wheelsRoute;
   }
 
   return buildWheelUrl(
-    props.wheelStyle,
-    props.wheelFinish,
+    resolvedStyle.value,
+    resolvedFinish.value,
     vehicleInfo.value.generation || undefined,
     vehicleInfo.value.trim || undefined
   );
@@ -74,7 +101,7 @@ const wheelStyleRoute = computed(() => {
 <template>
   <section v-if="hasImages" class="container-e5 py-24 px-24">
     <h2 class="text-2xl md:text-3xl lg:text-4xl text-black font-medium opacity-70 tracking-wide leading-[34px] mb-8 uppercase">
-      {{ wheelStyle || 'WHEEL' }} GALLERY
+      {{ resolvedStyle || 'WHEEL' }} GALLERY
     </h2>
 
     <div v-if="loading" class="flex items-center justify-center py-12">

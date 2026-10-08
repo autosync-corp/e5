@@ -319,3 +319,29 @@ export const SHOP_FINISHES = [
         stock: "IN STOCK"
     }
 ];
+
+// GT Series - GT.01 / GT.02 / GT.03 / GT.04
+// Made to order, 6 week lead time. No pricing in the AutoSync catalog yet (every
+// variant returns Price: null), so no price constants here on purpose.
+// Render URLs are the catalog's own Img0001 paths, each verified to return HTTP 200.
+// Note the finish codes are not uniform across the family (GT.01 uses AB for all three
+// finishes, GT.02-04 use AB/BK/SB), so these are taken from the API, not constructed.
+export const GT01_BRAND_NAME = "GT.01";
+export const GT01_BRUSHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/GT.01_AB_Brushed_Aluminum_5-lug_0001.webp";
+export const GT01_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.01_AB_Gloss_Black_5-lug_0001.webp";
+export const GT01_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.01_AB_Satin_Black_5-lug_0001.webp";
+
+export const GT02_BRAND_NAME = "GT.02";
+export const GT02_BRUSHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/GT.02_AB_Brushed_Aluminum_5-lug_0001.webp";
+export const GT02_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.02_BK_Gloss_Black_5-lug_0001.webp";
+export const GT02_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.02_SB_Satin_Black_5-lug_0001.webp";
+
+export const GT03_BRAND_NAME = "GT.03";
+export const GT03_BRUSHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/GT.03_AB_Brushed_Aluminum_5-lug_0001.webp";
+export const GT03_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.03_BK_Gloss_Black_5-lug_0001.webp";
+export const GT03_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.03_SB_Satin_Black_5-lug_0001.webp";
+
+export const GT04_BRAND_NAME = "GT.04";
+export const GT04_BRUSHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/GT.04_AB_Brushed_Aluminum_5-lug_0001.webp";
+export const GT04_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.04_BK_Gloss_Black_5-lug_0001.webp";
+export const GT04_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.04_SB_Satin_Black_5-lug_0001.webp";

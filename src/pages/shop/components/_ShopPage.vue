@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
+import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { filterWheelsByVehicle, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 
@@ -460,10 +461,10 @@ onMounted(() => {
                     {{ variation.finish }}
                   </span>
                   <span
-                    v-if="['talladega', 'sonoma'].includes(series.seriesName.toLowerCase())"
+                    v-if="getSeriesLeadTime(series.seriesName)"
                     class="text-xs font-['Franklin_Gothic_Book'] text-orange-600 bg-orange-50 px-2 py-1 rounded"
                   >
-                    Made to Order &middot; 4 Week Lead Time
+                    {{ getSeriesLeadTime(series.seriesName) }}
                   </span>
                   <span
                     v-else-if="variation.product.InStock"
