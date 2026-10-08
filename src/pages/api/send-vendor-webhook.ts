@@ -3,7 +3,9 @@ import type { APIRoute } from 'astro';
 // Mark this page as server-rendered
 export const prerender = false;
 
-const ghlWebhookUrl = 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/1133036c-d6b3-4550-b41d-74a64cb17477';
+// Falls back to the live hook when the env var is unset, so production is
+// unaffected until GHL_VENDOR_WEBHOOK_URL is deliberately set there.
+const ghlWebhookUrl = import.meta.env.GHL_VENDOR_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/1133036c-d6b3-4550-b41d-74a64cb17477';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
