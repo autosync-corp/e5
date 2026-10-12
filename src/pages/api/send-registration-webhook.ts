@@ -3,9 +3,9 @@ import type { APIRoute } from 'astro';
 // Mark this page as server-rendered
 export const prerender = false;
 
-// Falls back to the live hook when the env var is unset, so production is
-// unaffected until GHL_REGISTRATION_WEBHOOK_URL is deliberately set there.
-const ghlWebhookUrl = import.meta.env.GHL_REGISTRATION_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/99787a4f-3544-4eb1-917b-6ef2a4a2e7c1';
+// The default is the current production hook; GHL_REGISTRATION_WEBHOOK_URL only needs setting
+// to point a deploy somewhere else (e.g. a test hook locally).
+const ghlWebhookUrl = import.meta.env.GHL_REGISTRATION_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/F2g2xOQ3ELR4bB1mEUed/webhook-trigger/cf036c3d-501c-409e-95f8-17c06a35e047';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

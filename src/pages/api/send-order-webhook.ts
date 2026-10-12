@@ -5,7 +5,7 @@ import { sendFbPurchaseEvent } from '@/core/utils/fbConversions';
 // Mark this page as server-rendered
 export const prerender = false;
 
-const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/KqlpMLqMB6avqxiT2xPx/webhook-trigger/68181ce2-c728-4127-9f12-87c621adf287';
+const ghlWebhookUrl = import.meta.env.GHL_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/F2g2xOQ3ELR4bB1mEUed/webhook-trigger/ef0fe3c1-b1b5-499e-b3e5-4a1e248f5f01';
 
 let redis: Redis | null = null;
 try {
