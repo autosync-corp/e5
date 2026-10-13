@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { Redis } from '@upstash/redis';
 import { getEventBySlug } from '@/core/services/EventsService';
+import { verifyRecaptcha, verifyCity } from '@/core/utils/formVerification';
 
 export const prerender = false;
 
@@ -46,68 +47,6 @@ function wrapOptionalDetails(rows: string[]): string {
 
 function buildOptionalDetailsText(pairs: [string, string][]): string {
   return pairs.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`).join('\n');
-}
-
-const RECAPTCHA_SCORE_THRESHOLD = 0.7;
-const NOMINATIM_USER_AGENT = 'E5Wheels-RSVP/1.0 (https://e5wheels.com)';
-
-// Returns true if the submission should proceed. Skips the check entirely when the
-// feature isn't configured (matches the optional-webhook pattern used elsewhere here),
-// but blocks once a project/API key is set and the token is missing, invalid, or low-scoring.
-async function verifyRecaptcha(token: string, expectedAction: string): Promise<boolean> {
-  const projectId = import.meta.env.RECAPTCHA_PROJECT_ID;
-  const apiKey = import.meta.env.RECAPTCHA_API_KEY;
-  const siteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
-  if (!projectId || !apiKey || !siteKey) return true;
-  if (!token) return false;
-
-  try {
-    const res = await fetch(
-      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: { token, expectedAction, siteKey } }),
-      }
-    );
-    const result = await res.json();
-    if (!result.tokenProperties?.valid) return false;
-    if (result.tokenProperties.action !== expectedAction) return false;
-    return (result.riskAnalysis?.score ?? 0) >= RECAPTCHA_SCORE_THRESHOLD;
-  } catch {
-    return false;
-  }
-}
-
-// Verifies the submitted city genuinely exists in the given state via OpenStreetMap's free
-// Nominatim geocoder. Fails OPEN (allows the submission through) on network/timeout/service
-// errors — this is a community-run public service with no SLA, an outage there should never
-// block a real RSVP. Only fails CLOSED when Nominatim actually returns zero matches, meaning
-// the city/state pair doesn't resolve to any real place.
-async function verifyCity(city: string, state: string): Promise<boolean> {
-  if (!city || !state) return true;
-
-  try {
-    const params = new URLSearchParams({
-      city,
-      state,
-      country: 'USA',
-      format: 'json',
-      limit: '1',
-    });
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const res = await fetch(`https://nominatim.openstreetmap.org/search?${params.toString()}`, {
-      headers: { 'User-Agent': NOMINATIM_USER_AGENT },
-      signal: controller.signal,
-    });
-    clearTimeout(timeout);
-    if (!res.ok) return true;
-    const results = await res.json();
-    return Array.isArray(results) && results.length > 0;
-  } catch {
-    return true;
-  }
 }
 
 export const POST: APIRoute = async ({ request }) => {

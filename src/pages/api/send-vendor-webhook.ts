@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { verifyRecaptcha, verifyCity, verifyZipMatchesState, isHoneypotFilled } from '@/core/utils/formVerification';
 
 // Mark this page as server-rendered
 export const prerender = false;
@@ -33,6 +34,17 @@ export const POST: APIRoute = async ({ request }) => {
       resaleCertificate
     } = body;
 
+    // Honeypot: a field hidden from real users that bots fill because it's in the DOM.
+    // Answer 200 so the bot believes it succeeded and doesn't retry another way, but
+    // drop the submission on the floor.
+    if (isHoneypotFilled(body.faxNumber)) {
+      console.warn('[forms] vendor submission rejected: honeypot filled');
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     console.log('Received vendor registration data:', { shopName, email, shopType });
 
     // Validate required fields
@@ -43,6 +55,27 @@ export const POST: APIRoute = async ({ request }) => {
           status: 400,
           headers: { 'Content-Type': 'application/json' },
         }
+      );
+    }
+
+    if (!(await verifyRecaptcha(body.recaptchaToken, 'vendor_submit'))) {
+      return new Response(
+        JSON.stringify({ error: 'Something went wrong. Please try again.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!(await verifyCity(city, state))) {
+      return new Response(
+        JSON.stringify({ error: "We couldn't verify that City/State combination. Please double check and try again." }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!(await verifyZipMatchesState(zipCode, state))) {
+      return new Response(
+        JSON.stringify({ error: "That ZIP code doesn't match the state selected. Please double check and try again." }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 

@@ -6,9 +6,15 @@ const title = 'Contact Us - E5 Wheels';
 const description = 'Get in touch with E5 Wheels for questions about our Corvette wheels. Call (305) 964-7429 or email sales@e5wheels.com. We respond within 1 business day.';
 const canonicalUrl = `${baseUrl}/contact-us`;
 const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
+  <Fragment slot="head">
+    {recaptchaSiteKey && (
+      <script is:inline src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaSiteKey}`}></script>
+    )}
+  </Fragment>
   <div class="w-full bg-white pb-24">
     <!-- Contact Form Section -->
     <section class="container-e5 py-20">
@@ -26,6 +32,13 @@ const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
 
         <!-- Form -->
         <form class="space-y-6 mt-12">
+          <!-- Honeypot: positioned off-screen so real users never see or tab into it,
+               but bots parsing the DOM fill it in. The server discards any submission
+               that has it set. Costs nothing and needs no third-party service. -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label>Fax number <input type="text" name="faxNumber" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
           <!-- First Name and Last Name Row -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="relative">
@@ -189,6 +202,25 @@ const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
 </MainLayout>
 
 <script>
+  const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+
+  // Mirrors the RSVP form's approach. Resolves to an empty string when reCAPTCHA isn't
+  // configured or hasn't loaded; the server skips the check when it isn't configured,
+  // and rejects with a friendly message when it is.
+  function getRecaptchaToken(action: string): Promise<string> {
+    return new Promise((resolve) => {
+      const grecaptcha = (window as any).grecaptcha;
+      if (!RECAPTCHA_SITE_KEY || !grecaptcha?.enterprise) return resolve('');
+      grecaptcha.enterprise.ready(async () => {
+        try {
+          resolve(await grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action }));
+        } catch {
+          resolve('');
+        }
+      });
+    });
+  }
+
   // Handle form submission
   const form = document.querySelector('form');
   if (form) {
@@ -215,6 +247,8 @@ const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
           zipCode: formData.get('zipCode'),
           message: formData.get('message'),
           smsConsent: formData.get('smsConsent') === 'on',
+          faxNumber: formData.get('faxNumber'),
+          recaptchaToken: await getRecaptchaToken('contact_submit'),
         };
 
         // Send to webhook API

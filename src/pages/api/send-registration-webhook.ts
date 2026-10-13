@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { verifyRecaptcha, isHoneypotFilled } from '@/core/utils/formVerification';
 
 // Mark this page as server-rendered
 export const prerender = false;
@@ -27,6 +28,17 @@ export const POST: APIRoute = async ({ request }) => {
       purchaseLocation
     } = body;
 
+    // Honeypot: a field hidden from real users that bots fill because it's in the DOM.
+    // Answer 200 so the bot believes it succeeded and doesn't retry another way, but
+    // drop the submission on the floor.
+    if (isHoneypotFilled(body.faxNumber)) {
+      console.warn('[forms] registration submission rejected: honeypot filled');
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     console.log('Received registration data:', { firstName, lastName, email, wheelModel });
 
     // Validate required fields
@@ -37,6 +49,14 @@ export const POST: APIRoute = async ({ request }) => {
           status: 400,
           headers: { 'Content-Type': 'application/json' },
         }
+      );
+    }
+
+    // No city/state on this form, so reCAPTCHA and the honeypot are the defences here.
+    if (!(await verifyRecaptcha(body.recaptchaToken, 'registration_submit'))) {
+      return new Response(
+        JSON.stringify({ error: 'Something went wrong. Please try again.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 

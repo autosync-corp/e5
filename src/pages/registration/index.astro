@@ -1,8 +1,15 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <MainLayout title="E5 Wheels - Wheel Registration" noindex={true}>
+  <Fragment slot="head">
+    {recaptchaSiteKey && (
+      <script is:inline src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaSiteKey}`}></script>
+    )}
+  </Fragment>
   <div class="w-full bg-white">
     <!-- Header Section -->
     <section class="py-20">
@@ -26,6 +33,13 @@ import MainLayout from '@/layouts/MainLayout.astro';
     <section class="pb-20">
       <div class="max-w-[1300px] mx-auto px-6">
         <form class="max-w-[1048px] mx-auto space-y-12">
+          <!-- Honeypot: positioned off-screen so real users never see or tab into it,
+               but bots parsing the DOM fill it in. The server discards any submission
+               that has it set. Costs nothing and needs no third-party service. -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label>Fax number <input type="text" name="faxNumber" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
           <!-- Your Info Section -->
           <div>
             <h2 class="text-[18px] md:text-[20px] lg:text-[22px] xl:text-[24px] font-franklin-demi text-black tracking-[2.16px] md:tracking-[2.4px] lg:tracking-[2.64px] xl:tracking-[2.88px] uppercase mb-6">
@@ -303,6 +317,25 @@ import MainLayout from '@/layouts/MainLayout.astro';
 </MainLayout>
 
 <script>
+  const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+
+  // Mirrors the RSVP form's approach. Resolves to an empty string when reCAPTCHA isn't
+  // configured or hasn't loaded; the server skips the check when it isn't configured,
+  // and rejects with a friendly message when it is.
+  function getRecaptchaToken(action: string): Promise<string> {
+    return new Promise((resolve) => {
+      const grecaptcha = (window as any).grecaptcha;
+      if (!RECAPTCHA_SITE_KEY || !grecaptcha?.enterprise) return resolve('');
+      grecaptcha.enterprise.ready(async () => {
+        try {
+          resolve(await grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action }));
+        } catch {
+          resolve('');
+        }
+      });
+    });
+  }
+
   // Handle form submission
   const form = document.querySelector('form');
   if (form) {
@@ -332,6 +365,8 @@ import MainLayout from '@/layouts/MainLayout.astro';
           color: formData.get('color'),
           wheelModel: formData.get('wheelModel'),
           purchaseLocation: formData.get('purchaseLocation'),
+          faxNumber: formData.get('faxNumber'),
+          recaptchaToken: await getRecaptchaToken('registration_submit'),
         };
 
         // Send to webhook API
