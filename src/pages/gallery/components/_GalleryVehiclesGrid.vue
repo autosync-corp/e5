@@ -8,6 +8,7 @@ import GalleryPageStyleSelector from "@/pages/gallery/components/_GalleryPageSty
 import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 import { useWheelApi } from "@/core/composables/useWheelApi";
+import { sortGalleryItems } from "@/pages/gallery/utils/sortGallery.ts";
 
 const detailedGallery = ref<boolean>(false);
 const filters = ref<{ model: string; trim: string; year: string }>({
@@ -18,6 +19,8 @@ const filters = ref<{ model: string; trim: string; year: string }>({
 
 // Read URL parameters and set initial filters
 onMounted(() => {
+  document.getElementById('gallery-ssr')?.setAttribute('hidden', '');
+
   const urlParams = new URLSearchParams(window.location.search);
   const generation = urlParams.get('generation');
   const trim = urlParams.get('trim');
@@ -134,31 +137,7 @@ const filteredVehicles = computed(() => {
     filtered = filtered.filter(item => item.year === filters.value.year);
   }
 
-  // Sort: pinned first, then recently added (by dateAdded desc),
-  // then by generation (C8 → C7 → C6 → C5), then by year (newest first)
-  const generationOrder: Record<string, number> = { 'C8': 1, 'C7': 2, 'C6': 3, 'C5': 4 };
-  filtered = [...filtered].sort((a, b) => {
-    // Pinned entries always come first
-    if (a.pinned && !b.pinned) return -1;
-    if (!a.pinned && b.pinned) return 1;
-
-    // Then entries with dateAdded come before entries without (most recent first)
-    if (a.dateAdded && !b.dateAdded) return -1;
-    if (!a.dateAdded && b.dateAdded) return 1;
-    if (a.dateAdded && b.dateAdded) {
-      return b.dateAdded.localeCompare(a.dateAdded);
-    }
-
-    // Then sort by generation
-    const genA = generationOrder[a.submodel || ''] || 999;
-    const genB = generationOrder[b.submodel || ''] || 999;
-    if (genA !== genB) return genA - genB;
-
-    // Within same generation, sort by year (newest first)
-    const yearA = parseInt(a.year || '0');
-    const yearB = parseInt(b.year || '0');
-    return yearB - yearA;
-  });
+  filtered = sortGalleryItems(filtered);
 
   return filtered.map(mapVehicleData);
 });

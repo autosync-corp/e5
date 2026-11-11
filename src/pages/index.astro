@@ -19,25 +19,59 @@ import {
     WHEELS_TALLADEGA_ROUTE
 } from "@/core/constants/Routes.ts";
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
-const description = 'Forged and flow-formed wheels exclusively engineered for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric design, made in the USA.';
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const title = 'E5 Wheels | Exclusively Engineered for Corvettes';
+const description = 'E5 Wheels designs forged and flow-formed wheels exclusively for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric, made in the USA.';
 const canonicalUrl = `${baseUrl}/`;
+const heroVideoId = '2zk8Sdi3Yh8';
 ---
 
-<MainLayout description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
   <div class="w-full h-full">
     <Hero>
-      <div style="position: relative; width: 100%; height: 94%; overflow: hidden;">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/2zk8Sdi3Yh8?autoplay=1&mute=1&loop=1&playlist=2zk8Sdi3Yh8&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440"
-          allowtransparency="true"
-          style="position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;"
-          allow="autoplay; encrypted-media"
-          loading="eager"
-          title="E5 Wheels Hero Video"
-        ></iframe>
+      <div
+        id="e5-hero-video"
+        data-youtube-id={heroVideoId}
+        style={`position: relative; width: 100%; height: 94%; overflow: hidden; background: #000 url('/assets/images/hero-video-poster.jpg') center / cover no-repeat;`}
+      >
+        <img
+          src="/assets/images/hero-video-poster.jpg"
+          alt="E5 Wheels hero video"
+          width="1280"
+          height="720"
+          fetchpriority="high"
+          decoding="async"
+          style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); object-fit: cover; pointer-events: none;"
+        />
       </div>
     </Hero>
+    <script is:inline>
+      (function () {
+        var host = document.getElementById('e5-hero-video');
+        if (!host) return;
+        var videoId = host.getAttribute('data-youtube-id');
+        if (!videoId) return;
+        function loadHeroVideo() {
+          if (host.getAttribute('data-loaded')) return;
+          host.setAttribute('data-loaded', '1');
+          var iframe = document.createElement('iframe');
+          iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440';
+          iframe.setAttribute('allowtransparency', 'true');
+          iframe.setAttribute('allow', 'autoplay; encrypted-media');
+          iframe.setAttribute('title', 'E5 Wheels Hero Video');
+          iframe.setAttribute('loading', 'lazy');
+          iframe.style.cssText = 'position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;';
+          host.appendChild(iframe);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+        } else if (document.readyState === 'complete') {
+          loadHeroVideo();
+        } else {
+          window.addEventListener('load', loadHeroVideo);
+        }
+      })();
+    </script>
 
     <section class="container-e5 text-center mt-8 mb-20">
       <div>
