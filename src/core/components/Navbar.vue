@@ -163,7 +163,7 @@ const closeMiniCart = () => {
 
           <!-- Gallery Dropdown -->
           <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
-            <a :href="GALLERY_ROUTE" class="nav-link" :class="{'selected': isGalleryRoute}" aria-label="Gallery">
+            <a :href="GALLERY_VEHICLES_ROUTE" class="nav-link" :class="{'selected': isGalleryRoute}" aria-label="Gallery">
               GALLERY
               <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -321,7 +321,7 @@ const closeMiniCart = () => {
         <!-- Gallery Submenu for Mobile -->
         <div class="mobile-submenu">
           <div class="flex items-center gap-2">
-            <a :href="GALLERY_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">
+            <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">
               GALLERY
             </a>
             <button @click="toggleGalleryDropdown" class="text-white p-1" aria-label="Toggle Gallery submenu">

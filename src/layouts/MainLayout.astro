@@ -19,7 +19,7 @@ export interface Props {
 const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 
 const {
-  title = 'E5 Wheels - Exclusively Engineered for Corvettes',
+  title = 'E5 Wheels | Exclusively Engineered for Corvettes',
   description,
   canonical,
   ogImage = `${siteUrl}/assets/images/vette-black-on-river.webp`,
@@ -48,21 +48,18 @@ const fbPixelId = tracking.fbPixelId || '';
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  data-ga-id={gaId || undefined}
+  data-gtm-id={gtmId || undefined}
+  data-fb-pixel-id={fbPixelId || undefined}
+>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Tag Manager -->
-    {gtmId && <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`} />}
-
-    <!-- Google Analytics -->
-    {gaId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />}
-    {gaId && <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`} />}
-
-    <!-- Facebook Pixel -->
-    {fbPixelId && <script is:inline set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${fbPixelId}');fbq('track','PageView');`} />}
-    {fbPixelId && <noscript set:html={`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${fbPixelId}&ev=PageView&noscript=1"/>`} />}
+    <!-- gtag stub queues events immediately; gtag.js / GTM / pixel / blog fonts load after idle via /js/e5-defer.js -->
+    {gaId && <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${gaId}');`} />}
     <link rel="icon" type="image/webp" href="/assets/images/e5-logo-short.webp">
     <link rel="icon" type="image/png" href="/assets/images/e5-logo-short.png">
     <link rel="apple-touch-icon" href="/assets/images/e5-logo-short.png">
@@ -70,7 +67,7 @@ const fbPixelId = tracking.fbPixelId || '';
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script is:inline src="/js/e5-defer.js" defer></script>
 
     <!-- SEO Meta Tags -->
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
@@ -128,9 +125,17 @@ const fbPixelId = tracking.fbPixelId || '';
         "https://www.tiktok.com/@e5wheels"
       ]
     })}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "E5 Wheels",
+      "alternateName": ["e5 wheels", "e5wheels"],
+      "url": siteUrl
+    })}></script>
   </head>
   <body>
     {gtmId && <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />}
+    {fbPixelId && <noscript set:html={`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${fbPixelId}&ev=PageView&noscript=1"/>`} />}
     <script is:inline>
       document.addEventListener('click', function(e) {
         var el = e.target.closest('[data-gtm-event]');
@@ -150,7 +155,7 @@ const fbPixelId = tracking.fbPixelId || '';
       </main>
     </div>
     <Footer client:visible transition:persist/>
-    <LiveChat client:load />
+    <LiveChat client:idle />
   </body>
 </html>
 

@@ -60,7 +60,7 @@ const buildDescription = () => {
 const description = buildDescription();
 
 // Build canonical URL
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
 const canonicalUrl = `${baseUrl}/gallery/${vehicleData.galleryId}`;
 
 // Helper function to get media items from the vehicle data
@@ -203,6 +203,13 @@ const corvetteGalleryImages = corvetteGalleryData
       <h1 class="text-2xl md:text-3xl lg:text-4xl font-franklin-heavy uppercase tracking-[2px] text-black mb-6">
         {vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`} with {wheelDesc}
       </h1>
+      {(vehicleData.partF || vehicleData.wheelPartR) && (
+        <p class="text-lg text-black opacity-70 tracking-wide leading-[30px] mb-6">
+          {vehicleData.partF && <span>Front: {vehicleData.partF}</span>}
+          {vehicleData.partF && vehicleData.wheelPartR && <span> · </span>}
+          {vehicleData.wheelPartR && <span>Rear: {vehicleData.wheelPartR}</span>}
+        </p>
+      )}
       <div class="flex items-start justify-between mb-8">
         <div></div>
         <div class="text-right">

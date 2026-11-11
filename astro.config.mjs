@@ -3,6 +3,7 @@ import vue from '@astrojs/vue';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import { getSitemapLastmod } from './src/core/constants/sitemapLastmod.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,6 +27,7 @@ export default defineConfig({
           '/visualizer-callback',
           '/registration/',
           '/shop/single-product',
+          '/e5-visualizer',
         ];
         return !excludePaths.some(p => page.includes(p));
       },
@@ -70,8 +72,12 @@ export default defineConfig({
         if (item.url.endsWith('/') && item.url !== 'https://www.e5wheels.com/') {
           item.url = item.url.slice(0, -1);
         }
-        // Add lastmod (set to build date for all entries — best signal Google sees)
-        item.lastmod = new Date().toISOString();
+        const lastmod = getSitemapLastmod(item.url);
+        if (lastmod) {
+          item.lastmod = lastmod;
+        } else {
+          delete item.lastmod;
+        }
         return item;
       },
     }),
