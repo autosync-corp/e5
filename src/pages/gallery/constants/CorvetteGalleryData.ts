@@ -45,7 +45,7 @@ export const corvetteGalleryData: CorvetteGalleryItem[] = [
     "submodel": "C8",
     "trim": "Stingray",
     "vehicleColor": "Blue",
-    "vehicleTitle": "2025 C8 Stingray Blue Sebring Gloss Black",
+    "vehicleTitle": "2025 C8 Stingray Blue",
     "wheelStyle": "Sebring",
     "wheelFinish": "Gloss Black",
     "wheelSizeF": "20\" x 9\"",
