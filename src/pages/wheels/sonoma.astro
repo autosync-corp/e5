@@ -13,16 +13,25 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import {
+    SHOP_ROUTE,
+    GENERATIONS_C8_ROUTE,
+    GENERATIONS_C8_Z06_ROUTE,
+    GENERATIONS_C8_ZR1_ROUTE,
+    GENERATIONS_C8_E_RAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const brushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
+const shopSonomaUrl = `${SHOP_ROUTE}?series=${SONOMA_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
-const title = 'Sonoma - E5 Forged Corvette Wheels | E5 Wheels';
-const description = 'The Sonoma features a refined performance-focused mesh profile, fully forged and weight-optimized. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 3 premium finishes.';
+const title = 'Sonoma Fully Forged Corvette Wheels (C8) | E5 Wheels';
+const description = 'Sonoma fully forged wheels (C8 Z06, ZR1, E-Ray) with Corvette-only 20x10 +25mm / 21x13 +20mm fitment. Brushed aluminum, gloss black, titanium, and bronze.';
 const canonicalUrl = `${baseUrl}/wheels/sonoma`;
+const ogImage = `${baseUrl}${SONOMA_HERO_IMAGE}`;
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -51,7 +60,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -80,12 +89,12 @@ const breadcrumbSchema = JSON.stringify({
 
             <!-- Page Title -->
             <h1 class="text-[16px] md:text-[20px] lg:text-[24px] font-sans tracking-[6px] md:tracking-[9px] lg:tracking-[12.8px] text-black mb-8">
-                SONOMA E5 FORGED WHEELS
+                SONOMA FULLY FORGED CORVETTE WHEELS (C8)
             </h1>
 
             <!-- Description Text -->
             <p class="text-[14px] md:text-[17px] leading-[20px] md:leading-[24px] text-black/70 mb-4 max-w-[700px]">
-                The Sonoma expands our E5 Forged Series with a refined, performance-focused mesh profile that's fully forged, weight-optimized, and Made in the USA. Designed with precision-cut pocketing and a clean, elevated aesthetic, it brings both visual clarity and driving precision.
+                Sonoma fully forged wheels are made in the USA for <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a> <a href={GENERATIONS_C8_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a>, <a href={GENERATIONS_C8_ZR1_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">ZR1</a>, and <a href={GENERATIONS_C8_E_RAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">E-Ray</a>&mdash;hub-centric 20x10 +25mm front and 21x13 +20mm rear. Shop brushed aluminum, gloss black, titanium brushed tint, and bronze in the <a href={shopSonomaUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
             </p>
 
             <!-- Exclusively Forged For -->
