@@ -1,6 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    WHEELS_DAYTONA_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
@@ -21,21 +28,23 @@ const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint'
 const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
 const baseUrl = SITE_URL;
-const title = 'C7 Stingray Wheels (2014-2019) - Form Forged | E5 Wheels';
-const description = 'Form Forged wheels for C7 Stingray Corvette (2014-2019). Precision-engineered for the LT1 455hp platform. Staggered sizing, hub-centric fitment, multiple finishes.';
+const title = 'C7 Stingray Wheels (2014–2019) | E5 Wheels';
+const description = 'C7 Stingray wheels (2014-2019) with Corvette-only 19x9.5 +53mm / 20x11 +76mm fitment. Daytona, Sebring, and Speedway in gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/generations/c7/c7-stingray`;
+const ogImage = `${baseUrl}/assets/images/generations/c7/stingray/7421e74de44ad9760f99063e35898960a06a4f63.webp`;
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "C7 Corvette", "item": `${baseUrl}/generations/c7` },
-    { "@type": "ListItem", "position": 3, "name": "C7 Stingray", "item": canonicalUrl }
+    { "@type": "ListItem", "position": 2, "name": "Generations", "item": `${baseUrl}${GENERATIONS_ROUTE}` },
+    { "@type": "ListItem", "position": 3, "name": "C7", "item": `${baseUrl}/generations/c7` },
+    { "@type": "ListItem", "position": 4, "name": "Stingray", "item": canonicalUrl }
   ]
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
@@ -54,10 +63,10 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
             <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                Custom C7 Corvette Stingray Wheels
+                C7 Stingray Wheels (2014&ndash;2019)
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                Unlike universal fitments, every E5 wheel is specifically designed around the C7 platform&mdash;its offsets, brake clearance, and body lines. The fitment is aggressive yet refined, amplifying the Stingray's naturally muscular stance while keeping comfort uncompromised. Whether it's your daily drive or a track-built setup, these wheels deliver performance that meets the legend they were made for.
+                C7 Stingray wheels (2014&ndash;2019) are Form Forged for Corvette-only fitment&mdash;hub-centric 19x9.5 +53mm front and 20x11 +76mm rear. Choose <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, or <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> in gloss black, bronze brushed tint, and titanium brushed tint, or browse Stingray builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7&trim=Stingray`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
             </p>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED SERIES FOR C7 CORVETTES

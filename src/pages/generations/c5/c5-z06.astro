@@ -1,6 +1,11 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    WHEELS_DAYTONA_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
@@ -14,21 +19,23 @@ const daytonaTitaniumUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed',
 const daytonaBronzeUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C5', 'Z06', '18" x 10" +58mm', '19" x 11" +59mm');
 
 const baseUrl = SITE_URL;
-const title = 'C5 Z06 Corvette Wheels (2001-2004) - Form Forged | E5 Wheels';
-const description = 'Form Forged wheels engineered for C5 Z06 Corvette (2001-2004). Precision fitment for the 385hp LS6 platform. Multiple sizes, finishes, and styles available.';
+const title = 'C5 Z06 Wheels (2001–2004) | E5 Wheels';
+const description = 'C5 Z06 wheels (2001-2004) with Corvette-only 18x10 +58mm / 19x11 +59mm Form Forged fitment. Daytona in gloss black, bronze brushed tint, and titanium.';
 const canonicalUrl = `${baseUrl}/generations/c5/c5-z06`;
+const ogImage = `${baseUrl}/assets/images/generations/c5/z06-updated/76e661b873c8acdfb076c02ad1ca15b4ba8974d5.webp`;
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "C5 Corvette", "item": `${baseUrl}/generations/c5` },
-    { "@type": "ListItem", "position": 3, "name": "C5 Z06", "item": canonicalUrl }
+    { "@type": "ListItem", "position": 2, "name": "Generations", "item": `${baseUrl}${GENERATIONS_ROUTE}` },
+    { "@type": "ListItem", "position": 3, "name": "C5", "item": `${baseUrl}/generations/c5` },
+    { "@type": "ListItem", "position": 4, "name": "Z06", "item": canonicalUrl }
   ]
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
@@ -47,10 +54,10 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
             <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                Custom C5 Corvette Z06 Wheels
+                C5 Z06 Wheels (2001&ndash;2004)
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                The passion for the C5 never faded &mdash; and neither should the support. Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility without compromise. Exclusively built for Corvettes, every design aligns with the car's stance, performance, and unmistakable identity.
+                C5 Z06 wheels (2001&ndash;2004) are Form Forged for Corvette-only fitment&mdash;hub-centric 18x10 +58mm front and 19x11 +59mm rear. Shop <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a> in gloss black, bronze brushed tint, and titanium brushed tint, or browse Z06 builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5&trim=Z06`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
             </p>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FITMENT FOR C5 CORVETTES

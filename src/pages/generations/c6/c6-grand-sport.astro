@@ -1,6 +1,13 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    WHEELS_DAYTONA_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
@@ -26,21 +33,23 @@ const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 
 const speedwayDarkBronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 
 const baseUrl = SITE_URL;
-const title = 'C6 Grand Sport Wheels (2010-2013) - Form Forged | E5 Wheels';
-const description = 'Form Forged wheels for C6 Grand Sport Corvette (2010-2013). Engineered for widebody fitment and the LS3 430hp platform. Staggered sizes, multiple finishes available.';
+const title = 'C6 Grand Sport Wheels (2010–2013) | E5 Wheels';
+const description = 'C6 Grand Sport wheels (2010-2013) with Corvette-only 19x10 +30mm / 20x12 +50mm fitment. Daytona, Sebring, and Speedway in gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/generations/c6/c6-grand-sport`;
+const ogImage = `${baseUrl}/assets/images/generations/c6/grand-sport-figma-new/ebd9666fb80be2e2e27be771428f3fc1ea0e0241.webp`;
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "C6 Corvette", "item": `${baseUrl}/generations/c6` },
-    { "@type": "ListItem", "position": 3, "name": "C6 Grand Sport", "item": canonicalUrl }
+    { "@type": "ListItem", "position": 2, "name": "Generations", "item": `${baseUrl}${GENERATIONS_ROUTE}` },
+    { "@type": "ListItem", "position": 3, "name": "C6", "item": `${baseUrl}/generations/c6` },
+    { "@type": "ListItem", "position": 4, "name": "Grand Sport", "item": canonicalUrl }
   ]
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
@@ -59,10 +68,10 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
             <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                Custom C6 Corvette Grand Sport Wheels
+                C6 Grand Sport Wheels (2010&ndash;2013)
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                Born from the bridge between street presence and track capability, the C6 Grand Sport demands more than a generic fitment. Our Form Forged Series is engineered around its wider stance and performance intent, using flow-formed construction rooted in forged DNA to deliver strength, reduced weight, and daily drivability. Exclusively designed for Corvettes, each wheel sharpens the Grand Sport's proportions, handling confidence, and unmistakable character.
+                C6 Grand Sport wheels (2010&ndash;2013) are Form Forged for Corvette-only widebody fitment&mdash;hub-centric 19x10 +30mm front and 20x12 +50mm rear. Choose <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, or <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> in gloss black, bronze brushed tint, and titanium brushed tint, or browse Grand Sport builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C6&trim=Grand Sport`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
             </p>
         </section>
 
