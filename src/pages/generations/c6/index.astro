@@ -1,7 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from "@/core/components/Button.vue";
-import {GALLERY_VEHICLES_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    GENERATIONS_C6_GRAND_SPORT_ROUTE,
+    WHEELS_DAYTONA_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
@@ -27,16 +34,19 @@ const daytonaGlossBlackAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black',
 const daytonaTitaniumBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 const daytonaBronzeBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
-const title = 'C6 Corvette Wheels (2005-2013) - Form Forged Series | E5 Wheels';
-const description = 'Shop Form Forged wheels for C6 Corvette (2005-2013). Engineered for Base, Z06, ZR1, and Grand Sport models. Hub-centric fitment, multiple finishes and sizes available.';
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const title = 'C6 Corvette Wheels (2005–2013) | E5 Wheels';
+const description = 'E5 C6 Corvette wheels for 2005–2013 Base, Z06, ZR1, and Grand Sport. Hub-centric Daytona and Sebring fitment, 19"/20" sizes, and Corvette-only finishes.';
 const canonicalUrl = `${baseUrl}/generations/c6`;
+const c6GalleryUrl = `${GALLERY_VEHICLES_ROUTE}?generation=c6`;
+const introLinkClass = 'underline decoration-black/30 underline-offset-[6px] hover:text-e5-red hover:decoration-e5-red transition-colors';
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "C6 Corvette", "item": canonicalUrl }
+    { "@type": "ListItem", "position": 2, "name": "Generations", "item": `${baseUrl}${GENERATIONS_ROUTE}` },
+    { "@type": "ListItem", "position": 3, "name": "C6", "item": canonicalUrl }
   ]
 });
 ---
@@ -51,7 +61,7 @@ const breadcrumbSchema = JSON.stringify({
             <div class="absolute inset-0">
                 <img
                     src="/assets/images/generations/c6/19e3d04f39bacd3cde7701e9583418f945235fb5.webp"
-                    alt="C6 Corvette"
+                    alt="C6 Corvette with E5 wheels"
                     class="w-full h-full object-cover"
                 />
             </div>
@@ -60,10 +70,19 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
             <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                Custom C6 Corvette Wheels
+                C6 Corvette Wheels
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                The passion for the C6 runs deep&mdash;and the support should match it. Built for the C6 base model, our Form Forged Series blends forged DNA with flow-formed construction to deliver strength, reduced weight, and everyday drivability. Exclusively engineered for Corvettes, each design complements the C6's proportions, performance character, and timeless identity.
+                E5 C6 Corvette wheels are hub-centric and engineered only for Corvettes, covering 2005–2013 Base, Z06, ZR1, and Grand Sport. Shop
+                <a href={WHEELS_DAYTONA_ROUTE} class={introLinkClass}>Daytona</a>,
+                <a href={WHEELS_SEBRING_ROUTE} class={introLinkClass}>Sebring</a>,
+                and
+                <a href={WHEELS_SPEEDWAY_ROUTE} class={introLinkClass}>Speedway</a>
+                in staggered 19&quot;/20&quot; sizes&mdash;Base 19&quot; x 9.5&quot; +53mm / 20&quot; x 11&quot; +76mm; Grand Sport and Z06 19&quot; x 10&quot; +30mm / 20&quot; x 12&quot; +50mm&mdash;in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint, and Dark Bronze. See customer cars in the
+                <a href={c6GalleryUrl} class={introLinkClass}>C6 gallery</a>
+                and on the
+                <a href={GENERATIONS_C6_GRAND_SPORT_ROUTE} class={introLinkClass}>C6 Grand Sport</a>
+                page.
             </p>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED FOR C6 CORVETTES
