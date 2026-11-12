@@ -10,6 +10,7 @@ import {
     SEBRING_LOGO,
     SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Shop URLs with proper sizes (Z06 uses: 19x10 +30mm / 20x12 +50mm)
 const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -21,7 +22,7 @@ const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C
 const sebringGlossBlackDetailUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
 const sebringTitaniumUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed', 'C7', 'Z06', '19" x 10" +30mm', '20" x 12" +50mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C7 Z06 Wheels (2015-2019) - Form Forged | E5 Wheels';
 const description = 'Form Forged wheels for C7 Z06 Corvette (2015-2019). Precision-engineered for the supercharged LT4 650hp platform. Staggered sizing, hub-centric fitment.';
 const canonicalUrl = `${baseUrl}/generations/c7/c7-z06`;

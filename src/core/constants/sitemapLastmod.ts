@@ -1,6 +1,7 @@
 import { corvetteGalleryData } from '../../pages/gallery/constants/CorvetteGalleryData.ts';
+import { SITE_URL } from './Site.ts';
 
-const SITE = 'https://www.e5wheels.com';
+const SITE = SITE_URL;
 
 /** Known content dates for URLs this change actually updates. Dates are YYYY-MM-DD. */
 const PAGE_LASTMOD: Record<string, string> = {

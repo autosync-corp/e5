@@ -35,6 +35,7 @@ import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE, PROCESS_FORM_FORGED_ROUTE} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const glossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black');
@@ -42,7 +43,7 @@ const titaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed')
 const bronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint');
 const shopDaytonaUrl = `${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`;
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Daytona - Form Forged Corvette Wheels | E5 Wheels';
 const description = 'Lightest wheel in our Form Forged Series. 10-spoke design with bold deep profile, exclusively engineered for Corvette C5, C6, C7, and C8.';
 const canonicalUrl = `${baseUrl}/wheels/daytona`;

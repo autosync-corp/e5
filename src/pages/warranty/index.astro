@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = '5-Year Warranty - Corvette Wheel Warranty | E5 Wheels';
 const description = 'E5 Wheels 5-year warranty coverage for all Corvette wheels. Comprehensive protection against manufacturing defects on E5 Forged and Form Forged wheels.';
 const canonicalUrl = `${baseUrl}/warranty`;

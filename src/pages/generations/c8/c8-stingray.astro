@@ -17,6 +17,7 @@ import {
     SPEEDWAY_LOGO,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Top section URLs (matches CuratedFitments.ts's C8 Stingray/Base 19" option: 19x9+35mm / 20x11+45mm)
 const speedwayTopUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
@@ -28,7 +29,7 @@ const daytonaDetailUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', '
 const sebringDetailUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
 const speedwayDetailUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '20" x 9" +35mm', '21" x 12" +52mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C8 Stingray Wheels (2020–2026) | E5 Wheels';
 const description = 'C8 Stingray wheels (2020–2026) with Corvette-only 19x9 / 20x11 Form Forged fitment. Daytona, Sebring, and Speedway in gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/generations/c8/c8-stingray`;

@@ -10,6 +10,7 @@ import {
     SPEEDWAY_LOGO,
     SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Shop URLs with proper sizes (Grand Sport uses first detail section sizes: 19" x 10" +30mm / 20" x 12" +50mm)
 const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -24,7 +25,7 @@ const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C
 const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 const speedwayDarkBronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C6 Grand Sport Wheels (2010-2013) - Form Forged | E5 Wheels';
 const description = 'Form Forged wheels for C6 Grand Sport Corvette (2010-2013). Engineered for widebody fitment and the LS3 430hp platform. Staggered sizes, multiple finishes available.';
 const canonicalUrl = `${baseUrl}/generations/c6/c6-grand-sport`;

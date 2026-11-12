@@ -13,12 +13,13 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const brushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Sonoma - E5 Forged Corvette Wheels | E5 Wheels';
 const description = 'The Sonoma features a refined performance-focused mesh profile, fully forged and weight-optimized. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 3 premium finishes.';
 const canonicalUrl = `${baseUrl}/wheels/sonoma`;

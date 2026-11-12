@@ -9,6 +9,7 @@ import Button from "@/core/components/Button.vue";
 import VehicleWheelDetails from "@/pages/gallery/components/_VehicleWheelDetails.vue";
 import WheelGalleryImages from "@/pages/gallery/components/_WheelGalleryImages.vue";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 export const prerender = true;
 
@@ -60,7 +61,7 @@ const buildDescription = () => {
 const description = buildDescription();
 
 // Build canonical URL
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}/gallery/${vehicleData.galleryId}`;
 
 // Helper function to get media items from the vehicle data

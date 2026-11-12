@@ -1,8 +1,9 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import { WHEELS_SEBRING_ROUTE, WHEELS_DAYTONA_ROUTE, WHEELS_SPEEDWAY_ROUTE } from '@/core/constants/Routes';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Form Forged Series Process - Flow-Formed Corvette Wheels | E5 Wheels';
 const description = 'Discover our Form Forged manufacturing process. Flow-formed construction with forged DNA for C5, C6, C7, and C8 Corvettes. Superior strength-to-weight ratio at accessible pricing.';
 const canonicalUrl = `${baseUrl}/process/form-forged`;

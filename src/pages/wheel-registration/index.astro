@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Wheel Registration - Activate Your Warranty | E5 Wheels';
 const description = 'Register your E5 wheels to activate warranty coverage. Complete the registration form with your wheel details and vehicle information for warranty protection.';
 const canonicalUrl = `${baseUrl}/wheel-registration`;

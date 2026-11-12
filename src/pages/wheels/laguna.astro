@@ -22,6 +22,7 @@ import {
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import { HOME_ROUTE, PROCESS_FORGED_ROUTE, GALLERY_WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE } from "@/core/constants/Routes.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const brushedAluminumUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Brushed Aluminum');
@@ -31,7 +32,7 @@ const glossBlackUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Gloss Black');
 const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
 const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Laguna - E5 Forged Corvette Wheels | E5 Wheels';
 const description = 'The Laguna is a fully forged wheel featuring a bold multi-spoke design. Exclusively forged in the USA for the C8 Corvette platform. 4 premium finishes available.';
 const canonicalUrl = `${baseUrl}/wheels/laguna`;

@@ -14,6 +14,7 @@ import {
   GT03_BRUSHED_ALUMINUM, GT03_GLOSS_BLACK, GT03_SATIN_BLACK,
   GT04_BRUSHED_ALUMINUM, GT04_GLOSS_BLACK, GT04_SATIN_BLACK,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Get URL parameters from path
 const { series, finish } = Astro.params;
@@ -52,7 +53,7 @@ if (parsedUrl.generation || parsedUrl.trim) {
 description += '. Precision-engineered fitment, hub-centric design. Available in multiple sizes and finishes. Made in USA.';
 
 // Build canonical URL - always points to base product page
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}/shop/${series}/${finish}`;
 
 // Pass parameters to component as props
