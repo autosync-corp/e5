@@ -1,6 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import {WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    WHEELS_TALLADEGA_ROUTE,
+    WHEELS_SONOMA_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     TALLADEGA_LOGO,
@@ -15,22 +21,24 @@ const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 const sonomaShopUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
 const talladegaShopUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
-const title = 'C8 ZR1 Wheels (2025+) - E5 Forged | E5 Wheels';
-const description = 'E5 Forged wheels for C8 ZR1 (2025+). Fully forged in USA for the twin-turbo LT7 1064hp platform. Ultimate strength-to-weight ratio. 5 premium finishes.';
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const title = 'C8 ZR1 Wheels (2025–2026) | E5 Wheels';
+const description = 'C8 ZR1 wheels (2025–2026) with Corvette-only 20x10.5 +25mm / 21x13 +20mm forged fitment. Talladega and Sonoma, forged in the USA, in brushed aluminum.';
 const canonicalUrl = `${baseUrl}/generations/c8/c8-zr1`;
+const ogImage = `${baseUrl}/assets/images/generations/c8/zr1-figma/eda905a44366020603e226a9f33a6ee123371b79.webp`;
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "C8 Corvette", "item": `${baseUrl}/generations/c8` },
-    { "@type": "ListItem", "position": 3, "name": "C8 ZR1", "item": canonicalUrl }
+    { "@type": "ListItem", "position": 2, "name": "Generations", "item": `${baseUrl}${GENERATIONS_ROUTE}` },
+    { "@type": "ListItem", "position": 3, "name": "C8", "item": `${baseUrl}/generations/c8` },
+    { "@type": "ListItem", "position": 4, "name": "ZR1", "item": canonicalUrl }
   ]
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
@@ -48,10 +56,10 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Main Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
             <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                Custom C8 Corvette ZR1 Wheels
+                C8 ZR1 Wheels (2025&ndash;2026)
             </h1>
             <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4">
-                The C8 ZR1 represents the pinnacle of American performance engineering&mdash;a street-legal supercar built to dominate both the track and the road. Every E5 Forged wheel for the ZR1 is precision-engineered to complement its extreme aerodynamics, carbon-ceramic braking system, and track-focused suspension geometry. Designed for those who demand the absolute best, these wheels deliver uncompromising strength, reduced unsprung weight, and fitment that enhances the ZR1's aggressive stance without sacrificing control or precision.
+                C8 ZR1 wheels (2025&ndash;2026) are E5 Forged for Corvette-only fitment&mdash;hub-centric 20x10.5 +25mm front and 21x13 +20mm rear. Choose <a href={WHEELS_TALLADEGA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Talladega</a> or <a href={WHEELS_SONOMA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sonoma</a> in brushed aluminum, or browse ZR1 builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=ZR1`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
             </p>
         </section>
 
