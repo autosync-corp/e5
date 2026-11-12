@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'About E5 Wheels - The Fifth Element of Corvette Performance';
 const description = 'E5 Wheels brings 40+ years of wheel industry excellence to Corvette enthusiasts. Forged wheels exclusively engineered for C5, C6, C7, and C8 Corvettes.';
 const canonicalUrl = `${baseUrl}/about-us`;
@@ -153,7 +154,7 @@ const ogImage = `${baseUrl}/assets/images/vette-black-on-river.webp`;
             E5 Wheels | Doral, Florida
           </p>
           <p class="text-black/70 text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] leading-[24px] md:leading-[28px]">
-            305-964-7429 | <a href="https://e5wheels.com" class="text-[#d31d25] hover:underline">e5wheels.com</a>
+            305-964-7429 | <a href={SITE_URL} class="text-[#d31d25] hover:underline">e5wheels.com</a>
           </p>
         </div>
       </div>

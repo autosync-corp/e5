@@ -39,13 +39,15 @@ import {
     SHOP_ROUTE,
     PROCESS_FORM_FORGED_ROUTE
 } from "@/core/constants/Routes.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
+
 // Build product URLs
 const glossBlackUrl = '/shop/sebring-2p/black';
 const darkBronzeUrl = '/shop/sebring-2p/bronze-black-lip';
 const titaniumBrushedUrl = '/shop/sebring-2p/titanium-black-lip';
 const shopSebring2pUrl = `${SHOP_ROUTE}?series=${SEBRING_2P_BRAND_NAME}`;
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Sebring 2P - Form Forged Two-Piece Corvette Wheels | E5 Wheels';
 const description = 'The Sebring 2-Piece is the evolution of our most popular Form Forged design &mdash; reimagined in a true two-piece configuration with a distinct outer lip. Exclusively engineered for the C8 Corvette platform.';
 const canonicalUrl = `${baseUrl}/wheels/sebring-2p`;

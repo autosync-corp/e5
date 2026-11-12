@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Become a Dealer - E5 Wheels Vendor Registration | E5 Wheels';
 const description = 'Join the E5 Wheels dealer network. Apply to become an authorized dealer and offer premium Corvette wheels to your customers. Competitive pricing and support.';
 const canonicalUrl = `${baseUrl}/vendor-registration`;

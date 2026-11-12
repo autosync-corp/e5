@@ -16,6 +16,7 @@ import {
     SEBRING_LOGO,
     SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // URL variables for different sections
 // Daytona detail section (19" x 9.5" +53mm / 20" x 11" +76mm)
@@ -34,7 +35,7 @@ const daytonaGlossBlackAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black',
 const daytonaTitaniumBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 const daytonaBronzeBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C6 Corvette Wheels (2005–2013) | E5 Wheels';
 const description = 'E5 C6 Corvette wheels for 2005–2013 Base, Z06, ZR1, and Grand Sport. Hub-centric Daytona and Sebring fitment, 19"/20" sizes, and Corvette-only finishes.';
 const canonicalUrl = `${baseUrl}/generations/c6`;

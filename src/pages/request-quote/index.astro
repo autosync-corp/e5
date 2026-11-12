@@ -1,5 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Reached from the visualizers (/visualizer, /e5-visualizer) when the
 // wheel/finish/vehicle combo someone is looking at doesn't have a real
@@ -7,7 +8,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 // on-page summary text and pre-fill the embedded GHL form below via its
 // field keys (snake_case, except the vehicle field which the form calls
 // just "corvette").
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Request a Quote - E5 Wheels';
 const description = 'Request a custom quote for E5 Wheels not yet available in our online shop.';
 const canonicalUrl = `${baseUrl}/request-quote`;

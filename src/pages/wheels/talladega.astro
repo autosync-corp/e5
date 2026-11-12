@@ -13,12 +13,13 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const brushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
 const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Talladega - E5 Forged Corvette Wheels | E5 Wheels';
 const description = 'The Talladega is a fully forged wheel featuring bold split Y-spoke design. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 5 premium finishes available.';
 const canonicalUrl = `${baseUrl}/wheels/talladega`;

@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 const { slug } = Astro.params;
 
@@ -19,7 +20,7 @@ const formattedDate = new Date(post.data.date).toLocaleDateString('en-US', {
 });
 
 const isoDate = new Date(post.data.date).toISOString();
-const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const siteUrl = SITE_URL;
 const canonical = `${siteUrl}/${slug}`;
 
 const jsonLd = JSON.stringify({

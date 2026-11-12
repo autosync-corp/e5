@@ -32,6 +32,7 @@ import {
     PROCESS_FORM_FORGED_ROUTE
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const glossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black');
@@ -39,7 +40,7 @@ const titaniumBrushedUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed 
 const bronzeUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze');
 const shopSpeedwayUrl = `${SHOP_ROUTE}?series=${SPEEDWAY_BRAND_NAME}`;
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Speedway - Form Forged Corvette Wheels | E5 Wheels';
 const description = 'The Speedway features a classic 5-spoke design refined for modern performance. Form Forged construction delivers strength and reduced weight for Corvette C5, C6, C7, and C8.';
 const canonicalUrl = `${baseUrl}/wheels/speedway`;

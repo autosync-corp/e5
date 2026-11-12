@@ -1,4 +1,5 @@
 ---
+import { SITE_URL } from '@/core/constants/Site.ts';
 ---
 
 <header class="rsvp-header">
@@ -7,18 +8,18 @@
   </button>
   <a href="/events/upcoming" class="rsvp-nav-link rsvp-nav-dark">Upcoming</a>
   <a href="/events" class="rsvp-nav-link rsvp-nav-dark">Calendar</a>
-  <a href="https://www.e5wheels.com" aria-label="E5 Wheels home" class="rsvp-header-logo-link">
+  <a href={SITE_URL} aria-label="E5 Wheels home" class="rsvp-header-logo-link">
     <img src="/assets/images/e5-logo-black-rsvp.webp" alt="E5 Wheels" class="rsvp-header-logo" />
   </a>
-  <a href="https://www.e5wheels.com" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
-  <a href="https://www.e5wheels.com/shop" class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
+  <a href={SITE_URL} class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
+  <a href={`${SITE_URL}/shop`} class="rsvp-nav-link"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
 </header>
 
 <nav class="rsvp-mobile-menu" id="mobileMenu">
   <a href="/events/upcoming">Upcoming</a>
   <a href="/events">Calendar</a>
-  <a href="https://www.e5wheels.com"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
-  <a href="https://www.e5wheels.com/shop"><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
+  <a href={SITE_URL}><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5Wheels.com</span></a>
+  <a href={`${SITE_URL}/shop`}><span class="rsvp-nav-dark">To</span> <span class="rsvp-nav-red">E5 Shop</span></a>
 </nav>
 
 <style>

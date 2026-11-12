@@ -1,9 +1,10 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 const { slug } = Astro.params;
 const WP_API = 'https://post.e5wheels.com/wp-json/wp/v2';
-const siteUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const siteUrl = SITE_URL;
 
 let post: any = null;
 try {

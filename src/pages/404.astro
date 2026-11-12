@@ -1,8 +1,9 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import Button from '@/core/components/Button.vue';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Page Not Found - E5 Wheels';
 const description = 'The page you are looking for could not be found.';
 const canonicalUrl = `${baseUrl}/404`;

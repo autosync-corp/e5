@@ -4,10 +4,11 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import { getSitemapLastmod } from './src/core/constants/sitemapLastmod.ts';
+import { SITE_URL } from './src/core/constants/Site.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.e5wheels.com',
+  site: SITE_URL,
   output: 'server',
   trailingSlash: 'ignore',
   adapter: vercel(),
@@ -33,43 +34,43 @@ export default defineConfig({
       },
       customPages: [
         // Blog pages (WordPress headless — SSR routes not auto-discovered)
-        'https://www.e5wheels.com/blog',
-        'https://www.e5wheels.com/blog/cracked-oem-c7-corvette-wheels',
-        'https://www.e5wheels.com/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette',
-        'https://www.e5wheels.com/blog/e5-wheels-at-corvettes-at-carlisle-2025',
-        'https://www.e5wheels.com/blog/c6-corvette-aftermarket-wheels-personalize-your-ride',
+        `${SITE_URL}/blog`,
+        `${SITE_URL}/blog/cracked-oem-c7-corvette-wheels`,
+        `${SITE_URL}/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette`,
+        `${SITE_URL}/blog/e5-wheels-at-corvettes-at-carlisle-2025`,
+        `${SITE_URL}/blog/c6-corvette-aftermarket-wheels-personalize-your-ride`,
         // Shop level-2 pages: /shop/{series}/{finish} (SSR routes not auto-discovered)
         // Daytona
-        'https://www.e5wheels.com/shop/daytona/gloss-black',
-        'https://www.e5wheels.com/shop/daytona/titanium-brushed',
-        'https://www.e5wheels.com/shop/daytona/titanium-gray-brushed',
-        'https://www.e5wheels.com/shop/daytona/bronze-brushed-tint',
-        'https://www.e5wheels.com/shop/daytona/chrome',
+        `${SITE_URL}/shop/daytona/gloss-black`,
+        `${SITE_URL}/shop/daytona/titanium-brushed`,
+        `${SITE_URL}/shop/daytona/titanium-gray-brushed`,
+        `${SITE_URL}/shop/daytona/bronze-brushed-tint`,
+        `${SITE_URL}/shop/daytona/chrome`,
         // Sebring
-        'https://www.e5wheels.com/shop/sebring/gloss-black',
-        'https://www.e5wheels.com/shop/sebring/titanium-brushed',
-        'https://www.e5wheels.com/shop/sebring/titanium-gray-brushed',
-        'https://www.e5wheels.com/shop/sebring/bronze-brushed-tint',
-        'https://www.e5wheels.com/shop/sebring/chrome',
+        `${SITE_URL}/shop/sebring/gloss-black`,
+        `${SITE_URL}/shop/sebring/titanium-brushed`,
+        `${SITE_URL}/shop/sebring/titanium-gray-brushed`,
+        `${SITE_URL}/shop/sebring/bronze-brushed-tint`,
+        `${SITE_URL}/shop/sebring/chrome`,
         // Sebring 2P
-        'https://www.e5wheels.com/shop/sebring-2p/gloss-black-polished-lip',
-        'https://www.e5wheels.com/shop/sebring-2p/gray-polished-lip',
-        'https://www.e5wheels.com/shop/sebring-2p/bronze-polished-lip',
+        `${SITE_URL}/shop/sebring-2p/gloss-black-polished-lip`,
+        `${SITE_URL}/shop/sebring-2p/gray-polished-lip`,
+        `${SITE_URL}/shop/sebring-2p/bronze-polished-lip`,
         // Speedway
-        'https://www.e5wheels.com/shop/speedway/gloss-black',
-        'https://www.e5wheels.com/shop/speedway/titanium-brushed',
-        'https://www.e5wheels.com/shop/speedway/titanium-brushed-tint',
-        'https://www.e5wheels.com/shop/speedway/dark-bronze',
-        'https://www.e5wheels.com/shop/speedway/chrome',
+        `${SITE_URL}/shop/speedway/gloss-black`,
+        `${SITE_URL}/shop/speedway/titanium-brushed`,
+        `${SITE_URL}/shop/speedway/titanium-brushed-tint`,
+        `${SITE_URL}/shop/speedway/dark-bronze`,
+        `${SITE_URL}/shop/speedway/chrome`,
         // Talladega
-        'https://www.e5wheels.com/shop/talladega/brushed-aluminum',
-        'https://www.e5wheels.com/shop/talladega/gloss-black',
+        `${SITE_URL}/shop/talladega/brushed-aluminum`,
+        `${SITE_URL}/shop/talladega/gloss-black`,
         // Sonoma
-        'https://www.e5wheels.com/shop/sonoma/brushed-aluminum',
+        `${SITE_URL}/shop/sonoma/brushed-aluminum`,
       ],
       serialize(item) {
         // Strip trailing slashes to match canonical URLs (keep root slash)
-        if (item.url.endsWith('/') && item.url !== 'https://www.e5wheels.com/') {
+        if (item.url.endsWith('/') && item.url !== `${SITE_URL}/`) {
           item.url = item.url.slice(0, -1);
         }
         const lastmod = getSitemapLastmod(item.url);

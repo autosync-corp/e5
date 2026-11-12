@@ -11,8 +11,9 @@ import {
     WHEELS_LAGUNA_ROUTE
 } from "@/core/constants/Routes.ts";
 import { LAGUNA_LOGO, LAGUNA_WHEEL_RENDER } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Corvette Wheels Collection | E5 Wheels';
 const description = 'Browse our complete collection of forged and flow-formed Corvette wheels. E5 Forged for C8 Z06/ZR1/E-Ray and Form Forged for C5, C6, C7, and C8 generations.';
 const canonicalUrl = `${baseUrl}/wheels`;

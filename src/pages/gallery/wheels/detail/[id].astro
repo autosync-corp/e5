@@ -7,6 +7,7 @@ import Button from "@/core/components/Button.vue";
 // @ts-expect-error - Vue component with script setup has implicit default export
 import WheelImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
 import { GALLERY_WHEELS_ROUTE, GALLERY_WHEELS_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 export const prerender = true;
 
@@ -29,7 +30,7 @@ const relatedWheels = wheelGalleryItems
   .filter(w => w.name === wheelData.name && w.id !== wheelData.id)
   .slice(0, 3);
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const description = `Detailed close-up views of the ${wheelData.name} ${wheelData.finish} wheel by E5. Precision-forged for Corvette fitments, multiple sizes available.`;
 const canonicalUrl = `${baseUrl}/gallery/wheels/detail/${wheelData.id}`;
 const pageTitle = `${wheelData.name} ${wheelData.finish} | E5 Wheels Gallery`;

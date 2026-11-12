@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Installation Guide - Corvette Wheel Installation | E5 Wheels';
 const description = 'Complete installation instructions for E5 wheels on Corvette C5, C6, C7, and C8. Includes torque specs, safety guidelines, and Corvette-specific installation procedures.';
 const canonicalUrl = `${baseUrl}/installation`;

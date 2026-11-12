@@ -1,8 +1,9 @@
 ---
 import WheelGallery from '@/pages/gallery/components/_WheelGallery.vue';
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Wheel Gallery - E5 Form Forged Series | E5 Wheels';
 const description = 'Explore our Form Forged wheel gallery featuring Daytona, Sebring, and Speedway wheels in various finishes and environments. See real-world installations and styling options.';
 const canonicalUrl = `${baseUrl}/gallery/wheels`;

@@ -1,8 +1,9 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import MediaDownload from "@/pages/media/components/_MediaDownload.vue"
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Media & Downloads - Logos and High-Res Assets | E5 Wheels';
 const description = 'Download official E5 wheel logos and high-resolution product images. Includes assets for Daytona, Sebring, Speedway, Talladega, and Sonoma wheels in various formats.';
 const canonicalUrl = `${baseUrl}/media`;

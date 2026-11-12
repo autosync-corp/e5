@@ -1,7 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Return & Refund Policy - E5 Wheels';
 const description = 'E5 Wheels return and refund policy. Review our 30-day return window, conditions for returns, restocking fees, and refund process for Corvette wheels.';
 const canonicalUrl = `${baseUrl}/refund-return-policy`;

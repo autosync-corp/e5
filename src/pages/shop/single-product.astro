@@ -1,13 +1,14 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import SingleProductPage from './components/_SingleProductPage.vue';
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Get product ID from URL query params if provided
 const url = new URL(Astro.request.url);
 const productIdParam = url.searchParams.get('id');
 const productId = productIdParam ? parseInt(productIdParam, 10) : undefined;
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'Corvette Wheel Details - E5 Wheels';
 const description = 'View detailed specifications, fitment options, and available finishes for E5 Forged and Form Forged Corvette wheels. Hub-centric design, precision-engineered in USA.';
 const canonicalUrl = `${baseUrl}/shop/single-product`;

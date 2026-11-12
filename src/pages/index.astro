@@ -18,8 +18,9 @@ import {
     WHEELS_FORM_FORGED_ROUTE,
     WHEELS_TALLADEGA_ROUTE
 } from "@/core/constants/Routes.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'E5 Wheels | Exclusively Engineered for Corvettes';
 const description = 'E5 Wheels designs forged and flow-formed wheels exclusively for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric, made in the USA.';
 const canonicalUrl = `${baseUrl}/`;

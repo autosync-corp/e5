@@ -10,7 +10,7 @@
  */
 
 const RECAPTCHA_SCORE_THRESHOLD = 0.7;
-const NOMINATIM_USER_AGENT = 'E5Wheels-Forms/1.0 (https://e5wheels.com)';
+const NOMINATIM_USER_AGENT = 'E5Wheels-Forms/1.0 (https://www.e5wheels.com)';
 const NOMINATIM_TIMEOUT_MS = 5000;
 
 /**

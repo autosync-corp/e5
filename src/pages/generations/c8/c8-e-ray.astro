@@ -19,6 +19,7 @@ import {
     SEBRING_2P_DARK_BRONZE,
     SEBRING_2P_TITANIUM_BRUSHED,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 const IMG_BASE = "/assets/images/generations/c8/c8-e-ray";
@@ -30,7 +31,7 @@ const sebring2pDarkBronzeUrl      = '/shop/sebring-2p/bronze-black-lip';
 const sebring2pTitaniumBrushedUrl = '/shop/sebring-2p/titanium-black-lip';
 const shopThisLookUrl = buildWheelUrl(SEBRING_2P_BRAND_NAME, 'Bronze Black Lip', 'C8', 'E-Ray', '20" x 10" +25mm', '21" x 13" +20mm');
 
-const baseUrl      = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl      = SITE_URL;
 const title        = 'C8 E-Ray Wheels (2024–2026) | E5 Wheels';
 const description  = 'C8 E-Ray wheels (2024–2026) with Corvette-only 20x10 / 21x13 fitment. Talladega, Sonoma, and Sebring 2P in brushed aluminum, gloss black, and dark bronze.';
 const canonicalUrl = `${baseUrl}/generations/c8/c8-e-ray`;

@@ -15,6 +15,7 @@ import {
     SPEEDWAY_BRAND_NAME,
     SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Shop URLs with proper sizes (Grand Sport uses same sizes across all wheels: 19x10 +30mm / 20x12 +50mm)
 const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -26,7 +27,7 @@ const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 
 const daytonaGlossBlackDetailUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 const sebringTitaniumUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Titanium Brushed', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C7 Grand Sport Wheels (2017–2019) | E5 Wheels';
 const description = 'C7 Grand Sport wheels (2017-2019) with Corvette-only 19x10 / 20x12 fitment. Daytona, Sebring, and Speedway in gloss black, bronze, and titanium finishes.';
 const canonicalUrl = `${baseUrl}/generations/c7/c7-grand-sport`;

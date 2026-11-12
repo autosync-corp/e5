@@ -16,10 +16,11 @@ import {
   WHEELS_SONOMA_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
+import { SITE_URL } from '@/core/constants/Site.ts';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || 'https://www.e5wheels.com';
+const baseUrl = SITE_URL;
 const title = 'C8 Corvette Wheels (2020–2026) | E5 Wheels';
 const description = 'C8 Corvette wheels (2020–2026) for Stingray, Z06, ZR1, and E-Ray. Corvette-only 19/20 and 20/21 fitment in gloss black, bronze, titanium, brushed aluminum.';
 const canonicalUrl = `${baseUrl}/generations/c8`;
