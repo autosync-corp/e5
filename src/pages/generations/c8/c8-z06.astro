@@ -73,8 +73,9 @@ const breadcrumbSchema = JSON.stringify({
                     { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
                 ]}
                 finishes="Available in brushed aluminum"
-                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+                application="C8 Corvette application"
             >
                 <Fragment slot="see">
                     See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=Z06`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
@@ -90,36 +91,6 @@ const breadcrumbSchema = JSON.stringify({
                 <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] text-black/70 max-w-[656px] text-center md:text-left">
                     Exclusively Forged in the USA for C8 Z06, ZR1, and E-Ray. Engineered for extreme performance, reduced weight, and maximum strength.
                 </p>
-            </div>
-        </section>
-
-        <!-- Two Wheel Options (Talladega & Sonoma) -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
-
-                <!-- Talladega -->
-                <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-full object-contain" />
-                    </div>
-                    <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase">MADE IN USA</p>
-                </a>
-
-                <!-- Sonoma -->
-                <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-full object-contain" />
-                    </div>
-                    <img src={SONOMA_LOGO} alt="Sonoma" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase">MADE IN USA</p>
-                </a>
             </div>
         </section>
 

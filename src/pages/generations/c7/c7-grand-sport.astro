@@ -19,11 +19,6 @@ import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
-// Shop URLs with proper sizes (Grand Sport uses same sizes across all wheels: 19x10 +30mm / 20x12 +50mm)
-const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-const sebringBronzeUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
-
 // Detail section URLs
 const speedwayGlossBlackUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
 const daytonaGlossBlackDetailUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -80,8 +75,9 @@ const breadcrumbSchema = JSON.stringify({
                     { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
                 ]}
                 finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
-                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+                application="C7 Corvette application"
             >
                 <Fragment slot="see">
                     See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7&trim=Grand Sport`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
@@ -90,47 +86,6 @@ const breadcrumbSchema = JSON.stringify({
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED SERIES FOR C7 CORVETTES
             </p>
-        </section>
-
-        <!-- Three Wheel Options -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Speedway - Titanium Brushed Tint -->
-                <a href={speedwayTitaniumUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp" alt="Speedway Titanium Brushed Tint" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/grand-sport/5a059fba9b6f32612b072a121dc09766ef507b86.webp" alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Daytona - Gloss Black -->
-                <a href={daytonaGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/grand-sport/bf617359a30df6e52e23d25ba89f15964c216df1.webp" alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Sebring - Bronze Brushed Tint -->
-                <a href={sebringBronzeUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/grand-sport/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp" alt="Sebring Bronze Brushed Tint" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/grand-sport/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.webp" alt="Sebring" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 GRAND SPORT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-            </div>
         </section>
 
         <!-- Overview Section -->

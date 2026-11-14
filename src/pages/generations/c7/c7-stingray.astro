@@ -12,17 +12,10 @@ import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
-    SPEEDWAY_BRAND_NAME,
-    SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
-
-// Shop URLs with proper sizes (using shop fitment sizes - 19" x 9.5" / 20" x 11")
-const speedwayShopUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const daytonaShopUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const sebringShopUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Chrome', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
 // Detail section URLs
 const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C7', 'Stingray', '19" x 9.5" +53mm', '20" x 11" +76mm');
@@ -80,8 +73,9 @@ const breadcrumbSchema = JSON.stringify({
                     { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
                 ]}
                 finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
-                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+                application="C7 Corvette application"
             >
                 <Fragment slot="see">
                     See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7&trim=Stingray`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
@@ -90,47 +84,6 @@ const breadcrumbSchema = JSON.stringify({
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED SERIES FOR C7 CORVETTES
             </p>
-        </section>
-
-        <!-- Three Wheel Options -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Speedway -->
-                <a href={speedwayShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/stingray/cd19461c451031cb11b5e748b6774ae80b22a516.webp" alt="Speedway Gloss Black" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/stingray/5a059fba9b6f32612b072a121dc09766ef507b86.webp" alt="Speedway" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 STINGRAY</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Daytona -->
-                <a href={daytonaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/stingray/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/stingray/bf617359a30df6e52e23d25ba89f15964c216df1.webp" alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">TITANIUM BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 STINGRAY</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Sebring -->
-                <a href={sebringShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c7/stingray/2890992da4691efe5a794ea8c4ce3130ac005db2.webp" alt="Sebring Chrome" class="w-full h-full object-contain" />
-                    </div>
-                    <img src="/assets/images/generations/c7/stingray/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.webp" alt="Sebring" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">CHROME</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C7 STINGRAY</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-            </div>
         </section>
 
         <!-- Overview Section -->

@@ -86,8 +86,9 @@ const breadcrumbSchema = JSON.stringify({
                     { href: WHEELS_SEBRING_2P_ROUTE, label: 'Sebring 2P' },
                 ]}
                 finishes="Available in brushed aluminum, gloss black, dark bronze, and titanium"
-                bodyClass="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1200px] mx-auto mb-8"
+                application="C8 Corvette application"
             >
                 <Fragment slot="see">
                     See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=E-Ray`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
@@ -103,42 +104,6 @@ const breadcrumbSchema = JSON.stringify({
                 <p class="text-[15px] md:text-[18px] lg:text-[22px] leading-[22px] md:leading-[26px] lg:leading-[30px] text-black/70 max-w-[560px] text-center md:text-left">
                     Exclusively Forged in the USA for C8 Z06, ZR1, and E-Ray. Engineered for extreme performance, reduced weight, and maximum strength.
                 </p>
-            </div>
-        </section>
-
-        <!-- ── Talladega + Sonoma ── -->
-        <section class="container-e5 py-10 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-16 items-start">
-
-                <!-- Talladega -->
-                <a href={talladegaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp" alt="Talladega forged wheel for C8 E-Ray &mdash; brushed aluminum finish" class="w-full h-full object-contain" loading="lazy" />
-                    </div>
-                    <img src={TALLADEGA_LOGO} alt="Talladega wheel logo" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-5 md:mb-6">MADE IN USA</p>
-                    <span class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 text-[13px] md:text-[15px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
-                        SHOP TALLADEGA
-                    </span>
-                </a>
-
-                <!-- Sonoma -->
-                <a href={sonomaShopUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[380px] md:max-w-[464px] aspect-square mb-5 md:mb-8">
-                        <img src="/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp" alt="Sonoma forged wheel for C8 E-Ray &mdash; brushed aluminum finish" class="w-full h-full object-contain" loading="lazy" />
-                    </div>
-                    <img src={SONOMA_LOGO} alt="Sonoma wheel logo" class="h-[24px] md:h-[30px] w-auto mb-3 md:mb-4" loading="lazy" />
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">BRUSHED ALUMINUM</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/60 uppercase mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-2">CUSTOM FINISHES</p>
-                    <p class="text-[13px] md:text-[16px] lg:text-[18px] tracking-[2px] md:tracking-[3.2px] lg:tracking-[4px] leading-[18px] text-black/50 uppercase mb-5 md:mb-6">MADE IN USA</p>
-                    <span class="inline-block bg-e5-red text-white px-8 md:px-10 py-3 text-[13px] md:text-[15px] tracking-[2px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors">
-                        SHOP SONOMA
-                    </span>
-                </a>
             </div>
         </section>
 
