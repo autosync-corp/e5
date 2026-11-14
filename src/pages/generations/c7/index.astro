@@ -14,6 +14,7 @@ import {
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const baseUrl = SITE_URL;
 const title = 'C7 Corvette Wheels (2014–2019) | E5 Wheels';
@@ -48,9 +49,11 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- Main Title and Description -->
     <section class="container-e5 py-8 md:py-12 lg:py-16 text-center">
-      <h1 class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']">
-        C7 Corvette Wheels (2014&ndash;2019)
-      </h1>
+      <GenerationHeading
+        title="C7 Corvette Wheels"
+        years="2014–2019"
+        class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']"
+      />
       <GenerationIntro
         lead="C7 Corvette wheels (2014–2019) are Form Forged for Stingray, Z06, and Grand Sport only, with staggered 19/20 fitment."
         groups={[

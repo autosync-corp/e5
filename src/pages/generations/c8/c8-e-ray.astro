@@ -21,6 +21,7 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 const IMG_BASE = "/assets/images/generations/c8/c8-e-ray";
@@ -69,9 +70,11 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- ── Title & Description ── -->
         <section class="container-e5 py-10 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[28px] sm:text-[36px] md:text-[52px] lg:text-[72px] tracking-[0px] leading-[32px] sm:leading-[40px] md:leading-[56px] lg:leading-[76px] text-black uppercase mb-6 md:mb-10 font-['Franklin_Gothic_Heavy']">
-                C8 E-Ray Wheels (2024&ndash;2026)
-            </h1>
+            <GenerationHeading
+                title="C8 E-Ray Wheels"
+                years="2024–2026"
+                class="text-[28px] sm:text-[36px] md:text-[52px] lg:text-[72px] tracking-[0px] leading-[32px] sm:leading-[40px] md:leading-[56px] lg:leading-[76px] text-black uppercase mb-6 md:mb-10 font-['Franklin_Gothic_Heavy']"
+            />
             <GenerationIntro
                 lead="C8 E-Ray wheels (2024–2026) are forged for Corvette-only hybrid hub-centric fitment."
                 groups={[

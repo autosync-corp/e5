@@ -17,6 +17,7 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 // Shop URLs with proper sizes (Grand Sport uses same sizes across all wheels: 19x10 +30mm / 20x12 +50mm)
 const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C7', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -63,9 +64,11 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                C7 Grand Sport Wheels (2017&ndash;2019)
-            </h1>
+            <GenerationHeading
+                title="C7 Grand Sport Wheels"
+                years="2017–2019"
+                class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']"
+            />
             <GenerationIntro
                 lead="C7 Grand Sport wheels (2017–2019) are Form Forged for Corvette-only widebody hub-centric fitment."
                 groups={[

@@ -16,6 +16,7 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 
@@ -57,9 +58,11 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Main Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                C8 Z06 Wheels (2023&ndash;2026)
-            </h1>
+            <GenerationHeading
+                title="C8 Z06 Wheels"
+                years="2023–2026"
+                class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']"
+            />
             <GenerationIntro
                 lead="C8 Z06 wheels (2023–2026) are E5 Forged for Corvette-only hub-centric fitment."
                 groups={[

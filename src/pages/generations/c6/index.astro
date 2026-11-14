@@ -18,6 +18,7 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 // URL variables for different sections
 // Daytona detail section (19" x 9.5" +53mm / 20" x 11" +76mm)
@@ -71,9 +72,11 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                C6 Corvette Wheels
-            </h1>
+            <GenerationHeading
+                title="C6 Corvette Wheels"
+                years="2005–2013"
+                class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']"
+            />
             <GenerationIntro
                 lead={'E5 C6 Corvette wheels are hub-centric and engineered only for Corvettes, covering 2005–2013 Base, Z06, ZR1, and Grand Sport in staggered 19"/20" sizes.'}
                 groups={[
