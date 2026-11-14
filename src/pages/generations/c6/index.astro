@@ -26,11 +26,6 @@ const daytonaTitaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Br
 
 // Sebring detail section (19" x 10" +30mm / 20" x 12" +50mm)
 const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-const sebringBronzeBrushedUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-
-// Top 3 wheels - use Base sizes
-const daytonaBronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
-const daytonaGlossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 
 // Also Available section - use Base sizes (Daytona finishes)
 const daytonaGlossBlackAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
@@ -92,6 +87,7 @@ const breadcrumbSchema = JSON.stringify({
                 linkClass={introLinkClass}
                 bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+                application="C6 Corvette application"
             >
                 <Fragment slot="see">
                     See customer cars in the <a href={c6GalleryUrl} class={introLinkClass}>C6 gallery</a> and on the <a href={GENERATIONS_C6_GRAND_SPORT_ROUTE} class={introLinkClass}>C6 Grand Sport</a> page.
@@ -100,47 +96,6 @@ const breadcrumbSchema = JSON.stringify({
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
                 SHOP FORM FORGED FOR C6 CORVETTES
             </p>
-        </section>
-
-        <!-- Three Wheel Options -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mb-12">
-                <!-- Daytona - Bronze Brushed Tint -->
-                <a href={daytonaBronzeBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="https://wheels.autosyncstudio.com/webp/E5/Daytona_BBT_Gloss_Bronze_Brushed-Face-Tinted-Clear_5-lug_0001.webp" alt="Daytona Bronze Brushed Tint" class="w-full h-full object-contain" />
-                    </div>
-                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">19" / 20" SIZES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Daytona - Gloss Black -->
-                <a href={daytonaGlossBlackUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/77a1e54cf299ca527e8fc5695731f7a6680822fe.webp" alt="Daytona Gloss Black" class="w-full h-full object-contain" />
-                    </div>
-                    <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">GLOSS BLACK</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">SET OF 4 STARTING AT $2,500</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-
-                <!-- Sebring - Bronze Brushed Tint -->
-                <a href={sebringBronzeBrushedUrl} class="flex flex-col items-center hover:opacity-80 transition-opacity">
-                    <div class="w-full max-w-[464px] aspect-square mb-6 md:mb-8">
-                        <img src="/assets/images/generations/c6/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp" alt="Sebring Bronze Brushed Tint" class="w-full h-full object-contain" />
-                    </div>
-                    <img src={SEBRING_LOGO} alt="Sebring" class="h-[30px] w-auto mb-4" />
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
-                </a>
-            </div>
         </section>
 
         <!-- Overview Section -->
@@ -377,7 +332,7 @@ const breadcrumbSchema = JSON.stringify({
                     <img src={DAYTONA_LOGO} alt="Daytona" class="h-[30px] w-auto mb-4" />
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">BRONZE BRUSHED TINT</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/60 uppercase mb-2">AVAILABLE FOR C6 CORVETTES</p>
-                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">ENJOY FREE SHIPPING</p>
+                    <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-black/50 uppercase mb-2">FREE SHIPPING</p>
                     <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[4px] leading-[20px] text-e5-red uppercase">IN STOCK</p>
                 </a>
             </div>

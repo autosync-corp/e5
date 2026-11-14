@@ -1,4 +1,13 @@
 ---
+import {
+  DAYTONA_GLOSS_BLACK,
+  SEBRING_GLOSS_BLACK,
+  SPEEDWAY_GLOSS_BLACK,
+  TALLADEGA_GLOSS_BLACK,
+  SONOMA_GLOSS_BLACK,
+  SEBRING_2P_GLOSS_BLACK,
+} from '@/pages/wheels/constants/Wheels.ts';
+
 export interface HeadingPart {
   label: string;
   href?: string;
@@ -26,7 +35,17 @@ interface Props {
   linkClass?: string;
   bodyClass: string;
   wrapperClass?: string;
+  application?: string;
 }
+
+const STYLE_IMAGES: Record<string, string> = {
+  Daytona: DAYTONA_GLOSS_BLACK,
+  Sebring: SEBRING_GLOSS_BLACK,
+  Speedway: SPEEDWAY_GLOSS_BLACK,
+  Talladega: TALLADEGA_GLOSS_BLACK,
+  Sonoma: SONOMA_GLOSS_BLACK,
+  'Sebring 2P': SEBRING_2P_GLOSS_BLACK,
+};
 
 const {
   lead,
@@ -36,7 +55,17 @@ const {
   linkClass = 'text-e5-red hover:opacity-80 transition-opacity',
   bodyClass,
   wrapperClass = 'max-w-[1536px] mx-auto px-4 mb-8',
+  application,
 } = Astro.props;
+
+const cardGridClass =
+  styles.length >= 5
+    ? 'grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4'
+    : styles.length === 1
+      ? 'grid grid-cols-1 max-w-[140px] mx-auto'
+      : styles.length === 2
+        ? 'grid grid-cols-2 max-w-[320px] mx-auto gap-2 md:gap-4'
+        : 'grid grid-cols-3 max-w-[420px] md:max-w-[520px] mx-auto gap-2 md:gap-4';
 
 const groupGridClass =
   groups.length >= 3
@@ -91,7 +120,25 @@ function styleSeparator(index: number, length: number): string {
     ))}
   </p>
   <p class="mb-3 md:mb-4">{finishes}</p>
-  <p>
+  <p class="mb-6 md:mb-8">
     <slot name="see" />
   </p>
+  {application && (
+    <ul class:list={[cardGridClass, 'mt-2']}>
+      {styles.map((style) => (
+        <li>
+          <a href={style.href} class="flex flex-col items-center hover:opacity-80 transition-opacity">
+            {STYLE_IMAGES[style.label] && (
+              <div class="w-full max-w-[96px] md:max-w-[128px] aspect-square mb-1.5">
+                <img src={STYLE_IMAGES[style.label]} alt={style.label} class="w-full h-full object-contain" width="128" height="128" />
+              </div>
+            )}
+            <p class="text-[12px] md:text-[14px] tracking-[1.4px] md:tracking-[2px] leading-[15px] md:leading-[17px] text-black uppercase mb-0.5 font-['Franklin_Gothic_Heavy']">{style.label}</p>
+            <p class="text-[10px] md:text-[11px] tracking-[0.3px] leading-[13px] md:leading-[15px] text-black/50 mb-0.5">{application}</p>
+            <p class="text-[9px] md:text-[10px] tracking-[1.4px] md:tracking-[1.8px] leading-[13px] text-e5-red uppercase">Free Shipping</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
 </div>
