@@ -17,6 +17,7 @@ import {
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 
@@ -56,9 +57,40 @@ const breadcrumbSchema = JSON.stringify({
       <h1 class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']">
         C8 Corvette Wheels (2020&ndash;2026)
       </h1>
-      <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1276px] mx-auto mb-4 md:mb-6 px-4">
-        C8 Corvette wheels (2020&ndash;2026) are hub-centric and Corvette-only. Form Forged <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, and <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> for <a href={GENERATIONS_C8_STINGRAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Stingray</a> at 19x9 +35mm / 20x11 +45mm or 20x9 +35mm / 21x12 +52mm; E5 Forged <a href={WHEELS_TALLADEGA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Talladega</a> and <a href={WHEELS_SONOMA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sonoma</a> for <a href={GENERATIONS_C8_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a>, <a href={GENERATIONS_C8_ZR1_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">ZR1</a>, and <a href={GENERATIONS_C8_E_RAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">E-Ray</a> at 20x10 +25mm / 21x13 +20mm (ZR1 20x10.5). Finishes include gloss black, bronze brushed tint, titanium, dark bronze, and brushed aluminum&mdash;see them on cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8`} class="text-e5-red hover:opacity-80 transition-opacity">C8 gallery</a>.
-      </p>
+      <GenerationIntro
+        lead="C8 Corvette wheels (2020–2026) are hub-centric and Corvette-only, with Form Forged for Stingray and E5 Forged for Z06, ZR1, and E-Ray."
+        groups={[
+          { heading: 'Stingray 19"/20"', headingHref: GENERATIONS_C8_STINGRAY_ROUTE, front: 'Front 19" × 9" +35mm', rear: 'Rear 20" × 11" +45mm' },
+          { heading: 'Stingray 20"/21"', headingHref: GENERATIONS_C8_STINGRAY_ROUTE, front: 'Front 20" × 9" +35mm', rear: 'Rear 21" × 12" +52mm' },
+          {
+            heading: 'Z06, ZR1 & E-Ray',
+            headingParts: [
+              { label: 'Z06', href: GENERATIONS_C8_Z06_ROUTE },
+              { label: ', ' },
+              { label: 'ZR1', href: GENERATIONS_C8_ZR1_ROUTE },
+              { label: ' & ' },
+              { label: 'E-Ray', href: GENERATIONS_C8_E_RAY_ROUTE },
+            ],
+            front: 'Front 20" × 10" +25mm',
+            rear: 'Rear 21" × 13" +20mm',
+            note: 'ZR1 20x10.5',
+          },
+        ]}
+        styles={[
+          { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
+          { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
+          { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
+          { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
+          { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
+        ]}
+        finishes="Available in gloss black, bronze brushed tint, titanium, dark bronze, and brushed aluminum"
+        bodyClass="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70"
+        wrapperClass="max-w-[1276px] mx-auto mb-4 md:mb-6 px-4"
+      >
+        <Fragment slot="see">
+          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8`} class="text-e5-red hover:opacity-80 transition-opacity">C8 gallery</a>.
+        </Fragment>
+      </GenerationIntro>
       <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase">
         Shop Wheels by C8 Model
       </p>

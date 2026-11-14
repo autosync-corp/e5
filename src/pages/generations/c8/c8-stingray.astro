@@ -18,6 +18,7 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
 
 // Top section URLs (matches CuratedFitments.ts's C8 Stingray/Base 19" option: 19x9+35mm / 20x11+45mm)
 const speedwayTopUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Dark Bronze', 'C8', 'Stingray', '19" x 9" +35mm', '20" x 11" +45mm');
@@ -67,9 +68,25 @@ const breadcrumbSchema = JSON.stringify({
       <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-6 md:mb-8 font-['Franklin_Gothic_Heavy']">
         C8 Stingray Wheels (2020&ndash;2026)
       </h1>
-      <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto mb-6 md:mb-8 px-4">
-        C8 Stingray wheels (2020&ndash;2026) are Form Forged for Corvette-only fitment&mdash;hub-centric 19x9 +35mm / 20x11 +45mm or 20x9 +35mm / 21x12 +52mm. Shop <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, and <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> in gloss black, bronze brushed tint, titanium brushed tint, and dark bronze, or browse Stingrays in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8`} class="text-e5-red hover:opacity-80 transition-opacity">C8 gallery</a>.
-      </p>
+      <GenerationIntro
+        lead="C8 Stingray wheels (2020–2026) are Form Forged for Corvette-only hub-centric fitment."
+        groups={[
+          { heading: '19"/20"', front: 'Front 19" × 9" +35mm', rear: 'Rear 20" × 11" +45mm' },
+          { heading: '20"/21"', front: 'Front 20" × 9" +35mm', rear: 'Rear 21" × 12" +52mm' },
+        ]}
+        styles={[
+          { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
+          { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
+          { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
+        ]}
+        finishes="Available in gloss black, bronze brushed tint, titanium brushed tint, and dark bronze"
+        bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+        wrapperClass="max-w-[1536px] mx-auto mb-6 md:mb-8 px-4"
+      >
+        <Fragment slot="see">
+          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8`} class="text-e5-red hover:opacity-80 transition-opacity">C8 gallery</a>.
+        </Fragment>
+      </GenerationIntro>
       <p class="text-[16px] md:text-[20px] lg:text-[24px] tracking-[3.2px] md:tracking-[4px] lg:tracking-[4.8px] leading-[20px] text-black/50 uppercase">
         SHOP FORM FORGED SERIES FOR C8 CORVETTES
       </p>

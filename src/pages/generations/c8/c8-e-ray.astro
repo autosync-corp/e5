@@ -20,6 +20,7 @@ import {
     SEBRING_2P_TITANIUM_BRUSHED,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 const IMG_BASE = "/assets/images/generations/c8/c8-e-ray";
@@ -71,9 +72,24 @@ const breadcrumbSchema = JSON.stringify({
             <h1 class="text-[28px] sm:text-[36px] md:text-[52px] lg:text-[72px] tracking-[0px] leading-[32px] sm:leading-[40px] md:leading-[56px] lg:leading-[76px] text-black uppercase mb-6 md:mb-10 font-['Franklin_Gothic_Heavy']">
                 C8 E-Ray Wheels (2024&ndash;2026)
             </h1>
-            <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1200px] mx-auto">
-                C8 E-Ray wheels (2024&ndash;2026) are forged for Corvette-only hybrid fitment&mdash;hub-centric 20x10 +25mm front and 21x13 +20mm rear. Choose <a href={WHEELS_TALLADEGA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Talladega</a>, <a href={WHEELS_SONOMA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sonoma</a>, or <a href={WHEELS_SEBRING_2P_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring 2P</a> in brushed aluminum, gloss black, dark bronze, and titanium, or browse E-Ray builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=E-Ray`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
-            </p>
+            <GenerationIntro
+                lead="C8 E-Ray wheels (2024–2026) are forged for Corvette-only hybrid hub-centric fitment."
+                groups={[
+                    { heading: 'E-Ray', front: 'Front 20" × 10" +25mm', rear: 'Rear 21" × 13" +20mm' },
+                ]}
+                styles={[
+                    { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
+                    { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
+                    { href: WHEELS_SEBRING_2P_ROUTE, label: 'Sebring 2P' },
+                ]}
+                finishes="Available in brushed aluminum, gloss black, dark bronze, and titanium"
+                bodyClass="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70"
+                wrapperClass="max-w-[1200px] mx-auto mb-8"
+            >
+                <Fragment slot="see">
+                    See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=E-Ray`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
+                </Fragment>
+            </GenerationIntro>
         </section>
 
         <!-- ── E5 Forged Badge ── -->
