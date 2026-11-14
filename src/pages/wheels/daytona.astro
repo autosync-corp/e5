@@ -33,7 +33,17 @@ import Button from "@/core/components/Button.vue";
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import {GALLERY_WHEELS_ROUTE, SHOP_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE, PROCESS_FORM_FORGED_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    GALLERY_WHEELS_ROUTE,
+    SHOP_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+    PROCESS_FORM_FORGED_ROUTE,
+    GENERATIONS_C5_ROUTE,
+    GENERATIONS_C6_ROUTE,
+    GENERATIONS_C7_ROUTE,
+    GENERATIONS_C8_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
@@ -44,9 +54,10 @@ const bronzeBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Bronze Brushed Tint'
 const shopDaytonaUrl = `${SHOP_ROUTE}?series=${DAYTONA_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
-const title = 'Daytona - Form Forged Corvette Wheels | E5 Wheels';
-const description = 'Lightest wheel in our Form Forged Series. 10-spoke design with bold deep profile, exclusively engineered for Corvette C5, C6, C7, and C8.';
+const title = 'Daytona Form Forged Corvette Wheels (C5–C8) | E5 Wheels';
+const description = 'Daytona Form Forged wheels (C5-C8) with Corvette-only 18x10 +58mm / 19x11 +59mm through 20x10 / 21x13 fitment. Gloss black, bronze brushed tint, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/daytona`;
+const ogImage = `${baseUrl}${DAYTONA_HERO_IMAGE}`;
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -75,7 +86,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -90,11 +101,11 @@ const breadcrumbSchema = JSON.stringify({
         </div>
 
         <h1 class="text-[16px] md:text-[20px] lg:text-[24px] font-sans tracking-[6px] md:tracking-[9px] lg:tracking-[12.8px] text-black text-center mb-8">
-            DAYTONA FORM FORGED WHEELS
+            DAYTONA FORM FORGED CORVETTE WHEELS (C5&ndash;C8)
         </h1>
 
         <p class="text-[16px] md:text-[24px] leading-[22px] md:leading-[30px] text-black/50 mb-12 md:mb-16 max-w-[1024px]">
-            The Daytona is the lightest wheel in our Form Forged Series &mdash; a 10-spoke design with a bold deep profile and precision engineering. Built exclusively  for Corvette fitments, it delivers uncompromising strength, reduced weight, and aggressive styling that's equally at home on the street or track.
+            Daytona Form Forged wheels (C5&ndash;C8) are hub-centric Corvette-only fitment&mdash;18x10 +58mm / 19x11 +59mm on <a href={GENERATIONS_C5_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5</a>, staggered 19/20 on <a href={GENERATIONS_C6_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C6</a> and <a href={GENERATIONS_C7_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C7</a>, and 19x9 / 20x11 or 20x10 / 21x13 on <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a>. Shop gloss black, titanium brushed tint, and bronze brushed tint in the <a href={shopDaytonaUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
         </p>
 
         <h2 class="text-center text-[14px] md:text-[20px] tracking-[2.8px] md:tracking-[4px] text-black/45 uppercase mb-8 md:mb-12">

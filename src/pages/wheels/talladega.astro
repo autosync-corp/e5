@@ -13,16 +13,25 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import {VETTE_GALLERY_IMAGE_1} from "@/pages/gallery/constants/Images.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import {
+    SHOP_ROUTE,
+    GENERATIONS_C8_ROUTE,
+    GENERATIONS_C8_Z06_ROUTE,
+    GENERATIONS_C8_ZR1_ROUTE,
+    GENERATIONS_C8_E_RAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
 const brushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
 const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
+const shopTalladegaUrl = `${SHOP_ROUTE}?series=${TALLADEGA_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
-const title = 'Talladega - E5 Forged Corvette Wheels | E5 Wheels';
-const description = 'The Talladega is a fully forged wheel featuring bold split Y-spoke design. Exclusively forged in the USA for C8 Z06, ZR1, and E-Ray. 5 premium finishes available.';
+const title = 'Talladega Fully Forged Corvette Wheels (C8) | E5 Wheels';
+const description = 'Talladega fully forged wheels (C8 Z06, ZR1, E-Ray) with Corvette-only 20x10 +25mm / 21x13 +20mm fitment. Brushed aluminum, gloss black, and podium finishes.';
 const canonicalUrl = `${baseUrl}/wheels/talladega`;
+const ogImage = `${baseUrl}${TALLADEGA_HERO}`;
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -51,7 +60,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -80,12 +89,12 @@ const breadcrumbSchema = JSON.stringify({
 
             <!-- Page Title -->
             <h1 class="text-[16px] md:text-[20px] lg:text-[24px] font-sans tracking-[6px] md:tracking-[9px] lg:tracking-[12.8px] text-black mb-8">
-                TALLADEGA E5 FORGED WHEELS
+                TALLADEGA FULLY FORGED CORVETTE WHEELS (C8)
             </h1>
 
             <!-- Description Text -->
             <p class="text-[14px] md:text-[17px] leading-[20px] md:leading-[24px] text-black/70 mb-4 max-w-[700px]">
-                The Talladega marks the foundation of the E5 Forged Series&mdash;a fully forged, performance-driven design that set the standard for everything that followed. Featuring a bold split Y-spoke, precision weight reduction, and a clean motorsport aesthetic, it delivers strength, balance, and driving confidence with unmistakable presence.
+                Talladega fully forged wheels are made in the USA for <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a> <a href={GENERATIONS_C8_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a>, <a href={GENERATIONS_C8_ZR1_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">ZR1</a>, and <a href={GENERATIONS_C8_E_RAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">E-Ray</a>&mdash;hub-centric 20x10 +25mm front and 21x13 +20mm rear. Shop brushed aluminum, gloss black, and podium finishes in the <a href={shopTalladegaUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
             </p>
 
             <!-- Exclusively Forged For -->

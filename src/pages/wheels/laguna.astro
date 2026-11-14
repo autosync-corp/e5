@@ -21,7 +21,17 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import { HOME_ROUTE, PROCESS_FORGED_ROUTE, GALLERY_WHEELS_ROUTE, GALLERY_VEHICLES_ROUTE } from "@/core/constants/Routes.ts";
+import {
+    HOME_ROUTE,
+    PROCESS_FORGED_ROUTE,
+    GALLERY_WHEELS_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    SHOP_ROUTE,
+    GENERATIONS_C8_ROUTE,
+    GENERATIONS_C8_Z06_ROUTE,
+    GENERATIONS_C8_ZR1_ROUTE,
+    GENERATIONS_C8_E_RAY_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
 // Build product URLs
@@ -31,25 +41,13 @@ const polishedAluminumUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Polished');
 const glossBlackUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Gloss Black');
 const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
 const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
+const shopLagunaUrl = `${SHOP_ROUTE}?series=${LAGUNA_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
-const title = 'Laguna - E5 Forged Corvette Wheels | E5 Wheels';
-const description = 'The Laguna is a fully forged wheel featuring a bold multi-spoke design. Exclusively forged in the USA for the C8 Corvette platform. 4 premium finishes available.';
+const title = 'Laguna Fully Forged Corvette Wheels (C8) | E5 Wheels';
+const description = 'Laguna fully forged wheels (C8 Z06, ZR1, E-Ray) with Corvette-only 20x10 +25mm / 21x13 +20mm fitment. Brushed aluminum, satin black, polished, and gloss black.';
 const canonicalUrl = `${baseUrl}/wheels/laguna`;
 const ogImage = `${baseUrl}${LAGUNA_HERO}`;
-// No "offers" block: every Laguna entry in the AutoSync catalog still has Price: null.
-// Publishing a placeholder price (e.g. "0") in Product schema risks Google flagging it as
-// invalid, or literally displaying "$0" in search results — add "offers" back once real
-// pricing is confirmed.
-const productSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "E5 Laguna Forged Corvette Wheel",
-  "brand": { "@type": "Brand", "name": "E5 Wheels" },
-  "description": description,
-  "url": canonicalUrl,
-  "image": ogImage
-});
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -63,7 +61,6 @@ const breadcrumbSchema = JSON.stringify({
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
-    <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
 
@@ -90,12 +87,12 @@ const breadcrumbSchema = JSON.stringify({
 
             <!-- Page Title -->
             <h1 class="text-[16px] md:text-[20px] lg:text-[24px] font-sans tracking-[6px] md:tracking-[9px] lg:tracking-[12.8px] text-black mb-8">
-                LAGUNA E5 FORGED WHEELS
+                LAGUNA FULLY FORGED CORVETTE WHEELS (C8)
             </h1>
 
             <!-- Description Text -->
             <p class="text-[14px] md:text-[17px] leading-[20px] md:leading-[24px] text-black/70 mb-4 max-w-[700px]">
-                The Laguna sharpens the E5 Forged Series with a bold multi-spoke design and an aggressive, motorsport-inspired stance. Still fully forged and made in the USA, its strategically placed weight cutouts keep it strong and lightweight while delivering a sharper edge to the lineup.
+                Laguna fully forged wheels are made in the USA for <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a> <a href={GENERATIONS_C8_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a>, <a href={GENERATIONS_C8_ZR1_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">ZR1</a>, <a href={GENERATIONS_C8_E_RAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">E-Ray</a>, and Grand Sport / X&mdash;hub-centric 20x10 +25mm front and 21x13 +20mm rear. Shop brushed aluminum, satin black, polished aluminum, and gloss black in the <a href={shopLagunaUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
             </p>
 
             <!-- Exclusively Forged For -->

@@ -14,25 +14,61 @@ import {
 } from "@/pages/wheels/constants/Wheels.ts";
 import Button from "@/core/components/Button.vue";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
-import {WHEELS_DAYTONA_ROUTE, WHEELS_SEBRING_ROUTE, WHEELS_SPEEDWAY_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
+import {
+    WHEELS_DAYTONA_ROUTE,
+    WHEELS_SEBRING_ROUTE,
+    WHEELS_SPEEDWAY_ROUTE,
+    WHEELS_ROUTE,
+    SHOP_ROUTE,
+    GENERATIONS_C5_ROUTE,
+    GENERATIONS_C6_ROUTE,
+    GENERATIONS_C7_ROUTE,
+    GENERATIONS_C8_ROUTE,
+} from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
+const shopFormForgedUrl = SHOP_ROUTE;
 const baseUrl = SITE_URL;
-const description = 'E5 Form Forged wheels &mdash; engineered with forged DNA and crafted through flow forming. Precision-fitted for Corvette C6, C7, and C8. Available in Sebring, Daytona, and Speedway.';
+const title = 'Form Forged Corvette Wheels (C5–C8) | E5 Wheels';
+const description = 'Form Forged Corvette wheels (C5-C8) in Daytona, Sebring, and Speedway. Staggered 18–21 inch Corvette-only fitment in gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/form-forged`;
+const ogImage = `${baseUrl}${FORM_FORGED_STUDIO_IMAGES[0]}`;
+const productGroupSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ProductGroup",
+  "name": "E5 Form Forged Corvette Wheels",
+  "brand": { "@type": "Brand", "name": "E5 Wheels" },
+  "description": description,
+  "url": canonicalUrl,
+  "image": ogImage,
+  "variesBy": [
+    "https://schema.org/model",
+    "https://schema.org/color",
+    "https://schema.org/size"
+  ],
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "550",
+    "highPrice": "1200",
+    "availability": "https://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "E5 Wheels" }
+  }
+});
 const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": `${baseUrl}/` },
-    { "@type": "ListItem", "position": 2, "name": "Wheels", "item": `${baseUrl}/wheels` },
+    { "@type": "ListItem", "position": 2, "name": "Wheels", "item": `${baseUrl}${WHEELS_ROUTE}` },
     { "@type": "ListItem", "position": 3, "name": "Form Forged", "item": canonicalUrl }
   ]
 });
 ---
 
-<MainLayout title="Form Forged Wheels | E5 Wheels" description={description} canonical={canonicalUrl}>
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productGroupSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
   </Fragment>
 
@@ -47,7 +83,7 @@ const breadcrumbSchema = JSON.stringify({
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
             <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged Series" class="invert h-[36px] md:h-[48px] lg:h-[60px] w-auto mb-6 md:mb-8" />
             <h1 class="font-['Franklin_Gothic_Heavy'] text-[28px] md:text-[44px] lg:text-[60px] leading-[32px] md:leading-[48px] lg:leading-[64px] tracking-[2px] md:tracking-[3px] lg:tracking-[4px] text-white uppercase mb-4 md:mb-6 max-w-[1100px]">
-                Form Forged Wheels
+                Form Forged Corvette Wheels (C5&ndash;C8)
             </h1>
             <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[2px] md:tracking-[3px] lg:tracking-[4px] leading-[20px] md:leading-[26px] text-white/85 uppercase max-w-[800px]">
                 Forged DNA. Flow-formed precision. Built for Corvette.
@@ -58,7 +94,7 @@ const breadcrumbSchema = JSON.stringify({
     <!-- Intro Section -->
     <section class="container-e5 text-center py-12 md:py-16 lg:py-20">
         <p class="text-[16px] md:text-[18px] lg:text-[20px] tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[32px] text-black/70 max-w-[900px] mx-auto">
-            Engineered with forged DNA and crafted through flow forming, our Form Forged Series balances strength, agility, and everyday drivability. Precision-fitted exclusively for Corvette C6, C7, and C8 platforms.
+            Form Forged Corvette wheels (C5&ndash;C8) are flow-formed for <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, and <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a>&mdash;hub-centric 18x10 / 19x11 on <a href={GENERATIONS_C5_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5</a> through staggered 19/20 and 20x10 / 21x13 on <a href={GENERATIONS_C6_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C6</a>, <a href={GENERATIONS_C7_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C7</a>, and <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a>. Shop gloss black, bronze brushed tint, titanium brushed tint, and dark bronze in the <a href={shopFormForgedUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
         </p>
     </section>
 

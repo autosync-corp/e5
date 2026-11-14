@@ -37,7 +37,11 @@ import {
     WHEELS_SEBRING_ROUTE,
     WHEELS_SPEEDWAY_ROUTE,
     SHOP_ROUTE,
-    PROCESS_FORM_FORGED_ROUTE
+    PROCESS_FORM_FORGED_ROUTE,
+    GENERATIONS_C8_ROUTE,
+    GENERATIONS_C8_STINGRAY_ROUTE,
+    GENERATIONS_C8_Z06_ROUTE,
+    GENERATIONS_C8_E_RAY_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
@@ -48,9 +52,10 @@ const titaniumBrushedUrl = '/shop/sebring-2p/titanium-black-lip';
 const shopSebring2pUrl = `${SHOP_ROUTE}?series=${SEBRING_2P_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
-const title = 'Sebring 2P - Form Forged Two-Piece Corvette Wheels | E5 Wheels';
-const description = 'The Sebring 2-Piece is the evolution of our most popular Form Forged design &mdash; reimagined in a true two-piece configuration with a distinct outer lip. Exclusively engineered for the C8 Corvette platform.';
+const title = 'Sebring 2P Form Forged Corvette Wheels (C8) | E5 Wheels';
+const description = 'Sebring 2P Form Forged wheels (C8) with Corvette-only 19x9 +35mm / 20x11 +45mm and 20x10 +25mm / 21x13 +20mm fitment. Gloss black, dark bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/sebring-2p`;
+const ogImage = `${baseUrl}${SEBRING_2P_HERO_IMAGE}`;
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -79,7 +84,7 @@ const breadcrumbSchema = JSON.stringify({
 });
 ---
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} ogType="product">
+<MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage} ogType="product">
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={productSchema}></script>
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -106,11 +111,11 @@ const breadcrumbSchema = JSON.stringify({
         </div>
 
         <h1 class="text-[16px] md:text-[20px] lg:text-[24px] font-sans tracking-[6px] md:tracking-[9px] lg:tracking-[12.8px] text-black text-center mb-8">
-            SEBRING 2-PIECE FORM FORGED WHEELS
+            SEBRING 2P FORM FORGED CORVETTE WHEELS (C8)
         </h1>
 
         <p class="text-[16px] md:text-[18px] lg:text-[20px] xl:text-[24px] leading-[24px] md:leading-[26px] lg:leading-[28px] xl:leading-[30px] text-black/50 mb-16 max-w-[1024px]">
-            The Sebring 2-Piece is the evolution of our most popular Form Forged design &mdash; now reimagined in a true two-piece configuration. The same intricate split-spoke mesh architecture, now paired with a distinct outer lip that adds depth, dimension, and an unmistakable presence. Engineered exclusively for the C8 Corvette platform, the Sebring 2-Piece delivers the rigidity and precision of the original with an elevated, motorsport-inspired aesthetic built for those who demand more.
+            Sebring 2P Form Forged wheels are a two-piece Corvette-only <a href={GENERATIONS_C8_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C8</a> fitment&mdash;19x9 +35mm / 20x11 +45mm on <a href={GENERATIONS_C8_STINGRAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Stingray</a>, and 20x10 +25mm / 21x13 +20mm on <a href={GENERATIONS_C8_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a> and <a href={GENERATIONS_C8_E_RAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">E-Ray</a>. Shop gloss black, dark bronze, and titanium brushed with black lip in the <a href={shopSebring2pUrl} class="text-e5-red hover:opacity-80 transition-opacity">shop</a>.
         </p>
 
         <h2 class="text-center text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] xl:tracking-[4px] text-black/45 uppercase mb-8">
