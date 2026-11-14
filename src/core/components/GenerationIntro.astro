@@ -76,49 +76,29 @@ const {
   styles,
   finishes,
   linkClass = 'text-e5-red hover:opacity-80 transition-opacity',
-  bodyClass,
-  wrapperClass = 'max-w-[1536px] mx-auto px-4 mb-8',
   application,
 } = Astro.props;
 
-const cardGridClass =
-  styles.length >= 5
-    ? 'grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5'
-    : styles.length === 1
-      ? 'grid grid-cols-1 max-w-[175px] mx-auto'
-      : styles.length === 2
-        ? 'grid grid-cols-2 max-w-[400px] mx-auto gap-3 md:gap-5'
-        : 'grid grid-cols-3 max-w-[525px] md:max-w-[650px] mx-auto gap-3 md:gap-5';
-
 const groupGridClass =
   groups.length >= 3
-    ? 'grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8'
+    ? 'grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 lg:gap-8'
     : groups.length === 2
-      ? 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8'
-      : 'grid grid-cols-1 gap-6 mb-6 md:mb-8';
+      ? 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 lg:gap-16'
+      : 'grid grid-cols-1 gap-6 max-w-[420px] mx-auto';
 
 const headingClass =
-  "text-[16px] md:text-[18px] lg:text-[20px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[22px] text-black uppercase mb-3 font-['Franklin_Gothic_Heavy']";
+  "text-[12px] md:text-[13px] lg:text-[14px] tracking-[2.2px] md:tracking-[2.6px] lg:tracking-[3px] leading-[18px] text-black uppercase mb-2 md:mb-3 font-['Franklin_Gothic_Heavy']";
 
-const styleNameClass = `font-['Franklin_Gothic_Heavy'] ${linkClass}`;
-
-function styleSeparator(index: number, length: number): string {
-  if (index === 0) return '';
-  if (index === length - 1) return length > 2 ? ', and ' : ' and ';
-  return ', ';
-}
-
-function splitFitment(line: string): { label: string; value: string } {
-  const match = line.match(/^(Front|Rear)\s+(.+)$/);
-  if (!match) return { label: '', value: line };
-  return { label: match[1], value: match[2] };
-}
+const sizeClass =
+  "text-[16px] md:text-[18px] lg:text-[21px] tracking-[0px] leading-[22px] md:leading-[24px] lg:leading-[28px] text-black font-['Franklin_Gothic_Heavy']";
 ---
 
-<div class:list={[bodyClass, wrapperClass, 'text-center']}>
-  <p class="mb-6 md:mb-8">{lead}</p>
+<div class="max-w-[1000px] mx-auto mb-8 md:mb-10 text-center text-black/70">
+  <p class="mb-8 md:mb-10 text-[16px] md:text-[18px] lg:text-[20px] font-normal tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px]">
+    {lead}
+  </p>
 
-  <div class={groupGridClass}>
+  <div class:list={[groupGridClass, 'mb-8 md:mb-10 lg:mb-12']}>
     {groups.map((group) => (
       <section class="min-w-0">
         <h2 class={headingClass}>{group.headingParts && group.headingParts.length > 0
@@ -126,21 +106,18 @@ function splitFitment(line: string): { label: string; value: string } {
           : group.headingHref
             ? <a href={group.headingHref} class={linkClass}>{group.heading}</a>
             : group.heading}</h2>
-        <dl class="space-y-1">
-          {[group.front, group.rear].map((line) => {
-            const { label, value } = splitFitment(line);
-            return (
-              <div>
-                <dt class={label ? "inline font-['Franklin_Gothic_Heavy']" : 'sr-only'}>{label || 'Size'}</dt>
-                <dd class:list={[label && 'inline', "font-['Franklin_Gothic_Heavy']"]}>
-                  {label ? ` ${value}` : value}
-                </dd>
-              </div>
-            );
-          })}
+        <dl class="space-y-0.5">
+          <div>
+            <dt class="sr-only">Front</dt>
+            <dd class={sizeClass}>{group.front}</dd>
+          </div>
+          <div>
+            <dt class="sr-only">Rear</dt>
+            <dd class={sizeClass}>{group.rear}</dd>
+          </div>
         </dl>
         {group.note && (
-          <p class="mt-2 text-[15px] md:text-[17px] lg:text-[19px] tracking-[0px] leading-[22px] md:leading-[26px] text-black/50">
+          <p class="mt-1.5 text-[13px] md:text-[14px] leading-[18px] text-black/50">
             {group.note}
           </p>
         )}
@@ -148,31 +125,29 @@ function splitFitment(line: string): { label: string; value: string } {
     ))}
   </div>
 
-  <p class="mb-3 md:mb-4">
-    <span class="font-['Franklin_Gothic_Demi']">Styles:</span>{' '}{styles.map((style, index) => (
-      <Fragment>{styleSeparator(index, styles.length)}<a href={style.href} class={styleNameClass}>{style.label}</a></Fragment>
-    ))}
-  </p>
-  <p class="mb-3 md:mb-4">{finishes}</p>
-  <p class="mb-6 md:mb-8">
-    <slot name="see" />
-  </p>
   {application && (
-    <ul class:list={[cardGridClass, 'mt-2']}>
+    <ul class="flex flex-wrap justify-center gap-x-2 gap-y-8 md:gap-x-12 md:gap-y-10 lg:gap-x-24 lg:gap-y-12 mb-8 md:mb-10 lg:mb-12">
       {styles.map((style) => (
-        <li>
+        <li class="w-[calc((100%-0.5rem*2)/3)] md:w-[190px] min-w-0">
           <a href={style.href} class="flex flex-col items-center hover:opacity-80 transition-opacity">
             {STYLE_IMAGES[style.label] && (
-              <div class="w-full max-w-[120px] md:max-w-[160px] aspect-square mb-2">
-                <img src={STYLE_IMAGES[style.label].src} alt={STYLE_IMAGES[style.label].alt} class="w-full h-full object-contain" width="160" height="160" />
+              <div class="w-full aspect-square mb-3 md:mb-4">
+                <img src={STYLE_IMAGES[style.label].src} alt={STYLE_IMAGES[style.label].alt} class="w-full h-full object-contain" width="190" height="190" />
               </div>
             )}
-            <p class="text-[14px] md:text-[16px] tracking-[1.4px] md:tracking-[2px] leading-[18px] md:leading-[20px] text-black uppercase mb-1 font-['Franklin_Gothic_Heavy']">{style.label}</p>
-            <p class="text-[13px] md:text-[15px] tracking-[0.3px] leading-[17px] md:leading-[19px] text-black/50 mb-1">{application}</p>
-            <p class="text-[12px] md:text-[14px] tracking-[0.6px] md:tracking-[1.4px] leading-[16px] md:leading-[18px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] whitespace-nowrap">Free Shipping</p>
+            <p class="text-[11px] md:text-[14px] lg:text-[15px] tracking-[1.2px] md:tracking-[2.4px] lg:tracking-[2.8px] leading-[14px] md:leading-[18px] text-black uppercase mb-1 font-['Franklin_Gothic_Heavy']">{style.label}</p>
+            <p class="text-[10px] md:text-[13px] lg:text-[14px] tracking-[0.1px] leading-[13px] md:leading-[18px] text-black/50 mb-1 md:whitespace-nowrap">{application}</p>
+            <p class="text-[10px] md:text-[12px] lg:text-[13px] tracking-[1.2px] md:tracking-[2.4px] leading-[14px] md:leading-[16px] text-e5-red uppercase font-['Franklin_Gothic_Heavy'] whitespace-nowrap">Free Shipping</p>
           </a>
         </li>
       ))}
     </ul>
   )}
+
+  <p class="mb-8 md:mb-10 text-[16px] md:text-[18px] lg:text-[20px] font-normal tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] lg:whitespace-nowrap">
+    {finishes}
+  </p>
+  <p class="text-[16px] md:text-[18px] lg:text-[20px] font-normal tracking-[0px] leading-[24px] md:leading-[28px] lg:leading-[30px] [&_a]:underline [&_a]:underline-offset-[6px] [&_a]:decoration-black/30">
+    <slot name="see" />
+  </p>
 </div>
