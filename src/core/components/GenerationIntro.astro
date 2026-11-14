@@ -47,6 +47,12 @@ const groupGridClass =
 
 const headingClass =
   "text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-black uppercase mb-3 font-['Franklin_Gothic_Demi']";
+
+function styleSeparator(index: number, length: number): string {
+  if (index === 0) return '';
+  if (index === length - 1) return length > 2 ? ', and ' : ' and ';
+  return ', ';
+}
 ---
 
 <div class:list={[bodyClass, wrapperClass, 'text-center']}>
@@ -55,21 +61,11 @@ const headingClass =
   <div class={groupGridClass}>
     {groups.map((group) => (
       <section class="min-w-0">
-        <h2 class={headingClass}>
-          {group.headingParts && group.headingParts.length > 0 ? (
-            group.headingParts.map((part) =>
-              part.href ? (
-                <a href={part.href} class={linkClass}>{part.label}</a>
-              ) : (
-                <span>{part.label}</span>
-              )
-            )
-          ) : group.headingHref ? (
-            <a href={group.headingHref} class={linkClass}>{group.heading}</a>
-          ) : (
-            group.heading
-          )}
-        </h2>
+        <h2 class={headingClass}>{group.headingParts && group.headingParts.length > 0
+          ? group.headingParts.map((part) => part.href ? <a href={part.href} class={linkClass}>{part.label}</a> : <span>{part.label}</span>)
+          : group.headingHref
+            ? <a href={group.headingHref} class={linkClass}>{group.heading}</a>
+            : group.heading}</h2>
         <dl class="space-y-1">
           <div>
             <dt class="sr-only">Front</dt>
@@ -90,12 +86,8 @@ const headingClass =
   </div>
 
   <p class="mb-3 md:mb-4">
-    Styles:{' '}
-    {styles.map((style, index) => (
-      <>
-        {index > 0 && (index === styles.length - 1 ? (styles.length > 2 ? ', and ' : ' and ') : ', ')}
-        <a href={style.href} class={linkClass}>{style.label}</a>
-      </>
+    Styles:{' '}{styles.map((style, index) => (
+      <Fragment>{styleSeparator(index, styles.length)}<a href={style.href} class={linkClass}>{style.label}</a></Fragment>
     ))}
   </p>
   <p class="mb-3 md:mb-4">{finishes}</p>
