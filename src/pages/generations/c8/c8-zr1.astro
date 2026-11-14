@@ -15,6 +15,8 @@ import {
     SONOMA_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 
@@ -56,12 +58,28 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Main Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                C8 ZR1 Wheels (2025&ndash;2026)
-            </h1>
-            <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4">
-                C8 ZR1 wheels (2025&ndash;2026) are E5 Forged for Corvette-only fitment&mdash;hub-centric 20x10.5 +25mm front and 21x13 +20mm rear. Choose <a href={WHEELS_TALLADEGA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Talladega</a> or <a href={WHEELS_SONOMA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sonoma</a> in brushed aluminum, or browse ZR1 builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=ZR1`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
-            </p>
+            <GenerationHeading
+                title="C8 ZR1 Wheels"
+                years="2025–2026"
+                class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']"
+            />
+            <GenerationIntro
+                lead="C8 ZR1 wheels (2025–2026) are E5 Forged for Corvette-only hub-centric fitment."
+                groups={[
+                    { heading: 'ZR1', front: 'Front 20" × 10.5" +25mm', rear: 'Rear 21" × 13" +20mm' },
+                ]}
+                styles={[
+                    { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
+                    { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
+                ]}
+                finishes="Available in brushed aluminum"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+                wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+            >
+                <Fragment slot="see">
+                    See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C8&trim=ZR1`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
+                </Fragment>
+            </GenerationIntro>
         </section>
 
         <!-- E5 FORGED Logo Section -->

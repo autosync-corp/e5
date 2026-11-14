@@ -9,6 +9,8 @@ import {
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const baseUrl = SITE_URL;
 const title = 'C5 Corvette Wheels (1997–2004) | E5 Wheels';
@@ -43,12 +45,25 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- Main Title and Description -->
     <section class="container-e5 py-8 md:py-12 lg:py-16 text-center">
-      <h1 class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']">
-        C5 Corvette Wheels (1997&ndash;2004)
-      </h1>
-      <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1276px] mx-auto mb-4 md:mb-6 px-4">
-        C5 Corvette wheels (1997&ndash;2004) are Form Forged for Base and Z06 only&mdash;hub-centric 18x10 +58mm front and 19x11 +59mm rear. Shop <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a> in gloss black, bronze brushed tint, and titanium brushed tint, explore <a href={GENERATIONS_C5_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5 Z06</a> fitment, or see C5s in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
-      </p>
+      <GenerationHeading
+        title="C5 Corvette Wheels"
+        years="1997–2004"
+        class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']"
+      />
+      <GenerationIntro
+        lead="C5 Corvette wheels (1997–2004) are Form Forged for Base and Z06 only—hub-centric fitment."
+        groups={[
+          { heading: 'Base & Z06', front: 'Front 18" × 10" +58mm', rear: 'Rear 19" × 11" +59mm' },
+        ]}
+        styles={[{ href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' }]}
+        finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
+        bodyClass="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70"
+        wrapperClass="max-w-[1276px] mx-auto mb-4 md:mb-6 px-4"
+      >
+        <Fragment slot="see">
+          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a> and on the <a href={GENERATIONS_C5_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5 Z06</a> page.
+        </Fragment>
+      </GenerationIntro>
       <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase">
         Featured C5 Model
       </p>

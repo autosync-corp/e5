@@ -18,6 +18,8 @@ import {
     SPEEDWAY_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 // Shop URLs with proper sizes (Grand Sport uses first detail section sizes: 19" x 10" +30mm / 20" x 12" +50mm)
 const speedwayTitaniumUrl = buildWheelUrl(SPEEDWAY_BRAND_NAME, 'Titanium Brushed Tint', 'C6', 'Grand Sport', '19" x 10" +30mm', '20" x 12" +50mm');
@@ -67,12 +69,29 @@ const breadcrumbSchema = JSON.stringify({
 
         <!-- Title and Description -->
         <section class="container-e5 py-12 md:py-16 lg:py-20 text-center">
-            <h1 class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']">
-                C6 Grand Sport Wheels (2010&ndash;2013)
-            </h1>
-            <p class="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70 max-w-[1536px] mx-auto px-4 mb-8">
-                C6 Grand Sport wheels (2010&ndash;2013) are Form Forged for Corvette-only widebody fitment&mdash;hub-centric 19x10 +30mm front and 20x12 +50mm rear. Choose <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, or <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> in gloss black, bronze brushed tint, and titanium brushed tint, or browse Grand Sport builds in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C6&trim=Grand Sport`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
-            </p>
+            <GenerationHeading
+                title="C6 Grand Sport Wheels"
+                years="2010–2013"
+                class="text-[48px] md:text-[64px] lg:text-[79px] tracking-[0px] leading-[48px] md:leading-[56px] lg:leading-[60px] text-black uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Heavy']"
+            />
+            <GenerationIntro
+                lead="C6 Grand Sport wheels (2010–2013) are Form Forged for Corvette-only widebody hub-centric fitment."
+                groups={[
+                    { heading: 'Grand Sport', front: 'Front 19" × 10" +30mm', rear: 'Rear 20" × 12" +50mm' },
+                ]}
+                styles={[
+                    { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
+                    { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
+                    { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
+                ]}
+                finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
+                bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[32px] lg:leading-[35px] text-black/70"
+                wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
+            >
+                <Fragment slot="see">
+                    See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C6&trim=Grand Sport`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a>.
+                </Fragment>
+            </GenerationIntro>
         </section>
 
         <!-- Three Wheel Options -->

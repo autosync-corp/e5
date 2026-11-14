@@ -1,0 +1,97 @@
+---
+export interface HeadingPart {
+  label: string;
+  href?: string;
+}
+
+export interface FitmentGroup {
+  heading: string;
+  headingHref?: string;
+  headingParts?: HeadingPart[];
+  front: string;
+  rear: string;
+  note?: string;
+}
+
+export interface StyleLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  lead: string;
+  groups: FitmentGroup[];
+  styles: StyleLink[];
+  finishes: string;
+  linkClass?: string;
+  bodyClass: string;
+  wrapperClass?: string;
+}
+
+const {
+  lead,
+  groups,
+  styles,
+  finishes,
+  linkClass = 'text-e5-red hover:opacity-80 transition-opacity',
+  bodyClass,
+  wrapperClass = 'max-w-[1536px] mx-auto px-4 mb-8',
+} = Astro.props;
+
+const groupGridClass =
+  groups.length >= 3
+    ? 'grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8'
+    : groups.length === 2
+      ? 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8'
+      : 'grid grid-cols-1 gap-6 mb-6 md:mb-8';
+
+const headingClass =
+  "text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-black uppercase mb-3 font-['Franklin_Gothic_Demi']";
+
+function styleSeparator(index: number, length: number): string {
+  if (index === 0) return '';
+  if (index === length - 1) return length > 2 ? ', and ' : ' and ';
+  return ', ';
+}
+---
+
+<div class:list={[bodyClass, wrapperClass, 'text-center']}>
+  <p class="mb-6 md:mb-8">{lead}</p>
+
+  <div class={groupGridClass}>
+    {groups.map((group) => (
+      <section class="min-w-0">
+        <h2 class={headingClass}>{group.headingParts && group.headingParts.length > 0
+          ? group.headingParts.map((part) => part.href ? <a href={part.href} class={linkClass}>{part.label}</a> : <span>{part.label}</span>)
+          : group.headingHref
+            ? <a href={group.headingHref} class={linkClass}>{group.heading}</a>
+            : group.heading}</h2>
+        <dl class="space-y-1">
+          <div>
+            <dt class="sr-only">Front</dt>
+            <dd>{group.front}</dd>
+          </div>
+          <div>
+            <dt class="sr-only">Rear</dt>
+            <dd>{group.rear}</dd>
+          </div>
+        </dl>
+        {group.note && (
+          <p class="mt-2 text-[14px] md:text-[16px] lg:text-[18px] tracking-[0px] leading-[20px] md:leading-[24px] text-black/50">
+            {group.note}
+          </p>
+        )}
+      </section>
+    ))}
+  </div>
+
+  <p class="mb-3 md:mb-4">
+    Styles:{' '}{styles.map((style, index) => (
+      <Fragment>{styleSeparator(index, styles.length)}<a href={style.href} class={linkClass}>{style.label}</a></Fragment>
+    ))}
+  </p>
+  <p class="mb-3 md:mb-4">{finishes}</p>
+  <p>
+    <slot name="see" />
+  </p>
+</div>

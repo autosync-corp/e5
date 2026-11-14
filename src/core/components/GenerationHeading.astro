@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  years?: string;
+  class?: string;
+}
+
+const { title, years, class: className } = Astro.props;
+
+const eyebrowClass =
+  "block whitespace-nowrap text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-black uppercase mb-3 md:mb-4 font-['Franklin_Gothic_Demi']";
+---
+
+<h1 class:list={[className, 'flex flex-col items-center']}>
+  {years && <span class={eyebrowClass}>{years}</span>}
+  <span class="block">{title}</span>
+</h1>

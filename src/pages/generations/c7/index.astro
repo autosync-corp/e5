@@ -13,6 +13,8 @@ import {
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import GenerationIntro from '@/core/components/GenerationIntro.astro';
+import GenerationHeading from '@/core/components/GenerationHeading.astro';
 
 const baseUrl = SITE_URL;
 const title = 'C7 Corvette Wheels (2014–2019) | E5 Wheels';
@@ -47,12 +49,39 @@ const breadcrumbSchema = JSON.stringify({
 
     <!-- Main Title and Description -->
     <section class="container-e5 py-8 md:py-12 lg:py-16 text-center">
-      <h1 class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']">
-        C7 Corvette Wheels (2014&ndash;2019)
-      </h1>
-      <p class="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70 max-w-[1276px] mx-auto mb-4 md:mb-6 px-4">
-        C7 Corvette wheels (2014&ndash;2019) are Form Forged for <a href={GENERATIONS_C7_STINGRAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Stingray</a>, <a href={GENERATIONS_C7_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Z06</a>, and <a href={GENERATIONS_C7_GRAND_SPORT_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Grand Sport</a> only&mdash;staggered 19x9.5 / 20x11 on Stingray, and 19x10 / 20x12 on Z06 and Grand Sport. Shop <a href={WHEELS_DAYTONA_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Daytona</a>, <a href={WHEELS_SEBRING_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Sebring</a>, and <a href={WHEELS_SPEEDWAY_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">Speedway</a> in gloss black, bronze brushed tint, and titanium brushed tint, then see them on cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7`} class="text-e5-red hover:opacity-80 transition-opacity">C7 gallery</a>.
-      </p>
+      <GenerationHeading
+        title="C7 Corvette Wheels"
+        years="2014–2019"
+        class="text-[36px] md:text-[56px] lg:text-[72px] tracking-[0px] leading-[40px] md:leading-[56px] lg:leading-[68px] text-black uppercase mb-4 md:mb-6 font-['Franklin_Gothic_Heavy']"
+      />
+      <GenerationIntro
+        lead="C7 Corvette wheels (2014–2019) are Form Forged for Stingray, Z06, and Grand Sport only, with staggered 19/20 fitment."
+        groups={[
+          { heading: 'Stingray', headingHref: GENERATIONS_C7_STINGRAY_ROUTE, front: 'Front 19" × 9.5" +53mm', rear: 'Rear 20" × 11" +76mm' },
+          {
+            heading: 'Z06 and Grand Sport',
+            headingParts: [
+              { label: 'Z06', href: GENERATIONS_C7_Z06_ROUTE },
+              { label: ' and ' },
+              { label: 'Grand Sport', href: GENERATIONS_C7_GRAND_SPORT_ROUTE },
+            ],
+            front: 'Front 19" × 10" +30mm',
+            rear: 'Rear 20" × 12" +50mm',
+          },
+        ]}
+        styles={[
+          { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
+          { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
+          { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
+        ]}
+        finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
+        bodyClass="text-[16px] md:text-[22px] lg:text-[28px] tracking-[0px] leading-[24px] md:leading-[30px] lg:leading-[36px] text-black/70"
+        wrapperClass="max-w-[1276px] mx-auto mb-4 md:mb-6 px-4"
+      >
+        <Fragment slot="see">
+          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C7`} class="text-e5-red hover:opacity-80 transition-opacity">C7 gallery</a>.
+        </Fragment>
+      </GenerationIntro>
       <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase">
         Shop Wheels by C7 Model
       </p>
