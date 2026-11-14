@@ -5,6 +5,7 @@ export const TALLADEGA_SMOKED_POLISHED = "/assets/images/wheels/c5130d4e56f6e243
 export const TALLADEGA_SATIN_GREY = "/assets/images/wheels/5aadb0394c4c49db86d0f64235e3f00404c7faf7.webp";
 export const TALLADEGA_PODIUM_BRONZE = "/assets/images/wheels/edd03fa4648dfa8d219b2e1dd0aef9cc737c3b27.webp";
 export const TALLADEGA_GLOSS_BLACK = "/assets/images/wheels/afdec958cf713eb929ae510752b31594f43c1a4f.webp";
+export const TALLADEGA_BRUSHED_ALUMINUM = "/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp";
 export const TALLADEGA_PODIUM_GOLD = "/assets/images/wheels/464d2ace3214351d17a75848ec4bddc985f8c836.webp";
 export const TALLADEGA_EXO = "/assets/images/talladega-exo.webp";
 export const TALLADEGA_HERO = "/assets/images/wheels/talladega/70359cfd82b50a1c47e7171df936e40fdaf000fb.webp";
@@ -208,6 +209,7 @@ export const SONOMA_DETAIL_2 = "/assets/images/sonoma/sonoma_detail_2.webp";
 export const SONOMA_DETAIL_3 = "/assets/images/sonoma/sonoma_detail_3.webp";
 export const SONOMA_DETAIL_4 = "/assets/images/sonoma/sonoma_detail_4.webp";
 
+export const SONOMA_BRUSHED_ALUMINUM = "/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp";
 export const SONOMA_BRONZE_BRUSHED_TINT = "/assets/images/wheels/sonoma_bronze_brushed_tint.webp";
 export const SONOMA_GLOSS_BLACK = "/assets/images/wheels/sonoma_gloss_black.webp";
 export const SONOMA_TITANIUM_BRUSHED_TINT = "/assets/images/wheels/sonoma_titanium_brushed_tint.webp";
