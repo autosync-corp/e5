@@ -1,6 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import { SITE_URL } from '@/core/constants/Site.ts';
+import E5ForgedDesigns from '@/core/components/E5ForgedDesigns.astro';
 
 const baseUrl = SITE_URL;
 const title = 'E5 Forged Process - USA-Made Corvette Wheels | E5 Wheels';
@@ -296,5 +297,7 @@ const breadcrumbSchema = JSON.stringify({
 
       </div>
     </section>
+
+    <E5ForgedDesigns />
   </div>
 </MainLayout>

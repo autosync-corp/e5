@@ -14,12 +14,9 @@ import {
     LAGUNA_SHOT_3,
     LAGUNA_VETTE_GALLERY,
     LAGUNA_WHEEL_GALLERY_BANNER,
-    TALLADEGA_LOGO,
-    TALLADEGA_BRAND_NAME,
-    SONOMA_LOGO,
-    SONOMA_BRAND_NAME
 } from "@/pages/wheels/constants/Wheels.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
+import E5ForgedDesigns from '@/core/components/E5ForgedDesigns.astro';
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
 import {
     HOME_ROUTE,
@@ -39,8 +36,6 @@ const brushedAluminumUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Brushed Aluminum');
 const satinBlackUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Satin Black');
 const polishedAluminumUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Polished');
 const glossBlackUrl = buildWheelUrl(LAGUNA_BRAND_NAME, 'Gloss Black');
-const talladegaBrushedAluminumUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum');
-const sonomaBrushedAluminumUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum');
 const shopLagunaUrl = `${SHOP_ROUTE}?series=${LAGUNA_BRAND_NAME}`;
 
 const baseUrl = SITE_URL;
@@ -309,42 +304,7 @@ const breadcrumbSchema = JSON.stringify({
         </div>
     </section>
 
-    <!-- Related Wheels - Talladega + Sonoma (same E5 Forged family) -->
-    <section class="bg-white py-8 md:py-12">
-        <div class="max-w-[1400px] mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Talladega -->
-                <a href={talladegaBrushedAluminumUrl} class="block hover:opacity-80 transition-opacity">
-                    <div class="text-center w-full md:w-[70%] mx-auto">
-                        <img src="/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp" alt="Talladega" class="w-full h-auto mb-4" />
-                        <img src={TALLADEGA_LOGO} alt="TALLADEGA" class="mx-auto h-[34px] md:h-[38px] mb-4" />
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
-                        <div class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block">
-                            SHOP FITMENT
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Sonoma -->
-                <a href={sonomaBrushedAluminumUrl} class="block hover:opacity-80 transition-opacity">
-                    <div class="text-center w-full md:w-[70%] mx-auto">
-                        <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto mb-4" />
-                        <img src={SONOMA_LOGO} alt="SONOMA" class="mx-auto h-[42px] md:h-[46px] mb-4" />
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">EXCLUSIVELY FOR C8 Z06, ZR1, E-RAY.</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
-                        <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
-                        <div class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block">
-                            SHOP FITMENT
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
+    <E5ForgedDesigns />
 
     <!-- Footer Red Section -->
     <section class="bg-e5-red text-white py-6">
