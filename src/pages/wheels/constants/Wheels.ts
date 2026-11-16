@@ -44,6 +44,8 @@ export const DAYTONA_TITANIUM_BRUSHED_TINT = "/assets/images/wheels/d4565cf05e3f
 export const DAYTONA_BRONZE_BRUSHED_TINT = "/assets/images/wheels/13015d50313f3d5f39cd2616f369d0fd2c044010.webp";
 export const DAYTONA_GLOSS_BLACK_BEAUTY_RIGHT = "/assets/images/560ac3f8b1099b2daae4a94ca20ee27ccfd3e19c.webp";
 export const DAYTONA_TITANIUM_BRUSHED_TINT_FACE = "/assets/images/1c2da75e73ddd418dd5781f30e936d44508e695a.webp";
+/** Catalog 3/4 studio render (Titanium Brushed). Closest machined-silver finish; no Silver Machined asset exists. */
+export const DAYTONA_TITANIUM_BRUSHED_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Daytona_TIU_Titanium_Brushed_5-lug_0001.webp";
 export const DAYTONA_BRONZE_BRUSHED_TINT_BEAUTY_LEFT = "/assets/images/f64453e3ffa137fa97c81ca409e6d07b0e2a2f8d.webp";
 
 // Daytona Page Assets
@@ -105,6 +107,8 @@ export const SPEEDWAY_DETAIL_2 = "/assets/images/speedway/speedway_detail_2.webp
 export const SPEEDWAY_DETAIL_3 = "/assets/images/speedway/speedway_detail_3.webp";
 export const SPEEDWAY_DETAIL_4 = "/assets/images/speedway/speedway_detail_4.webp";
 export const SPEEDWAY_TITANIUM_BRUSHED = "/assets/images/wheels/9b42939207b0a1af6d11b3b9a2835f0304c9cedb.webp";
+/** Catalog 3/4 studio render (Titanium Brushed Tint). Closest machined-silver finish; no Silver Machined asset exists. */
+export const SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Speedway_TIU_Titanium_Brushed-Tint_5-lug_0001.webp";
 export const SPEEDWAY_TITANIUM_BRUSHED_TINT_BEAUTY_LEFT = "/assets/images/wheels/2cb17a45657fa348958b15419df6f796aa26a518.webp";
 export const SPEEDWAY_BRONZE = "/assets/images/wheels/55e2dad1e72a82c3b811737504db985db4ec5353.webp";
 export const SPEEDWAY_GLOSS_BLACK = "/assets/images/wheels/cd19461c451031cb11b5e748b6774ae80b22a516.webp";
@@ -142,6 +146,8 @@ export const SEBRING_DETAIL_4 = "/assets/images/sebring/sebring_detail_4.webp";
 export const SEBRING_BRONZE = "/assets/images/wheels/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp";
 export const SEBRING_GLOSS_BLACK = "/assets/images/wheels/57612e656f7cb177dd66a7b9e8dbaf32845675c7.webp";
 export const SEBRING_TITANIUM_BRUSHED = "/assets/images/wheels/d442c91c12ba3d5e69ac89b01731b5399b849d1f.webp";
+/** Catalog 3/4 studio render (Titanium Brushed). Closest machined-silver finish; no Silver Machined asset exists. */
+export const SEBRING_TITANIUM_BRUSHED_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring_TIU_Titanium_Brushed_5-lug_0001.webp";
 export const SEBRING_WHEELS = [
     {
         image: SEBRING_BRONZE,
