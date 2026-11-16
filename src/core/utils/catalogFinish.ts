@@ -1,5 +1,5 @@
 import { toSlug } from '@/core/utils/wheelUrl';
-import { priceRangeFromProducts } from '@/core/utils/priceDisplay';
+import { setRangeFromProducts } from '@/core/utils/priceDisplay';
 
 export function catalogFinishName(wheel: {
   Finish?: string | null;
@@ -44,7 +44,7 @@ export function wheelsMatchingFinish<
 export function offerRangeFromProducts(
   products: Array<{ Price?: number | null }>
 ): { lowPrice: string; highPrice: string } | null {
-  const range = priceRangeFromProducts(products);
+  const range = setRangeFromProducts(products);
   if (!range) return null;
   return {
     lowPrice: String(range.min),

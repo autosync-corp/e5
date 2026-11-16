@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { fetchWheels, getWheelImageUrl, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { formatPriceRangeOrCall, priceRangeFromProducts } from '@/core/utils/priceDisplay';
+import { formatSetPriceRangeOrCall, priceRangeFromProducts } from '@/core/utils/priceDisplay';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
@@ -258,7 +258,7 @@ const productsBySeries = computed(() => {
             frontSizes: finishFrontSizes,
             rearSizes: finishRearSizes,
             priceRange: priceRangeFromProducts(finishProducts),
-            priceLabel: formatPriceRangeOrCall(finishProducts),
+            priceLabel: formatSetPriceRangeOrCall(finishProducts),
           };
         }).filter(variation => {
           // For staggered fitment, only show finishes that have BOTH front AND rear sizes available
@@ -273,7 +273,7 @@ const productsBySeries = computed(() => {
         frontSizes,
         rearSizes,
         priceRange: priceRangeFromProducts(products),
-        priceLabel: formatPriceRangeOrCall(products),
+        priceLabel: formatSetPriceRangeOrCall(products),
       };
     }).filter(series => {
       // Hide series that have no finish variations after filtering

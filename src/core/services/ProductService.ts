@@ -7,6 +7,7 @@ import {
 } from '@/core/utils/priceDisplay';
 import { applyOfficialPrices } from '@/core/utils/officialPricing';
 import { wheelsMatchingFinish, offerRangeFromProducts } from '@/core/utils/catalogFinish';
+import { mergeSupplementalWheels } from '@/core/utils/supplementalWheels';
 
 export { formatPriceOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
 
@@ -172,7 +173,7 @@ async function fetchAllWheelsRaw(): Promise<WheelsApiResponse> {
 function withOfficialPrices(response: WheelsApiResponse): WheelsApiResponse {
   return {
     ...response,
-    Wheels: applyOfficialPrices(response.Wheels),
+    Wheels: applyOfficialPrices(mergeSupplementalWheels(response.Wheels)),
   };
 }
 

@@ -4,7 +4,7 @@ import E5ForgedDesigns from '@/core/components/E5ForgedDesigns.astro';
 import { SITE_URL } from '@/core/constants/Site.ts';
 import { GALLERY_WHEELS_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes.ts';
 import { fetchWheels, getWheelImageUrl, type WheelProduct } from '@/core/services/ProductService';
-import { formatPriceRangeOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
+import { formatSetPriceRangeOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
 import { offerRangeFromProducts } from '@/core/utils/catalogFinish';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import {
@@ -63,7 +63,7 @@ try {
       image: finish.image,
       href: finish.href,
       call: finish.call,
-      priceLabel: formatPriceRangeOrCall(finish.products),
+      priceLabel: formatSetPriceRangeOrCall(finish.products),
     }));
     ordered.sort((a, b) => {
       if (a.name.toLowerCase().includes('brushed')) return -1;
