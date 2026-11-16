@@ -260,6 +260,7 @@ export const GT03_WORDMARK = "/assets/images/logos/gt-03-wordmark.png";
 export const GT04_WORDMARK = "/assets/images/logos/gt-04-wordmark.png";
 export const FORM_FORGED_LOGO = "/assets/images/wheels/48b34752d7bd939ae556a6e8de9fa0837077ec48.webp";
 export const FORM_FORGED_WORDMARK = "/assets/images/logos/form-forged.png";
+export const TWO_P_FORGED_LOGO = "/assets/images/logos/2p-forged.png";
 export const FORM_FORGED_LOGO_BLACK = "/assets/images/form-forged-logo-black.webp";
 export const FORM_FORGED_GROUP = "/assets/images/form-forged-group.webp";
 export const VPS_FORGED_LOGO = "/assets/images/vossen_forged_banner.webp";

@@ -54,6 +54,12 @@ const wheelsTitleOrder = [...navbar.matchAll(/<(?:div class="(?:wheel-group-titl
 assert('desktop wheels order', wheelsTitleOrder.slice(0, 4).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
 assert('mobile wheels order', wheelsTitleOrder.slice(4, 8).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
 assert('2-PIECE relabeled', navbar.includes('2-PIECE'), false);
+assert('menu stays text 2P FORGED', navbar.includes('>2P FORGED<'), true);
+
+const sebring2p = readFileSync(join(root, 'src/pages/wheels/sebring-2p.astro'), 'utf8');
+assert('sebring-2p uses 2P logo', sebring2p.includes('TWO_P_FORGED_LOGO'), true);
+assert('sebring-2p alt 2P Forged', sebring2p.includes('alt="2P Forged"'), true);
+assert('sebring-2p no FORM series lockup', sebring2p.includes('FORM_FORGED_WORDMARK'), false);
 assert('desktop GT.01 link', navbar.includes('WHEELS_GT_01_ROUTE'), true);
 assert('mobile GT.04 link', navbar.includes('WHEELS_GT_04_ROUTE'), true);
 

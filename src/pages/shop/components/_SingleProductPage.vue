@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, hasRealPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE, WHEELS_GT_01_ROUTE } from '@/core/constants/Routes';
+import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE, WHEELS_GT_01_ROUTE, WHEELS_SEBRING_2P_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
@@ -623,14 +623,25 @@ const brandLogo = computed(() => {
     heightClass: 'series-logo-shop-e5',
   };
 
-  // Form Forged wheels: Daytona, Sebring, Sebring 2P, Speedway
+  // 2P Forged: Sebring 2P
+  // Form Forged: Daytona, Sebring, Speedway
   // E5 Forged: Sonoma, Talladega, Laguna
   // GT Forged: GT.01–GT.04
   const model = selectedProduct.value.Model?.toLowerCase() || '';
   const formForgedModels = ['daytona', 'sebring', 'speedway'];
 
-  const isFormForged = formForgedModels.some(modelName => model.includes(modelName));
+  const is2pForged = model.includes('2p');
+  const isFormForged = !is2pForged && formForgedModels.some(modelName => model.includes(modelName));
   const isGtForged = /^gt[\s.\-_]?0[1-4]/.test(model);
+
+  if (is2pForged) {
+    return {
+      src: '/assets/images/logos/2p-forged.png',
+      alt: '2P Forged',
+      href: WHEELS_SEBRING_2P_ROUTE,
+      heightClass: 'series-logo-shop-2p',
+    };
+  }
 
   if (isFormForged) {
     return {
