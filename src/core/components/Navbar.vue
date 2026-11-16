@@ -147,6 +147,19 @@ const closeMiniCart = () => {
             <!-- Dropdown Menu -->
             <div v-if="isWheelsDropdownOpen" class="dropdown-menu wheels-dropdown">
               <div class="wheel-group">
+                <div class="wheel-group-title">GT FORGED</div>
+                <a :href="WHEELS_GT_01_ROUTE" class="dropdown-item">GT.01</a>
+                <a :href="WHEELS_GT_02_ROUTE" class="dropdown-item">GT.02</a>
+                <a :href="WHEELS_GT_03_ROUTE" class="dropdown-item">GT.03</a>
+                <a :href="WHEELS_GT_04_ROUTE" class="dropdown-item">GT.04</a>
+              </div>
+              <div class="wheel-group">
+                <div class="wheel-group-title">E5 FORGED</div>
+                <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
+                <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
+                <a :href="WHEELS_LAGUNA_ROUTE" class="dropdown-item">LAGUNA</a>
+              </div>
+              <div class="wheel-group">
                 <div class="wheel-group-title">FORM FORGED</div>
                 <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
                 <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
@@ -155,19 +168,6 @@ const closeMiniCart = () => {
               <div class="wheel-group">
                 <div class="wheel-group-title">2-PIECE</div>
                 <a :href="WHEELS_SEBRING_2P_ROUTE" class="dropdown-item">SEBRING 2P</a>
-              </div>
-              <div class="wheel-group">
-                <div class="wheel-group-title">FULL FORGED</div>
-                <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
-                <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
-                <a :href="WHEELS_LAGUNA_ROUTE" class="dropdown-item">LAGUNA</a>
-              </div>
-              <div class="wheel-group">
-                <div class="wheel-group-title">GT FORGED</div>
-                <a :href="WHEELS_GT_01_ROUTE" class="dropdown-item">GT.01</a>
-                <a :href="WHEELS_GT_02_ROUTE" class="dropdown-item">GT.02</a>
-                <a :href="WHEELS_GT_03_ROUTE" class="dropdown-item">GT.03</a>
-                <a :href="WHEELS_GT_04_ROUTE" class="dropdown-item">GT.04</a>
               </div>
             </div>
           </div>
@@ -311,6 +311,19 @@ const closeMiniCart = () => {
           </div>
           <div v-if="isWheelsDropdownOpen" class="mobile-submenu-items">
             <div class="mobile-wheel-group">
+              <div class="mobile-wheel-title">GT FORGED</div>
+              <a :href="WHEELS_GT_01_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.01</a>
+              <a :href="WHEELS_GT_02_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.02</a>
+              <a :href="WHEELS_GT_03_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.03</a>
+              <a :href="WHEELS_GT_04_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.04</a>
+            </div>
+            <div class="mobile-wheel-group">
+              <div class="mobile-wheel-title">E5 FORGED</div>
+              <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
+              <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
+              <a :href="WHEELS_LAGUNA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">LAGUNA</a>
+            </div>
+            <div class="mobile-wheel-group">
               <div class="mobile-wheel-title">FORM FORGED</div>
               <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
               <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
@@ -319,19 +332,6 @@ const closeMiniCart = () => {
             <div class="mobile-wheel-group">
               <div class="mobile-wheel-title">2-PIECE</div>
               <a :href="WHEELS_SEBRING_2P_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING 2P</a>
-            </div>
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">FULL FORGED</div>
-              <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
-              <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
-              <a :href="WHEELS_LAGUNA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">LAGUNA</a>
-            </div>
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">GT FORGED</div>
-              <a :href="WHEELS_GT_01_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.01</a>
-              <a :href="WHEELS_GT_02_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.02</a>
-              <a :href="WHEELS_GT_03_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.03</a>
-              <a :href="WHEELS_GT_04_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.04</a>
             </div>
           </div>
         </div>
