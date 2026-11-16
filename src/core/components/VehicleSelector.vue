@@ -312,7 +312,7 @@ const vehicleDisplay = computed(() => {
 
 <template>
   <div class="vehicle-selector">
-    <div class="selector-header">
+    <div v-if="!selectedVehicle" class="selector-header">
       <h2 class="selector-title">SELECT YOUR VEHICLE</h2>
       <p class="selector-subtitle">Find wheels that fit your Corvette perfectly</p>
     </div>
@@ -367,15 +367,15 @@ const vehicleDisplay = computed(() => {
 }
 
 .selector-header {
-  @apply hidden;
+  @apply mb-3;
 }
 
 .selector-title {
-  @apply hidden;
+  @apply font-franklin-demi text-lg tracking-wider text-black uppercase;
 }
 
 .selector-subtitle {
-  @apply hidden;
+  @apply font-franklin-book text-sm text-black/70 mb-3;
 }
 
 .dropdowns-container {

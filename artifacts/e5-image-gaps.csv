@@ -1,0 +1,5 @@
+Model,Finish,PNs,Current image state
+GT.01,Gloss Black,E5GT011910E30565BK E5GT011990E35520BK E5GT012010E25520BK E5GT012011E45520BK E5GT012012E50565BK E5GT012113E20520BK,filename finish code is AB (PNs are BK; E5/GT.01_AB_Gloss_Black_5-lug_0001.webp)
+GT.01,Satin Black,E5GT011910E30565SB E5GT011990E35520SB E5GT012010E25520SB E5GT012011E45520SB E5GT012012E50565SB E5GT012113E20520SB,filename finish code is AB (PNs are SB; E5/GT.01_AB_Satin_Black_5-lug_0001.webp)
+Talladega,Polished,E5TA2010E25520PO E5TA2113E20520PO,filename finish code is AB (PNs are PO; E5/Talladega_AB_Brushed_Aluminum_5-lug_0001.webp); borrows Brushed Aluminum image (E5/Talladega_AB_Brushed_Aluminum_5-lug_0001.webp)
+Talladega,Satin Black,E5TA2010E25520SB E5TA2113E20520SB,filename finish code is BK (PNs are SB; E5/Talladega_BK_Gloss_Black_5-lug_e5ta2010e25520bk_0001.webp); borrows Gloss Black image (E5/Talladega_BK_Gloss_Black_5-lug_e5ta2010e25520bk_0001.webp)

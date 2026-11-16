@@ -19,6 +19,10 @@ const {
   formatPriceOrCall,
   priceRangeFromProducts,
   formatPriceRangeOrCall,
+  setPriceFromUnit,
+  staggeredSetPrice,
+  setRangeFromProducts,
+  formatSetPriceRangeOrCall,
 } = await import(moduleUrl);
 
 let failed = 0;
@@ -67,6 +71,23 @@ assert(
   'priced min-max ignores nulls instead of collapsing to $0.00',
   formatPriceRangeOrCall([{ Price: 600 }, { Price: 1100 }, { Price: null }]),
   '$600.00 - $1,100.00'
+);
+assert('set of 4 from unit', setPriceFromUnit(550), 2200);
+assert('staggered 2+2', staggeredSetPrice(550, 700), 2500);
+assert(
+  'set range is unit range times 4',
+  setRangeFromProducts([{ Price: 550 }, { Price: 850 }, { Price: null }]),
+  { min: 2200, max: 3400 }
+);
+assert(
+  'shop/forged labels show complete-set dollars',
+  formatSetPriceRangeOrCall([{ Price: 550 }, { Price: 850 }]),
+  '$2,200.00 - $3,400.00'
+);
+assert(
+  'single set price stays a single price',
+  formatSetPriceRangeOrCall([{ Price: 2900 }, { Price: 2900 }]),
+  '$11,600.00'
 );
 
 if (failed) {

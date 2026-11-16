@@ -26,6 +26,7 @@ import {
     GENERATIONS_C8_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { officialRangeForModels } from '@/core/services/ProductService';
 const finishingImages = FORM_FORGED_STUDIO_IMAGES.slice(0, 4);
 const shopFormForgedUrl = SHOP_ROUTE;
 const baseUrl = SITE_URL;
@@ -33,6 +34,17 @@ const title = 'Form Forged Corvette Wheels (C5–C8) | E5 Wheels';
 const description = 'Form Forged Corvette wheels (C5-C8) in Daytona, Sebring, and Speedway. Staggered 18–21 inch Corvette-only fitment in gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/form-forged`;
 const ogImage = `${baseUrl}${FORM_FORGED_STUDIO_IMAGES[0]}`;
+let formForgedLow = '550';
+let formForgedHigh = '1300';
+try {
+  const range = await officialRangeForModels(['Daytona', 'Sebring', 'Sebring 2P', 'Speedway']);
+  if (range) {
+    formForgedLow = String(range.min);
+    formForgedHigh = String(range.max);
+  }
+} catch (error) {
+  console.warn('Form Forged official price range unavailable', error);
+}
 const productGroupSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "ProductGroup",
@@ -49,8 +61,8 @@ const productGroupSchema = JSON.stringify({
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": "550",
-    "highPrice": "1200",
+    "lowPrice": formForgedLow,
+    "highPrice": formForgedHigh,
     "availability": "https://schema.org/InStock",
     "seller": { "@type": "Organization", "name": "E5 Wheels" }
   }

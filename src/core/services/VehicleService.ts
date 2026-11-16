@@ -1,5 +1,10 @@
 // Vehicle Service for E5 Wheels Vehicle Fitment API
 
+import {
+  curatedFitmentIsStaggered,
+  getCuratedFitmentForVehicle,
+} from '@/core/constants/CuratedFitments';
+
 const API_BASE_URL = 'https://api.autosyncstudio.com/vehicles';
 const API_KEY = 'efive';
 
@@ -141,6 +146,20 @@ export function hasStaggeredFitment(vehicle: Vehicle): boolean {
     f.Type === 'F' ||
     f.Type === 'R'
   );
+}
+
+/**
+ * Whether shop/product shopping should use a staggered (2F+2R) set vs a square 4-pack.
+ * Follows the vehicle's actual fitment: curated options first (front ≠ rear →
+ * staggered, front = rear → square), otherwise AutoSync Position/Type flags.
+ * Does not force a generation by year.
+ */
+export function usesStaggeredSet(vehicle: Vehicle): boolean {
+  const curated = getCuratedFitmentForVehicle(vehicle.Year, vehicle.Submodel);
+  if (curated && curated.length > 0) {
+    return curatedFitmentIsStaggered(curated);
+  }
+  return hasStaggeredFitment(vehicle);
 }
 
 /**

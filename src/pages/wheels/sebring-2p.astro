@@ -44,6 +44,7 @@ import {
     GENERATIONS_C8_E_RAY_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { officialRangeOrFallback } from '@/core/services/ProductService';
 
 // Build product URLs
 const glossBlackUrl = '/shop/sebring-2p/black';
@@ -56,6 +57,7 @@ const title = 'Sebring 2P Form Forged Corvette Wheels (C8) | E5 Wheels';
 const description = 'Sebring 2P Form Forged wheels (C8) with Corvette-only 19x9 +35mm / 20x11 +45mm and 20x10 +25mm / 21x13 +20mm fitment. Gloss black, dark bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/sebring-2p`;
 const ogImage = `${baseUrl}${SEBRING_2P_HERO_IMAGE}`;
+const sebring2pRange = await officialRangeOrFallback(['Sebring 2P'], { min: 770, max: 1300 });
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -67,8 +69,8 @@ const productSchema = JSON.stringify({
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": "770",
-    "highPrice": "1300",
+    "lowPrice": String(sebring2pRange.min),
+    "highPrice": String(sebring2pRange.max),
     "availability": "https://schema.org/InStock",
     "seller": { "@type": "Organization", "name": "E5 Wheels" }
   }

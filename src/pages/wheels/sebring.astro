@@ -29,6 +29,7 @@ import {
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { officialRangeOrFallback } from '@/core/services/ProductService';
 
 // Build product URLs
 const glossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black');
@@ -41,6 +42,7 @@ const title = 'Sebring Form Forged Corvette Wheels (C6–C8) | E5 Wheels';
 const description = 'Sebring Form Forged wheels (C6-C8) with Corvette-only 19x9.5 +53mm / 20x11 +76mm and 19x10 +30mm / 20x12 +50mm fitment. Gloss black, bronze, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/sebring`;
 const ogImage = `${baseUrl}${SEBRING_HERO_IMAGE}`;
+const sebringRange = await officialRangeOrFallback(['Sebring'], { min: 600, max: 1200 });
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -52,8 +54,8 @@ const productSchema = JSON.stringify({
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": "600",
-    "highPrice": "1200",
+    "lowPrice": String(sebringRange.min),
+    "highPrice": String(sebringRange.max),
     "availability": "https://schema.org/InStock",
     "seller": { "@type": "Organization", "name": "E5 Wheels" }
   }

@@ -3,7 +3,11 @@ import { validateCoupon, calculateDiscount } from '@/core/constants/Coupons';
 import {
   formatPrice as formatUsd,
   hasRealPrice,
+  priceRangeFromProducts,
 } from '@/core/utils/priceDisplay';
+import { applyOfficialPrices } from '@/core/utils/officialPricing';
+import { wheelsMatchingFinish, offerRangeFromProducts } from '@/core/utils/catalogFinish';
+import { mergeSupplementalWheels } from '@/core/utils/supplementalWheels';
 
 export { formatPriceOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
 
@@ -121,38 +125,29 @@ async function fetchWheelsPage(
   return response.json();
 }
 
-/**
- * Fetches all wheels from the API (handles pagination automatically)
- */
-export async function fetchWheels(filters?: {
+async function fetchAllPages(filters?: {
   model?: string;
   color?: string;
   diameter?: number;
   inStockOnly?: boolean;
 }): Promise<WheelsApiResponse> {
-  const pageSize = 100; // Fetch 100 items per page
+  const pageSize = 100;
   let pageNumber = 1;
   let allWheels: WheelProduct[] = [];
   let imgUrlBase = '';
   let hasMoreItems = true;
 
-  // Keep fetching until we have all products
   while (hasMoreItems) {
     const response = await fetchWheelsPage(pageNumber, pageSize, filters);
 
-    // Store the image URL base from the first response
     if (pageNumber === 1) {
       imgUrlBase = response.ImgUrlBase;
     }
 
-    // Add wheels from this page to our collection
     allWheels = [...allWheels, ...response.Wheels];
-
-    // Check if there are more items to fetch
     hasMoreItems = response.MoreItems;
     pageNumber++;
 
-    // Safety check: limit to 10 pages (1000 products max)
     if (pageNumber > 10) {
       console.warn('Reached maximum page limit (10 pages). Some products may not be loaded.');
       break;
@@ -161,9 +156,79 @@ export async function fetchWheels(filters?: {
 
   return {
     ImgUrlBase: imgUrlBase,
-    MoreItems: false, // We've fetched everything
+    MoreItems: false,
     Wheels: allWheels,
   };
+}
+
+let allWheelsCache: Promise<WheelsApiResponse> | null = null;
+
+async function fetchAllWheelsRaw(): Promise<WheelsApiResponse> {
+  if (!allWheelsCache) {
+    allWheelsCache = fetchAllPages();
+  }
+  return allWheelsCache;
+}
+
+function withOfficialPrices(response: WheelsApiResponse): WheelsApiResponse {
+  return {
+    ...response,
+    Wheels: applyOfficialPrices(mergeSupplementalWheels(response.Wheels)),
+  };
+}
+
+/**
+ * Fetches all wheels from the API (handles pagination automatically).
+ * Official CSV prices overlay AutoSync `Price` by part number.
+ */
+export async function fetchWheels(filters?: {
+  model?: string;
+  color?: string;
+  diameter?: number;
+  inStockOnly?: boolean;
+}): Promise<WheelsApiResponse> {
+  const canUseCache = !filters?.color && !filters?.diameter && !filters?.inStockOnly;
+  let response: WheelsApiResponse;
+
+  if (canUseCache) {
+    const all = await fetchAllWheelsRaw();
+    response = filters?.model
+      ? { ...all, Wheels: all.Wheels.filter((wheel) => wheel.Model === filters.model) }
+      : all;
+  } else {
+    response = await fetchAllPages(filters);
+  }
+
+  return withOfficialPrices(response);
+}
+
+export async function officialRangeForModels(
+  models: string[]
+): Promise<{ min: number; max: number } | null> {
+  const catalog = await fetchWheels();
+  const wanted = new Set(models);
+  return priceRangeFromProducts(catalog.Wheels.filter((wheel) => wanted.has(wheel.Model)));
+}
+
+export async function officialRangeOrFallback(
+  models: string[],
+  fallback: { min: number; max: number }
+): Promise<{ min: number; max: number }> {
+  try {
+    return (await officialRangeForModels(models)) ?? fallback;
+  } catch (error) {
+    console.warn(`Official price range unavailable for ${models.join(', ')}`, error);
+    return fallback;
+  }
+}
+
+export async function officialOfferForSeriesFinish(
+  series: string,
+  finishSlug: string
+): Promise<{ lowPrice: string; highPrice: string } | null> {
+  const catalog = await fetchWheels();
+  const matched = wheelsMatchingFinish(catalog.Wheels, series, finishSlug);
+  return offerRangeFromProducts(matched);
 }
 
 /**
