@@ -144,6 +144,20 @@ export function hasStaggeredFitment(vehicle: Vehicle): boolean {
 }
 
 /**
+ * Whether shop/product shopping should use a staggered (2F+2R) set vs a square 4-pack.
+ *
+ * C5 (1997–2004) OEM and Type-FR plus-sizes are square (same size all around).
+ * Plus-size Type F/R rows exist on those cars but must not force a staggered set.
+ * C6–C8 keep the existing staggered detection (OEM Front/Rear and/or Type F/R).
+ */
+export function usesStaggeredSet(vehicle: Vehicle): boolean {
+  if (vehicle.Year >= 1997 && vehicle.Year <= 2004) {
+    return false;
+  }
+  return hasStaggeredFitment(vehicle);
+}
+
+/**
  * Get front fitments from vehicle
  * Uses Position field for Fitments/OptionalFitments and Type='F' for PlusSizes
  */

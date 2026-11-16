@@ -2,11 +2,12 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, hasRealPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
 import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes';
-import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
+import { checkWheelFitment, checkStaggeredFitment, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
 import { toSlug } from '@/core/utils/wheelUrl';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
+import { modelWordmarkSrc } from '@/core/utils/modelWordmark';
 
 // Props
 const props = defineProps<{
@@ -179,9 +180,9 @@ const availableFinishes = computed(() => {
   return Array.from(finishes).sort();
 });
 
-// Check if vehicle has staggered fitment
+// Check if vehicle shops as a staggered (2F+2R) set
 const isStaggered = computed(() => {
-  return selectedVehicle.value ? hasStaggeredFitment(selectedVehicle.value) : false;
+  return selectedVehicle.value ? usesStaggeredSet(selectedVehicle.value) : false;
 });
 
 // Available size+offset combinations for non-staggered
@@ -605,6 +606,8 @@ const productDisplayName = computed(() => {
   return selectedProduct.value.Model.toUpperCase();
 });
 
+const modelWordmark = computed(() => modelWordmarkSrc(selectedProduct.value?.Model));
+
 const finishDisplayName = computed(() => {
   if (!selectedProduct.value) return '';
   return getFinishName(selectedProduct.value).toUpperCase();
@@ -614,35 +617,33 @@ const finishDisplayName = computed(() => {
 const brandLogo = computed(() => {
   if (!selectedProduct.value) return {
     src: '/assets/images/logos/e5-forged.webp',
-    alt: 'E5 Forged'
+    alt: 'E5 Forged',
+    href: PROCESS_FORGED_ROUTE,
+    isFormForged: false
   };
 
-  // Form Forged wheels: Daytona, Sebring, Speedway
-  // Forged wheels: Sonoma, Talladega
+  // Form Forged wheels: Daytona, Sebring, Sebring 2P, Speedway
+  // Forged wheels: Sonoma, Talladega, Laguna, GT
   const model = selectedProduct.value.Model?.toLowerCase() || '';
   const formForgedModels = ['daytona', 'sebring', 'speedway'];
 
   const isFormForged = formForgedModels.some(modelName => model.includes(modelName));
 
-  console.log('🎨 Brand Logo Check:', {
-    model: selectedProduct.value.Model,
-    isFormForged,
-    logoPath: isFormForged ? 'e5-form-forged.webp' : 'e5-forged.webp'
-  });
-
   if (isFormForged) {
     return {
       src: '/assets/images/logos/e5-form-forged.webp',
       alt: 'E5 Form Forged',
-      href: PROCESS_FORM_FORGED_ROUTE
+      href: PROCESS_FORM_FORGED_ROUTE,
+      isFormForged: true
     };
   }
 
-  // Default to Forged logo (Sonoma, Talladega)
+  // Default to Forged logo (Sonoma, Talladega, Laguna, GT)
   return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
-    href: PROCESS_FORGED_ROUTE
+    href: PROCESS_FORGED_ROUTE,
+    isFormForged: false
   };
 });
 
@@ -751,7 +752,7 @@ const vehicleDisplay = computed(() => {
 
 // Check if wheels fit the selected vehicle
 const doesWheelsFit = computed(() => {
-  if (!selectedVehicle.value) return true; // Allow purchase if no vehicle selected
+  if (!selectedVehicle.value) return false;
 
   if (isStaggered.value) {
     // For staggered, check if there are ANY available sizes
@@ -1038,7 +1039,7 @@ async function loadProducts() {
         const sizeOffsetStr = `${selectedProduct.value.Diameter}" x ${selectedProduct.value.Width}" ${offset}mm`;
 
         // Check if this is staggered fitment
-        if (selectedVehicle.value && hasStaggeredFitment(selectedVehicle.value)) {
+        if (selectedVehicle.value && usesStaggeredSet(selectedVehicle.value)) {
           // For staggered, try to auto-select sizes from URL params or use smart defaults
           if (availableFrontSizeOffsets.value.length > 0) {
             // Priority 1: Check if initialFrontSize is provided (from gallery page)
@@ -1440,7 +1441,7 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
 
   // Reset size selections when vehicle changes to trigger refitment validation
   if (vehicle) {
-    if (hasStaggeredFitment(vehicle)) {
+    if (usesStaggeredSet(vehicle)) {
       // For staggered, check URL params first, then use smart defaults
       if (availableFrontSizeOffsets.value.length > 0) {
         // Priority 1: Check if initialFrontSize is provided (from gallery page)
@@ -1547,7 +1548,7 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
 }
 
 function addToCart() {
-  if (!selectedProduct.value || !hasPricedSelection.value) return;
+  if (!selectedVehicle.value || !selectedProduct.value || !hasPricedSelection.value) return;
 
   // For staggered fitment, need both front and rear products
   if (isStaggered.value) {
@@ -1730,27 +1731,47 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Brand Logo - Left aligned on mobile, right aligned on desktop -->
+          <!-- Brand Logo — forged lockup matches Daytona FORM FORGED letter size -->
           <div class="flex justify-start lg:justify-end">
             <a :href="brandLogo.href">
               <img
                 :src="brandLogo.src"
                 :alt="brandLogo.alt"
-                class="h-8 lg:h-12 object-contain"
+                class="w-auto object-contain"
+                :class="brandLogo.isFormForged ? 'h-8 lg:h-12' : 'h-4 lg:h-5'"
               />
             </a>
           </div>
 
-          <!-- Product Title -->
+          <!-- Product Title: gallery wordmark when the model has one; display font otherwise -->
           <div>
-            <h1 class="text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
-              {{ productDisplayName }}
+            <h1>
+              <img
+                v-if="modelWordmark"
+                :src="modelWordmark"
+                alt=""
+                class="h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left"
+              />
+              <span
+                :class="modelWordmark
+                  ? 'sr-only'
+                  : `block text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Heavy'] text-black tracking-wider`"
+              >{{ productDisplayName }}</span>
               <span class="sr-only"> {{ finishDisplayName }} WHEELS<template v-if="generationParam || trimParam"> - {{ generationParam ? generationParam.toUpperCase() : '' }}{{ generationParam && trimParam ? ' ' : '' }}{{ trimParam || '' }}</template></span>
             </h1>
           </div>
 
           <!-- Divider -->
           <div class="w-full h-[2px] bg-e5-red"></div>
+
+          <!-- Vehicle lookup is the first shopping step on every product page -->
+          <div>
+            <VehicleSelector
+              @vehicle-selected="handleVehicleSelected"
+              :initial-generation="initialGeneration"
+              :initial-trim="initialTrim"
+            />
+          </div>
 
           <!-- Vehicle Fitment Display - Non-Staggered -->
           <div v-if="selectedVehicle && !isStaggered && vehicleFitment" class="p-4 border-2 rounded-lg" :class="vehicleFitment?.fits ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'">
@@ -1868,6 +1889,8 @@ onMounted(() => {
             </a>
           </div>
 
+          <!-- Price, finish, size, and ATC wait on a chosen vehicle -->
+          <template v-if="selectedVehicle">
           <!-- Price: keep real catalog dollars; CALL only when this size/finish has none -->
           <div class="space-y-2">
             <p class="text-xl font-['Excon_Variable'] text-black/70">
@@ -1883,15 +1906,6 @@ onMounted(() => {
               />
               at checkout
             </p>
-          </div>
-
-          <!-- Vehicle Selector -->
-          <div class="mb-6">
-            <VehicleSelector
-              @vehicle-selected="handleVehicleSelected"
-              :initial-generation="initialGeneration"
-              :initial-trim="initialTrim"
-            />
           </div>
 
           <!-- Configuration Options -->
@@ -1998,6 +2012,7 @@ onMounted(() => {
            data-gtm-event="add_to_cart_click" data-gtm-label="Add to Cart">
             {{ hasPricedSelection ? 'ADD TO CART' : 'CALL' }}
           </button>
+          </template>
 
           <!-- Product Info -->
           <div v-if="!isStaggered" class="space-y-2 pt-4 text-sm text-black/60">

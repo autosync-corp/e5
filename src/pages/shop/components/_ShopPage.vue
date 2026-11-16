@@ -5,7 +5,7 @@ import { formatSetPriceRangeOrCall, priceRangeFromProducts } from '@/core/utils/
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
-import { filterWheelsByVehicle, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
+import { filterWheelsByVehicle, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 
 // State
 const apiResponse = ref<WheelsApiResponse | null>(null);
@@ -15,9 +15,9 @@ const selectedSeries = ref<string>('All Series');
 const searchQuery = ref('');
 const selectedVehicle = ref<Vehicle | null>(null);
 
-// Computed - Check if selected vehicle has staggered fitment
+// Computed - Check if selected vehicle shops as a staggered (2F+2R) set
 const isStaggered = computed(() => {
-  return selectedVehicle.value ? hasStaggeredFitment(selectedVehicle.value) : false;
+  return selectedVehicle.value ? usesStaggeredSet(selectedVehicle.value) : false;
 });
 
 // Computed - Get available series (unique Model names)
@@ -258,7 +258,10 @@ const productsBySeries = computed(() => {
             frontSizes: finishFrontSizes,
             rearSizes: finishRearSizes,
             priceRange: priceRangeFromProducts(finishProducts),
-            priceLabel: formatSetPriceRangeOrCall(finishProducts),
+            // No vehicle: listings stay visible for SEO, but set dollars wait on fitment
+            priceLabel: selectedVehicle.value
+              ? formatSetPriceRangeOrCall(finishProducts)
+              : 'CALL',
           };
         }).filter(variation => {
           // For staggered fitment, only show finishes that have BOTH front AND rear sizes available
@@ -273,7 +276,9 @@ const productsBySeries = computed(() => {
         frontSizes,
         rearSizes,
         priceRange: priceRangeFromProducts(products),
-        priceLabel: formatSetPriceRangeOrCall(products),
+        priceLabel: selectedVehicle.value
+          ? formatSetPriceRangeOrCall(products)
+          : 'CALL',
       };
     }).filter(series => {
       // Hide series that have no finish variations after filtering
@@ -341,6 +346,11 @@ onMounted(() => {
 
 <template>
   <div class="w-full bg-white min-h-screen">
+    <!-- Vehicle lookup is the first shopping step, before the hero and listings -->
+    <div class="max-w-[1728px] mx-auto px-16 pt-8">
+      <VehicleSelector @vehicle-selected="handleVehicleSelected" />
+    </div>
+
     <!-- Hero Section -->
     <section class="relative w-full h-[400px] bg-gradient-to-r from-black to-gray-900 flex items-center justify-center">
       <div class="text-center">
@@ -365,9 +375,6 @@ onMounted(() => {
 
     <!-- Shop Content -->
     <div v-else class="max-w-[1728px] mx-auto px-16 py-12">
-      <!-- Vehicle Selector -->
-      <VehicleSelector @vehicle-selected="handleVehicleSelected" />
-
       <!-- Filters Section -->
       <div class="mb-12 space-y-6">
         <!-- Search Bar -->
@@ -470,9 +477,9 @@ onMounted(() => {
                   </span>
                 </div>
 
-                <!-- Available Sizes for this Finish -->
-                <div class="space-y-1">
-                  <!-- Non-staggered: Show regular sizes -->
+                <!-- Available Sizes for this Finish — only after a vehicle is chosen -->
+                <div v-if="selectedVehicle" class="space-y-1">
+                  <!-- Non-staggered / square: Show regular sizes -->
                   <template v-if="!isStaggered">
                     <p class="text-xs font-['Franklin_Gothic_Book'] text-black/60">
                       {{ variation.variantCount }} size{{ variation.variantCount !== 1 ? 's' : '' }} available
