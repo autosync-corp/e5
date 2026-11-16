@@ -65,6 +65,8 @@ export interface ForgedModel {
   wheelGalleryImage: string;
   productSchemaName: string;
   schemaOffers?: { lowPrice: string; highPrice: string };
+  /** Optional series wordmark shown above the H1 (GT FORGED on GT pages). */
+  seriesLogo?: { src: string; alt: string };
 }
 
 const IMG = 'https://wheels.autosyncstudio.com/webp';

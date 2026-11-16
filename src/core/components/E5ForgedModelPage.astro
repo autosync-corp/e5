@@ -179,6 +179,13 @@ const breadcrumbSchema = JSON.stringify({
 
     <section class="bg-white pt-8 md:pt-12 pb-4">
       <div class="max-w-[1400px] mx-auto px-6">
+        {model.seriesLogo && (
+          <img
+            src={model.seriesLogo.src}
+            alt={model.seriesLogo.alt}
+            class="h-[40px] md:h-[54px] w-auto max-w-full object-contain object-left mb-4 md:mb-6"
+          />
+        )}
         <h1 class="text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2">
           {model.h1}
         </h1>

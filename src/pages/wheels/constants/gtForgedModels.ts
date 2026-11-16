@@ -1,8 +1,9 @@
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
-import { WHEEL_GALLERY_STUDIO_BANNER } from '@/pages/wheels/constants/Wheels.ts';
 import { VETTE_GALLERY_IMAGE_1 } from '@/pages/gallery/constants/Images.ts';
 import type { ForgedFinish, ForgedModel } from '@/pages/wheels/constants/e5ForgedModels.ts';
 import {
+  GT_FORGED_LOGO,
+  WHEEL_GALLERY_STUDIO_BANNER,
   GT01_BRAND_NAME,
   GT01_BRUSHED_ALUMINUM,
   GT01_GLOSS_BLACK,
@@ -81,6 +82,7 @@ function gtModel(opts: {
     brandName,
     displayName: brandName,
     h1: `${brandName} CORVETTE WHEELS`,
+    seriesLogo: { src: GT_FORGED_LOGO, alt: 'GT Forged' },
     exclusive: 'MADE TO ORDER · 6 WEEK LEAD TIME',
     title: `${brandName} Corvette Wheels | E5 Wheels`,
     description: `${brandName} Corvette wheels in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm. Complete sets from $4,900.`,

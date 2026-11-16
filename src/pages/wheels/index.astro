@@ -17,6 +17,8 @@ import {
 import {
     LAGUNA_LOGO,
     LAGUNA_WHEEL_RENDER,
+    GT_FORGED_LOGO,
+    FORM_FORGED_WORDMARK,
     DAYTONA_TITANIUM_BRUSHED_STUDIO,
     SEBRING_TITANIUM_BRUSHED_STUDIO,
     SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
@@ -57,7 +59,11 @@ const gtCards = [
             <div class="mb-8 md:mb-16">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
-                        <h2 class="font-franklin-heavy text-[32px] md:text-[44px] tracking-[2px] uppercase leading-none">GT FORGED</h2>
+                        <img
+                            src={GT_FORGED_LOGO}
+                            alt="GT Forged"
+                            class="wheels-series-logo"
+                        />
                     </div>
                     <div class="flex-1">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
@@ -105,7 +111,7 @@ const gtCards = [
                         <img
                             src="/assets/images/wheels-new/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp"
                             alt="E5 Forged"
-                            class="h-[40px] md:h-[54px]"
+                            class="wheels-series-logo"
                         />
                     </div>
                     <div class="flex-1">
@@ -220,9 +226,9 @@ const gtCards = [
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
-                            src="/assets/images/wheels-new/48b34752d7bd939ae556a6e8de9fa0837077ec48.webp"
-                            alt="Form Forged Series"
-                            class="h-[100px] md:h-[140px]"
+                            src={FORM_FORGED_WORDMARK}
+                            alt="Form Forged"
+                            class="wheels-series-logo"
                         />
                     </div>
                     <div class="flex-1">
@@ -427,9 +433,27 @@ const gtCards = [
         display: block;
     }
 
-    /* Laguna's catalog render has more canvas padding than Talladega/Sonoma. */
+    /* Match E5 FORGED / GT FORGED / FORM FORGED header logos to one height. */
+    .wheels-series-logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        object-position: left center;
+    }
+    @media (min-width: 768px) {
+        .wheels-series-logo {
+            height: 54px;
+        }
+    }
+
+    /* Laguna's catalog render is a 1500² canvas with extra top/right whitespace
+       and a downward-shifted wheel vs Talladega/Sonoma. Scale + offset so the
+       rim matches their visual size and center inside the same square box
+       without cropping the barrel. */
     .wheels-card-image--laguna img {
-        transform: scale(1.14);
+        transform: translate(1.06%, -3.04%) scale(1.057);
     }
 
     .wheels-card-name {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, hasRealPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes';
+import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE, WHEELS_GT_01_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
@@ -618,32 +618,39 @@ const brandLogo = computed(() => {
   if (!selectedProduct.value) return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
-    href: PROCESS_FORGED_ROUTE,
-    isFormForged: false
+    href: PROCESS_FORGED_ROUTE
   };
 
   // Form Forged wheels: Daytona, Sebring, Sebring 2P, Speedway
-  // Forged wheels: Sonoma, Talladega, Laguna, GT
+  // E5 Forged: Sonoma, Talladega, Laguna
+  // GT Forged: GT.01–GT.04
   const model = selectedProduct.value.Model?.toLowerCase() || '';
   const formForgedModels = ['daytona', 'sebring', 'speedway'];
 
   const isFormForged = formForgedModels.some(modelName => model.includes(modelName));
+  const isGtForged = /^gt[\s.\-_]?0[1-4]/.test(model);
 
   if (isFormForged) {
     return {
-      src: '/assets/images/logos/e5-form-forged.webp',
-      alt: 'E5 Form Forged',
-      href: PROCESS_FORM_FORGED_ROUTE,
-      isFormForged: true
+      src: '/assets/images/logos/form-forged.png',
+      alt: 'Form Forged',
+      href: PROCESS_FORM_FORGED_ROUTE
     };
   }
 
-  // Default to Forged logo (Sonoma, Talladega, Laguna, GT)
+  if (isGtForged) {
+    return {
+      src: '/assets/images/logos/gt-forged.png',
+      alt: 'GT Forged',
+      href: WHEELS_GT_01_ROUTE
+    };
+  }
+
+  // Default to E5 Forged logo (Sonoma, Talladega, Laguna)
   return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
-    href: PROCESS_FORGED_ROUTE,
-    isFormForged: false
+    href: PROCESS_FORGED_ROUTE
   };
 });
 
@@ -1731,14 +1738,13 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Brand Logo — forged lockup matches Daytona FORM FORGED letter size -->
+          <!-- Series wordmark — GT FORGED, E5 FORGED, and FORM FORGED share one height -->
           <div class="flex justify-start lg:justify-end">
             <a :href="brandLogo.href">
               <img
                 :src="brandLogo.src"
                 :alt="brandLogo.alt"
-                class="w-auto object-contain"
-                :class="brandLogo.isFormForged ? 'h-8 lg:h-12' : 'h-4 lg:h-5'"
+                class="h-4 lg:h-5 w-auto max-w-full object-contain"
               />
             </a>
           </div>
