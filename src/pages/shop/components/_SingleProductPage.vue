@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { fetchWheels, getWheelImageUrl, formatPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
+import { fetchWheels, getWheelImageUrl, formatPrice, hasRealPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
 import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, hasStaggeredFitment, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
@@ -577,12 +577,23 @@ const currentImageUrl = computed(() => {
 
 const totalPrice = computed(() => {
   if (isStaggered.value) {
-    const frontPrice = selectedFrontProduct.value?.Price ?? 0;
-    const rearPrice = selectedRearProduct.value?.Price ?? 0;
+    const frontPrice = hasRealPrice(selectedFrontProduct.value?.Price) ? selectedFrontProduct.value!.Price : 0;
+    const rearPrice = hasRealPrice(selectedRearProduct.value?.Price) ? selectedRearProduct.value!.Price : 0;
     return (frontPrice * 2) + (rearPrice * 2);
   }
-  if (!selectedProduct.value) return 0;
-  return (selectedProduct.value.Price ?? 0) * 4; // Complete set of 4 wheels
+  if (!selectedProduct.value || !hasRealPrice(selectedProduct.value.Price)) return 0;
+  return selectedProduct.value.Price * 4; // Complete set of 4 wheels
+});
+
+const hasPricedSelection = computed(() => {
+  if (isStaggered.value) {
+    return hasRealPrice(selectedFrontProduct.value?.Price) && hasRealPrice(selectedRearProduct.value?.Price);
+  }
+  return hasRealPrice(selectedProduct.value?.Price);
+});
+
+const setPriceLabel = computed(() => {
+  return hasPricedSelection.value ? formatPrice(totalPrice.value) : 'CALL';
 });
 
 const affirmMonthly = computed(() => {
@@ -1146,8 +1157,8 @@ async function loadProducts() {
         }
       }
     }
-    // GTM: view_item
-    if (selectedProduct.value && selectedProduct.value.Price != null) {
+    // GTM: view_item — skip unpriced SKUs so we never send $0 / CALL as a price
+    if (selectedProduct.value && hasRealPrice(selectedProduct.value.Price)) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'view_item',
@@ -1536,7 +1547,7 @@ function handleVehicleSelected(vehicle: Vehicle | null) {
 }
 
 function addToCart() {
-  if (!selectedProduct.value) return;
+  if (!selectedProduct.value || !hasPricedSelection.value) return;
 
   // For staggered fitment, need both front and rear products
   if (isStaggered.value) {
@@ -1565,8 +1576,8 @@ function addToCart() {
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
 
-    // GTM: add_to_cart (staggered)
-    if (selectedFrontProduct.value.Price != null && selectedRearProduct.value.Price != null) {
+    // GTM: add_to_cart (staggered) — only fire for real catalog prices
+    if (hasRealPrice(selectedFrontProduct.value.Price) && hasRealPrice(selectedRearProduct.value.Price)) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'add_to_cart',
@@ -1603,8 +1614,8 @@ function addToCart() {
       imgUrlBase: apiResponse.value?.ImgUrlBase
     });
 
-    // GTM: add_to_cart (non-staggered)
-    if (selectedProduct.value.Price != null) {
+    // GTM: add_to_cart (non-staggered) — only fire for real catalog prices
+    if (hasRealPrice(selectedProduct.value.Price)) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'add_to_cart',
@@ -1857,13 +1868,13 @@ onMounted(() => {
             </a>
           </div>
 
-          <!-- Price -->
+          <!-- Price: keep real catalog dollars; CALL only when this size/finish has none -->
           <div class="space-y-2">
             <p class="text-xl font-['Excon_Variable'] text-black/70">
-              <span class="font-normal">{{ formatPrice(totalPrice) }}</span>
-              <span class="font-thin">(Complete Set)</span>
+              <span class="font-normal">{{ setPriceLabel }}</span>
+              <span class="font-thin"> (Complete Set)</span>
             </p>
-            <p class="text-xl font-['Excon_Variable'] font-thin text-black/70">
+            <p v-if="hasPricedSelection" class="text-xl font-['Excon_Variable'] font-thin text-black/70">
               From <span class="font-normal">{{ formatPrice(affirmMonthly) }}/mo</span> with
               <img
                 src="/assets/images/578fa0d18bbca3760015bb5ca95a185ccb50b0f2.webp"
@@ -1979,13 +1990,13 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Add to Cart Button -->
+          <!-- Add to Cart Button — unpriced SKUs cannot be added at $0 -->
           <button
             @click="addToCart"
-            :disabled="!doesWheelsFit"
+            :disabled="!doesWheelsFit || !hasPricedSelection"
             class="w-full h-10 bg-e5-red rounded-lg text-white text-base font-['Excon_Variable'] font-light tracking-[0.32em] hover:bg-e5-red/90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
            data-gtm-event="add_to_cart_click" data-gtm-label="Add to Cart">
-            ADD TO CART
+            {{ hasPricedSelection ? 'ADD TO CART' : 'CALL' }}
           </button>
 
           <!-- Product Info -->

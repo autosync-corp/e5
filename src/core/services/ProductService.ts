@@ -1,5 +1,11 @@
 // Product Service for E5 Wheels API Integration
 import { validateCoupon, calculateDiscount } from '@/core/constants/Coupons';
+import {
+  formatPrice as formatUsd,
+  hasRealPrice,
+} from '@/core/utils/priceDisplay';
+
+export { formatPriceOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
 
 const API_BASE_URL = 'https://api.autosyncstudio.com/wheels';
 const API_KEY = import.meta.env.PUBLIC_AUTOSYNC_API_KEY || 'efive';
@@ -34,7 +40,7 @@ export interface WheelProduct {
   Orientation: string;
   Pn: string;
   Position: string;
-  Price: number;
+  Price: number | null;
   SegmentTags: string[];
   ShortColor: string;
   ShortFinish: string | null;
@@ -186,13 +192,12 @@ export function getWheelImageUrl(imgUrlBase: string, imgPath: string): string {
 }
 
 /**
- * Formats price to USD currency string
+ * Formats a real USD price. Callers that may receive a missing catalog
+ * price should use `formatPriceOrCall` so unpriced SKUs render as CALL
+ * instead of `$0.00`.
  */
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(price);
+  return formatUsd(price);
 }
 
 /**
@@ -210,7 +215,8 @@ export function getWheelDisplayName(wheel: WheelProduct): string {
 export function calculateCartTotals(items: CartItem[], customerState?: string, couponCode?: string) {
   const subtotal = items.reduce((sum, item) => {
     // quantity always represents individual wheels for all item types
-    return sum + ((item.product.Price ?? 0) * item.quantity);
+    const unitPrice = hasRealPrice(item.product.Price) ? item.product.Price : 0;
+    return sum + (unitPrice * item.quantity);
   }, 0);
 
   // Apply coupon discount if valid

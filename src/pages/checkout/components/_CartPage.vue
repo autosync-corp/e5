@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { CartManager, calculateCartTotals, getWheelImageUrl, formatPrice, type CartItem } from '@/core/services/ProductService';
+import { CartManager, calculateCartTotals, getWheelImageUrl, formatPrice, formatPriceOrCall, type CartItem } from '@/core/services/ProductService';
 import { CHECKOUT_ROUTE, SHOP_ROUTE } from '@/core/constants/Routes';
 
 // State
@@ -290,7 +290,7 @@ onMounted(async () => {
                 <div class="flex items-center justify-between gap-2">
                   <div class="text-center">
                     <p class="text-[10px] text-black/50 uppercase mb-1 tracking-wide">Price</p>
-                    <p class="text-sm font-['Franklin_Gothic_Book'] text-black">{{ formatPrice(item.product.Price) }}</p>
+                    <p class="text-sm font-['Franklin_Gothic_Book'] text-black">{{ formatPriceOrCall(item.product.Price) }}</p>
                   </div>
                   <div class="text-center">
                     <p class="text-[10px] text-black/50 uppercase mb-1 tracking-wide">Qty</p>
@@ -357,7 +357,7 @@ onMounted(async () => {
 
                 <!-- Price -->
                 <div class="text-center text-base font-['Franklin_Gothic_Book'] text-black">
-                  {{ formatPrice(item.product.Price) }}
+                  {{ formatPriceOrCall(item.product.Price) }}
                 </div>
 
                 <!-- Quantity — +/− buttons -->
