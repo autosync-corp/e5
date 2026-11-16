@@ -46,6 +46,7 @@ import {
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { officialRangeOrFallback } from '@/core/services/ProductService';
 
 // Build product URLs
 const glossBlackUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black');
@@ -58,6 +59,7 @@ const title = 'Daytona Form Forged Corvette Wheels (C5–C8) | E5 Wheels';
 const description = 'Daytona Form Forged wheels (C5-C8) with Corvette-only 18x10 +58mm / 19x11 +59mm through 20x10 / 21x13 fitment. Gloss black, bronze brushed tint, and titanium.';
 const canonicalUrl = `${baseUrl}/wheels/daytona`;
 const ogImage = `${baseUrl}${DAYTONA_HERO_IMAGE}`;
+const daytonaRange = await officialRangeOrFallback(['Daytona'], { min: 550, max: 1200 });
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
@@ -69,8 +71,8 @@ const productSchema = JSON.stringify({
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": "550",
-    "highPrice": "1200",
+    "lowPrice": String(daytonaRange.min),
+    "highPrice": String(daytonaRange.max),
     "availability": "https://schema.org/InStock",
     "seller": { "@type": "Organization", "name": "E5 Wheels" }
   }

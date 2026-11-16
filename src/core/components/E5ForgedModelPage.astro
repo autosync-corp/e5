@@ -4,7 +4,8 @@ import E5ForgedDesigns from '@/core/components/E5ForgedDesigns.astro';
 import { SITE_URL } from '@/core/constants/Site.ts';
 import { GALLERY_WHEELS_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes.ts';
 import { fetchWheels, getWheelImageUrl, type WheelProduct } from '@/core/services/ProductService';
-import { hasRealPrice } from '@/core/utils/priceDisplay';
+import { formatPriceRangeOrCall, hasRealPrice } from '@/core/utils/priceDisplay';
+import { offerRangeFromProducts } from '@/core/utils/catalogFinish';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import {
   FORGING_STEPS,
@@ -27,6 +28,7 @@ let rearSize = model.rearSize;
 let boltPattern = model.boltPattern;
 let finishes: ForgedFinish[] = model.finishes;
 let shopFitmentHref = model.shopFitmentHref;
+let schemaOffers = model.schemaOffers;
 
 try {
   const catalog = await fetchWheels({ model: model.brandName });
@@ -38,24 +40,31 @@ try {
     rearSize = `${rear.Diameter} x ${rear.Width} / +${rear.Offset}mm`;
     boltPattern = `5x${front.BoltCircle1}`;
 
-    const byFinish = new Map<string, ForgedFinish>();
+    const byFinish = new Map<string, ForgedFinish & { products: WheelProduct[] }>();
     for (const wheel of wheels) {
       const name = catalogFinishName(wheel);
       if (!name) continue;
       const existing = byFinish.get(name);
-      const priced = hasRealPrice(wheel.Price);
       if (!existing) {
         byFinish.set(name, {
           name,
           image: getWheelImageUrl(catalog.ImgUrlBase, wheel.Img0001),
           href: buildWheelUrl(model.brandName, name),
-          call: !priced,
+          call: !hasRealPrice(wheel.Price),
+          products: [wheel],
         });
-      } else if (priced) {
-        existing.call = false;
+      } else {
+        existing.products.push(wheel);
+        if (hasRealPrice(wheel.Price)) existing.call = false;
       }
     }
-    const ordered = [...byFinish.values()];
+    const ordered = [...byFinish.values()].map((finish) => ({
+      name: finish.name,
+      image: finish.image,
+      href: finish.href,
+      call: finish.call,
+      priceLabel: formatPriceRangeOrCall(finish.products),
+    }));
     ordered.sort((a, b) => {
       if (a.name.toLowerCase().includes('brushed')) return -1;
       if (b.name.toLowerCase().includes('brushed')) return 1;
@@ -66,6 +75,7 @@ try {
       const brushed = ordered.find((finish) => finish.name.toLowerCase().includes('brushed'));
       shopFitmentHref = (brushed ?? ordered[0]).href;
     }
+    schemaOffers = offerRangeFromProducts(wheels) ?? schemaOffers;
   }
 } catch (error) {
   console.warn(`E5 Forged model page using static specs for ${model.brandName}`, error);
@@ -83,13 +93,13 @@ const productSchema = JSON.stringify({
   description: model.description,
   url: canonicalUrl,
   image: ogImage,
-  ...(model.schemaOffers
+  ...(schemaOffers
     ? {
         offers: {
           '@type': 'AggregateOffer',
           priceCurrency: 'USD',
-          lowPrice: model.schemaOffers.lowPrice,
-          highPrice: model.schemaOffers.highPrice,
+          lowPrice: schemaOffers.lowPrice,
+          highPrice: schemaOffers.highPrice,
           availability: 'https://schema.org/MadeToOrder',
           seller: { '@type': 'Organization', name: 'E5 Wheels' },
         },
@@ -209,11 +219,9 @@ const breadcrumbSchema = JSON.stringify({
               <p class="mt-2 text-[11px] md:text-[12px] tracking-[1.4px] uppercase text-black/70 text-center">
                 {finish.name}
               </p>
-              {finish.call && (
-                <p class="mt-1 text-[11px] md:text-[12px] tracking-[1.4px] uppercase text-black/60 text-center">
-                  CALL
-                </p>
-              )}
+              <p class="mt-1 text-[11px] md:text-[12px] tracking-[1.4px] uppercase text-black/60 text-center">
+                {finish.call ? 'CALL' : finish.priceLabel}
+              </p>
             </a>
           ))}
         </div>

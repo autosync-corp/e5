@@ -25,6 +25,7 @@ export interface ForgedFinish {
   image: string;
   href: string;
   call: boolean;
+  priceLabel?: string;
 }
 
 export interface ForgedModel {
@@ -86,24 +87,28 @@ export const SONOMA_MODEL: ForgedModel = {
       image: `${IMG}/E5/Sonoma_AB_Brushed_Aluminum_5-lug_0001.webp`,
       href: buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum'),
       call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
     {
       name: 'Gloss Black',
       image: `${IMG}/E5/Sonoma_BK_Gloss_Black_5-lug_0001.webp`,
       href: buildWheelUrl(SONOMA_BRAND_NAME, 'Gloss Black'),
-      call: true,
+      call: false,
+      priceLabel: '$2,800.00 - $3,000.00',
     },
     {
       name: 'Polished',
       image: `${IMG}/E5/Sonoma_PO_Polished_5-lug_0001.webp`,
       href: buildWheelUrl(SONOMA_BRAND_NAME, 'Polished'),
-      call: true,
+      call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
     {
       name: 'Satin Black',
       image: `${IMG}/E5/Sonoma_SB_Satin_Black_5-lug_0001.webp`,
       href: buildWheelUrl(SONOMA_BRAND_NAME, 'Satin Black'),
-      call: true,
+      call: false,
+      priceLabel: '$2,800.00 - $3,000.00',
     },
   ],
   finishingBg: SONOMA_DETAIL_3,
@@ -114,7 +119,7 @@ export const SONOMA_MODEL: ForgedModel = {
   vetteGalleryAlt: 'Corvette builds fitted with E5 Sonoma wheels',
   wheelGalleryImage: WHEEL_GALLERY_STUDIO_BANNER,
   productSchemaName: 'E5 Sonoma Forged Corvette Wheel',
-  schemaOffers: { lowPrice: '2900', highPrice: '3100' },
+  schemaOffers: { lowPrice: '2800', highPrice: '3100' },
 };
 
 export const TALLADEGA_MODEL: ForgedModel = {
@@ -143,12 +148,14 @@ export const TALLADEGA_MODEL: ForgedModel = {
       image: `${IMG}/E5/Talladega_AB_Brushed_Aluminum_5-lug_0001.webp`,
       href: buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum'),
       call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
     {
       name: 'Gloss Black',
       image: `${IMG}/E5/Talladega_BK_Gloss_Black_5-lug_e5ta2010e25520bk_0001.webp`,
       href: buildWheelUrl(TALLADEGA_BRAND_NAME, 'Gloss Black'),
       call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
   ],
   finishingBg: TALLADEGA_SHOT_1,
@@ -187,25 +194,29 @@ export const LAGUNA_MODEL: ForgedModel = {
       name: 'Brushed Aluminum',
       image: LAGUNA_WHEEL_RENDER,
       href: buildWheelUrl(LAGUNA_BRAND_NAME, 'Brushed Aluminum'),
-      call: true,
+      call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
     {
       name: 'Satin Black',
       image: `${IMG}/E5/Laguna_SB_Satin_Black_Front_5-lug_0001.webp`,
       href: buildWheelUrl(LAGUNA_BRAND_NAME, 'Satin Black'),
-      call: true,
+      call: false,
+      priceLabel: '$2,800.00 - $3,000.00',
     },
     {
       name: 'Polished',
       image: `${IMG}/E5/Laguna_PO_Polished_Front_5-lug_0001.webp`,
       href: buildWheelUrl(LAGUNA_BRAND_NAME, 'Polished'),
-      call: true,
+      call: false,
+      priceLabel: '$2,900.00 - $3,100.00',
     },
     {
       name: 'Gloss Black',
       image: `${IMG}/E5/Laguna_BK_Gloss_Black_Front_5-lug_0001.webp`,
       href: buildWheelUrl(LAGUNA_BRAND_NAME, 'Gloss Black'),
-      call: true,
+      call: false,
+      priceLabel: '$2,800.00 - $3,000.00',
     },
   ],
   finishingBg: LAGUNA_FINISHING_BG,
@@ -216,6 +227,7 @@ export const LAGUNA_MODEL: ForgedModel = {
   vetteGalleryAlt: 'Corvette builds fitted with E5 Laguna wheels',
   wheelGalleryImage: LAGUNA_WHEEL_GALLERY_BANNER,
   productSchemaName: 'E5 Laguna Forged Corvette Wheel',
+  schemaOffers: { lowPrice: '2800', highPrice: '3100' },
 };
 
 export const FORGING_STEPS = [
