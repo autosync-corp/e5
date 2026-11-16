@@ -32,6 +32,10 @@ export const WHEELS_SEBRING_2P_ROUTE = '/wheels/sebring-2p';
 export const WHEELS_SPEEDWAY_ROUTE = '/wheels/speedway';
 export const WHEELS_SONOMA_ROUTE = '/wheels/sonoma';
 export const WHEELS_LAGUNA_ROUTE = '/wheels/laguna';
+export const WHEELS_GT_01_ROUTE = '/wheels/gt-01';
+export const WHEELS_GT_02_ROUTE = '/wheels/gt-02';
+export const WHEELS_GT_03_ROUTE = '/wheels/gt-03';
+export const WHEELS_GT_04_ROUTE = '/wheels/gt-04';
 
 export const WHEELS_FORM_FORGED_ROUTE = '/wheels/form-forged';
 export const GALLERY_ROUTE = '/gallery';

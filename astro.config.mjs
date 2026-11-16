@@ -67,6 +67,11 @@ export default defineConfig({
         `${SITE_URL}/shop/talladega/gloss-black`,
         // Sonoma
         `${SITE_URL}/shop/sonoma/brushed-aluminum`,
+        // GT Forged model pages (SSR routes)
+        `${SITE_URL}/wheels/gt-01`,
+        `${SITE_URL}/wheels/gt-02`,
+        `${SITE_URL}/wheels/gt-03`,
+        `${SITE_URL}/wheels/gt-04`,
       ],
       serialize(item) {
         // Strip trailing slashes to match canonical URLs (keep root slash)
@@ -100,6 +105,31 @@ export default defineConfig({
 
     // Unique redirects not covered by vercel.json
     '/catalog-2025/': '/catalog',
+
+    '/wheels/gt.01': '/wheels/gt-01',
+    '/wheels/gt.01/': '/wheels/gt-01',
+    '/wheels/gt01': '/wheels/gt-01',
+    '/wheels/gt01/': '/wheels/gt-01',
+    '/wheels/gt_01': '/wheels/gt-01',
+    '/wheels/gt_01/': '/wheels/gt-01',
+    '/wheels/gt.02': '/wheels/gt-02',
+    '/wheels/gt.02/': '/wheels/gt-02',
+    '/wheels/gt02': '/wheels/gt-02',
+    '/wheels/gt02/': '/wheels/gt-02',
+    '/wheels/gt_02': '/wheels/gt-02',
+    '/wheels/gt_02/': '/wheels/gt-02',
+    '/wheels/gt.03': '/wheels/gt-03',
+    '/wheels/gt.03/': '/wheels/gt-03',
+    '/wheels/gt03': '/wheels/gt-03',
+    '/wheels/gt03/': '/wheels/gt-03',
+    '/wheels/gt_03': '/wheels/gt-03',
+    '/wheels/gt_03/': '/wheels/gt-03',
+    '/wheels/gt.04': '/wheels/gt-04',
+    '/wheels/gt.04/': '/wheels/gt-04',
+    '/wheels/gt04': '/wheels/gt-04',
+    '/wheels/gt04/': '/wheels/gt-04',
+    '/wheels/gt_04': '/wheels/gt-04',
+    '/wheels/gt_04/': '/wheels/gt-04',
 
     '/catalog-2025': '/catalog',
 

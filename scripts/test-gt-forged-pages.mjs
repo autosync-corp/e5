@@ -1,0 +1,73 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import esbuild from 'esbuild';
+import { tmpdir } from 'node:os';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+function loadBundled(rel) {
+  const outfile = join(tmpdir(), `e5-gt-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`);
+  esbuild.buildSync({
+    entryPoints: [join(root, rel)],
+    outfile,
+    bundle: true,
+    format: 'esm',
+    platform: 'neutral',
+    packages: 'external',
+  });
+  return import(pathToFileURL(outfile).href);
+}
+
+let failed = 0;
+function assert(label, actual, expected) {
+  const ok = actual === expected;
+  if (!ok) {
+    failed += 1;
+    console.error('fail', label, { actual, expected });
+  } else {
+    console.log('ok  ', label);
+  }
+}
+
+const { GT_FORGED_MODELS, GT_CATALOG_SIZE_LINES, GT_01_MODEL } = await loadBundled(
+  'src/pages/wheels/constants/gtForgedModels.ts'
+);
+const { modelWordmarkSrc } = await loadBundled('src/core/utils/modelWordmark.ts');
+const { WHEELS_GT_01_ROUTE, WHEELS_GT_04_ROUTE } = await loadBundled('src/core/constants/Routes.ts');
+
+assert('four GT models', GT_FORGED_MODELS.length, 4);
+assert('canonical gt-01', GT_01_MODEL.canonicalPath, '/wheels/gt-01');
+assert('route gt-01', WHEELS_GT_01_ROUTE, '/wheels/gt-01');
+assert('route gt-04', WHEELS_GT_04_ROUTE, '/wheels/gt-04');
+assert('no GT.01 wordmark', modelWordmarkSrc('GT.01'), null);
+assert('catalog size count', GT_CATALOG_SIZE_LINES.length, 6);
+assert('hides E5 process copy', GT_01_MODEL.showProcessSections, false);
+assert('no explore CTA', GT_01_MODEL.exploreHref, null);
+assert('three finishes', GT_01_MODEL.finishes.length, 3);
+assert('brushed shop link', GT_01_MODEL.finishes[0].href.includes('/shop/gt01/brushed-aluminum'), true);
+assert('exclusive is lead time only', GT_01_MODEL.exclusive.includes('C8'), false);
+
+const navbar = readFileSync(join(root, 'src/core/components/Navbar.vue'), 'utf8');
+assert('desktop GT FORGED', navbar.includes('GT FORGED'), true);
+assert('desktop GT.01 link', navbar.includes('WHEELS_GT_01_ROUTE'), true);
+assert('mobile GT.04 link', navbar.includes('WHEELS_GT_04_ROUTE'), true);
+
+const designs = readFileSync(join(root, 'src/core/components/E5ForgedDesigns.astro'), 'utf8');
+assert('bottom block has no GT entry', /GT\.0|gt-01|GT FORGED/.test(designs), false);
+
+const vercel = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'));
+const sources = new Set(vercel.redirects.map((row) => row.source));
+assert('301 /wheels/gt.01', sources.has('/wheels/gt.01'), true);
+assert('301 /wheels/gt01', sources.has('/wheels/gt01'), true);
+assert('301 /wheels/gt.04', sources.has('/wheels/gt.04'), true);
+
+const sitemap = readFileSync(join(root, 'astro.config.mjs'), 'utf8');
+assert('sitemap gt-01', sitemap.includes('/wheels/gt-01'), true);
+assert('sitemap gt-04', sitemap.includes('/wheels/gt-04'), true);
+
+if (failed) {
+  console.error(`${failed} GT forged checks failed`);
+  process.exit(1);
+}
+console.log('all GT forged checks passed');

@@ -47,6 +47,14 @@ export interface ForgedModel {
   boltPattern: string;
   shopFitmentHref: string;
   shopFitmentLabel: string;
+  /** When set, SIZE lists these catalog sizes instead of a single [F]/[R] pair. */
+  sizeLines?: string[];
+  /** Default true. GT pages omit the E5 Forged process/finishing essays. */
+  showProcessSections?: boolean;
+  /** `null` hides the second specs CTA. */
+  exploreHref?: string | null;
+  exploreLabel?: string;
+  heroFit?: 'cover' | 'contain';
   finishes: ForgedFinish[];
   finishingBg: string;
   spinImage: string;
