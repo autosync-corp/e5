@@ -107,6 +107,13 @@ const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}${model.canonicalPath}`;
 const ogImage = model.ogImage.startsWith('http') ? model.ogImage : `${baseUrl}${model.ogImage}`;
 
+const seriesDetailClass =
+  model.seriesLogo?.alt === 'GT Forged'
+    ? 'series-logo-detail-gt'
+    : model.seriesLogo?.alt === '2P Forged'
+      ? 'series-logo-detail-2p'
+      : 'series-logo-detail-e5';
+
 const productSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -164,36 +171,38 @@ const breadcrumbSchema = JSON.stringify({
           ]}
         />
       </div>
-      {model.nameWordmark ? (
-        <img
-          src={model.nameWordmark.src}
-          alt=""
-          class="pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12 h-[48px] sm:h-[72px] md:h-[100px] lg:h-[120px] w-auto max-w-[min(90%,540px)] object-contain object-left"
-        />
-      ) : (
-        <p
-          class:list={[
-            'pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
-            'text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.9]',
-            'font-franklin-heavy italic tracking-[2px] md:tracking-[4px] uppercase',
-            model.heroNameClass,
-          ]}
-          aria-hidden="true"
-        >
-          {model.displayName}
-        </p>
-      )}
-    </section>
-
-    <section class="bg-white pt-8 md:pt-12 pb-4">
-      <div class="max-w-[1400px] mx-auto px-6 series-lockup-scope">
+      <div
+        class:list={[
+          'style-series-lockup pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
+          model.nameWordmark ? 'style-series-lockup--hero-mark' : 'style-series-lockup--hero-text',
+        ]}
+      >
+        {model.nameWordmark ? (
+          <img
+            src={model.nameWordmark.src}
+            alt=""
+            class="style-series-lockup__name"
+          />
+        ) : (
+          <p
+            class:list={['style-series-lockup__name-text', model.heroNameClass]}
+            aria-hidden="true"
+          >
+            {model.displayName}
+          </p>
+        )}
         {model.seriesLogo && (
           <img
             src={model.seriesLogo.src}
             alt={model.seriesLogo.alt}
-            class="series-logo-gt mb-4 md:mb-6"
+            class:list={['style-series-lockup__series', seriesDetailClass]}
           />
         )}
+      </div>
+    </section>
+
+    <section class="bg-white pt-8 md:pt-12 pb-4">
+      <div class="max-w-[1400px] mx-auto px-6">
         <h1
           class:list={[
             model.nameWordmark

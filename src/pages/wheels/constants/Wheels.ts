@@ -253,6 +253,7 @@ export const SONOMA_WHEELS_BANNERS = [
 ];
 
 export const E5_FORGED_LOGO = "/assets/images/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp";
+export const E5_FORGED_SERIES_LOGO = "/assets/images/logos/e5-forged.webp";
 export const GT_FORGED_LOGO = "/assets/images/logos/gt-forged.png";
 export const GT01_WORDMARK = "/assets/images/logos/gt-01-wordmark.png";
 export const GT02_WORDMARK = "/assets/images/logos/gt-02-wordmark.png";

@@ -620,7 +620,7 @@ const brandLogo = computed(() => {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
     href: PROCESS_FORGED_ROUTE,
-    heightClass: 'series-logo-shop-e5',
+    heightClass: 'series-logo-detail-e5',
   };
 
   // 2P Forged: Sebring 2P
@@ -639,7 +639,7 @@ const brandLogo = computed(() => {
       src: '/assets/images/logos/2p-forged.png',
       alt: '2P Forged',
       href: WHEELS_SEBRING_2P_ROUTE,
-      heightClass: 'series-logo-shop-2p',
+      heightClass: 'series-logo-detail-2p',
     };
   }
 
@@ -648,7 +648,7 @@ const brandLogo = computed(() => {
       src: '/assets/images/logos/form-forged.png',
       alt: 'Form Forged',
       href: PROCESS_FORM_FORGED_ROUTE,
-      heightClass: 'series-logo-shop-form',
+      heightClass: 'series-logo-detail-form',
     };
   }
 
@@ -657,7 +657,7 @@ const brandLogo = computed(() => {
       src: '/assets/images/logos/gt-forged.png',
       alt: 'GT Forged',
       href: WHEELS_GT_01_ROUTE,
-      heightClass: 'series-logo-shop-gt',
+      heightClass: 'series-logo-detail-gt',
     };
   }
 
@@ -666,7 +666,7 @@ const brandLogo = computed(() => {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
     href: PROCESS_FORGED_ROUTE,
-    heightClass: 'series-logo-shop-e5',
+    heightClass: 'series-logo-detail-e5',
   };
 });
 
@@ -1754,33 +1754,32 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Series wordmark — GT FORGED / FORM FORGED cap-height matches E5 FORGED -->
-          <div class="flex justify-start lg:justify-end">
-            <a :href="brandLogo.href">
-              <img
-                :src="brandLogo.src"
-                :alt="brandLogo.alt"
-                :class="[brandLogo.heightClass, 'w-auto max-w-full object-contain']"
-              />
-            </a>
-          </div>
-
-          <!-- Product Title: gallery wordmark when the model has one; display font otherwise -->
+          <!-- Style name + series logo on one line (series ~45% of name letter height) -->
           <div>
-            <h1>
+            <h1
+              class="style-series-lockup style-series-lockup--shop"
+              :class="{ 'is-gt-wordmark': isGtModelWordmark }"
+            >
               <img
                 v-if="modelWordmark"
                 :src="modelWordmark"
                 alt=""
                 :class="isGtModelWordmark
-                  ? 'h-[44px] md:h-[54px] lg:h-[64px] w-auto max-w-full object-contain object-left'
-                  : 'h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left'"
+                  ? 'style-series-lockup__name h-[44px] md:h-[54px] lg:h-[64px] w-auto max-w-full object-contain object-left'
+                  : 'style-series-lockup__name h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left'"
               />
               <span
                 :class="modelWordmark
                   ? 'sr-only'
-                  : `block text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Heavy'] text-black tracking-wider`"
+                  : `style-series-lockup__name-text block text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Heavy'] text-black tracking-wider`"
               >{{ productDisplayName }}</span>
+              <a :href="brandLogo.href" class="style-series-lockup__series-link">
+                <img
+                  :src="brandLogo.src"
+                  :alt="brandLogo.alt"
+                  :class="[brandLogo.heightClass, 'style-series-lockup__series w-auto max-w-full object-contain']"
+                />
+              </a>
               <span class="sr-only"> {{ finishDisplayName }} WHEELS<template v-if="generationParam || trimParam"> - {{ generationParam ? generationParam.toUpperCase() : '' }}{{ generationParam && trimParam ? ' ' : '' }}{{ trimParam || '' }}</template></span>
             </h1>
           </div>

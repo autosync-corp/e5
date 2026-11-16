@@ -60,6 +60,36 @@ const sebring2p = readFileSync(join(root, 'src/pages/wheels/sebring-2p.astro'), 
 assert('sebring-2p uses 2P logo', sebring2p.includes('TWO_P_FORGED_LOGO'), true);
 assert('sebring-2p alt 2P Forged', sebring2p.includes('alt="2P Forged"'), true);
 assert('sebring-2p no FORM series lockup', sebring2p.includes('FORM_FORGED_WORDMARK'), false);
+assert('sebring-2p detail lockup', sebring2p.includes('style-series-lockup'), true);
+assert('sebring-2p detail series size', sebring2p.includes('series-logo-detail-2p'), true);
+assert('sebring-2p not E5-cap class', /(?<!detail-)series-logo-2p/.test(sebring2p), false);
+
+const daytona = readFileSync(join(root, 'src/pages/wheels/daytona.astro'), 'utf8');
+assert('daytona detail lockup', daytona.includes('style-series-lockup'), true);
+assert('daytona detail series size', daytona.includes('series-logo-detail-form'), true);
+assert('daytona not E5-cap class', /(?<!detail-)series-logo-form/.test(daytona), false);
+
+const sebring = readFileSync(join(root, 'src/pages/wheels/sebring.astro'), 'utf8');
+assert('sebring detail lockup', sebring.includes('series-logo-detail-form'), true);
+const speedway = readFileSync(join(root, 'src/pages/wheels/speedway.astro'), 'utf8');
+assert('speedway detail lockup', speedway.includes('series-logo-detail-form'), true);
+
+const wheelsIndex = readFileSync(join(root, 'src/pages/wheels/index.astro'), 'utf8');
+assert('wheels keeps E5-cap form header', wheelsIndex.includes('series-logo-form'), true);
+assert('wheels keeps E5-cap e5 header', wheelsIndex.includes('series-logo-e5'), true);
+assert('wheels keeps E5-cap gt header', wheelsIndex.includes('series-logo-gt'), true);
+assert('wheels headers not detail class', wheelsIndex.includes('series-logo-detail-'), false);
+
+const modelPage = readFileSync(join(root, 'src/core/components/E5ForgedModelPage.astro'), 'utf8');
+assert('model page hero lockup', modelPage.includes('style-series-lockup--hero'), true);
+assert('model page no stacked E5-cap series', /(?<!detail-)series-logo-gt/.test(modelPage), false);
+
+const e5Models = readFileSync(join(root, 'src/pages/wheels/constants/e5ForgedModels.ts'), 'utf8');
+assert('laguna has E5 series logo', e5Models.includes("alt: 'E5 Forged'"), true);
+
+const shopPage = readFileSync(join(root, 'src/pages/shop/components/_SingleProductPage.vue'), 'utf8');
+assert('shop adjacent lockup', shopPage.includes('style-series-lockup--shop'), true);
+assert('shop uses detail series class', shopPage.includes('series-logo-detail-form'), true);
 assert('desktop GT.01 link', navbar.includes('WHEELS_GT_01_ROUTE'), true);
 assert('mobile GT.04 link', navbar.includes('WHEELS_GT_04_ROUTE'), true);
 
