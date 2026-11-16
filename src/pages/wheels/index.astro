@@ -135,9 +135,9 @@ const gtCards = [
                     <div class="wheels-card-body">
                         <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">5 PREMIUM FINISHES</p>
-                            <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
                         </div>
                         <a
                             href={WHEELS_TALLADEGA_ROUTE}
@@ -166,9 +166,9 @@ const gtCards = [
                     <div class="wheels-card-body">
                         <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                            <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
                         </div>
                         <a
                             href={WHEELS_SONOMA_ROUTE}
@@ -197,10 +197,9 @@ const gtCards = [
                     <div class="wheels-card-body">
                         <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY, GRAND SPORT</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY, GRAND SPORT</p>
                             <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">4 PREMIUM FINISHES</p>
-                            <!-- TODO: replace TODO with Laguna lead-time weeks when Dave sends it -->
-                            <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; TODO WEEK LEAD TIME</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 6 WEEK LEAD TIME</p>
                         </div>
                         <a
                             href={WHEELS_LAGUNA_ROUTE}
@@ -387,11 +386,15 @@ const gtCards = [
 </MainLayout>
 
 <style>
-    /* Four GT cards stay in a 2×2 from tablet up so each image keeps the same
-       400px box as E5 Forged / Form Forged (a 4-column row would shrink them). */
+    /* GT: 1 col mobile, 2 col tablet, 4 col desktop so all four sit on one row. */
     @media (min-width: 640px) {
         .wheel-finish-grid.wheels-gt-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (min-width: 1024px) {
+        .wheel-finish-grid.wheels-gt-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
 
@@ -467,5 +470,16 @@ const gtCards = [
     .wheels-card-meta {
         flex: 1;
         width: 100%;
+    }
+
+    /* Keep E5 exclusive/lead-time rows the same height on desktop so Laguna
+       wrapping does not shift names or CTAs vs Talladega and Sonoma. */
+    @media (min-width: 768px) {
+        .wheels-card-fitment {
+            min-height: 48px;
+        }
+        .wheels-card-leadtime {
+            white-space: nowrap;
+        }
     }
 </style>
