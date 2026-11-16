@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { fetchWheels, getWheelImageUrl, formatPrice, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
+import { fetchWheels, getWheelImageUrl, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
+import { formatPriceRangeOrCall, priceRangeFromProducts } from '@/core/utils/priceDisplay';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
@@ -256,10 +257,8 @@ const productsBySeries = computed(() => {
             sizes: Array.from(new Set(finishProducts.map(p => `${p.Diameter}" x ${p.Width}"`))).sort(),
             frontSizes: finishFrontSizes,
             rearSizes: finishRearSizes,
-            priceRange: {
-              min: Math.min(...finishProducts.map(p => p.Price)),
-              max: Math.max(...finishProducts.map(p => p.Price))
-            }
+            priceRange: priceRangeFromProducts(finishProducts),
+            priceLabel: formatPriceRangeOrCall(finishProducts),
           };
         }).filter(variation => {
           // For staggered fitment, only show finishes that have BOTH front AND rear sizes available
@@ -273,11 +272,8 @@ const productsBySeries = computed(() => {
         allSizes,
         frontSizes,
         rearSizes,
-        // Get overall price range for series
-        priceRange: {
-          min: Math.min(...products.map(p => p.Price)),
-          max: Math.max(...products.map(p => p.Price))
-        }
+        priceRange: priceRangeFromProducts(products),
+        priceLabel: formatPriceRangeOrCall(products),
       };
     }).filter(series => {
       // Hide series that have no finish variations after filtering
@@ -537,15 +533,10 @@ onMounted(() => {
                   </template>
                 </div>
 
-                <!-- Price Range for this Finish -->
+                <!-- Price Range for this Finish: real catalog dollars, or CALL when none exist -->
                 <div class="pt-3 border-t border-gray-200">
                   <p class="text-lg font-['Franklin_Gothic_Demi'] text-black">
-                    <span v-if="variation.priceRange.min === variation.priceRange.max">
-                      {{ formatPrice(variation.priceRange.min) }}
-                    </span>
-                    <span v-else>
-                      {{ formatPrice(variation.priceRange.min) }} - {{ formatPrice(variation.priceRange.max) }}
-                    </span>
+                    {{ variation.priceLabel }}
                   </p>
                 </div>
 

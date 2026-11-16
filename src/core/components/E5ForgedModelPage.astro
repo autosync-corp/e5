@@ -1,0 +1,346 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import E5ForgedDesigns from '@/core/components/E5ForgedDesigns.astro';
+import { SITE_URL } from '@/core/constants/Site.ts';
+import { GALLERY_WHEELS_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes.ts';
+import { fetchWheels, getWheelImageUrl, type WheelProduct } from '@/core/services/ProductService';
+import { hasRealPrice } from '@/core/utils/priceDisplay';
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
+import {
+  FORGING_STEPS,
+  type ForgedFinish,
+  type ForgedModel,
+} from '@/pages/wheels/constants/e5ForgedModels.ts';
+
+interface Props {
+  model: ForgedModel;
+}
+
+const { model } = Astro.props;
+
+function catalogFinishName(wheel: WheelProduct): string {
+  return [wheel.Finish, wheel.Color].filter(Boolean).join(' ').trim();
+}
+
+let frontSize = model.frontSize;
+let rearSize = model.rearSize;
+let boltPattern = model.boltPattern;
+let finishes: ForgedFinish[] = model.finishes;
+let shopFitmentHref = model.shopFitmentHref;
+
+try {
+  const catalog = await fetchWheels({ model: model.brandName });
+  const wheels = catalog.Wheels ?? [];
+  if (wheels.length > 0) {
+    const front = wheels.find((wheel) => wheel.Diameter === 20) ?? wheels[0];
+    const rear = wheels.find((wheel) => wheel.Diameter === 21) ?? wheels[0];
+    frontSize = `${front.Diameter} x ${front.Width} / +${front.Offset}mm`;
+    rearSize = `${rear.Diameter} x ${rear.Width} / +${rear.Offset}mm`;
+    boltPattern = `5x${front.BoltCircle1}`;
+
+    const byFinish = new Map<string, ForgedFinish>();
+    for (const wheel of wheels) {
+      const name = catalogFinishName(wheel);
+      if (!name) continue;
+      const existing = byFinish.get(name);
+      const priced = hasRealPrice(wheel.Price);
+      if (!existing) {
+        byFinish.set(name, {
+          name,
+          image: getWheelImageUrl(catalog.ImgUrlBase, wheel.Img0001),
+          href: buildWheelUrl(model.brandName, name),
+          call: !priced,
+        });
+      } else if (priced) {
+        existing.call = false;
+      }
+    }
+    const ordered = [...byFinish.values()];
+    ordered.sort((a, b) => {
+      if (a.name.toLowerCase().includes('brushed')) return -1;
+      if (b.name.toLowerCase().includes('brushed')) return 1;
+      return a.name.localeCompare(b.name);
+    });
+    if (ordered.length > 0) {
+      finishes = ordered;
+      const brushed = ordered.find((finish) => finish.name.toLowerCase().includes('brushed'));
+      shopFitmentHref = (brushed ?? ordered[0]).href;
+    }
+  }
+} catch (error) {
+  console.warn(`E5 Forged model page using static specs for ${model.brandName}`, error);
+}
+
+const baseUrl = SITE_URL;
+const canonicalUrl = `${baseUrl}${model.canonicalPath}`;
+const ogImage = model.ogImage.startsWith('http') ? model.ogImage : `${baseUrl}${model.ogImage}`;
+
+const productSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: model.productSchemaName,
+  brand: { '@type': 'Brand', name: 'E5 Wheels' },
+  description: model.description,
+  url: canonicalUrl,
+  image: ogImage,
+  ...(model.schemaOffers
+    ? {
+        offers: {
+          '@type': 'AggregateOffer',
+          priceCurrency: 'USD',
+          lowPrice: model.schemaOffers.lowPrice,
+          highPrice: model.schemaOffers.highPrice,
+          availability: 'https://schema.org/MadeToOrder',
+          seller: { '@type': 'Organization', name: 'E5 Wheels' },
+        },
+      }
+    : {}),
+});
+
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Wheels', item: `${baseUrl}/wheels` },
+    { '@type': 'ListItem', position: 3, name: model.brandName, item: canonicalUrl },
+  ],
+});
+---
+
+<MainLayout
+  title={model.title}
+  description={model.description}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="product"
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={productSchema}></script>
+    <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
+  </Fragment>
+
+  <div class="w-full bg-white" data-e5-forged-model={model.brandName.toLowerCase()}>
+    <section class="relative w-full bg-white">
+      <div class="w-full h-[350px] sm:h-[450px] md:h-[560px] lg:h-[640px] overflow-hidden">
+        <img
+          src={model.heroImage}
+          alt={model.heroAlt}
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
+      <p
+        class:list={[
+          'pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
+          'text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.9]',
+          'font-franklin-heavy italic tracking-[2px] md:tracking-[4px] uppercase',
+          model.heroNameClass,
+        ]}
+        aria-hidden="true"
+      >
+        {model.displayName}
+      </p>
+    </section>
+
+    <section class="bg-white pt-8 md:pt-12 pb-4">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <h1 class="text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2">
+          {model.h1}
+        </h1>
+        <p class="text-[11px] md:text-[13px] tracking-[1.4px] md:tracking-[1.8px] uppercase text-black/50 mb-8 md:mb-12">
+          {model.exclusive}
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center mb-10 md:mb-14">
+          <div class="w-full flex justify-center">
+            <img
+              src={model.wheelImage}
+              alt={model.wheelAlt}
+              class="w-full max-w-[560px] h-auto object-contain"
+            />
+          </div>
+          <div class="w-full max-w-[360px] md:max-w-none mx-auto md:mx-0">
+            <h2 class="text-[13px] md:text-[15px] font-franklin-demi tracking-[1.6px] uppercase mb-3">
+              SIZE
+            </h2>
+            <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-1">
+              [F] {frontSize}
+            </p>
+            <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-6">
+              [R] {rearSize}
+            </p>
+            <h2 class="text-[13px] md:text-[15px] font-franklin-demi tracking-[1.6px] uppercase mb-3">
+              BOLT PATTERN
+            </h2>
+            <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-8">
+              {boltPattern}
+            </p>
+            <div class="flex flex-col gap-3 items-start">
+              <a
+                href={shopFitmentHref}
+                class="bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase text-center min-w-[220px]"
+                data-gtm-event="shop_fitment"
+                data-gtm-label={`Shop ${model.brandName}`}
+              >
+                {model.shopFitmentLabel}
+              </a>
+              <a
+                href={PROCESS_FORGED_ROUTE}
+                class="bg-white text-black border border-black px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-black/5 transition-colors uppercase text-center min-w-[220px]"
+                data-gtm-event="explore_wheel"
+                data-gtm-label="Explore E5 Forged"
+              >
+                EXPLORE E5 FORGED
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-6 md:gap-10 mb-8 md:mb-12">
+          {finishes.map((finish) => (
+            <a href={finish.href} class="block w-[42%] sm:w-[21%] max-w-[220px] hover:opacity-80 transition-opacity">
+              <div class="aspect-square p-2 flex items-center justify-center">
+                <img
+                  src={finish.image}
+                  alt={`${model.brandName} ${finish.name}`}
+                  class="w-full h-full object-contain"
+                />
+              </div>
+              <p class="mt-2 text-[11px] md:text-[12px] tracking-[1.4px] uppercase text-black/70 text-center">
+                {finish.name}
+              </p>
+              {finish.call && (
+                <p class="mt-1 text-[11px] md:text-[12px] tracking-[1.4px] uppercase text-black/60 text-center">
+                  CALL
+                </p>
+              )}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-8 md:py-12">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <h2 class="text-e5-red text-[22px] md:text-[28px] font-franklin-book tracking-[2px] uppercase mb-2 text-center">
+          THE FORGING PROCESS
+        </h2>
+        <p class="text-[12px] md:text-[14px] tracking-[1.5px] uppercase mb-4 text-center text-black/70">
+          FORGED IN THE USA. ENGINEERED WITHOUT COMPROMISE.
+          <img
+            src="/assets/images/process/forged/74e97b24bbd8f0fa93b10ef755682a46c52738c9.webp"
+            alt=""
+            class="inline-block h-[13px] w-[24px] ml-1 align-middle"
+          />
+        </p>
+        <p class="text-[13px] md:text-[15px] leading-[19px] md:leading-[21px] max-w-[860px] mx-auto mb-8 text-center text-black/70">
+          Every E5 Forged wheel begins with purpose. Designed exclusively for Corvette platforms, our forged wheels are engineered and manufactured in the United States to meet the extreme demands of performance, precision, and strength. From aerospace-grade material selection to final finishing, each step is executed with intention&mdash;eliminating excess, reinforcing structure, and delivering uncompromising performance for the C8 Z06, ZR1, and E-Ray.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-8">
+          {FORGING_STEPS.map((step) => (
+            <div class="text-center">
+              <img
+                src={step.image}
+                alt={step.caption}
+                class="w-full h-[120px] sm:h-[140px] md:h-[160px] object-cover mb-2"
+                loading="lazy"
+              />
+              <p class="text-[11px] md:text-[12px] font-franklin-demi tracking-[1px] uppercase">
+                {step.caption}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div class="text-center">
+          <a
+            href={PROCESS_FORGED_ROUTE}
+            class="bg-e5-red text-white px-8 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block"
+          >
+            LEARN MORE
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-black py-12 md:py-16">
+      <div class="absolute inset-0 opacity-30">
+        <img src={model.finishingBg} alt="" class="w-full h-full object-cover" />
+      </div>
+      <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+          <div class="w-full md:w-1/3">
+            <h2 class="text-white text-[40px] md:text-[58px] font-franklin-heavy tracking-[4px] md:tracking-[6px] uppercase">
+              FINISHING
+            </h2>
+          </div>
+          <div class="w-full md:w-2/3">
+            <p class="text-white text-[13px] md:text-[16px] leading-[19px] md:leading-[22px]">
+              Every wheel in the E5 Forged Collection is a statement beyond performance. Available in premium finishes like gloss black, brushed aluminum, and polished&mdash;with custom options upon request&mdash;each design highlights the precision of its forged construction. Every finish is executed with uncompromising attention to detail for a look that lasts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white" data-e5-forged-spin>
+      <div class="w-full h-[280px] sm:h-[380px] md:h-[520px] lg:h-[620px] overflow-hidden bg-white">
+        <img
+          src={model.spinImage}
+          alt={model.spinAlt}
+          class:list={[
+            'w-full h-full object-center',
+            model.spinFit === 'contain' ? 'object-contain bg-white' : 'object-cover',
+          ]}
+        />
+      </div>
+    </section>
+
+    <section class="w-full">
+      <div class="relative h-[250px] sm:h-[320px] md:h-[400px] lg:h-[460px] overflow-hidden">
+        <img
+          src={model.vetteGalleryImage}
+          alt={model.vetteGalleryAlt}
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 flex items-end justify-start pb-10 md:pb-14 pl-6 md:pl-16">
+          <div class="text-white">
+            <h2 class="text-[36px] md:text-[58px] font-franklin-heavy uppercase mb-2 md:mb-3 tracking-[2px] leading-[1]">
+              VETTE GALLERY
+            </h2>
+            <p class="text-[14px] md:text-[18px] leading-[1.4]">
+              A collection of builds fitted with our wheels.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative h-[250px] sm:h-[320px] md:h-[400px] lg:h-[460px] overflow-hidden">
+        <img
+          src={model.wheelGalleryImage}
+          alt="E5 wheel gallery"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 flex items-end justify-end pb-10 md:pb-14 pr-6 md:pr-16">
+          <div class="text-white text-right">
+            <h2 class="text-[36px] md:text-[58px] font-franklin-heavy uppercase mb-2 md:mb-3 tracking-[2px] leading-[1]">
+              WHEEL GALLERY
+            </h2>
+            <p class="text-[14px] md:text-[18px] leading-[1.4] mb-4 md:mb-6">
+              Our wheels, up close & personal.
+            </p>
+            <a
+              href={GALLERY_WHEELS_ROUTE}
+              class="bg-e5-red text-white px-8 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block"
+            >
+              VIEW GALLERY
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <E5ForgedDesigns />
+  </div>
+</MainLayout>

@@ -236,7 +236,9 @@ const productImageUrl = productImagePath.startsWith('http')
   ? productImagePath
   : `${baseUrl}${productImagePath}`;
 
-// Product schema &mdash; base data known at server time
+// Product schema — only emit Offer/AggregateOffer when this series/finish
+// already has a real price in site data. Unpriced wheels (Laguna, GT) stay
+// Product-only so we never ship a fake dollar amount.
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -248,16 +250,19 @@ const productSchema = {
   },
   "url": canonicalUrl,
   "image": productImageUrl,
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "USD",
-    ...(hasKnownPrice ? { lowPrice, highPrice } : {}),
-    "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
-    "seller": {
-      "@type": "Organization",
-      "name": "E5 Wheels"
+  ...(hasKnownPrice ? {
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": lowPrice,
+      "highPrice": highPrice,
+      "availability": isMadeToOrder ? "https://schema.org/MadeToOrder" : "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "E5 Wheels"
+      }
     }
-  }
+  } : {})
 };
 ---
 

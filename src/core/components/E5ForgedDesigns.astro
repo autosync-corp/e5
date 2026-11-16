@@ -1,0 +1,60 @@
+---
+import {
+  LAGUNA_BRAND_NAME,
+  LAGUNA_WHEEL_RENDER,
+  SONOMA_BRAND_NAME,
+  TALLADEGA_BRAND_NAME,
+} from '@/pages/wheels/constants/Wheels.ts';
+import { buildWheelUrl } from '@/core/utils/wheelUrl';
+
+const designs = [
+  {
+    name: 'Talladega',
+    image: '/assets/images/generations/c8/zr1-figma/taladaga-c8wheel.webp',
+    href: buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum'),
+    exclusive: 'Exclusively for C8 Z06, ZR1, E-Ray.',
+  },
+  {
+    name: 'Sonoma',
+    image: '/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp',
+    href: buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum'),
+    exclusive: 'Exclusively for C8 Z06, ZR1, E-Ray.',
+  },
+  {
+    name: 'Laguna',
+    image: LAGUNA_WHEEL_RENDER,
+    href: buildWheelUrl(LAGUNA_BRAND_NAME, 'Brushed Aluminum'),
+    exclusive: 'Exclusively for C8 Z06, ZR1, E-Ray, Grand Sport.',
+  },
+];
+---
+
+<section class="bg-white py-8 md:py-12" data-e5-forged-designs>
+  <div class="max-w-[1400px] mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10">
+      {designs.map((design) => (
+        <a href={design.href} class="block hover:opacity-80 transition-opacity">
+          <div class="text-center flex flex-col items-center h-full">
+            <div class="w-full max-w-[360px] aspect-square p-4 md:p-5 flex items-center justify-center">
+              <img
+                src={design.image}
+                alt={`${design.name} forged wheel`}
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <p class="mt-1 mb-3 text-[16px] md:text-[18px] leading-[22px] md:leading-[24px] font-franklin-demi tracking-[2.4px] md:tracking-[3.2px] uppercase text-black">
+              {design.name}
+            </p>
+            <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">BRUSHED ALUMINUM</p>
+            <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-2">{design.exclusive}</p>
+            <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-3">CUSTOM FINISHES</p>
+            <p class="text-[11px] md:text-[12px] tracking-[1.2px] uppercase text-black/70 mb-5">MADE IN USA</p>
+            <div class="mt-auto bg-e5-red text-white px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-e5-red/90 transition-colors uppercase inline-block">
+              SHOP FITMENT
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
