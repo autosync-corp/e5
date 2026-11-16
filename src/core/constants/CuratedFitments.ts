@@ -105,10 +105,10 @@ export const CURATED_FITMENTS: CuratedFitmentEntry[] = [
     ]
   },
 
-  // C5 Base Coupe and Z06
+  // C5 Base Coupe and Z06 (AutoSync Base is Submodel "Coupe")
   {
     generation: 'C5',
-    trims: ['Base', 'Z06'],
+    trims: ['Base', 'Coupe', 'Z06'],
     options: [
       {
         front: { diameter: 18, width: 10, offset: 58, boltPattern: '5x120.65' },
@@ -144,6 +144,48 @@ export function getCuratedFitment(generation: string, trim: string): VehicleFitm
  */
 export function hasCuratedFitment(generation: string, trim: string): boolean {
   return getCuratedFitment(generation, trim) !== null;
+}
+
+export function generationFromYear(year: number): string {
+  if (year >= 2020) return 'C8';
+  if (year >= 2014) return 'C7';
+  if (year >= 2005) return 'C6';
+  if (year >= 1997) return 'C5';
+  return '';
+}
+
+/** AutoSync C5 Base is stored as Submodel "Coupe". */
+export function trimKeysForSubmodel(submodel: string): string[] {
+  const trim = (submodel || '').trim();
+  if (!trim) return [];
+  const keys = [trim];
+  if (trim.toLowerCase() === 'coupe') keys.push('Base');
+  return keys;
+}
+
+export function getCuratedFitmentForVehicle(year: number, submodel: string): VehicleFitment[] | null {
+  const generation = generationFromYear(year);
+  if (!generation) return null;
+  for (const trim of trimKeysForSubmodel(submodel)) {
+    const curated = getCuratedFitment(generation, trim);
+    if (curated) return curated;
+  }
+  return null;
+}
+
+export function curatedFitmentIsStaggered(options: VehicleFitment[]): boolean {
+  return options.some(
+    (option) =>
+      option.front.diameter !== option.rear.diameter ||
+      option.front.width !== option.rear.width
+  );
+}
+
+export function wheelMatchesFitmentSpec(
+  wheel: { Diameter: number; Width: number },
+  spec: FitmentSpec
+): boolean {
+  return wheel.Diameter === spec.diameter && wheel.Width === spec.width;
 }
 
 /**

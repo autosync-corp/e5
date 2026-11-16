@@ -30,7 +30,7 @@ function loadBundled(rel) {
   return import(pathToFileURL(outfile).href);
 }
 
-const { hasStaggeredFitment, usesStaggeredSet } = await loadTs('../src/core/services/VehicleService.ts');
+const { hasStaggeredFitment, usesStaggeredSet } = await loadBundled('../src/core/services/VehicleService.ts');
 const { modelWordmarkSrc, MODEL_WORDMARK_SLUGS } = await loadBundled('../src/core/utils/modelWordmark.ts');
 
 let failed = 0;
@@ -56,10 +56,21 @@ const plusFR = {
 
 const c5 = { Year: 2001, Make: 'Chevrolet', Model: 'Corvette', Submodel: 'Z06', ...plusFR };
 assert('C5 plus F/R still looks staggered to raw detector', hasStaggeredFitment(c5), true);
-assert('C5 shops as a square set', usesStaggeredSet(c5), false);
+assert('C5 Z06 curated 18x10/19x11 shops staggered', usesStaggeredSet(c5), true);
 
-const c5Base = { Year: 1997, Make: 'Chevrolet', Model: 'Corvette', Submodel: 'Coupe', ...plusFR };
-assert('C5 Base shops as a square set', usesStaggeredSet(c5Base), false);
+const c5Base = { Year: 2001, Make: 'Chevrolet', Model: 'Corvette', Submodel: 'Coupe', ...emptyFit };
+assert('C5 Base Coupe curated shops staggered', usesStaggeredSet(c5Base), true);
+
+const c5SquareOnly = {
+  Year: 2001,
+  Make: 'Chevrolet',
+  Model: 'Corvette',
+  Submodel: 'Pace Car',
+  Fitments: [],
+  OptionalFitments: [],
+  PlusSizes: [{ Position: null, Type: 'FR' }],
+};
+assert('C5 Pace Car Type-FR only (no curated) shops square', usesStaggeredSet(c5SquareOnly), false);
 
 const c8 = {
   Year: 2023,

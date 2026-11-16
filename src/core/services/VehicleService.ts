@@ -1,5 +1,10 @@
 // Vehicle Service for E5 Wheels Vehicle Fitment API
 
+import {
+  curatedFitmentIsStaggered,
+  getCuratedFitmentForVehicle,
+} from '@/core/constants/CuratedFitments';
+
 const API_BASE_URL = 'https://api.autosyncstudio.com/vehicles';
 const API_KEY = 'efive';
 
@@ -145,14 +150,14 @@ export function hasStaggeredFitment(vehicle: Vehicle): boolean {
 
 /**
  * Whether shop/product shopping should use a staggered (2F+2R) set vs a square 4-pack.
- *
- * C5 (1997–2004) OEM and Type-FR plus-sizes are square (same size all around).
- * Plus-size Type F/R rows exist on those cars but must not force a staggered set.
- * C6–C8 keep the existing staggered detection (OEM Front/Rear and/or Type F/R).
+ * Follows the vehicle's actual fitment: curated options first (front ≠ rear →
+ * staggered, front = rear → square), otherwise AutoSync Position/Type flags.
+ * Does not force a generation by year.
  */
 export function usesStaggeredSet(vehicle: Vehicle): boolean {
-  if (vehicle.Year >= 1997 && vehicle.Year <= 2004) {
-    return false;
+  const curated = getCuratedFitmentForVehicle(vehicle.Year, vehicle.Submodel);
+  if (curated && curated.length > 0) {
+    return curatedFitmentIsStaggered(curated);
   }
   return hasStaggeredFitment(vehicle);
 }

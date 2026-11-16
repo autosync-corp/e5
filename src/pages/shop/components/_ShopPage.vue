@@ -6,6 +6,10 @@ import { buildWheelUrl } from '@/core/utils/wheelUrl';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { filterWheelsByVehicle, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
+import {
+  getCuratedFitmentForVehicle,
+  wheelMatchesFitmentSpec,
+} from '@/core/constants/CuratedFitments';
 
 // State
 const apiResponse = ref<WheelsApiResponse | null>(null);
@@ -105,15 +109,8 @@ const productsBySeries = computed(() => {
           // For staggered fitment, prefer smaller wheels (more likely to be front wheels)
           // This ensures when user clicks, they land on a product that fits the front
           if (isStaggered.value && selectedVehicle.value) {
-            const frontFitments = getFrontFitments(selectedVehicle.value);
-            const pMatchesFront = frontFitments.some(f =>
-              f.RimDiameter === p.Diameter &&
-              (f.RimWidth === p.Width || (f.RimWidthMin && f.RimWidthMax && p.Width >= f.RimWidthMin && p.Width <= f.RimWidthMax))
-            );
-            const existingMatchesFront = frontFitments.some(f =>
-              f.RimDiameter === existing.Diameter &&
-              (f.RimWidth === existing.Width || (f.RimWidthMin && f.RimWidthMax && existing.Width >= f.RimWidthMin && existing.Width <= f.RimWidthMax))
-            );
+            const pMatchesFront = wheelMatchesFront(p, selectedVehicle.value);
+            const existingMatchesFront = wheelMatchesFront(existing, selectedVehicle.value);
 
             // Strongly prefer front-fitting products
             if (pMatchesFront && !existingMatchesFront) {
@@ -148,16 +145,10 @@ const productsBySeries = computed(() => {
       let frontSizes: string[] = [];
       let rearSizes: string[] = [];
       if (isStaggered.value && selectedVehicle.value) {
-        const frontFitments = getFrontFitments(selectedVehicle.value);
-        const rearFitments = getRearFitments(selectedVehicle.value);
-
         // Get front sizes
         const frontSizeSet = new Set<string>();
         products.forEach(wheel => {
-          const matchesFront = frontFitments.some(f =>
-            f.RimDiameter === wheel.Diameter &&
-            (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
-          );
+          const matchesFront = wheelMatchesFront(wheel, selectedVehicle.value!);
           if (matchesFront) {
             const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
             frontSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
@@ -168,10 +159,7 @@ const productsBySeries = computed(() => {
         // Get rear sizes
         const rearSizeSet = new Set<string>();
         products.forEach(wheel => {
-          const matchesRear = rearFitments.some(f =>
-            f.RimDiameter === wheel.Diameter &&
-            (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
-          );
+          const matchesRear = wheelMatchesRear(wheel, selectedVehicle.value!);
           if (matchesRear) {
             const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
             rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
@@ -203,16 +191,10 @@ const productsBySeries = computed(() => {
           let finishFrontSizes: string[] = [];
           let finishRearSizes: string[] = [];
           if (isStaggered.value && selectedVehicle.value) {
-            const frontFitments = getFrontFitments(selectedVehicle.value);
-            const rearFitments = getRearFitments(selectedVehicle.value);
-
             // Get front sizes for this finish
             const frontSizeSet = new Set<string>();
             finishProducts.forEach(wheel => {
-              const matchesFront = frontFitments.some(f =>
-                f.RimDiameter === wheel.Diameter &&
-                (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
-              );
+              const matchesFront = wheelMatchesFront(wheel, selectedVehicle.value!);
               if (matchesFront) {
                 const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
                 frontSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
@@ -223,10 +205,7 @@ const productsBySeries = computed(() => {
             // Get rear sizes for this finish
             const rearSizeSet = new Set<string>();
             finishProducts.forEach(wheel => {
-              const matchesRear = rearFitments.some(f =>
-                f.RimDiameter === wheel.Diameter &&
-                (f.RimWidth === wheel.Width || (f.RimWidthMin && f.RimWidthMax && wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
-              );
+              const matchesRear = wheelMatchesRear(wheel, selectedVehicle.value!);
               if (matchesRear) {
                 const offset = wheel.Offset > 0 ? `+${wheel.Offset}` : `${wheel.Offset}`;
                 rearSizeSet.add(`${wheel.Diameter}" x ${wheel.Width}" ${offset}mm`);
@@ -330,6 +309,32 @@ function getProductImage(product: WheelProduct): string {
 
 function handleVehicleSelected(vehicle: Vehicle | null) {
   selectedVehicle.value = vehicle;
+}
+
+function wheelMatchesFront(wheel: WheelProduct, vehicle: Vehicle): boolean {
+  const curated = getCuratedFitmentForVehicle(vehicle.Year, vehicle.Submodel);
+  if (curated && curated.length > 0) {
+    return curated.some((option) => wheelMatchesFitmentSpec(wheel, option.front));
+  }
+  return getFrontFitments(vehicle).some((f) =>
+    f.RimDiameter === wheel.Diameter &&
+    (f.RimWidth === wheel.Width ||
+      (f.RimWidthMin != null && f.RimWidthMax != null &&
+        wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+  );
+}
+
+function wheelMatchesRear(wheel: WheelProduct, vehicle: Vehicle): boolean {
+  const curated = getCuratedFitmentForVehicle(vehicle.Year, vehicle.Submodel);
+  if (curated && curated.length > 0) {
+    return curated.some((option) => wheelMatchesFitmentSpec(wheel, option.rear));
+  }
+  return getRearFitments(vehicle).some((f) =>
+    f.RimDiameter === wheel.Diameter &&
+    (f.RimWidth === wheel.Width ||
+      (f.RimWidthMin != null && f.RimWidthMax != null &&
+        wheel.Width >= f.RimWidthMin && wheel.Width <= f.RimWidthMax))
+  );
 }
 
 onMounted(() => {
