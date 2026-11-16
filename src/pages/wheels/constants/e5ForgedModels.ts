@@ -67,6 +67,8 @@ export interface ForgedModel {
   schemaOffers?: { lowPrice: string; highPrice: string };
   /** Optional series wordmark shown above the H1 (GT FORGED on GT pages). */
   seriesLogo?: { src: string; alt: string };
+  /** Optional model-name wordmark (replaces Franklin Gothic overlay on GT pages). */
+  nameWordmark?: { src: string; alt: string };
 }
 
 const IMG = 'https://wheels.autosyncstudio.com/webp';

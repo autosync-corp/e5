@@ -3,6 +3,10 @@ import { VETTE_GALLERY_IMAGE_1 } from '@/pages/gallery/constants/Images.ts';
 import type { ForgedFinish, ForgedModel } from '@/pages/wheels/constants/e5ForgedModels.ts';
 import {
   GT_FORGED_LOGO,
+  GT01_WORDMARK,
+  GT02_WORDMARK,
+  GT03_WORDMARK,
+  GT04_WORDMARK,
   WHEEL_GALLERY_STUDIO_BANNER,
   GT01_BRAND_NAME,
   GT01_BRUSHED_ALUMINUM,
@@ -76,13 +80,15 @@ function gtModel(opts: {
   brushed: string;
   gloss: string;
   satin: string;
+  nameWordmark: string;
 }): ForgedModel {
-  const { brandName, slug, brushed, gloss, satin } = opts;
+  const { brandName, slug, brushed, gloss, satin, nameWordmark } = opts;
   return {
     brandName,
     displayName: brandName,
     h1: `${brandName} CORVETTE WHEELS`,
     seriesLogo: { src: GT_FORGED_LOGO, alt: 'GT Forged' },
+    nameWordmark: { src: nameWordmark, alt: brandName },
     exclusive: 'MADE TO ORDER · 6 WEEK LEAD TIME',
     title: `${brandName} Corvette Wheels | E5 Wheels`,
     description: `${brandName} Corvette wheels in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm. Complete sets from $4,900.`,
@@ -121,6 +127,7 @@ export const GT_01_MODEL = gtModel({
   brushed: GT01_BRUSHED_ALUMINUM,
   gloss: GT01_GLOSS_BLACK,
   satin: GT01_SATIN_BLACK,
+  nameWordmark: GT01_WORDMARK,
 });
 
 export const GT_02_MODEL = gtModel({
@@ -129,6 +136,7 @@ export const GT_02_MODEL = gtModel({
   brushed: GT02_BRUSHED_ALUMINUM,
   gloss: GT02_GLOSS_BLACK,
   satin: GT02_SATIN_BLACK,
+  nameWordmark: GT02_WORDMARK,
 });
 
 export const GT_03_MODEL = gtModel({
@@ -137,6 +145,7 @@ export const GT_03_MODEL = gtModel({
   brushed: GT03_BRUSHED_ALUMINUM,
   gloss: GT03_GLOSS_BLACK,
   satin: GT03_SATIN_BLACK,
+  nameWordmark: GT03_WORDMARK,
 });
 
 export const GT_04_MODEL = gtModel({
@@ -145,6 +154,7 @@ export const GT_04_MODEL = gtModel({
   brushed: GT04_BRUSHED_ALUMINUM,
   gloss: GT04_GLOSS_BLACK,
   satin: GT04_SATIN_BLACK,
+  nameWordmark: GT04_WORDMARK,
 });
 
 export const GT_FORGED_MODELS = [GT_01_MODEL, GT_02_MODEL, GT_03_MODEL, GT_04_MODEL];

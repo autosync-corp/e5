@@ -90,3 +90,49 @@
     gap: 2rem;
   }
 }
+
+/*
+ * Series lockups (E5 FORGED / GT FORGED / FORM FORGED).
+ * CSS box height is chosen so the FORGED cap-height matches E5 FORGED.
+ * Artwork is unaltered; padding is handled by sizing, not by cropping.
+ * Solid-letter measurements (dark pixels, longest vertical stem):
+ *   E5:   canvas 66, letters 64 (y 1–64)
+ *   GT:   canvas 90, letters 90 (y 0–89)
+ *   FORM: canvas 91, letters 90 (y 1–90)
+ * Desktop: E5 CSS 54px → cap 52.36px; GT 52.36px; FORM 52.95px (~907px wide).
+ * Narrower lockups: FORM is 100cqi and E5/GT share that cap.
+ */
+.series-lockup-scope {
+  container-type: inline-size;
+}
+
+.series-logo-e5,
+.series-logo-gt,
+.series-logo-form {
+  display: block;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
+}
+
+.series-logo-form {
+  width: min(100cqi, calc(54px * 64 / 66 * 1559 / 90));
+  height: auto;
+}
+.series-logo-e5 {
+  height: calc(min(100cqi, 54px * 64 / 66 * 1559 / 90) * 90 / 1559 * 66 / 64);
+}
+.series-logo-gt {
+  height: calc(min(100cqi, 54px * 64 / 66 * 1559 / 90) * 90 / 1559);
+}
+
+/* Shop product-page series logos — match E5 h-4 / lg:h-5 cap height. */
+.series-logo-shop-e5 { height: 16px; }
+.series-logo-shop-gt { height: calc(16px * 64 / 66); }
+.series-logo-shop-form { height: calc(16px * 64 / 66 * 91 / 90); }
+@media (min-width: 1024px) {
+  .series-logo-shop-e5 { height: 20px; }
+  .series-logo-shop-gt { height: calc(20px * 64 / 66); }
+  .series-logo-shop-form { height: calc(20px * 64 / 66 * 91 / 90); }
+}

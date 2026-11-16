@@ -607,6 +607,7 @@ const productDisplayName = computed(() => {
 });
 
 const modelWordmark = computed(() => modelWordmarkSrc(selectedProduct.value?.Model));
+const isGtModelWordmark = computed(() => Boolean(modelWordmark.value?.includes('gt-0')));
 
 const finishDisplayName = computed(() => {
   if (!selectedProduct.value) return '';
@@ -618,7 +619,8 @@ const brandLogo = computed(() => {
   if (!selectedProduct.value) return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
-    href: PROCESS_FORGED_ROUTE
+    href: PROCESS_FORGED_ROUTE,
+    heightClass: 'series-logo-shop-e5',
   };
 
   // Form Forged wheels: Daytona, Sebring, Sebring 2P, Speedway
@@ -634,7 +636,8 @@ const brandLogo = computed(() => {
     return {
       src: '/assets/images/logos/form-forged.png',
       alt: 'Form Forged',
-      href: PROCESS_FORM_FORGED_ROUTE
+      href: PROCESS_FORM_FORGED_ROUTE,
+      heightClass: 'series-logo-shop-form',
     };
   }
 
@@ -642,7 +645,8 @@ const brandLogo = computed(() => {
     return {
       src: '/assets/images/logos/gt-forged.png',
       alt: 'GT Forged',
-      href: WHEELS_GT_01_ROUTE
+      href: WHEELS_GT_01_ROUTE,
+      heightClass: 'series-logo-shop-gt',
     };
   }
 
@@ -650,7 +654,8 @@ const brandLogo = computed(() => {
   return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
-    href: PROCESS_FORGED_ROUTE
+    href: PROCESS_FORGED_ROUTE,
+    heightClass: 'series-logo-shop-e5',
   };
 });
 
@@ -1738,13 +1743,13 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Series wordmark — GT FORGED, E5 FORGED, and FORM FORGED share one height -->
+          <!-- Series wordmark — GT FORGED / FORM FORGED cap-height matches E5 FORGED -->
           <div class="flex justify-start lg:justify-end">
             <a :href="brandLogo.href">
               <img
                 :src="brandLogo.src"
                 :alt="brandLogo.alt"
-                class="h-4 lg:h-5 w-auto max-w-full object-contain"
+                :class="[brandLogo.heightClass, 'w-auto max-w-full object-contain']"
               />
             </a>
           </div>
@@ -1756,7 +1761,9 @@ onMounted(() => {
                 v-if="modelWordmark"
                 :src="modelWordmark"
                 alt=""
-                class="h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left"
+                :class="isGtModelWordmark
+                  ? 'h-[44px] md:h-[54px] lg:h-[64px] w-auto max-w-full object-contain object-left'
+                  : 'h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left'"
               />
               <span
                 :class="modelWordmark

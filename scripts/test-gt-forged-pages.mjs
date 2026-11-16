@@ -40,7 +40,8 @@ assert('four GT models', GT_FORGED_MODELS.length, 4);
 assert('canonical gt-01', GT_01_MODEL.canonicalPath, '/wheels/gt-01');
 assert('route gt-01', WHEELS_GT_01_ROUTE, '/wheels/gt-01');
 assert('route gt-04', WHEELS_GT_04_ROUTE, '/wheels/gt-04');
-assert('no GT.01 wordmark', modelWordmarkSrc('GT.01'), null);
+assert('GT.01 wordmark', modelWordmarkSrc('GT.01'), '/assets/images/logos/gt-01-wordmark.png');
+assert('GT.04 wordmark', modelWordmarkSrc('GT.04'), '/assets/images/logos/gt-04-wordmark.png');
 assert('catalog size count', GT_CATALOG_SIZE_LINES.length, 6);
 assert('hides E5 process copy', GT_01_MODEL.showProcessSections, false);
 assert('no explore CTA', GT_01_MODEL.exploreHref, null);
@@ -49,7 +50,10 @@ assert('brushed shop link', GT_01_MODEL.finishes[0].href.includes('/shop/gt01/br
 assert('exclusive is lead time only', GT_01_MODEL.exclusive.includes('C8'), false);
 
 const navbar = readFileSync(join(root, 'src/core/components/Navbar.vue'), 'utf8');
-assert('desktop GT FORGED', navbar.includes('GT FORGED'), true);
+const wheelsTitleOrder = [...navbar.matchAll(/<(?:div class="(?:wheel-group-title|mobile-wheel-title)")>([^<]+)</g)].map((m) => m[1]);
+assert('desktop wheels order', wheelsTitleOrder.slice(0, 4).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
+assert('mobile wheels order', wheelsTitleOrder.slice(4, 8).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
+assert('2-PIECE relabeled', navbar.includes('2-PIECE'), false);
 assert('desktop GT.01 link', navbar.includes('WHEELS_GT_01_ROUTE'), true);
 assert('mobile GT.04 link', navbar.includes('WHEELS_GT_04_ROUTE'), true);
 

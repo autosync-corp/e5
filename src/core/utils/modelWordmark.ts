@@ -14,13 +14,23 @@ export const MODEL_WORDMARK_SLUGS = [
   'sonoma',
 ] as const;
 
+const GT_WORDMARK_BY_SLUG: Record<string, string> = {
+  gt01: '/assets/images/logos/gt-01-wordmark.png',
+  gt02: '/assets/images/logos/gt-02-wordmark.png',
+  gt03: '/assets/images/logos/gt-03-wordmark.png',
+  gt04: '/assets/images/logos/gt-04-wordmark.png',
+};
+
 /**
  * Wordmark image for a catalog model name, or null when the site has no
- * wordmark file (GT.01–GT.04) and the display font should be used instead.
+ * wordmark file and the display font should be used instead.
  */
 export function modelWordmarkSrc(model: string | null | undefined): string | null {
   if (!model) return null;
   const slug = toSlug(model);
+  if (GT_WORDMARK_BY_SLUG[slug]) {
+    return GT_WORDMARK_BY_SLUG[slug];
+  }
   if ((MODEL_WORDMARK_SLUGS as readonly string[]).includes(slug)) {
     return `/assets/images/logos/e5-${slug}.webp`;
   }

@@ -164,29 +164,43 @@ const breadcrumbSchema = JSON.stringify({
           ]}
         />
       </div>
-      <p
-        class:list={[
-          'pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
-          'text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.9]',
-          'font-franklin-heavy italic tracking-[2px] md:tracking-[4px] uppercase',
-          model.heroNameClass,
-        ]}
-        aria-hidden="true"
-      >
-        {model.displayName}
-      </p>
+      {model.nameWordmark ? (
+        <img
+          src={model.nameWordmark.src}
+          alt=""
+          class="pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12 h-[48px] sm:h-[72px] md:h-[100px] lg:h-[120px] w-auto max-w-[min(90%,540px)] object-contain object-left"
+        />
+      ) : (
+        <p
+          class:list={[
+            'pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
+            'text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.9]',
+            'font-franklin-heavy italic tracking-[2px] md:tracking-[4px] uppercase',
+            model.heroNameClass,
+          ]}
+          aria-hidden="true"
+        >
+          {model.displayName}
+        </p>
+      )}
     </section>
 
     <section class="bg-white pt-8 md:pt-12 pb-4">
-      <div class="max-w-[1400px] mx-auto px-6">
+      <div class="max-w-[1400px] mx-auto px-6 series-lockup-scope">
         {model.seriesLogo && (
           <img
             src={model.seriesLogo.src}
             alt={model.seriesLogo.alt}
-            class="h-[40px] md:h-[54px] w-auto max-w-full object-contain object-left mb-4 md:mb-6"
+            class="series-logo-gt mb-4 md:mb-6"
           />
         )}
-        <h1 class="text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2">
+        <h1
+          class:list={[
+            model.nameWordmark
+              ? 'sr-only'
+              : 'text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2',
+          ]}
+        >
           {model.h1}
         </h1>
         <p class="text-[11px] md:text-[13px] tracking-[1.4px] md:tracking-[1.8px] uppercase text-black/50 mb-8 md:mb-12">

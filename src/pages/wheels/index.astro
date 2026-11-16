@@ -26,6 +26,10 @@ import {
     GT02_BRUSHED_ALUMINUM,
     GT03_BRUSHED_ALUMINUM,
     GT04_BRUSHED_ALUMINUM,
+    GT01_WORDMARK,
+    GT02_WORDMARK,
+    GT03_WORDMARK,
+    GT04_WORDMARK,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
@@ -35,10 +39,10 @@ const description = 'Browse our complete collection of GT Forged, E5 Forged, and
 const canonicalUrl = `${baseUrl}/wheels`;
 
 const gtCards = [
-    { name: 'GT.01', image: GT01_BRUSHED_ALUMINUM, href: WHEELS_GT_01_ROUTE, cta: 'EXPLORE GT.01' },
-    { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
-    { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
-    { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
+    { name: 'GT.01', image: GT01_BRUSHED_ALUMINUM, wordmark: GT01_WORDMARK, href: WHEELS_GT_01_ROUTE, cta: 'EXPLORE GT.01' },
+    { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM, wordmark: GT02_WORDMARK, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
+    { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM, wordmark: GT03_WORDMARK, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
+    { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM, wordmark: GT04_WORDMARK, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
 ];
 ---
 
@@ -55,17 +59,17 @@ const gtCards = [
 
     <!-- GT Forged Series Section -->
     <section class="py-12 md:py-20 bg-white">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-12">
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
             <div class="mb-8 md:mb-16">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src={GT_FORGED_LOGO}
                             alt="GT Forged"
-                            class="wheels-series-logo"
+                            class="series-logo-gt"
                         />
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
                             GT.01, GT.02, GT.03, and GT.04&mdash;made to order in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm.
                         </p>
@@ -80,7 +84,11 @@ const gtCards = [
                             <img src={card.image} alt={card.name} />
                         </div>
                         <div class="wheels-card-name">
-                            <p class="wheels-card-name-text font-franklin-heavy text-[22px] md:text-[28px] tracking-[2px] uppercase">{card.name}</p>
+                            <img
+                                src={card.wordmark}
+                                alt={card.name}
+                                class="wheels-gt-wordmark"
+                            />
                         </div>
                         <div class="wheels-card-body">
                             <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
@@ -104,17 +112,17 @@ const gtCards = [
 
     <!-- E5 Forged Series Section -->
     <section class="py-12 md:py-20 bg-white">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-12">
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
             <div class="mb-8 md:mb-16">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src="/assets/images/wheels-new/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp"
                             alt="E5 Forged"
-                            class="wheels-series-logo"
+                            class="series-logo-e5"
                         />
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
                             Exclusively Forged in the USA for C8 Z06, ZR1, and E_Ray. Engineered for extreme performance, reduced weight, and maximum strength. <a href="/process/forged" class="text-e5-red underline">LEARN MORE ABOUT E5 FORGED.</a>
                         </p>
@@ -221,17 +229,17 @@ const gtCards = [
 
     <!-- Form Forged Series Section -->
     <section class="py-12 md:py-20 bg-white">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-12">
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
             <div class="mb-8 md:mb-16">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src={FORM_FORGED_WORDMARK}
                             alt="Form Forged"
-                            class="wheels-series-logo"
+                            class="series-logo-form"
                         />
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
                             Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility&mdash;without compromising daily drivability. <a href="/process/form-forged" class="text-e5-red underline">Read more about our Form Forged series</a>.
                         </p>
@@ -433,18 +441,14 @@ const gtCards = [
         display: block;
     }
 
-    /* Match E5 FORGED / GT FORGED / FORM FORGED header logos to one height. */
-    .wheels-series-logo {
-        display: block;
-        height: 40px;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        object-position: left center;
+    /* GT.01–GT.04 wordmarks: canvas 544×115, ink ~93px. CSS height so
+       lettering matches Talladega/Laguna 24/29px letter height. */
+    .wheels-gt-wordmark {
+        height: 30px;
     }
     @media (min-width: 768px) {
-        .wheels-series-logo {
-            height: 54px;
+        .wheels-gt-wordmark {
+            height: 36px;
         }
     }
 
