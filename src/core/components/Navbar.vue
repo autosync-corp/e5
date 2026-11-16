@@ -157,7 +157,7 @@ const closeMiniCart = () => {
                 <a :href="WHEELS_SEBRING_2P_ROUTE" class="dropdown-item">SEBRING 2P</a>
               </div>
               <div class="wheel-group">
-                <div class="wheel-group-title">FORGED</div>
+                <div class="wheel-group-title">FULL FORGED</div>
                 <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
                 <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
                 <a :href="WHEELS_LAGUNA_ROUTE" class="dropdown-item">LAGUNA</a>
@@ -321,7 +321,7 @@ const closeMiniCart = () => {
               <a :href="WHEELS_SEBRING_2P_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING 2P</a>
             </div>
             <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">FORGED</div>
+              <div class="mobile-wheel-title">FULL FORGED</div>
               <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
               <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
               <a :href="WHEELS_LAGUNA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">LAGUNA</a>
