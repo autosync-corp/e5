@@ -45,19 +45,17 @@ for (const token of requiredTokens) {
   assert(`keeps ${token}`, footer.includes(token));
 }
 
-assert('variant A present', footer.includes('variant === \'a\'') || footer.includes('v-if="variant === \'a\'"'));
-assert('variant B present', footer.includes('variant === \'b\''));
-assert('variant C present', footer.includes('ft-c'));
-assert('white background', footer.includes('background: #ffffff') || footer.includes("background: '#ffffff'"));
+assert('no variant switch', !footer.includes('variant ===') && !layout.includes("searchParams.get('footer')"));
+assert('no A/B markup', !footer.includes('ft-a') && !footer.includes('ft-b') && !footer.includes('tesla-links'));
+assert('C layout remains', footer.includes('vossen-top') && footer.includes('GET IN TOUCH'));
+assert('white background', footer.includes('background: #ffffff'));
 assert('no red footer bg', !footer.includes('bg-e5-red w-full'));
 assert('44px tap', footer.includes('min-height: 44px'));
 assert('Oswald condensed', footer.includes('Oswald') && fonts.includes('oswald-500.woff2'));
 assert('logo aspect-ratio preserved', footer.includes('aspect-ratio: 1191 / 101') && footer.includes('max-width: none'));
 assert('mobile accordion', footer.includes('<details'));
-assert('layout reads ?footer=', layout.includes("searchParams.get('footer')"));
-assert('layout passes variant', layout.includes('variant={footerVariant}'));
+assert('mobile breakpoint 767', footer.includes('max-width: 767px'));
 assert('logo unaltered constant', footer.includes('E5_LOGO_BLACK'));
-assert('GET IN TOUCH kept', footer.includes('GET IN TOUCH'));
 assert('copyright kept', footer.includes('COPYRIGHT E5 WHEELS, LLC'));
 
 if (failed) {

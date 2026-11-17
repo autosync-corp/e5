@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import {
   E5_LOGO_BLACK,
   FACEBOOK_MEDIA_ICON,
@@ -24,13 +23,6 @@ import {
   WARRANTY_ROUTE,
 } from '@/core/constants/Routes.ts';
 
-const props = defineProps<{ variant?: string }>();
-
-const variant = computed(() => {
-  const v = (props.variant || 'a').toLowerCase();
-  return v === 'b' || v === 'c' ? v : 'a';
-});
-
 const year = new Date().getFullYear();
 
 const exploreLinks = [
@@ -51,7 +43,6 @@ const companyLinks = [
   { href: ABOUT_ROUTE, label: 'ABOUT US' },
   { href: '/blog', label: 'BLOG' },
 ];
-const navLinks = [...exploreLinks, ...supportLinks, ...companyLinks];
 
 const socials = [
   { href: 'https://www.instagram.com/e5wheels/', label: 'E5 Wheels on Instagram', src: INSTAGRAM_MEDIA_ICON, alt: 'Instagram' },
@@ -62,127 +53,30 @@ const socials = [
 </script>
 
 <template>
-  <footer class="site-footer" :data-footer-variant="variant">
-    <!-- A: BMW / Lucid / Porsche OEM sitemap -->
-    <div v-if="variant === 'a'" class="ft ft-a">
-      <nav class="col-grid desktop-only" aria-label="Footer">
-        <div class="col">
-          <p class="ft-label">Explore</p>
-          <a v-for="link in exploreLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </div>
-        <div class="col">
-          <p class="ft-label">Support</p>
-          <a v-for="link in supportLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </div>
-        <div class="col">
-          <p class="ft-label">Company</p>
-          <a v-for="link in companyLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </div>
-        <div class="col">
-          <p class="ft-label">Contact</p>
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
-            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
-          </a>
-          <a href="tel:+13059647429" class="ft-link ft-icon-link">
-            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
-            (305) 964-7429
-          </a>
-          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-          <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
-        </div>
-      </nav>
-      <nav class="mobile-only" aria-label="Footer">
-        <details class="acc">
-          <summary class="ft-label">Explore</summary>
-          <a v-for="link in exploreLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </details>
-        <details class="acc">
-          <summary class="ft-label">Support</summary>
-          <a v-for="link in supportLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </details>
-        <details class="acc">
-          <summary class="ft-label">Company</summary>
-          <a v-for="link in companyLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-        </details>
-        <details class="acc" open>
-          <summary class="ft-label">Contact</summary>
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
-            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
-          </a>
-          <a href="tel:+13059647429" class="ft-link ft-icon-link">
-            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
-            (305) 964-7429
-          </a>
-          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-          <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
-        </details>
-      </nav>
-      <div class="oem-bar">
-        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
-        <div class="oem-legal">
-          <a :href="TERMS_ROUTE" class="ft-legal">TERMS &amp; CONDITIONS</a>
-          <a :href="PRIVACY_ROUTE" class="ft-legal">PRIVACY POLICY</a>
-          <span class="ft-copy">© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
-        </div>
-        <div class="ft-socials">
-          <a v-for="s in socials" :key="'a-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
-            <img :src="s.src" :alt="s.alt" width="48" height="48" />
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- B: Tesla / Rivian ultra-minimal -->
-    <div v-else-if="variant === 'b'" class="ft ft-b">
-      <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo ft-logo-center" width="1191" height="101" />
-      <nav class="tesla-links" aria-label="Footer">
-        <a v-for="link in navLinks" :key="'b-'+link.href" :href="link.href" class="ft-link tesla-link">{{ link.label }}</a>
-      </nav>
-      <div class="tesla-contact">
-        <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-legal">
-          E5 WHEELS, LLC · 3500 NW 77 CT · DORAL, FL 33122
-        </a>
-        <a href="tel:+13059647429" class="ft-legal">(305) 964-7429</a>
-        <a href="mailto:SALES@E5WHEELS.COM" class="ft-legal">SALES@E5WHEELS.COM</a>
-        <a :href="CONTACT_ROUTE" class="ft-legal tesla-cta">GET IN TOUCH</a>
-      </div>
-      <div class="ft-socials ft-socials-center">
-        <a v-for="s in socials" :key="'b-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
-          <img :src="s.src" :alt="s.alt" width="48" height="48" />
-        </a>
-      </div>
-      <p class="tesla-legal">
-        <span>© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
-        <a :href="TERMS_ROUTE">TERMS &amp; CONDITIONS</a>
-        <a :href="PRIVACY_ROUTE">PRIVACY POLICY</a>
-      </p>
-    </div>
-
-    <!-- C: Vossen / HRE wheel-brand -->
-    <div v-else class="ft ft-c">
+  <footer class="site-footer">
+    <div class="ft">
       <div class="vossen-top">
         <div class="ft-socials">
-          <a v-for="s in socials" :key="'c-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
+          <a v-for="s in socials" :key="s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
             <img :src="s.src" :alt="s.alt" width="48" height="48" />
           </a>
         </div>
-        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo ft-logo-center" width="1191" height="101" />
-        <a :href="CONTACT_ROUTE" class="ft-cta ft-cta-outline">GET IN TOUCH</a>
+        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
+        <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
       </div>
-      <nav class="col-grid desktop-only" aria-label="Footer">
+
+      <nav class="col-grid" aria-label="Footer">
         <div class="col">
           <p class="ft-label">Explore</p>
-          <a v-for="link in exploreLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in exploreLinks" :key="'d-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </div>
         <div class="col">
           <p class="ft-label">Support</p>
-          <a v-for="link in supportLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in supportLinks" :key="'d-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </div>
         <div class="col">
           <p class="ft-label">Company</p>
-          <a v-for="link in companyLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in companyLinks" :key="'d-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </div>
         <div class="col">
           <p class="ft-label">Contact</p>
@@ -197,33 +91,37 @@ const socials = [
           <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
         </div>
       </nav>
-      <nav class="mobile-only" aria-label="Footer">
+
+      <nav class="acc-nav" aria-label="Footer">
         <details class="acc">
           <summary class="ft-label">Explore</summary>
-          <a v-for="link in exploreLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in exploreLinks" :key="'m-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </details>
         <details class="acc">
           <summary class="ft-label">Support</summary>
-          <a v-for="link in supportLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in supportLinks" :key="'m-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </details>
         <details class="acc">
           <summary class="ft-label">Company</summary>
-          <a v-for="link in companyLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+          <a v-for="link in companyLinks" :key="'m-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </details>
-        <details class="acc" open>
+        <details class="acc" data-contact>
           <summary class="ft-label">Contact</summary>
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
-            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
-          </a>
-          <a href="tel:+13059647429" class="ft-link ft-icon-link">
-            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
-            (305) 964-7429
-          </a>
-          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
+          <div class="acc-contact">
+            <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
+              <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
+              <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
+            </a>
+            <a href="tel:+13059647429" class="ft-link ft-icon-link">
+              <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
+              (305) 964-7429
+            </a>
+            <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
+          </div>
         </details>
       </nav>
-      <div class="vossen-legal">
+
+      <div class="legal">
         <a :href="TERMS_ROUTE" class="ft-legal">TERMS &amp; CONDITIONS</a>
         <span aria-hidden="true">|</span>
         <a :href="PRIVACY_ROUTE" class="ft-legal">PRIVACY POLICY</a>
@@ -256,19 +154,13 @@ const socials = [
   max-width: none;
   aspect-ratio: 1191 / 101;
   object-fit: contain;
-  object-position: left center;
-  flex: 0 0 auto;
-}
-
-.ft-logo-center {
   object-position: center;
-  margin-inline: auto;
+  flex: 0 0 auto;
 }
 
 .ft-link,
 .ft-legal,
-.ft-contact,
-.tesla-legal a {
+.ft-contact {
   color: #141414;
   text-decoration: none;
   letter-spacing: 0.04em;
@@ -278,7 +170,7 @@ const socials = [
 .ft-link {
   display: flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 30px;
   font-size: 13px;
   line-height: 1.25;
 }
@@ -288,9 +180,7 @@ const socials = [
 .ft-legal:hover,
 .ft-legal:focus-visible,
 .ft-contact:hover,
-.ft-contact:focus-visible,
-.tesla-legal a:hover,
-.tesla-legal a:focus-visible {
+.ft-contact:focus-visible {
   color: var(--color-e5-red);
 }
 
@@ -332,30 +222,19 @@ const socials = [
   justify-content: center;
   min-height: 44px;
   padding: 0 20px;
-  margin-top: 10px;
-  background: var(--color-e5-red);
-  color: #ffffff;
+  background: transparent;
+  color: #141414;
+  border: 1px solid #141414;
   font-size: 13px;
   letter-spacing: 0.14em;
   text-decoration: none;
   text-transform: uppercase;
   width: fit-content;
+  justify-self: end;
 }
 
 .ft-cta:hover,
 .ft-cta:focus-visible {
-  background: #b3181f;
-}
-
-.ft-cta-outline {
-  background: transparent;
-  color: #141414;
-  border: 1px solid #141414;
-  margin-top: 0;
-}
-
-.ft-cta-outline:hover,
-.ft-cta-outline:focus-visible {
   background: var(--color-e5-red);
   border-color: var(--color-e5-red);
   color: #ffffff;
@@ -365,10 +244,6 @@ const socials = [
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-.ft-socials-center {
-  justify-content: center;
 }
 
 .ft-social {
@@ -391,7 +266,6 @@ const socials = [
 }
 
 .ft-label {
-  list-style: none;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -400,16 +274,6 @@ const socials = [
   display: flex;
   align-items: center;
   margin: 0 0 8px;
-}
-
-.acc .ft-label {
-  min-height: 44px;
-  cursor: pointer;
-  margin: 0;
-}
-
-.acc .ft-label::-webkit-details-marker {
-  display: none;
 }
 
 .col {
@@ -424,86 +288,8 @@ const socials = [
   gap: 8px 40px;
 }
 
-.mobile-only {
+.acc-nav {
   display: none;
-}
-
-.oem-bar {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin-top: 36px;
-  padding-top: 18px;
-  border-top: 1px solid #e6e6e6;
-}
-
-.oem-legal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 20px;
-  flex: 1;
-}
-
-.oem-bar .ft-socials {
-  margin-left: auto;
-}
-
-.ft-b {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding-top: 48px;
-  padding-bottom: 28px;
-  gap: 8px;
-}
-
-.tesla-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0 4px;
-  max-width: 980px;
-  margin-top: 12px;
-}
-
-.tesla-link {
-  display: inline-flex;
-  padding: 0 10px;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-}
-
-.tesla-contact {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0 18px;
-  margin-top: 8px;
-}
-
-.tesla-cta {
-  color: var(--color-e5-red);
-}
-
-.tesla-legal {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px 18px;
-  margin: 16px 0 0;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: #333333;
-}
-
-.tesla-legal a,
-.tesla-legal span {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
 }
 
 .vossen-top {
@@ -516,11 +302,7 @@ const socials = [
   border-bottom: 1px solid #e6e6e6;
 }
 
-.vossen-top .ft-cta {
-  justify-self: end;
-}
-
-.vossen-legal {
+.legal {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -531,74 +313,124 @@ const socials = [
   border-top: 1px solid #e6e6e6;
 }
 
-.acc {
-  width: 100%;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.acc .ft-link,
-.acc .ft-contact,
-.acc .ft-cta {
-  margin-left: 2px;
-}
-
-@media (min-width: 1024px) {
-  .ft-link {
-    min-height: 30px;
-  }
-}
-
-@media (max-width: 1023px) {
+/* Mobile only. Tablet 768–1023 keeps the desktop C layout. */
+@media (max-width: 767px) {
   .ft {
-    padding: 24px 20px 16px;
-  }
-
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-
-  .oem-bar,
-  .vossen-top {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 12px;
+    padding: 8px 16px 8px;
   }
 
-  .vossen-top .ft-cta,
-  .oem-bar .ft-socials {
-    margin-left: 0;
-    justify-self: center;
+  .col-grid {
+    display: none;
+  }
+
+  .vossen-top {
+    display: contents;
   }
 
   .ft-logo {
+    order: 1;
     height: 24px;
+    margin: 4px 0 8px;
   }
 
-  .tesla-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .ft-cta {
+    order: 2;
+    margin: 0 0 8px;
+    justify-self: center;
+  }
+
+  .acc-nav {
+    display: block;
+    order: 3;
     width: 100%;
-    max-width: none;
-    gap: 0;
+    border-top: 1px solid #e6e6e6;
   }
 
-  .tesla-link {
-    justify-content: center;
-    padding: 0 8px;
+  .legal {
+    order: 4;
+    width: 100%;
+    gap: 0 10px;
+    margin-top: 12px;
+    padding-top: 0;
+    border-top: 0;
   }
 
-  .oem-legal,
-  .vossen-legal {
-    justify-content: center;
+  .ft-socials {
+    order: 5;
+    margin-top: 8px;
+  }
+
+  .ft-label {
+    margin: 0;
+  }
+
+  .acc {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .acc .ft-label {
+    list-style: none;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .acc .ft-label::-webkit-details-marker {
+    display: none;
+  }
+
+  .acc .ft-link {
+    min-height: 44px;
+    padding: 0 2px;
+  }
+
+  .acc-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 2px 8px;
+  }
+
+  .acc-contact .ft-contact,
+  .acc-contact .ft-link {
+    position: relative;
+    margin: 0;
+    min-height: 0;
+    padding: 2px 0;
+  }
+
+  .acc-contact .ft-contact {
+    line-height: 1.25;
+    gap: 8px;
+  }
+
+  .acc-contact .ft-contact::after,
+  .acc-contact .ft-link::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+
+  .legal .ft-legal {
+    min-height: 44px;
+  }
+
+  .ft-copy {
+    flex-basis: 100%;
+    text-align: center;
+    padding: 4px 0 0;
   }
 }
 </style>
