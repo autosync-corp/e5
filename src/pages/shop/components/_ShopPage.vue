@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { fetchWheels, getWheelImageUrl, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
 import { formatSetPriceRangeOrCall, priceRangeFromProducts } from '@/core/utils/priceDisplay';
 import { buildWheelUrl } from '@/core/utils/wheelUrl';
+import { modelWordmarkFit, modelWordmarkSrc, seriesWordmarkForModel } from '@/core/utils/modelWordmark';
 import { getSeriesLeadTime } from '@/core/constants/SeriesLeadTimes';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { filterWheelsByVehicle, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
@@ -181,6 +182,9 @@ const productsBySeries = computed(() => {
 
       return {
         seriesName,
+        wordmarkSrc: modelWordmarkSrc(seriesName),
+        seriesLogo: seriesWordmarkForModel(seriesName),
+        wordmarkFit: modelWordmarkFit(seriesName),
         totalVariants: products.length,
         // Array of finish variations with their representative product
         finishVariations: Array.from(finishMap.entries()).map(([finish, product]) => {
@@ -300,6 +304,13 @@ function getProductDisplayName(product: WheelProduct): string {
   const finish = product.Finish || '';
   const color = product.Color || '';
   return `${product.Model} - ${color} ${finish}`.trim();
+}
+
+function wordmarkClass(fit: string | null, variant: 'card' | 'header' = 'card'): string {
+  if (!fit) return '';
+  const parts = ['shop-wordmark', `shop-wordmark--${variant}`];
+  if (fit !== 'default') parts.push(`shop-wordmark--${fit}`);
+  return parts.join(' ');
 }
 
 function getProductImage(product: WheelProduct): string {
@@ -428,8 +439,22 @@ onMounted(() => {
         <div v-for="series in productsBySeries" :key="series.seriesName" class="space-y-6">
           <!-- Series Header -->
           <div class="border-b-2 border-e5-red pb-3">
-            <h2 class="text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
-              {{ series.seriesName.toUpperCase() }}
+            <h2 class="shop-series-heading text-2xl md:text-3xl font-['Franklin_Gothic_Demi'] text-black tracking-wider">
+              <img
+                v-if="series.wordmarkSrc"
+                :src="series.wordmarkSrc"
+                :alt="series.seriesName"
+                :class="wordmarkClass(series.wordmarkFit, 'header')"
+                decoding="async"
+              />
+              <img
+                v-if="series.seriesLogo"
+                :src="series.seriesLogo.src"
+                :alt="series.seriesLogo.alt"
+                class="shop-series-logo"
+                decoding="async"
+              />
+              <span :class="series.wordmarkSrc ? 'sr-only' : ''">{{ series.seriesName.toUpperCase() }}</span>
             </h2>
             <div class="mt-2 flex flex-wrap gap-3 text-sm font-['Franklin_Gothic_Book'] text-black/70">
               <span>{{ series.totalVariants }} Variants</span>
@@ -460,7 +485,14 @@ onMounted(() => {
               <!-- Product Info -->
               <div class="p-6 space-y-3">
                 <h3 class="text-xl font-['Franklin_Gothic_Demi'] text-e5-red tracking-wide">
-                  {{ series.seriesName.toUpperCase() }}
+                  <img
+                    v-if="series.wordmarkSrc"
+                    :src="series.wordmarkSrc"
+                    :alt="series.seriesName"
+                    :class="wordmarkClass(series.wordmarkFit, 'card')"
+                    decoding="async"
+                  />
+                  <span :class="series.wordmarkSrc ? 'sr-only' : ''">{{ series.seriesName.toUpperCase() }}</span>
                 </h3>
 
                 <!-- Finish Name -->
@@ -585,5 +617,56 @@ onMounted(() => {
 select:focus,
 input:focus {
   outline: none;
+}
+
+.shop-series-heading {
+  --shop-wm-h: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.shop-wordmark,
+.shop-series-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Shared letter height across cards; Sonoma/GT canvases have extra padding. */
+.shop-wordmark--card {
+  --shop-wm-h: 28px;
+  max-height: calc(var(--shop-wm-h) * var(--shop-wm-canvas, 1));
+}
+
+.shop-wordmark--header {
+  --shop-wm-h: 36px;
+  max-height: calc(var(--shop-wm-h) * var(--shop-wm-canvas, 1));
+}
+
+.shop-wordmark--sonoma {
+  --shop-wm-canvas: calc(295 / 190);
+}
+
+.shop-wordmark--gt {
+  --shop-wm-canvas: calc(115 / 93);
+}
+
+.shop-series-logo {
+  max-height: calc(var(--shop-wm-h, 36px) * 0.45);
+}
+
+@media (min-width: 768px) {
+  .shop-series-heading,
+  .shop-wordmark--header {
+    --shop-wm-h: 44px;
+  }
+  .shop-wordmark--card {
+    --shop-wm-h: 32px;
+  }
 }
 </style>

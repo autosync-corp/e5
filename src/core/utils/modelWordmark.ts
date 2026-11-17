@@ -36,3 +36,37 @@ export function modelWordmarkSrc(model: string | null | undefined): string | nul
   }
   return null;
 }
+
+const FORM_FORGED_SLUGS = ['daytona', 'sebring', 'speedway'];
+const E5_FORGED_SLUGS = ['sonoma', 'talladega', 'laguna'];
+
+/**
+ * Series family wordmark for a catalog model, or null when the model is not
+ * in FORM / 2P / E5 / GT Forged.
+ */
+export function seriesWordmarkForModel(model: string | null | undefined): { src: string; alt: string } | null {
+  if (!model) return null;
+  const slug = toSlug(model);
+  if (slug === 'sebring-2p' || slug.includes('2p')) {
+    return { src: '/assets/images/logos/2p-forged.png', alt: '2P Forged' };
+  }
+  if (FORM_FORGED_SLUGS.includes(slug)) {
+    return { src: '/assets/images/logos/form-forged.png', alt: 'Form Forged' };
+  }
+  if (/^gt0[1-4]$/.test(slug)) {
+    return { src: '/assets/images/logos/gt-forged.png', alt: 'GT Forged' };
+  }
+  if (E5_FORGED_SLUGS.includes(slug)) {
+    return { src: '/assets/images/logos/e5-forged.webp', alt: 'E5 Forged' };
+  }
+  return null;
+}
+
+/** Canvas/ink fit so shop cards share one letter height without altering files. */
+export function modelWordmarkFit(model: string | null | undefined): 'sonoma' | 'gt' | 'default' | null {
+  const src = modelWordmarkSrc(model);
+  if (!src) return null;
+  if (src.includes('sonoma')) return 'sonoma';
+  if (src.includes('gt-0')) return 'gt';
+  return 'default';
+}
