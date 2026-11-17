@@ -3,9 +3,6 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import {
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
-    WHEELS_TALLADEGA_ROUTE,
-    WHEELS_SONOMA_ROUTE,
-    WHEELS_SEBRING_2P_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
@@ -22,6 +19,12 @@ import {
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
+import GenerationSetups from '@/core/components/GenerationSetups.astro';
+import {
+    finishSummary,
+    styleLinksFromSetups,
+} from '@/core/utils/generationSetups';
+import { loadGenerationSetups } from '@/core/utils/loadGenerationSetups';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 const IMG_BASE = "/assets/images/generations/c8/c8-e-ray";
@@ -48,6 +51,7 @@ const breadcrumbSchema = JSON.stringify({
         { "@type": "ListItem", "position": 4, "name": "E-Ray", "item": canonicalUrl }
     ]
 });
+const setups = await loadGenerationSetups('C8', ['E-Ray']);
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={`${baseUrl}${IMG_BASE}/c8-e-ray-fitment-e5-wheels-hero.webp`} ogType="product">
@@ -80,12 +84,8 @@ const breadcrumbSchema = JSON.stringify({
                 groups={[
                     { heading: 'E-Ray', front: 'Front 20" × 10" +25mm', rear: 'Rear 21" × 13" +20mm' },
                 ]}
-                styles={[
-                    { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
-                    { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
-                    { href: WHEELS_SEBRING_2P_ROUTE, label: 'Sebring 2P' },
-                ]}
-                finishes="Available in brushed aluminum, gloss black, dark bronze, and titanium"
+                styles={styleLinksFromSetups(setups)}
+                finishes={finishSummary(setups) || "Available in brushed aluminum, gloss black, dark bronze, and titanium"}
                 bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1200px] mx-auto mb-8"
                 application="C8 Corvette application"
@@ -95,6 +95,9 @@ const breadcrumbSchema = JSON.stringify({
                 </Fragment>
             </GenerationIntro>
         </section>
+
+        <GenerationSetups setups={setups} />
+
 
         <!-- ── E5 Forged Badge ── -->
         <section class="container-e5 py-10 md:py-16 lg:py-20">

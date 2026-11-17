@@ -1,28 +1,20 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
-    WHEELS_ROUTE,
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
-    WHEELS_TALLADEGA_ROUTE,
-    WHEELS_SONOMA_ROUTE,
 } from "@/core/constants/Routes.ts";
-import { buildWheelUrl } from "@/core/utils/wheelUrl";
-import {
-    TALLADEGA_LOGO,
-    TALLADEGA_BRAND_NAME,
-    SONOMA_LOGO,
-    SONOMA_BRAND_NAME,
-} from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
+import GenerationSetups from '@/core/components/GenerationSetups.astro';
+import {
+    finishSummary,
+    styleLinksFromSetups,
+} from '@/core/utils/generationSetups';
+import { loadGenerationSetups } from '@/core/utils/loadGenerationSetups';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
-
-// Shop URLs with proper sizes
-const sonomaShopUrl = buildWheelUrl(SONOMA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
-const talladegaShopUrl = buildWheelUrl(TALLADEGA_BRAND_NAME, 'Brushed Aluminum', 'C8', 'ZR1', '20" x 10.5" +25mm', '21" x 13" +20mm');
 
 const baseUrl = SITE_URL;
 const title = 'C8 ZR1 Wheels (2025–2026) | E5 Wheels';
@@ -39,6 +31,7 @@ const breadcrumbSchema = JSON.stringify({
     { "@type": "ListItem", "position": 4, "name": "ZR1", "item": canonicalUrl }
   ]
 });
+const setups = await loadGenerationSetups('C8', ['ZR1']);
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
@@ -68,11 +61,8 @@ const breadcrumbSchema = JSON.stringify({
                 groups={[
                     { heading: 'ZR1', front: 'Front 20" × 10.5" +25mm', rear: 'Rear 21" × 13" +20mm' },
                 ]}
-                styles={[
-                    { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
-                    { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
-                ]}
-                finishes="Available in brushed aluminum"
+                styles={styleLinksFromSetups(setups)}
+                finishes={finishSummary(setups) || "Available in brushed aluminum"}
                 bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
                 application="C8 Corvette application"
@@ -82,6 +72,9 @@ const breadcrumbSchema = JSON.stringify({
                 </Fragment>
             </GenerationIntro>
         </section>
+
+        <GenerationSetups setups={setups} />
+
 
         <!-- E5 FORGED Logo Section -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
@@ -184,87 +177,9 @@ const breadcrumbSchema = JSON.stringify({
             <img src="/assets/images/generations/c8/zr1-figma/e39c7a34e8b69874a0fe8e52fabf2243421baa7e.webp" alt="C8 ZR1 Lifestyle" class="w-full h-full object-cover" />
         </section>
 
-        <!-- Product Detail: Sonoma -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
-                <div class="w-full max-w-[613px] mx-auto">
-                    <img src="/assets/images/generations/c8/zr1-figma/sonoma-wheel-c8.webp" alt="Sonoma" class="w-full h-auto" />
-                </div>
-                <div class="flex flex-col">
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
-                            <img src={SONOMA_LOGO} alt="Sonoma" class="h-[52px] w-auto mb-4" />
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 20" x 10.5" / Offset +25mm</li>
-                                <li>Rear: 21" x 13" / Offset +20mm</li>
-                                <li>Bolt Pattern: 5x120</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Brushed Aluminum</li>
-                            </ul>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                            <a href={sonomaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap" data-gtm-event="shop_fitment">
-                                SHOP FITMENT
-                            </a>
-                            <a href={`${WHEELS_ROUTE}/sonoma`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center whitespace-nowrap">
-                                EXPLORE SONOMA
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Banner Image 2 -->
         <section class="w-full h-[716px] overflow-hidden">
             <img src="/assets/images/generations/c8/zr1-figma/eda905a44366020603e226a9f33a6ee123371b79.webp" alt="C8 ZR1 Blue" class="w-full h-full object-cover" />
-        </section>
-
-        <!-- Product Detail: Talladega -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
-                <div class="w-full max-w-[613px] mx-auto">
-                    <img src="/assets/images/generations/c8/zr1-figma/82a4246061714fe6bf2bb3deb1c153e56e715ad2.webp" alt="Talladega" class="w-full h-auto" />
-                </div>
-                <div class="flex flex-col">
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
-                            <img src={TALLADEGA_LOGO} alt="Talladega" class="h-[52px] w-auto mb-4" />
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 20" x 10.5" / Offset +25mm</li>
-                                <li>Rear: 21" x 13" / Offset +20mm</li>
-                                <li>Bolt Pattern: 5x120</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Brushed Aluminum</li>
-                            </ul>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                            <a href={talladegaShopUrl} class="inline-block bg-e5-red text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center whitespace-nowrap" data-gtm-event="shop_fitment">
-                                SHOP FITMENT
-                            </a>
-                            <a href={`${WHEELS_ROUTE}/talladega`} class="inline-block border border-e5-red text-e5-red px-8 md:px-10 lg:px-12 py-3 md:py-4 text-[14px] md:text-[18px] lg:text-[20px] xl:text-[24px] tracking-[1.4px] md:tracking-[1.8px] lg:tracking-[2px] xl:tracking-[2.4px] leading-[20px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center whitespace-nowrap">
-                                EXPLORE TALLADEGA
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Gallery Section -->

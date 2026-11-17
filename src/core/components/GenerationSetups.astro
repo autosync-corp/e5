@@ -1,0 +1,92 @@
+---
+import {
+  groupSetups,
+  type GenerationSetup,
+} from '@/core/utils/generationSetups';
+
+interface Props {
+  setups: GenerationSetup[];
+  heading?: string;
+}
+
+const { setups, heading = 'AVAILABLE SETUPS' } = Astro.props;
+const groups = groupSetups(setups);
+---
+
+{setups.length > 0 && (
+  <section class="container-e5 py-12 md:py-16 lg:py-20" data-generation-setups>
+    <h2 class="text-[32px] md:text-[40px] lg:text-[48px] tracking-[6px] md:tracking-[8px] lg:tracking-[9.6px] leading-[36px] md:leading-[44px] lg:leading-[52px] text-e5-red uppercase mb-8 md:mb-12 font-['Franklin_Gothic_Book']">
+      {heading}
+    </h2>
+
+    {groups.map((group) => (
+      <div class="mb-12 md:mb-16">
+        <div class="flex items-center gap-4 md:gap-6 mb-6 md:mb-8 pb-3 border-b-2 border-e5-red">
+          <img
+            src={group.logo.src}
+            alt={group.logo.alt}
+            class="h-[28px] md:h-[36px] w-auto max-w-full object-contain object-left"
+          />
+          <span class="sr-only">{group.family}</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {group.setups.map((setup) => (
+            <article class="border-2 border-gray-200 p-4 md:p-6 flex flex-col" data-setup={`${setup.model} ${setup.finish}`}>
+              <div class="aspect-square bg-gray-50 flex items-center justify-center mb-4">
+                {setup.imageSrc ? (
+                  <img src={setup.imageSrc} alt={`${setup.model} ${setup.finish}`} class="w-full h-full object-contain" />
+                ) : (
+                  <span class="text-black/40 font-['Franklin_Gothic_Book']">{setup.model}</span>
+                )}
+              </div>
+              {setup.wordmarkSrc ? (
+                <img
+                  src={setup.wordmarkSrc}
+                  alt={setup.model}
+                  class="h-[28px] md:h-[32px] w-auto max-w-full object-contain object-left mb-3"
+                />
+              ) : (
+                <h3 class="text-[20px] md:text-[24px] font-['Franklin_Gothic_Demi'] tracking-wider uppercase mb-3">
+                  {setup.model}
+                </h3>
+              )}
+              {setup.wordmarkSrc && <h3 class="sr-only">{setup.model}</h3>}
+              <p class="text-[14px] md:text-[16px] font-['Franklin_Gothic_Medium'] text-black bg-gray-100 px-3 py-1 rounded self-start mb-3">
+                {setup.finish}
+              </p>
+              <ul class="text-[14px] md:text-[16px] leading-[22px] text-black/70 font-['Franklin_Gothic_Book'] mb-4 space-y-1">
+                {setup.staggered ? (
+                  <>
+                    <li>Front: {setup.frontLabel}</li>
+                    <li>Rear: {setup.rearLabel}</li>
+                  </>
+                ) : (
+                  <li>{setup.frontLabel}</li>
+                )}
+                <li>Bolt pattern: {setup.boltPattern}</li>
+              </ul>
+              <p class="text-[18px] md:text-[20px] font-['Franklin_Gothic_Demi'] text-black mb-4">
+                {setup.priceLabel}
+              </p>
+              <div class="mt-auto flex flex-col gap-3">
+                <a
+                  href={setup.shopHref}
+                  class="inline-block bg-e5-red text-white px-6 py-3 text-[14px] md:text-[16px] tracking-[1.6px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/90 transition-colors text-center"
+                  data-gtm-event="shop_fitment"
+                >
+                  SHOP FITMENT
+                </a>
+                <a
+                  href={setup.exploreHref}
+                  class="inline-block border border-e5-red text-e5-red px-6 py-3 text-[14px] md:text-[16px] tracking-[1.6px] uppercase font-['Franklin_Gothic_Demi'] hover:bg-e5-red/10 transition-colors text-center"
+                >
+                  EXPLORE {setup.model.toUpperCase()}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+)}

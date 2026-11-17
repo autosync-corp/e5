@@ -1,24 +1,25 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
-  GALLERY_VEHICLES_ROUTE,
-  GENERATIONS_ROUTE,
-  GENERATIONS_C8_STINGRAY_ROUTE,
-  GENERATIONS_C8_Z06_ROUTE,
-  GENERATIONS_C8_ZR1_ROUTE,
-  GENERATIONS_C8_E_RAY_ROUTE,
-  PROCESS_FORM_FORGED_ROUTE,
-  PROCESS_FORGED_ROUTE,
-  WHEELS_DAYTONA_ROUTE,
-  WHEELS_SEBRING_ROUTE,
-  WHEELS_SPEEDWAY_ROUTE,
-  WHEELS_TALLADEGA_ROUTE,
-  WHEELS_SONOMA_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    GENERATIONS_C8_STINGRAY_ROUTE,
+    GENERATIONS_C8_Z06_ROUTE,
+    GENERATIONS_C8_ZR1_ROUTE,
+    GENERATIONS_C8_E_RAY_ROUTE,
+    PROCESS_FORM_FORGED_ROUTE,
+    PROCESS_FORGED_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
+import GenerationSetups from '@/core/components/GenerationSetups.astro';
+import {
+    finishSummary,
+    styleLinksFromSetups,
+} from '@/core/utils/generationSetups';
+import { loadGenerationSetups } from '@/core/utils/loadGenerationSetups';
 
 const E5_FORGED_LOGO = "/assets/images/e5-forged-logo.webp";
 
@@ -36,6 +37,7 @@ const breadcrumbSchema = JSON.stringify({
     { "@type": "ListItem", "position": 3, "name": "C8", "item": canonicalUrl }
   ]
 });
+const setups = await loadGenerationSetups('C8', ['Stingray', 'Z06', 'ZR1', 'E-Ray']);
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
@@ -79,14 +81,8 @@ const breadcrumbSchema = JSON.stringify({
             note: 'ZR1 20x10.5',
           },
         ]}
-        styles={[
-          { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
-          { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
-          { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
-          { href: WHEELS_TALLADEGA_ROUTE, label: 'Talladega' },
-          { href: WHEELS_SONOMA_ROUTE, label: 'Sonoma' },
-        ]}
-        finishes="Available in gloss black, bronze brushed tint, titanium, dark bronze, and brushed aluminum"
+        styles={styleLinksFromSetups(setups)}
+        finishes={finishSummary(setups) || "Available in gloss black, bronze brushed tint, titanium, dark bronze, and brushed aluminum"}
         bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
         wrapperClass="max-w-[1276px] mx-auto mb-4 md:mb-6 px-4"
         application="C8 Corvette application"
@@ -99,6 +95,9 @@ const breadcrumbSchema = JSON.stringify({
         Shop Wheels by C8 Model
       </p>
     </section>
+
+        <GenerationSetups setups={setups} />
+
 
     <!-- C8 Model Selector Grid -->
     <section class="container-e5 py-8 md:py-12 lg:py-16">
