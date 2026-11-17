@@ -17,21 +17,23 @@ import {
 } from "@/core/constants/Routes.ts";
 import {
     LAGUNA_LOGO,
-    LAGUNA_WHEEL_RENDER,
+    LAGUNA_WHEEL_CARD,
     GT_FORGED_LOGO,
     FORM_FORGED_WORDMARK,
     TWO_P_FORGED_LOGO,
-    SEBRING_2P_BRONZE_BLACK_LIP,
-    SEBRING_2P_BRONZE_POLISHED_LIP,
-    SEBRING_2P_TITANIUM_BLACK_LIP,
-    SEBRING_2P_TITANIUM_POLISHED_LIP,
-    DAYTONA_TITANIUM_BRUSHED_STUDIO,
-    SEBRING_TITANIUM_BRUSHED_STUDIO,
-    SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
-    GT01_BRUSHED_ALUMINUM,
-    GT02_BRUSHED_ALUMINUM,
-    GT03_BRUSHED_ALUMINUM,
-    GT04_BRUSHED_ALUMINUM,
+    SEBRING_2P_BRONZE_BLACK_LIP_CARD,
+    SEBRING_2P_BRONZE_POLISHED_LIP_CARD,
+    SEBRING_2P_TITANIUM_BLACK_LIP_CARD,
+    SEBRING_2P_TITANIUM_POLISHED_LIP_CARD,
+    DAYTONA_TITANIUM_BRUSHED_CARD,
+    SEBRING_TITANIUM_BRUSHED_CARD,
+    SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD,
+    TALLADEGA_BRUSHED_ALUMINUM_CARD,
+    SONOMA_BRUSHED_ALUMINUM_CARD,
+    GT01_BRUSHED_ALUMINUM_CARD,
+    GT02_BRUSHED_ALUMINUM_CARD,
+    GT03_BRUSHED_ALUMINUM_CARD,
+    GT04_BRUSHED_ALUMINUM_CARD,
     GT01_WORDMARK,
     GT02_WORDMARK,
     GT03_WORDMARK,
@@ -45,22 +47,30 @@ const description = 'Browse our complete collection of Form Forged, 2P Forged, E
 const canonicalUrl = `${baseUrl}/wheels`;
 
 const gtCards = [
-    { name: 'GT.01', image: GT01_BRUSHED_ALUMINUM, wordmark: GT01_WORDMARK, href: WHEELS_GT_01_ROUTE, cta: 'EXPLORE GT.01' },
-    { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM, wordmark: GT02_WORDMARK, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
-    { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM, wordmark: GT03_WORDMARK, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
-    { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM, wordmark: GT04_WORDMARK, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
+    { name: 'GT.01', image: GT01_BRUSHED_ALUMINUM_CARD, wordmark: GT01_WORDMARK, href: WHEELS_GT_01_ROUTE, cta: 'EXPLORE GT.01' },
+    { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM_CARD, wordmark: GT02_WORDMARK, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
+    { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM_CARD, wordmark: GT03_WORDMARK, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
+    { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM_CARD, wordmark: GT04_WORDMARK, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
 ];
 
 /** Official Sebring 2P finish names from FINISH_CODE_TO_SITE_NAME (BZBL, BZPL, TBL, TPL). */
 const sebring2pCards = [
-    { name: 'Bronze Black Lip', image: SEBRING_2P_BRONZE_BLACK_LIP, href: `${WHEELS_SEBRING_2P_ROUTE}#bronze-black-lip` },
-    { name: 'Bronze Polished Lip', image: SEBRING_2P_BRONZE_POLISHED_LIP, href: WHEELS_SEBRING_2P_ROUTE },
-    { name: 'Titanium Black Lip', image: SEBRING_2P_TITANIUM_BLACK_LIP, href: `${WHEELS_SEBRING_2P_ROUTE}#titanium-black-lip` },
-    { name: 'Titanium Polished Lip', image: SEBRING_2P_TITANIUM_POLISHED_LIP, href: WHEELS_SEBRING_2P_ROUTE },
+    { name: 'Bronze Black Lip', image: SEBRING_2P_BRONZE_BLACK_LIP_CARD, href: `${WHEELS_SEBRING_2P_ROUTE}#bronze-black-lip` },
+    { name: 'Bronze Polished Lip', image: SEBRING_2P_BRONZE_POLISHED_LIP_CARD, href: WHEELS_SEBRING_2P_ROUTE },
+    { name: 'Titanium Black Lip', image: SEBRING_2P_TITANIUM_BLACK_LIP_CARD, href: `${WHEELS_SEBRING_2P_ROUTE}#titanium-black-lip` },
+    { name: 'Titanium Polished Lip', image: SEBRING_2P_TITANIUM_POLISHED_LIP_CARD, href: WHEELS_SEBRING_2P_ROUTE },
 ];
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={DAYTONA_TITANIUM_BRUSHED_CARD}
+        type="image/webp"
+        fetchpriority="high"
+    />
     <!-- Page Title -->
     <div class="max-w-[1583px] mx-auto px-6 md:px-12 pt-12 md:pt-16">
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-franklin-heavy text-black text-center mb-4">
@@ -96,8 +106,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image">
                         <img
-                            src={DAYTONA_TITANIUM_BRUSHED_STUDIO}
+                            src={DAYTONA_TITANIUM_BRUSHED_CARD}
                             alt="Daytona"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            fetchpriority="high"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -127,8 +141,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image">
                         <img
-                            src={SEBRING_TITANIUM_BRUSHED_STUDIO}
+                            src={SEBRING_TITANIUM_BRUSHED_CARD}
                             alt="Sebring"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -158,8 +176,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image">
                         <img
-                            src={SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO}
+                            src={SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD}
                             alt="Speedway"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -212,7 +234,7 @@ const sebring2pCards = [
                 {sebring2pCards.map((card) => (
                     <div class="wheels-card">
                         <div class="wheels-card-image">
-                            <img src={card.image} alt={`Sebring 2P ${card.name}`} />
+                            <img src={card.image} alt={`Sebring 2P ${card.name}`} width="400" height="400" decoding="async" loading="lazy" />
                         </div>
                         <div class="wheels-card-name">
                             <span class="wheels-card-name-text text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">{card.name}</span>
@@ -260,8 +282,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image">
                         <img
-                            src="/assets/images/wheels-new/taladaga-c8wheel.webp"
+                            src={TALLADEGA_BRUSHED_ALUMINUM_CARD}
                             alt="Talladega"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -291,8 +317,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image">
                         <img
-                            src="/assets/images/wheels-new/sonoma-wheel-c8.webp"
+                            src={SONOMA_BRUSHED_ALUMINUM_CARD}
                             alt="Sonoma"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -322,8 +352,12 @@ const sebring2pCards = [
                 <div class="wheels-card">
                     <div class="wheels-card-image wheels-card-image--laguna">
                         <img
-                            src={LAGUNA_WHEEL_RENDER}
+                            src={LAGUNA_WHEEL_CARD}
                             alt="Laguna"
+                            width="400"
+                            height="400"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="wheels-card-name">
@@ -376,7 +410,7 @@ const sebring2pCards = [
                 {gtCards.map((card) => (
                     <div class="wheels-card">
                         <div class="wheels-card-image">
-                            <img src={card.image} alt={card.name} />
+                            <img src={card.image} alt={card.name} width="400" height="400" decoding="async" loading="lazy" />
                         </div>
                         <div class="wheels-card-name">
                             <img

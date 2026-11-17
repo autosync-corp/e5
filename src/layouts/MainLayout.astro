@@ -14,6 +14,7 @@ export interface Props {
   ogImage?: string;
   ogType?: 'website' | 'product' | 'article';
   noindex?: boolean;
+  blogFonts?: boolean;
 }
 
 // Build full URL for OG tags — defined first so it can be used in prop defaults
@@ -21,26 +22,38 @@ const siteUrl = SITE_URL;
 
 const {
   title = 'E5 Wheels | Exclusively Engineered for Corvettes',
-  description,
+  description = 'E5 Wheels designs forged and flow-formed wheels exclusively for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric, made in the USA.',
   canonical,
   ogImage = `${siteUrl}/assets/images/vette-black-on-river.webp`,
   ogType = 'website',
   noindex = false,
+  blogFonts = false,
 } = Astro.props;
 const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
-// Load tracking settings from Redis
-let tracking: any = {};
-try {
-  const redis = new Redis({
-    url: import.meta.env.KV_REST_API_URL,
-    token: import.meta.env.KV_REST_API_TOKEN,
-  });
-  const raw = await redis.get('e5:tracking');
-  tracking = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : {};
-} catch {
-  // Fall back to env vars if Redis unavailable
-  tracking = {};
+// Load tracking settings from Redis (60s in-memory cache so TTFB is not
+// blocked on Upstash on every request of a warm isolate).
+const TRACKING_TTL_MS = 60_000;
+const trackingCache = globalThis as typeof globalThis & {
+  __e5Tracking?: { value: any; ts: number };
+};
+let tracking: any = trackingCache.__e5Tracking?.value || {};
+const cacheFresh =
+  trackingCache.__e5Tracking &&
+  Date.now() - trackingCache.__e5Tracking.ts < TRACKING_TTL_MS;
+if (!cacheFresh) {
+  try {
+    const redis = new Redis({
+      url: import.meta.env.KV_REST_API_URL,
+      token: import.meta.env.KV_REST_API_TOKEN,
+    });
+    const raw = await redis.get('e5:tracking');
+    tracking = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : {};
+    trackingCache.__e5Tracking = { value: tracking, ts: Date.now() };
+  } catch {
+    tracking = trackingCache.__e5Tracking?.value || {};
+    trackingCache.__e5Tracking = { value: tracking, ts: Date.now() };
+  }
 }
 
 const gaId = tracking.gaId || import.meta.env.GA_ID || 'G-7XTP4KDPC1';
@@ -54,6 +67,7 @@ const fbPixelId = tracking.fbPixelId || '';
   data-ga-id={gaId || undefined}
   data-gtm-id={gtmId || undefined}
   data-fb-pixel-id={fbPixelId || undefined}
+  data-blog-fonts={blogFonts ? 'true' : undefined}
 >
   <head>
     <meta charset="UTF-8">
@@ -65,15 +79,25 @@ const fbPixelId = tracking.fbPixelId || '';
     <link rel="icon" type="image/png" href="/assets/images/e5-logo-short.png">
     <link rel="apple-touch-icon" href="/assets/images/e5-logo-short.png">
     <link rel="shortcut icon" href="/assets/images/e5-logo-short.png">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {blogFonts && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      </>
+    )}
+    <link
+      rel="preload"
+      href="/assets/fonts/franklin-gothic-heavy.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <script is:inline src="/js/e5-defer.js" defer></script>
 
     <!-- SEO Meta Tags -->
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
-    {description && <meta name="description" content={description} />}
-    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="description" content={description} />
+    <link rel="canonical" href={currentUrl} />
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content={title} />
@@ -149,7 +173,7 @@ const fbPixelId = tracking.fbPixelId || '';
         });
       });
     </script>
-    <Navbar client:load transition:persist/>
+    <Navbar client:idle={{ timeout: 3500 }} transition:persist/>
     <div style="min-height: 100dvh">
       <main class="mt-107">
         <slot />

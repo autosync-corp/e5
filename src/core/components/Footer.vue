@@ -40,29 +40,29 @@ import {
 
         <!-- Center: Logo + Social -->
         <div class="footer-center flex flex-col items-center space-y-4">
-          <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="h-[33px] w-auto" />
+          <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="h-[33px] w-auto" width="1191" height="101" />
 
           <!-- Social Icons -->
           <div class="flex items-center justify-center gap-4">
             <a href="https://www.instagram.com/e5wheels/" target="_blank" rel="noopener" aria-label="E5 Wheels on Instagram" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="w-12 h-12" />
+              <img :src="INSTAGRAM_MEDIA_ICON" alt="Instagram" class="w-12 h-12" width="48" height="48" />
             </a>
             <a href="https://www.facebook.com/e5wheels/" target="_blank" rel="noopener" aria-label="E5 Wheels on Facebook" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="w-12 h-12" />
+              <img :src="FACEBOOK_MEDIA_ICON" alt="Facebook" class="w-12 h-12" width="48" height="48" />
             </a>
             <a href="https://www.youtube.com/@E5Wheels" target="_blank" rel="noopener" aria-label="E5 Wheels on YouTube" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="YOUTUBE_MEDIA_ICON" alt="YouTube" class="w-12 h-12" />
+              <img :src="YOUTUBE_MEDIA_ICON" alt="YouTube" class="w-12 h-12" width="48" height="48" />
             </a>
             <a href="https://www.tiktok.com/@e5wheels" target="_blank" rel="noopener" aria-label="E5 Wheels on TikTok" class="cursor-pointer hover:opacity-70 transition-opacity">
-              <img :src="TIKTOK_MEDIA_ICON" alt="TikTok" class="w-12 h-12" />
+              <img :src="TIKTOK_MEDIA_ICON" alt="TikTok" class="w-12 h-12" width="48" height="48" />
             </a>
           </div>
         </div>
 
         <!-- Right: Contact Info -->
         <div class="footer-contact flex flex-col items-end text-right space-y-2">
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" aria-label="E5 Wheels location on Google Maps" class="footer-link flex items-start gap-3 justify-end">
-            <img :src="PIN_BLACK_ICON" alt="Location" class="w-[22px] h-auto mt-1 rotate-180 scale-y-[-1]" />
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="footer-link flex items-start gap-3 justify-end">
+            <img :src="PIN_BLACK_ICON" alt="" class="w-[22px] h-auto mt-1 rotate-180 scale-y-[-1]" width="22" height="22" />
             <div>
               <p class="m-0">E5 WHEELS, LLC</p>
               <p class="m-0">3500 NW 77 CT</p>
@@ -71,7 +71,7 @@ import {
           </a>
 
           <a href="tel:+13059647429" target="_blank" class="footer-link flex items-center gap-3 justify-end">
-            <img :src="PHONE_BLACK_ICON" alt="Phone" class="w-[27px] h-auto" />
+            <img :src="PHONE_BLACK_ICON" alt="" class="w-[27px] h-auto" width="27" height="27" />
             <span>(305) 964-7429</span>
           </a>
 

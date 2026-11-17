@@ -8,18 +8,18 @@ import {
   TALLADEGA_EXO,
   TWO_P_FORGED_LOGO,
   GT_FORGED_LOGO,
-  DAYTONA_TITANIUM_BRUSHED_STUDIO,
-  SEBRING_TITANIUM_BRUSHED_STUDIO,
-  SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
-  SEBRING_2P_GLOSS_BLACK_STUDIO,
-  SEBRING_2P_DARK_BRONZE_STUDIO,
-  SEBRING_2P_TITANIUM_BRUSHED_STUDIO,
-  TALLADEGA_BRUSHED_ALUMINUM_STUDIO,
-  SONOMA_BRUSHED_ALUMINUM_STUDIO,
-  LAGUNA_WHEEL_RENDER,
-  GT01_BRUSHED_ALUMINUM,
-  GT02_BRUSHED_ALUMINUM,
-  GT03_BRUSHED_ALUMINUM,
+  DAYTONA_TITANIUM_BRUSHED_CARD,
+  SEBRING_TITANIUM_BRUSHED_CARD,
+  SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD,
+  SEBRING_2P_GLOSS_BLACK_CARD,
+  SEBRING_2P_DARK_BRONZE_CARD,
+  SEBRING_2P_TITANIUM_BRUSHED_CARD,
+  TALLADEGA_BRUSHED_ALUMINUM_CARD,
+  SONOMA_BRUSHED_ALUMINUM_CARD,
+  LAGUNA_WHEEL_CARD,
+  GT01_BRUSHED_ALUMINUM_CARD,
+  GT02_BRUSHED_ALUMINUM_CARD,
+  GT03_BRUSHED_ALUMINUM_CARD,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { VETTE_BLACK_ON_RIVER } from "@/pages/gallery/constants/VetteGallery.ts";
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
@@ -46,9 +46,9 @@ const homeSeries = [
     logoClass: 'home-series-logo--form',
     alt: 'Form Forged',
     wheels: [
-      { src: DAYTONA_TITANIUM_BRUSHED_STUDIO, alt: 'Daytona Titanium Brushed' },
-      { src: SEBRING_TITANIUM_BRUSHED_STUDIO, alt: 'Sebring Titanium Brushed' },
-      { src: SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO, alt: 'Speedway Titanium Brushed Tint' },
+      { src: DAYTONA_TITANIUM_BRUSHED_CARD, alt: 'Daytona Titanium Brushed' },
+      { src: SEBRING_TITANIUM_BRUSHED_CARD, alt: 'Sebring Titanium Brushed' },
+      { src: SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD, alt: 'Speedway Titanium Brushed Tint' },
     ],
     blurb: 'Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility&mdash;without compromising daily drivability.',
     cta: 'EXPLORE FORM FORGED',
@@ -61,9 +61,9 @@ const homeSeries = [
     logoClass: 'home-series-logo--2p',
     alt: '2P Forged',
     wheels: [
-      { src: SEBRING_2P_GLOSS_BLACK_STUDIO, alt: 'Sebring 2P Gloss Black' },
-      { src: SEBRING_2P_DARK_BRONZE_STUDIO, alt: 'Sebring 2P Dark Bronze' },
-      { src: SEBRING_2P_TITANIUM_BRUSHED_STUDIO, alt: 'Sebring 2P Titanium Brushed' },
+      { src: SEBRING_2P_GLOSS_BLACK_CARD, alt: 'Sebring 2P Gloss Black' },
+      { src: SEBRING_2P_DARK_BRONZE_CARD, alt: 'Sebring 2P Dark Bronze' },
+      { src: SEBRING_2P_TITANIUM_BRUSHED_CARD, alt: 'Sebring 2P Titanium Brushed' },
     ],
     blurb: 'Sebring 2P is a two-piece Corvette-only C8 fitment&mdash;19x9 +35mm / 20x11 +45mm on Stingray, and 20x10 +25mm / 21x13 +20mm on Z06 and E-Ray.',
     cta: 'EXPLORE 2P FORGED',
@@ -76,9 +76,9 @@ const homeSeries = [
     logoClass: 'home-series-logo--e5',
     alt: 'E5 Forged',
     wheels: [
-      { src: TALLADEGA_BRUSHED_ALUMINUM_STUDIO, alt: 'Talladega Brushed Aluminum' },
-      { src: SONOMA_BRUSHED_ALUMINUM_STUDIO, alt: 'Sonoma Brushed Aluminum' },
-      { src: LAGUNA_WHEEL_RENDER, alt: 'Laguna Brushed Aluminum' },
+      { src: TALLADEGA_BRUSHED_ALUMINUM_CARD, alt: 'Talladega Brushed Aluminum' },
+      { src: SONOMA_BRUSHED_ALUMINUM_CARD, alt: 'Sonoma Brushed Aluminum' },
+      { src: LAGUNA_WHEEL_CARD, alt: 'Laguna Brushed Aluminum' },
     ],
     blurb: 'Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.',
     cta: 'EXPLORE E5 FORGED',
@@ -91,9 +91,9 @@ const homeSeries = [
     logoClass: 'home-series-logo--gt',
     alt: 'GT Forged',
     wheels: [
-      { src: GT01_BRUSHED_ALUMINUM, alt: 'GT.01 Brushed Aluminum' },
-      { src: GT02_BRUSHED_ALUMINUM, alt: 'GT.02 Brushed Aluminum' },
-      { src: GT03_BRUSHED_ALUMINUM, alt: 'GT.03 Brushed Aluminum' },
+      { src: GT01_BRUSHED_ALUMINUM_CARD, alt: 'GT.01 Brushed Aluminum' },
+      { src: GT02_BRUSHED_ALUMINUM_CARD, alt: 'GT.02 Brushed Aluminum' },
+      { src: GT03_BRUSHED_ALUMINUM_CARD, alt: 'GT.03 Brushed Aluminum' },
     ],
     blurb: 'GT.01, GT.02, GT.03, and GT.04&mdash;made to order in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm.',
     cta: 'EXPLORE GT FORGED',
@@ -104,16 +104,36 @@ const homeSeries = [
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/assets/images/hero-video-poster-800.webp"
+    type="image/webp"
+    media="(max-width: 1023px)"
+    fetchpriority="high"
+  />
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/assets/images/hero-video-poster.webp"
+    type="image/webp"
+    media="(min-width: 1024px)"
+    fetchpriority="high"
+  />
   <div class="w-full h-full">
     <Hero>
       <div
         id="e5-hero-video"
         data-youtube-id={heroVideoId}
-        style={`position: relative; width: 100%; height: 94%; overflow: hidden; background: #000 url('/assets/images/hero-video-poster.jpg') center / cover no-repeat;`}
+        style={`position: relative; width: 100%; height: 94%; overflow: hidden; background: #000 url('/assets/images/hero-video-poster-800.webp') center / cover no-repeat;`}
       >
         <img
-          src="/assets/images/hero-video-poster.jpg"
-          alt="E5 Wheels hero video"
+          src="/assets/images/hero-video-poster-800.webp"
+          srcset="/assets/images/hero-video-poster-800.webp 800w, /assets/images/hero-video-poster.webp 1280w"
+          sizes="100vw"
+          alt="E5 Wheels Corvette hero"
           width="1280"
           height="720"
           fetchpriority="high"
@@ -132,20 +152,25 @@ const homeSeries = [
           if (host.getAttribute('data-loaded')) return;
           host.setAttribute('data-loaded', '1');
           var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd1440';
+          iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd720';
           iframe.setAttribute('allowtransparency', 'true');
           iframe.setAttribute('allow', 'autoplay; encrypted-media');
           iframe.setAttribute('title', 'E5 Wheels Hero Video');
-          iframe.setAttribute('loading', 'lazy');
           iframe.style.cssText = 'position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;';
           host.appendChild(iframe);
         }
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadHeroVideo, { timeout: 2500 });
-        } else if (document.readyState === 'complete') {
-          loadHeroVideo();
+        // Mobile PageSpeed: keep the poster as LCP and do not inject YouTube
+        // until the visitor interacts. Desktop still autoplays after idle.
+        var desktop = window.matchMedia('(min-width: 1024px)').matches;
+        if (desktop) {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadHeroVideo, { timeout: 4000 });
+          } else {
+            window.addEventListener('load', loadHeroVideo);
+          }
         } else {
-          window.addEventListener('load', loadHeroVideo);
+          window.addEventListener('pointerdown', loadHeroVideo, { once: true, passive: true });
+          window.addEventListener('touchstart', loadHeroVideo, { once: true, passive: true });
         }
       })();
     </script>
@@ -167,11 +192,11 @@ const homeSeries = [
         {homeSeries.map((block) => (
           <article class="home-series-block">
             <div class="home-series-logo-row">
-              <img src={block.logo} alt={block.alt} class={`home-series-logo ${block.logoClass}`} />
+              <img src={block.logo} alt={block.alt} class={`home-series-logo ${block.logoClass}`} width="528" height="66" decoding="async" loading="lazy" />
             </div>
             <div class:list={['home-series-cluster', block.key === 'gt' && 'home-series-cluster--gt']}>
               {block.wheels.map((wheel) => (
-                <img src={wheel.src} alt={wheel.alt} />
+                <img src={wheel.src} alt={wheel.alt} width="400" height="400" decoding="async" loading="lazy" />
               ))}
             </div>
             <p class="home-series-blurb" set:html={block.blurb} />
@@ -185,17 +210,17 @@ const homeSeries = [
 
     <section class="container-e5 relative max-w-[1500px] lg:flex justify-between mx-auto py-32">
       <div class="grid grid-cols-1 auto-rows-min text-center lg:text-start">
-        <img src={E5_BLACK_RED_DRAW} alt="Asset 29" class="w-[264px] h-auto mx-auto lg:mx-0" />
+        <img src={E5_BLACK_RED_DRAW} alt="E5 Wheels process" class="w-[264px] h-auto mx-auto lg:mx-0" width="264" height="80" decoding="async" loading="lazy" />
         <h2 class="text-3xl md:text-4xl lg:text-5xl font-franklin-medium mt-12">OUR PROCESS</h2>
         <p class="lg:max-w-[700px] text-xl text-black/70 mt-6">
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>
         <div class="mt-20">
-          <Button client:visible primary link={PROCESS_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn More">LEARN MORE</Button>
+          <Button client:visible primary link={PROCESS_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn More">LEARN MORE<span class="sr-only"> about our process</span></Button>
         </div>
       </div>
       <div class="h-[438px] hidden lg:block">
-        <img src={TALLADEGA_EXO} alt="Talladega Exo" class="w-full max-w-[438px] h-auto" />
+        <img src={TALLADEGA_EXO} alt="Talladega Exo" class="w-full max-w-[438px] h-auto" width="438" height="438" decoding="async" loading="lazy" />
       </div>
     </section>
 
@@ -210,11 +235,9 @@ const homeSeries = [
           <div class="flex justify-center items-center">
             <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${VETTE_BLACK_ON_RIVER})`}>
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <a href={GALLERY_VEHICLES_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Vette Gallery">
-                  <Button client:visible primary={true} secondary={false} disabled={false}>
+                <Button client:visible primary link={GALLERY_VEHICLES_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Vette Gallery">
                     VETTE GALLERY
-                  </Button>
-                </a>
+                </Button>
               </div>
             </div>
           </div>
@@ -222,11 +245,9 @@ const homeSeries = [
           <div class="flex justify-center items-center">
             <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${WHEEL_HOME_SHOT_1})`}>
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <a href={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Wheel Gallery">
-                  <Button client:visible primary={true} secondary={false} disabled={false}>
+                <Button client:visible primary link={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Wheel Gallery">
                     WHEEL GALLERY
-                  </Button>
-                </a>
+                </Button>
               </div>
             </div>
           </div>

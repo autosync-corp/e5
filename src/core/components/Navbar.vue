@@ -209,7 +209,7 @@ const closeMiniCart = () => {
         <!-- Center Logo -->
         <div class="flex justify-center items-center px-2 xl:px-4 2xl:px-6">
           <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
-            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" style="aspect-ratio: 35/3" />
+            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" width="1191" height="102" style="aspect-ratio: 35/3" />
           </a>
         </div>
 
@@ -268,7 +268,7 @@ const closeMiniCart = () => {
           </div>
 
           <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
-          <button @click="toggleMiniCart" class="relative">
+          <button @click="toggleMiniCart" class="relative min-h-11 min-w-11" aria-label="Open cart">
             <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
@@ -282,11 +282,11 @@ const closeMiniCart = () => {
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
       <!-- Mobile Logo -->
       <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
-        <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" />
+        <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" width="1191" height="102" />
       </a>
 
       <!-- Mobile Menu Toggle -->
-      <button @click="toggleMobileMenu" class="hamburger-btn" aria-label="Toggle menu">
+      <button @click="toggleMobileMenu" class="hamburger-btn min-h-12 min-w-12" aria-label="Toggle menu" :aria-expanded="isMobileMenuOpen">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path v-if="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -303,7 +303,7 @@ const closeMiniCart = () => {
             <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">
               WHEELS
             </a>
-            <button @click="toggleWheelsDropdown" class="text-white p-1">
+            <button @click="toggleWheelsDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Wheels submenu">
               <svg class="inline-block w-5 h-5" :class="{'rotate-180': isWheelsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -342,7 +342,7 @@ const closeMiniCart = () => {
             <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">
               GALLERY
             </a>
-            <button @click="toggleGalleryDropdown" class="text-white p-1" aria-label="Toggle Gallery submenu">
+            <button @click="toggleGalleryDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Gallery submenu">
               <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -361,7 +361,7 @@ const closeMiniCart = () => {
             <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">
               PROCESS
             </a>
-            <button @click="toggleProcessDropdown" class="text-white p-1" aria-label="Toggle Process submenu">
+            <button @click="toggleProcessDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Process submenu">
               <svg class="inline-block w-5 h-5" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -379,7 +379,7 @@ const closeMiniCart = () => {
             <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">
               GENERATIONS
             </a>
-            <button @click="toggleGenerationsDropdown" class="text-white p-1">
+            <button @click="toggleGenerationsDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Generations submenu">
               <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGenerationsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -417,7 +417,7 @@ const closeMiniCart = () => {
             <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">
               VISUALIZE
             </a>
-            <button @click="toggleVisualizeDropdown" class="text-white p-1" aria-label="Toggle Visualize submenu">
+            <button @click="toggleVisualizeDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Visualize submenu">
               <svg class="inline-block w-5 h-5" :class="{'rotate-180': isVisualizeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -431,7 +431,7 @@ const closeMiniCart = () => {
 
         <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
         <div class="flex justify-center mt-8">
-          <button @click="toggleMiniCart(); closeMobileMenu();" class="relative">
+          <button @click="toggleMiniCart(); closeMobileMenu();" class="relative min-h-11 min-w-11" aria-label="Open cart">
             <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
