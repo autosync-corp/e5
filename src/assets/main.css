@@ -321,43 +321,22 @@
 }
 
 .home-series-cluster {
-  --home-wheel: 46%;
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
   width: min(100%, 34rem);
-  aspect-ratio: 16 / 9;
   margin-top: 0.75rem;
+  justify-items: center;
+  align-items: center;
 }
 
 .home-series-cluster img {
-  position: absolute;
-  width: var(--home-wheel);
+  display: block;
+  width: 100%;
   aspect-ratio: 1 / 1;
   height: auto;
   object-fit: contain;
   object-position: center;
-}
-
-.home-series-cluster img:nth-child(1) {
-  left: 0;
-  top: 18%;
-  z-index: 2;
-}
-.home-series-cluster img:nth-child(2) {
-  left: 27%;
-  top: 0;
-  z-index: 3;
-}
-.home-series-cluster img:nth-child(3) {
-  left: 54%;
-  top: 18%;
-  z-index: 1;
-}
-
-/* GT.01–.03 catalog 0001s use the same 1500² canvas but ~3.5% extra top
-   padding vs Form / 2P / E5, so the rim reads smaller at the same CSS size. */
-.home-series-cluster--gt img {
-  transform: scale(1.035);
-  transform-origin: center center;
 }
 
 .home-series-blurb {

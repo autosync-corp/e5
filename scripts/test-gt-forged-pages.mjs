@@ -96,6 +96,10 @@ assert('home uses single-line FORM wordmark', home.includes('FORM_FORGED_WORDMAR
 assert('home drops two-line Form lockup', home.includes('FORM_FORGED_LOGO_BLACK'), false);
 assert('home drops Form group photo', home.includes('FORM_FORGED_GROUP'), false);
 assert('home uses catalog 0001 cluster', home.includes('home-series-cluster'), true);
+const homeCss = readFileSync(join(root, 'src/assets/main.css'), 'utf8');
+const clusterCss = homeCss.slice(homeCss.indexOf('.home-series-cluster {'), homeCss.indexOf('.home-series-cluster img'));
+assert('home cluster is a 3-col grid', clusterCss.includes('grid-template-columns: 1fr 1fr 1fr'), true);
+assert('home cluster is not overlapping absolute', clusterCss.includes('position: absolute'), false);
 assert('home uses 2P catalog 0001', home.includes('SEBRING_2P_GLOSS_BLACK_STUDIO'), true);
 assert('home uses E5 0001 studio', home.includes('TALLADEGA_BRUSHED_ALUMINUM_STUDIO'), true);
 assert('wheels 2P card centered', wheelsIndex.includes('wheels-2p-grid'), true);
