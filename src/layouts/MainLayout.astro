@@ -72,6 +72,11 @@ const fbPixelId = tracking.fbPixelId || '';
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Safari paints a gray Canvas (~#dedede) when color-scheme is unset and
+         html/body stay transparent. Lock the document to an opaque white page. -->
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- gtag stub queues events immediately; gtag.js / GTM / pixel / blog fonts load after idle via /js/e5-defer.js -->
     {gaId && <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${gaId}');`} />}
@@ -174,7 +179,7 @@ const fbPixelId = tracking.fbPixelId || '';
       });
     </script>
     <Navbar client:idle={{ timeout: 3500 }} transition:persist/>
-    <div style="min-height: 100dvh">
+    <div style="min-height: 100dvh; background-color: #ffffff">
       <main class="mt-107">
         <slot />
       </main>
@@ -185,9 +190,15 @@ const fbPixelId = tracking.fbPixelId || '';
 </html>
 
 <style is:global>
+html {
+  background-color: #ffffff;
+  color-scheme: only light;
+}
 body {
   margin: auto;
   padding: 0;
+  background-color: #ffffff;
+  color-scheme: only light;
   /* Percentage, not dvw: viewport units include the classic scrollbar's
      gutter, so 100dvw made the body ~15px wider than the actual content
      area whenever a scrollbar was present. overflow-x:hidden then swallowed

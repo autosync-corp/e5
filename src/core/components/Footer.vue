@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  E5_LOGO_BLACK,
+  E5_LOGO_BLACK_PNG,
   FACEBOOK_MEDIA_ICON,
   INSTAGRAM_MEDIA_ICON,
   PHONE_BLACK_ICON,
@@ -61,7 +61,7 @@ const socials = [
             <img :src="s.src" :alt="s.alt" width="48" height="48" />
           </a>
         </div>
-        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
+        <img :src="E5_LOGO_BLACK_PNG" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
         <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
       </div>
 
@@ -133,12 +133,13 @@ const socials = [
 
 <style scoped>
 .site-footer {
-  background: #ffffff;
+  background-color: #ffffff;
   color: #141414;
   width: 100%;
   border-top: 1px solid #e6e6e6;
   font-family: Oswald, 'Franklin Gothic Demi', sans-serif;
   font-weight: 500;
+  color-scheme: only light;
 }
 
 .ft {
@@ -150,8 +151,9 @@ const socials = [
 .ft-logo {
   display: block;
   height: 28px;
-  width: auto;
-  max-width: none;
+  width: calc(28px * 1191 / 101);
+  max-width: 100%;
+  min-width: 0;
   aspect-ratio: 1191 / 101;
   object-fit: contain;
   object-position: center;
@@ -294,7 +296,7 @@ const socials = [
 
 .vossen-top {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 16px;
   padding-bottom: 22px;
@@ -333,6 +335,7 @@ const socials = [
   .ft-logo {
     order: 1;
     height: 24px;
+    width: calc(24px * 1191 / 101);
     margin: 4px 0 8px;
   }
 
