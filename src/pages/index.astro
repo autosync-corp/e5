@@ -3,12 +3,23 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Hero from "@/core/components/Hero.vue";
 import Button from "@/core/components/Button.vue";
 import {
-  E5_FORGED_LOGO,
-  FORM_FORGED_GROUP,
-  FORM_FORGED_LOGO_BLACK,
+  E5_FORGED_SERIES_LOGO,
+  FORM_FORGED_WORDMARK,
   TALLADEGA_EXO,
-  TALLADEGA_GLOSS_BLACK,
-  TALLADEGA_SHOT_4,
+  TWO_P_FORGED_LOGO,
+  GT_FORGED_LOGO,
+  DAYTONA_TITANIUM_BRUSHED_STUDIO,
+  SEBRING_TITANIUM_BRUSHED_STUDIO,
+  SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
+  SEBRING_2P_GLOSS_BLACK_STUDIO,
+  SEBRING_2P_DARK_BRONZE_STUDIO,
+  SEBRING_2P_TITANIUM_BRUSHED_STUDIO,
+  TALLADEGA_BRUSHED_ALUMINUM_STUDIO,
+  SONOMA_BRUSHED_ALUMINUM_STUDIO,
+  LAGUNA_WHEEL_RENDER,
+  GT01_BRUSHED_ALUMINUM,
+  GT02_BRUSHED_ALUMINUM,
+  GT03_BRUSHED_ALUMINUM,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { VETTE_BLACK_ON_RIVER } from "@/pages/gallery/constants/VetteGallery.ts";
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
@@ -16,7 +27,9 @@ import {
     GALLERY_VEHICLES_ROUTE, GALLERY_WHEELS_ROUTE,
     PROCESS_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
-    WHEELS_TALLADEGA_ROUTE
+    WHEELS_TALLADEGA_ROUTE,
+    WHEELS_SEBRING_2P_ROUTE,
+    WHEELS_GT_01_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
@@ -25,6 +38,69 @@ const title = 'E5 Wheels | Exclusively Engineered for Corvettes';
 const description = 'E5 Wheels designs forged and flow-formed wheels exclusively for Corvette C5, C6, C7, and C8. Precision fitment, hub-centric, made in the USA.';
 const canonicalUrl = `${baseUrl}/`;
 const heroVideoId = '2zk8Sdi3Yh8';
+
+const homeSeries = [
+  {
+    key: 'form',
+    logo: FORM_FORGED_WORDMARK,
+    logoClass: 'home-series-logo--form',
+    alt: 'Form Forged',
+    wheels: [
+      { src: DAYTONA_TITANIUM_BRUSHED_STUDIO, alt: 'Daytona Titanium Brushed' },
+      { src: SEBRING_TITANIUM_BRUSHED_STUDIO, alt: 'Sebring Titanium Brushed' },
+      { src: SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO, alt: 'Speedway Titanium Brushed Tint' },
+    ],
+    blurb: 'Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility&mdash;without compromising daily drivability.',
+    cta: 'EXPLORE FORM FORGED',
+    href: WHEELS_FORM_FORGED_ROUTE,
+    gtm: 'Explore Form Forged',
+  },
+  {
+    key: '2p',
+    logo: TWO_P_FORGED_LOGO,
+    logoClass: 'home-series-logo--2p',
+    alt: '2P Forged',
+    wheels: [
+      { src: SEBRING_2P_GLOSS_BLACK_STUDIO, alt: 'Sebring 2P Gloss Black' },
+      { src: SEBRING_2P_DARK_BRONZE_STUDIO, alt: 'Sebring 2P Dark Bronze' },
+      { src: SEBRING_2P_TITANIUM_BRUSHED_STUDIO, alt: 'Sebring 2P Titanium Brushed' },
+    ],
+    blurb: 'Sebring 2P is a two-piece Corvette-only C8 fitment&mdash;19x9 +35mm / 20x11 +45mm on Stingray, and 20x10 +25mm / 21x13 +20mm on Z06 and E-Ray.',
+    cta: 'EXPLORE 2P FORGED',
+    href: WHEELS_SEBRING_2P_ROUTE,
+    gtm: 'Explore 2P Forged',
+  },
+  {
+    key: 'e5',
+    logo: E5_FORGED_SERIES_LOGO,
+    logoClass: 'home-series-logo--e5',
+    alt: 'E5 Forged',
+    wheels: [
+      { src: TALLADEGA_BRUSHED_ALUMINUM_STUDIO, alt: 'Talladega Brushed Aluminum' },
+      { src: SONOMA_BRUSHED_ALUMINUM_STUDIO, alt: 'Sonoma Brushed Aluminum' },
+      { src: LAGUNA_WHEEL_RENDER, alt: 'Laguna Brushed Aluminum' },
+    ],
+    blurb: 'Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.',
+    cta: 'EXPLORE E5 FORGED',
+    href: WHEELS_TALLADEGA_ROUTE,
+    gtm: 'Explore E5 Forged',
+  },
+  {
+    key: 'gt',
+    logo: GT_FORGED_LOGO,
+    logoClass: 'home-series-logo--gt',
+    alt: 'GT Forged',
+    wheels: [
+      { src: GT01_BRUSHED_ALUMINUM, alt: 'GT.01 Brushed Aluminum' },
+      { src: GT02_BRUSHED_ALUMINUM, alt: 'GT.02 Brushed Aluminum' },
+      { src: GT03_BRUSHED_ALUMINUM, alt: 'GT.03 Brushed Aluminum' },
+    ],
+    blurb: 'GT.01, GT.02, GT.03, and GT.04&mdash;made to order in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm.',
+    cta: 'EXPLORE GT FORGED',
+    href: WHEELS_GT_01_ROUTE,
+    gtm: 'Explore GT Forged',
+  },
+];
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
@@ -86,39 +162,24 @@ const heroVideoId = '2zk8Sdi3Yh8';
       </div>
     </section>
 
-    <section class="container-e5 flex mt-8 bg-gray-100 py-20">
-      <div class="grid grid-flow-row auto-rows-min grid-cols-1 lg:grid-cols-2">
-        <div class="col-start-1 row-start-1">
-          <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged" class="w-1/2 h-auto mx-auto" />
-        </div>
-        <div class="col-start-1 row-start-2">
-          <img src={FORM_FORGED_GROUP} alt="Form Forged Wheels" class="w-4/5 h-auto mx-auto" />
-        </div>
-        <div class="col-start-1 row-start-3">
-          <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
-            Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility&mdash;without compromising daily drivability.
-          </p>
-        </div>
-        <div class="col-start-1 row-start-4 flex justify-center items-center mt-6 mb-24 lg:mb-0">
-          <Button client:visible primary link={WHEELS_FORM_FORGED_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Form Forged">EXPLORE FORM FORGED</Button>
-        </div>
-        <div class="lg:col-start-2 lg:row-start-1">
-          <img src={E5_FORGED_LOGO} alt="Form Forged" class="w-3/5 h-auto mx-auto" />
-        </div>
-        <div class="lg:col-start-2 lg:row-start-2 mx-10">
-          <div class="relative flex justify-end">
-            <img src={TALLADEGA_GLOSS_BLACK} alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
-            <img src={TALLADEGA_SHOT_4} alt="Talladega Rear" class="me-10 w-1/2" />
-          </div>
-        </div>
-        <div class="lg:col-start-2 lg:row-start-3">
-          <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
-            Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.
-          </p>
-        </div>
-        <div class="lg:col-start-2 lg:ow-start-4 flex justify-center items-center mt-6">
-          <Button client:visible primary link={WHEELS_TALLADEGA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore E5 Forged">EXPLORE E5 FORGED</Button>
-        </div>
+    <section class="container-e5 mt-8 bg-gray-100 py-16 md:py-20">
+      <div class="home-series-grid">
+        {homeSeries.map((block) => (
+          <article class="home-series-block">
+            <div class="home-series-logo-row">
+              <img src={block.logo} alt={block.alt} class={`home-series-logo ${block.logoClass}`} />
+            </div>
+            <div class:list={['home-series-cluster', block.key === 'gt' && 'home-series-cluster--gt']}>
+              {block.wheels.map((wheel) => (
+                <img src={wheel.src} alt={wheel.alt} />
+              ))}
+            </div>
+            <p class="home-series-blurb" set:html={block.blurb} />
+            <div class="home-series-cta">
+              <Button client:visible primary link={block.href} data-gtm-event="explore_wheel" data-gtm-label={block.gtm}>{block.cta}</Button>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
 
