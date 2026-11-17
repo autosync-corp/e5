@@ -33,24 +33,25 @@ const variant = computed(() => {
 
 const year = new Date().getFullYear();
 
-const navLinks = [
+const exploreLinks = [
   { href: PROCESS_ROUTE, label: 'OUR PROCESS' },
   { href: CONTACT_ROUTE, label: 'CONTACT US' },
   { href: '/events/upcoming', label: 'EVENTS' },
   { href: CATALOG_ROUTE, label: 'CATALOG' },
+];
+const supportLinks = [
   { href: REFUND_ROUTE, label: 'RETURN POLICY' },
   { href: WARRANTY_ROUTE, label: 'WARRANTY' },
   { href: INSTALLATION_ROUTE, label: 'INSTALLATION GUIDELINES' },
   { href: REGISTRATION_ROUTE, label: 'WHEEL REGISTRATION' },
+];
+const companyLinks = [
   { href: VENDOR_REGISTRATION_ROUTE, label: 'VENDOR REGISTRATION' },
   { href: MEDIA_ROUTE, label: 'MEDIA' },
   { href: ABOUT_ROUTE, label: 'ABOUT US' },
   { href: '/blog', label: 'BLOG' },
 ];
-
-const exploreLinks = navLinks.slice(0, 4);
-const supportLinks = navLinks.slice(4, 8);
-const companyLinks = navLinks.slice(8, 12);
+const navLinks = [...exploreLinks, ...supportLinks, ...companyLinks];
 
 const socials = [
   { href: 'https://www.instagram.com/e5wheels/', label: 'E5 Wheels on Instagram', src: INSTAGRAM_MEDIA_ICON, alt: 'Instagram' },
@@ -62,132 +63,171 @@ const socials = [
 
 <template>
   <footer class="site-footer" :data-footer-variant="variant">
-    <!-- A: compact single row — logo left, link columns center, contact/social right -->
+    <!-- A: BMW / Lucid / Porsche OEM sitemap -->
     <div v-if="variant === 'a'" class="ft ft-a">
-      <div class="ft-a-row">
-        <div class="ft-brand">
-          <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
+      <nav class="col-grid desktop-only" aria-label="Footer">
+        <div class="col">
+          <p class="ft-label">Explore</p>
+          <a v-for="link in exploreLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
         </div>
-        <nav class="ft-cols" aria-label="Footer">
-          <div class="ft-col">
-            <a v-for="link in exploreLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-          <div class="ft-col">
-            <a v-for="link in supportLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-          <div class="ft-col">
-            <a v-for="link in companyLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-        </nav>
-        <div class="ft-aside">
+        <div class="col">
+          <p class="ft-label">Support</p>
+          <a v-for="link in supportLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </div>
+        <div class="col">
+          <p class="ft-label">Company</p>
+          <a v-for="link in companyLinks" :key="'ad-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </div>
+        <div class="col">
+          <p class="ft-label">Contact</p>
           <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-            <img :src="PIN_BLACK_ICON" alt="" class="ft-pin" width="22" height="22" />
-            <span>
-              E5 WHEELS, LLC<br />
-              3500 NW 77 CT<br />
-              DORAL, FL 33122
-            </span>
+            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
+            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
           </a>
-          <a href="tel:+13059647429" class="ft-link ft-inline">
-            <img :src="PHONE_BLACK_ICON" alt="" width="22" height="22" />
+          <a href="tel:+13059647429" class="ft-link ft-icon-link">
+            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
             (305) 964-7429
           </a>
           <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
           <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
-          <div class="ft-socials">
-            <a v-for="s in socials" :key="s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
-              <img :src="s.src" :alt="s.alt" width="48" height="48" />
-            </a>
-          </div>
         </div>
-      </div>
-      <div class="ft-legal">
-        <a :href="TERMS_ROUTE" class="ft-link ft-legal-link">TERMS &amp; CONDITIONS</a>
-        <span class="ft-sep" aria-hidden="true">|</span>
-        <a :href="PRIVACY_ROUTE" class="ft-link ft-legal-link">PRIVACY POLICY</a>
-        <span class="ft-copy">© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
-      </div>
-    </div>
-
-    <!-- B: centered stacked minimal -->
-    <div v-else-if="variant === 'b'" class="ft ft-b">
-      <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
-      <div class="ft-socials ft-socials-center">
-        <a v-for="s in socials" :key="s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
-          <img :src="s.src" :alt="s.alt" width="48" height="48" />
-        </a>
-      </div>
-      <nav class="ft-wrap" aria-label="Footer">
-        <a v-for="link in navLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
       </nav>
-      <div class="ft-b-contact">
-        <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact ft-contact-center">
-          <img :src="PIN_BLACK_ICON" alt="" class="ft-pin" width="22" height="22" />
-          <span>E5 WHEELS, LLC · 3500 NW 77 CT · DORAL, FL 33122</span>
-        </a>
-        <a href="tel:+13059647429" class="ft-link ft-inline">
-          <img :src="PHONE_BLACK_ICON" alt="" width="22" height="22" />
-          (305) 964-7429
-        </a>
-        <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-      </div>
-      <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
-      <div class="ft-legal ft-legal-center">
-        <a :href="TERMS_ROUTE" class="ft-link ft-legal-link">TERMS &amp; CONDITIONS</a>
-        <span class="ft-sep" aria-hidden="true">|</span>
-        <a :href="PRIVACY_ROUTE" class="ft-link ft-legal-link">PRIVACY POLICY</a>
-      </div>
-      <p class="ft-copy">© {{ year }} COPYRIGHT E5 WHEELS, LLC</p>
-    </div>
-
-    <!-- C: two-tier dense grid + thin bottom bar -->
-    <div v-else class="ft ft-c">
-      <div class="ft-c-grid">
-        <nav class="ft-c-links" aria-label="Footer">
-          <div class="ft-col">
-            <p class="ft-heading">EXPLORE</p>
-            <a v-for="link in exploreLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-          <div class="ft-col">
-            <p class="ft-heading">SUPPORT</p>
-            <a v-for="link in supportLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-          <div class="ft-col">
-            <p class="ft-heading">COMPANY</p>
-            <a v-for="link in companyLinks" :key="link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
-          </div>
-          <div class="ft-col ft-c-contact">
-            <p class="ft-heading">CONTACT</p>
-            <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-              <img :src="PIN_BLACK_ICON" alt="" class="ft-pin" width="22" height="22" />
-              <span>
-                E5 WHEELS, LLC<br />
-                3500 NW 77 CT<br />
-                DORAL, FL 33122
-              </span>
-            </a>
-            <a href="tel:+13059647429" class="ft-link ft-inline">
-              <img :src="PHONE_BLACK_ICON" alt="" width="22" height="22" />
-              (305) 964-7429
-            </a>
-            <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-            <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
-          </div>
-        </nav>
-      </div>
-      <div class="ft-c-bar">
-        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo ft-logo-sm" width="1191" height="101" />
-        <div class="ft-legal">
-          <a :href="TERMS_ROUTE" class="ft-link ft-legal-link">TERMS &amp; CONDITIONS</a>
-          <span class="ft-sep" aria-hidden="true">|</span>
-          <a :href="PRIVACY_ROUTE" class="ft-link ft-legal-link">PRIVACY POLICY</a>
+      <nav class="mobile-only" aria-label="Footer">
+        <details class="acc">
+          <summary class="ft-label">Explore</summary>
+          <a v-for="link in exploreLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc">
+          <summary class="ft-label">Support</summary>
+          <a v-for="link in supportLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc">
+          <summary class="ft-label">Company</summary>
+          <a v-for="link in companyLinks" :key="'am-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc" open>
+          <summary class="ft-label">Contact</summary>
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
+            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
+            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
+          </a>
+          <a href="tel:+13059647429" class="ft-link ft-icon-link">
+            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
+            (305) 964-7429
+          </a>
+          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
+          <a :href="CONTACT_ROUTE" class="ft-cta">GET IN TOUCH</a>
+        </details>
+      </nav>
+      <div class="oem-bar">
+        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo" width="1191" height="101" />
+        <div class="oem-legal">
+          <a :href="TERMS_ROUTE" class="ft-legal">TERMS &amp; CONDITIONS</a>
+          <a :href="PRIVACY_ROUTE" class="ft-legal">PRIVACY POLICY</a>
           <span class="ft-copy">© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
         </div>
         <div class="ft-socials">
-          <a v-for="s in socials" :key="s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
+          <a v-for="s in socials" :key="'a-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
             <img :src="s.src" :alt="s.alt" width="48" height="48" />
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- B: Tesla / Rivian ultra-minimal -->
+    <div v-else-if="variant === 'b'" class="ft ft-b">
+      <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo ft-logo-center" width="1191" height="101" />
+      <nav class="tesla-links" aria-label="Footer">
+        <a v-for="link in navLinks" :key="'b-'+link.href" :href="link.href" class="ft-link tesla-link">{{ link.label }}</a>
+      </nav>
+      <div class="tesla-contact">
+        <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-legal">
+          E5 WHEELS, LLC · 3500 NW 77 CT · DORAL, FL 33122
+        </a>
+        <a href="tel:+13059647429" class="ft-legal">(305) 964-7429</a>
+        <a href="mailto:SALES@E5WHEELS.COM" class="ft-legal">SALES@E5WHEELS.COM</a>
+        <a :href="CONTACT_ROUTE" class="ft-legal tesla-cta">GET IN TOUCH</a>
+      </div>
+      <div class="ft-socials ft-socials-center">
+        <a v-for="s in socials" :key="'b-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
+          <img :src="s.src" :alt="s.alt" width="48" height="48" />
+        </a>
+      </div>
+      <p class="tesla-legal">
+        <span>© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
+        <a :href="TERMS_ROUTE">TERMS &amp; CONDITIONS</a>
+        <a :href="PRIVACY_ROUTE">PRIVACY POLICY</a>
+      </p>
+    </div>
+
+    <!-- C: Vossen / HRE wheel-brand -->
+    <div v-else class="ft ft-c">
+      <div class="vossen-top">
+        <div class="ft-socials">
+          <a v-for="s in socials" :key="'c-'+s.href" :href="s.href" target="_blank" rel="noopener" :aria-label="s.label" class="ft-social">
+            <img :src="s.src" :alt="s.alt" width="48" height="48" />
+          </a>
+        </div>
+        <img :src="E5_LOGO_BLACK" alt="E5 Wheels" class="ft-logo ft-logo-center" width="1191" height="101" />
+        <a :href="CONTACT_ROUTE" class="ft-cta ft-cta-outline">GET IN TOUCH</a>
+      </div>
+      <nav class="col-grid desktop-only" aria-label="Footer">
+        <div class="col">
+          <p class="ft-label">Explore</p>
+          <a v-for="link in exploreLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </div>
+        <div class="col">
+          <p class="ft-label">Support</p>
+          <a v-for="link in supportLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </div>
+        <div class="col">
+          <p class="ft-label">Company</p>
+          <a v-for="link in companyLinks" :key="'cd-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </div>
+        <div class="col">
+          <p class="ft-label">Contact</p>
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
+            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
+            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
+          </a>
+          <a href="tel:+13059647429" class="ft-link ft-icon-link">
+            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
+            (305) 964-7429
+          </a>
+          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
+        </div>
+      </nav>
+      <nav class="mobile-only" aria-label="Footer">
+        <details class="acc">
+          <summary class="ft-label">Explore</summary>
+          <a v-for="link in exploreLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc">
+          <summary class="ft-label">Support</summary>
+          <a v-for="link in supportLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc">
+          <summary class="ft-label">Company</summary>
+          <a v-for="link in companyLinks" :key="'cm-'+link.href" :href="link.href" class="ft-link">{{ link.label }}</a>
+        </details>
+        <details class="acc" open>
+          <summary class="ft-label">Contact</summary>
+          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
+            <img :src="PIN_BLACK_ICON" alt="" class="ft-icon ft-pin" width="22" height="22" />
+            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
+          </a>
+          <a href="tel:+13059647429" class="ft-link ft-icon-link">
+            <img :src="PHONE_BLACK_ICON" alt="" class="ft-icon" width="22" height="22" />
+            (305) 964-7429
+          </a>
+          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
+        </details>
+      </nav>
+      <div class="vossen-legal">
+        <a :href="TERMS_ROUTE" class="ft-legal">TERMS &amp; CONDITIONS</a>
+        <span aria-hidden="true">|</span>
+        <a :href="PRIVACY_ROUTE" class="ft-legal">PRIVACY POLICY</a>
+        <span class="ft-copy">© {{ year }} COPYRIGHT E5 WHEELS, LLC</span>
       </div>
     </div>
   </footer>
@@ -198,81 +238,92 @@ const socials = [
   background: #ffffff;
   color: #141414;
   width: 100%;
-  border-top: 4px solid var(--color-e5-red);
-  font-family: 'Barlow Condensed', 'Franklin Gothic Demi', sans-serif;
-  font-weight: 600;
+  border-top: 1px solid #e6e6e6;
+  font-family: Oswald, 'Franklin Gothic Demi', sans-serif;
+  font-weight: 500;
 }
 
 .ft {
-  max-width: 1518px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 28px 24px 16px;
+  padding: 40px 32px 20px;
 }
 
 .ft-logo {
-  height: 33px;
-  width: auto;
   display: block;
+  height: 28px;
+  width: auto;
+  max-width: none;
+  aspect-ratio: 1191 / 101;
+  object-fit: contain;
+  object-position: left center;
+  flex: 0 0 auto;
 }
 
-.ft-logo-sm {
-  height: 28px;
+.ft-logo-center {
+  object-position: center;
+  margin-inline: auto;
+}
+
+.ft-link,
+.ft-legal,
+.ft-contact,
+.tesla-legal a {
+  color: #141414;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .ft-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   min-height: 44px;
-  color: #141414;
-  text-decoration: none;
-  font-size: 15px;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  transition: color 150ms ease;
+  font-size: 13px;
+  line-height: 1.25;
 }
 
 .ft-link:hover,
-.ft-link:focus-visible {
+.ft-link:focus-visible,
+.ft-legal:hover,
+.ft-legal:focus-visible,
+.ft-contact:hover,
+.ft-contact:focus-visible,
+.tesla-legal a:hover,
+.tesla-legal a:focus-visible {
   color: var(--color-e5-red);
 }
 
-.ft-legal-link {
+.ft-legal {
+  display: inline-flex;
+  align-items: center;
   min-height: 44px;
-}
-
-.ft-inline {
-  gap: 10px;
-}
-
-.ft-inline img {
-  width: 22px;
-  height: 22px;
+  font-size: 12px;
 }
 
 .ft-contact {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  color: #141414;
-  text-decoration: none;
-  font-size: 15px;
-  letter-spacing: 0.08em;
-  line-height: 1.35;
-  text-transform: uppercase;
   min-height: 44px;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 4px 0 8px;
 }
 
-.ft-contact:hover,
-.ft-contact:focus-visible {
-  color: var(--color-e5-red);
+.ft-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 auto;
 }
 
 .ft-pin {
-  width: 22px;
-  height: auto;
-  margin-top: 2px;
   transform: rotate(180deg) scaleY(-1);
+}
+
+.ft-icon-link {
+  gap: 10px;
 }
 
 .ft-cta {
@@ -280,14 +331,15 @@ const socials = [
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 0 22px;
+  padding: 0 20px;
+  margin-top: 10px;
   background: var(--color-e5-red);
   color: #ffffff;
-  font-size: 14px;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  letter-spacing: 0.14em;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background 150ms ease;
+  width: fit-content;
 }
 
 .ft-cta:hover,
@@ -295,10 +347,24 @@ const socials = [
   background: #b3181f;
 }
 
+.ft-cta-outline {
+  background: transparent;
+  color: #141414;
+  border: 1px solid #141414;
+  margin-top: 0;
+}
+
+.ft-cta-outline:hover,
+.ft-cta-outline:focus-visible {
+  background: var(--color-e5-red);
+  border-color: var(--color-e5-red);
+  color: #ffffff;
+}
+
 .ft-socials {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .ft-socials-center {
@@ -311,209 +377,228 @@ const socials = [
   justify-content: center;
   width: 44px;
   height: 44px;
-  flex-shrink: 0;
 }
 
 .ft-social img {
-  width: 36px;
-  height: 36px;
-}
-
-.ft-social:hover,
-.ft-social:focus-visible {
-  opacity: 0.7;
-}
-
-.ft-legal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-e5-separator);
-}
-
-.ft-legal-center {
-  justify-content: center;
-}
-
-.ft-sep {
-  color: #333333;
+  width: 28px;
+  height: 28px;
 }
 
 .ft-copy {
-  margin: 0 0 0 auto;
-  font-size: 14px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #141414;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #333333;
 }
 
-.ft-heading {
-  margin: 0 0 4px;
-  color: var(--color-e5-red);
-  font-size: 13px;
+.ft-label {
+  list-style: none;
+  font-size: 11px;
   letter-spacing: 0.18em;
-  min-height: 24px;
+  text-transform: uppercase;
+  color: #4a4a4a;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 8px;
 }
 
-.ft-col {
+.acc .ft-label {
+  min-height: 44px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.acc .ft-label::-webkit-details-marker {
+  display: none;
+}
+
+.col {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-/* A */
-.ft-a-row {
+.col-grid {
   display: grid;
-  grid-template-columns: 180px 1fr 260px;
-  gap: 32px 40px;
-  align-items: start;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px 40px;
 }
 
-.ft-cols {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 24px;
+.mobile-only {
+  display: none;
 }
 
-.ft-aside {
+.oem-bar {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  align-items: center;
+  gap: 28px;
+  margin-top: 36px;
+  padding-top: 18px;
+  border-top: 1px solid #e6e6e6;
 }
 
-/* B */
+.oem-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  flex: 1;
+}
+
+.oem-bar .ft-socials {
+  margin-left: auto;
+}
+
 .ft-b {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding-top: 48px;
+  padding-bottom: 28px;
   gap: 8px;
 }
 
-.ft-wrap {
+.tesla-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0 8px;
-  max-width: 920px;
+  gap: 0 4px;
+  max-width: 980px;
+  margin-top: 12px;
 }
 
-.ft-wrap .ft-link {
-  padding: 0 12px;
+.tesla-link {
+  display: inline-flex;
+  padding: 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
 }
 
-.ft-b-contact {
+.tesla-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 18px;
+  margin-top: 8px;
+}
+
+.tesla-cta {
+  color: var(--color-e5-red);
+}
+
+.tesla-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 18px;
+  margin: 16px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #333333;
+}
+
+.tesla-legal a,
+.tesla-legal span {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.vossen-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 22px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.vossen-top .ft-cta {
+  justify-self: end;
+}
+
+.vossen-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e6e6e6;
+}
+
+.acc {
+  width: 100%;
+  border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0;
+  align-items: flex-start;
 }
 
-.ft-contact-center {
-  justify-content: center;
-  text-align: center;
+.acc .ft-link,
+.acc .ft-contact,
+.acc .ft-cta {
+  margin-left: 2px;
 }
 
-.ft-b .ft-copy {
-  margin: 8px 0 0;
-}
-
-/* C */
-.ft-c {
-  padding-bottom: 0;
-}
-
-.ft-c-links {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px 32px;
-}
-
-.ft-c-bar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 16px;
-  align-items: center;
-  margin-top: 20px;
-  padding: 10px 0 14px;
-  border-top: 3px solid var(--color-e5-red);
-}
-
-.ft-c-bar .ft-legal {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  justify-content: center;
-}
-
-.ft-c-bar .ft-copy {
-  margin-left: 16px;
-}
-
-@media (max-width: 1024px) {
-  .ft-a-row,
-  .ft-c-links,
-  .ft-c-bar {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-  }
-
-  .ft-cols {
-    width: 100%;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .ft-a .ft-cols .ft-col {
-    display: contents;
-  }
-
-  .ft-col,
-  .ft-aside,
-  .ft-brand {
-    align-items: center;
-  }
-
-  .ft-contact {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .ft-copy {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-  }
-
-  .ft-legal {
-    justify-content: center;
-  }
-
-  .ft-c-bar .ft-copy {
-    margin-left: 0;
+@media (min-width: 1024px) {
+  .ft-link {
+    min-height: 30px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1023px) {
   .ft {
-    padding: 20px 16px 12px;
+    padding: 24px 20px 16px;
   }
 
-  .ft-cols {
-    gap: 0 12px;
+  .desktop-only {
+    display: none;
   }
 
-  .ft-link,
-  .ft-contact {
-    font-size: 14px;
+  .mobile-only {
+    display: block;
   }
 
-  .ft-c-links {
+  .oem-bar,
+  .vossen-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .vossen-top .ft-cta,
+  .oem-bar .ft-socials {
+    margin-left: 0;
+    justify-self: center;
+  }
+
+  .ft-logo {
+    height: 24px;
+  }
+
+  .tesla-links {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: none;
+    gap: 0;
+  }
+
+  .tesla-link {
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  .oem-legal,
+  .vossen-legal {
+    justify-content: center;
   }
 }
 </style>
