@@ -88,10 +88,17 @@ const twoPChunk = wheelsIndex.slice(wheelsIndex.indexOf('2P Forged Series'), whe
 assert('wheels 2P has no invented lead time', twoPChunk.includes('LEAD TIME'), false);
 
 const home = readFileSync(join(root, 'src/pages/index.astro'), 'utf8');
-const homeAlts = [...home.matchAll(/alt="(Form Forged|2P Forged|E5 Forged|GT Forged)"/g)].map((m) => m[1]);
+const homeAlts = [...home.matchAll(/alt: '(Form Forged|2P Forged|E5 Forged|GT Forged)'/g)].map((m) => m[1]);
 assert('home series order', homeAlts.slice(0, 4).join('|'), 'Form Forged|2P Forged|E5 Forged|GT Forged');
 assert('home 2P CTA', home.includes('EXPLORE 2P FORGED'), true);
 assert('home GT CTA', home.includes('EXPLORE GT FORGED'), true);
+assert('home uses single-line FORM wordmark', home.includes('FORM_FORGED_WORDMARK'), true);
+assert('home drops two-line Form lockup', home.includes('FORM_FORGED_LOGO_BLACK'), false);
+assert('home drops Form group photo', home.includes('FORM_FORGED_GROUP'), false);
+assert('home uses catalog 0001 cluster', home.includes('home-series-cluster'), true);
+assert('home uses 2P catalog 0001', home.includes('SEBRING_2P_GLOSS_BLACK_STUDIO'), true);
+assert('home uses E5 0001 studio', home.includes('TALLADEGA_BRUSHED_ALUMINUM_STUDIO'), true);
+assert('wheels 2P card centered', wheelsIndex.includes('wheels-2p-grid'), true);
 
 const modelPage = readFileSync(join(root, 'src/core/components/E5ForgedModelPage.astro'), 'utf8');
 assert('model page hero lockup', modelPage.includes('style-series-lockup--hero'), true);

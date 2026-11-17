@@ -7,6 +7,8 @@ export const TALLADEGA_PODIUM_BRONZE = "/assets/images/wheels/edd03fa4648dfa8d21
 export const TALLADEGA_GLOSS_BLACK = "/assets/images/wheels/afdec958cf713eb929ae510752b31594f43c1a4f.webp";
 export const TALLADEGA_BRUSHED_ALUMINUM = "/assets/images/generations/c8/c8-z06-new/taladaga-c8wheel.webp";
 export const TALLADEGA_PODIUM_GOLD = "/assets/images/wheels/464d2ace3214351d17a75848ec4bddc985f8c836.webp";
+/** Catalog 3/4 studio render used on /wheels. */
+export const TALLADEGA_BRUSHED_ALUMINUM_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Talladega_AB_Brushed_Aluminum_5-lug_0001.webp";
 export const TALLADEGA_EXO = "/assets/images/talladega-exo.webp";
 export const TALLADEGA_HERO = "/assets/images/wheels/talladega/70359cfd82b50a1c47e7171df936e40fdaf000fb.webp";
 export const TALLADEGA_SHOT_1 = "/assets/images/wheels/ac4f9bca958678b8de35e44893e3d5a5f294ec8b.webp";
@@ -181,6 +183,10 @@ export const SEBRING_2P_DETAIL_4 = "/assets/images/sebring-2p/5cfb8858c33598093a
 export const SEBRING_2P_GLOSS_BLACK = "/assets/images/sebring-2p/2406343708833f55c198a88a5445185e9429917b.webp";
 export const SEBRING_2P_DARK_BRONZE = "/assets/images/sebring-2p/56f3ae5409c87851cf211f3e49011b8ec199e5d8.webp";
 export const SEBRING_2P_TITANIUM_BRUSHED = "/assets/images/sebring-2p/eba86791e50a7d4cafb714b1c332039208596d1b.webp";
+/** Catalog 3/4 studio renders (Img0001). Same angle as E5 Forged /wheels cards. */
+export const SEBRING_2P_GLOSS_BLACK_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring-2P_BK_Black_5-lug_e5se2p1901_0001.webp";
+export const SEBRING_2P_DARK_BRONZE_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring-2P_BZBL_Bronze_Black-Lip_5-lug_e5se2p1903_0001.webp";
+export const SEBRING_2P_TITANIUM_BRUSHED_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring-2P_TBL_Titanium_Black-Lip_5-lug_e5se2p1902_0001.webp";
 export const SEBRING_2P_PROCESS_DIAGRAM_1 = "/assets/images/sebring-2p/64bb97db938e3fdaa9d10414be63d66a1365e361.webp";
 export const SEBRING_2P_PROCESS_DIAGRAM_2 = "/assets/images/sebring-2p/ecda52251e8fccbaea01c9a3d3a82156fabcfa56.webp";
 export const SEBRING_2P_PROCESS_DIAGRAM_3 = "/assets/images/sebring-2p/a05053599e50883ef39a7e50dfc6b06adcb1fbff.webp";
@@ -216,6 +222,8 @@ export const SONOMA_DETAIL_3 = "/assets/images/sonoma/sonoma_detail_3.webp";
 export const SONOMA_DETAIL_4 = "/assets/images/sonoma/sonoma_detail_4.webp";
 
 export const SONOMA_BRUSHED_ALUMINUM = "/assets/images/generations/c8/c8-z06-new/sonoma-wheel-c8.webp";
+/** Catalog 3/4 studio render used on /wheels. */
+export const SONOMA_BRUSHED_ALUMINUM_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sonoma_AB_Brushed_Aluminum_5-lug_0001.webp";
 export const SONOMA_BRONZE_BRUSHED_TINT = "/assets/images/wheels/sonoma_bronze_brushed_tint.webp";
 export const SONOMA_GLOSS_BLACK = "/assets/images/wheels/sonoma_gloss_black.webp";
 export const SONOMA_TITANIUM_BRUSHED_TINT = "/assets/images/wheels/sonoma_titanium_brushed_tint.webp";
