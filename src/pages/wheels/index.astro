@@ -21,8 +21,10 @@ import {
     GT_FORGED_LOGO,
     FORM_FORGED_WORDMARK,
     TWO_P_FORGED_LOGO,
-    SEBRING_2P_LOGO,
-    SEBRING_2P_GLOSS_BLACK,
+    SEBRING_2P_BRONZE_BLACK_LIP,
+    SEBRING_2P_BRONZE_POLISHED_LIP,
+    SEBRING_2P_TITANIUM_BLACK_LIP,
+    SEBRING_2P_TITANIUM_POLISHED_LIP,
     DAYTONA_TITANIUM_BRUSHED_STUDIO,
     SEBRING_TITANIUM_BRUSHED_STUDIO,
     SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
@@ -47,6 +49,14 @@ const gtCards = [
     { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM, wordmark: GT02_WORDMARK, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
     { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM, wordmark: GT03_WORDMARK, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
     { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM, wordmark: GT04_WORDMARK, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
+];
+
+/** Official Sebring 2P finish names from FINISH_CODE_TO_SITE_NAME (BZBL, BZPL, TBL, TPL). */
+const sebring2pCards = [
+    { name: 'Bronze Black Lip', image: SEBRING_2P_BRONZE_BLACK_LIP, href: `${WHEELS_SEBRING_2P_ROUTE}#bronze-black-lip` },
+    { name: 'Bronze Polished Lip', image: SEBRING_2P_BRONZE_POLISHED_LIP, href: WHEELS_SEBRING_2P_ROUTE },
+    { name: 'Titanium Black Lip', image: SEBRING_2P_TITANIUM_BLACK_LIP, href: `${WHEELS_SEBRING_2P_ROUTE}#titanium-black-lip` },
+    { name: 'Titanium Polished Lip', image: SEBRING_2P_TITANIUM_POLISHED_LIP, href: WHEELS_SEBRING_2P_ROUTE },
 ];
 ---
 
@@ -199,35 +209,28 @@ const gtCards = [
             </div>
 
             <div class="wheel-finish-grid wheels-2p-grid mb-8 md:mb-12">
-                <div class="wheels-card">
-                    <div class="wheels-card-image">
-                        <img
-                            src={SEBRING_2P_GLOSS_BLACK}
-                            alt="Sebring 2P"
-                        />
-                    </div>
-                    <div class="wheels-card-name">
-                        <img
-                            src={SEBRING_2P_LOGO}
-                            alt="Sebring 2P"
-                            class="h-[24px] md:h-[29px]"
-                        />
-                    </div>
-                    <div class="wheels-card-body">
-                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">GLOSS BLACK</p>
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8</p>
-                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                            <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                {sebring2pCards.map((card) => (
+                    <div class="wheels-card">
+                        <div class="wheels-card-image">
+                            <img src={card.image} alt={`Sebring 2P ${card.name}`} />
                         </div>
-                        <a
-                            href={WHEELS_SEBRING_2P_ROUTE}
-                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                        >
-                            EXPLORE SEBRING 2P
-                        </a>
+                        <div class="wheels-card-name">
+                            <span class="wheels-card-name-text text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">{card.name}</span>
+                        </div>
+                        <div class="wheels-card-body">
+                            <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                                <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8</p>
+                                <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                            </div>
+                            <a
+                                href={card.href}
+                                class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                            >
+                                EXPLORE SEBRING 2P
+                            </a>
+                        </div>
                     </div>
-                </div>
+                ))}
             </div>
         </div>
     </section>
@@ -467,6 +470,32 @@ const gtCards = [
     @media (min-width: 1024px) {
         .wheel-finish-grid.wheels-gt-grid {
             grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+    /* 2P: 2×2 on mobile/tablet, one row of four on desktop like GT. */
+    .wheel-finish-grid.wheels-2p-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (min-width: 640px) {
+        .wheel-finish-grid.wheels-2p-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (min-width: 1024px) {
+        .wheel-finish-grid.wheels-2p-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+    .wheels-2p-grid .wheels-card-name {
+        height: auto;
+        min-height: 38px;
+        text-align: center;
+    }
+    @media (min-width: 768px) {
+        .wheels-2p-grid .wheels-card-name {
+            min-height: 46px;
         }
     }
 

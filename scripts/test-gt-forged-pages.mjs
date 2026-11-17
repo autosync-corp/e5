@@ -86,6 +86,15 @@ assert('wheels form cards Daytona first', wheelsIndex.indexOf('EXPLORE DAYTONA')
 assert('wheels has Sebring 2P card', wheelsIndex.includes('EXPLORE SEBRING 2P'), true);
 const twoPChunk = wheelsIndex.slice(wheelsIndex.indexOf('2P Forged Series'), wheelsIndex.indexOf('E5 Forged Series'));
 assert('wheels 2P has no invented lead time', twoPChunk.includes('LEAD TIME'), false);
+assert('wheels 2P uses official Bronze Black Lip', wheelsIndex.includes('Bronze Black Lip'), true);
+assert('wheels 2P uses official Bronze Polished Lip', wheelsIndex.includes('Bronze Polished Lip'), true);
+assert('wheels 2P uses official Titanium Black Lip', wheelsIndex.includes('Titanium Black Lip'), true);
+assert('wheels 2P uses official Titanium Polished Lip', wheelsIndex.includes('Titanium Polished Lip'), true);
+assert('wheels 2P uses Dave bronze black lip render', wheelsIndex.includes('SEBRING_2P_BRONZE_BLACK_LIP'), true);
+assert('wheels 2P uses Dave bronze polished lip render', wheelsIndex.includes('SEBRING_2P_BRONZE_POLISHED_LIP'), true);
+assert('wheels 2P uses Dave titanium black lip render', wheelsIndex.includes('SEBRING_2P_TITANIUM_BLACK_LIP'), true);
+assert('wheels 2P uses Dave titanium polished lip render', wheelsIndex.includes('SEBRING_2P_TITANIUM_POLISHED_LIP'), true);
+assert('wheels 2P drops 3 premium finishes line', twoPChunk.includes('3 PREMIUM FINISHES'), false);
 
 const home = readFileSync(join(root, 'src/pages/index.astro'), 'utf8');
 const homeAlts = [...home.matchAll(/alt: '(Form Forged|2P Forged|E5 Forged|GT Forged)'/g)].map((m) => m[1]);
@@ -102,7 +111,10 @@ assert('home cluster is a 3-col grid', clusterCss.includes('grid-template-column
 assert('home cluster is not overlapping absolute', clusterCss.includes('position: absolute'), false);
 assert('home uses 2P catalog 0001', home.includes('SEBRING_2P_GLOSS_BLACK_STUDIO'), true);
 assert('home uses E5 0001 studio', home.includes('TALLADEGA_BRUSHED_ALUMINUM_STUDIO'), true);
-assert('wheels 2P card centered', wheelsIndex.includes('wheels-2p-grid'), true);
+assert('wheels 2P uses four-up grid', wheelsIndex.includes('wheels-2p-grid'), true);
+assert('wheels 2P is four columns on desktop', wheelsIndex.includes('.wheel-finish-grid.wheels-2p-grid {\n            grid-template-columns: repeat(4, minmax(0, 1fr));'), true);
+assert('wheels 2P is 2x2 on mobile', wheelsIndex.includes('.wheel-finish-grid.wheels-2p-grid {\n        grid-template-columns: repeat(2, minmax(0, 1fr));'), true);
+assert('wheels 2P no longer centers a lone card', wheelsIndex.includes('grid-column: 2'), false);
 
 const modelPage = readFileSync(join(root, 'src/core/components/E5ForgedModelPage.astro'), 'utf8');
 assert('model page hero lockup', modelPage.includes('style-series-lockup--hero'), true);
