@@ -189,27 +189,14 @@
   height: calc(var(--style-letter-h) * 0.45);
 }
 
-/* GT hero overlay: box 48/72/100/120; letters are 93/115 of the canvas. */
-.style-series-lockup--hero-mark {
-  --style-box-h: 48px;
-  --style-letter-h: calc(var(--style-box-h) * 93 / 115);
-  max-width: calc(100% - 1.25rem);
-}
-.style-series-lockup--hero-mark .style-series-lockup__name {
-  height: var(--style-box-h);
+/* GT.01–GT.04: wordmark + series sit in the white band below the hero.
+   Letters track the same --style-letter-h as Daytona; canvas is 93/115. */
+.style-series-lockup--gt-band .style-series-lockup__name {
+  height: calc(var(--style-letter-h) * 115 / 93);
   width: auto;
-  max-width: min(90%, 540px);
+  max-width: 100%;
   object-fit: contain;
   object-position: left center;
-}
-@media (min-width: 640px) {
-  .style-series-lockup--hero-mark { --style-box-h: 72px; }
-}
-@media (min-width: 768px) {
-  .style-series-lockup--hero-mark { --style-box-h: 100px; }
-}
-@media (min-width: 1024px) {
-  .style-series-lockup--hero-mark { --style-box-h: 120px; }
 }
 
 /* E5 Franklin overlay: font-size is the cap height. */

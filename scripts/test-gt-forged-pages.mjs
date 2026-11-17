@@ -82,6 +82,8 @@ assert('wheels headers not detail class', wheelsIndex.includes('series-logo-deta
 
 const modelPage = readFileSync(join(root, 'src/core/components/E5ForgedModelPage.astro'), 'utf8');
 assert('model page hero lockup', modelPage.includes('style-series-lockup--hero'), true);
+assert('GT lockup is below-hero band', modelPage.includes('style-series-lockup--gt-band'), true);
+assert('GT lockup not overlaid on hero', modelPage.includes('style-series-lockup--hero-mark'), false);
 assert('model page no stacked E5-cap series', /(?<!detail-)series-logo-gt/.test(modelPage), false);
 
 const e5Models = readFileSync(join(root, 'src/pages/wheels/constants/e5ForgedModels.ts'), 'utf8');

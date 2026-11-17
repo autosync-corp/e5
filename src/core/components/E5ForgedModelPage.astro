@@ -171,38 +171,43 @@ const breadcrumbSchema = JSON.stringify({
           ]}
         />
       </div>
-      <div
-        class:list={[
-          'style-series-lockup pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
-          model.nameWordmark ? 'style-series-lockup--hero-mark' : 'style-series-lockup--hero-text',
-        ]}
-      >
-        {model.nameWordmark ? (
-          <img
-            src={model.nameWordmark.src}
-            alt=""
-            class="style-series-lockup__name"
-          />
-        ) : (
+      {!model.nameWordmark && (
+        <div class="style-series-lockup style-series-lockup--hero-text pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12">
           <p
             class:list={['style-series-lockup__name-text', model.heroNameClass]}
             aria-hidden="true"
           >
             {model.displayName}
           </p>
-        )}
-        {model.seriesLogo && (
-          <img
-            src={model.seriesLogo.src}
-            alt={model.seriesLogo.alt}
-            class:list={['style-series-lockup__series', seriesDetailClass]}
-          />
-        )}
-      </div>
+          {model.seriesLogo && (
+            <img
+              src={model.seriesLogo.src}
+              alt={model.seriesLogo.alt}
+              class:list={['style-series-lockup__series', seriesDetailClass]}
+            />
+          )}
+        </div>
+      )}
     </section>
 
     <section class="bg-white pt-8 md:pt-12 pb-4">
       <div class="max-w-[1400px] mx-auto px-6">
+        {model.nameWordmark && (
+          <div class="style-series-lockup style-series-lockup--gt-band mb-6 md:mb-8">
+            <img
+              src={model.nameWordmark.src}
+              alt=""
+              class="style-series-lockup__name"
+            />
+            {model.seriesLogo && (
+              <img
+                src={model.seriesLogo.src}
+                alt={model.seriesLogo.alt}
+                class:list={['style-series-lockup__series', seriesDetailClass]}
+              />
+            )}
+          </div>
+        )}
         <h1
           class:list={[
             model.nameWordmark
