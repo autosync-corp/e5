@@ -9,6 +9,12 @@ import {
   TALLADEGA_EXO,
   TALLADEGA_GLOSS_BLACK,
   TALLADEGA_SHOT_4,
+  TWO_P_FORGED_LOGO,
+  GT_FORGED_LOGO,
+  SEBRING_2P_GLOSS_BLACK,
+  SEBRING_2P_TITANIUM_BRUSHED,
+  GT01_BRUSHED_ALUMINUM,
+  GT04_BRUSHED_ALUMINUM,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { VETTE_BLACK_ON_RIVER } from "@/pages/gallery/constants/VetteGallery.ts";
 import { E5_BLACK_RED_DRAW, WHEEL_HOME_SHOT_1 } from "@/core/constants/App.ts";
@@ -16,7 +22,9 @@ import {
     GALLERY_VEHICLES_ROUTE, GALLERY_WHEELS_ROUTE,
     PROCESS_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
-    WHEELS_TALLADEGA_ROUTE
+    WHEELS_TALLADEGA_ROUTE,
+    WHEELS_SEBRING_2P_ROUTE,
+    WHEELS_GT_01_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
@@ -86,8 +94,8 @@ const heroVideoId = '2zk8Sdi3Yh8';
       </div>
     </section>
 
-    <section class="container-e5 flex mt-8 bg-gray-100 py-20">
-      <div class="grid grid-flow-row auto-rows-min grid-cols-1 lg:grid-cols-2">
+    <section class="container-e5 mt-8 bg-gray-100 py-20">
+      <div class="grid grid-flow-row auto-rows-min grid-cols-1 lg:grid-cols-2 mb-24 lg:mb-32">
         <div class="col-start-1 row-start-1">
           <img src={FORM_FORGED_LOGO_BLACK} alt="Form Forged" class="w-1/2 h-auto mx-auto" />
         </div>
@@ -103,21 +111,57 @@ const heroVideoId = '2zk8Sdi3Yh8';
           <Button client:visible primary link={WHEELS_FORM_FORGED_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Form Forged">EXPLORE FORM FORGED</Button>
         </div>
         <div class="lg:col-start-2 lg:row-start-1">
-          <img src={E5_FORGED_LOGO} alt="Form Forged" class="w-3/5 h-auto mx-auto" />
+          <img src={TWO_P_FORGED_LOGO} alt="2P Forged" class="w-3/5 h-auto mx-auto" />
         </div>
         <div class="lg:col-start-2 lg:row-start-2 mx-10">
+          <div class="relative flex justify-end">
+            <img src={SEBRING_2P_GLOSS_BLACK} alt="Sebring 2P Gloss Black" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
+            <img src={SEBRING_2P_TITANIUM_BRUSHED} alt="Sebring 2P Titanium Brushed" class="me-10 w-1/2" />
+          </div>
+        </div>
+        <div class="lg:col-start-2 lg:row-start-3">
+          <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
+            Sebring 2P is a two-piece Corvette-only C8 fitment&mdash;19x9 +35mm / 20x11 +45mm on Stingray, and 20x10 +25mm / 21x13 +20mm on Z06 and E-Ray.
+          </p>
+        </div>
+        <div class="lg:col-start-2 lg:row-start-4 flex justify-center items-center mt-6">
+          <Button client:visible primary link={WHEELS_SEBRING_2P_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore 2P Forged">EXPLORE 2P FORGED</Button>
+        </div>
+      </div>
+      <div class="grid grid-flow-row auto-rows-min grid-cols-1 lg:grid-cols-2">
+        <div class="col-start-1 row-start-1">
+          <img src={E5_FORGED_LOGO} alt="E5 Forged" class="w-3/5 h-auto mx-auto" />
+        </div>
+        <div class="col-start-1 row-start-2 mx-10">
           <div class="relative flex justify-end">
             <img src={TALLADEGA_GLOSS_BLACK} alt="Talladega Render" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
             <img src={TALLADEGA_SHOT_4} alt="Talladega Rear" class="me-10 w-1/2" />
           </div>
         </div>
-        <div class="lg:col-start-2 lg:row-start-3">
+        <div class="col-start-1 row-start-3">
           <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
             Exclusively Forged in the USA for C8 Z06, ZR1, and E Ray. Engineered for extreme performance, reduced weight, and maximum strength.
           </p>
         </div>
-        <div class="lg:col-start-2 lg:ow-start-4 flex justify-center items-center mt-6">
+        <div class="col-start-1 row-start-4 flex justify-center items-center mt-6 mb-24 lg:mb-0">
           <Button client:visible primary link={WHEELS_TALLADEGA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore E5 Forged">EXPLORE E5 FORGED</Button>
+        </div>
+        <div class="lg:col-start-2 lg:row-start-1">
+          <img src={GT_FORGED_LOGO} alt="GT Forged" class="w-1/2 h-auto mx-auto" />
+        </div>
+        <div class="lg:col-start-2 lg:row-start-2 mx-10">
+          <div class="relative flex justify-end">
+            <img src={GT01_BRUSHED_ALUMINUM} alt="GT.01 Brushed Aluminum" class="w-2/5 absolute bottom-0 left-0 ms-16" style="z-index: 1" />
+            <img src={GT04_BRUSHED_ALUMINUM} alt="GT.04 Brushed Aluminum" class="me-10 w-1/2" />
+          </div>
+        </div>
+        <div class="lg:col-start-2 lg:row-start-3">
+          <p class="text-xl text-black/70 text-center mt-8 font-black w-4/5 mx-auto">
+            GT.01, GT.02, GT.03, and GT.04&mdash;made to order in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm.
+          </p>
+        </div>
+        <div class="lg:col-start-2 lg:row-start-4 flex justify-center items-center mt-6">
+          <Button client:visible primary link={WHEELS_GT_01_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore GT Forged">EXPLORE GT FORGED</Button>
         </div>
       </div>
     </section>

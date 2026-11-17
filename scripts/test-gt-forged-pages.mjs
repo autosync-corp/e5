@@ -78,7 +78,20 @@ const wheelsIndex = readFileSync(join(root, 'src/pages/wheels/index.astro'), 'ut
 assert('wheels keeps E5-cap form header', wheelsIndex.includes('series-logo-form'), true);
 assert('wheels keeps E5-cap e5 header', wheelsIndex.includes('series-logo-e5'), true);
 assert('wheels keeps E5-cap gt header', wheelsIndex.includes('series-logo-gt'), true);
+assert('wheels keeps E5-cap 2p header', wheelsIndex.includes('series-logo-2p'), true);
 assert('wheels headers not detail class', wheelsIndex.includes('series-logo-detail-'), false);
+const wheelsSeries = [...wheelsIndex.matchAll(/<!-- (Form|2P|E5|GT) Forged Series Section -->/g)].map((m) => m[1]);
+assert('wheels section order', wheelsSeries.join('|'), 'Form|2P|E5|GT');
+assert('wheels form cards Daytona first', wheelsIndex.indexOf('EXPLORE DAYTONA') < wheelsIndex.indexOf('EXPLORE SEBRING'), true);
+assert('wheels has Sebring 2P card', wheelsIndex.includes('EXPLORE SEBRING 2P'), true);
+const twoPChunk = wheelsIndex.slice(wheelsIndex.indexOf('2P Forged Series'), wheelsIndex.indexOf('E5 Forged Series'));
+assert('wheels 2P has no invented lead time', twoPChunk.includes('LEAD TIME'), false);
+
+const home = readFileSync(join(root, 'src/pages/index.astro'), 'utf8');
+const homeAlts = [...home.matchAll(/alt="(Form Forged|2P Forged|E5 Forged|GT Forged)"/g)].map((m) => m[1]);
+assert('home series order', homeAlts.slice(0, 4).join('|'), 'Form Forged|2P Forged|E5 Forged|GT Forged');
+assert('home 2P CTA', home.includes('EXPLORE 2P FORGED'), true);
+assert('home GT CTA', home.includes('EXPLORE GT FORGED'), true);
 
 const modelPage = readFileSync(join(root, 'src/core/components/E5ForgedModelPage.astro'), 'utf8');
 assert('model page hero lockup', modelPage.includes('style-series-lockup--hero'), true);
