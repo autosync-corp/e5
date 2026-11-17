@@ -203,7 +203,9 @@ export const WHEEL_SERIES_EXCLUSIONS: Record<string, { generation: string; trims
  * Returns true if the wheel should NOT be shown as compatible.
  */
 export function isWheelExcludedForVehicle(seriesSlug: string, generation: string, trim: string): boolean {
-  const exclusions = WHEEL_SERIES_EXCLUSIONS[seriesSlug.toLowerCase()];
+  const exclusions =
+    WHEEL_SERIES_EXCLUSIONS[seriesSlug.toLowerCase()] ||
+    WHEEL_SERIES_EXCLUSIONS[seriesSlug.toLowerCase().replace(/-/g, ' ')];
   if (!exclusions) return false;
 
   const normalizedTrim = trim.toLowerCase();

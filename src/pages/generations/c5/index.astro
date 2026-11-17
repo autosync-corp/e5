@@ -1,16 +1,21 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import {
-  GALLERY_VEHICLES_ROUTE,
-  GENERATIONS_ROUTE,
-  GENERATIONS_C5_Z06_ROUTE,
-  WHEELS_DAYTONA_ROUTE,
-  WHEELS_FORM_FORGED_ROUTE,
+    GALLERY_VEHICLES_ROUTE,
+    GENERATIONS_ROUTE,
+    GENERATIONS_C5_Z06_ROUTE,
+    WHEELS_FORM_FORGED_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { FORM_FORGED_LOGO } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
+import GenerationSetups from '@/core/components/GenerationSetups.astro';
+import {
+    finishSummary,
+    styleLinksFromSetups,
+} from '@/core/utils/generationSetups';
+import { loadGenerationSetups } from '@/core/utils/loadGenerationSetups';
 
 const baseUrl = SITE_URL;
 const title = 'C5 Corvette Wheels (1997–2004) | E5 Wheels';
@@ -26,6 +31,7 @@ const breadcrumbSchema = JSON.stringify({
     { "@type": "ListItem", "position": 3, "name": "C5", "item": canonicalUrl }
   ]
 });
+const setups = await loadGenerationSetups('C5', ['Base', 'Z06']);
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl} ogImage={ogImage}>
@@ -55,8 +61,8 @@ const breadcrumbSchema = JSON.stringify({
         groups={[
           { heading: 'Base & Z06', front: 'Front 18" × 10" +58mm', rear: 'Rear 19" × 11" +59mm' },
         ]}
-        styles={[{ href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' }]}
-        finishes="Available in gloss black, bronze brushed tint, and titanium brushed tint"
+        styles={styleLinksFromSetups(setups)}
+        finishes={finishSummary(setups) || "Available in gloss black, bronze brushed tint, and titanium brushed tint"}
         bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
         wrapperClass="max-w-[1276px] mx-auto mb-4 md:mb-6 px-4"
         application="C5 Corvette application"
@@ -69,6 +75,9 @@ const breadcrumbSchema = JSON.stringify({
         Featured C5 Model
       </p>
     </section>
+
+        <GenerationSetups setups={setups} />
+
 
     <!-- C5 Z06 Featured Card -->
     <section class="container-e5 py-8 md:py-12 lg:py-16">

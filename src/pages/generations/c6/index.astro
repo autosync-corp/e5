@@ -5,28 +5,25 @@ import {
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
     GENERATIONS_C6_GRAND_SPORT_ROUTE,
-    WHEELS_DAYTONA_ROUTE,
-    WHEELS_SEBRING_ROUTE,
-    WHEELS_SPEEDWAY_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
     DAYTONA_LOGO,
     DAYTONA_BRAND_NAME,
-    SEBRING_LOGO,
-    SEBRING_BRAND_NAME,
 } from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 import GenerationIntro from '@/core/components/GenerationIntro.astro';
 import GenerationHeading from '@/core/components/GenerationHeading.astro';
+import GenerationSetups from '@/core/components/GenerationSetups.astro';
+import {
+    finishSummary,
+    styleLinksFromSetups,
+} from '@/core/utils/generationSetups';
+import { loadGenerationSetups } from '@/core/utils/loadGenerationSetups';
 
 // URL variables for different sections
 // Daytona detail section (19" x 9.5" +53mm / 20" x 11" +76mm)
-const daytonaTitaniumBrushedUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
-
 // Sebring detail section (19" x 10" +30mm / 20" x 12" +50mm)
-const sebringGlossBlackUrl = buildWheelUrl(SEBRING_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 10" +30mm', '20" x 12" +50mm');
-
 // Also Available section - use Base sizes (Daytona finishes)
 const daytonaGlossBlackAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Gloss Black', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
 const daytonaTitaniumBrushedAltUrl = buildWheelUrl(DAYTONA_BRAND_NAME, 'Titanium Brushed', 'C6', 'Base', '19" x 9.5" +53mm', '20" x 11" +76mm');
@@ -47,6 +44,7 @@ const breadcrumbSchema = JSON.stringify({
     { "@type": "ListItem", "position": 3, "name": "C6", "item": canonicalUrl }
   ]
 });
+const setups = await loadGenerationSetups('C6', ['Base']);
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
@@ -78,12 +76,8 @@ const breadcrumbSchema = JSON.stringify({
                     { heading: 'Base', front: 'Front 19" × 9.5" +53mm', rear: 'Rear 20" × 11" +76mm' },
                     { heading: 'Grand Sport and Z06', front: 'Front 19" × 10" +30mm', rear: 'Rear 20" × 12" +50mm' },
                 ]}
-                styles={[
-                    { href: WHEELS_DAYTONA_ROUTE, label: 'Daytona' },
-                    { href: WHEELS_SEBRING_ROUTE, label: 'Sebring' },
-                    { href: WHEELS_SPEEDWAY_ROUTE, label: 'Speedway' },
-                ]}
-                finishes="Available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint & Dark Bronze"
+                styles={styleLinksFromSetups(setups)}
+                finishes={finishSummary(setups) || "Available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint & Dark Bronze"}
                 linkClass={introLinkClass}
                 bodyClass="text-[20px] md:text-[28px] lg:text-[32px] tracking-[0px] leading-[28px] md:leading-[34px] lg:leading-[38px] text-black/70"
                 wrapperClass="max-w-[1536px] mx-auto px-4 mb-8"
@@ -97,6 +91,9 @@ const breadcrumbSchema = JSON.stringify({
                 SHOP FORM FORGED FOR C6 CORVETTES
             </p>
         </section>
+
+        <GenerationSetups setups={setups} />
+
 
         <!-- Overview Section -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
@@ -206,45 +203,6 @@ const breadcrumbSchema = JSON.stringify({
             />
         </section>
 
-        <!-- Wheel Detail 1: Titanium Brushed Tint -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
-                <div class="w-full max-w-[613px] mx-auto">
-                    <img src="/assets/images/generations/c6/d4565cf05e3fa3637a06eedfd917c1499967f34b.webp" alt="Daytona Titanium Brushed Tint" class="w-full h-auto" />
-                </div>
-                <div class="flex flex-col">
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
-                            <img src={DAYTONA_LOGO} alt="Daytona" class="h-[52px] w-auto mb-4" />
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 19" x 9.5" / Offset +53mm</li>
-                                <li>Rear: 20" x 11" / Offset +76mm</li>
-                                <li>Bolt Pattern: 5x120</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Titanium Brushed Tint</li>
-                            </ul>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={daytonaTitaniumBrushedUrl}>
-                                <span>SHOP FITMENT</span>
-                            </Button>
-                            <Button client:visible secondary link={WHEELS_DAYTONA_ROUTE}>
-                                <span>EXPLORE DAYTONA</span>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Banner Image 2 -->
         <section class="w-full h-[400px] md:h-[550px] lg:h-[716px] overflow-hidden">
             <img
@@ -252,45 +210,6 @@ const breadcrumbSchema = JSON.stringify({
                 alt="C6"
                 class="w-full h-full object-cover"
             />
-        </section>
-
-        <!-- Wheel Detail 2: Gloss Black (Sebring) -->
-        <section class="container-e5 py-12 md:py-16 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
-                <div class="w-full max-w-[613px] mx-auto">
-                    <img src="/assets/images/generations/c6/57612e656f7cb177dd66a7b9e8dbaf32845675c7.webp" alt="Sebring Gloss Black" class="w-full h-auto" />
-                </div>
-                <div class="flex flex-col">
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">WHEEL MODEL</p>
-                            <img src={SEBRING_LOGO} alt="Sebring" class="h-[52px] w-auto mb-4" />
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">SIZES</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Front: 19" x 10" / Offset +30mm</li>
-                                <li>Rear: 20" x 12" / Offset +50mm</li>
-                                <li>Bolt Pattern: 5x120</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/50 mb-2">FINISH</p>
-                            <ul class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[0px] leading-[30px] text-black/70 list-disc pl-9">
-                                <li>Gloss Black</li>
-                            </ul>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-8">
-                            <Button client:visible primary link={sebringGlossBlackUrl}>
-                                <span>SHOP FITMENT</span>
-                            </Button>
-                            <Button client:visible secondary link={WHEELS_SEBRING_ROUTE}>
-                                <span>EXPLORE SEBRING</span>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Daytona Section -->
