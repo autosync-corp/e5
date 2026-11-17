@@ -8,6 +8,9 @@ export const EMPTY_OBJECT = {};
 export const API_KEY = 'efive';
 export const CART_ICON = "/assets/images/asset-18.webp";
 export const E5_LOGO_BLACK = "/assets/images/e5-wheels-alt-logo-black.webp";
+/** PNG original of the black lockup. Footer uses this so Safari never has to
+ *  decode the lossy VP8+ALPH WebP (transparent-black fringe on the final S). */
+export const E5_LOGO_BLACK_PNG = "/assets/images/e5-wheels-alt-logo-black.png";
 export const E5_LOGO_WHITE = "/assets/images/e5-wheels-logo-white.webp";
 export const E5_LOGO_WHITE_SHORT = "/assets/images/e5-logo-short.webp";
 export const E5_BLACK_RED_DRAW = "/assets/images/asset-29.webp";

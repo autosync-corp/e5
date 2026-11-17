@@ -34,8 +34,14 @@
     box-sizing: border-box;
   }
 
+  html {
+    background-color: #ffffff;
+    color-scheme: only light;
+  }
+
   body {
     @apply font-sans;
+    background-color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
