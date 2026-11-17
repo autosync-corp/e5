@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import {
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
+    GENERATIONS_C5_BASE_ROUTE,
     GENERATIONS_C5_Z06_ROUTE,
     WHEELS_FORM_FORGED_ROUTE,
 } from "@/core/constants/Routes.ts";
@@ -68,42 +69,66 @@ const setups = await loadGenerationSetups('C5', ['Base', 'Z06']);
         application="C5 Corvette application"
       >
         <Fragment slot="see">
-          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a> and on the <a href={GENERATIONS_C5_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5 Z06</a> page.
+          See customer cars in the <a href={`${GALLERY_VEHICLES_ROUTE}?generation=C5`} class="text-e5-red hover:opacity-80 transition-opacity">gallery</a> and on the <a href={GENERATIONS_C5_BASE_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5 Base</a> and <a href={GENERATIONS_C5_Z06_ROUTE} class="text-e5-red hover:opacity-80 transition-opacity">C5 Z06</a> pages.
         </Fragment>
       </GenerationIntro>
       <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase">
-        Featured C5 Model
+        Shop Wheels by C5 Model
       </p>
     </section>
 
         <GenerationSetups setups={setups} />
 
 
-    <!-- C5 Z06 Featured Card -->
+    <!-- C5 Model Selector Grid -->
     <section class="container-e5 py-8 md:py-12 lg:py-16">
-      <a href={GENERATIONS_C5_Z06_ROUTE} class="group flex flex-col md:flex-row gap-6 md:gap-10 lg:gap-12 max-w-[1200px] mx-auto hover:opacity-90 transition-opacity">
-        <div class="relative w-full md:w-1/2 aspect-[4/3] overflow-hidden bg-e5-black">
-          <img
-            src="/assets/images/generations/c5/z06-updated/76e661b873c8acdfb076c02ad1ca15b4ba8974d5.webp"
-            alt="C5 Corvette Z06"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        </div>
-        <div class="w-full md:w-1/2 flex flex-col justify-center">
-          <h2 class="text-[28px] md:text-[36px] lg:text-[42px] leading-[32px] md:leading-[40px] lg:leading-[46px] tracking-[2px] md:tracking-[2.8px] lg:tracking-[3.6px] text-black uppercase mb-3 font-['Franklin_Gothic_Heavy']">
-            C5 Z06
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 max-w-[1200px] mx-auto">
+
+        <a href={GENERATIONS_C5_BASE_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+          <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+            <img
+              src="/assets/images/gallery/corvette/2003-c5-corvette/0.webp"
+              alt="C5 Corvette Base"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] md:tracking-[2.4px] lg:tracking-[3.2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+            C5 Base
           </h2>
-          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-4 font-['Franklin_Gothic_Demi']">
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
             Form Forged Series
           </p>
-          <p class="text-[15px] md:text-[16px] lg:text-[18px] leading-[22px] md:leading-[26px] lg:leading-[28px] text-black/60 mb-6">
+          <p class="text-[14px] md:text-[15px] lg:text-[16px] leading-[20px] md:leading-[22px] text-black/60 mb-3">
+            LS1 coupe and convertible, 1997–2004. Same catalog 18x10 / 19x11 staggered set as C5 Z06.
+          </p>
+          <span class="text-[12px] md:text-[14px] tracking-[2.4px] md:tracking-[2.8px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+            Explore C5 Base &rarr;
+          </span>
+        </a>
+
+        <a href={GENERATIONS_C5_Z06_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+          <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+            <img
+              src="/assets/images/generations/c5/z06-updated/76e661b873c8acdfb076c02ad1ca15b4ba8974d5.webp"
+              alt="C5 Corvette Z06"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] md:tracking-[2.4px] lg:tracking-[3.2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+            C5 Z06
+          </h2>
+          <p class="text-[14px] md:text-[16px] lg:text-[18px] tracking-[2.8px] md:tracking-[3.2px] lg:tracking-[3.6px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+            Form Forged Series
+          </p>
+          <p class="text-[14px] md:text-[15px] lg:text-[16px] leading-[20px] md:leading-[22px] text-black/60 mb-3">
             For the LS6 (385-405hp) hardtop platform with FE4 suspension. Wider fitment to match the Z06's track-tuned stance and brake clearance.
           </p>
-          <span class="text-[13px] md:text-[14px] lg:text-[16px] tracking-[2.6px] md:tracking-[2.8px] lg:tracking-[3.2px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+          <span class="text-[12px] md:text-[14px] tracking-[2.4px] md:tracking-[2.8px] leading-[20px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
             Explore C5 Z06 &rarr;
           </span>
-        </div>
-      </a>
+        </a>
+
+      </div>
     </section>
 
     <!-- Form Forged Section -->

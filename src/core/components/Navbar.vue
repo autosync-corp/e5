@@ -9,12 +9,16 @@ import {
   GALLERY_VEHICLES_ROUTE,
   GALLERY_WHEELS_ROUTE,
   GENERATIONS_ROUTE,
+  GENERATIONS_C5_BASE_ROUTE,
   GENERATIONS_C5_Z06_ROUTE,
   GENERATIONS_C6_ROUTE,
+  GENERATIONS_C6_Z06_ROUTE,
+  GENERATIONS_C6_ZR1_ROUTE,
   GENERATIONS_C6_GRAND_SPORT_ROUTE,
   GENERATIONS_C7_STINGRAY_ROUTE,
   GENERATIONS_C7_GRAND_SPORT_ROUTE,
   GENERATIONS_C7_Z06_ROUTE,
+  GENERATIONS_C7_ZR1_ROUTE,
   GENERATIONS_C8_STINGRAY_ROUTE,
   GENERATIONS_C8_Z06_ROUTE,
   GENERATIONS_C8_ZR1_ROUTE,
@@ -238,14 +242,18 @@ const closeMiniCart = () => {
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
               <a :href="GENERATIONS_C7_Z06_ROUTE" class="dropdown-item">Z06</a>
+              <a :href="GENERATIONS_C7_ZR1_ROUTE" class="dropdown-item">ZR1</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C6 2005-2013</div>
               <a :href="GENERATIONS_C6_ROUTE" class="dropdown-item">Base Model</a>
               <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
+              <a :href="GENERATIONS_C6_Z06_ROUTE" class="dropdown-item">Z06</a>
+              <a :href="GENERATIONS_C6_ZR1_ROUTE" class="dropdown-item">ZR1</a>
             </div>
             <div class="generation-group">
               <div class="generation-title">C5 1997-2004</div>
+              <a :href="GENERATIONS_C5_BASE_ROUTE" class="dropdown-item">Base</a>
               <a :href="GENERATIONS_C5_Z06_ROUTE" class="dropdown-item">Z06</a>
             </div>
           </div>
@@ -398,14 +406,18 @@ const closeMiniCart = () => {
               <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
               <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
               <a :href="GENERATIONS_C7_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
+              <a :href="GENERATIONS_C7_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C6 2005-2013</div>
               <a :href="GENERATIONS_C6_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base Model</a>
               <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
+              <a :href="GENERATIONS_C6_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
+              <a :href="GENERATIONS_C6_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
             </div>
             <div class="mobile-generation-group">
               <div class="mobile-generation-title">C5 1997-2004</div>
+              <a :href="GENERATIONS_C5_BASE_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base</a>
               <a :href="GENERATIONS_C5_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
             </div>
           </div>
