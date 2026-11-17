@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { fetchWheels, getWheelImageUrl, formatPrice, hasRealPrice, CartManager, type WheelProduct, type WheelsApiResponse } from '@/core/services/ProductService';
-import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE } from '@/core/constants/Routes';
+import { CART_ROUTE, SHOP_ROUTE, PROCESS_FORM_FORGED_ROUTE, PROCESS_FORGED_ROUTE, WHEELS_GT_01_ROUTE, WHEELS_SEBRING_2P_ROUTE } from '@/core/constants/Routes';
 import { checkWheelFitment, checkStaggeredFitment, usesStaggeredSet, getFrontFitments, getRearFitments, type Vehicle } from '@/core/services/VehicleService';
 import VehicleSelector from '@/core/components/VehicleSelector.vue';
 import { getCuratedFitment, hasCuratedFitment, formatFitmentSpec, isWheelExcludedForVehicle, type VehicleFitment } from '@/core/constants/CuratedFitments';
@@ -607,6 +607,7 @@ const productDisplayName = computed(() => {
 });
 
 const modelWordmark = computed(() => modelWordmarkSrc(selectedProduct.value?.Model));
+const isGtModelWordmark = computed(() => Boolean(modelWordmark.value?.includes('gt-0')));
 
 const finishDisplayName = computed(() => {
   if (!selectedProduct.value) return '';
@@ -619,31 +620,53 @@ const brandLogo = computed(() => {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
     href: PROCESS_FORGED_ROUTE,
-    isFormForged: false
+    heightClass: 'series-logo-detail-e5',
   };
 
-  // Form Forged wheels: Daytona, Sebring, Sebring 2P, Speedway
-  // Forged wheels: Sonoma, Talladega, Laguna, GT
+  // 2P Forged: Sebring 2P
+  // Form Forged: Daytona, Sebring, Speedway
+  // E5 Forged: Sonoma, Talladega, Laguna
+  // GT Forged: GT.01–GT.04
   const model = selectedProduct.value.Model?.toLowerCase() || '';
   const formForgedModels = ['daytona', 'sebring', 'speedway'];
 
-  const isFormForged = formForgedModels.some(modelName => model.includes(modelName));
+  const is2pForged = model.includes('2p');
+  const isFormForged = !is2pForged && formForgedModels.some(modelName => model.includes(modelName));
+  const isGtForged = /^gt[\s.\-_]?0[1-4]/.test(model);
 
-  if (isFormForged) {
+  if (is2pForged) {
     return {
-      src: '/assets/images/logos/e5-form-forged.webp',
-      alt: 'E5 Form Forged',
-      href: PROCESS_FORM_FORGED_ROUTE,
-      isFormForged: true
+      src: '/assets/images/logos/2p-forged.png',
+      alt: '2P Forged',
+      href: WHEELS_SEBRING_2P_ROUTE,
+      heightClass: 'series-logo-detail-2p',
     };
   }
 
-  // Default to Forged logo (Sonoma, Talladega, Laguna, GT)
+  if (isFormForged) {
+    return {
+      src: '/assets/images/logos/form-forged.png',
+      alt: 'Form Forged',
+      href: PROCESS_FORM_FORGED_ROUTE,
+      heightClass: 'series-logo-detail-form',
+    };
+  }
+
+  if (isGtForged) {
+    return {
+      src: '/assets/images/logos/gt-forged.png',
+      alt: 'GT Forged',
+      href: WHEELS_GT_01_ROUTE,
+      heightClass: 'series-logo-detail-gt',
+    };
+  }
+
+  // Default to E5 Forged logo (Sonoma, Talladega, Laguna)
   return {
     src: '/assets/images/logos/e5-forged.webp',
     alt: 'E5 Forged',
     href: PROCESS_FORGED_ROUTE,
-    isFormForged: false
+    heightClass: 'series-logo-detail-e5',
   };
 });
 
@@ -1731,32 +1754,32 @@ onMounted(() => {
 
         <!-- Right Column - Product Details -->
         <div class="space-y-6">
-          <!-- Brand Logo — forged lockup matches Daytona FORM FORGED letter size -->
-          <div class="flex justify-start lg:justify-end">
-            <a :href="brandLogo.href">
-              <img
-                :src="brandLogo.src"
-                :alt="brandLogo.alt"
-                class="w-auto object-contain"
-                :class="brandLogo.isFormForged ? 'h-8 lg:h-12' : 'h-4 lg:h-5'"
-              />
-            </a>
-          </div>
-
-          <!-- Product Title: gallery wordmark when the model has one; display font otherwise -->
+          <!-- Style name + series logo on one line (series ~45% of name letter height) -->
           <div>
-            <h1>
+            <h1
+              class="style-series-lockup style-series-lockup--shop"
+              :class="{ 'is-gt-wordmark': isGtModelWordmark }"
+            >
               <img
                 v-if="modelWordmark"
                 :src="modelWordmark"
                 alt=""
-                class="h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left"
+                :class="isGtModelWordmark
+                  ? 'style-series-lockup__name h-[44px] md:h-[54px] lg:h-[64px] w-auto max-w-full object-contain object-left'
+                  : 'style-series-lockup__name h-9 md:h-11 lg:h-[52px] w-auto max-w-full object-contain object-left'"
               />
               <span
                 :class="modelWordmark
                   ? 'sr-only'
-                  : `block text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Heavy'] text-black tracking-wider`"
+                  : `style-series-lockup__name-text block text-2xl md:text-3xl lg:text-4xl font-['Franklin_Gothic_Heavy'] text-black tracking-wider`"
               >{{ productDisplayName }}</span>
+              <a :href="brandLogo.href" class="style-series-lockup__series-link">
+                <img
+                  :src="brandLogo.src"
+                  :alt="brandLogo.alt"
+                  :class="[brandLogo.heightClass, 'style-series-lockup__series w-auto max-w-full object-contain']"
+                />
+              </a>
               <span class="sr-only"> {{ finishDisplayName }} WHEELS<template v-if="generationParam || trimParam"> - {{ generationParam ? generationParam.toUpperCase() : '' }}{{ generationParam && trimParam ? ' ' : '' }}{{ trimParam || '' }}</template></span>
             </h1>
           </div>

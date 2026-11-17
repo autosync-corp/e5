@@ -21,6 +21,8 @@ const SERIES_LEAD_TIMES: Record<string, string> = {
   // Forged family - 4 week
   talladega: 'Made to Order \u00B7 4 Week Lead Time',
   sonoma: 'Made to Order \u00B7 4 Week Lead Time',
+  // Laguna - 6 week
+  laguna: 'Made to Order \u00B7 6 Week Lead Time',
 
   // GT family - 6 week
   gt01: 'Made to Order \u00B7 6 Week Lead Time',

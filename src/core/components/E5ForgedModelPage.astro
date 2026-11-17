@@ -23,12 +23,26 @@ function catalogFinishName(wheel: WheelProduct): string {
   return [wheel.Finish, wheel.Color].filter(Boolean).join(' ').trim();
 }
 
+function formatOffset(offset: number): string {
+  return offset >= 0 ? `+${offset}mm` : `${offset}mm`;
+}
+
+function formatBolt(wheel: WheelProduct): string {
+  const primary = `${wheel.LugCount}x${wheel.BoltCircle1}`;
+  return wheel.BoltCircle2 ? `${primary}/${wheel.BoltCircle2}` : primary;
+}
+
 let frontSize = model.frontSize;
 let rearSize = model.rearSize;
+let sizeLines = model.sizeLines ? [...model.sizeLines] : [];
 let boltPattern = model.boltPattern;
 let finishes: ForgedFinish[] = model.finishes;
 let shopFitmentHref = model.shopFitmentHref;
 let schemaOffers = model.schemaOffers;
+const showProcessSections = model.showProcessSections !== false;
+const exploreHref = model.exploreHref === undefined ? PROCESS_FORGED_ROUTE : model.exploreHref;
+const exploreLabel = model.exploreLabel ?? 'EXPLORE E5 FORGED';
+const heroFit = model.heroFit ?? 'cover';
 
 try {
   const catalog = await fetchWheels({ model: model.brandName });
@@ -36,9 +50,17 @@ try {
   if (wheels.length > 0) {
     const front = wheels.find((wheel) => wheel.Diameter === 20) ?? wheels[0];
     const rear = wheels.find((wheel) => wheel.Diameter === 21) ?? wheels[0];
-    frontSize = `${front.Diameter} x ${front.Width} / +${front.Offset}mm`;
-    rearSize = `${rear.Diameter} x ${rear.Width} / +${rear.Offset}mm`;
-    boltPattern = `5x${front.BoltCircle1}`;
+    frontSize = `${front.Diameter} x ${front.Width} / ${formatOffset(front.Offset)}`;
+    rearSize = `${rear.Diameter} x ${rear.Width} / ${formatOffset(rear.Offset)}`;
+    const bolts = [...new Set(wheels.map(formatBolt))];
+    boltPattern = bolts.join(' / ');
+    if (model.sizeLines) {
+      const unique = new Set<string>();
+      for (const wheel of wheels) {
+        unique.add(`${wheel.Diameter} x ${wheel.Width} / ${formatOffset(wheel.Offset)}`);
+      }
+      sizeLines = [...unique].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    }
 
     const byFinish = new Map<string, ForgedFinish & { products: WheelProduct[] }>();
     for (const wheel of wheels) {
@@ -84,6 +106,13 @@ try {
 const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}${model.canonicalPath}`;
 const ogImage = model.ogImage.startsWith('http') ? model.ogImage : `${baseUrl}${model.ogImage}`;
+
+const seriesDetailClass =
+  model.seriesLogo?.alt === 'GT Forged'
+    ? 'series-logo-detail-gt'
+    : model.seriesLogo?.alt === '2P Forged'
+      ? 'series-logo-detail-2p'
+      : 'series-logo-detail-e5';
 
 const productSchema = JSON.stringify({
   '@context': 'https://schema.org',
@@ -136,25 +165,56 @@ const breadcrumbSchema = JSON.stringify({
         <img
           src={model.heroImage}
           alt={model.heroAlt}
-          class="w-full h-full object-cover object-center"
+          class:list={[
+            'w-full h-full object-center',
+            heroFit === 'contain' ? 'object-contain bg-white' : 'object-cover',
+          ]}
         />
       </div>
-      <p
-        class:list={[
-          'pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12',
-          'text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.9]',
-          'font-franklin-heavy italic tracking-[2px] md:tracking-[4px] uppercase',
-          model.heroNameClass,
-        ]}
-        aria-hidden="true"
-      >
-        {model.displayName}
-      </p>
+      {!model.nameWordmark && (
+        <div class="style-series-lockup style-series-lockup--hero-text pointer-events-none absolute z-10 bottom-5 left-5 sm:bottom-8 sm:left-8 md:bottom-10 md:left-12">
+          <p
+            class:list={['style-series-lockup__name-text', model.heroNameClass]}
+            aria-hidden="true"
+          >
+            {model.displayName}
+          </p>
+          {model.seriesLogo && (
+            <img
+              src={model.seriesLogo.src}
+              alt={model.seriesLogo.alt}
+              class:list={['style-series-lockup__series', seriesDetailClass]}
+            />
+          )}
+        </div>
+      )}
     </section>
 
     <section class="bg-white pt-8 md:pt-12 pb-4">
       <div class="max-w-[1400px] mx-auto px-6">
-        <h1 class="text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2">
+        {model.nameWordmark && (
+          <div class="style-series-lockup style-series-lockup--gt-band mb-6 md:mb-8">
+            <img
+              src={model.nameWordmark.src}
+              alt=""
+              class="style-series-lockup__name"
+            />
+            {model.seriesLogo && (
+              <img
+                src={model.seriesLogo.src}
+                alt={model.seriesLogo.alt}
+                class:list={['style-series-lockup__series', seriesDetailClass]}
+              />
+            )}
+          </div>
+        )}
+        <h1
+          class:list={[
+            model.nameWordmark
+              ? 'sr-only'
+              : 'text-e5-red text-[14px] sm:text-[18px] md:text-[22px] lg:text-[24px] font-franklin-book tracking-[2px] sm:tracking-[5px] md:tracking-[8px] uppercase mb-2',
+          ]}
+        >
           {model.h1}
         </h1>
         <p class="text-[11px] md:text-[13px] tracking-[1.4px] md:tracking-[1.8px] uppercase text-black/50 mb-8 md:mb-12">
@@ -173,12 +233,27 @@ const breadcrumbSchema = JSON.stringify({
             <h2 class="text-[13px] md:text-[15px] font-franklin-demi tracking-[1.6px] uppercase mb-3">
               SIZE
             </h2>
-            <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-1">
-              [F] {frontSize}
-            </p>
-            <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-6">
-              [R] {rearSize}
-            </p>
+            {sizeLines.length > 0 ? (
+              sizeLines.map((line, index) => (
+                <p
+                  class:list={[
+                    'text-[13px] md:text-[15px] leading-[22px] text-black/80',
+                    index === sizeLines.length - 1 ? 'mb-6' : 'mb-1',
+                  ]}
+                >
+                  {line}
+                </p>
+              ))
+            ) : (
+              <>
+                <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-1">
+                  [F] {frontSize}
+                </p>
+                <p class="text-[13px] md:text-[15px] leading-[22px] text-black/80 mb-6">
+                  [R] {rearSize}
+                </p>
+              </>
+            )}
             <h2 class="text-[13px] md:text-[15px] font-franklin-demi tracking-[1.6px] uppercase mb-3">
               BOLT PATTERN
             </h2>
@@ -194,14 +269,16 @@ const breadcrumbSchema = JSON.stringify({
               >
                 {model.shopFitmentLabel}
               </a>
-              <a
-                href={PROCESS_FORGED_ROUTE}
-                class="bg-white text-black border border-black px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-black/5 transition-colors uppercase text-center min-w-[220px]"
-                data-gtm-event="explore_wheel"
-                data-gtm-label="Explore E5 Forged"
-              >
-                EXPLORE E5 FORGED
-              </a>
+              {exploreHref ? (
+                <a
+                  href={exploreHref}
+                  class="bg-white text-black border border-black px-10 py-3 text-[12px] md:text-[13px] tracking-[2px] font-bold hover:bg-black/5 transition-colors uppercase text-center min-w-[220px]"
+                  data-gtm-event="explore_wheel"
+                  data-gtm-label={exploreLabel}
+                >
+                  {exploreLabel}
+                </a>
+              ) : null}
             </div>
           </div>
         </div>
@@ -228,6 +305,7 @@ const breadcrumbSchema = JSON.stringify({
       </div>
     </section>
 
+    {showProcessSections ? (
     <section class="bg-white py-8 md:py-12">
       <div class="max-w-[1400px] mx-auto px-6">
         <h2 class="text-e5-red text-[22px] md:text-[28px] font-franklin-book tracking-[2px] uppercase mb-2 text-center">
@@ -269,7 +347,9 @@ const breadcrumbSchema = JSON.stringify({
         </div>
       </div>
     </section>
+    ) : null}
 
+    {showProcessSections ? (
     <section class="relative bg-black py-12 md:py-16">
       <div class="absolute inset-0 opacity-30">
         <img src={model.finishingBg} alt="" class="w-full h-full object-cover" />
@@ -289,6 +369,7 @@ const breadcrumbSchema = JSON.stringify({
         </div>
       </div>
     </section>
+    ) : null}
 
     <section class="bg-white" data-e5-forged-spin>
       <div class="w-full h-[280px] sm:h-[380px] md:h-[520px] lg:h-[620px] overflow-hidden bg-white">

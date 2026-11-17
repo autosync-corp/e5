@@ -8,15 +8,42 @@ import {
     WHEELS_SPEEDWAY_ROUTE,
     WHEELS_TALLADEGA_ROUTE,
     WHEELS_SONOMA_ROUTE,
-    WHEELS_LAGUNA_ROUTE
+    WHEELS_LAGUNA_ROUTE,
+    WHEELS_GT_01_ROUTE,
+    WHEELS_GT_02_ROUTE,
+    WHEELS_GT_03_ROUTE,
+    WHEELS_GT_04_ROUTE,
 } from "@/core/constants/Routes.ts";
-import { LAGUNA_LOGO, LAGUNA_WHEEL_RENDER } from "@/pages/wheels/constants/Wheels.ts";
+import {
+    LAGUNA_LOGO,
+    LAGUNA_WHEEL_RENDER,
+    GT_FORGED_LOGO,
+    FORM_FORGED_WORDMARK,
+    DAYTONA_TITANIUM_BRUSHED_STUDIO,
+    SEBRING_TITANIUM_BRUSHED_STUDIO,
+    SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO,
+    GT01_BRUSHED_ALUMINUM,
+    GT02_BRUSHED_ALUMINUM,
+    GT03_BRUSHED_ALUMINUM,
+    GT04_BRUSHED_ALUMINUM,
+    GT01_WORDMARK,
+    GT02_WORDMARK,
+    GT03_WORDMARK,
+    GT04_WORDMARK,
+} from "@/pages/wheels/constants/Wheels.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
 
 const baseUrl = SITE_URL;
 const title = 'Corvette Wheels Collection | E5 Wheels';
-const description = 'Browse our complete collection of forged and flow-formed Corvette wheels. E5 Forged for C8 Z06/ZR1/E-Ray and Form Forged for C5, C6, C7, and C8 generations.';
+const description = 'Browse our complete collection of GT Forged, E5 Forged, and Form Forged Corvette wheels, engineered for every Corvette generation.';
 const canonicalUrl = `${baseUrl}/wheels`;
+
+const gtCards = [
+    { name: 'GT.01', image: GT01_BRUSHED_ALUMINUM, wordmark: GT01_WORDMARK, href: WHEELS_GT_01_ROUTE, cta: 'EXPLORE GT.01' },
+    { name: 'GT.02', image: GT02_BRUSHED_ALUMINUM, wordmark: GT02_WORDMARK, href: WHEELS_GT_02_ROUTE, cta: 'EXPLORE GT.02' },
+    { name: 'GT.03', image: GT03_BRUSHED_ALUMINUM, wordmark: GT03_WORDMARK, href: WHEELS_GT_03_ROUTE, cta: 'EXPLORE GT.03' },
+    { name: 'GT.04', image: GT04_BRUSHED_ALUMINUM, wordmark: GT04_WORDMARK, href: WHEELS_GT_04_ROUTE, cta: 'EXPLORE GT.04' },
+];
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
@@ -30,20 +57,72 @@ const canonicalUrl = `${baseUrl}/wheels`;
         </p>
     </div>
 
+    <!-- GT Forged Series Section -->
+    <section class="py-12 md:py-20 bg-white">
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
+            <div class="mb-8 md:mb-16">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
+                    <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
+                        <img
+                            src={GT_FORGED_LOGO}
+                            alt="GT Forged"
+                            class="series-logo-gt"
+                        />
+                    </div>
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
+                        <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
+                            GT.01, GT.02, GT.03, and GT.04&mdash;made to order in Brushed Aluminum, Gloss Black, and Satin Black. Catalog sizes 19x9 +35mm through 21x13 +20mm.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wheel-finish-grid wheels-gt-grid mb-8 md:mb-12">
+                {gtCards.map((card) => (
+                    <div class="wheels-card">
+                        <div class="wheels-card-image">
+                            <img src={card.image} alt={card.name} />
+                        </div>
+                        <div class="wheels-card-name">
+                            <img
+                                src={card.wordmark}
+                                alt={card.name}
+                                class="wheels-gt-wordmark"
+                            />
+                        </div>
+                        <div class="wheels-card-body">
+                            <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                                <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                                <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">19X9 +35 THROUGH 21X13 +20</p>
+                                <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                                <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 6 WEEK LEAD TIME</p>
+                            </div>
+                            <a
+                                href={card.href}
+                                class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                            >
+                                {card.cta}
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
     <!-- E5 Forged Series Section -->
     <section class="py-12 md:py-20 bg-white">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-12">
-            <!-- Header Container -->
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
             <div class="mb-8 md:mb-16">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src="/assets/images/wheels-new/02d80e5501d4b44b3e61daf67192b4fe23242b09.webp"
                             alt="E5 Forged"
-                            class="h-[40px] md:h-[54px]"
+                            class="series-logo-e5"
                         />
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
                             Exclusively Forged in the USA for C8 Z06, ZR1, and E_Ray. Engineered for extreme performance, reduced weight, and maximum strength. <a href="/process/forged" class="text-e5-red underline">LEARN MORE ABOUT E5 FORGED.</a>
                         </p>
@@ -51,89 +130,98 @@ const canonicalUrl = `${baseUrl}/wheels`;
                 </div>
             </div>
 
-            <!-- Three Wheels Grid -->
             <div class="wheel-finish-grid mb-8 md:mb-12">
                 <!-- Talladega -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image">
                         <img
                             src="/assets/images/wheels-new/taladaga-c8wheel.webp"
                             alt="Talladega"
-                            class="w-full max-w-[300px] md:max-w-[400px] mx-auto"
                         />
                     </div>
-                    <img
-                        src="/assets/images/wheels-new/3a0f898a970a7108262be2cdc91dcdde57744bd4.webp"
-                        alt="Talladega"
-                        class="h-[24px] md:h-[29px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">5 PREMIUM FINISHES</p>
-                        <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src="/assets/images/wheels-new/3a0f898a970a7108262be2cdc91dcdde57744bd4.webp"
+                            alt="Talladega"
+                            class="h-[24px] md:h-[29px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_TALLADEGA_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE TALLADEGA
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">5 PREMIUM FINISHES</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                        </div>
+                        <a
+                            href={WHEELS_TALLADEGA_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE TALLADEGA
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Sonoma -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image">
                         <img
                             src="/assets/images/wheels-new/sonoma-wheel-c8.webp"
                             alt="Sonoma"
-                            class="w-full max-w-[300px] md:max-w-[400px] mx-auto"
                         />
                     </div>
-                    <img
-                        src="/assets/images/wheels-new/85b233dbe3893890d7939ec5aea2b7b17a0287c2.webp"
-                        alt="Sonoma"
-                        class="h-[38px] md:h-[46px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                        <p class="text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src="/assets/images/wheels-new/85b233dbe3893890d7939ec5aea2b7b17a0287c2.webp"
+                            alt="Sonoma"
+                            class="h-[38px] md:h-[46px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_SONOMA_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE SONOMA
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 4 WEEK LEAD TIME</p>
+                        </div>
+                        <a
+                            href={WHEELS_SONOMA_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE SONOMA
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Laguna -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image wheels-card-image--laguna">
                         <img
                             src={LAGUNA_WHEEL_RENDER}
                             alt="Laguna"
-                            class="w-full max-w-[300px] md:max-w-[400px] mx-auto"
                         />
                     </div>
-                    <img
-                        src={LAGUNA_LOGO}
-                        alt="Laguna"
-                        class="h-[24px] md:h-[29px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY, GRAND SPORT</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">4 PREMIUM FINISHES</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src={LAGUNA_LOGO}
+                            alt="Laguna"
+                            class="h-[24px] md:h-[29px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_LAGUNA_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE LAGUNA
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">BRUSHED ALUMINUM</p>
+                            <p class="wheels-card-fitment text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C8 Z06, ZR1, E_RAY, GRAND SPORT</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">4 PREMIUM FINISHES</p>
+                            <p class="wheels-card-leadtime text-[12px] md:text-[16px] text-e5-red font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">MADE TO ORDER &middot; 6 WEEK LEAD TIME</p>
+                        </div>
+                        <a
+                            href={WHEELS_LAGUNA_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE LAGUNA
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,18 +229,17 @@ const canonicalUrl = `${baseUrl}/wheels`;
 
     <!-- Form Forged Series Section -->
     <section class="py-12 md:py-20 bg-white">
-        <div class="max-w-[1583px] mx-auto px-6 md:px-12">
-            <!-- Header -->
+        <div class="max-w-[1583px] mx-auto px-6 md:px-12 series-lockup-scope">
             <div class="mb-8 md:mb-16">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div class="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-4 md:gap-8">
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
-                            src="/assets/images/wheels-new/48b34752d7bd939ae556a6e8de9fa0837077ec48.webp"
-                            alt="Form Forged Series"
-                            class="h-[100px] md:h-[140px]"
+                            src={FORM_FORGED_WORDMARK}
+                            alt="Form Forged"
+                            class="series-logo-form"
                         />
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-[min(100%,16rem)]">
                         <p class="text-[14px] md:text-[16px] text-black leading-[20px] md:leading-[24px]">
                             Engineered with forged DNA and crafted through flow forming, our Form Forged Series delivers strength and agility&mdash;without compromising daily drivability. <a href="/process/form-forged" class="text-e5-red underline">Read more about our Form Forged series</a>.
                         </p>
@@ -160,90 +247,98 @@ const canonicalUrl = `${baseUrl}/wheels`;
                 </div>
             </div>
 
-            <!-- Three Wheels Grid -->
             <div class="wheel-finish-grid mb-8 md:mb-12">
                 <!-- Sebring -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image">
                         <img
-                            src="/assets/images/wheels-new/6633a5fa3fbf86ab9e4ebada3acfa83d7ae98d30.webp"
+                            src={SEBRING_TITANIUM_BRUSHED_STUDIO}
                             alt="Sebring"
-                            class="w-full max-w-[250px] md:max-w-[300px] mx-auto"
                         />
                     </div>
-                    <img
-                        src="/assets/images/wheels-new/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.webp"
-                        alt="Sebring"
-                        class="h-[24px] md:h-[29px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">GLOSS BLACK</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                        <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src="/assets/images/wheels-new/90f6c4d4b52eb6c3ec25ae4927cf62a98d647c4d.webp"
+                            alt="Sebring"
+                            class="h-[24px] md:h-[29px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_SEBRING_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE SEBRING
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">TITANIUM BRUSHED</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                            <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                        </div>
+                        <a
+                            href={WHEELS_SEBRING_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE SEBRING
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Daytona -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image">
                         <img
-                            src="/assets/images/wheels-new/80cf38509a5d16588f6e494cb2d89f353487504c.webp"
+                            src={DAYTONA_TITANIUM_BRUSHED_STUDIO}
                             alt="Daytona"
-                            class="w-full max-w-[250px] md:max-w-[300px] mx-auto"
                         />
                     </div>
-                    <img
-                        src="/assets/images/wheels-new/bf617359a30df6e52e23d25ba89f15964c216df1.webp"
-                        alt="Daytona"
-                        class="h-[22px] md:h-[27px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">GLOSS BLACK</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                        <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src="/assets/images/wheels-new/bf617359a30df6e52e23d25ba89f15964c216df1.webp"
+                            alt="Daytona"
+                            class="h-[22px] md:h-[27px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_DAYTONA_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE DAYTONA
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">TITANIUM BRUSHED</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                            <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                        </div>
+                        <a
+                            href={WHEELS_DAYTONA_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE DAYTONA
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Speedway -->
-                <div class="text-center">
-                    <div class="mb-4 md:mb-6">
+                <div class="wheels-card">
+                    <div class="wheels-card-image">
                         <img
-                            src="/assets/images/wheels-new/2cb17a45657fa348958b15419df6f796aa26a518.webp"
+                            src={SPEEDWAY_TITANIUM_BRUSHED_TINT_STUDIO}
                             alt="Speedway"
-                            class="w-full max-w-[250px] md:max-w-[300px] mx-auto"
                         />
                     </div>
-                    <img
-                        src="/assets/images/wheels-new/5a059fba9b6f32612b072a121dc09766ef507b86.webp"
-                        alt="Speedway"
-                        class="h-[23px] md:h-[28px] mx-auto mb-4 md:mb-6"
-                    />
-                    <div class="space-y-1 md:space-y-2 mb-4 md:mb-6">
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">TITANIUM BRUSHED TINT</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
-                        <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
-                        <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                    <div class="wheels-card-name">
+                        <img
+                            src="/assets/images/wheels-new/5a059fba9b6f32612b072a121dc09766ef507b86.webp"
+                            alt="Speedway"
+                            class="h-[23px] md:h-[28px]"
+                        />
                     </div>
-                    <a
-                        href={WHEELS_SPEEDWAY_ROUTE}
-                        class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
-                    >
-                        EXPLORE SPEEDWAY
-                    </a>
+                    <div class="wheels-card-body">
+                        <div class="space-y-1 md:space-y-2 mb-4 md:mb-6 wheels-card-meta">
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">TITANIUM BRUSHED TINT</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">EXCLUSIVELY FOR C6_C7_C8</p>
+                            <p class="text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">3 PREMIUM FINISHES</p>
+                            <p class="text-[12px] md:text-[16px] text-black font-bold tracking-[2.4px] md:tracking-[3.2px] uppercase">IN STOCK</p>
+                        </div>
+                        <a
+                            href={WHEELS_SPEEDWAY_ROUTE}
+                            class="inline-block bg-e5-red text-white px-6 md:px-8 py-3 md:py-4 text-[14px] md:text-[16px] font-franklin-demi tracking-[2px] md:tracking-[2.4px] uppercase hover:bg-e5-red/90 transition-colors"
+                        >
+                            EXPLORE SPEEDWAY
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -303,3 +398,116 @@ const canonicalUrl = `${baseUrl}/wheels`;
         </div>
     </section>
 </MainLayout>
+
+<style>
+    /* GT: 1 col mobile, 2 col tablet, 4 col desktop so all four sit on one row. */
+    @media (min-width: 640px) {
+        .wheel-finish-grid.wheels-gt-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (min-width: 1024px) {
+        .wheel-finish-grid.wheels-gt-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+    .wheels-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 100%;
+    }
+
+    .wheels-card-image {
+        width: 100%;
+        max-width: 400px;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto 1rem;
+        overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+        .wheels-card-image {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    .wheels-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* GT.01–GT.04 wordmarks: canvas 544×115, ink ~93px. CSS height so
+       lettering matches Talladega/Laguna 24/29px letter height. */
+    .wheels-gt-wordmark {
+        height: 30px;
+    }
+    @media (min-width: 768px) {
+        .wheels-gt-wordmark {
+            height: 36px;
+        }
+    }
+
+    /* Laguna's catalog render is a 1500² canvas with extra top/right whitespace
+       and a downward-shifted wheel vs Talladega/Sonoma. Scale + offset so the
+       rim matches their visual size and center inside the same square box
+       without cropping the barrel. */
+    .wheels-card-image--laguna img {
+        transform: translate(1.06%, -3.04%) scale(1.057);
+    }
+
+    .wheels-card-name {
+        width: 100%;
+        height: 38px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .wheels-card-name {
+            height: 46px;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    .wheels-card-name img {
+        width: auto;
+        max-width: 90%;
+        object-fit: contain;
+        object-position: center bottom;
+    }
+
+    .wheels-card-name-text {
+        line-height: 1;
+    }
+
+    .wheels-card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        width: 100%;
+        align-items: center;
+    }
+
+    .wheels-card-meta {
+        flex: 1;
+        width: 100%;
+    }
+
+    /* Keep E5 exclusive/lead-time rows the same height on desktop so Laguna
+       wrapping does not shift names or CTAs vs Talladega and Sonoma. */
+    @media (min-width: 768px) {
+        .wheels-card-fitment {
+            min-height: 48px;
+        }
+        .wheels-card-leadtime {
+            white-space: nowrap;
+        }
+    }
+</style>

@@ -17,6 +17,7 @@ import {
   TALLADEGA_SHOT_1,
   TALLADEGA_SHOT_2,
   WHEEL_GALLERY_STUDIO_BANNER,
+  E5_FORGED_SERIES_LOGO,
 } from '@/pages/wheels/constants/Wheels.ts';
 import { VETTE_GALLERY_IMAGE_1 } from '@/pages/gallery/constants/Images.ts';
 
@@ -47,6 +48,14 @@ export interface ForgedModel {
   boltPattern: string;
   shopFitmentHref: string;
   shopFitmentLabel: string;
+  /** When set, SIZE lists these catalog sizes instead of a single [F]/[R] pair. */
+  sizeLines?: string[];
+  /** Default true. GT pages omit the E5 Forged process/finishing essays. */
+  showProcessSections?: boolean;
+  /** `null` hides the second specs CTA. */
+  exploreHref?: string | null;
+  exploreLabel?: string;
+  heroFit?: 'cover' | 'contain';
   finishes: ForgedFinish[];
   finishingBg: string;
   spinImage: string;
@@ -57,6 +66,10 @@ export interface ForgedModel {
   wheelGalleryImage: string;
   productSchemaName: string;
   schemaOffers?: { lowPrice: string; highPrice: string };
+  /** Optional series wordmark shown adjacent to the style name on detail pages. */
+  seriesLogo?: { src: string; alt: string };
+  /** Optional model-name wordmark (replaces Franklin Gothic overlay on GT pages). */
+  nameWordmark?: { src: string; alt: string };
 }
 
 const IMG = 'https://wheels.autosyncstudio.com/webp';
@@ -64,6 +77,7 @@ const IMG = 'https://wheels.autosyncstudio.com/webp';
 export const SONOMA_MODEL: ForgedModel = {
   brandName: SONOMA_BRAND_NAME,
   displayName: 'SONOMA',
+  seriesLogo: { src: E5_FORGED_SERIES_LOGO, alt: 'E5 Forged' },
   h1: 'SONOMA FULLY FORGED CORVETTE WHEELS (C8)',
   exclusive: 'EXCLUSIVELY FORGED FOR C8 Z06, ZR1, E-RAY.',
   title: 'Sonoma Fully Forged Corvette Wheels (C8) | E5 Wheels',
@@ -125,6 +139,7 @@ export const SONOMA_MODEL: ForgedModel = {
 export const TALLADEGA_MODEL: ForgedModel = {
   brandName: TALLADEGA_BRAND_NAME,
   displayName: 'TALLADEGA',
+  seriesLogo: { src: E5_FORGED_SERIES_LOGO, alt: 'E5 Forged' },
   h1: 'TALLADEGA FULLY FORGED CORVETTE WHEELS (C8)',
   exclusive: 'EXCLUSIVELY FORGED FOR C8 Z06, ZR1, E-RAY.',
   title: 'Talladega Fully Forged Corvette Wheels (C8) | E5 Wheels',
@@ -186,6 +201,7 @@ export const TALLADEGA_MODEL: ForgedModel = {
 export const LAGUNA_MODEL: ForgedModel = {
   brandName: LAGUNA_BRAND_NAME,
   displayName: 'LAGUNA',
+  seriesLogo: { src: E5_FORGED_SERIES_LOGO, alt: 'E5 Forged' },
   h1: 'LAGUNA FULLY FORGED CORVETTE WHEELS (C8)',
   exclusive: 'EXCLUSIVELY FORGED FOR C8 Z06, ZR1 / X, E-RAY, GRAND SPORT / X',
   title: 'Laguna Fully Forged Corvette Wheels (C8) | E5 Wheels',
