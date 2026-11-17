@@ -89,10 +89,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
   }
-  /* Lone Sebring 2P card: occupy the center column of the 3-col grid. */
-  .wheel-finish-grid.wheels-2p-grid > .wheels-card {
-    grid-column: 2;
-  }
 }
 
 /*

@@ -183,6 +183,11 @@ export const SEBRING_2P_DETAIL_4 = "/assets/images/sebring-2p/5cfb8858c33598093a
 export const SEBRING_2P_GLOSS_BLACK = "/assets/images/sebring-2p/2406343708833f55c198a88a5445185e9429917b.webp";
 export const SEBRING_2P_DARK_BRONZE = "/assets/images/sebring-2p/56f3ae5409c87851cf211f3e49011b8ec199e5d8.webp";
 export const SEBRING_2P_TITANIUM_BRUSHED = "/assets/images/sebring-2p/eba86791e50a7d4cafb714b1c332039208596d1b.webp";
+/** Dave 2026-11-17 Sebring 2P finish renders for the /wheels 2P row. */
+export const SEBRING_2P_BRONZE_BLACK_LIP = "/assets/images/sebring-2p/sebring-2p-bronze-black-lip.webp";
+export const SEBRING_2P_BRONZE_POLISHED_LIP = "/assets/images/sebring-2p/sebring-2p-bronze-polished-lip.webp";
+export const SEBRING_2P_TITANIUM_BLACK_LIP = "/assets/images/sebring-2p/sebring-2p-titanium-black-lip.webp";
+export const SEBRING_2P_TITANIUM_POLISHED_LIP = "/assets/images/sebring-2p/sebring-2p-titanium-polished-lip.webp";
 /** Catalog 3/4 studio renders (Img0001). Same angle as E5 Forged /wheels cards. */
 export const SEBRING_2P_GLOSS_BLACK_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring-2P_BK_Black_5-lug_e5se2p1901_0001.webp";
 export const SEBRING_2P_DARK_BRONZE_STUDIO = "https://wheels.autosyncstudio.com/webp/E5/Sebring-2P_BZBL_Bronze_Black-Lip_5-lug_e5se2p1903_0001.webp";
