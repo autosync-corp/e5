@@ -373,3 +373,22 @@ export const GT04_BRAND_NAME = "GT.04";
 export const GT04_BRUSHED_ALUMINUM = "https://wheels.autosyncstudio.com/webp/E5/GT.04_AB_Brushed_Aluminum_5-lug_0001.webp";
 export const GT04_GLOSS_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.04_BK_Gloss_Black_5-lug_0001.webp";
 export const GT04_SATIN_BLACK = "https://wheels.autosyncstudio.com/webp/E5/GT.04_SB_Satin_Black_5-lug_0001.webp";
+
+/** 800px local copies of catalog 0001s for / and /wheels cards. */
+export const DAYTONA_TITANIUM_BRUSHED_CARD = "/assets/images/catalog-800/daytona-tiu.webp";
+export const SEBRING_TITANIUM_BRUSHED_CARD = "/assets/images/catalog-800/sebring-tiu.webp";
+export const SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD = "/assets/images/catalog-800/speedway-tiu-tint.webp";
+export const SEBRING_2P_GLOSS_BLACK_CARD = "/assets/images/catalog-800/sebring-2p-bk.webp";
+export const SEBRING_2P_DARK_BRONZE_CARD = "/assets/images/catalog-800/sebring-2p-bzbl.webp";
+export const SEBRING_2P_TITANIUM_BRUSHED_CARD = "/assets/images/catalog-800/sebring-2p-tbl.webp";
+export const SEBRING_2P_BRONZE_BLACK_LIP_CARD = "/assets/images/catalog-800/sebring-2p-bronze-black-lip.webp";
+export const SEBRING_2P_BRONZE_POLISHED_LIP_CARD = "/assets/images/catalog-800/sebring-2p-bronze-polished-lip.webp";
+export const SEBRING_2P_TITANIUM_BLACK_LIP_CARD = "/assets/images/catalog-800/sebring-2p-titanium-black-lip.webp";
+export const SEBRING_2P_TITANIUM_POLISHED_LIP_CARD = "/assets/images/catalog-800/sebring-2p-titanium-polished-lip.webp";
+export const TALLADEGA_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/talladega-ab.webp";
+export const SONOMA_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/sonoma-ab.webp";
+export const LAGUNA_WHEEL_CARD = "/assets/images/catalog-800/laguna-ab.webp";
+export const GT01_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/gt01-ab.webp";
+export const GT02_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/gt02-ab.webp";
+export const GT03_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/gt03-ab.webp";
+export const GT04_BRUSHED_ALUMINUM_CARD = "/assets/images/catalog-800/gt04-ab.webp";

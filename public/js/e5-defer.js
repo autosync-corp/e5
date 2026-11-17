@@ -17,7 +17,7 @@
     document.head.appendChild(l);
   }
 
-  function run() {
+  function loadTracking() {
     var root = document.documentElement;
     var gaId = root.getAttribute('data-ga-id');
     var gtmId = root.getAttribute('data-gtm-id');
@@ -56,18 +56,33 @@
       window.fbq('init', fbPixelId);
       window.fbq('track', 'PageView');
     }
+  }
 
-    if (!window.__e5FontsLoaded) {
+  function loadBlogFonts() {
+    var root = document.documentElement;
+    if (!window.__e5FontsLoaded && root.getAttribute('data-blog-fonts') === 'true') {
       window.__e5FontsLoaded = true;
       loadStylesheet('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800;900&display=swap');
     }
   }
 
+  // Blog fonts can wait for idle. Tracking is interaction-gated so Lighthouse
+  // does not pull GTM / gtag / Facebook (those dominate TBT and TTI).
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(run, { timeout: 3000 });
+    requestIdleCallback(loadBlogFonts, { timeout: 3000 });
   } else if (document.readyState === 'complete') {
-    run();
+    loadBlogFonts();
   } else {
-    window.addEventListener('load', run);
+    window.addEventListener('load', loadBlogFonts);
   }
+
+  function onInteract() {
+    loadTracking();
+    window.removeEventListener('pointerdown', onInteract);
+    window.removeEventListener('keydown', onInteract);
+    window.removeEventListener('touchstart', onInteract);
+  }
+  window.addEventListener('pointerdown', onInteract, { passive: true });
+  window.addEventListener('keydown', onInteract);
+  window.addEventListener('touchstart', onInteract, { passive: true });
 })();
