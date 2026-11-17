@@ -67,6 +67,11 @@ export default defineConfig({
         `${SITE_URL}/shop/talladega/gloss-black`,
         // Sonoma
         `${SITE_URL}/shop/sonoma/brushed-aluminum`,
+        // Generation model pages (SSR routes not auto-discovered)
+        `${SITE_URL}/generations/c5/c5-base`,
+        `${SITE_URL}/generations/c6/c6-z06`,
+        `${SITE_URL}/generations/c6/c6-zr1`,
+        `${SITE_URL}/generations/c7/c7-zr1`,
         // GT Forged model pages (SSR routes)
         `${SITE_URL}/wheels/gt-01`,
         `${SITE_URL}/wheels/gt-02`,

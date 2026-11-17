@@ -49,13 +49,17 @@ const { getCuratedFitment } = await loadBundled('src/core/constants/CuratedFitme
 const catalog = await fetchWheels();
 const pages = [
   ['/generations/c5', 'C5', ['Base', 'Z06']],
+  ['/generations/c5/c5-base', 'C5', ['Base']],
   ['/generations/c5/c5-z06', 'C5', ['Z06']],
   ['/generations/c6', 'C6', ['Base']],
   ['/generations/c6/c6-grand-sport', 'C6', ['Grand Sport']],
+  ['/generations/c6/c6-z06', 'C6', ['Z06']],
+  ['/generations/c6/c6-zr1', 'C6', ['ZR1']],
   ['/generations/c7', 'C7', ['Stingray', 'Grand Sport', 'Z06']],
   ['/generations/c7/c7-stingray', 'C7', ['Stingray']],
   ['/generations/c7/c7-grand-sport', 'C7', ['Grand Sport']],
   ['/generations/c7/c7-z06', 'C7', ['Z06']],
+  ['/generations/c7/c7-zr1', 'C7', ['ZR1']],
   ['/generations/c8', 'C8', ['Stingray', 'Z06', 'ZR1', 'E-Ray']],
   ['/generations/c8/c8-stingray', 'C8', ['Stingray']],
   ['/generations/c8/c8-e-ray', 'C8', ['E-Ray']],
@@ -63,12 +67,7 @@ const pages = [
   ['/generations/c8/c8-zr1', 'C8', ['ZR1']],
 ];
 
-const missing = [
-  ['C5 Base dedicated page', 'C5', 'Base'],
-  ['C6 Z06 dedicated page', 'C6', 'Z06'],
-  ['C6 ZR1 dedicated page', 'C6', 'ZR1'],
-  ['C7 ZR1 dedicated page', 'C7', 'ZR1'],
-];
+const missing = [];
 
 const report = {};
 for (const [path, gen, trims] of pages) {

@@ -12,6 +12,16 @@ const PAGE_LASTMOD: Record<string, string> = {
   [`${SITE}/wheels/gt-02`]: '2026-11-16',
   [`${SITE}/wheels/gt-03`]: '2026-11-16',
   [`${SITE}/wheels/gt-04`]: '2026-11-16',
+  [`${SITE}/generations`]: '2026-11-17',
+  [`${SITE}/generations/c5`]: '2026-11-17',
+  [`${SITE}/generations/c5/c5-base`]: '2026-11-17',
+  [`${SITE}/generations/c6`]: '2026-11-17',
+  [`${SITE}/generations/c6/c6-z06`]: '2026-11-17',
+  [`${SITE}/generations/c6/c6-zr1`]: '2026-11-17',
+  [`${SITE}/generations/c7`]: '2026-11-17',
+  [`${SITE}/generations/c7/c7-zr1`]: '2026-11-17',
+  [`${SITE}/generations/c8`]: '2026-11-17',
+  [`${SITE}/generations/c8/c8-zr1`]: '2026-11-17',
 };
 
 function toIsoDate(date: string): string {

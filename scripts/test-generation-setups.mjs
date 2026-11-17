@@ -84,6 +84,8 @@ const catalog = {
   Wheels: [
     wheel('Daytona', ['Gloss', 'Black', null], 18, 10, 58, 120.65, 550, 'E5DA1810E58565BK'),
     wheel('Daytona', ['Gloss', 'Black', null], 19, 11, 59, 120.65, 700, 'E5DA1911E59565BK'),
+    wheel('Daytona', ['Gloss', 'Black', null], 19, 10, 30, 120.65, 550, 'E5DA1910E30565BK'),
+    wheel('Daytona', ['Gloss', 'Black', null], 20, 12, 50, 120.65, 700, 'E5DA2012E50565BK'),
     wheel('Sebring', [null, 'Titanium', 'Brushed'], 18, 10, 58, 120.65, 600, 'E5SE1810E58565TIU'),
     wheel('Sebring', [null, 'Titanium', 'Brushed'], 19, 11, 59, 120.65, 750, 'E5SE1911E59565TIU'),
     wheel('Talladega', [null, 'Brushed', 'Aluminum'], 20, 10, 25, 120, 2900, 'E5TA2010E25520AB'),
@@ -157,6 +159,16 @@ assert(
 const zr1 = setupsForVehicle(catalog, 'C8', ['ZR1']);
 assert('ZR1 excludes Sebring 2P', zr1.every((s) => s.model !== 'Sebring 2P'));
 assert('ZR1 keeps Talladega', zr1.some((s) => s.model === 'Talladega'));
+assert('C8 ZR1 front is 20x10 not 10.5', zr1.every((s) => s.frontLabel.includes('20" x 10"') && !s.frontLabel.includes('10.5')));
+
+const c5Base = setupsForVehicle(catalog, 'C5', ['Base']);
+assert('C5 Base includes Daytona gloss black', c5Base.some((s) => s.model === 'Daytona' && s.finish === 'Gloss Black'));
+assert('C5 Base is 18x10 / 19x11', c5Base.every((s) => s.frontLabel.includes('18" x 10"') && s.rearLabel.includes('19" x 11"')));
+assert('C6 ZR1 has no curated setups', setupsForVehicle(catalog, 'C6', ['ZR1']).length === 0);
+assert('C7 ZR1 has no curated setups', setupsForVehicle(catalog, 'C7', ['ZR1']).length === 0);
+const c6z06 = setupsForVehicle(catalog, 'C6', ['Z06']);
+assert('C6 Z06 has setups', c6z06.length > 0);
+assert('C6 Z06 is 19x10 / 20x12', c6z06.every((s) => s.frontLabel.includes('19" x 10"') && s.rearLabel.includes('20" x 12"')));
 
 const grouped = groupSetups(c8);
 assert('family order starts FORM or 2P', grouped[0].family === '2P FORGED' || grouped[0].family === 'E5 FORGED');
@@ -179,6 +191,13 @@ for (const page of genPages) {
   const rel = page.slice(join(root, 'src/pages/generations/').length);
   assert(`${rel} loads catalog setups`, src.includes('loadGenerationSetups') && src.includes('<GenerationSetups'));
 }
+
+const c8Zr1Src = readFileSync(join(root, 'src/pages/generations/c8/c8-zr1.astro'), 'utf8');
+assert('C8 ZR1 intro uses 20x10', c8Zr1Src.includes('Front 20" × 10"') && !c8Zr1Src.includes('10.5'));
+assert('C6 ZR1 page marks unpublished fitment', readFileSync(join(root, 'src/pages/generations/c6/c6-zr1.astro'), 'utf8').includes('Front size unpublished'));
+assert('C7 ZR1 page marks unpublished fitment', readFileSync(join(root, 'src/pages/generations/c7/c7-zr1.astro'), 'utf8').includes('Front size unpublished'));
+assert('C5 Base page exists', readFileSync(join(root, 'src/pages/generations/c5/c5-base.astro'), 'utf8').includes("loadGenerationSetups('C5', ['Base'])"));
+assert('C6 Z06 page exists', readFileSync(join(root, 'src/pages/generations/c6/c6-z06.astro'), 'utf8').includes("loadGenerationSetups('C6', ['Z06'])"));
 
 if (failed) {
   console.error(`${failed} generation setup checks failed`);

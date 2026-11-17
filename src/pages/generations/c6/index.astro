@@ -5,6 +5,8 @@ import {
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
     GENERATIONS_C6_GRAND_SPORT_ROUTE,
+    GENERATIONS_C6_Z06_ROUTE,
+    GENERATIONS_C6_ZR1_ROUTE,
 } from "@/core/constants/Routes.ts";
 import { buildWheelUrl } from "@/core/utils/wheelUrl";
 import {
@@ -74,7 +76,23 @@ const setups = await loadGenerationSetups('C6', ['Base']);
                 lead={'E5 C6 Corvette wheels are hub-centric and engineered only for Corvettes, covering 2005–2013 Base, Z06, ZR1, and Grand Sport in staggered 19"/20" sizes.'}
                 groups={[
                     { heading: 'Base', front: 'Front 19" × 9.5" +53mm', rear: 'Rear 20" × 11" +76mm' },
-                    { heading: 'Grand Sport and Z06', front: 'Front 19" × 10" +30mm', rear: 'Rear 20" × 12" +50mm' },
+                    {
+                      heading: 'Grand Sport and Z06',
+                      headingParts: [
+                        { label: 'Grand Sport', href: GENERATIONS_C6_GRAND_SPORT_ROUTE },
+                        { label: ' and ' },
+                        { label: 'Z06', href: GENERATIONS_C6_Z06_ROUTE },
+                      ],
+                      front: 'Front 19" × 10" +30mm',
+                      rear: 'Rear 20" × 12" +50mm',
+                    },
+                    {
+                      heading: 'ZR1',
+                      headingHref: GENERATIONS_C6_ZR1_ROUTE,
+                      front: 'Front size unpublished',
+                      rear: 'Rear size unpublished',
+                      note: 'No E5 gallery car or curated catalog fitment for C6 ZR1 yet.',
+                    },
                 ]}
                 styles={styleLinksFromSetups(setups)}
                 finishes={finishSummary(setups) || "Available in Gloss Black, Titanium Brushed Tint, Bronze Brushed Tint & Dark Bronze"}
@@ -84,7 +102,7 @@ const setups = await loadGenerationSetups('C6', ['Base']);
                 application="C6 Corvette application"
             >
                 <Fragment slot="see">
-                    See customer cars in the <a href={c6GalleryUrl} class={introLinkClass}>C6 gallery</a> and on the <a href={GENERATIONS_C6_GRAND_SPORT_ROUTE} class={introLinkClass}>C6 Grand Sport</a> page.
+                    See customer cars in the <a href={c6GalleryUrl} class={introLinkClass}>C6 gallery</a> and on the <a href={GENERATIONS_C6_GRAND_SPORT_ROUTE} class={introLinkClass}>C6 Grand Sport</a>, <a href={GENERATIONS_C6_Z06_ROUTE} class={introLinkClass}>C6 Z06</a>, and <a href={GENERATIONS_C6_ZR1_ROUTE} class={introLinkClass}>C6 ZR1</a> pages.
                 </Fragment>
             </GenerationIntro>
             <p class="text-[18px] md:text-[20px] lg:text-[24px] tracking-[4.8px] leading-[20px] text-black/50 uppercase">
@@ -94,6 +112,68 @@ const setups = await loadGenerationSetups('C6', ['Base']);
 
         <GenerationSetups setups={setups} />
 
+        <section class="container-e5 py-8 md:py-12 lg:py-16">
+            <p class="text-[14px] md:text-[18px] lg:text-[22px] tracking-[3px] md:tracking-[4px] lg:tracking-[4.4px] leading-[22px] text-black/50 uppercase text-center mb-8 md:mb-12">
+                Shop Wheels by C6 Model
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+                <a href={GENERATIONS_C6_GRAND_SPORT_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+                    <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-e5-black">
+                        <img
+                            src="/assets/images/generations/c6/grand-sport-figma-new/ebd9666fb80be2e2e27be771428f3fc1ea0e0241.webp"
+                            alt="C6 Corvette Grand Sport"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                    </div>
+                    <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+                        C6 Grand Sport
+                    </h2>
+                    <p class="text-[14px] md:text-[16px] tracking-[2.8px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+                        Form Forged Series
+                    </p>
+                    <p class="text-[14px] md:text-[15px] leading-[20px] text-black/60 mb-3">
+                        Catalog 19x10 +30mm / 20x12 +50mm staggered set, shared with C6 Z06.
+                    </p>
+                    <span class="text-[12px] md:text-[14px] tracking-[2.4px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+                        Explore C6 Grand Sport &rarr;
+                    </span>
+                </a>
+                <a href={GENERATIONS_C6_Z06_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+                    <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-[#ededed] flex items-center justify-center" data-missing="gallery-thumb">
+                        <p class="px-4 text-center text-[12px] tracking-[2px] uppercase text-black/40">E5 gallery photo needed</p>
+                    </div>
+                    <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+                        C6 Z06
+                    </h2>
+                    <p class="text-[14px] md:text-[16px] tracking-[2.8px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+                        Form Forged Series
+                    </p>
+                    <p class="text-[14px] md:text-[15px] leading-[20px] text-black/60 mb-3">
+                        LS7 widebody, 2006–2013. Same published 19x10 / 20x12 staggered set as Grand Sport.
+                    </p>
+                    <span class="text-[12px] md:text-[14px] tracking-[2.4px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+                        Explore C6 Z06 &rarr;
+                    </span>
+                </a>
+                <a href={GENERATIONS_C6_ZR1_ROUTE} class="group flex flex-col hover:opacity-90 transition-opacity">
+                    <div class="relative w-full aspect-[4/3] overflow-hidden mb-4 md:mb-6 bg-[#ededed] flex items-center justify-center" data-missing="gallery-thumb">
+                        <p class="px-4 text-center text-[12px] tracking-[2px] uppercase text-black/40">E5 gallery photo needed</p>
+                    </div>
+                    <h2 class="text-[24px] md:text-[28px] lg:text-[32px] leading-[28px] md:leading-[32px] lg:leading-[36px] tracking-[2px] text-black uppercase mb-2 font-['Franklin_Gothic_Heavy']">
+                        C6 ZR1
+                    </h2>
+                    <p class="text-[14px] md:text-[16px] tracking-[2.8px] leading-[20px] text-e5-red uppercase mb-2 font-['Franklin_Gothic_Demi']">
+                        Form Forged Series
+                    </p>
+                    <p class="text-[14px] md:text-[15px] leading-[20px] text-black/60 mb-3">
+                        LS9 flagship, 2009–2013. Fitment unpublished until a catalog row or gallery car is confirmed.
+                    </p>
+                    <span class="text-[12px] md:text-[14px] tracking-[2.4px] text-e5-red uppercase font-['Franklin_Gothic_Demi'] border-b border-e5-red pb-[2px] self-start">
+                        Explore C6 ZR1 &rarr;
+                    </span>
+                </a>
+            </div>
+        </section>
 
         <!-- Overview Section -->
         <section class="container-e5 py-12 md:py-16 lg:py-20">
