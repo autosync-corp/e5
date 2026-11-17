@@ -17,6 +17,7 @@ export default {
         'franklin-medium': ['Franklin Gothic Medium', 'sans-serif'],
         'franklin-book': ['Franklin Gothic Book', 'sans-serif'],
         'excon': ['Excon Variable', 'sans-serif'],
+        'condensed': ['Barlow Condensed', 'sans-serif'],
       },
       fontSize: {
         '14': ['14px', { letterSpacing: '4.9px' }],

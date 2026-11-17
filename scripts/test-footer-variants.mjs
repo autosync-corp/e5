@@ -1,0 +1,65 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const footer = readFileSync(join(root, 'src/core/components/Footer.vue'), 'utf8');
+const layout = readFileSync(join(root, 'src/layouts/MainLayout.astro'), 'utf8');
+const fonts = readFileSync(join(root, 'src/assets/fonts/fonts.css'), 'utf8');
+
+let failed = 0;
+function assert(label, ok) {
+  if (!ok) {
+    failed += 1;
+    console.error('fail', label);
+  } else {
+    console.log('ok  ', label);
+  }
+}
+
+const requiredTokens = [
+  'PROCESS_ROUTE',
+  'CONTACT_ROUTE',
+  '/events/upcoming',
+  'CATALOG_ROUTE',
+  'REFUND_ROUTE',
+  'WARRANTY_ROUTE',
+  'INSTALLATION_ROUTE',
+  'REGISTRATION_ROUTE',
+  'VENDOR_REGISTRATION_ROUTE',
+  'MEDIA_ROUTE',
+  'ABOUT_ROUTE',
+  "'/blog'",
+  'TERMS_ROUTE',
+  'PRIVACY_ROUTE',
+  'https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8',
+  'tel:+13059647429',
+  'mailto:SALES@E5WHEELS.COM',
+  'https://www.instagram.com/e5wheels/',
+  'https://www.facebook.com/e5wheels/',
+  'https://www.youtube.com/@E5Wheels',
+  'https://www.tiktok.com/@e5wheels',
+];
+
+for (const token of requiredTokens) {
+  assert(`keeps ${token}`, footer.includes(token));
+}
+
+assert('variant A present', footer.includes('variant === \'a\'') || footer.includes('v-if="variant === \'a\'"'));
+assert('variant B present', footer.includes('variant === \'b\''));
+assert('variant C present', footer.includes('ft-c'));
+assert('white background', footer.includes('background: #ffffff') || footer.includes("background: '#ffffff'"));
+assert('no red footer bg', !footer.includes('bg-e5-red w-full'));
+assert('44px tap', footer.includes('min-height: 44px'));
+assert('Barlow Condensed', footer.includes('Barlow Condensed') && fonts.includes('barlow-condensed-600.woff2'));
+assert('layout reads ?footer=', layout.includes("searchParams.get('footer')"));
+assert('layout passes variant', layout.includes('variant={footerVariant}'));
+assert('logo unaltered constant', footer.includes('E5_LOGO_BLACK'));
+assert('GET IN TOUCH kept', footer.includes('GET IN TOUCH'));
+assert('copyright kept', footer.includes('COPYRIGHT E5 WHEELS, LLC'));
+
+if (failed) {
+  console.error(`${failed} footer checks failed`);
+  process.exit(1);
+}
+console.log('all footer variant checks passed');

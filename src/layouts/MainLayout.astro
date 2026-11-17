@@ -59,6 +59,8 @@ if (!cacheFresh) {
 const gaId = tracking.gaId || import.meta.env.GA_ID || 'G-7XTP4KDPC1';
 const gtmId = tracking.gtmId || '';
 const fbPixelId = tracking.fbPixelId || '';
+const footerParam = (Astro.url.searchParams.get('footer') || 'a').toLowerCase();
+const footerVariant = footerParam === 'b' || footerParam === 'c' ? footerParam : 'a';
 ---
 
 <!DOCTYPE html>
@@ -179,7 +181,7 @@ const fbPixelId = tracking.fbPixelId || '';
         <slot />
       </main>
     </div>
-    <Footer client:visible transition:persist/>
+    <Footer variant={footerVariant} client:visible />
     <LiveChat client:idle />
   </body>
 </html>
