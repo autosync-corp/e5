@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import MainLayout from '@/layouts/MainLayout.astro';
 import Hero from "@/core/components/Hero.vue";
 import Button from "@/core/components/Button.vue";
@@ -129,17 +131,23 @@ const homeSeries = [
         data-youtube-id={heroVideoId}
         style={`position: relative; width: 100%; height: 94%; overflow: hidden; background: #000 url('/assets/images/hero-video-poster-800.webp') center / cover no-repeat;`}
       >
-        <img
-          src="/assets/images/hero-video-poster-800.webp"
-          srcset="/assets/images/hero-video-poster-800.webp 800w, /assets/images/hero-video-poster.webp 1280w"
-          sizes="100vw"
-          alt="E5 Wheels Corvette hero"
-          width="1280"
-          height="720"
-          fetchpriority="high"
-          decoding="async"
-          style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); object-fit: cover; pointer-events: none;"
-        />
+        <picture>
+          <source media="(min-width: 1024px)" srcset="/assets/images/hero-video-poster.webp" type="image/webp" />
+          <img
+            src="/assets/images/hero-video-poster-800.webp"
+            alt="E5 Wheels Corvette hero"
+            width="800"
+            height="450"
+            fetchpriority="high"
+            decoding="async"
+            style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); object-fit: cover; pointer-events: none;"
+          />
+        </picture>
+        <button type="button" id="e5-hero-play" class="e5-hero-play" aria-label="Play E5 Wheels video">
+          <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+            <path d="M9 6.5v15l13-7.5L9 6.5z" fill="#ffffff" />
+          </svg>
+        </button>
       </div>
     </Hero>
     <script is:inline>
@@ -148,32 +156,72 @@ const homeSeries = [
         if (!host) return;
         var videoId = host.getAttribute('data-youtube-id');
         if (!videoId) return;
-        function loadHeroVideo() {
+        var desktop = window.matchMedia('(min-width: 1024px)').matches;
+        var common = '&loop=1&playlist=' + videoId + '&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&enablejsapi=0';
+        var desktopSrc = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&cc_load_policy=0&vq=hd720' + common;
+        var mobileSrc = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&controls=1' + common;
+        function loadHeroVideo(userInitiated) {
           if (host.getAttribute('data-loaded')) return;
           host.setAttribute('data-loaded', '1');
+          host.classList.add('is-playing');
           var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0&vq=hd720';
+          iframe.src = userInitiated ? mobileSrc : desktopSrc;
           iframe.setAttribute('allowtransparency', 'true');
           iframe.setAttribute('allow', 'autoplay; encrypted-media');
           iframe.setAttribute('title', 'E5 Wheels Hero Video');
-          iframe.style.cssText = 'position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; pointer-events: none;';
+          iframe.style.cssText = 'position: absolute; top: 47%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: 0; z-index: 3; pointer-events: ' + (userInitiated ? 'auto' : 'none') + ';';
           host.appendChild(iframe);
         }
-        // Mobile PageSpeed: keep the poster as LCP and do not inject YouTube
-        // until the visitor interacts. Desktop still autoplays after idle.
-        var desktop = window.matchMedia('(min-width: 1024px)').matches;
         if (desktop) {
           if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadHeroVideo, { timeout: 4000 });
+            requestIdleCallback(function () { loadHeroVideo(false); }, { timeout: 4000 });
           } else {
-            window.addEventListener('load', loadHeroVideo);
+            window.addEventListener('load', function () { loadHeroVideo(false); });
           }
-        } else {
-          window.addEventListener('pointerdown', loadHeroVideo, { once: true, passive: true });
-          window.addEventListener('touchstart', loadHeroVideo, { once: true, passive: true });
+          return;
         }
+        function onMobilePlay() {
+          loadHeroVideo(true);
+        }
+        host.addEventListener('click', onMobilePlay);
+        var playBtn = document.getElementById('e5-hero-play');
+        if (playBtn) playBtn.addEventListener('click', onMobilePlay);
       })();
     </script>
+    <style>
+      .e5-hero-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        width: 72px;
+        height: 72px;
+        margin: 0;
+        padding: 0 0 0 4px;
+        border: 0;
+        border-radius: 50%;
+        background: #d31d25;
+        color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      }
+      .e5-hero-play:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+      }
+      #e5-hero-video.is-playing .e5-hero-play {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        .e5-hero-play {
+          display: none;
+        }
+      }
+    </style>
 
     <section class="container-e5 text-center mt-8 mb-20">
       <div>
