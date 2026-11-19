@@ -2,7 +2,7 @@
 export const prerender = false;
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
-import Footer from '@/core/components/Footer.vue';
+import Footer from '@/core/components/Footer.astro';
 import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import EventPage from '@/core/components/EventPage.astro';
 import { getActiveEvent } from '@/core/services/EventsService';
@@ -40,7 +40,7 @@ const event = await getActiveEvent();
       <p>There's nothing scheduled right now — check back soon, or view <a href="/events">past events</a>.</p>
     </div>
   </div>
-  <Footer client:only="vue" />
+  <Footer />
   </body>
   </html>
 )}

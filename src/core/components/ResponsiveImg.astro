@@ -1,0 +1,55 @@
+---
+import { pictureFor } from '@/core/utils/responsiveSrc';
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  sizes = '(min-width: 1024px) 280px, 45vw',
+  loading = 'lazy',
+  fetchpriority,
+  class: className,
+} = Astro.props;
+
+const pic = pictureFor(src, sizes);
+---
+
+{pic ? (
+  <picture class:list={['block w-full', className]}>
+    {pic.avif && <source type="image/avif" srcset={pic.avif} sizes={pic.sizes} />}
+    {pic.webp && <source type="image/webp" srcset={pic.webp} sizes={pic.sizes} />}
+    <img
+      src={pic.src}
+      alt={alt}
+      width={width}
+      height={height}
+      decoding="async"
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class:list={['block w-full h-auto', className]}
+    />
+  </picture>
+) : (
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    decoding="async"
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={className}
+  />
+)}

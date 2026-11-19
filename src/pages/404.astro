@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import Button from '@/core/components/Button.vue';
+import CtaLink from '@/core/components/CtaLink.astro';
 import { SITE_URL } from '@/core/constants/Site.ts';
 
 const baseUrl = SITE_URL;
@@ -28,15 +28,15 @@ const canonicalUrl = `${baseUrl}/404`;
 
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <Button client:visible primary link="/">
+        <CtaLink primary href="/">
           GO TO HOMEPAGE
-        </Button>
-        <Button client:visible link="/wheels">
+        </CtaLink>
+        <CtaLink href="/wheels">
           BROWSE WHEELS
-        </Button>
-        <Button client:visible link="/gallery/vehicles">
+        </CtaLink>
+        <CtaLink href="/gallery/vehicles">
           VIEW GALLERY
-        </Button>
+        </CtaLink>
       </div>
 
       <!-- Additional Help -->

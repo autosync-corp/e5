@@ -2,7 +2,7 @@
 export const prerender = false;
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
-import Footer from '@/core/components/Footer.vue';
+import Footer from '@/core/components/Footer.astro';
 import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import { getAllEvents } from '@/core/services/EventsService';
 import { SITE_URL } from '@/core/constants/Site.ts';
@@ -73,6 +73,6 @@ const past = events
   </div>
 </div>
 
-<Footer client:only="vue" />
+<Footer />
 </body>
 </html>

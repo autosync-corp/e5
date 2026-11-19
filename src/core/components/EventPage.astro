@@ -1,7 +1,7 @@
 ---
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
-import Footer from '@/core/components/Footer.vue';
+import Footer from '@/core/components/Footer.astro';
 import EventNavHeader from '@/core/components/EventNavHeader.astro';
 import { fetchWheels } from '@/core/services/ProductService';
 import { SITE_URL } from '@/core/constants/Site.ts';
@@ -547,7 +547,7 @@ const cascadeWheel = event.showWheelDropdown && event.showFinishDropdown;
 </div><!-- end .rsvp-page -->
 
   <!-- Footer — global component, outside rsvp-page scope -->
-  <Footer client:only="vue" />
+  <Footer />
 
   <script define:vars={{ eventSlug: event.slug, generationTrimMap, wheelFinishMap, recaptchaSiteKey: import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY }}>
     // @ts-nocheck

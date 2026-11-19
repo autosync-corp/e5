@@ -479,6 +479,10 @@ onMounted(() => {
                   :src="getProductImage(variation.product)"
                   :alt="`${series.seriesName} - ${variation.finish}`"
                   class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 

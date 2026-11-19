@@ -3,7 +3,9 @@ export const prerender = true;
 
 import MainLayout from '@/layouts/MainLayout.astro';
 import Hero from "@/core/components/Hero.vue";
-import Button from "@/core/components/Button.vue";
+import CtaLink from '@/core/components/CtaLink.astro';
+import ResponsiveImg from '@/core/components/ResponsiveImg.astro';
+import { LOGO_SRCSET } from '@/core/utils/responsiveSrc';
 import {
   E5_FORGED_SERIES_LOGO,
   FORM_FORGED_WORDMARK,
@@ -240,16 +242,16 @@ const homeSeries = [
         {homeSeries.map((block) => (
           <article class="home-series-block">
             <div class="home-series-logo-row">
-              <img src={block.logo} alt={block.alt} class={`home-series-logo ${block.logoClass}`} width="528" height="66" decoding="async" loading="lazy" />
+              <img src={block.logo} srcset={LOGO_SRCSET[block.logo]} sizes="(min-width: 1024px) 420px, 92vw" alt={block.alt} class={`home-series-logo ${block.logoClass}`} width="528" height="66" decoding="async" loading="lazy" />
             </div>
             <div class:list={['home-series-cluster', block.key === 'gt' && 'home-series-cluster--gt']}>
               {block.wheels.map((wheel) => (
-                <img src={wheel.src} alt={wheel.alt} width="400" height="400" decoding="async" loading="lazy" />
+                <ResponsiveImg src={wheel.src} alt={wheel.alt} width={400} height={400} sizes="(min-width: 1024px) 180px, 110px" />
               ))}
             </div>
             <p class="home-series-blurb" set:html={block.blurb} />
             <div class="home-series-cta">
-              <Button client:visible primary link={block.href} data-gtm-event="explore_wheel" data-gtm-label={block.gtm}>{block.cta}</Button>
+              <CtaLink primary href={block.href} data-gtm-event="explore_wheel" data-gtm-label={block.gtm}>{block.cta}</CtaLink>
             </div>
           </article>
         ))}
@@ -258,13 +260,13 @@ const homeSeries = [
 
     <section class="container-e5 relative max-w-[1500px] lg:flex justify-between mx-auto py-32">
       <div class="grid grid-cols-1 auto-rows-min text-center lg:text-start">
-        <img src={E5_BLACK_RED_DRAW} alt="E5 Wheels process" class="w-[264px] h-auto mx-auto lg:mx-0" width="264" height="80" decoding="async" loading="lazy" />
+        <ResponsiveImg src={E5_BLACK_RED_DRAW} alt="E5 Wheels process" class="w-[264px] h-auto mx-auto lg:mx-0" width={264} height={80} sizes="264px" />
         <h2 class="text-3xl md:text-4xl lg:text-5xl font-franklin-medium mt-12">OUR PROCESS</h2>
         <p class="lg:max-w-[700px] text-xl text-black/70 mt-6">
           At E5, we approach every wheel with a process rooted in precision engineering, model-specific fitment, and an uncompromising attention to detail. From concept design to final finish, we engineer each product to enhance performance, complement the car's design, and uphold the standards that define the Corvette platform.
         </p>
         <div class="mt-20">
-          <Button client:visible primary link={PROCESS_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn More">LEARN MORE<span class="sr-only"> about our process</span></Button>
+          <CtaLink primary href={PROCESS_ROUTE} data-gtm-event="cta_learn_more" data-gtm-label="Learn More">LEARN MORE<span class="sr-only"> about our process</span></CtaLink>
         </div>
       </div>
       <div class="h-[438px] hidden lg:block">
@@ -281,21 +283,23 @@ const homeSeries = [
 
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_4px_1fr] gap-12">
           <div class="flex justify-center items-center">
-            <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${VETTE_BLACK_ON_RIVER})`}>
+            <div class="relative w-full max-w-[660px] h-auto aspect-square overflow-hidden">
+              <ResponsiveImg src={VETTE_BLACK_ON_RIVER} alt="Vette Gallery" class="absolute inset-0 w-full h-full object-cover" width={660} height={660} sizes="(min-width: 1024px) 660px, 100vw" />
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <Button client:visible primary link={GALLERY_VEHICLES_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Vette Gallery">
+                <CtaLink primary href={GALLERY_VEHICLES_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Vette Gallery">
                     VETTE GALLERY
-                </Button>
+                </CtaLink>
               </div>
             </div>
           </div>
           <div class="bg-e5-separator h-full min-h-[660px] hidden lg:block"></div>
           <div class="flex justify-center items-center">
-            <div class="relative w-full max-w-[660px] h-auto aspect-square bg-cover bg-center" style={`background-image: url(${WHEEL_HOME_SHOT_1})`}>
+            <div class="relative w-full max-w-[660px] h-auto aspect-square overflow-hidden">
+              <ResponsiveImg src={WHEEL_HOME_SHOT_1} alt="Wheel Gallery" class="absolute inset-0 w-full h-full object-cover" width={660} height={660} sizes="(min-width: 1024px) 660px, 100vw" />
               <div class="absolute bottom-0 left-0 w-full cursor-pointer h-full hover:bg-black/30 flex justify-center items-end pb-10">
-                <Button client:visible primary link={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Wheel Gallery">
+                <CtaLink primary href={GALLERY_WHEELS_ROUTE} data-gtm-event="view_gallery" data-gtm-label="Wheel Gallery">
                     WHEEL GALLERY
-                </Button>
+                </CtaLink>
               </div>
             </div>
           </div>
