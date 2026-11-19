@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { Redis } from '@upstash/redis';
 import { sendFbPurchaseEvent } from '@/core/utils/fbConversions';
+import { applyHowDidYouHear } from '@/core/utils/howDidYouHear';
 
 // Mark this page as server-rendered
 export const prerender = false;
@@ -52,6 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Generate sequential order number from Upstash counter
     const orderNumber = await getNextOrderNumber();
+    const { how_did_you_hear, orderNotes } = applyHowDidYouHear(customerData);
 
     // Build webhook data
     const webhookData = {
@@ -123,8 +125,9 @@ export const POST: APIRoute = async ({ request }) => {
         fullAddress: `${customerData.billing.streetAddress1}${customerData.billing.streetAddress2 ? ', ' + customerData.billing.streetAddress2 : ''}, ${customerData.billing.city}, ${customerData.billing.state} ${customerData.billing.zipCode}, ${customerData.billing.country}`,
       },
 
-      // Order Notes
-      orderNotes: customerData.orderNotes || '',
+      // Order Notes (includes how-did-you-hear line when provided)
+      orderNotes,
+      how_did_you_hear,
 
       // Products/Items
       items: cartItems.map((item: any, index: number) => {
