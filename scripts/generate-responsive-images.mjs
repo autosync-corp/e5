@@ -100,4 +100,5 @@ async function logos() {
 await catalogVariants();
 await namedPhotos();
 await logos();
+await import('./generate-banner-images.mjs');
 console.log('done');

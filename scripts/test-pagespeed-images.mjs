@@ -21,7 +21,7 @@ const wheels = readFileSync(join(root, 'src/pages/wheels/index.astro'), 'utf8');
 assert('homepage uses ResponsiveImg for catalog wheels', index.includes('<ResponsiveImg src={wheel.src}'));
 assert('homepage gallery uses ResponsiveImg not CSS background', index.includes('src={VETTE_BLACK_ON_RIVER}') && !index.includes('background-image: url(${VETTE_BLACK_ON_RIVER})'));
 assert('homepage CTAs are CtaLink not Vue Button', index.includes('CtaLink') && !index.includes('Button client:'));
-assert('hero poster still eager high priority', index.includes('hero-video-poster-800.webp') && index.includes('fetchpriority="high"'));
+assert('homepage LCP banner is eager high priority', index.includes('banner/bf-sale-800.webp') && index.includes('fetchpriority="high"'));
 assert('footer is Astro with no client hydrate', layout.includes("Footer.astro") && !layout.includes('<Footer client:'));
 assert('shop hydrates when visible not on load', shop.includes('client:visible') && !shop.includes('client:load'));
 assert('wheels uses ResponsiveImg', wheels.includes('ResponsiveImg'));
