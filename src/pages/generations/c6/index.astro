@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import Button from "@/core/components/Button.vue";
+import CtaLink from '@/core/components/CtaLink.astro';
 import {
     GALLERY_VEHICLES_ROUTE,
     GENERATIONS_ROUTE,
@@ -337,9 +337,9 @@ const setups = await loadGenerationSetups('C6', ['Base']);
             </div>
 
             <div class="text-center">
-                <Button client:visible primary link={daytonaGlossBlackAltUrl}>
+                <CtaLink primary href={daytonaGlossBlackAltUrl}>
                     <span>SHOP FITMENT</span>
-                </Button>
+                </CtaLink>
             </div>
         </section>
 
@@ -375,9 +375,9 @@ const setups = await loadGenerationSetups('C6', ['Base']);
                 </div>
             </div>
             <div class="text-center">
-                <Button client:visible primary link={`${GALLERY_VEHICLES_ROUTE}?generation=c6`}>
+                <CtaLink primary href={`${GALLERY_VEHICLES_ROUTE}?generation=c6`}>
                     <span>VIEW GALLERY</span>
-                </Button>
+                </CtaLink>
             </div>
         </section>
 

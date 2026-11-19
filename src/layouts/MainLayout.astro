@@ -1,6 +1,6 @@
 ---
 import Navbar from '@/core/components/Navbar.vue';
-import Footer from '@/core/components/Footer.vue';
+import Footer from '@/core/components/Footer.astro';
 import LiveChat from '@/core/components/LiveChat.vue';
 import { Redis } from '@upstash/redis';
 import '@/assets/main.css';
@@ -184,7 +184,7 @@ const fbPixelId = tracking.fbPixelId || '';
         <slot />
       </main>
     </div>
-    <Footer client:visible />
+    <Footer />
     <LiveChat client:idle />
   </body>
 </html>

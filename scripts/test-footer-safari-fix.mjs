@@ -22,7 +22,7 @@ for (const needle of [
   if (!layout.includes(needle)) fail(`MainLayout missing ${needle}`);
 }
 
-const footer = fs.readFileSync(path.join(root, 'src/core/components/Footer.vue'), 'utf8');
+const footer = fs.readFileSync(path.join(root, 'src/core/components/Footer.astro'), 'utf8');
 if (!footer.includes('E5_LOGO_BLACK_PNG')) fail('Footer must use E5_LOGO_BLACK_PNG');
 if (footer.includes('E5_LOGO_BLACK,') || /:src="E5_LOGO_BLACK"/.test(footer)) {
   fail('Footer still points at the WebP constant');

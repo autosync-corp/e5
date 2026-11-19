@@ -3,7 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import { wheelGalleryItems } from "@/pages/gallery/constants/WheelGallery.ts";
 import type { WheelGalleryItem } from "@/pages/gallery/constants/WheelGallery.ts";
 import WheelCard from "@/pages/gallery/components/_WheelCard.vue";
-import Button from "@/core/components/Button.vue";
+import CtaLink from '@/core/components/CtaLink.astro';
 // @ts-expect-error - Vue component with script setup has implicit default export
 import WheelImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
 import { GALLERY_WHEELS_ROUTE, GALLERY_WHEELS_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
@@ -147,9 +147,9 @@ const breadcrumbSchema = JSON.stringify({
         </div>
 
         <div class="w-full flex justify-center mt-12">
-          <Button client:only="vue" primary={true} secondary={false} disabled={false} link={GALLERY_WHEELS_ROUTE}>
+          <CtaLink primary href={GALLERY_WHEELS_ROUTE}>
             VIEW FULL GALLERY
-          </Button>
+          </CtaLink>
         </div>
       </section>
     )}

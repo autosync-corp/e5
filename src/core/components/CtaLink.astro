@@ -1,0 +1,34 @@
+---
+interface Props {
+  href: string;
+  primary?: boolean;
+  secondary?: boolean;
+  class?: string;
+  'data-gtm-event'?: string;
+  'data-gtm-label'?: string;
+}
+
+const {
+  href,
+  primary = false,
+  secondary = false,
+  class: className,
+  'data-gtm-event': gtmEvent,
+  'data-gtm-label': gtmLabel,
+} = Astro.props;
+
+const tone = primary
+  ? 'bg-e5-red border-2 border-e5-red text-white font-franklin-demi border-0 px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg'
+  : secondary
+    ? 'bg-transparent text-e5-red font-sans border-2 border-e5-red px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg'
+    : 'bg-black text-white font-sans border-0 px-6 py-4 text-[14px] tracking-[5.6px] cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg';
+---
+
+<a
+  href={href}
+  class:list={['uppercase inline-block text-center no-underline', tone, className]}
+  data-gtm-event={gtmEvent}
+  data-gtm-label={gtmLabel}
+>
+  <slot />
+</a>

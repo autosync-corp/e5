@@ -1,5 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
+import ResponsiveImg from '@/core/components/ResponsiveImg.astro';
+import { LOGO_SRCSET } from '@/core/utils/responsiveSrc';
 import {
     WHEELS_DAYTONA_ROUTE,
     GALLERY_WHEELS_ROUTE,
@@ -89,8 +91,13 @@ const sebring2pCards = [
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src={FORM_FORGED_WORDMARK}
+                            srcset={LOGO_SRCSET[FORM_FORGED_WORDMARK]}
+                            sizes="(min-width: 768px) 420px, 92vw"
                             alt="Form Forged"
                             class="series-logo-form"
+                            width="1559"
+                            height="91"
+                            decoding="async"
                         />
                     </div>
                     <div class="flex-1 min-w-[min(100%,16rem)]">
@@ -105,14 +112,7 @@ const sebring2pCards = [
                 <!-- Daytona -->
                 <div class="wheels-card">
                     <div class="wheels-card-image">
-                        <img
-                            src={DAYTONA_TITANIUM_BRUSHED_CARD}
-                            alt="Daytona"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            fetchpriority="high"
-                        />
+                        <ResponsiveImg src={DAYTONA_TITANIUM_BRUSHED_CARD} alt="Daytona" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" loading="eager" fetchpriority="high" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -140,14 +140,7 @@ const sebring2pCards = [
                 <!-- Sebring -->
                 <div class="wheels-card">
                     <div class="wheels-card-image">
-                        <img
-                            src={SEBRING_TITANIUM_BRUSHED_CARD}
-                            alt="Sebring"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        <ResponsiveImg src={SEBRING_TITANIUM_BRUSHED_CARD} alt="Sebring" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -175,14 +168,7 @@ const sebring2pCards = [
                 <!-- Speedway -->
                 <div class="wheels-card">
                     <div class="wheels-card-image">
-                        <img
-                            src={SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD}
-                            alt="Speedway"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        <ResponsiveImg src={SPEEDWAY_TITANIUM_BRUSHED_TINT_CARD} alt="Speedway" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -218,8 +204,14 @@ const sebring2pCards = [
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src={TWO_P_FORGED_LOGO}
+                            srcset={LOGO_SRCSET[TWO_P_FORGED_LOGO]}
+                            sizes="(min-width: 768px) 280px, 70vw"
                             alt="2P Forged"
                             class="series-logo-2p"
+                            width="765"
+                            height="66"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="flex-1 min-w-[min(100%,16rem)]">
@@ -234,7 +226,7 @@ const sebring2pCards = [
                 {sebring2pCards.map((card) => (
                     <div class="wheels-card">
                         <div class="wheels-card-image">
-                            <img src={card.image} alt={`Sebring 2P ${card.name}`} width="400" height="400" decoding="async" loading="lazy" />
+                            <ResponsiveImg src={card.image} alt={`Sebring 2P ${card.name}`} width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                         </div>
                         <div class="wheels-card-name">
                             <span class="wheels-card-name-text text-[12px] md:text-[16px] text-black tracking-[2.4px] md:tracking-[3.2px] uppercase">{card.name}</span>
@@ -281,14 +273,7 @@ const sebring2pCards = [
                 <!-- Talladega -->
                 <div class="wheels-card">
                     <div class="wheels-card-image">
-                        <img
-                            src={TALLADEGA_BRUSHED_ALUMINUM_CARD}
-                            alt="Talladega"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        <ResponsiveImg src={TALLADEGA_BRUSHED_ALUMINUM_CARD} alt="Talladega" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -316,14 +301,7 @@ const sebring2pCards = [
                 <!-- Sonoma -->
                 <div class="wheels-card">
                     <div class="wheels-card-image">
-                        <img
-                            src={SONOMA_BRUSHED_ALUMINUM_CARD}
-                            alt="Sonoma"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        <ResponsiveImg src={SONOMA_BRUSHED_ALUMINUM_CARD} alt="Sonoma" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -351,14 +329,7 @@ const sebring2pCards = [
                 <!-- Laguna -->
                 <div class="wheels-card">
                     <div class="wheels-card-image wheels-card-image--laguna">
-                        <img
-                            src={LAGUNA_WHEEL_CARD}
-                            alt="Laguna"
-                            width="400"
-                            height="400"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        <ResponsiveImg src={LAGUNA_WHEEL_CARD} alt="Laguna" width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                     </div>
                     <div class="wheels-card-name">
                         <img
@@ -394,8 +365,14 @@ const sebring2pCards = [
                     <div class="flex-shrink-0 pb-4 md:pb-0 md:pr-8 border-b-[3px] md:border-b-0 md:border-r-[3px] border-e5-red w-full md:w-auto">
                         <img
                             src={GT_FORGED_LOGO}
+                            srcset={LOGO_SRCSET[GT_FORGED_LOGO]}
+                            sizes="(min-width: 768px) 360px, 80vw"
                             alt="GT Forged"
                             class="series-logo-gt"
+                            width="1176"
+                            height="90"
+                            decoding="async"
+                            loading="lazy"
                         />
                     </div>
                     <div class="flex-1 min-w-[min(100%,16rem)]">
@@ -410,7 +387,7 @@ const sebring2pCards = [
                 {gtCards.map((card) => (
                     <div class="wheels-card">
                         <div class="wheels-card-image">
-                            <img src={card.image} alt={card.name} width="400" height="400" decoding="async" loading="lazy" />
+                            <ResponsiveImg src={card.image} alt={card.name} width={400} height={400} sizes="(min-width: 1024px) 280px, 45vw" />
                         </div>
                         <div class="wheels-card-name">
                             <img
@@ -441,10 +418,13 @@ const sebring2pCards = [
 
     <!-- Vette Gallery Banner -->
     <section class="relative h-[280px] md:h-[380px] w-full">
-        <img
+        <ResponsiveImg
             src="/assets/images/wheels-new/195456d72b224f9b92ca6b410ac88f61fad3db24.webp"
             alt="Vette Gallery"
             class="absolute inset-0 w-full h-full object-cover"
+            width={1620}
+            height={1080}
+            sizes="100vw"
         />
         <div class="absolute inset-0 flex items-center justify-start">
             <div class="max-w-[1583px] mx-auto px-6 md:px-12 w-full">
@@ -468,10 +448,13 @@ const sebring2pCards = [
 
     <!-- Wheel Gallery Banner -->
     <section class="relative h-[280px] md:h-[380px] w-full">
-        <img
+        <ResponsiveImg
             src="/assets/images/wheels-new/38f473e1f45f9c800e13c02c7283b158fad81634.webp"
             alt="Wheel Gallery"
             class="absolute inset-0 w-full h-full object-cover"
+            width={1620}
+            height={1080}
+            sizes="100vw"
         />
         <div class="absolute inset-0 flex items-center justify-start md:justify-end">
             <div class="max-w-[1583px] mx-auto px-6 md:px-12 w-full">

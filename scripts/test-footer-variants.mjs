@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const footer = readFileSync(join(root, 'src/core/components/Footer.vue'), 'utf8');
+const footer = readFileSync(join(root, 'src/core/components/Footer.astro'), 'utf8');
 const layout = readFileSync(join(root, 'src/layouts/MainLayout.astro'), 'utf8');
 const fonts = readFileSync(join(root, 'src/assets/fonts/fonts.css'), 'utf8');
 
@@ -48,11 +48,11 @@ for (const token of requiredTokens) {
 assert('no variant switch', !footer.includes('variant ===') && !layout.includes("searchParams.get('footer')"));
 assert('no A/B markup', !footer.includes('ft-a') && !footer.includes('ft-b') && !footer.includes('tesla-links'));
 assert('C layout remains', footer.includes('vossen-top') && footer.includes('GET IN TOUCH'));
-assert('white background', footer.includes('background: #ffffff'));
+assert('white background', footer.includes('background-color: #ffffff'));
 assert('no red footer bg', !footer.includes('bg-e5-red w-full'));
 assert('44px tap', footer.includes('min-height: 44px'));
 assert('Oswald condensed', footer.includes('Oswald') && fonts.includes('oswald-500.woff2'));
-assert('logo aspect-ratio preserved', footer.includes('aspect-ratio: 1191 / 101') && footer.includes('max-width: none'));
+assert('logo aspect-ratio preserved', footer.includes('aspect-ratio: 1191 / 101') && footer.includes('min-width: 0'));
 assert('mobile accordion', footer.includes('<details'));
 assert('mobile breakpoint 767', footer.includes('max-width: 767px'));
 assert('logo unaltered constant', footer.includes('E5_LOGO_BLACK'));

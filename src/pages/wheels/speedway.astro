@@ -20,7 +20,7 @@ import {
     SPEEDWAY_PRECISION_FITMENT_BANNER,
     SPEEDWAY_TITANIUM_BRUSHED, SPEEDWAY_VETTE_GALLERY_1, SPEEDWAY_VETTE_GALLERY_2, SPEEDWAY_VETTE_GALLERY_3,
 } from "@/pages/wheels/constants/Wheels.ts";
-import Button from "@/core/components/Button.vue";
+import CtaLink from '@/core/components/CtaLink.astro';
 import BannerFullWidthWithLegend from "@/core/components/BannerFullWidthWithLegend.vue";
 import {Orientations} from "@/core/types/App.ts";
 import ImageWithLegend from "@/core/components/ImageWithLegend.vue";
@@ -142,12 +142,12 @@ const breadcrumbSchema = JSON.stringify({
         <!-- Shop Speedway Button -->
         <div class="text-center mt-12">
             <div class="inline-block uppercase px-16">
-                <Button client:visible primary link={shopSpeedwayUrl}>
+                <CtaLink primary href={shopSpeedwayUrl}>
                     <span>
                         SHOP <br />
                         {SPEEDWAY_BRAND_NAME}
                     </span>
-                </Button>
+                </CtaLink>
             </div>
         </div>
     </section>
@@ -169,9 +169,9 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="mt-4 md:mt-8 lg:mt-12">
-                <Button client:visible secondary link={PROCESS_FORM_FORGED_ROUTE}>
+                <CtaLink secondary href={PROCESS_FORM_FORGED_ROUTE}>
                     <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">LEARN ABOUT<br/>OUR PROCESS</span>
-                </Button>
+                </CtaLink>
             </div>
         </article>
     </BannerFullWidthWithLegend>
@@ -227,9 +227,9 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="my-8 md:my-10 lg:my-12 flex justify-end px-4 md:px-8 lg:px-12 xl:px-16">
-                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
+                <CtaLink secondary href={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">VIEW<br/>WHEEL GALLERY</span>
-                </Button>
+                </CtaLink>
             </div>
         </article>
     </BannerFullWidthWithLegend>
@@ -343,9 +343,9 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={glossBlackUrl}>
+                            <CtaLink primary href={glossBlackUrl}>
                                 SHOP NOW
-                            </Button>
+                            </CtaLink>
                         </div>
                     </div>
                 </ImageWithLegend>
@@ -359,9 +359,9 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={titaniumBrushedUrl}>
+                            <CtaLink primary href={titaniumBrushedUrl}>
                                 SHOP NOW
-                            </Button>
+                            </CtaLink>
                         </div>
                     </div>
                 </ImageWithLegend>
@@ -375,9 +375,9 @@ const breadcrumbSchema = JSON.stringify({
                         <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">STARTING AT $600 PER WHEEL</p>
                         <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                         <div class="mt-8">
-                            <Button client:visible primary link={bronzeUrl}>
+                            <CtaLink primary href={bronzeUrl}>
                                 SHOP NOW
-                            </Button>
+                            </CtaLink>
                         </div>
                     </div>
                 </ImageWithLegend>
@@ -401,9 +401,9 @@ const breadcrumbSchema = JSON.stringify({
             </p>
 
             <div class="my-8 md:my-10 lg:my-12 px-4 md:px-8 lg:px-12 xl:px-16">
-                <Button client:visible secondary link={GALLERY_WHEELS_ROUTE}>
+                <CtaLink secondary href={GALLERY_WHEELS_ROUTE}>
                     <span class="text-[16px] md:text-[18px] lg:text-[20px] font-black tracking-[1.5px]">VIEW DAYTONA<br/>GALLERY</span>
-                </Button>
+                </CtaLink>
             </div>
         </article>
     </BannerFullWidthWithLegend>
@@ -423,7 +423,7 @@ const breadcrumbSchema = JSON.stringify({
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8 uppercase">
-                        <Button client:visible primary link={WHEELS_DAYTONA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Daytona"> EXPLORE {DAYTONA_BRAND_NAME} </Button>
+                        <CtaLink primary href={WHEELS_DAYTONA_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Daytona"> EXPLORE {DAYTONA_BRAND_NAME} </CtaLink>
                     </div>
                 </div>
             </ImageWithLegend>
@@ -436,7 +436,7 @@ const breadcrumbSchema = JSON.stringify({
                     <p class="text-[16px] tracking-[1.5px] text-black/60 uppercase mb-2">AVAILABLE IN OTHER FINISHES</p>
                     <p class="text-[16px] text-e5-red uppercase mt-4 font-medium">IN STOCK</p>
                     <div class="mt-8 uppercase">
-                        <Button client:visible primary link={WHEELS_SEBRING_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Sebring"> EXPLORE {SEBRING_BRAND_NAME} </Button>
+                        <CtaLink primary href={WHEELS_SEBRING_ROUTE} data-gtm-event="explore_wheel" data-gtm-label="Explore Sebring"> EXPLORE {SEBRING_BRAND_NAME} </CtaLink>
                     </div>
                 </div>
             </ImageWithLegend>

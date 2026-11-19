@@ -332,6 +332,7 @@
   align-items: center;
 }
 
+.home-series-cluster picture,
 .home-series-cluster img {
   display: block;
   width: 100%;
