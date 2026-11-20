@@ -29,6 +29,7 @@ assert('pending 301 home', mw.includes("'/pending': '/'"));
 assert('registration 301 wheel-registration', mw.includes("'/registration': '/wheel-registration'"));
 assert('single-product always redirected', mw.includes("pathname === '/shop/single-product'") && mw.includes("redirect('/shop', 301)"));
 assert('shop series maps to wheels', mw.includes('SHOP_SERIES_TO_WHEELS') && mw.includes("daytona: '/wheels/daytona'"));
+assert('shop series hubs redirect at the edge', vercel.includes('"/shop/gt01"') && vercel.includes('"/shop/gt-01"') && vercel.includes('"/shop/laguna"') && vercel.includes('"/wheels/gt-01"'));
 assert('2P black alias to gloss-black', mw.includes('black: \'gloss-black\'') && sebring2p.includes('/shop/sebring-2p/gloss-black'));
 assert('request-quote kept noindex and out of sitemap', astro.includes("'/request-quote'") && readFileSync(join(root, 'src/pages/request-quote/index.astro'), 'utf8').includes('noindex={true}'));
 assert('e5-visualizer is indexable and in sitemap', !viz.includes('noindex={true}') && astro.includes('/e5-visualizer') && !astro.includes("'/e5-visualizer'"));
