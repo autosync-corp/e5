@@ -1,0 +1,103 @@
+url,issue_category,before_status_behavior,after_status_behavior
+https://www.e5wheels.com/community,Not found (404),200-missing page (404) after /racing chain to /community,301 to /events/upcoming
+https://www.e5wheels.com/racing,Not found (404) + Page with redirect,301 to /community which 404d,301 to /events/upcoming (chain collapsed)
+https://www.e5wheels.com/search,Not found (404),404,301 to /shop
+https://www.e5wheels.com/feed,Not found (404),404,301 to /blog
+https://www.e5wheels.com/feed/rss,Not found (404),404,301 to /blog
+https://www.e5wheels.com/comments/feed,Not found (404),404,301 to /blog
+https://www.e5wheels.com/page/2,Not found (404),404,301 to /blog
+https://www.e5wheels.com/wp-admin,Not found (404),404,410 Gone + X-Robots-Tag noindex
+https://www.e5wheels.com/wp-login.php,Not found (404),404,410 Gone + X-Robots-Tag noindex
+https://www.e5wheels.com/xmlrpc.php,Not found (404),404,410 Gone + X-Robots-Tag noindex
+https://www.e5wheels.com/pending,Soft 404 + Excluded by noindex,200 noindex thin under-construction,301 to /
+https://www.e5wheels.com/registration,Soft 404 + Excluded by noindex + Duplicate,200 noindex duplicate of /wheel-registration,301 to /wheel-registration
+https://www.e5wheels.com/shop/single-product,Soft 404 + Excluded by noindex,200 noindex unless series+finish query,301 to /shop or mapped finish URL
+https://www.e5wheels.com/?s=,Soft 404,WordPress search 200 on prerendered homepage,301 to /shop via vercel.json query match plus middleware
+https://www.e5wheels.com/visualize-test,Excluded by noindex,200 noindex test visualizer,301 to /visualizer
+https://www.e5wheels.com/e5-visualizer,Excluded by noindex + Crawled currently not indexed,200 noindex (navbar-linked),indexable; unique title/description; SSR H1; in sitemap
+https://www.e5wheels.com/request-quote,Excluded by noindex + sitemap conflict,200 noindex AND listed in sitemap,still noindex (lead form); removed from sitemap
+https://www.e5wheels.com/checkout,Blocked by robots.txt + Excluded by noindex,Disallow /checkout/ + noindex,unchanged (cart/checkout stay out of index)
+https://www.e5wheels.com/checkout/cart,Blocked by robots.txt + Excluded by noindex,Disallow /checkout/ + noindex,unchanged
+https://www.e5wheels.com/admin,Blocked by robots.txt + Excluded by noindex,Disallow /admin/ + noindex,unchanged
+https://www.e5wheels.com/api/,Blocked by robots.txt,Disallow /api/,unchanged
+https://www.e5wheels.com/order-success,Excluded by noindex,200 noindex,still noindex; also Disallow in robots.txt; not in sitemap
+https://www.e5wheels.com/visualizer-callback,Excluded by noindex,200 noindex,still noindex; also Disallow in robots.txt; not in sitemap
+https://www.e5wheels.com/404,Excluded by noindex,200 noindex,unchanged; not in sitemap
+https://www.e5wheels.com/shop/daytona,Not found (404) / thin series hub,404,301 to /wheels/daytona
+https://www.e5wheels.com/shop/sebring,Not found (404) / thin series hub,404,301 to /wheels/sebring
+https://www.e5wheels.com/shop/sebring-2p,Not found (404) / thin series hub,404,301 to /wheels/sebring-2p
+https://www.e5wheels.com/shop/speedway,Not found (404) / thin series hub,404,301 to /wheels/speedway
+https://www.e5wheels.com/shop/talladega,Not found (404) / thin series hub,404,301 to /wheels/talladega
+https://www.e5wheels.com/shop/sonoma,Not found (404) / thin series hub,404,301 to /wheels/sonoma
+https://www.e5wheels.com/shop/laguna,Not found (404) / thin series hub,404,301 to /wheels/laguna
+https://www.e5wheels.com/shop/gt01,Not found (404) / thin series hub,404,301 to /wheels/gt-01
+https://www.e5wheels.com/shop/gt-01,Duplicate + series hub,200 or 404 vs /shop/gt01,301 to /wheels/gt-01
+https://www.e5wheels.com/shop/gt02,Not found (404) / thin series hub,404,301 to /wheels/gt-02
+https://www.e5wheels.com/shop/gt03,Not found (404) / thin series hub,404,301 to /wheels/gt-03
+https://www.e5wheels.com/shop/gt04,Not found (404) / thin series hub,404,301 to /wheels/gt-04
+https://www.e5wheels.com/shop/gt-01/brushed-aluminum,Duplicate Google chose different canonical (candidate),200 alongside /shop/gt01/brushed-aluminum,301 to /shop/gt01/brushed-aluminum
+https://www.e5wheels.com/shop/gt-02/brushed-aluminum,Duplicate,200 alongside /shop/gt02/...,301 to /shop/gt02/brushed-aluminum
+https://www.e5wheels.com/shop/gt-03/brushed-aluminum,Duplicate,200 alongside /shop/gt03/...,301 to /shop/gt03/brushed-aluminum
+https://www.e5wheels.com/shop/gt-04/brushed-aluminum,Duplicate,200 alongside /shop/gt04/...,301 to /shop/gt04/brushed-aluminum
+https://www.e5wheels.com/shop/sebring-2p/black,Duplicate + broken internal href,200 duplicate of gloss-black; linked from wheels/sebring-2p and c8-e-ray,301 to /shop/sebring-2p/gloss-black; internal hrefs updated
+https://www.e5wheels.com/shop/sebring-2p/gray-polished-lip,Duplicate / unofficial finish slug,200,301 to /shop/sebring-2p/gray-black-lip
+https://www.e5wheels.com/shop/sebring-2p/gloss-black-gloss-black-lip,Duplicate,200,301 to /shop/sebring-2p/gloss-black
+https://www.e5wheels.com/shop/sebring-2p/dark-bronze,Duplicate / unofficial finish slug,200,301 to /shop/sebring-2p/bronze-black-lip
+https://www.e5wheels.com/shop/sebring-2p/dark-bronze-gloss-black-lip,Duplicate,200,301 to /shop/sebring-2p/bronze-black-lip
+https://www.e5wheels.com/shop/sebring-2p/titanium-brushed,Duplicate / unofficial finish slug,200,301 to /shop/sebring-2p/titanium-black-lip
+https://www.e5wheels.com/shop/sebring-2p/titanium-brushed-gloss-black-lip,Duplicate,200,301 to /shop/sebring-2p/titanium-black-lip
+https://www.e5wheels.com/shop,Crawled currently not indexed,Vue-only H1 (client:visible); no CollectionPage JSON-LD,SSR H1 + intro; CollectionPage JSON-LD; lastmod 2026-11-20
+https://www.e5wheels.com/shop/daytona/gloss-black,Crawled currently not indexed,Vue client:only H1; not always in sitemap,SSR H1/intro; Product JSON-LD; sitemap customPages; lastmod 2026-11-20
+https://www.e5wheels.com/shop/daytona/titanium-brushed,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/daytona/titanium-gray-brushed,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/daytona/bronze-brushed-tint,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/daytona/chrome,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring/gloss-black,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring/titanium-brushed,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring/titanium-gray-brushed,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring/bronze-brushed-tint,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring/chrome,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring-2p/gloss-black,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sebring-2p/gloss-black-polished-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sebring-2p/bronze-black-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sebring-2p/bronze-polished-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sebring-2p/gray-black-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sebring-2p/titanium-black-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sebring-2p/titanium-polished-lip,Crawled currently not indexed / sitemap gap,Vue-only H1; missing from sitemap,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/speedway/gloss-black,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/speedway/titanium-brushed,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/speedway/titanium-brushed-tint,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/speedway/dark-bronze,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/speedway/chrome,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/talladega/brushed-aluminum,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/talladega/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/talladega/polished,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/talladega/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sonoma/brushed-aluminum,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/sonoma/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sonoma/polished,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/sonoma/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/laguna/brushed-aluminum,Crawled currently not indexed,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/laguna/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/laguna/polished,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/laguna/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; added to sitemap
+https://www.e5wheels.com/shop/gt01/brushed-aluminum,Crawled currently not indexed / sitemap gap,Vue-only H1; GT hyphen duplicate,SSR H1/intro; canonical /shop/gt01/...; sitemap
+https://www.e5wheels.com/shop/gt02/brushed-aluminum,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt02/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt02/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt03/brushed-aluminum,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt03/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt03/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt04/brushed-aluminum,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt04/gloss-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/gt04/satin-black,Crawled currently not indexed / sitemap gap,Vue-only H1,SSR H1/intro; sitemap
+https://www.e5wheels.com/shop/daytona/gloss-black/c8-z06,Alternate page with proper canonical,200 self-or-parent canonical; sometimes in sitemap,canonical remains parent finish URL; excluded from sitemap (path depth != 3)
+https://www.e5wheels.com/shop?generation=c8,Alternate page with proper canonical,200 shop listing with query,canonical /shop; not in sitemap
+https://www.e5wheels.com/gallery/vehicles?generation=c8,Alternate page with proper canonical,200 gallery with query,canonical /gallery/vehicles; not in sitemap
+https://www.e5wheels.com/gallery,Page with redirect + Duplicate canonical candidate,301 to /gallery/vehicles,unchanged 301; nav already points at /gallery/vehicles
+https://www.e5wheels.com/tag/anything,Page with redirect (chain),301 /tag/:path* -> /category/blog -> /blog,301 directly to /blog
+https://www.e5wheels.com/category/uncategorized,Page with redirect (chain),301 -> /category/blog -> /blog,301 directly to /blog
+https://www.e5wheels.com/national-corvette-museum-31st-anniversary-celebration,Page with redirect (chain),301 -> /category/blog -> /blog,301 directly to /blog
+https://www.e5wheels.com/wheel-registration,Sitemap hygiene,could be excluded by naive includes('/registration') filter,filter uses exact /registration so this stays indexable
+https://www.e5wheels.com/sitemap-index.xml,Sitemap hygiene,177 URLs; missing official 2P/GT/Laguna finishes; included request-quote,finish-only shop URLs + /e5-visualizer; request-quote/pending/registration/checkout excluded; lastmod for updated pages
+https://www.e5wheels.com/robots.txt,Blocked by robots.txt,Disallow /admin/ /checkout/ /api/,added Disallow /order-success and /visualizer-callback; did not disallow /e5-visualizer

@@ -12,6 +12,10 @@ const PAGE_LASTMOD: Record<string, string> = {
   [`${SITE}/wheels/gt-02`]: '2026-11-16',
   [`${SITE}/wheels/gt-03`]: '2026-11-16',
   [`${SITE}/wheels/gt-04`]: '2026-11-16',
+  [`${SITE}/e5-visualizer`]: '2026-11-20',
+  [`${SITE}/shop`]: '2026-11-20',
+  [`${SITE}/wheels/sebring-2p`]: '2026-11-20',
+  [`${SITE}/generations/c8/c8-e-ray`]: '2026-11-20',
   [`${SITE}/generations`]: '2026-11-17',
   [`${SITE}/generations/c5`]: '2026-11-17',
   [`${SITE}/generations/c5/c5-base`]: '2026-11-17',
@@ -46,6 +50,11 @@ export function getSitemapLastmod(url: string): string | undefined {
 
   const pageDate = PAGE_LASTMOD[normalized] || PAGE_LASTMOD[url];
   if (pageDate) return toIsoDate(pageDate);
+
+  // Shop finish pages gained server-rendered H1/intro on 2026-11-20.
+  if (/^https:\/\/www\.e5wheels\.com\/shop\/[^/]+\/[^/]+$/.test(normalized)) {
+    return toIsoDate('2026-11-20');
+  }
 
   const galleryMatch = normalized.match(/\/gallery\/([^/]+)$/);
   const galleryId = galleryMatch?.[1];

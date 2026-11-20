@@ -1,13 +1,13 @@
 # E5 Wheels - robots.txt
 
-# Allow all crawlers
 User-agent: *
 Allow: /
 
-# Disallow admin/checkout pages
+# Utility / account-style surfaces. Keep these out of the index.
 Disallow: /admin/
 Disallow: /checkout/
 Disallow: /api/
+Disallow: /order-success
+Disallow: /visualizer-callback
 
-# Sitemap location
 Sitemap: https://www.e5wheels.com/sitemap-index.xml
