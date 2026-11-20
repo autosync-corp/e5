@@ -6,6 +6,8 @@ import sitemap from '@astrojs/sitemap';
 import { getSitemapLastmod } from './src/core/constants/sitemapLastmod.ts';
 import { SITE_URL } from './src/core/constants/Site.ts';
 
+const seenSitemapUrls = new Set();
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
@@ -19,54 +21,81 @@ export default defineConfig({
     }),
     sitemap({
       filter: (page) => {
-        const excludePaths = [
+        const path = (page.replace(SITE_URL, '') || '/').replace(/\/+$/, '') || '/';
+        const excludedPrefixes = [
           '/admin',
           '/checkout',
-          '/order-success',
           '/pending',
           '/visualize-test',
           '/visualizer-callback',
-          '/registration/',
           '/shop/single-product',
-          '/e5-visualizer',
+          '/request-quote',
         ];
-        return !excludePaths.some(p => page.includes(p));
+        const excludedExact = ['/order-success', '/registration', '/404'];
+        if (excludedExact.includes(path) || excludedPrefixes.some((p) => path === p || path.startsWith(`${p}/`))) {
+          return false;
+        }
+        // Finish-only shop URLs belong in customPages; drop series hubs and fitment variants.
+        if (path.startsWith('/shop/')) {
+          const parts = path.split('/').filter(Boolean);
+          if (parts.length !== 3) return false;
+        }
+        return true;
       },
       customPages: [
+        `${SITE_URL}/shop`,
         // Blog pages (WordPress headless — SSR routes not auto-discovered)
         `${SITE_URL}/blog`,
         `${SITE_URL}/blog/cracked-oem-c7-corvette-wheels`,
         `${SITE_URL}/blog/revamp-your-ride-e5-custom-wheels-for-your-c7-corvette`,
         `${SITE_URL}/blog/e5-wheels-at-corvettes-at-carlisle-2025`,
         `${SITE_URL}/blog/c6-corvette-aftermarket-wheels-personalize-your-ride`,
-        // Shop level-2 pages: /shop/{series}/{finish} (SSR routes not auto-discovered)
-        // Daytona
+        `${SITE_URL}/e5-visualizer`,
+        // Shop finish pages from the official price file, plus live extra finishes already 200.
         `${SITE_URL}/shop/daytona/gloss-black`,
         `${SITE_URL}/shop/daytona/titanium-brushed`,
         `${SITE_URL}/shop/daytona/titanium-gray-brushed`,
         `${SITE_URL}/shop/daytona/bronze-brushed-tint`,
         `${SITE_URL}/shop/daytona/chrome`,
-        // Sebring
         `${SITE_URL}/shop/sebring/gloss-black`,
         `${SITE_URL}/shop/sebring/titanium-brushed`,
         `${SITE_URL}/shop/sebring/titanium-gray-brushed`,
         `${SITE_URL}/shop/sebring/bronze-brushed-tint`,
         `${SITE_URL}/shop/sebring/chrome`,
-        // Sebring 2P
+        `${SITE_URL}/shop/sebring-2p/gloss-black`,
         `${SITE_URL}/shop/sebring-2p/gloss-black-polished-lip`,
-        `${SITE_URL}/shop/sebring-2p/gray-polished-lip`,
+        `${SITE_URL}/shop/sebring-2p/bronze-black-lip`,
         `${SITE_URL}/shop/sebring-2p/bronze-polished-lip`,
-        // Speedway
+        `${SITE_URL}/shop/sebring-2p/gray-black-lip`,
+        `${SITE_URL}/shop/sebring-2p/titanium-black-lip`,
+        `${SITE_URL}/shop/sebring-2p/titanium-polished-lip`,
         `${SITE_URL}/shop/speedway/gloss-black`,
         `${SITE_URL}/shop/speedway/titanium-brushed`,
         `${SITE_URL}/shop/speedway/titanium-brushed-tint`,
         `${SITE_URL}/shop/speedway/dark-bronze`,
         `${SITE_URL}/shop/speedway/chrome`,
-        // Talladega
         `${SITE_URL}/shop/talladega/brushed-aluminum`,
         `${SITE_URL}/shop/talladega/gloss-black`,
-        // Sonoma
+        `${SITE_URL}/shop/talladega/polished`,
+        `${SITE_URL}/shop/talladega/satin-black`,
         `${SITE_URL}/shop/sonoma/brushed-aluminum`,
+        `${SITE_URL}/shop/sonoma/gloss-black`,
+        `${SITE_URL}/shop/sonoma/polished`,
+        `${SITE_URL}/shop/sonoma/satin-black`,
+        `${SITE_URL}/shop/laguna/brushed-aluminum`,
+        `${SITE_URL}/shop/laguna/gloss-black`,
+        `${SITE_URL}/shop/laguna/polished`,
+        `${SITE_URL}/shop/laguna/satin-black`,
+        `${SITE_URL}/shop/gt01/brushed-aluminum`,
+        `${SITE_URL}/shop/gt02/brushed-aluminum`,
+        `${SITE_URL}/shop/gt02/gloss-black`,
+        `${SITE_URL}/shop/gt02/satin-black`,
+        `${SITE_URL}/shop/gt03/brushed-aluminum`,
+        `${SITE_URL}/shop/gt03/gloss-black`,
+        `${SITE_URL}/shop/gt03/satin-black`,
+        `${SITE_URL}/shop/gt04/brushed-aluminum`,
+        `${SITE_URL}/shop/gt04/gloss-black`,
+        `${SITE_URL}/shop/gt04/satin-black`,
         // Generation model pages (SSR routes not auto-discovered)
         `${SITE_URL}/generations/c5/c5-base`,
         `${SITE_URL}/generations/c6/c6-z06`,
@@ -83,6 +112,8 @@ export default defineConfig({
         if (item.url.endsWith('/') && item.url !== `${SITE_URL}/`) {
           item.url = item.url.slice(0, -1);
         }
+        if (seenSitemapUrls.has(item.url)) return undefined;
+        seenSitemapUrls.add(item.url);
         const lastmod = getSitemapLastmod(item.url);
         if (lastmod) {
           item.lastmod = lastmod;

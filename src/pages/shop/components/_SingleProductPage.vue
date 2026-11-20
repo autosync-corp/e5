@@ -19,6 +19,7 @@ const props = defineProps<{
   trimParam?: string;
   frontSizeParam?: string;
   rearSizeParam?: string;
+  ssrHasHeading?: boolean;
 }>();
 
 // Get product ID from URL if not provided as prop
@@ -1756,7 +1757,8 @@ onMounted(() => {
         <div class="space-y-6">
           <!-- Style name + series logo on one line (series ~45% of name letter height) -->
           <div>
-            <h1
+            <component
+              :is="ssrHasHeading ? 'h2' : 'h1'"
               class="style-series-lockup style-series-lockup--shop"
               :class="{ 'is-gt-wordmark': isGtModelWordmark }"
             >
@@ -1781,7 +1783,7 @@ onMounted(() => {
                 />
               </a>
               <span class="sr-only"> {{ finishDisplayName }} WHEELS<template v-if="generationParam || trimParam"> - {{ generationParam ? generationParam.toUpperCase() : '' }}{{ generationParam && trimParam ? ' ' : '' }}{{ trimParam || '' }}</template></span>
-            </h1>
+            </component>
           </div>
 
           <!-- Divider -->

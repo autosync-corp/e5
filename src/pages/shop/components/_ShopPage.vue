@@ -12,6 +12,8 @@ import {
   wheelMatchesFitmentSpec,
 } from '@/core/constants/CuratedFitments';
 
+defineProps<{ hideHero?: boolean }>();
+
 // State
 const apiResponse = ref<WheelsApiResponse | null>(null);
 const isLoading = ref(true);
@@ -367,8 +369,8 @@ onMounted(() => {
       <VehicleSelector @vehicle-selected="handleVehicleSelected" />
     </div>
 
-    <!-- Hero Section -->
-    <section class="relative w-full h-[400px] bg-gradient-to-r from-black to-gray-900 flex items-center justify-center">
+    <!-- Hero Section (omitted when Astro already rendered the H1) -->
+    <section v-if="!hideHero" class="relative w-full h-[400px] bg-gradient-to-r from-black to-gray-900 flex items-center justify-center">
       <div class="text-center">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-['Franklin_Gothic_Demi'] text-white tracking-wider mb-4">
           E5 WHEELS SHOP

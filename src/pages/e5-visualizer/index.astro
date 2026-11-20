@@ -15,12 +15,34 @@ import { SITE_URL } from '@/core/constants/Site.ts';
 //
 // Not linked from anywhere else on the site yet — direct-link access only.
 const baseUrl = SITE_URL;
-const title = 'Wheel Visualizer | E5 Wheels';
-const description = 'Visualize E5 Forged and Form Forged wheels on your Corvette.';
+const title = 'E5 Immersive Gallery | Visualize E5 Wheels on Your Corvette';
+const description = 'Open the E5 Immersive Gallery to see Daytona, Sebring, Speedway, Talladega, Sonoma, Laguna, and GT Forged wheels on C5, C6, C7, and C8 Corvettes.';
 const canonicalUrl = `${baseUrl}/e5-visualizer`;
 ---
 
 <style>
+.e5-visualizer-intro {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 16px;
+    text-align: center;
+}
+.e5-visualizer-intro h1 {
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    color: #111;
+}
+.e5-visualizer-intro p {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 720px;
+}
 .e5-visualizer-frame {
     display: block;
     width: 100%;
@@ -30,10 +52,17 @@ const canonicalUrl = `${baseUrl}/e5-visualizer`;
 }
 </style>
 
-<MainLayout title={title} description={description} canonical={canonicalUrl} noindex={true}>
+<MainLayout title={title} description={description} canonical={canonicalUrl}>
+    <section class="e5-visualizer-intro">
+        <h1>E5 Immersive Gallery</h1>
+        <p>
+            Browse real E5 wheel and Corvette combinations in the Immersive Gallery.
+            Pick a generation, style, and finish to see complete staggered sets on C5, C6, C7, and C8.
+        </p>
+    </section>
     <iframe
         class="e5-visualizer-frame"
         src="/visualizer-app/e5wheels-visualizer_9.html"
-        title="E5 Wheels Visualizer"
+        title="E5 Immersive Gallery"
     ></iframe>
 </MainLayout>

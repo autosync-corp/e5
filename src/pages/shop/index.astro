@@ -7,8 +7,26 @@ const baseUrl = SITE_URL;
 const title = 'Shop Corvette Wheels - E5 Forged & Form Forged | E5 Wheels';
 const description = 'Shop precision-engineered wheels for your Corvette. E5 Forged for C8 Z06/ZR1/E-Ray and Form Forged for C5, C6, C7, C8. Filter by generation, model, and size.';
 const canonicalUrl = `${baseUrl}/shop`;
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: canonicalUrl,
+};
 ---
 
 <MainLayout title={title} description={description} canonical={canonicalUrl}>
-  <ShopPage client:visible />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  <section class="relative w-full min-h-[240px] bg-gradient-to-r from-black to-gray-900 flex items-center justify-center px-6 py-16">
+    <div class="text-center max-w-3xl">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-['Franklin_Gothic_Demi'] text-white tracking-wider mb-4">
+        E5 WHEELS SHOP
+      </h1>
+      <p class="text-xl font-['Franklin_Gothic_Book'] text-white/80">
+        Complete staggered Corvette wheel sets for C5, C6, C7, and C8. Older square C5 fitments stay square.
+      </p>
+    </div>
+  </section>
+  <ShopPage client:visible hideHero />
 </MainLayout>
