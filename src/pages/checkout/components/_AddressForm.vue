@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
+import { HOW_DID_YOU_HEAR_OPTIONS } from '@/core/utils/howDidYouHear';
 
 // Country and state data
 const countries = [
@@ -53,6 +54,7 @@ const phoneNumber = ref('');
 const emailAddress = ref('');
 const shipToDifferent = ref(false);
 const orderNotes = ref('');
+const howDidYouHear = ref('');
 
 // Shipping address fields
 const shippingFirstName = ref('');
@@ -164,6 +166,7 @@ function getFormData() {
       zipCode: shippingZipCode.value,
     } : null,
     orderNotes: orderNotes.value,
+    howDidYouHear: howDidYouHear.value,
   };
 }
 
@@ -323,6 +326,16 @@ if (typeof window !== 'undefined') {
       <div class="e5CheckoutFormGroup">
         <label class="e5CheckoutLabel">ORDER NOTES (OPTIONAL)</label>
         <textarea v-model="orderNotes" class="e5CheckoutTextarea" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+      </div>
+
+      <div class="e5CheckoutFormGroup">
+        <label class="e5CheckoutLabel" for="howDidYouHear">HOW DID YOU HEAR ABOUT US?</label>
+        <select id="howDidYouHear" v-model="howDidYouHear" class="e5CheckoutSelect">
+          <option disabled value="">Select one</option>
+          <option v-for="option in HOW_DID_YOU_HEAR_OPTIONS" :key="option" :value="option">
+            {{ option }}
+          </option>
+        </select>
       </div>
     </form>
   </div>
