@@ -6,9 +6,9 @@ export type PictureSources = {
 };
 
 const CATALOG_RE = /\/assets\/images\/catalog-800\/([^/]+)\.webp$/;
-const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|immersive-gallery|gt03-black)(?:-1280)?\.webp$/;
+const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4])(?:-1280)?\.webp$/;
 
-export function bannerPicture(stem: 'bf-sale' | 'immersive-gallery' | 'gt03-black', sizes = '100vw'): PictureSources {
+export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
   return {
     src: `/assets/images/banner/${stem}-1280.webp`,
     avif: `/assets/images/banner/${stem}-800.avif 800w, /assets/images/banner/${stem}-1280.avif 1280w, /assets/images/banner/${stem}-1920.avif 1920w`,
@@ -31,7 +31,7 @@ export function pictureFor(src: string, sizes: string): PictureSources | null {
 
   const banner = src.match(BANNER_RE);
   if (banner) {
-    return bannerPicture(banner[1] as 'bf-sale' | 'immersive-gallery' | 'gt03-black', sizes);
+    return bannerPicture(banner[1], sizes);
   }
 
   const named: Record<string, PictureSources> = {

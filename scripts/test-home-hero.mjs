@@ -31,7 +31,12 @@ assert('promo code is exact HTML text', banner.includes('15%OFF@E5'));
 assert('shop CTA goes to /shop', banner.includes('SHOP_ROUTE') && banner.includes('SHOP WHEELS'));
 assert('gallery CTA goes to /e5-visualizer', banner.includes('INTERACTIVE_GALLERY_ROUTE') && banner.includes('OPEN GALLERY'));
 assert('GT.03 CTA goes to series page', banner.includes('WHEELS_GT_03_ROUTE') && banner.includes('IN-STOCK & READY-2-SHIP'));
-assert('three slides', banner.includes("stem: 'bf-sale'") && banner.includes("stem: 'immersive-gallery'") && banner.includes("stem: 'gt03-black'"));
+assert('three slides', banner.includes("stem: 'bf-sale'") && banner.includes("stem: 'viz-01'") && banner.includes("stem: 'gt03-black'"));
+assert('visualizer cycle uses real C8 combos', banner.includes('Torch Red') && banner.includes('Daytona Gloss Black') && banner.includes('Arctic White') && banner.includes('Sebring Titanium') && banner.includes('Rapid Blue') && banner.includes('Speedway Chrome') && banner.includes('Bronze Brushed Tint'));
+assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('2200'));
+assert('GT.03 laydown is catalog-800 gt03-ab', banner.includes('/assets/images/catalog-800/gt03-ab.webp') && banner.includes('e5-banner-laydown'));
+assert('banner copy sits on the right away from LiveChat', banner.includes('align-items: flex-end') && banner.includes('margin-left: auto') && banner.includes('text-align: right') && banner.includes('padding: 36px 18px 140px 56px') && banner.includes('padding-left: 44%'));
+assert('reduced motion freezes viz frames', banner.includes("prefers-reduced-motion: reduce") && banner.includes('.e5-banner-viz-frame'));
 assert('LCP preload 800 on mobile', src.includes('href="/assets/images/banner/bf-sale-800.webp"') && src.includes('media="(max-width: 1023px)"'));
 assert('LCP preload 1280 on desktop', src.includes('href="/assets/images/banner/bf-sale-1280.webp"') && src.includes('media="(min-width: 1024px)"'));
 assert('first slide is eager high priority', banner.includes("eager ? 'high'") && banner.includes("eager ? 'eager' : 'lazy'"));
@@ -40,7 +45,7 @@ assert('AVIF and WebP srcset', banner.includes('type="image/avif"') && banner.in
 assert('arrows dots swipe keyboard autoplay', banner.includes('data-prev') && banner.includes('data-next') && banner.includes('data-dot') && banner.includes('pointerdown') && banner.includes('ArrowLeft') && banner.includes('6000') && banner.includes('prefers-reduced-motion'));
 assert('no Vue carousel island', !banner.includes('client:') && !src.includes('client:load'));
 
-const stems = ['bf-sale', 'immersive-gallery', 'gt03-black'];
+const stems = ['bf-sale', 'gt03-black', 'viz-01', 'viz-02', 'viz-03', 'viz-04'];
 const widths = [800, 1280, 1920];
 for (const stem of stems) {
   for (const width of widths) {

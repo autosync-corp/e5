@@ -2,10 +2,10 @@
  * Crop homepage banner photos to 16:9 and emit 800/1280/1920 WebP+AVIF.
  * Slide sources:
  *  1. gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp
- *  2. live capture of https://www.e5wheels.com/e5-visualizer (tmp or existing 1920)
+ *  2. visualizer frames: scripts/generate-banner-viz-frames.py
  *  3. gallery/corvette/2025-c8-z06-black/1.webp (GT.03 on black C8 Z06)
  */
-import { mkdirSync, existsSync, statSync } from 'node:fs';
+import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
@@ -54,15 +54,5 @@ const sebring = join(ROOT, 'gallery/corvette/2025-c8-stingray-blue-sebring-gloss
 const gt03 = join(ROOT, 'gallery/corvette/2025-c8-z06-black/1.webp');
 await variants(await crop16x9(sebring, 'south'), 'bf-sale');
 await variants(await crop16x9(gt03, 'south'), 'gt03-black');
-
-const vizCapture = '/tmp/e5-banner/visualizer-capture.png';
-const vizExisting = join(OUT, 'immersive-gallery-1920.webp');
-if (existsSync(vizCapture)) {
-  await variants(await crop16x9(vizCapture, 'north'), 'immersive-gallery');
-} else if (existsSync(vizExisting)) {
-  await variants(sharp(vizExisting), 'immersive-gallery');
-} else {
-  throw new Error('Missing visualizer capture; expected ' + vizCapture + ' or ' + vizExisting);
-}
 
 console.log('banner images done');
