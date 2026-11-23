@@ -33,9 +33,13 @@ assert('gallery CTA goes to /e5-visualizer', banner.includes('INTERACTIVE_GALLER
 assert('GT.03 CTA goes to series page', banner.includes('WHEELS_GT_03_ROUTE') && banner.includes('IN-STOCK & READY-2-SHIP'));
 assert('three slides', banner.includes("stem: 'bf-sale'") && banner.includes("stem: 'viz-01'") && banner.includes("stem: 'gt03-black'"));
 assert('visualizer cycle uses real C8 combos', banner.includes('Torch Red') && banner.includes('Daytona Gloss Black') && banner.includes('Arctic White') && banner.includes('Sebring Titanium') && banner.includes('Rapid Blue') && banner.includes('Speedway Chrome') && banner.includes('Bronze Brushed Tint'));
-assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('2200'));
-assert('GT.03 laydown is catalog-800 gt03-ab', banner.includes('/assets/images/catalog-800/gt03-ab.webp') && banner.includes('e5-banner-laydown'));
-assert('banner copy sits on the right away from LiveChat', banner.includes('align-items: flex-end') && banner.includes('margin-left: auto') && banner.includes('text-align: right') && banner.includes('padding: 36px 18px 140px 56px') && banner.includes('padding-left: 44%'));
+assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('vizHoldMs') && banner.includes('3000'));
+assert('viz crossfade is 0.9s', banner.includes('opacity 0.9s ease'));
+assert('viz caption names the combo', banner.includes('data-viz-caption') && banner.includes('Torch Red · Daytona Gloss Black') && banner.includes('data-combo'));
+assert('GT.03 laydown is transparent hi-res overlay', banner.includes('gt03LaydownPicture') && banner.includes('e5-banner-laydown') && !banner.includes('catalog-800/gt03-ab.webp') && !banner.includes('background: #0a0a0a'));
+assert('banner copy sits on the right away from LiveChat', banner.includes('align-items: flex-end') && banner.includes('margin-left: auto') && banner.includes('text-align: right') && banner.includes('padding: 36px 18px 140px 56px'));
+assert('mobile front-wheel crop', banner.includes('object-position: 50% 68%') && banner.includes('object-position: 62% 70%') && banner.includes('object-position: 42% 58%'));
+assert('laydown does not leak into other slides', banner.includes('overflow: hidden') && banner.includes('width: 62%'));
 assert('reduced motion freezes viz frames', banner.includes("prefers-reduced-motion: reduce") && banner.includes('.e5-banner-viz-frame'));
 assert('LCP preload 800 on mobile', src.includes('href="/assets/images/banner/bf-sale-800.webp"') && src.includes('media="(max-width: 1023px)"'));
 assert('LCP preload 1280 on desktop', src.includes('href="/assets/images/banner/bf-sale-1280.webp"') && src.includes('media="(min-width: 1024px)"'));
@@ -52,6 +56,10 @@ for (const stem of stems) {
     assert(`${stem}-${width}.webp`, existsSync(join(root, `public/assets/images/banner/${stem}-${width}.webp`)));
     assert(`${stem}-${width}.avif`, existsSync(join(root, `public/assets/images/banner/${stem}-${width}.avif`)));
   }
+}
+for (const width of [800, 1200, 1500]) {
+  assert(`gt03-laydown-${width}.webp`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.webp`)));
+  assert(`gt03-laydown-${width}.avif`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.avif`)));
 }
 
 if (failed) {

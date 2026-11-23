@@ -50,9 +50,29 @@ async function variants(pipeline, stem, widths = [800, 1280, 1920]) {
   }
 }
 
+async function laydownVariants() {
+  const input = join(import.meta.dirname, 'assets', 'gt03-laydown.png');
+  const base = sharp(input);
+  for (const width of [800, 1200, 1500]) {
+    const resized = base.clone().resize({
+      width,
+      height: width,
+      fit: 'inside',
+      withoutEnlargement: true,
+      kernel: sharp.kernel.lanczos3,
+    });
+    const webp = join(OUT, `gt03-laydown-${width}.webp`);
+    const avif = join(OUT, `gt03-laydown-${width}.avif`);
+    await resized.clone().webp({ quality: 84, alphaQuality: 100, effort: 5 }).toFile(webp);
+    await resized.clone().avif({ quality: 52, effort: 4 }).toFile(avif);
+    console.log('gt03-laydown', width, 'webp', statSync(webp).size, 'avif', statSync(avif).size);
+  }
+}
+
 const sebring = join(ROOT, 'gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp');
 const gt03 = join(ROOT, 'gallery/corvette/2025-c8-z06-black/1.webp');
 await variants(await crop16x9(sebring, 'south'), 'bf-sale');
 await variants(await crop16x9(gt03, 'south'), 'gt03-black');
+await laydownVariants();
 
 console.log('banner images done');

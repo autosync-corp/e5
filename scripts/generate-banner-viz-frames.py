@@ -30,7 +30,11 @@ def composite(paint: str, style: str, finish: str) -> Image.Image:
 def emit(img: Image.Image, stem: str) -> None:
     for width in WIDTHS:
         height = round(width * 9 / 16)
-        resized = img.resize((width, height), Image.Resampling.LANCZOS)
+        # Native 1920x1080 composites stay unscaled so the four looks stay pixel-locked.
+        if img.size == (width, height):
+            resized = img
+        else:
+            resized = img.resize((width, height), Image.Resampling.LANCZOS)
         webp = OUT / f'{stem}-{width}.webp'
         avif = OUT / f'{stem}-{width}.avif'
         resized.save(webp, 'WEBP', quality=78, method=5)

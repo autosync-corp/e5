@@ -17,6 +17,15 @@ export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
   };
 }
 
+export function gt03LaydownPicture(sizes = '(min-width: 768px) 46vw, 1px'): PictureSources {
+  return {
+    src: '/assets/images/banner/gt03-laydown-1500.webp',
+    avif: '/assets/images/banner/gt03-laydown-800.avif 800w, /assets/images/banner/gt03-laydown-1200.avif 1200w, /assets/images/banner/gt03-laydown-1500.avif 1500w',
+    webp: '/assets/images/banner/gt03-laydown-800.webp 800w, /assets/images/banner/gt03-laydown-1200.webp 1200w, /assets/images/banner/gt03-laydown-1500.webp 1500w',
+    sizes,
+  };
+}
+
 export function pictureFor(src: string, sizes: string): PictureSources | null {
   const catalog = src.match(CATALOG_RE);
   if (catalog) {
