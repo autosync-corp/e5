@@ -6,6 +6,7 @@ import { Redis } from '@upstash/redis';
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { loadSiteNav, navFingerprint, visibleHeaderItems } from '@/core/portal/nav.ts';
 
 export interface Props {
   title?: string;
@@ -30,6 +31,9 @@ const {
   blogFonts = false,
 } = Astro.props;
 const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const { nav: siteNav } = await loadSiteNav();
+const headerItems = visibleHeaderItems(siteNav.header);
+const navFp = navFingerprint(siteNav);
 
 // Load tracking settings from Redis (60s in-memory cache so TTFB is not
 // blocked on Upstash on every request of a warm isolate).
@@ -178,7 +182,7 @@ const fbPixelId = tracking.fbPixelId || '';
         });
       });
     </script>
-    <Navbar client:idle={{ timeout: 3500 }} transition:persist/>
+    <Navbar client:idle={{ timeout: 3500 }} transition:persist items={headerItems} fingerprint={navFp} />
     <div style="min-height: 100dvh; background-color: #ffffff">
       <main class="mt-107">
         <slot />

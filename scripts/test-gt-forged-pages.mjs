@@ -50,11 +50,13 @@ assert('brushed shop link', GT_01_MODEL.finishes[0].href.includes('/shop/gt01/br
 assert('exclusive is lead time only', GT_01_MODEL.exclusive.includes('C8'), false);
 
 const navbar = readFileSync(join(root, 'src/core/components/Navbar.vue'), 'utf8');
-const wheelsTitleOrder = [...navbar.matchAll(/<(?:div class="(?:wheel-group-title|mobile-wheel-title)")>([^<]+)</g)].map((m) => m[1]);
-assert('desktop wheels order', wheelsTitleOrder.slice(0, 4).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
-assert('mobile wheels order', wheelsTitleOrder.slice(4, 8).join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
-assert('2-PIECE relabeled', navbar.includes('2-PIECE'), false);
-assert('menu stays text 2P FORGED', navbar.includes('>2P FORGED<'), true);
+const navSeed = readFileSync(join(root, 'src/core/portal/nav.ts'), 'utf8');
+const wheelsTitleOrder = [...navSeed.matchAll(/group: '(FORM FORGED|2P FORGED|E5 FORGED|GT FORGED)'/g)].map((m) => m[1]);
+const uniqueWheelGroups = [...new Set(wheelsTitleOrder)];
+assert('desktop wheels order', uniqueWheelGroups.join('|'), 'FORM FORGED|2P FORGED|E5 FORGED|GT FORGED');
+assert('navbar keeps wheel group classes', navbar.includes('wheel-group-title') && navbar.includes('mobile-wheel-title'), true);
+assert('2-PIECE relabeled', navbar.includes('2-PIECE') || navSeed.includes('2-PIECE'), false);
+assert('menu stays text 2P FORGED', navSeed.includes("'2P FORGED'"), true);
 
 const sebring2p = readFileSync(join(root, 'src/pages/wheels/sebring-2p.astro'), 'utf8');
 assert('sebring-2p uses 2P logo', sebring2p.includes('TWO_P_FORGED_LOGO'), true);
@@ -128,8 +130,8 @@ assert('laguna has E5 series logo', e5Models.includes("alt: 'E5 Forged'"), true)
 const shopPage = readFileSync(join(root, 'src/pages/shop/components/_SingleProductPage.vue'), 'utf8');
 assert('shop adjacent lockup', shopPage.includes('style-series-lockup--shop'), true);
 assert('shop uses detail series class', shopPage.includes('series-logo-detail-form'), true);
-assert('desktop GT.01 link', navbar.includes('WHEELS_GT_01_ROUTE'), true);
-assert('mobile GT.04 link', navbar.includes('WHEELS_GT_04_ROUTE'), true);
+assert('desktop GT.01 link', navSeed.includes('WHEELS_GT_01_ROUTE'), true);
+assert('mobile GT.04 link', navSeed.includes('WHEELS_GT_04_ROUTE'), true);
 
 const designs = readFileSync(join(root, 'src/core/components/E5ForgedDesigns.astro'), 'utf8');
 assert('bottom block has no GT entry', /GT\.0|gt-01|GT FORGED/.test(designs), false);

@@ -4,8 +4,10 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const footer = readFileSync(join(root, 'src/core/components/Footer.astro'), 'utf8');
+const nav = readFileSync(join(root, 'src/core/portal/nav.ts'), 'utf8');
 const layout = readFileSync(join(root, 'src/layouts/MainLayout.astro'), 'utf8');
 const fonts = readFileSync(join(root, 'src/assets/fonts/fonts.css'), 'utf8');
+const footerAndNav = `${footer}\n${nav}`;
 
 let failed = 0;
 function assert(label, ok) {
@@ -42,12 +44,12 @@ const requiredTokens = [
 ];
 
 for (const token of requiredTokens) {
-  assert(`keeps ${token}`, footer.includes(token));
+  assert(`keeps ${token}`, footerAndNav.includes(token));
 }
 
 assert('no variant switch', !footer.includes('variant ===') && !layout.includes("searchParams.get('footer')"));
 assert('no A/B markup', !footer.includes('ft-a') && !footer.includes('ft-b') && !footer.includes('tesla-links'));
-assert('C layout remains', footer.includes('vossen-top') && footer.includes('GET IN TOUCH'));
+assert('C layout remains', footer.includes('vossen-top') && footerAndNav.includes('GET IN TOUCH'));
 assert('white background', footer.includes('background-color: #ffffff'));
 assert('no red footer bg', !footer.includes('bg-e5-red w-full'));
 assert('44px tap', footer.includes('min-height: 44px'));

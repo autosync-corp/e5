@@ -234,11 +234,11 @@ try {
   assert('dashboard uses site type', dashHtml.includes('Franklin Gothic'));
   assert('dashboard has logout', dashHtml.includes('/portal/logout'));
 
-  const soon = await fetch(`${BASE}/portal/links`, { headers: { cookie: `e5_portal=${cookieValue}` } });
+  const soon = await fetch(`${BASE}/portal/blog`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const soonHtml = await soon.text();
-  assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Footer Links') && soonHtml.includes('Coming soon'));
+  assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Blog Posts') && soonHtml.includes('Coming soon'));
 
-  const unauth = await fetch(`${BASE}/portal/links`, { redirect: 'manual' });
+  const unauth = await fetch(`${BASE}/portal/blog`, { redirect: 'manual' });
   assert('section redirects when logged out', unauth.status === 302);
 
   const out = await fetch(`${BASE}/portal/logout`, {

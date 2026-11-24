@@ -1,134 +1,151 @@
 <script setup lang="ts">
-import {computed, ref, onMounted} from "vue";
-import {CART_ICON, E5_LOGO_WHITE} from "@/core/constants/App.ts";
-import {
-  ABOUT_ROUTE,
-  CART_ROUTE,
-  CONTACT_ROUTE,
-  GALLERY_ROUTE,
-  GALLERY_VEHICLES_ROUTE,
-  GALLERY_WHEELS_ROUTE,
-  GENERATIONS_ROUTE,
-  GENERATIONS_C5_BASE_ROUTE,
-  GENERATIONS_C5_Z06_ROUTE,
-  GENERATIONS_C6_ROUTE,
-  GENERATIONS_C6_Z06_ROUTE,
-  GENERATIONS_C6_ZR1_ROUTE,
-  GENERATIONS_C6_GRAND_SPORT_ROUTE,
-  GENERATIONS_C7_STINGRAY_ROUTE,
-  GENERATIONS_C7_GRAND_SPORT_ROUTE,
-  GENERATIONS_C7_Z06_ROUTE,
-  GENERATIONS_C7_ZR1_ROUTE,
-  GENERATIONS_C8_STINGRAY_ROUTE,
-  GENERATIONS_C8_Z06_ROUTE,
-  GENERATIONS_C8_ZR1_ROUTE,
-  GENERATIONS_C8_E_RAY_ROUTE,
-  HOME_ROUTE, PROCESS_ROUTE, PROCESS_FORGED_ROUTE, PROCESS_FORM_FORGED_ROUTE, SHOP_ROUTE, VISUALIZE_ROUTE,
-  INTERACTIVE_GALLERY_ROUTE,
-  WHEELS_ROUTE,
-  WHEELS_DAYTONA_ROUTE,
-  WHEELS_TALLADEGA_ROUTE,
-  WHEELS_SEBRING_ROUTE,
-  WHEELS_SEBRING_2P_ROUTE,
-  WHEELS_SPEEDWAY_ROUTE,
-  WHEELS_SONOMA_ROUTE,
-  WHEELS_LAGUNA_ROUTE,
-  WHEELS_GT_01_ROUTE,
-  WHEELS_GT_02_ROUTE,
-  WHEELS_GT_03_ROUTE,
-  WHEELS_GT_04_ROUTE
-} from "@/core/constants/Routes.ts";
-import { CartManager } from "@/core/services/ProductService.ts";
-import MiniCart from "@/core/components/MiniCart.vue";
+import { computed, ref, watch, onMounted } from 'vue';
+import { CART_ICON, E5_LOGO_WHITE } from '@/core/constants/App.ts';
+import { HOME_ROUTE } from '@/core/constants/Routes.ts';
+import { CartManager } from '@/core/services/ProductService.ts';
+import MiniCart from '@/core/components/MiniCart.vue';
+
+type NavChild = {
+  id: string;
+  label: string;
+  href: string;
+  group: string;
+  badge: string;
+};
+
+type HeaderItem = {
+  id: string;
+  label: string;
+  href: string;
+  align: 'left' | 'right';
+  menu: 'plain' | 'wheels' | 'generations' | 'visualize';
+  matches: string[];
+  children: NavChild[];
+};
+
+type NavGroup = { label: string; items: NavChild[] };
+
+const props = defineProps<{
+  items: HeaderItem[];
+  fingerprint: string;
+}>();
+
+const liveItems = ref<HeaderItem[]>(props.items || []);
+watch(
+  () => props.items,
+  (next) => {
+    liveItems.value = next || [];
+  },
+);
 
 const currentPath = ref('');
 const isMobileMenuOpen = ref(false);
-const isWheelsDropdownOpen = ref(false);
-const isGalleryDropdownOpen = ref(false);
-const isProcessDropdownOpen = ref(false);
-const isGenerationsDropdownOpen = ref(false);
-const isVisualizeDropdownOpen = ref(false);
+const openMenus = ref<Record<string, boolean>>({});
 const isMiniCartOpen = ref(false);
 const cartItemCount = ref(0);
 
 onMounted(() => {
   currentPath.value = window.location.pathname;
   updateCartCount();
-
-  // Listen for cart updates
   window.addEventListener('storage', updateCartCount);
   window.addEventListener('cart-updated', updateCartCount);
+  hydrateLiveNav();
 });
 
 const updateCartCount = () => {
   cartItemCount.value = CartManager.getItemCount();
 };
 
-const isWheelsRoute = computed(() => currentPath.value.startsWith(WHEELS_ROUTE))
-const isGalleryRoute = computed(() => currentPath.value.startsWith(GALLERY_ROUTE))
-const isShopRoute = computed(() => currentPath.value.startsWith(SHOP_ROUTE))
-const isProcessRoute = computed(() => currentPath.value.startsWith(PROCESS_ROUTE))
-const isVisualizeRoute = computed(() =>
-  currentPath.value.startsWith(VISUALIZE_ROUTE) || currentPath.value.startsWith(INTERACTIVE_GALLERY_ROUTE)
-)
-const isGenerationRoute = computed(() => currentPath.value.startsWith(GENERATIONS_ROUTE))
-const isContactRoute = computed(() => currentPath.value.startsWith(CONTACT_ROUTE))
+async function hydrateLiveNav() {
+  try {
+    const res = await fetch('/api/site-nav');
+    const data = await res.json();
+    if (data?.fingerprint && data.fingerprint !== props.fingerprint && Array.isArray(data.header)) {
+      liveItems.value = data.header;
+    }
+  } catch {
+    /* keep SSR items */
+  }
+}
+
+const leftItems = computed(() => liveItems.value.filter((item) => item.align !== 'right'));
+const rightItems = computed(() => liveItems.value.filter((item) => item.align === 'right'));
+
+function isSelected(item: HeaderItem) {
+  const path = currentPath.value;
+  const prefixes = item.matches.length ? item.matches : [item.href];
+  return prefixes.some((prefix) => {
+    if (prefix === '/') return path === '/' || path === '';
+    return path === prefix || path.startsWith(`${prefix}/`);
+  });
+}
+
+function grouped(children: NavChild[]): NavGroup[] {
+  const groups: NavGroup[] = [];
+  const index = new Map<string, number>();
+  for (const row of children) {
+    const label = row.group || '';
+    if (!label) {
+      groups.push({ label: '', items: [row] });
+      continue;
+    }
+    const existing = index.get(label);
+    if (existing === undefined) {
+      index.set(label, groups.length);
+      groups.push({ label, items: [row] });
+    } else {
+      groups[existing].items.push(row);
+    }
+  }
+  return groups;
+}
+
+function usesGroups(item: HeaderItem) {
+  return item.menu === 'wheels' || item.menu === 'generations';
+}
+
+function dropdownClass(item: HeaderItem) {
+  if (item.menu === 'wheels') return 'wheels-dropdown';
+  if (item.menu === 'generations') return 'generations-dropdown';
+  if (item.menu === 'visualize') return 'visualize-dropdown';
+  return '';
+}
+
+function groupClass(item: HeaderItem) {
+  return item.menu === 'wheels' ? 'wheel-group' : 'generation-group';
+}
+
+function groupTitleClass(item: HeaderItem) {
+  return item.menu === 'wheels' ? 'wheel-group-title' : 'generation-title';
+}
+
+function mobileGroupClass(item: HeaderItem) {
+  return item.menu === 'wheels' ? 'mobile-wheel-group' : 'mobile-generation-group';
+}
+
+function mobileTitleClass(item: HeaderItem) {
+  return item.menu === 'wheels' ? 'mobile-wheel-title' : 'mobile-generation-title';
+}
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
-}
+};
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false;
-}
+};
 
-const toggleGalleryDropdown = () => {
-  isGalleryDropdownOpen.value = !isGalleryDropdownOpen.value;
-}
-
-const closeGalleryDropdown = () => {
-  isGalleryDropdownOpen.value = false;
-}
-
-const toggleGenerationsDropdown = () => {
-  isGenerationsDropdownOpen.value = !isGenerationsDropdownOpen.value;
-}
-
-const closeGenerationsDropdown = () => {
-  isGenerationsDropdownOpen.value = false;
-}
-
-const toggleWheelsDropdown = () => {
-  isWheelsDropdownOpen.value = !isWheelsDropdownOpen.value;
-}
-
-const closeWheelsDropdown = () => {
-  isWheelsDropdownOpen.value = false;
-}
-
-const toggleProcessDropdown = () => {
-  isProcessDropdownOpen.value = !isProcessDropdownOpen.value;
-}
-
-const closeProcessDropdown = () => {
-  isProcessDropdownOpen.value = false;
-}
-
-const toggleVisualizeDropdown = () => {
-  isVisualizeDropdownOpen.value = !isVisualizeDropdownOpen.value;
-}
-
-const closeVisualizeDropdown = () => {
-  isVisualizeDropdownOpen.value = false;
-}
+const toggleMenu = (id: string) => {
+  openMenus.value = { ...openMenus.value, [id]: !openMenus.value[id] };
+};
 
 const toggleMiniCart = () => {
   isMiniCartOpen.value = !isMiniCartOpen.value;
-}
+};
 
 const closeMiniCart = () => {
   isMiniCartOpen.value = false;
-}
+};
 </script>
 
 <template>
@@ -137,145 +154,68 @@ const closeMiniCart = () => {
     <!-- Desktop Navigation -->
     <div class="desktop-nav w-full max-w-[1600px] h-full flex items-center justify-center px-4 xl:px-8 2xl:px-12">
       <div class="flex items-center gap-2 xl:gap-4 2xl:gap-8">
-        <!-- Left Menu Items -->
         <div class="flex items-center gap-2 xl:gap-3 2xl:gap-4">
-          <!-- Wheels Dropdown -->
-          <div class="gallery-dropdown-wrapper" @mouseenter="isWheelsDropdownOpen = true" @mouseleave="closeWheelsDropdown">
-            <a :href="WHEELS_ROUTE" class="nav-link" :class="{'selected': isWheelsRoute}">
-              WHEELS
-              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-
-            <!-- Dropdown Menu -->
-            <div v-if="isWheelsDropdownOpen" class="dropdown-menu wheels-dropdown">
-              <div class="wheel-group">
-                <div class="wheel-group-title">FORM FORGED</div>
-                <a :href="WHEELS_DAYTONA_ROUTE" class="dropdown-item">DAYTONA</a>
-                <a :href="WHEELS_SEBRING_ROUTE" class="dropdown-item">SEBRING</a>
-                <a :href="WHEELS_SPEEDWAY_ROUTE" class="dropdown-item">SPEEDWAY</a>
-              </div>
-              <div class="wheel-group">
-                <div class="wheel-group-title">2P FORGED</div>
-                <a :href="WHEELS_SEBRING_2P_ROUTE" class="dropdown-item">SEBRING 2P</a>
-              </div>
-              <div class="wheel-group">
-                <div class="wheel-group-title">E5 FORGED</div>
-                <a :href="WHEELS_SONOMA_ROUTE" class="dropdown-item">SONOMA</a>
-                <a :href="WHEELS_TALLADEGA_ROUTE" class="dropdown-item">TALLADEGA</a>
-                <a :href="WHEELS_LAGUNA_ROUTE" class="dropdown-item">LAGUNA</a>
-              </div>
-              <div class="wheel-group">
-                <div class="wheel-group-title">GT FORGED</div>
-                <a :href="WHEELS_GT_01_ROUTE" class="dropdown-item">GT.01</a>
-                <a :href="WHEELS_GT_02_ROUTE" class="dropdown-item">GT.02</a>
-                <a :href="WHEELS_GT_03_ROUTE" class="dropdown-item">GT.03</a>
-                <a :href="WHEELS_GT_04_ROUTE" class="dropdown-item">GT.04</a>
+          <template v-for="item in leftItems" :key="item.id">
+            <div v-if="item.children.length" class="gallery-dropdown-wrapper">
+              <a :href="item.href" class="nav-link" :class="{'selected': isSelected(item)}" :aria-label="item.label">
+                {{ item.label }}
+                <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <div class="dropdown-menu" :class="dropdownClass(item)">
+                <template v-if="usesGroups(item)">
+                  <div v-for="group in grouped(item.children)" :key="group.label" :class="groupClass(item)">
+                    <div :class="groupTitleClass(item)">{{ group.label }}</div>
+                    <a v-for="child in group.items" :key="child.id" :href="child.href" class="dropdown-item">
+                      {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                    </a>
+                  </div>
+                </template>
+                <template v-else>
+                  <a v-for="child in item.children" :key="child.id" :href="child.href" class="dropdown-item whitespace-nowrap">
+                    {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                  </a>
+                </template>
               </div>
             </div>
-          </div>
-
-          <!-- Gallery Dropdown -->
-          <div class="gallery-dropdown-wrapper" @mouseenter="isGalleryDropdownOpen = true" @mouseleave="closeGalleryDropdown">
-            <a :href="GALLERY_VEHICLES_ROUTE" class="nav-link" :class="{'selected': isGalleryRoute}" aria-label="Gallery">
-              GALLERY
-              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-
-            <!-- Dropdown Menu -->
-            <div v-if="isGalleryDropdownOpen" class="dropdown-menu">
-              <a :href="GALLERY_VEHICLES_ROUTE" class="dropdown-item">VEHICLES</a>
-              <a :href="GALLERY_WHEELS_ROUTE" class="dropdown-item">WHEELS</a>
-              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">AI GALLERY<span class="new-badge">NEW</span></a>
-            </div>
-          </div>
-
-          <!-- Process Dropdown -->
-          <div class="gallery-dropdown-wrapper" @mouseenter="isProcessDropdownOpen = true" @mouseleave="closeProcessDropdown">
-            <a :href="PROCESS_ROUTE" class="nav-link" :class="{'selected': isProcessRoute}" aria-label="Process">
-              PROCESS
-              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-
-            <!-- Dropdown Menu -->
-            <div v-if="isProcessDropdownOpen" class="dropdown-menu">
-              <a :href="PROCESS_FORGED_ROUTE" class="dropdown-item">FORGED</a>
-              <a :href="PROCESS_FORM_FORGED_ROUTE" class="dropdown-item">FORM FORGED</a>
-            </div>
-          </div>
+            <a v-else :href="item.href" class="nav-link" :class="{'selected': isSelected(item)}">{{ item.label }}</a>
+          </template>
         </div>
 
-        <!-- Center Logo -->
         <div class="flex justify-center items-center px-2 xl:px-4 2xl:px-6">
           <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
             <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" width="1191" height="102" style="aspect-ratio: 35/3" />
           </a>
         </div>
 
-        <!-- Right Menu Items -->
         <div class="flex items-center gap-2 xl:gap-3 2xl:gap-4">
-        <!-- Generations Dropdown -->
-        <div class="gallery-dropdown-wrapper" @mouseenter="isGenerationsDropdownOpen = true" @mouseleave="closeGenerationsDropdown">
-          <a :href="GENERATIONS_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isGenerationRoute}">
-            GENERATIONS
-            <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-
-          <!-- Dropdown Menu -->
-          <div v-if="isGenerationsDropdownOpen" class="dropdown-menu generations-dropdown">
-            <div class="generation-group">
-              <div class="generation-title">C8 2020-2026</div>
-              <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
-              <a :href="GENERATIONS_C8_Z06_ROUTE" class="dropdown-item">Z06</a>
-              <a :href="GENERATIONS_C8_ZR1_ROUTE" class="dropdown-item">ZR1</a>
-              <a :href="GENERATIONS_C8_E_RAY_ROUTE" class="dropdown-item">E-Ray</a>
+          <template v-for="item in rightItems" :key="item.id">
+            <div v-if="item.children.length" class="gallery-dropdown-wrapper">
+              <a :href="item.href" class="nav-link whitespace-nowrap" :class="{'selected': isSelected(item)}" :aria-label="item.label">
+                {{ item.label }}
+                <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <div class="dropdown-menu" :class="dropdownClass(item)">
+                <template v-if="usesGroups(item)">
+                  <div v-for="group in grouped(item.children)" :key="group.label" :class="groupClass(item)">
+                    <div :class="groupTitleClass(item)">{{ group.label }}</div>
+                    <a v-for="child in group.items" :key="child.id" :href="child.href" class="dropdown-item">
+                      {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                    </a>
+                  </div>
+                </template>
+                <template v-else>
+                  <a v-for="child in item.children" :key="child.id" :href="child.href" class="dropdown-item whitespace-nowrap">
+                    {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                  </a>
+                </template>
+              </div>
             </div>
-            <div class="generation-group">
-              <div class="generation-title">C7 2014-2019</div>
-              <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="dropdown-item">Stingray</a>
-              <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
-              <a :href="GENERATIONS_C7_Z06_ROUTE" class="dropdown-item">Z06</a>
-              <a :href="GENERATIONS_C7_ZR1_ROUTE" class="dropdown-item">ZR1</a>
-            </div>
-            <div class="generation-group">
-              <div class="generation-title">C6 2005-2013</div>
-              <a :href="GENERATIONS_C6_ROUTE" class="dropdown-item">Base Model</a>
-              <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="dropdown-item">Grand Sport</a>
-              <a :href="GENERATIONS_C6_Z06_ROUTE" class="dropdown-item">Z06</a>
-              <a :href="GENERATIONS_C6_ZR1_ROUTE" class="dropdown-item">ZR1</a>
-            </div>
-            <div class="generation-group">
-              <div class="generation-title">C5 1997-2004</div>
-              <a :href="GENERATIONS_C5_BASE_ROUTE" class="dropdown-item">Base</a>
-              <a :href="GENERATIONS_C5_Z06_ROUTE" class="dropdown-item">Z06</a>
-            </div>
-          </div>
-        </div>
-
-          <!-- Visualize Dropdown -->
-          <div class="gallery-dropdown-wrapper" @mouseenter="isVisualizeDropdownOpen = true" @mouseleave="closeVisualizeDropdown">
-            <a :href="VISUALIZE_ROUTE" class="nav-link whitespace-nowrap" :class="{'selected': isVisualizeRoute}">
-              VISUALIZE
-              <svg class="inline-block w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-
-            <!-- Dropdown Menu -->
-            <div v-if="isVisualizeDropdownOpen" class="dropdown-menu visualize-dropdown">
-              <a :href="INTERACTIVE_GALLERY_ROUTE" class="dropdown-item whitespace-nowrap">AI GALLERY<span class="new-badge">NEW</span></a>
-              <a :href="VISUALIZE_ROUTE" class="dropdown-item whitespace-nowrap">WHEEL VISUALIZER</a>
-            </div>
-          </div>
-
-          <a :href="CONTACT_ROUTE" class="nav-link" :class="{'selected': isContactRoute}">CONTACT</a>
+            <a v-else :href="item.href" class="nav-link" :class="{'selected': isSelected(item)}">{{ item.label }}</a>
+          </template>
           <button @click="toggleMiniCart" class="relative min-h-11 min-w-11" aria-label="Open cart">
             <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -288,12 +228,10 @@ const closeMiniCart = () => {
 
     <!-- Mobile Navigation -->
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
-      <!-- Mobile Logo -->
       <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
         <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" width="1191" height="102" />
       </a>
 
-      <!-- Mobile Menu Toggle -->
       <button @click="toggleMobileMenu" class="hamburger-btn min-h-12 min-w-12" aria-label="Toggle menu" :aria-expanded="isMobileMenuOpen">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path v-if="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -302,146 +240,38 @@ const closeMiniCart = () => {
       </button>
     </div>
 
-    <!-- Mobile Menu Overlay -->
     <div v-if="isMobileMenuOpen" class="mobile-menu" @click="closeMobileMenu">
       <div class="mobile-menu-content" @click.stop>
-        <!-- Wheels Submenu for Mobile -->
-        <div class="mobile-submenu">
-          <div class="flex items-center gap-2">
-            <a :href="WHEELS_ROUTE" class="mobile-nav-link" :class="{'selected': isWheelsRoute}" @click="closeMobileMenu">
-              WHEELS
-            </a>
-            <button @click="toggleWheelsDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Wheels submenu">
-              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isWheelsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          <div v-if="isWheelsDropdownOpen" class="mobile-submenu-items">
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">FORM FORGED</div>
-              <a :href="WHEELS_DAYTONA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">DAYTONA</a>
-              <a :href="WHEELS_SEBRING_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING</a>
-              <a :href="WHEELS_SPEEDWAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SPEEDWAY</a>
+        <template v-for="item in liveItems" :key="item.id">
+          <div v-if="item.children.length" class="mobile-submenu">
+            <div class="flex items-center gap-2">
+              <a :href="item.href" class="mobile-nav-link" :class="{'selected': isSelected(item)}" @click="closeMobileMenu">
+                {{ item.label }}
+              </a>
+              <button @click="toggleMenu(item.id)" class="text-white p-2 min-h-11 min-w-11" :aria-label="'Toggle ' + item.label + ' submenu'">
+                <svg class="inline-block w-5 h-5" :class="{'rotate-180': openMenus[item.id]}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
             </div>
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">2P FORGED</div>
-              <a :href="WHEELS_SEBRING_2P_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SEBRING 2P</a>
-            </div>
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">E5 FORGED</div>
-              <a :href="WHEELS_SONOMA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">SONOMA</a>
-              <a :href="WHEELS_TALLADEGA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">TALLADEGA</a>
-              <a :href="WHEELS_LAGUNA_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">LAGUNA</a>
-            </div>
-            <div class="mobile-wheel-group">
-              <div class="mobile-wheel-title">GT FORGED</div>
-              <a :href="WHEELS_GT_01_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.01</a>
-              <a :href="WHEELS_GT_02_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.02</a>
-              <a :href="WHEELS_GT_03_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.03</a>
-              <a :href="WHEELS_GT_04_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">GT.04</a>
+            <div v-if="openMenus[item.id]" class="mobile-submenu-items">
+              <template v-if="usesGroups(item)">
+                <div v-for="group in grouped(item.children)" :key="group.label" :class="mobileGroupClass(item)">
+                  <div :class="mobileTitleClass(item)">{{ group.label }}</div>
+                  <a v-for="child in group.items" :key="child.id" :href="child.href" class="mobile-submenu-link" @click="closeMobileMenu">
+                    {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                  </a>
+                </div>
+              </template>
+              <template v-else>
+                <a v-for="child in item.children" :key="child.id" :href="child.href" class="mobile-submenu-link" @click="closeMobileMenu">
+                  {{ child.label }}<span v-if="child.badge" class="new-badge">{{ child.badge }}</span>
+                </a>
+              </template>
             </div>
           </div>
-        </div>
-
-        <!-- Gallery Submenu for Mobile -->
-        <div class="mobile-submenu">
-          <div class="flex items-center gap-2">
-            <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-nav-link" :class="{'selected': isGalleryRoute}" @click="closeMobileMenu">
-              GALLERY
-            </a>
-            <button @click="toggleGalleryDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Gallery submenu">
-              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGalleryDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          <div v-if="isGalleryDropdownOpen" class="mobile-submenu-items">
-            <a :href="GALLERY_VEHICLES_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">VEHICLES</a>
-            <a :href="GALLERY_WHEELS_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEELS</a>
-            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">AI GALLERY<span class="new-badge">NEW</span></a>
-          </div>
-        </div>
-
-        <!-- Process Submenu for Mobile -->
-        <div class="mobile-submenu">
-          <div class="flex items-center gap-2">
-            <a :href="PROCESS_ROUTE" class="mobile-nav-link" :class="{'selected': isProcessRoute}" @click="closeMobileMenu">
-              PROCESS
-            </a>
-            <button @click="toggleProcessDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Process submenu">
-              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isProcessDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          <div v-if="isProcessDropdownOpen" class="mobile-submenu-items">
-            <a :href="PROCESS_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORGED</a>
-            <a :href="PROCESS_FORM_FORGED_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">FORM FORGED</a>
-          </div>
-        </div>
-
-        <!-- Generations Submenu for Mobile -->
-        <div class="mobile-submenu">
-          <div class="flex items-center gap-2">
-            <a :href="GENERATIONS_ROUTE" class="mobile-nav-link" :class="{'selected': isGenerationRoute}" @click="closeMobileMenu">
-              GENERATIONS
-            </a>
-            <button @click="toggleGenerationsDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Generations submenu">
-              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isGenerationsDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          <div v-if="isGenerationsDropdownOpen" class="mobile-submenu-items">
-            <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C8 2020-2026</div>
-              <a :href="GENERATIONS_C8_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
-              <a :href="GENERATIONS_C8_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
-              <a :href="GENERATIONS_C8_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
-              <a :href="GENERATIONS_C8_E_RAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">E-Ray</a>
-            </div>
-            <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C7 2014-2019</div>
-              <a :href="GENERATIONS_C7_STINGRAY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Stingray</a>
-              <a :href="GENERATIONS_C7_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
-              <a :href="GENERATIONS_C7_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
-              <a :href="GENERATIONS_C7_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
-            </div>
-            <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C6 2005-2013</div>
-              <a :href="GENERATIONS_C6_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base Model</a>
-              <a :href="GENERATIONS_C6_GRAND_SPORT_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Grand Sport</a>
-              <a :href="GENERATIONS_C6_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
-              <a :href="GENERATIONS_C6_ZR1_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">ZR1</a>
-            </div>
-            <div class="mobile-generation-group">
-              <div class="mobile-generation-title">C5 1997-2004</div>
-              <a :href="GENERATIONS_C5_BASE_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Base</a>
-              <a :href="GENERATIONS_C5_Z06_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">Z06</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Visualize Submenu for Mobile -->
-        <div class="mobile-submenu">
-          <div class="flex items-center gap-2">
-            <a :href="VISUALIZE_ROUTE" class="mobile-nav-link" :class="{'selected': isVisualizeRoute}" @click="closeMobileMenu">
-              VISUALIZE
-            </a>
-            <button @click="toggleVisualizeDropdown" class="text-white p-2 min-h-11 min-w-11" aria-label="Toggle Visualize submenu">
-              <svg class="inline-block w-5 h-5" :class="{'rotate-180': isVisualizeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          <div v-if="isVisualizeDropdownOpen" class="mobile-submenu-items">
-            <a :href="INTERACTIVE_GALLERY_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">AI GALLERY<span class="new-badge">NEW</span></a>
-            <a :href="VISUALIZE_ROUTE" class="mobile-submenu-link" @click="closeMobileMenu">WHEEL VISUALIZER</a>
-          </div>
-        </div>
-
-        <a :href="CONTACT_ROUTE" class="mobile-nav-link" :class="{'selected': isContactRoute}" @click="closeMobileMenu">CONTACT</a>
+          <a v-else :href="item.href" class="mobile-nav-link" :class="{'selected': isSelected(item)}" @click="closeMobileMenu">{{ item.label }}</a>
+        </template>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative min-h-11 min-w-11" aria-label="Open cart">
             <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
@@ -454,7 +284,6 @@ const closeMiniCart = () => {
     </div>
   </nav>
 
-  <!-- Mini Cart Component -->
   <MiniCart client:visible :isOpen="isMiniCartOpen" @close="closeMiniCart" />
   </div>
 </template>
@@ -477,18 +306,24 @@ const closeMiniCart = () => {
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%;
 }
 
 .dropdown-menu {
+  display: none;
   position: absolute;
-  top: calc(100% + 2px);
+  top: 100%;
   left: 0;
-  min-width: 180px;
+  min-width: 200px;
+  padding: 0.5rem 0;
   background: #141414;
   border: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 50;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-dropdown-wrapper:hover .dropdown-menu,
+.gallery-dropdown-wrapper:focus-within .dropdown-menu {
+  display: block;
 }
 
 .dropdown-menu::before {

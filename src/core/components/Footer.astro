@@ -1,133 +1,194 @@
 ---
 import {
   E5_LOGO_BLACK_PNG,
-  FACEBOOK_MEDIA_ICON,
-  INSTAGRAM_MEDIA_ICON,
   PHONE_BLACK_ICON,
   PIN_BLACK_ICON,
-  TIKTOK_MEDIA_ICON,
-  YOUTUBE_MEDIA_ICON,
 } from '@/core/constants/App.ts';
-import {
-  ABOUT_ROUTE,
-  CATALOG_ROUTE,
-  CONTACT_ROUTE,
-  INSTALLATION_ROUTE,
-  MEDIA_ROUTE,
-  PRIVACY_ROUTE,
-  PROCESS_ROUTE,
-  REFUND_ROUTE,
-  REGISTRATION_ROUTE,
-  TERMS_ROUTE,
-  VENDOR_REGISTRATION_ROUTE,
-  WARRANTY_ROUTE,
-} from '@/core/constants/Routes.ts';
+import { loadSiteNav, navFingerprint, visibleFooter } from '@/core/portal/nav.ts';
 import { LOGO_SRCSET, SOCIAL_SRC } from '@/core/utils/responsiveSrc';
 
 const year = new Date().getFullYear();
-const exploreLinks = [
-  { href: PROCESS_ROUTE, label: 'OUR PROCESS' },
-  { href: CONTACT_ROUTE, label: 'CONTACT US' },
-  { href: '/events/upcoming', label: 'EVENTS' },
-  { href: CATALOG_ROUTE, label: 'CATALOG' },
-];
-const supportLinks = [
-  { href: REFUND_ROUTE, label: 'RETURN POLICY' },
-  { href: WARRANTY_ROUTE, label: 'WARRANTY' },
-  { href: INSTALLATION_ROUTE, label: 'INSTALLATION GUIDELINES' },
-  { href: REGISTRATION_ROUTE, label: 'WHEEL REGISTRATION' },
-];
-const companyLinks = [
-  { href: VENDOR_REGISTRATION_ROUTE, label: 'VENDOR REGISTRATION' },
-  { href: MEDIA_ROUTE, label: 'MEDIA' },
-  { href: ABOUT_ROUTE, label: 'ABOUT US' },
-  { href: '/blog', label: 'BLOG' },
-];
-const socials = [
-  { href: 'https://www.instagram.com/e5wheels/', label: 'E5 Wheels on Instagram', src: INSTAGRAM_MEDIA_ICON, alt: 'Instagram' },
-  { href: 'https://www.facebook.com/e5wheels/', label: 'E5 Wheels on Facebook', src: FACEBOOK_MEDIA_ICON, alt: 'Facebook' },
-  { href: 'https://www.youtube.com/@E5Wheels', label: 'E5 Wheels on YouTube', src: YOUTUBE_MEDIA_ICON, alt: 'YouTube' },
-  { href: 'https://www.tiktok.com/@e5wheels', label: 'E5 Wheels on TikTok', src: TIKTOK_MEDIA_ICON, alt: 'TikTok' },
-];
+const { nav } = await loadSiteNav();
+const footer = visibleFooter(nav.footer);
+const fingerprint = navFingerprint(nav);
+const colCount = footer.columns.length + (footer.contact ? 1 : 0);
+const pinIcon = PIN_BLACK_ICON;
+const phoneIcon = PHONE_BLACK_ICON;
 ---
-<footer class="site-footer">
+<footer
+  class="site-footer"
+  data-site-nav
+  data-fp={fingerprint}
+  data-nav-api="/api/site-nav"
+  data-pin={pinIcon}
+  data-phone={phoneIcon}
+>
   <div class="ft">
     <div class="vossen-top">
-      <div class="ft-socials">
-        {socials.map((s) => (
+      <div class="ft-socials" data-ft-socials>
+        {footer.socials.map((s) => (
           <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} class="ft-social">
             <img src={SOCIAL_SRC[s.src] || s.src} alt={s.alt} width="48" height="48" loading="lazy" decoding="async" />
           </a>
         ))}
       </div>
       <img src={E5_LOGO_BLACK_PNG} srcset={LOGO_SRCSET[E5_LOGO_BLACK_PNG]} sizes="(max-width: 767px) 283px, 330px" alt="E5 Wheels" class="ft-logo" width="1191" height="101" loading="lazy" decoding="async" />
-      <a href={CONTACT_ROUTE} class="ft-cta">GET IN TOUCH</a>
+      {footer.cta ? (
+        <a href={footer.cta.href} class="ft-cta" data-ft-cta>{footer.cta.label}</a>
+      ) : (
+        <span class="ft-cta is-empty" data-ft-cta hidden></span>
+      )}
     </div>
 
-    <nav class="col-grid" aria-label="Footer">
-      <div class="col">
-        <p class="ft-label">Explore</p>
-        {exploreLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </div>
-      <div class="col">
-        <p class="ft-label">Support</p>
-        {supportLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </div>
-      <div class="col">
-        <p class="ft-label">Company</p>
-        {companyLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </div>
-      <div class="col">
-        <p class="ft-label">Contact</p>
-        <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-          <img src={PIN_BLACK_ICON} alt="" class="ft-icon ft-pin" width="22" height="22" loading="lazy" decoding="async" />
-          <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
-        </a>
-        <a href="tel:+13059647429" class="ft-link ft-icon-link">
-          <img src={PHONE_BLACK_ICON} alt="" class="ft-icon" width="22" height="22" loading="lazy" decoding="async" />
-          (305) 964-7429
-        </a>
-        <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-      </div>
+    <nav class="col-grid" aria-label="Footer" data-ft-cols style={`grid-template-columns: repeat(${Math.max(colCount, 1)}, minmax(0, 1fr))`}>
+      {footer.columns.map((col) => (
+        <div class="col">
+          <p class="ft-label">{col.heading}</p>
+          {col.links.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
+        </div>
+      ))}
+      {footer.contact && (
+        <div class="col" data-ft-contact>
+          <p class="ft-label">Contact</p>
+          <a href={footer.contact.addressHref} target="_blank" rel="noopener noreferrer" class="ft-contact">
+            <img src={PIN_BLACK_ICON} alt="" class="ft-icon ft-pin" width="22" height="22" loading="lazy" decoding="async" />
+            <span set:html={footer.contact.addressLines.map((line) => line.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br />')} />
+          </a>
+          <a href={footer.contact.phoneHref} class="ft-link ft-icon-link">
+            <img src={PHONE_BLACK_ICON} alt="" class="ft-icon" width="22" height="22" loading="lazy" decoding="async" />
+            {footer.contact.phoneLabel}
+          </a>
+          <a href={footer.contact.emailHref} class="ft-link">{footer.contact.emailLabel}</a>
+        </div>
+      )}
     </nav>
 
-    <nav class="acc-nav" aria-label="Footer">
-      <details class="acc">
-        <summary class="ft-label">Explore</summary>
-        {exploreLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </details>
-      <details class="acc">
-        <summary class="ft-label">Support</summary>
-        {supportLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </details>
-      <details class="acc">
-        <summary class="ft-label">Company</summary>
-        {companyLinks.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
-      </details>
-      <details class="acc" data-contact>
-        <summary class="ft-label">Contact</summary>
-        <div class="acc-contact">
-          <a href="https://maps.app.goo.gl/Xe5EHmAQb11B4Nar8" target="_blank" rel="noopener noreferrer" class="ft-contact">
-            <img src={PIN_BLACK_ICON} alt="" class="ft-icon ft-pin" width="22" height="22" loading="lazy" decoding="async" />
-            <span>E5 WHEELS, LLC<br />3500 NW 77 CT<br />DORAL, FL 33122</span>
-          </a>
-          <a href="tel:+13059647429" class="ft-link ft-icon-link">
-            <img src={PHONE_BLACK_ICON} alt="" class="ft-icon" width="22" height="22" loading="lazy" decoding="async" />
-            (305) 964-7429
-          </a>
-          <a href="mailto:SALES@E5WHEELS.COM" class="ft-link">SALES@E5WHEELS.COM</a>
-        </div>
-      </details>
+    <nav class="acc-nav" aria-label="Footer" data-footer-acc>
+      {footer.columns.map((col) => (
+        <details class="acc">
+          <summary class="ft-label">{col.heading}</summary>
+          {col.links.map((link) => <a href={link.href} class="ft-link">{link.label}</a>)}
+        </details>
+      ))}
+      {footer.contact && (
+        <details class="acc" data-contact>
+          <summary class="ft-label">Contact</summary>
+          <div class="acc-contact">
+            <a href={footer.contact.addressHref} target="_blank" rel="noopener noreferrer" class="ft-contact">
+              <img src={PIN_BLACK_ICON} alt="" class="ft-icon ft-pin" width="22" height="22" loading="lazy" decoding="async" />
+              <span set:html={footer.contact.addressLines.map((line) => line.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br />')} />
+            </a>
+            <a href={footer.contact.phoneHref} class="ft-link ft-icon-link">
+              <img src={PHONE_BLACK_ICON} alt="" class="ft-icon" width="22" height="22" loading="lazy" decoding="async" />
+              {footer.contact.phoneLabel}
+            </a>
+            <a href={footer.contact.emailHref} class="ft-link">{footer.contact.emailLabel}</a>
+          </div>
+        </details>
+      )}
     </nav>
 
     <div class="legal">
-      <a href={TERMS_ROUTE} class="ft-legal">TERMS &amp; CONDITIONS</a>
-      <span aria-hidden="true">|</span>
-      <a href={PRIVACY_ROUTE} class="ft-legal">PRIVACY POLICY</a>
+      <span data-ft-legal>
+        {footer.legal.map((link, i) => (
+          <span>
+            {i > 0 && <span aria-hidden="true">|</span>}
+            <a href={link.href} class="ft-legal">{link.label}</a>
+          </span>
+        ))}
+      </span>
       <span class="ft-copy">&copy; {year} COPYRIGHT E5 WHEELS, LLC</span>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-site-nav]');
+    if (!root) return;
+    var api = root.getAttribute('data-nav-api') || '/api/site-nav';
+    var fp = root.getAttribute('data-fp') || '';
+    var pin = root.getAttribute('data-pin') || '';
+    var phone = root.getAttribute('data-phone') || '';
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, function (ch) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+      });
+    }
+
+    function contactHtml(contact, accordion) {
+      if (!contact) return '';
+      var lines = (contact.addressLines || []).map(esc).join('<br />');
+      var inner =
+        '<a href="' + esc(contact.addressHref) + '" target="_blank" rel="noopener noreferrer" class="ft-contact">' +
+        '<img src="' + esc(pin) + '" alt="" class="ft-icon ft-pin" width="22" height="22" loading="lazy" decoding="async" />' +
+        '<span>' + lines + '</span></a>' +
+        '<a href="' + esc(contact.phoneHref) + '" class="ft-link ft-icon-link">' +
+        '<img src="' + esc(phone) + '" alt="" class="ft-icon" width="22" height="22" loading="lazy" decoding="async" />' +
+        esc(contact.phoneLabel) + '</a>' +
+        '<a href="' + esc(contact.emailHref) + '" class="ft-link">' + esc(contact.emailLabel) + '</a>';
+      if (accordion) {
+        return '<details class="acc" data-contact><summary class="ft-label">Contact</summary><div class="acc-contact">' + inner + '</div></details>';
+      }
+      return '<div class="col" data-ft-contact><p class="ft-label">Contact</p>' + inner + '</div>';
+    }
+
+    fetch(api)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (!data || data.fingerprint === fp || !data.footer) return;
+        var footer = data.footer;
+        var socials = root.querySelector('[data-ft-socials]');
+        if (socials) {
+          socials.innerHTML = (footer.socials || []).map(function (s) {
+            return '<a href="' + esc(s.href) + '" target="_blank" rel="noopener" aria-label="' + esc(s.label) + '" class="ft-social">' +
+              '<img src="' + esc(s.src) + '" alt="' + esc(s.alt) + '" width="48" height="48" loading="lazy" decoding="async" /></a>';
+          }).join('');
+        }
+        var cta = root.querySelector('[data-ft-cta]');
+        if (cta) {
+          if (footer.cta) {
+            cta.hidden = false;
+            cta.classList.remove('is-empty');
+            cta.setAttribute('href', footer.cta.href);
+            cta.textContent = footer.cta.label;
+          } else {
+            cta.hidden = true;
+            cta.textContent = '';
+          }
+        }
+        var cols = root.querySelector('[data-ft-cols]');
+        if (cols) {
+          var n = (footer.columns || []).length + (footer.contact ? 1 : 0);
+          cols.style.gridTemplateColumns = 'repeat(' + Math.max(n, 1) + ', minmax(0, 1fr))';
+          cols.innerHTML = (footer.columns || []).map(function (col) {
+            return '<div class="col"><p class="ft-label">' + esc(col.heading) + '</p>' +
+              (col.links || []).map(function (link) {
+                return '<a href="' + esc(link.href) + '" class="ft-link">' + esc(link.label) + '</a>';
+              }).join('') + '</div>';
+          }).join('') + contactHtml(footer.contact, false);
+        }
+        var acc = root.querySelector('[data-footer-acc]');
+        if (acc) {
+          acc.innerHTML = (footer.columns || []).map(function (col) {
+            return '<details class="acc"><summary class="ft-label">' + esc(col.heading) + '</summary>' +
+              (col.links || []).map(function (link) {
+                return '<a href="' + esc(link.href) + '" class="ft-link">' + esc(link.label) + '</a>';
+              }).join('') + '</details>';
+          }).join('') + contactHtml(footer.contact, true);
+        }
+        var legal = root.querySelector('[data-ft-legal]');
+        if (legal) {
+          legal.innerHTML = (footer.legal || []).map(function (link, i) {
+            return (i ? '<span aria-hidden="true">|</span>' : '') +
+              '<a href="' + esc(link.href) + '" class="ft-legal">' + esc(link.label) + '</a>';
+          }).join('');
+        }
+      })
+      .catch(function () {});
+  })();
+</script>
 
 <style>
 .site-footer {
