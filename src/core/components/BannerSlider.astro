@@ -1,0 +1,700 @@
+---
+import CtaLink from '@/core/components/CtaLink.astro';
+import { bannerPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
+import {
+  SHOP_ROUTE,
+  INTERACTIVE_GALLERY_ROUTE,
+  WHEELS_GT_03_ROUTE,
+} from '@/core/constants/Routes.ts';
+
+const vizFrames = [
+  { stem: 'viz-01', caption: 'Torch Red · Daytona Gloss Black', alt: 'C8 Stingray Torch Red with Daytona Gloss Black wheels in the E5 Immersive Gallery' },
+  { stem: 'viz-02', caption: 'Arctic White · Sebring Titanium', alt: 'C8 Stingray Arctic White with Sebring Titanium wheels in the E5 Immersive Gallery' },
+  { stem: 'viz-03', caption: 'Rapid Blue · Speedway Chrome', alt: 'C8 Stingray Rapid Blue with Speedway Chrome wheels in the E5 Immersive Gallery' },
+  { stem: 'viz-04', caption: 'Black · Daytona Bronze Brushed Tint', alt: 'C8 Stingray Black with Daytona Bronze Brushed Tint wheels in the E5 Immersive Gallery' },
+];
+
+const gt03Laydown = gt03LaydownPicture();
+
+const slides = [
+  {
+    stem: 'bf-sale' as const,
+    // Real gallery photo: 2025 C8 Stingray Blue on Sebring Gloss Black
+    // (public/assets/images/gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp)
+    alt: 'Blue C8 Corvette Stingray fitted with E5 Sebring Gloss Black wheels',
+    kicker: 'LIMITED TIME',
+    title: 'BLACK FRIDAY SALE',
+    code: '15%OFF@E5',
+    body: 'Use this code at checkout for 15% off complete E5 wheel sets.',
+    cta: 'SHOP WHEELS',
+    href: SHOP_ROUTE,
+    gtm: 'Black Friday Shop Wheels',
+    viz: false,
+    laydown: false,
+  },
+  {
+    stem: 'viz-01' as const,
+    viz: true,
+    alt: vizFrames[0].alt,
+    kicker: 'NOW LIVE',
+    title: 'E5 IMMERSIVE GALLERY',
+    code: '',
+    body: 'See E5 wheels on your Corvette — the new Immersive Gallery is live.',
+    cta: 'OPEN GALLERY',
+    href: INTERACTIVE_GALLERY_ROUTE,
+    gtm: 'Open Immersive Gallery',
+    laydown: false,
+  },
+  {
+    stem: 'gt03-black' as const,
+    // Real GT.03 on a black C8 Z06: gallery 2025-c8-z06-black/1.webp
+    // Part numbers E5GT032010E25520AB / E5GT032113E20520AB.
+    // Laydown is Dave's transparent GT.03 Brushed Aluminum product shot (scripts/assets/gt03-laydown.png).
+    laydown: true,
+    alt: 'Black C8 Corvette Z06 fitted with in-stock E5 GT.03 wheels',
+    kicker: 'GT FORGED',
+    title: 'GT.03',
+    code: '',
+    body: 'IN-STOCK & READY-2-SHIP',
+    emphasize: true,
+    cta: 'EXPLORE GT.03',
+    href: WHEELS_GT_03_ROUTE,
+    gtm: 'Explore GT.03',
+  },
+];
+---
+
+<section
+  id="e5-banner"
+  class="e5-banner"
+  aria-roledescription="carousel"
+  aria-label="Featured promotions"
+  tabindex="0"
+>
+  <div class="e5-banner-viewport">
+    <div class="e5-banner-track">
+      {slides.map((slide, index) => {
+        const pic = bannerPicture(slide.stem);
+        const eager = index === 0;
+        return (
+          <div
+            class:list={['e5-banner-slide', slide.laydown && 'is-split']}
+            data-slide={index}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${slides.length}`}
+            aria-hidden={index === 0 ? 'false' : 'true'}
+            inert={index === 0 ? undefined : true}
+          >
+            {slide.viz ? (
+              <div class="e5-banner-viz" data-viz-cycle>
+                {vizFrames.map((frame, fi) => {
+                  const framePic = bannerPicture(frame.stem);
+                  const first = fi === 0;
+                  return (
+                    <picture
+                      class:list={['e5-banner-viz-frame', first && 'is-active']}
+                      data-viz-frame={fi}
+                      data-combo={frame.caption}
+                    >
+                      {framePic.avif && (
+                        <source
+                          type="image/avif"
+                          srcset={first ? framePic.avif : undefined}
+                          data-srcset={first ? undefined : framePic.avif}
+                          sizes={framePic.sizes}
+                        />
+                      )}
+                      {framePic.webp && (
+                        <source
+                          type="image/webp"
+                          srcset={first ? framePic.webp : undefined}
+                          data-srcset={first ? undefined : framePic.webp}
+                          sizes={framePic.sizes}
+                        />
+                      )}
+                      <img
+                        src={first ? framePic.src : `/assets/images/banner/${frame.stem}-800.webp`}
+                        data-src={first ? undefined : framePic.src}
+                        alt={frame.alt}
+                        width="1280"
+                        height="720"
+                        decoding="async"
+                        fetchpriority="low"
+                        loading="lazy"
+                      />
+                    </picture>
+                  );
+                })}
+              </div>
+            ) : (
+              <picture class="e5-banner-picture">
+                {pic.avif && <source type="image/avif" srcset={pic.avif} sizes={pic.sizes} />}
+                {pic.webp && <source type="image/webp" srcset={pic.webp} sizes={pic.sizes} />}
+                <img
+                  src={pic.src}
+                  alt={slide.alt}
+                  width="1280"
+                  height="720"
+                  decoding="async"
+                  fetchpriority={eager ? 'high' : 'low'}
+                  loading={eager ? 'eager' : 'lazy'}
+                />
+              </picture>
+            )}
+            {slide.laydown && gt03Laydown && (
+              <div class="e5-banner-laydown">
+                <picture>
+                  {gt03Laydown.avif && <source type="image/avif" srcset={gt03Laydown.avif} sizes={gt03Laydown.sizes} />}
+                  {gt03Laydown.webp && <source type="image/webp" srcset={gt03Laydown.webp} sizes={gt03Laydown.sizes} />}
+                  <img
+                    src={gt03Laydown.src}
+                    alt="GT.03 Brushed Aluminum wheel, product laydown"
+                    width="1500"
+                    height="1500"
+                    decoding="async"
+                    fetchpriority="low"
+                    loading="lazy"
+                  />
+                </picture>
+              </div>
+            )}
+            <div class="e5-banner-overlay"></div>
+            <div class="e5-banner-copy">
+              <div class:list={['e5-banner-copy-inner', slide.laydown && 'is-card']}>
+                {slide.kicker && <p class="e5-banner-kicker">{slide.kicker}</p>}
+                <h2 class="e5-banner-title">{slide.title}</h2>
+                {slide.code && (
+                  <p class="e5-banner-code" aria-label={`Promo code ${slide.code}`}>
+                    {slide.code}
+                  </p>
+                )}
+                {slide.body && (
+                  <p class:list={['e5-banner-body', slide.emphasize && 'is-emphasis']}>{slide.body}</p>
+                )}
+                <div class="e5-banner-cta">
+                  <CtaLink
+                    primary
+                    href={slide.href}
+                    data-gtm-event="home_banner"
+                    data-gtm-label={slide.gtm}
+                  >
+                    {slide.cta}
+                  </CtaLink>
+                </div>
+                {slide.viz && (
+                  <p class="e5-banner-combo" data-viz-caption>
+                    {vizFrames[0].caption}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <button type="button" class="e5-banner-arrow e5-banner-arrow--prev" data-prev aria-label="Previous slide">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+      <path d="M11.5 3.5 6 9l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+  <button type="button" class="e5-banner-arrow e5-banner-arrow--next" data-next aria-label="Next slide">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+      <path d="M6.5 3.5 12 9l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <div class="e5-banner-dots" role="tablist" aria-label="Choose slide">
+    {slides.map((slide, index) => (
+      <button
+        type="button"
+        class:list={['e5-banner-dot', index === 0 && 'is-active']}
+        data-dot={index}
+        aria-label={`Go to slide ${index + 1}: ${slide.title}`}
+        aria-current={index === 0 ? 'true' : 'false'}
+      />
+    ))}
+  </div>
+  <p class="sr-only" data-live aria-live="polite">Slide 1 of {slides.length}</p>
+</section>
+
+<script is:inline>
+  (function () {
+    var root = document.getElementById('e5-banner');
+    if (!root) return;
+    var track = root.querySelector('.e5-banner-track');
+    var slides = root.querySelectorAll('[data-slide]');
+    var dots = root.querySelectorAll('[data-dot]');
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    var live = root.querySelector('[data-live]');
+    if (!track || !slides.length) return;
+    var n = slides.length;
+    var i = 0;
+    var timer = null;
+    var paused = false;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var vizRoot = root.querySelector('[data-viz-cycle]');
+    var vizFrames = vizRoot ? vizRoot.querySelectorAll('[data-viz-frame]') : [];
+    var vizCaption = root.querySelector('[data-viz-caption]');
+    var vizTimer = null;
+    var vizI = 0;
+    var vizLoaded = false;
+    var vizHoldMs = 3000;
+
+    function loadViz() {
+      if (vizLoaded || !vizFrames.length) return;
+      vizLoaded = true;
+      for (var f = 0; f < vizFrames.length; f++) {
+        var sources = vizFrames[f].querySelectorAll('source[data-srcset]');
+        for (var s = 0; s < sources.length; s++) {
+          if (!sources[s].getAttribute('srcset')) {
+            sources[s].setAttribute('srcset', sources[s].getAttribute('data-srcset'));
+          }
+        }
+        var img = vizFrames[f].querySelector('img');
+        if (img && img.getAttribute('data-src') && !img.getAttribute('src')) {
+          img.setAttribute('src', img.getAttribute('data-src'));
+        }
+      }
+    }
+
+    function paintViz() {
+      for (var f = 0; f < vizFrames.length; f++) {
+        vizFrames[f].classList.toggle('is-active', f === vizI);
+      }
+      if (vizCaption && vizFrames[vizI]) {
+        vizCaption.textContent = vizFrames[vizI].getAttribute('data-combo') || '';
+      }
+    }
+
+    function stopViz() {
+      if (vizTimer) {
+        clearInterval(vizTimer);
+        vizTimer = null;
+      }
+    }
+
+    function startViz() {
+      if (reduce || i !== 1 || !vizFrames.length) return;
+      loadViz();
+      if (vizTimer) return;
+      vizTimer = setInterval(function () {
+        vizI = (vizI + 1) % vizFrames.length;
+        paintViz();
+      }, vizHoldMs);
+    }
+
+    function paint(idx) {
+      i = ((idx % n) + n) % n;
+      track.style.transform = 'translate3d(' + (-i * 100) + '%,0,0)';
+      for (var s = 0; s < n; s++) {
+        var hidden = s !== i;
+        slides[s].setAttribute('aria-hidden', hidden ? 'true' : 'false');
+        if (hidden) slides[s].setAttribute('inert', '');
+        else slides[s].removeAttribute('inert');
+        dots[s].setAttribute('aria-current', s === i ? 'true' : 'false');
+        dots[s].classList.toggle('is-active', s === i);
+      }
+      if (live) live.textContent = 'Slide ' + (i + 1) + ' of ' + n;
+      if (i === 1) startViz();
+      else stopViz();
+    }
+
+    function go(idx, fromUser) {
+      paint(idx);
+      if (fromUser && !paused) restart();
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function start() {
+      if (reduce || paused) return;
+      stop();
+      timer = setInterval(function () { go(i + 1, false); }, 6000);
+      startViz();
+    }
+
+    function restart() {
+      stop();
+      start();
+    }
+
+    function pause() {
+      paused = true;
+      stop();
+    }
+
+    function resume() {
+      paused = false;
+      start();
+    }
+
+    prev.addEventListener('click', function () { go(i - 1, true); });
+    next.addEventListener('click', function () { go(i + 1, true); });
+    for (var d = 0; d < dots.length; d++) {
+      (function (idx) {
+        dots[idx].addEventListener('click', function () { go(idx, true); });
+      })(d);
+    }
+
+    root.addEventListener('mouseenter', pause);
+    root.addEventListener('mouseleave', resume);
+    root.addEventListener('focusin', pause);
+    root.addEventListener('focusout', function (e) {
+      if (!root.contains(e.relatedTarget)) resume();
+    });
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1, true); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1, true); }
+    });
+
+    var startX = 0;
+    var dx = 0;
+    var swiping = false;
+    root.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('a, button')) return;
+      swiping = true;
+      startX = e.clientX;
+      dx = 0;
+    });
+    root.addEventListener('pointermove', function (e) {
+      if (!swiping) return;
+      dx = e.clientX - startX;
+    });
+    function endSwipe() {
+      if (!swiping) return;
+      swiping = false;
+      if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1), true);
+    }
+    root.addEventListener('pointerup', endSwipe);
+    root.addEventListener('pointercancel', endSwipe);
+
+    paint(0);
+    start();
+  })();
+</script>
+
+<style>
+  .e5-banner {
+    position: relative;
+    width: 100%;
+    margin-top: 107px;
+    height: 754px;
+    min-height: 420px;
+    max-height: calc(100svh - 107px);
+    overflow: hidden;
+    background: #111;
+    color: #fff;
+    outline: none;
+  }
+  .e5-banner:focus-visible {
+    box-shadow: inset 0 0 0 3px #d31d25;
+  }
+  .e5-banner-viewport,
+  .e5-banner-track,
+  .e5-banner-slide {
+    width: 100%;
+    height: 100%;
+  }
+  .e5-banner-viewport {
+    overflow: hidden;
+  }
+  .e5-banner-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    will-change: transform;
+  }
+  .e5-banner-slide {
+    position: relative;
+    flex: 0 0 100%;
+    overflow: hidden;
+  }
+  .e5-banner-picture,
+  .e5-banner-picture img,
+  .e5-banner-viz,
+  .e5-banner-viz-frame,
+  .e5-banner-viz-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .e5-banner-picture img,
+  .e5-banner-viz-frame img {
+    object-fit: cover;
+    object-position: 22% center;
+    pointer-events: none;
+  }
+  .e5-banner-slide.is-split .e5-banner-picture img {
+    object-position: 72% center;
+  }
+  .e5-banner-viz-frame {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    z-index: 0;
+  }
+  .e5-banner-viz-frame.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+  .e5-banner-laydown {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: transparent;
+    pointer-events: none;
+  }
+  .e5-banner-laydown picture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .e5-banner-laydown img {
+    position: absolute;
+    left: -16%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 62%;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: center;
+    pointer-events: none;
+    filter: drop-shadow(16px 8px 28px rgba(0, 0, 0, 0.38));
+  }
+  .e5-banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(270deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.52) 38%, rgba(0, 0, 0, 0.16) 68%, rgba(0, 0, 0, 0.28) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, transparent 34%, rgba(0, 0, 0, 0.5) 100%);
+  }
+  .e5-banner-slide.is-split .e5-banner-overlay {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.1) 26%, transparent 48%),
+      linear-gradient(270deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.18) 30%, transparent 58%);
+  }
+  .e5-banner-copy {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-left: auto;
+    height: 100%;
+    max-width: 760px;
+    padding: 32px 80px 72px 40px;
+    text-align: right;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  .e5-banner-slide.is-split .e5-banner-copy {
+    justify-content: flex-start;
+    padding-top: 48px;
+  }
+  .e5-banner-copy-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+  .e5-banner-copy-inner.is-card {
+    background: rgba(8, 8, 8, 0.5);
+    padding: 22px 24px 24px;
+  }
+  .e5-banner-kicker {
+    margin: 0 0 10px;
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4.2px;
+    color: #fff;
+  }
+  .e5-banner-title {
+    margin: 0;
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 0.95;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  .e5-banner-code {
+    margin: 18px 0 0;
+    display: inline-block;
+    padding: 10px 16px;
+    border: 2px solid #d31d25;
+    background: rgba(211, 29, 37, 0.92);
+    color: #fff;
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(22px, 3.4vw, 36px);
+    letter-spacing: 2px;
+    line-height: 1;
+    text-shadow: none;
+  }
+  .e5-banner-body {
+    margin: 16px 0 0;
+    max-width: 34rem;
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: clamp(16px, 2vw, 22px);
+    line-height: 1.35;
+    color: #fff;
+  }
+  .e5-banner-body.is-emphasis {
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(18px, 2.4vw, 28px);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+  .e5-banner-cta {
+    margin-top: 28px;
+  }
+  .e5-banner-combo {
+    margin: 16px 0 0;
+    max-width: 24rem;
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    color: #fff;
+  }
+  .e5-banner-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    cursor: pointer;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .e5-banner-arrow:hover,
+  .e5-banner-arrow:focus-visible {
+    background: #d31d25;
+  }
+  .e5-banner-arrow:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  .e5-banner-arrow--prev { left: 12px; }
+  .e5-banner-arrow--next { right: 12px; }
+  .e5-banner-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .e5-banner-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+  }
+  .e5-banner-dot.is-active {
+    background: #d31d25;
+    transform: scale(1.15);
+  }
+  .e5-banner-dot:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  @media (min-width: 768px) and (max-width: 1100px) {
+    .e5-banner-copy {
+      padding-right: 56px;
+      padding-left: 32px;
+    }
+    .e5-banner-laydown img {
+      width: 50%;
+      left: -10%;
+      height: auto;
+    }
+    .e5-banner-slide.is-split .e5-banner-picture img {
+      object-position: 74% center;
+    }
+  }
+  @media (max-width: 767px) {
+    .e5-banner-picture img,
+    .e5-banner-viz-frame img {
+      inset: auto;
+      width: 170%;
+      height: 170%;
+      max-width: none;
+      left: 50%;
+      top: 38%;
+      transform: translate(-50%, -50%);
+    }
+    .e5-banner-picture img {
+      object-position: 42% 58%;
+    }
+    .e5-banner-viz-frame img {
+      object-position: 50% 68%;
+    }
+    .e5-banner-slide.is-split .e5-banner-picture img {
+      object-position: 62% 70%;
+    }
+    .e5-banner-copy {
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 36px 18px 140px 56px;
+      text-align: right;
+    }
+    .e5-banner-slide.is-split .e5-banner-copy {
+      padding-top: 36px;
+    }
+    .e5-banner-copy-inner.is-card {
+      background: rgba(8, 8, 8, 0.46);
+      padding: 14px 16px 16px;
+    }
+    .e5-banner-overlay,
+    .e5-banner-slide.is-split .e5-banner-overlay {
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.22) 46%, rgba(0, 0, 0, 0.42) 100%);
+    }
+    .e5-banner-cta {
+      margin-top: 18px;
+    }
+    .e5-banner-combo {
+      font-size: 12px;
+    }
+    .e5-banner-laydown {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .e5-banner-track {
+      transition: none;
+    }
+    .e5-banner-viz-frame {
+      transition: none;
+    }
+    .e5-banner-viz-frame:not(.is-active) {
+      display: none;
+    }
+  }
+</style>

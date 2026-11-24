@@ -6,6 +6,25 @@ export type PictureSources = {
 };
 
 const CATALOG_RE = /\/assets\/images\/catalog-800\/([^/]+)\.webp$/;
+const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4])(?:-1280)?\.webp$/;
+
+export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
+  return {
+    src: `/assets/images/banner/${stem}-1280.webp`,
+    avif: `/assets/images/banner/${stem}-800.avif 800w, /assets/images/banner/${stem}-1280.avif 1280w, /assets/images/banner/${stem}-1920.avif 1920w`,
+    webp: `/assets/images/banner/${stem}-800.webp 800w, /assets/images/banner/${stem}-1280.webp 1280w, /assets/images/banner/${stem}-1920.webp 1920w`,
+    sizes,
+  };
+}
+
+export function gt03LaydownPicture(sizes = '(min-width: 768px) 46vw, 1px'): PictureSources {
+  return {
+    src: '/assets/images/banner/gt03-laydown-1500.webp',
+    avif: '/assets/images/banner/gt03-laydown-800.avif 800w, /assets/images/banner/gt03-laydown-1200.avif 1200w, /assets/images/banner/gt03-laydown-1500.avif 1500w',
+    webp: '/assets/images/banner/gt03-laydown-800.webp 800w, /assets/images/banner/gt03-laydown-1200.webp 1200w, /assets/images/banner/gt03-laydown-1500.webp 1500w',
+    sizes,
+  };
+}
 
 export function pictureFor(src: string, sizes: string): PictureSources | null {
   const catalog = src.match(CATALOG_RE);
@@ -17,6 +36,11 @@ export function pictureFor(src: string, sizes: string): PictureSources | null {
       webp: `/assets/images/catalog-200/${stem}.webp 200w, /assets/images/catalog-400/${stem}.webp 400w, ${src} 800w`,
       sizes,
     };
+  }
+
+  const banner = src.match(BANNER_RE);
+  if (banner) {
+    return bannerPicture(banner[1], sizes);
   }
 
   const named: Record<string, PictureSources> = {
