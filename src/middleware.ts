@@ -1,5 +1,14 @@
 import { defineMiddleware } from 'astro:middleware';
 import { buildWheelUrlFromParams } from './core/utils/wheelUrl';
+import {
+  PORTAL_ORIGIN,
+  SITE_ORIGIN,
+  internalPortalPath,
+  isPortalHost,
+  isPortalPagePath,
+  isProductionSiteHost,
+  isStaticAssetPath,
+} from './core/portal/host.ts';
 
 const GONE = new Set([
   '/wp-admin',
@@ -77,9 +86,70 @@ function gone() {
   });
 }
 
-export const onRequest = defineMiddleware((context, next) => {
-  const { url, redirect } = context;
+function noindex(response: Response) {
+  response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return response;
+}
+
+function noStore(response: Response) {
+  response.headers.set('Cache-Control', 'private, no-store');
+  return response;
+}
+
+function portalHeaders(response: Response) {
+  noindex(response);
+  noStore(response);
+  return response;
+}
+
+function isPortalPath(pathname: string) {
+  return pathname === '/portal' || pathname.startsWith('/portal/');
+}
+
+function portalRobots() {
+  return new Response('User-agent: *\nDisallow: /\n', {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'private, no-store',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const { url, redirect, rewrite, request, locals } = context;
   const pathname = url.pathname.replace(/\/+$/, '') || '/';
+  const flags = locals as Record<string, unknown>;
+
+  if (isPortalHost(request) || flags.portalRewrite) {
+    if (pathname === '/robots.txt') return portalRobots();
+
+    if (isStaticAssetPath(pathname) || flags.portalRewrite) {
+      return portalHeaders(await next());
+    }
+
+    if (isPortalPath(pathname)) {
+      return portalHeaders(await next());
+    }
+
+    if (isPortalPagePath(pathname)) {
+      flags.portalRewrite = true;
+      return portalHeaders(await rewrite(internalPortalPath(pathname)));
+    }
+
+    return portalHeaders(redirect(`${SITE_ORIGIN}${url.pathname}${url.search}`, 302));
+  }
+
+  if (isProductionSiteHost(request) && isPortalPath(pathname)) {
+    const rest = pathname === '/portal' ? '/' : pathname.slice('/portal'.length) || '/';
+    return noStore(redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301));
+  }
+
+  if (pathname === '/portal/login') {
+    flags.portalRewrite = true;
+    return portalHeaders(await rewrite('/portal'));
+  }
 
   if (GONE.has(pathname) || pathname.startsWith('/wp-admin/')) {
     return gone();
@@ -125,5 +195,14 @@ export const onRequest = defineMiddleware((context, next) => {
     }
   }
 
-  return next();
+  const response = await next();
+  if (isPortalPath(pathname) || isPortalHost(request)) {
+    portalHeaders(response);
+  } else if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    noindex(response);
+  }
+  if (response.headers.has('set-cookie')) {
+    noStore(response);
+  }
+  return response;
 });

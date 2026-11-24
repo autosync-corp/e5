@@ -1,0 +1,117 @@
+---
+export const prerender = false;
+
+import PortalLogin from '@/core/portal/PortalLogin.astro';
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { PORTAL_SECTIONS } from '@/core/portal/sections.ts';
+import { portalHref } from '@/core/portal/host.ts';
+import {
+  PORTAL_USERS,
+  clearLoginFailures,
+  clearSessionCookie,
+  clientIp,
+  createSessionCookieValue,
+  isLoginLocked,
+  portalConfigError,
+  readSession,
+  recordLoginFailure,
+  setSessionCookie,
+  verifyPortalPassword,
+} from '@/core/portal/auth.ts';
+
+const loginAction = portalHref(Astro.request, '/login');
+const configError = portalConfigError();
+let error = configError || '';
+const ip = clientIp(Astro.request);
+let user = configError ? null : readSession(Astro.cookies);
+
+if (Astro.request.method === 'POST') {
+  if (configError) {
+    error = configError;
+    user = null;
+  } else if (await isLoginLocked(ip)) {
+    error = 'Too many attempts. Try again in 15 minutes.';
+    user = null;
+    clearSessionCookie(Astro.cookies, Astro.request);
+  } else {
+    const form = await Astro.request.formData();
+    const password = String(form.get('password') || '');
+    const ok = await verifyPortalPassword(password);
+    if (ok) {
+      const session = createSessionCookieValue(PORTAL_USERS[0]);
+      if (!session) {
+        error = configError || 'Portal login is disabled. Set PORTAL_PASSWORD_HASH and PORTAL_SESSION_SECRET.';
+        user = null;
+      } else {
+        setSessionCookie(Astro.cookies, Astro.request, session, Astro.url.protocol === 'https:');
+        await clearLoginFailures(ip);
+        return Astro.redirect(portalHref(Astro.request, '/'));
+      }
+    } else {
+      await recordLoginFailure(ip);
+      error = 'Invalid password.';
+      user = null;
+      clearSessionCookie(Astro.cookies, Astro.request);
+    }
+  }
+}
+
+const cards = PORTAL_SECTIONS.filter((s) => s.slug !== 'dashboard').map((card) => ({
+  ...card,
+  href: portalHref(Astro.request, card.path),
+}));
+const userName = user?.username || '';
+---
+
+{!user && <PortalLogin error={error} action={loginAction} disabled={Boolean(configError)} />}
+
+{user && (
+  <PortalLayout title="E5 Client Portal" userName={userName}>
+    <h1>Dashboard</h1>
+    <p class="lead">
+      Manage site content from here. Later sections publish live on save — no drafts, no redeploy.
+      Wheel prices stay on the AutoSync platform and are not editable in this portal.
+    </p>
+    <div class="cards">
+      {cards.map((card) => (
+        <a class="card" href={card.href}>
+          <strong>{card.label}</strong>
+          <span>Coming soon</span>
+          <p>{card.summary}</p>
+        </a>
+      ))}
+    </div>
+  </PortalLayout>
+)}
+
+<style>
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 20px 18px;
+    min-height: 140px;
+  }
+  .card:hover { border-color: #141414; }
+  .card strong {
+    display: block;
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .card span {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .card p { font-size: 14px; color: #333; line-height: 1.4; }
+</style>
