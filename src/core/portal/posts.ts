@@ -1,5 +1,6 @@
 import { portalRedis } from '@/core/portal/slides.ts';
 import {
+  cleanEditorExcerpt,
   decodeEntities,
   isAllowedImageSrc,
   renderMarkdown,
@@ -69,6 +70,12 @@ export type PostsIndex = {
   slugs: string[];
 };
 
+type WpMedia = {
+  source_url?: unknown;
+  alt_text?: unknown;
+  media_details?: { sizes?: Record<string, { source_url?: unknown; mime_type?: unknown }> };
+};
+
 type WpPost = {
   slug?: unknown;
   date?: unknown;
@@ -76,7 +83,7 @@ type WpPost = {
   title?: { rendered?: unknown };
   excerpt?: { rendered?: unknown };
   content?: { rendered?: unknown };
-  _embedded?: { 'wp:featuredmedia'?: Array<{ source_url?: unknown; alt_text?: unknown }> };
+  _embedded?: { 'wp:featuredmedia'?: WpMedia[] };
 };
 
 type CacheBag = {
@@ -125,9 +132,26 @@ function isoDate(value: string): string | null {
   return parsed.toISOString();
 }
 
+function pickMediaUrl(media: WpMedia | undefined): string {
+  if (!media) return '';
+  const sizes = media.media_details?.sizes || {};
+  const order = ['medium_large', 'large', 'full', 'medium'];
+  const looksImage = (url: string) => /\.(jpe?g|png|webp|gif|avif)(\?|$)/i.test(url);
+  for (const key of order) {
+    const url = sizes[key]?.source_url;
+    if (typeof url === 'string' && looksImage(url) && !/\.avif(\?|$)/i.test(url)) return url;
+  }
+  if (typeof media.source_url === 'string' && looksImage(media.source_url)) return media.source_url;
+  for (const key of order) {
+    const url = sizes[key]?.source_url;
+    if (typeof url === 'string' && looksImage(url)) return url;
+  }
+  return typeof media.source_url === 'string' ? media.source_url : '';
+}
+
 function featured(wp: WpPost): { url: string; alt: string } {
   const media = wp._embedded?.['wp:featuredmedia']?.[0];
-  const url = typeof media?.source_url === 'string' ? media.source_url : '';
+  const url = pickMediaUrl(media);
   const alt = typeof media?.alt_text === 'string' ? media.alt_text : '';
   return { url, alt };
 }
@@ -346,6 +370,7 @@ export async function loadPublicPost(slug: string): Promise<LoadPostResult> {
 function toPortalPost(post: PublicPost, extra?: Partial<PortalPost>): PortalPost {
   return {
     ...post,
+    excerpt: extra?.excerpt ?? (post.source === 'wordpress' ? cleanEditorExcerpt(post.excerpt) : post.excerpt),
     bodyMarkdown: extra?.bodyMarkdown || '',
     bodyMode: extra?.bodyMode || (post.source === 'wordpress' ? 'html' : 'markdown'),
     published: extra?.published ?? true,

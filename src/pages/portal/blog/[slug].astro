@@ -104,8 +104,19 @@ const initial = {
 
     <fieldset class="cover">
       <legend>Cover photo</legend>
-      <div class="cover-preview">
-        {post.coverUrl ? <img src={post.coverUrl} alt="" data-cover-preview /> : <img alt="" data-cover-preview hidden />}
+      <div class="cover-preview" data-cover-box>
+        {post.coverUrl ? (
+          <img
+            src={post.coverUrl}
+            alt=""
+            data-cover-preview
+            referrerpolicy="no-referrer"
+            decoding="async"
+          />
+        ) : (
+          <img alt="" data-cover-preview hidden referrerpolicy="no-referrer" decoding="async" />
+        )}
+        <p class="cover-empty" data-cover-empty hidden={Boolean(post.coverUrl)}>No cover photo</p>
       </div>
       <label>
         Photo description
@@ -174,7 +185,28 @@ const initial = {
     var replaceEl = form.querySelector('[data-replace-body]');
     var bodyEl = form.querySelector('[data-body]');
     var coverPreview = form.querySelector('[data-cover-preview]');
+    var coverEmpty = form.querySelector('[data-cover-empty]');
     var slugTouched = false;
+
+    function showCover(url) {
+      if (!coverPreview) return;
+      if (url) {
+        coverPreview.hidden = false;
+        coverPreview.src = url;
+        if (coverEmpty) coverEmpty.hidden = true;
+      } else {
+        coverPreview.removeAttribute('src');
+        coverPreview.hidden = true;
+        if (coverEmpty) coverEmpty.hidden = false;
+      }
+    }
+    if (coverPreview) {
+      coverPreview.addEventListener('error', function () {
+        if (!coverPreview.getAttribute('src')) return;
+        coverPreview.hidden = true;
+        if (coverEmpty) coverEmpty.hidden = false;
+      });
+    }
 
     function setStatus(text, ok) {
       if (!status) return;
@@ -266,11 +298,7 @@ const initial = {
         var url = await uploadFile(cover.files[0], slugEl.value);
         cover.value = '';
         if (!url) return;
-        coverUrl = url;
-        if (coverPreview) {
-          coverPreview.hidden = false;
-          coverPreview.src = url;
-        }
+        showCover(url);
         setStatus('Cover photo uploaded. Save to publish.');
       }
       var inline = e.target.closest('[data-body-upload]');
@@ -384,8 +412,32 @@ const initial = {
   .check.warn { color: #141414; }
   .cover { border: 1px solid #d9d9d9; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
   .cover legend { font-family: 'Franklin Gothic Demi', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 6px; }
-  .cover-preview { background: #111; min-height: 120px; }
-  .cover-preview img { width: 100%; max-height: 220px; object-fit: cover; display: block; }
+  .cover-preview {
+    background: #f4f4f4;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover-preview img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    display: block;
+    background: #111;
+  }
+  .cover-preview img[hidden] { display: none; }
+  .cover-empty {
+    margin: 0;
+    padding: 16px 12px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .cover-empty[hidden] { display: none; }
   .file { text-transform: none; letter-spacing: 0; }
   .toolbar { display: flex; flex-wrap: wrap; gap: 6px; }
   .toolbar button, .btn {

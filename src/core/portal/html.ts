@@ -131,6 +131,13 @@ export function stripTags(html: string): string {
     .trim();
 }
 
+/** Decode entities and drop WordPress's trailing [&hellip;] / [...] marker. Public pages keep the raw excerpt. */
+export function cleanEditorExcerpt(raw: string): string {
+  return decodeEntities(stripTags(raw || ''))
+    .replace(/\s*\[\s*(?:\u2026|\.{3}|hellip)\s*\]\s*$/iu, '')
+    .trim();
+}
+
 export function decodeEntities(html: string): string {
   return html
     .replace(/&#038;|&amp;/gi, '&')
@@ -142,6 +149,7 @@ export function decodeEntities(html: string): string {
     .replace(/&#8221;|&rdquo;/gi, '\u201d')
     .replace(/&#8211;|&ndash;/gi, '\u2013')
     .replace(/&#8212;|&mdash;/gi, '\u2014')
+    .replace(/&hellip;|&#8230;/gi, '\u2026')
     .replace(/&nbsp;/gi, ' ')
     .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))

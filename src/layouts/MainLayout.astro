@@ -214,4 +214,23 @@ body {
   min-height: 100dvh;
   overflow-x: hidden;
 }
+/* Keep the fixed header offset in this first-paint stylesheet so the
+   homepage does not jump 107px when Tailwind / island CSS arrives. */
+nav.fixed.top-0 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 107px;
+  z-index: 50;
+}
+.desktop-nav { display: inline-grid; }
+.mobile-nav { display: none; }
+@media (max-width: 1024px) {
+  .desktop-nav { display: none; }
+  .mobile-nav { display: flex; }
+}
+main.mt-107 {
+  margin-top: 107px;
+}
 </style>
