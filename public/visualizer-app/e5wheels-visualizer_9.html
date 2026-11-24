@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E5 Wheels Visualizer</title>
 </head>
-<body style="margin:0;padding:0;height:100vh;overflow:hidden;background:#000;">
+<body style="margin:0;padding:0;height:100vh;overflow:hidden;background:#fff;">
 <iframe id="shell" style="position:fixed;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
 <script>
 try {
@@ -19,12 +19,12 @@ const HTML = `<!DOCTYPE html>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100%;}
 :root{
-  --black:#0a0a0a;--dark:#111;--panel:#161616;--border:#2a2a2a;
-  --muted:#555;--light:#999;--white:#f2f2f2;
-  --gold:#c8a84b;--gold-dim:#9a7e35;
+  --black:#ffffff;--dark:#ffffff;--panel:#ffffff;--border:#e4e4e4;
+  --muted:#5c5c5c;--light:#333333;--white:#111111;
+  --gold:#9a7428;--gold-dim:#7a5c1e;
   --fd:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
   --nav-h:64px;
-  --tabs-h:44px;
+  --tabs-h:56px;
   --config-w:320px;
   --thumb-h:90px;
   --page-max-w:1920px;
@@ -46,7 +46,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 /* ── GEN TABS ── */
 .gen-bar{flex-shrink:0;height:var(--tabs-h);background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;}
 .gen-bar::-webkit-scrollbar{display:none}
-.gtab{flex-shrink:0;padding:0 18px;background:none;border:none;border-bottom:2px solid transparent;font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;}
+.gtab{flex-shrink:0;padding:0 18px;background:none;border:none;border-bottom:2px solid transparent;font-family:var(--fd);font-size:16px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;}
 .gtab:hover{color:var(--white)}
 .gtab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
@@ -95,7 +95,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   display:block;
   width:100%;
   border:none;
-  background:#000;
+  background:#fff;
 }
 
 /* Loading */
@@ -109,7 +109,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 .config-col{
   flex-shrink:0;
   width:var(--config-w);
-  background:#111;
+  background:#fff;
   border-left:1px solid var(--border);
   display:flex;
   flex-direction:column;
@@ -122,20 +122,20 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 .d-lbl{
   font-family:var(--fd);font-size:11px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);display:block;margin-bottom:8px;
+  color:var(--white);display:block;margin-bottom:8px;
 }
 
 /* Wheel style — 3 buttons with images */
 .ws-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
 .ws-btn{
   display:flex;flex-direction:column;align-items:center;gap:6px;
-  padding:10px 4px 8px;background:#1a1a1a;
-  border:2px solid transparent;border-radius:3px;
+  padding:10px 4px 8px;background:#fff;
+  border:2px solid var(--border);border-radius:3px;
   cursor:pointer;transition:border-color .15s,background .15s;
 }
 .ws-btn:hover{border-color:var(--light)}
-.ws-btn.active{border-color:var(--gold);background:rgba(200,168,75,.07)}
-.ws-crop{width:100%;aspect-ratio:1;overflow:hidden;border-radius:2px;background:#000;position:relative;}.ws-crop img{position:absolute;left:-130%;top:-30%;width:260%;height:260%;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.9));}
+.ws-btn.active{border-color:var(--gold);background:rgba(154,116,40,.08)}
+.ws-crop{width:100%;aspect-ratio:1;overflow:hidden;border-radius:2px;background:#f4f4f4;position:relative;}.ws-crop img{position:absolute;left:-130%;top:-30%;width:260%;height:260%;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));}
 .ws-btn span{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);}
 .ws-btn.active span{color:var(--gold)}
 
@@ -181,21 +181,21 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 }
 .scroll-fade.visible{opacity:1;}
 .scroll-fade-panel{background:linear-gradient(to right, transparent, var(--panel) 65%);}
-.scroll-fade-dark{background:linear-gradient(to right, transparent, #0d0d0d 65%);}
+.scroll-fade-dark{background:linear-gradient(to right, transparent, #ffffff 65%);}
 
 /* Dropdowns */
 .d-sel{
-  width:100%;background:#1a1a1a;border:1px solid var(--border);
+  width:100%;background:#fff;border:1px solid var(--border);
   border-radius:3px;color:var(--white);
   font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.04em;
   padding:11px 32px 11px 12px;cursor:pointer;
   appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23111111' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 12px center;
   transition:border-color .15s;
 }
 .d-sel:focus{outline:none;border-color:var(--gold)}
-.d-sel option{background:#111}
+.d-sel option{background:#fff;color:#111}
 
 /* Shop */
 .d-shop{
@@ -223,7 +223,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 .thumb-strip{
   flex-shrink:0;
   height:var(--thumb-h);
-  background:#0d0d0d;
+  background:#fff;
   border-top:1px solid var(--border);
   display:flex;
   align-items:center;
@@ -241,7 +241,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
   border-radius:2px;
   border:2px solid var(--border);
   cursor:pointer;
-  background:#000;
+  background:#f4f4f4;
   transition:border-color .15s;
 }
 .thumb:hover{border-color:var(--light)}
@@ -287,7 +287,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 }
 
 @media(max-width:768px){
-  :root{--nav-h:52px;--tabs-h:40px;--config-w:100%;}
+  :root{--nav-h:52px;--tabs-h:48px;--config-w:100%;}
   .e5-nav{padding:0 16px;}
   .nav-side a:not(.nav-logo){display:none}
   .nav-logo img{height:26px}
@@ -323,9 +323,9 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 }
 
 @media(max-width:480px){
-  :root{--nav-h:48px;--tabs-h:36px;}
+  :root{--nav-h:48px;--tabs-h:46px;}
   .nav-logo img{height:22px}
-  .gtab{padding:0 12px;font-size:10px;}
+  .gtab{padding:0 12px;font-size:14px;}
   .d-sec{padding:12px;}
   .d-lbl{font-size:10px;margin-bottom:8px;}
   .ws-btn span{font-size:10px;}
@@ -334,7 +334,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 }
 
 @media(max-width:360px){
-  .gtab{padding:0 10px;font-size:9px;}
+  .gtab{padding:0 10px;font-size:13px;}
   .ws-grid{gap:4px;}
   .d-sec{padding:10px;}
 }
@@ -350,14 +350,14 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
 <!-- GEN TABS -->
 <div class="scroll-fade-wrap">
   <div class="gen-bar" id="genBar">
-    <button class="gtab active" data-gen="C5" data-label="C5 Z06">C5 Z06</button>
+    <button class="gtab active" data-gen="C8_Z06" data-label="C8 Z06">C8 Z06</button>
+    <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray">C8 Stingray</button>
+    <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport">C7 Grand Sport</button>
+    <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06">C7 Z06</button>
+    <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray">C7 Stingray</button>
     <button class="gtab" data-gen="C6_Grand_Sport" data-label="C6 Grand Sport">C6 Grand Sport</button>
     <button class="gtab" data-gen="C6_Z06" data-label="C6 Base / Z06">C6 Base / Z06</button>
-    <button class="gtab" data-gen="C7_Grand_Sport" data-label="C7 Grand Sport">C7 Grand Sport</button>
-    <button class="gtab" data-gen="C7_Stingray" data-label="C7 Stingray">C7 Stingray</button>
-    <button class="gtab" data-gen="C7_Z06" data-label="C7 Z06">C7 Z06</button>
-    <button class="gtab" data-gen="C8_Z06" data-label="C8 Z06">C8 Z06</button>
-    <button class="gtab" data-gen="C8_Stingray" data-label="C8 Stingray">C8 Stingray</button>
+    <button class="gtab" data-gen="C5" data-label="C5 Z06">C5 Z06</button>
   </div>
   <div class="scroll-fade scroll-fade-panel" id="genBarFade" aria-hidden="true">&#8250;</div>
 </div>
@@ -381,7 +381,7 @@ body{font-family:var(--fb);background:var(--black);color:var(--white);display:fl
           <div class="loading-txt">Loading</div>
         </div>
         <iframe class="viz-iframe" id="vizFrame"
-          src="index.html?car=C5"
+          src="index.html?car=C8_Z06"
           title="E5 Wheels Visualizer">
         </iframe>
       </div>
@@ -856,7 +856,7 @@ setTimeout(()=>loader.classList.add('hidden'),6000);
 document.querySelectorAll('.gtab').forEach(b=>b.addEventListener('click',()=>loadGen(b.dataset.gen)));
 (async()=>{
   await loadFitmentCatalog();
-  loadGen('C5');
+  loadGen('C8_Z06');
 })();
 <\/script>
 </body>
