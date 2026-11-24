@@ -96,12 +96,33 @@ Blog posts.
 
 Do not merge until Dave replies **go live**.
 
+## Section 6 (this PR)
+
+Site Performance.
+
+- Portal host: `https://portal.e5wheels.com/performance`
+- Preview: `/portal/performance`
+- Read-only. No Redis. The page reads a committed snapshot under `src/data/performance/` (`compare.json`, `latest.json`, `history.json`, and `runs/<YYYY-MM-DD>/` JSON + PNG score cards).
+- Primary view is latest vs the November 1, 2026 baseline (mobile and desktop). Better/worse comes from each metric’s `direction` field in `compare.json` — do not recompute it.
+- Caveats on the page are rewritten from `compare.json.caveats` into client language (lab test, not real visitors; Nov 1 mobile score spread; testing tool version change). Do not invent numbers.
+- PNG score cards are imported into the auth-gated page (hashed `/_astro/` URLs). They are not linked from the public site.
+
+### Monthly refresh
+
+When the Website Performance Audit bot drops a new v2 export:
+
+1. Replace `src/data/performance/compare.json`, `latest.json`, `history.json`.
+2. Copy the new `runs/<YYYY-MM-DD>/` folder (summary.json + mobile.png + desktop.png + compare.png on the latest run).
+3. Point the three PNG imports in `src/pages/portal/performance.astro` at that new dated folder.
+4. Open a small preview PR. Do not merge until Dave replies **go live**.
+
+Do not merge until Dave replies **go live**.
+
 ## Later sections (not in this PR)
 
 | Section | Portal host | Preview |
 |---|---|---|
 | Galleries | `/galleries` | `/portal/galleries` |
-| Site Performance | `/performance` | `/portal/performance` |
 | Sales & Prospects (GoHighLevel) | `/sales` | `/portal/sales` |
 
 ## Content storage

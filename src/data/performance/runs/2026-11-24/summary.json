@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "generated": "2026-11-24T13:49:05-08:00",
+  "client": {
+    "id": "e5wheels",
+    "name": "E5 Wheels"
+  },
+  "url": "https://www.e5wheels.com/",
+  "urls": [
+    "https://www.e5wheels.com/"
+  ],
+  "run_date": "2026-11-24",
+  "run_datetime": "2026-11-24T13:42:50-08:00",
+  "data_source": "lighthouse-local",
+  "lighthouse_version": "13.4.1",
+  "source": "lab",
+  "field": null,
+  "real_user": null,
+  "caveats": [
+    "Real-user Chrome UX Report data is not available (CRUX_API_KEY is not set)."
+  ],
+  "by_url": {
+    "https://www.e5wheels.com/": {
+      "url": "https://www.e5wheels.com/",
+      "source": "lab",
+      "field": null,
+      "mobile": {
+        "run_date": "2026-11-24T13:42:50-08:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "13.4.1",
+        "scores": {
+          "performance": 95,
+          "accessibility": 90,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "lcp_s": 1.79,
+        "tbt_ms": 23,
+        "cls": 0.13,
+        "fcp_s": 0.95,
+        "speed_index_s": 1.25,
+        "ttfb_ms": 33,
+        "page_weight_kib": 652,
+        "request_count": 51,
+        "third_party_kib": 0,
+        "third_party_count": 0,
+        "resource_breakdown": {
+          "html": {
+            "kib": 17,
+            "count": 1
+          },
+          "js": {
+            "kib": 49,
+            "count": 11
+          },
+          "css": {
+            "kib": 18,
+            "count": 2
+          },
+          "image": {
+            "kib": 416,
+            "count": 27
+          },
+          "font": {
+            "kib": 117,
+            "count": 4
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 34,
+            "count": 6
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            100,
+            95,
+            92
+          ],
+          "min": 92,
+          "max": 100,
+          "spread": 8
+        },
+        "opportunities": [
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 0,
+            "savings_kib": 102
+          },
+          {
+            "id": "unused-css-rules",
+            "title": "Reduce unused CSS",
+            "savings_ms": 0,
+            "savings_kib": 13
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 0,
+            "savings_kib": 1
+          }
+        ]
+      },
+      "desktop": {
+        "run_date": "2026-11-24T13:42:50-08:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "13.4.1",
+        "scores": {
+          "performance": 100,
+          "accessibility": 90,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "lcp_s": 0.57,
+        "tbt_ms": 0,
+        "cls": 0.0031,
+        "fcp_s": 0.32,
+        "speed_index_s": 0.32,
+        "ttfb_ms": 31,
+        "page_weight_kib": 1045,
+        "request_count": 54,
+        "third_party_kib": 0,
+        "third_party_count": 0,
+        "resource_breakdown": {
+          "html": {
+            "kib": 17,
+            "count": 1
+          },
+          "js": {
+            "kib": 49,
+            "count": 11
+          },
+          "css": {
+            "kib": 18,
+            "count": 2
+          },
+          "image": {
+            "kib": 809,
+            "count": 30
+          },
+          "font": {
+            "kib": 117,
+            "count": 4
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 34,
+            "count": 6
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            100,
+            100,
+            100
+          ],
+          "min": 100,
+          "max": 100,
+          "spread": 0
+        },
+        "opportunities": [
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 100,
+            "savings_kib": 260
+          },
+          {
+            "id": "unused-css-rules",
+            "title": "Reduce unused CSS",
+            "savings_ms": 0,
+            "savings_kib": 13
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 0,
+            "savings_kib": 1
+          }
+        ]
+      }
+    }
+  }
+}

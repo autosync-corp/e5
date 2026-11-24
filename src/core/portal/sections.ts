@@ -46,8 +46,8 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     slug: 'performance',
     label: 'Site Performance',
     path: '/performance',
-    ready: false,
-    summary: 'Read-only PageSpeed / Core Web Vitals snapshot.',
+    ready: true,
+    summary: 'Lab test scores for the homepage, compared with November 1. Snapshot files, updated by a small PR.',
   },
   {
     slug: 'sales',

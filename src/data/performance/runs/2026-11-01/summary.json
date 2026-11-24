@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "generated": "2026-11-24T13:49:05-08:00",
+  "client": {
+    "id": "e5wheels",
+    "name": "E5 Wheels"
+  },
+  "url": "https://www.e5wheels.com/",
+  "urls": [
+    "https://www.e5wheels.com/"
+  ],
+  "run_date": "2026-11-01",
+  "run_datetime": "2026-11-01T08:57:39-08:00",
+  "data_source": "lighthouse-local",
+  "lighthouse_version": "13.6.0",
+  "source": "lab",
+  "field": null,
+  "real_user": null,
+  "caveats": [
+    "Mobile performance scores in this snapshot spread from 56 to 79 across 3 runs (median 70). Treat the score as approximate.",
+    "PageSpeed Insights was unavailable for this run (HTTP 429, quota exceeded). Lab results are from local Lighthouse.",
+    "Real-user Chrome UX Report data is not available (CRUX_API_KEY is not set)."
+  ],
+  "by_url": {
+    "https://www.e5wheels.com/": {
+      "url": "https://www.e5wheels.com/",
+      "source": "lab",
+      "field": null,
+      "mobile": {
+        "run_date": "2026-11-01T08:57:39-08:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "13.6.0",
+        "scores": {
+          "performance": 70,
+          "accessibility": 95,
+          "best_practices": 73,
+          "seo": 92
+        },
+        "lcp_s": 4.69,
+        "tbt_ms": 286.0,
+        "cls": 0.0013,
+        "fcp_s": 1.64,
+        "speed_index_s": 6.89,
+        "ttfb_ms": 116,
+        "page_weight_kib": 8358,
+        "request_count": 96,
+        "third_party_kib": 7143,
+        "third_party_count": 61,
+        "resource_breakdown": {
+          "html": {
+            "kib": 82,
+            "count": 4
+          },
+          "js": {
+            "kib": 1802,
+            "count": 39
+          },
+          "css": {
+            "kib": 73,
+            "count": 5
+          },
+          "image": {
+            "kib": 1135,
+            "count": 20
+          },
+          "font": {
+            "kib": 119,
+            "count": 2
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 5148,
+            "count": 26
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            70,
+            56,
+            79
+          ],
+          "min": 56,
+          "max": 79,
+          "spread": 23
+        },
+        "opportunities": [
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 1050,
+            "savings_kib": 567
+          },
+          {
+            "id": "render-blocking-insight",
+            "title": "Render-blocking requests",
+            "savings_ms": 750,
+            "savings_kib": null
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 450,
+            "savings_kib": 294
+          },
+          {
+            "id": "unused-javascript",
+            "title": "Reduce unused JavaScript",
+            "savings_ms": 450,
+            "savings_kib": 198
+          },
+          {
+            "id": "legacy-javascript-insight",
+            "title": "Legacy JavaScript",
+            "savings_ms": 0,
+            "savings_kib": 12
+          }
+        ]
+      },
+      "desktop": {
+        "run_date": "2026-11-01T08:57:39-08:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "13.6.0",
+        "scores": {
+          "performance": 93,
+          "accessibility": 95,
+          "best_practices": 77,
+          "seo": 92
+        },
+        "lcp_s": 0.52,
+        "tbt_ms": 0,
+        "cls": 0.0065,
+        "fcp_s": 0.52,
+        "speed_index_s": 2.99,
+        "ttfb_ms": 79,
+        "page_weight_kib": 10160,
+        "request_count": 95,
+        "third_party_kib": 8944,
+        "third_party_count": 60,
+        "resource_breakdown": {
+          "html": {
+            "kib": 83,
+            "count": 4
+          },
+          "js": {
+            "kib": 1802,
+            "count": 39
+          },
+          "css": {
+            "kib": 73,
+            "count": 5
+          },
+          "image": {
+            "kib": 1135,
+            "count": 20
+          },
+          "font": {
+            "kib": 119,
+            "count": 2
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 6948,
+            "count": 25
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            93,
+            94,
+            89
+          ],
+          "min": 89,
+          "max": 94,
+          "spread": 5
+        },
+        "opportunities": [
+          {
+            "id": "render-blocking-insight",
+            "title": "Render-blocking requests",
+            "savings_ms": 200,
+            "savings_kib": null
+          },
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 0,
+            "savings_kib": 685
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 0,
+            "savings_kib": 294
+          },
+          {
+            "id": "unused-javascript",
+            "title": "Reduce unused JavaScript",
+            "savings_ms": 0,
+            "savings_kib": 198
+          },
+          {
+            "id": "legacy-javascript-insight",
+            "title": "Legacy JavaScript",
+            "savings_ms": 0,
+            "savings_kib": 13
+          }
+        ]
+      }
+    }
+  }
+}

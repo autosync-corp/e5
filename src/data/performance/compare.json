@@ -1,0 +1,187 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-11-24T13:49:05-08:00",
+  "client": {
+    "id": "e5wheels",
+    "name": "E5 Wheels"
+  },
+  "baseline_date": "2026-11-01",
+  "latest_date": "2026-11-24",
+  "urls": [
+    "https://www.e5wheels.com/"
+  ],
+  "source": "lab",
+  "field": null,
+  "caveats": [
+    "Lighthouse version differed: baseline 13.6.0 (2026-11-01) vs latest 13.4.1 (2026-11-24). Score changes are not a perfect match.",
+    "Mobile performance scores on 2026-11-01 spread from 56 to 79 across 3 runs. Treat that side's score as approximate.",
+    "Real-user Chrome UX Report data is not available (CRUX_API_KEY is not set)."
+  ],
+  "by_url": {
+    "https://www.e5wheels.com/": {
+      "url": "https://www.e5wheels.com/",
+      "source": "lab",
+      "field": null,
+      "mobile": {
+        "source": "lab",
+        "field": null,
+        "lighthouse_version": {
+          "baseline": "13.6.0",
+          "latest": "13.4.1"
+        },
+        "run_to_run": {
+          "baseline": {
+            "runs": 3,
+            "scores": [
+              70,
+              56,
+              79
+            ],
+            "min": 56,
+            "max": 79,
+            "spread": 23
+          },
+          "latest": {
+            "runs": 3,
+            "scores": [
+              100,
+              95,
+              92
+            ],
+            "min": 92,
+            "max": 100,
+            "spread": 8
+          }
+        },
+        "score": {
+          "baseline": 70,
+          "latest": 95,
+          "delta": 25,
+          "direction": "better"
+        },
+        "lcp": {
+          "baseline": 4690,
+          "latest": 1790,
+          "delta": -2900,
+          "direction": "better"
+        },
+        "fcp": {
+          "baseline": 1640,
+          "latest": 950,
+          "delta": -690,
+          "direction": "better"
+        },
+        "tbt": {
+          "baseline": 286,
+          "latest": 23,
+          "delta": -263,
+          "direction": "better"
+        },
+        "speed_index": {
+          "baseline": 6890,
+          "latest": 1250,
+          "delta": -5640,
+          "direction": "better"
+        },
+        "cls": {
+          "baseline": 0.0013,
+          "latest": 0.13,
+          "delta": 0.1287,
+          "direction": "worse"
+        },
+        "page_weight": {
+          "baseline": 8558592,
+          "latest": 667648,
+          "delta": -7890944,
+          "direction": "better"
+        },
+        "requests": {
+          "baseline": 96,
+          "latest": 51,
+          "delta": -45,
+          "direction": "better"
+        }
+      },
+      "desktop": {
+        "source": "lab",
+        "field": null,
+        "lighthouse_version": {
+          "baseline": "13.6.0",
+          "latest": "13.4.1"
+        },
+        "run_to_run": {
+          "baseline": {
+            "runs": 3,
+            "scores": [
+              93,
+              94,
+              89
+            ],
+            "min": 89,
+            "max": 94,
+            "spread": 5
+          },
+          "latest": {
+            "runs": 3,
+            "scores": [
+              100,
+              100,
+              100
+            ],
+            "min": 100,
+            "max": 100,
+            "spread": 0
+          }
+        },
+        "score": {
+          "baseline": 93,
+          "latest": 100,
+          "delta": 7,
+          "direction": "better"
+        },
+        "lcp": {
+          "baseline": 520,
+          "latest": 570,
+          "delta": 50,
+          "direction": "worse"
+        },
+        "fcp": {
+          "baseline": 520,
+          "latest": 320,
+          "delta": -200,
+          "direction": "better"
+        },
+        "tbt": {
+          "baseline": 0,
+          "latest": 0,
+          "delta": 0,
+          "direction": "same"
+        },
+        "speed_index": {
+          "baseline": 2990,
+          "latest": 320,
+          "delta": -2670,
+          "direction": "better"
+        },
+        "cls": {
+          "baseline": 0.0065,
+          "latest": 0.0031,
+          "delta": -0.0034,
+          "direction": "better"
+        },
+        "page_weight": {
+          "baseline": 10403840,
+          "latest": 1070080,
+          "delta": -9333760,
+          "direction": "better"
+        },
+        "requests": {
+          "baseline": 95,
+          "latest": 54,
+          "delta": -41,
+          "direction": "better"
+        }
+      }
+    }
+  }
+}
