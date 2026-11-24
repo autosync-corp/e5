@@ -10,11 +10,11 @@ Staff ops (orders, coupons, events, attendees, tracking) stay at **`/admin`** on
 
 | Host | Behavior |
 |---|---|
-| `portal.e5wheels.com` | `/`, `/login`, `/logout`, and section paths are the portal. `robots.txt` is `Disallow: /`. Everything else (shop, blog, etc.) 302s to `https://www.e5wheels.com` + the same path. All responses send `X-Robots-Tag: noindex, nofollow`. |
-| `www.e5wheels.com` | `/portal` and `/portal/*` 301 to `https://portal.e5wheels.com` (prefix stripped). |
+| `portal.e5wheels.com` | `/` 302s to `/login`. `/login` is login or dashboard depending on the session. `/logout`, `/dashboard`, and section paths are the portal. `robots.txt` is `Disallow: /`. Everything else (shop, wheels, prerendered pages) 302s to `https://www.e5wheels.com` + the same path. All responses send `X-Robots-Tag: noindex, nofollow`. |
+| `www.e5wheels.com` | `/portal` 301s to `https://portal.e5wheels.com/login`. `/portal/*` 301s to `https://portal.e5wheels.com` (prefix stripped). |
 | Preview / localhost | `/portal` is the portal (no subdomain). Use this to test before DNS. |
 
-Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on the portal host onto those routes. The marketing homepage is prerendered, so `vercel.json` also rewrites `portal.e5wheels.com/` and `/robots.txt` at the edge (plus `/login`, `/logout`, and the section slugs).
+Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on the portal host onto those routes. The marketing homepage is a prerendered `index.html`, and Vercel serves the filesystem before rewrites, so `vercel.json` **redirects** `portal.e5wheels.com/` to `/login` (302) before that file can be cached. A catch-all 302 on the portal host sends any path outside the portal allowlist (login, logout, dashboard, sections, robots.txt, `_astro`/`assets`/`js`/favicon) to www. `/login` and section slugs are dest-rewritten at the edge so they still beat prerendered files such as `/blog`.
 
 Portal HTML is cookie-varying (login vs dashboard), so it must never be CDN-cached. The homepage `Cache-Control: public, s-maxage=3600` rule on `source: "/"` is skipped when the host is `portal.e5wheels.com`. The portal host instead gets `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow` on `/` and `/(.*)`. Middleware also sets `private, no-store` on every portal-host response, every `/portal/*` response, and any response that sets `Set-Cookie`.
 

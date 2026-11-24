@@ -59,7 +59,17 @@ assert('docs plan Upstash live publish', docs.includes('Upstash') && docs.includ
 assert('sitemap excludes /admin and /portal', astro.includes("'/admin'") && astro.includes("'/portal'"));
 assert('robots disallow /admin and /portal', robots.includes('Disallow: /admin/') && robots.includes('Disallow: /portal/'));
 assert('portal host robots Disallow /', read('src/pages/portal/robots.txt.ts').includes('Disallow: /') && vercel.includes('/portal/robots.txt') && vercel.includes('portal.e5wheels.com'));
-assert('vercel rewrites portal host / to /portal', vercel.includes('"destination": "/portal"') && vercel.includes('"source": "/"'));
+assert('vercel redirects portal host / to /login', (() => {
+  const cfg = JSON.parse(vercel);
+  return cfg.redirects.some((r) => r.source === '/' && r.destination === '/login' && r.statusCode === 302 && r.has?.some((h) => h.value === 'portal.e5wheels.com'));
+})());
+assert('vercel catch-all sends other portal-host paths to www', (() => {
+  const cfg = JSON.parse(vercel);
+  const catchAll = cfg.redirects.find((r) => r.statusCode === 302 && String(r.destination || '').startsWith('https://www.e5wheels.com/') && r.has?.some((h) => h.value === 'portal.e5wheels.com'));
+  const src = String(catchAll?.source || '');
+  return src.includes('login') && src.includes('slides') && src.includes('assets') && src.includes('_astro') && (catchAll?.destination || '').includes(':path');
+})());
+assert('vercel dest-rewrites portal login and sections before filesystem', vercel.includes('"dest": "/portal"') && vercel.includes('/portal/$1') && vercel.includes('/portal/robots.txt'));
 assert('noindex on portal pages', login.includes('noindex, nofollow') && layout.includes('noindex, nofollow'));
 assert('middleware noindex for portal', mw.includes("'X-Robots-Tag'") && mw.includes('noindex, nofollow'));
 assert('middleware no-store for portal and Set-Cookie', mw.includes('private, no-store') && mw.includes('portalHeaders') && mw.includes("headers.has('set-cookie')"));
@@ -174,7 +184,7 @@ try {
   assert('portal robots disallow all', portalRobots.status === 200 && portalRobotsBody.includes('Disallow: /') && !portalRobotsBody.includes('Allow: /'));
 
   const wwwPortal = await fetch(`${BASE}/portal`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
-  assert('www /portal redirects to portal host', wwwPortal.status === 301 && (wwwPortal.headers.get('location') || '') === 'https://portal.e5wheels.com/');
+  assert('www /portal redirects to portal /login', wwwPortal.status === 301 && (wwwPortal.headers.get('location') || '') === 'https://portal.e5wheels.com/login');
   assert('www /portal redirect is no-store', isNoStore(wwwPortal));
 
   const wwwPortalSlides = await fetch(`${BASE}/portal/slides`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
@@ -254,6 +264,13 @@ try {
   const hostCookie = (hostLogin.headers.getSetCookie?.() || []).find((c) => c.startsWith('e5_portal=')) || hostLogin.headers.get('set-cookie') || '';
   assert('portal host login sets cookie path /', hostLogin.status === 302 && /path=\/(;|$)/i.test(hostCookie));
   assert('portal host login Set-Cookie is no-store', isNoStore(hostLogin));
+  assert('portal host login lands on /login', (hostLogin.headers.get('location') || '').endsWith('/login'));
+
+  const hostDash = await fetch(`${BASE}/login`, {
+    headers: { 'x-forwarded-host': 'portal.e5wheels.com', cookie: hostCookie.split(';')[0] },
+  });
+  const hostDashHtml = await hostDash.text();
+  assert('portal host /login shows dashboard when signed in', hostDash.status === 200 && hostDashHtml.includes('Dashboard') && hostDashHtml.includes('Coming soon'));
 
   for (let i = 0; i < 8; i += 1) {
     await fetch(`${BASE}/portal/login`, {
