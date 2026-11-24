@@ -19,14 +19,14 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     label: 'Homepage Slides',
     path: '/slides',
     ready: true,
-    summary: 'Edit the homepage film-poster hero slides. Live on save via Upstash.',
+    summary: 'Edit the homepage film-poster hero slides. Saved changes appear on the live homepage within about a minute.',
   },
   {
     slug: 'links',
     label: 'Header & Footer Links',
     path: '/links',
-    ready: false,
-    summary: 'Edit header and footer navigation links. Live on save via Upstash.',
+    ready: true,
+    summary: 'Edit header and footer navigation links. Saved changes appear on the live site within about a minute.',
   },
   {
     slug: 'blog',

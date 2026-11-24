@@ -35,7 +35,7 @@ const layoutLabel: Record<HomepageSlide['layout'], string> = {
   {loginHref && null}
   <h1>Homepage Slides</h1>
   <p class="lead">
-    Edit the homepage banner. Saves write to Upstash Redis and show on the live homepage within about a minute — no redeploy.
+    Edit the homepage banner. Saved changes appear on the live homepage within about a minute — no redeploy.
     The film poster keeps its neon layout and Watch the Film lightbox.
   </p>
 
@@ -45,8 +45,8 @@ const layoutLabel: Record<HomepageSlide['layout'], string> = {
     <span class="status" data-status></span>
   </div>
   <p class="meta">
-    Loaded from {source === 'redis' ? 'Redis' : 'the current hardcoded slides'}.
-    {blobReady ? 'Image uploads use Vercel Blob.' : 'Image uploads need BLOB_READ_WRITE_TOKEN on this environment.'}
+    {source === 'redis' ? 'Showing the live saved slides.' : 'Showing the current homepage slides. Nothing changes on the public site until you save.'}
+    {blobReady ? 'Replace a slide image by uploading a JPEG, PNG, or WebP (max 4 MB).' : 'Image uploads are not available in this environment.'}
   </p>
 
   <ol class="list" data-list>
@@ -309,7 +309,7 @@ const layoutLabel: Record<HomepageSlide['layout'], string> = {
       var file = input.files[0];
       input.value = '';
       if (!blobReady) {
-        setStatus('Vercel Blob is not configured on this environment.', false);
+        setStatus('Image uploads are not available in this environment.', false);
         return;
       }
       if (file.size > maxBytes) {

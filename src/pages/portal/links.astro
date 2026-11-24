@@ -1,0 +1,701 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import {
+  loadSiteNav,
+  MAX_CHILDREN,
+  MAX_COLUMNS,
+  MAX_COLUMN_LINKS,
+  MAX_HEADER_ITEMS,
+  MAX_LEGAL,
+  MAX_SOCIALS,
+} from '@/core/portal/nav.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const { nav, source } = await loadSiteNav();
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+---
+
+<PortalLayout title="Header & Footer Links — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Header & Footer Links</h1>
+  <p class="lead">
+    Edit the site header menus and footer link columns. Saved changes appear on the live site within about a minute — no redeploy.
+    The logo, cart, and fonts stay as they are. Hidden items drop off the public site but remain here so you can turn them back on.
+  </p>
+
+  <div class="toolbar">
+    <button type="button" class="btn primary" data-save>Save changes</button>
+    <span class="status" data-status></span>
+  </div>
+  <p class="meta">
+    {source === 'redis' ? 'Showing the live saved menus.' : 'Showing the current site menus. Nothing changes on the public site until you save.'}
+  </p>
+
+  <h2>Header</h2>
+  <p class="hint">Left items sit left of the logo; right items sit to the right, before the cart. Use the Wheels or Generations dropdown layout to keep those column headings.</p>
+  <div class="toolbar tight">
+    <button type="button" class="btn ghost" data-add-header>Add header item</button>
+  </div>
+  <ol class="list" data-header>
+    {nav.header.map((item) => (
+      <li class="card" data-header-item data-id={item.id}>
+        <div class="row head">
+          <strong>{item.label}</strong>
+          <label class="check"><input type="checkbox" data-field="hidden" checked={item.hidden} /> Hidden</label>
+        </div>
+        <div class="split">
+          <label>Label <input type="text" data-field="label" maxlength="48" value={item.label} /></label>
+          <label>Link <input type="text" data-field="href" maxlength="300" value={item.href} /></label>
+        </div>
+        <div class="split3">
+          <label>Side
+            <select data-field="align">
+              <option value="left" selected={item.align === 'left'}>Left of logo</option>
+              <option value="right" selected={item.align === 'right'}>Right of logo</option>
+            </select>
+          </label>
+          <label>Dropdown layout
+            <select data-field="menu">
+              <option value="plain" selected={item.menu === 'plain'}>Default</option>
+              <option value="wheels" selected={item.menu === 'wheels'}>Wheels groups</option>
+              <option value="generations" selected={item.menu === 'generations'}>Generations groups</option>
+              <option value="visualize" selected={item.menu === 'visualize'}>Visualize (right-aligned)</option>
+            </select>
+          </label>
+          <label>Active on paths <input type="text" data-field="matches" value={item.matches.join(', ')} placeholder="/wheels" /></label>
+        </div>
+        <div class="row head">
+          <strong>Dropdown links</strong>
+          <button type="button" class="btn ghost" data-add-child>Add dropdown link</button>
+        </div>
+        <ol class="sublist" data-children>
+          {item.children.map((child) => (
+            <li class="subcard" data-child data-id={child.id}>
+              <div class="split">
+                <label>Label <input type="text" data-field="label" maxlength="48" value={child.label} /></label>
+                <label>Link <input type="text" data-field="href" maxlength="300" value={child.href} /></label>
+              </div>
+              <div class="split3">
+                <label>Group heading <input type="text" data-field="group" maxlength="40" value={child.group} placeholder="FORM FORGED" /></label>
+                <label>Badge <input type="text" data-field="badge" maxlength="12" value={child.badge} /></label>
+                <label class="check"><input type="checkbox" data-field="hidden" checked={child.hidden} /> Hidden</label>
+              </div>
+              <div class="actions">
+                <button type="button" class="btn ghost" data-up>Move up</button>
+                <button type="button" class="btn ghost" data-down>Move down</button>
+                <button type="button" class="btn danger" data-delete>Remove</button>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="actions">
+          <button type="button" class="btn ghost" data-up>Move up</button>
+          <button type="button" class="btn ghost" data-down>Move down</button>
+          <button type="button" class="btn danger" data-delete>Remove</button>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <h2>Footer columns</h2>
+  <div class="toolbar tight">
+    <button type="button" class="btn ghost" data-add-column>Add column</button>
+  </div>
+  <ol class="list" data-columns>
+    {nav.footer.columns.map((col) => (
+      <li class="card" data-column data-id={col.id}>
+        <div class="row head">
+          <strong>{col.heading}</strong>
+          <label class="check"><input type="checkbox" data-field="hidden" checked={col.hidden} /> Hidden</label>
+        </div>
+        <label>Heading <input type="text" data-field="heading" maxlength="40" value={col.heading} /></label>
+        <div class="row head">
+          <strong>Links</strong>
+          <button type="button" class="btn ghost" data-add-col-link>Add link</button>
+        </div>
+        <ol class="sublist" data-col-links>
+          {col.links.map((link) => (
+            <li class="subcard" data-col-link data-id={link.id}>
+              <div class="split">
+                <label>Label <input type="text" data-field="label" maxlength="48" value={link.label} /></label>
+                <label>Link <input type="text" data-field="href" maxlength="300" value={link.href} /></label>
+              </div>
+              <div class="actions">
+                <label class="check"><input type="checkbox" data-field="hidden" checked={link.hidden} /> Hidden</label>
+                <button type="button" class="btn ghost" data-up>Move up</button>
+                <button type="button" class="btn ghost" data-down>Move down</button>
+                <button type="button" class="btn danger" data-delete>Remove</button>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="actions">
+          <button type="button" class="btn ghost" data-up>Move up</button>
+          <button type="button" class="btn ghost" data-down>Move down</button>
+          <button type="button" class="btn danger" data-delete>Remove</button>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <h2>Contact, social, and legal</h2>
+  <div class="card stack">
+    <div class="row head">
+      <strong>Contact</strong>
+      <label class="check"><input type="checkbox" data-contact-hidden checked={nav.footer.contact.hidden} /> Hidden</label>
+    </div>
+    <label>Address <textarea data-contact-address rows="3">{nav.footer.contact.addressLines.join('\n')}</textarea></label>
+    <label>Address link <input type="text" data-contact-address-href value={nav.footer.contact.addressHref} /></label>
+    <div class="split">
+      <label>Phone label <input type="text" data-contact-phone-label value={nav.footer.contact.phoneLabel} /></label>
+      <label>Phone link <input type="text" data-contact-phone-href value={nav.footer.contact.phoneHref} /></label>
+    </div>
+    <div class="split">
+      <label>Email label <input type="text" data-contact-email-label value={nav.footer.contact.emailLabel} /></label>
+      <label>Email link <input type="text" data-contact-email-href value={nav.footer.contact.emailHref} /></label>
+    </div>
+  </div>
+
+  <div class="card stack">
+    <div class="row head">
+      <strong>Get in touch button</strong>
+      <label class="check"><input type="checkbox" data-cta-hidden checked={nav.footer.cta.hidden} /> Hidden</label>
+    </div>
+    <div class="split">
+      <label>Label <input type="text" data-cta-label value={nav.footer.cta.label} /></label>
+      <label>Link <input type="text" data-cta-href value={nav.footer.cta.href} /></label>
+    </div>
+  </div>
+
+  <div class="card stack">
+    <div class="row head">
+      <strong>Social links</strong>
+      <button type="button" class="btn ghost" data-add-social>Add social</button>
+    </div>
+    <ol class="sublist" data-socials>
+      {nav.footer.socials.map((social) => (
+        <li class="subcard" data-social data-id={social.id}>
+          <div class="split">
+            <label>Label <input type="text" data-field="label" maxlength="48" value={social.label} /></label>
+            <label>Link <input type="text" data-field="href" maxlength="300" value={social.href} /></label>
+          </div>
+          <div class="split">
+            <label>Network
+              <select data-field="network">
+                <option value="instagram" selected={social.network === 'instagram'}>Instagram</option>
+                <option value="facebook" selected={social.network === 'facebook'}>Facebook</option>
+                <option value="youtube" selected={social.network === 'youtube'}>YouTube</option>
+                <option value="tiktok" selected={social.network === 'tiktok'}>TikTok</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" data-field="hidden" checked={social.hidden} /> Hidden</label>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn ghost" data-up>Move up</button>
+            <button type="button" class="btn ghost" data-down>Move down</button>
+            <button type="button" class="btn danger" data-delete>Remove</button>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="card stack">
+    <div class="row head">
+      <strong>Legal links</strong>
+      <button type="button" class="btn ghost" data-add-legal>Add legal link</button>
+    </div>
+    <ol class="sublist" data-legal>
+      {nav.footer.legal.map((link) => (
+        <li class="subcard" data-legal-item data-id={link.id}>
+          <div class="split">
+            <label>Label <input type="text" data-field="label" maxlength="48" value={link.label} /></label>
+            <label>Link <input type="text" data-field="href" maxlength="300" value={link.href} /></label>
+          </div>
+          <div class="actions">
+            <label class="check"><input type="checkbox" data-field="hidden" checked={link.hidden} /> Hidden</label>
+            <button type="button" class="btn ghost" data-up>Move up</button>
+            <button type="button" class="btn ghost" data-down>Move down</button>
+            <button type="button" class="btn danger" data-delete>Remove</button>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+<template id="header-item-template">
+  <li class="card" data-header-item data-id="">
+    <div class="row head">
+      <strong>New link</strong>
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+    </div>
+    <div class="split">
+      <label>Label <input type="text" data-field="label" maxlength="48" value="NEW LINK" /></label>
+      <label>Link <input type="text" data-field="href" maxlength="300" value="/" /></label>
+    </div>
+    <div class="split3">
+      <label>Side
+        <select data-field="align">
+          <option value="left">Left of logo</option>
+          <option value="right" selected>Right of logo</option>
+        </select>
+      </label>
+      <label>Dropdown layout
+        <select data-field="menu">
+          <option value="plain" selected>Default</option>
+          <option value="wheels">Wheels groups</option>
+          <option value="generations">Generations groups</option>
+          <option value="visualize">Visualize (right-aligned)</option>
+        </select>
+      </label>
+      <label>Active on paths <input type="text" data-field="matches" value="" placeholder="/wheels" /></label>
+    </div>
+    <div class="row head">
+      <strong>Dropdown links</strong>
+      <button type="button" class="btn ghost" data-add-child>Add dropdown link</button>
+    </div>
+    <ol class="sublist" data-children></ol>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<template id="child-template">
+  <li class="subcard" data-child data-id="">
+    <div class="split">
+      <label>Label <input type="text" data-field="label" maxlength="48" value="NEW PAGE" /></label>
+      <label>Link <input type="text" data-field="href" maxlength="300" value="/" /></label>
+    </div>
+    <div class="split3">
+      <label>Group heading <input type="text" data-field="group" maxlength="40" value="" /></label>
+      <label>Badge <input type="text" data-field="badge" maxlength="12" value="" /></label>
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<template id="column-template">
+  <li class="card" data-column data-id="">
+    <div class="row head">
+      <strong>New column</strong>
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+    </div>
+    <label>Heading <input type="text" data-field="heading" maxlength="40" value="New column" /></label>
+    <div class="row head">
+      <strong>Links</strong>
+      <button type="button" class="btn ghost" data-add-col-link>Add link</button>
+    </div>
+    <ol class="sublist" data-col-links>
+      <li class="subcard" data-col-link data-id="">
+        <div class="split">
+          <label>Label <input type="text" data-field="label" maxlength="48" value="NEW LINK" /></label>
+          <label>Link <input type="text" data-field="href" maxlength="300" value="/" /></label>
+        </div>
+        <div class="actions">
+          <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+          <button type="button" class="btn ghost" data-up>Move up</button>
+          <button type="button" class="btn ghost" data-down>Move down</button>
+          <button type="button" class="btn danger" data-delete>Remove</button>
+        </div>
+      </li>
+    </ol>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<template id="column-link-template">
+  <li class="subcard" data-col-link data-id="">
+    <div class="split">
+      <label>Label <input type="text" data-field="label" maxlength="48" value="NEW LINK" /></label>
+      <label>Link <input type="text" data-field="href" maxlength="300" value="/" /></label>
+    </div>
+    <div class="actions">
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<template id="social-template">
+  <li class="subcard" data-social data-id="">
+    <div class="split">
+      <label>Label <input type="text" data-field="label" maxlength="48" value="E5 Wheels on Instagram" /></label>
+      <label>Link <input type="text" data-field="href" maxlength="300" value="https://www.instagram.com/e5wheels/" /></label>
+    </div>
+    <div class="split">
+      <label>Network
+        <select data-field="network">
+          <option value="instagram" selected>Instagram</option>
+          <option value="facebook">Facebook</option>
+          <option value="youtube">YouTube</option>
+          <option value="tiktok">TikTok</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<template id="legal-template">
+  <li class="subcard" data-legal-item data-id="">
+    <div class="split">
+      <label>Label <input type="text" data-field="label" maxlength="48" value="NEW LINK" /></label>
+      <label>Link <input type="text" data-field="href" maxlength="300" value="/" /></label>
+    </div>
+    <div class="actions">
+      <label class="check"><input type="checkbox" data-field="hidden" /> Hidden</label>
+      <button type="button" class="btn ghost" data-up>Move up</button>
+      <button type="button" class="btn ghost" data-down>Move down</button>
+      <button type="button" class="btn danger" data-delete>Remove</button>
+    </div>
+  </li>
+</template>
+
+<script is:inline define:vars={{ apiBase, maxHeader: MAX_HEADER_ITEMS, maxChildren: MAX_CHILDREN, maxColumns: MAX_COLUMNS, maxColLinks: MAX_COLUMN_LINKS, maxSocials: MAX_SOCIALS, maxLegal: MAX_LEGAL }}>
+  (function () {
+    var headerList = document.querySelector('[data-header]');
+    var columnList = document.querySelector('[data-columns]');
+    var socialList = document.querySelector('[data-socials]');
+    var legalList = document.querySelector('[data-legal]');
+    var status = document.querySelector('[data-status]');
+    if (!headerList || !columnList) return;
+
+    function setStatus(text, ok) {
+      if (!status) return;
+      status.textContent = text || '';
+      status.classList.toggle('is-error', ok === false);
+    }
+
+    function uid(prefix) {
+      return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    }
+
+    function val(root, name) {
+      var el = root.querySelector('[data-field="' + name + '"]');
+      return el ? el.value : '';
+    }
+
+    function checked(root, name) {
+      var el = root.querySelector('[data-field="' + name + '"]');
+      return !!(el && el.checked);
+    }
+
+    function move(node, dir) {
+      if (!node || !node.parentNode) return;
+      if (dir < 0 && node.previousElementSibling) node.parentNode.insertBefore(node, node.previousElementSibling);
+      if (dir > 0 && node.nextElementSibling) node.parentNode.insertBefore(node.nextElementSibling, node);
+    }
+
+    function readChild(node) {
+      return {
+        id: node.getAttribute('data-id') || uid('child'),
+        label: val(node, 'label'),
+        href: val(node, 'href'),
+        hidden: checked(node, 'hidden'),
+        group: val(node, 'group'),
+        badge: val(node, 'badge'),
+      };
+    }
+
+    function readHeaderItem(node) {
+      var matches = val(node, 'matches').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      return {
+        id: node.getAttribute('data-id') || uid('item'),
+        label: val(node, 'label'),
+        href: val(node, 'href'),
+        hidden: checked(node, 'hidden'),
+        align: val(node, 'align') || 'left',
+        menu: val(node, 'menu') || 'plain',
+        matches: matches,
+        children: Array.prototype.slice.call(node.querySelectorAll('[data-child]')).map(readChild),
+      };
+    }
+
+    function readColLink(node) {
+      return {
+        id: node.getAttribute('data-id') || uid('link'),
+        label: val(node, 'label'),
+        href: val(node, 'href'),
+        hidden: checked(node, 'hidden'),
+      };
+    }
+
+    function readColumn(node) {
+      return {
+        id: node.getAttribute('data-id') || uid('column'),
+        heading: val(node, 'heading'),
+        hidden: checked(node, 'hidden'),
+        links: Array.prototype.slice.call(node.querySelectorAll('[data-col-link]')).map(readColLink),
+      };
+    }
+
+    function readSocial(node) {
+      return {
+        id: node.getAttribute('data-id') || uid('social'),
+        network: val(node, 'network') || 'instagram',
+        href: val(node, 'href'),
+        label: val(node, 'label'),
+        hidden: checked(node, 'hidden'),
+      };
+    }
+
+    function cloneTpl(id) {
+      var tpl = document.getElementById(id);
+      return tpl.content.firstElementChild.cloneNode(true);
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-add-header]')) {
+        if (headerList.querySelectorAll('[data-header-item]').length >= maxHeader) {
+          setStatus('At most ' + maxHeader + ' header items.', false);
+          return;
+        }
+        var node = cloneTpl('header-item-template');
+        node.setAttribute('data-id', uid('item'));
+        headerList.appendChild(node);
+      }
+      if (e.target.closest('[data-add-column]')) {
+        if (columnList.querySelectorAll('[data-column]').length >= maxColumns) {
+          setStatus('At most ' + maxColumns + ' footer columns.', false);
+          return;
+        }
+        var cnode = cloneTpl('column-template');
+        cnode.setAttribute('data-id', uid('column'));
+        var firstLink = cnode.querySelector('[data-col-link]');
+        if (firstLink) firstLink.setAttribute('data-id', uid('link'));
+        columnList.appendChild(cnode);
+      }
+      if (e.target.closest('[data-add-social]') && socialList) {
+        if (socialList.querySelectorAll('[data-social]').length >= maxSocials) {
+          setStatus('At most ' + maxSocials + ' social links.', false);
+          return;
+        }
+        var snode = cloneTpl('social-template');
+        snode.setAttribute('data-id', uid('social'));
+        socialList.appendChild(snode);
+      }
+      if (e.target.closest('[data-add-legal]') && legalList) {
+        if (legalList.querySelectorAll('[data-legal-item]').length >= maxLegal) {
+          setStatus('At most ' + maxLegal + ' legal links.', false);
+          return;
+        }
+        var lnode = cloneTpl('legal-template');
+        lnode.setAttribute('data-id', uid('legal'));
+        legalList.appendChild(lnode);
+      }
+      var addChild = e.target.closest('[data-add-child]');
+      if (addChild) {
+        var item = addChild.closest('[data-header-item]');
+        var list = item && item.querySelector('[data-children]');
+        if (!list) return;
+        if (list.querySelectorAll('[data-child]').length >= maxChildren) {
+          setStatus('At most ' + maxChildren + ' dropdown links.', false);
+          return;
+        }
+        var childNode = cloneTpl('child-template');
+        childNode.setAttribute('data-id', uid('child'));
+        list.appendChild(childNode);
+      }
+      var addColLink = e.target.closest('[data-add-col-link]');
+      if (addColLink) {
+        var col = addColLink.closest('[data-column]');
+        var clist = col && col.querySelector('[data-col-links]');
+        if (!clist) return;
+        if (clist.querySelectorAll('[data-col-link]').length >= maxColLinks) {
+          setStatus('At most ' + maxColLinks + ' links in a column.', false);
+          return;
+        }
+        var linkNode = cloneTpl('column-link-template');
+        linkNode.setAttribute('data-id', uid('link'));
+        clist.appendChild(linkNode);
+      }
+      var up = e.target.closest('[data-up]');
+      if (up) move(up.closest('[data-header-item], [data-column], [data-child], [data-col-link], [data-social], [data-legal-item]'), -1);
+      var down = e.target.closest('[data-down]');
+      if (down) move(down.closest('[data-header-item], [data-column], [data-child], [data-col-link], [data-social], [data-legal-item]'), 1);
+      var del = e.target.closest('[data-delete]');
+      if (del) {
+        var target = del.closest('[data-header-item], [data-column], [data-child], [data-col-link], [data-social], [data-legal-item]');
+        if (!target) return;
+        if (target.matches('[data-header-item]') && headerList.querySelectorAll('[data-header-item]').length < 2) {
+          setStatus('Keep at least one header item.', false);
+          return;
+        }
+        if (target.matches('[data-column]') && columnList.querySelectorAll('[data-column]').length < 2) {
+          setStatus('Keep at least one footer column.', false);
+          return;
+        }
+        if (target.matches('[data-col-link]')) {
+          var parentCol = target.closest('[data-column]');
+          if (parentCol && parentCol.querySelectorAll('[data-col-link]').length < 2) {
+            setStatus('Keep at least one link in each column.', false);
+            return;
+          }
+        }
+        if (target.matches('[data-legal-item]') && legalList && legalList.querySelectorAll('[data-legal-item]').length < 2) {
+          setStatus('Keep at least one legal link.', false);
+          return;
+        }
+        if (window.confirm('Remove this item?')) target.remove();
+      }
+    });
+
+    var saveBtn = document.querySelector('[data-save]');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async function () {
+        var payload = {
+          header: Array.prototype.slice.call(headerList.querySelectorAll('[data-header-item]')).map(readHeaderItem),
+          footer: {
+            columns: Array.prototype.slice.call(columnList.querySelectorAll('[data-column]')).map(readColumn),
+            contact: {
+              hidden: !!(document.querySelector('[data-contact-hidden]') && document.querySelector('[data-contact-hidden]').checked),
+              addressLines: (document.querySelector('[data-contact-address]') && document.querySelector('[data-contact-address]').value || '').split('\n'),
+              addressHref: document.querySelector('[data-contact-address-href]') && document.querySelector('[data-contact-address-href]').value || '',
+              phoneLabel: document.querySelector('[data-contact-phone-label]') && document.querySelector('[data-contact-phone-label]').value || '',
+              phoneHref: document.querySelector('[data-contact-phone-href]') && document.querySelector('[data-contact-phone-href]').value || '',
+              emailLabel: document.querySelector('[data-contact-email-label]') && document.querySelector('[data-contact-email-label]').value || '',
+              emailHref: document.querySelector('[data-contact-email-href]') && document.querySelector('[data-contact-email-href]').value || '',
+            },
+            socials: socialList ? Array.prototype.slice.call(socialList.querySelectorAll('[data-social]')).map(readSocial) : [],
+            cta: {
+              hidden: !!(document.querySelector('[data-cta-hidden]') && document.querySelector('[data-cta-hidden]').checked),
+              label: document.querySelector('[data-cta-label]') && document.querySelector('[data-cta-label]').value || '',
+              href: document.querySelector('[data-cta-href]') && document.querySelector('[data-cta-href]').value || '',
+            },
+            legal: legalList ? Array.prototype.slice.call(legalList.querySelectorAll('[data-legal-item]')).map(readColLink) : [],
+          },
+        };
+        setStatus('Saving…');
+        try {
+          var res = await fetch(apiBase + '/nav', {
+            method: 'PUT',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nav: payload }),
+          });
+          var data = await res.json();
+          if (!res.ok) {
+            setStatus(data.error || 'Save failed.', false);
+            return;
+          }
+          setStatus('Saved. Live site updates within about a minute.');
+        } catch (err) {
+          setStatus('Save failed.', false);
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  h2 {
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin: 28px 0 8px;
+  }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .toolbar.tight { margin-bottom: 12px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .hint { color: #666; font-size: 13px; margin-bottom: 12px; max-width: 46rem; }
+  .status { font-size: 13px; color: #333; }
+  .status.is-error { color: #d31d25; }
+  .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.ghost:hover { background: #141414; color: #fff; }
+  .btn.danger { border-color: #d31d25; color: #d31d25; }
+  .list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 920px; }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 16px;
+    background: #fff;
+    max-width: 920px;
+  }
+  .card.stack { margin-bottom: 16px; }
+  .sublist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .subcard {
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fafafa;
+  }
+  .row.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  label, .check {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .check { flex-direction: row; align-items: center; text-transform: none; letter-spacing: 0; }
+  input, textarea, select {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 15px;
+    border: 1px solid #d9d9d9;
+    padding: 8px 10px;
+    color: #141414;
+    width: 100%;
+    background: #fff;
+  }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .split3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 800px) {
+    .split, .split3 { grid-template-columns: 1fr; }
+  }
+</style>
+</PortalLayout>

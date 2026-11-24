@@ -50,9 +50,9 @@ Later sections can add more users (table in Redis keyed by username) without cha
 
 In Vercel, add domain `portal.e5wheels.com` to the e5 project (same deployment as www). Point DNS to Vercel. Do not merge this PR until Dave replies **go live**.
 
-## Section 2 (this PR)
+## Section 2
 
-Homepage banner slides.
+Homepage banner slides. Shipped.
 
 - Portal host: `https://portal.e5wheels.com/slides`
 - Preview: `/portal/slides`
@@ -62,13 +62,30 @@ Homepage banner slides.
 - Images go to the `e5-portal` Vercel Blob store (`BLOB_READ_WRITE_TOKEN`). JPEG/PNG/WebP, max 4 MB. Relative `/…` or `https://(www.)e5wheels.com/…` links only.
 - Film-poster layout (neon, Watch the Film lightbox) stays; copy and photo are editable.
 
+## Section 3 (this PR)
+
+Header and footer links.
+
+- Portal host: `https://portal.e5wheels.com/links`
+- Preview: `/portal/links`
+- Redis key `e5:portal:nav` (one versioned JSON document). First GET seeds it from the current hardcoded header/footer. Empty Redis or Redis errors fall back to that seed, so the public site does not change until the client saves an edit.
+- Saves publish live immediately (no draft). Auth-protected `GET/PUT /api/portal/nav` (preview: `/portal/api/nav`) with the same session cookie and Origin check as slides.
+- Public `GET /api/site-nav` is `s-maxage=60` (stale-while-revalidate 600).
+- Allowed hrefs: site-relative paths, `https://www.e5wheels.com` / `e5wheels.com`, `tel:`, `mailto:`, E5 social profiles, and the existing Google Maps address link. `javascript:` and other unsafe schemes are rejected.
+- Logo, cart, and staff `/admin` are not editable. Wheel prices stay on AutoSync.
+
+### Crawlable nav tradeoff
+
+Most pages are SSR (`output: 'server'`). `MainLayout` and `Footer` load `e5:portal:nav` at request time (60s in-memory cache, same pattern as tracking) and emit live `<a href>` in HTML. Dropdown children stay in the desktop markup (CSS hover, not `v-if`) so they are crawlable too.
+
+Three pages are prerendered for PageSpeed: `/`, plus two gallery detail routes. Those bake the seed (or last-build snapshot) into HTML. Visitors still see live edits within about a minute via `/api/site-nav` hydrate on the Vue navbar and the footer. Crawlers of those three pages see the baked links until the next deploy. Dropping homepage prerender would put live nav in that HTML immediately but would undo the LCP work from the PageSpeed/slides PRs, so this PR keeps prerender on those routes.
+
 Do not merge until Dave replies **go live**.
 
 ## Later sections (not in this PR)
 
 | Section | Portal host | Preview |
 |---|---|---|
-| Header & Footer Links | `/links` | `/portal/links` |
 | Blog Posts | `/blog` | `/portal/blog` |
 | Galleries | `/galleries` | `/portal/galleries` |
 | Site Performance | `/performance` | `/portal/performance` |
@@ -83,7 +100,7 @@ Use **Upstash Redis** (already on this project as `KV_REST_API_URL` / `KV_REST_A
 Planned keys (write on save, read at request time):
 
 - `e5:portal:slides` — homepage hero slides (Section 2)
-- `e5:portal:nav` — header / footer links
+- `e5:portal:nav` — header / footer links (Section 3)
 - `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog
 - `e5:portal:galleries` — immersive gallery sets
 - `e5:portal:users` — extra portal users (optional, later)
