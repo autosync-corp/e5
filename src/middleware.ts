@@ -91,11 +91,27 @@ function noindex(response: Response) {
   return response;
 }
 
+function noStore(response: Response) {
+  response.headers.set('Cache-Control', 'private, no-store');
+  return response;
+}
+
+function portalHeaders(response: Response) {
+  noindex(response);
+  noStore(response);
+  return response;
+}
+
+function isPortalPath(pathname: string) {
+  return pathname === '/portal' || pathname.startsWith('/portal/');
+}
+
 function portalRobots() {
   return new Response('User-agent: *\nDisallow: /\n', {
     status: 200,
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'private, no-store',
       'X-Robots-Tag': 'noindex, nofollow',
     },
   });
@@ -110,29 +126,29 @@ export const onRequest = defineMiddleware(async (context, next) => {
     if (pathname === '/robots.txt') return portalRobots();
 
     if (isStaticAssetPath(pathname) || flags.portalRewrite) {
-      return noindex(await next());
+      return portalHeaders(await next());
     }
 
-    if (pathname === '/portal' || pathname.startsWith('/portal/')) {
-      return noindex(await next());
+    if (isPortalPath(pathname)) {
+      return portalHeaders(await next());
     }
 
     if (isPortalPagePath(pathname)) {
       flags.portalRewrite = true;
-      return noindex(await rewrite(internalPortalPath(pathname)));
+      return portalHeaders(await rewrite(internalPortalPath(pathname)));
     }
 
-    return redirect(`${SITE_ORIGIN}${url.pathname}${url.search}`, 302);
+    return portalHeaders(redirect(`${SITE_ORIGIN}${url.pathname}${url.search}`, 302));
   }
 
-  if (isProductionSiteHost(request) && (pathname === '/portal' || pathname.startsWith('/portal/'))) {
+  if (isProductionSiteHost(request) && isPortalPath(pathname)) {
     const rest = pathname === '/portal' ? '/' : pathname.slice('/portal'.length) || '/';
-    return redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301);
+    return noStore(redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301));
   }
 
   if (pathname === '/portal/login') {
     flags.portalRewrite = true;
-    return noindex(await rewrite('/portal'));
+    return portalHeaders(await rewrite('/portal'));
   }
 
   if (GONE.has(pathname) || pathname.startsWith('/wp-admin/')) {
@@ -180,13 +196,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const response = await next();
-  if (
-    pathname === '/admin' ||
-    pathname.startsWith('/admin/') ||
-    pathname === '/portal' ||
-    pathname.startsWith('/portal/')
-  ) {
+  if (isPortalPath(pathname) || isPortalHost(request)) {
+    portalHeaders(response);
+  } else if (pathname === '/admin' || pathname.startsWith('/admin/')) {
     noindex(response);
+  }
+  if (response.headers.has('set-cookie')) {
+    noStore(response);
   }
   return response;
 });

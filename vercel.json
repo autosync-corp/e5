@@ -78,11 +78,28 @@
     },
     {
       "source": "/",
+      "missing": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, s-maxage=3600, stale-while-revalidate=86400"
         }
+      ]
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
   ],

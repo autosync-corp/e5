@@ -62,8 +62,35 @@ assert('portal host robots Disallow /', read('src/pages/portal/robots.txt.ts').i
 assert('vercel rewrites portal host / to /portal', vercel.includes('"destination": "/portal"') && vercel.includes('"source": "/"'));
 assert('noindex on portal pages', login.includes('noindex, nofollow') && layout.includes('noindex, nofollow'));
 assert('middleware noindex for portal', mw.includes("'X-Robots-Tag'") && mw.includes('noindex, nofollow'));
+assert('middleware no-store for portal and Set-Cookie', mw.includes('private, no-store') && mw.includes('portalHeaders') && mw.includes("headers.has('set-cookie')"));
 assert('site fonts in shell', layout.includes('Franklin Gothic') && layout.includes('fonts.css'));
 assert('portal pages are SSR', portal.includes('prerender = false') && section.includes('prerender = false'));
+
+const vercelCfg = JSON.parse(vercel);
+const slashPublic = vercelCfg.headers.find(
+  (h) => h.source === '/' && h.headers.some((x) => (x.value || '').includes('s-maxage=3600')),
+);
+assert(
+  'homepage / cache excludes portal host',
+  JSON.stringify(slashPublic?.missing) === JSON.stringify([{ type: 'host', value: 'portal.e5wheels.com' }]),
+);
+const portalRoot = vercelCfg.headers.find(
+  (h) => h.source === '/' && h.has?.some((x) => x.type === 'host' && x.value === 'portal.e5wheels.com'),
+);
+const portalCatch = vercelCfg.headers.find(
+  (h) => h.source === '/(.*)' && h.has?.some((x) => x.type === 'host' && x.value === 'portal.e5wheels.com'),
+);
+function headerIs(rule, key, value) {
+  return !!rule?.headers?.some((x) => x.key === key && x.value === value);
+}
+assert(
+  'portal host / is private no-store + noindex',
+  headerIs(portalRoot, 'Cache-Control', 'private, no-store') && headerIs(portalRoot, 'X-Robots-Tag', 'noindex, nofollow'),
+);
+assert(
+  'portal host /(.*) is private no-store + noindex',
+  headerIs(portalCatch, 'Cache-Control', 'private, no-store') && headerIs(portalCatch, 'X-Robots-Tag', 'noindex, nofollow'),
+);
 
 const password = 'portal-test-pass';
 const N = 16384;
@@ -118,10 +145,15 @@ try {
   await waitForServer(child);
 
   const origin = BASE;
+  const isNoStore = (res) => {
+    const cc = (res.headers.get('cache-control') || '').toLowerCase();
+    return cc.includes('private') && cc.includes('no-store');
+  };
   const loginPage = await fetch(`${BASE}/portal`);
   const loginHtml = await loginPage.text();
   assert('GET /portal is 200 login', loginPage.status === 200 && loginHtml.includes('Client Portal') && loginHtml.includes('name="password"'));
   assert('GET /portal noindex', loginPage.headers.get('x-robots-tag') === 'noindex, nofollow' && loginHtml.includes('noindex, nofollow'));
+  assert('GET /portal is no-store', isNoStore(loginPage));
   assert('login does not leak hash', !loginHtml.includes('scrypt$') && !loginHtml.includes(password));
 
   const staffPage = await fetch(`${BASE}/admin`);
@@ -131,9 +163,11 @@ try {
   const portalHostLogin = await fetch(`${BASE}/login`, { headers: { 'x-forwarded-host': 'portal.e5wheels.com' } });
   const portalHostHtml = await portalHostLogin.text();
   assert('portal host /login is login', portalHostLogin.status === 200 && portalHostHtml.includes('Client Portal') && portalHostLogin.headers.get('x-robots-tag') === 'noindex, nofollow');
+  assert('portal host /login is no-store', isNoStore(portalHostLogin));
 
   const portalShop = await fetch(`${BASE}/shop`, { headers: { 'x-forwarded-host': 'portal.e5wheels.com' }, redirect: 'manual' });
   assert('portal host /shop redirects to www', portalShop.status === 302 && (portalShop.headers.get('location') || '') === 'https://www.e5wheels.com/shop');
+  assert('portal host /shop redirect is no-store', isNoStore(portalShop));
 
   const portalRobots = await fetch(`${BASE}/portal/robots.txt`);
   const portalRobotsBody = await portalRobots.text();
@@ -141,6 +175,7 @@ try {
 
   const wwwPortal = await fetch(`${BASE}/portal`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
   assert('www /portal redirects to portal host', wwwPortal.status === 301 && (wwwPortal.headers.get('location') || '') === 'https://portal.e5wheels.com/');
+  assert('www /portal redirect is no-store', isNoStore(wwwPortal));
 
   const wwwPortalSlides = await fetch(`${BASE}/portal/slides`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
   assert('www /portal/slides redirects to portal /slides', wwwPortalSlides.status === 301 && (wwwPortalSlides.headers.get('location') || '') === 'https://portal.e5wheels.com/slides');
@@ -173,6 +208,7 @@ try {
   const setCookie = good.headers.getSetCookie?.() || (good.headers.get('set-cookie') ? [good.headers.get('set-cookie')] : []);
   const sessionCookie = setCookie.find((c) => c.startsWith('e5_portal=')) || '';
   assert('good password redirects', good.status === 302 && (good.headers.get('location') || '').includes('/portal'));
+  assert('login Set-Cookie response is no-store', isNoStore(good) && sessionCookie.includes('e5_portal='));
   assert('session cookie is httpOnly', /httponly/i.test(sessionCookie) && sessionCookie.includes('e5_portal='));
   assert('session cookie path /portal on preview', /path=\/portal/i.test(sessionCookie));
   assert('session cookie is not the password', !sessionCookie.includes(password));
@@ -184,6 +220,7 @@ try {
   const dash = await fetch(`${BASE}/portal`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const dashHtml = await dash.text();
   assert('dashboard renders after login', dash.status === 200 && dashHtml.includes('Dashboard') && dashHtml.includes('Coming soon') && dashHtml.includes('Homepage Slides'));
+  assert('dashboard is no-store', isNoStore(dash));
   assert('dashboard uses site type', dashHtml.includes('Franklin Gothic'));
   assert('dashboard has logout', dashHtml.includes('/portal/logout'));
 
@@ -200,6 +237,7 @@ try {
   });
   const outCookie = (out.headers.get('set-cookie') || '').toLowerCase();
   assert('logout redirects to login', out.status === 302);
+  assert('logout Set-Cookie response is no-store', isNoStore(out));
   assert('logout clears cookie', outCookie.includes('e5_portal=') && (outCookie.includes('max-age=0') || outCookie.includes('expires=')));
 
   const hostLogin = await fetch(`${BASE}/login`, {
@@ -215,6 +253,7 @@ try {
   });
   const hostCookie = (hostLogin.headers.getSetCookie?.() || []).find((c) => c.startsWith('e5_portal=')) || hostLogin.headers.get('set-cookie') || '';
   assert('portal host login sets cookie path /', hostLogin.status === 302 && /path=\/(;|$)/i.test(hostCookie));
+  assert('portal host login Set-Cookie is no-store', isNoStore(hostLogin));
 
   for (let i = 0; i < 8; i += 1) {
     await fetch(`${BASE}/portal/login`, {

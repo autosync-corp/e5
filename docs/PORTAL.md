@@ -16,6 +16,8 @@ Staff ops (orders, coupons, events, attendees, tracking) stay at **`/admin`** on
 
 Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on the portal host onto those routes. The marketing homepage is prerendered, so `vercel.json` also rewrites `portal.e5wheels.com/` and `/robots.txt` at the edge (plus `/login`, `/logout`, and the section slugs).
 
+Portal HTML is cookie-varying (login vs dashboard), so it must never be CDN-cached. The homepage `Cache-Control: public, s-maxage=3600` rule on `source: "/"` is skipped when the host is `portal.e5wheels.com`. The portal host instead gets `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow` on `/` and `/(.*)`. Middleware also sets `private, no-store` on every portal-host response, every `/portal/*` response, and any response that sets `Set-Cookie`.
+
 ## Section 1 (this PR)
 
 Login + shell only.
