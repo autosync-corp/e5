@@ -23,37 +23,46 @@ function read(rel) {
 }
 
 const auth = read('src/core/portal/auth.ts');
-const portal = read('src/pages/admin/index.astro');
+const host = read('src/core/portal/host.ts');
+const portal = read('src/pages/portal/index.astro');
 const login = read('src/core/portal/PortalLogin.astro');
-const section = read('src/pages/admin/[section].astro');
+const section = read('src/pages/portal/[section].astro');
 const layout = read('src/layouts/PortalLayout.astro');
-const logout = read('src/pages/admin/logout.ts');
+const logout = read('src/pages/portal/logout.ts');
 const mw = read('src/middleware.ts');
 const astro = read('astro.config.mjs');
 const robots = read('public/robots.txt');
+const vercel = read('vercel.json');
 const docs = read('docs/PORTAL.md');
-const ops = read('src/pages/admin/ops/index.astro');
+const staff = read('src/pages/admin/index.astro');
+const staffLogout = read('src/pages/admin/logout.ts');
 
 assert('portal docs exist', existsSync(join(root, 'docs/PORTAL.md')));
 assert('hash helper exists', existsSync(join(root, 'scripts/hash-portal-password.mjs')));
-assert('staff ops moved to /admin/ops', ops.includes("redirect('/admin/ops')") && ops.includes('Coupons'));
-assert('portal owns /admin', portal.includes('Client Portal') && login.includes('action="/admin"') && login.includes('Client Portal'));
+assert('staff ops stays at /admin', staff.includes('Admin Panel') && staff.includes("redirect('/admin')") && staff.includes('Coupons') && !existsSync(join(root, 'src/pages/admin/ops')));
+assert('staff logout is unchanged', staffLogout.includes("delete('admin_auth'") && !staffLogout.includes('e5_portal'));
+assert('portal lives under /portal', portal.includes('Client Portal') && login.includes('Client Portal'));
+assert('portal host is portal.e5wheels.com', host.includes("PORTAL_HOST = 'portal.e5wheels.com'") && mw.includes('isPortalHost') && mw.includes('rewrite('));
+assert('www /portal redirects to portal host', mw.includes('isProductionSiteHost') && mw.includes('PORTAL_ORIGIN'));
 assert('hashed password env', auth.includes('PORTAL_PASSWORD_HASH') && auth.includes('scrypt'));
+assert('no ADMIN_PASSWORD login fallback', !auth.includes("env('ADMIN_PASSWORD')") && auth.includes('portalConfigError'));
 assert('session cookie httpOnly signed', auth.includes("PORTAL_COOKIE = 'e5_portal'") && auth.includes('httpOnly: true') && auth.includes("createHmac('sha256'"));
+assert('cookie path is host-aware', auth.includes("isPortalHost(request) ? '/' : '/portal'"));
 assert('rate limit on login', auth.includes('e5:portal:login:') && auth.includes('LOGIN_MAX_ATTEMPTS'));
 assert('users list is extendable', auth.includes('PORTAL_USERS') && docs.includes('e5:portal:users'));
 assert('logout clears portal cookie', logout.includes('clearSessionCookie'));
 assert('coming soon placeholders', portal.includes('Coming soon') && section.includes('Coming soon'));
-assert('planned nav sections', layout.includes('Homepage Slides') && layout.includes('Header & Footer Links') && layout.includes('Blog Posts') && layout.includes('Galleries') && layout.includes('Site Performance') && layout.includes('Sales & Prospects'));
-assert('ghl called out', portal.includes('GoHighLevel') || layout.includes('GoHighLevel') || read('src/core/portal/sections.ts').includes('GoHighLevel'));
-assert('no price editing in portal', !portal.includes('price') || portal.includes('not editable'));
+assert('planned nav sections', layout.includes('PORTAL_SECTIONS') && read('src/core/portal/sections.ts').includes('Homepage Slides') && read('src/core/portal/sections.ts').includes('GoHighLevel'));
+assert('no price editing in portal', portal.includes('not editable'));
 assert('docs forbid price editing', docs.includes('not editable') && docs.includes('AutoSync'));
 assert('docs plan Upstash live publish', docs.includes('Upstash') && docs.includes('no draft') && docs.includes('e5:portal:slides'));
-assert('sitemap excludes /admin', astro.includes("'/admin'"));
-assert('robots disallow /admin', robots.includes('Disallow: /admin/'));
+assert('sitemap excludes /admin and /portal', astro.includes("'/admin'") && astro.includes("'/portal'"));
+assert('robots disallow /admin and /portal', robots.includes('Disallow: /admin/') && robots.includes('Disallow: /portal/'));
+assert('portal host robots Disallow /', read('src/pages/portal/robots.txt.ts').includes('Disallow: /') && vercel.includes('/portal/robots.txt') && vercel.includes('portal.e5wheels.com'));
+assert('vercel rewrites portal host / to /portal', vercel.includes('"destination": "/portal"') && vercel.includes('"source": "/"'));
 assert('noindex on portal pages', login.includes('noindex, nofollow') && layout.includes('noindex, nofollow'));
-assert('middleware X-Robots-Tag for /admin', mw.includes("pathname.startsWith('/admin/')") && mw.includes("'X-Robots-Tag'") && mw.includes('noindex, nofollow'));
-assert('site fonts in shell', layout.includes('Franklin Gothic') && layout.includes("fonts.css"));
+assert('middleware noindex for portal', mw.includes("'X-Robots-Tag'") && mw.includes('noindex, nofollow'));
+assert('site fonts in shell', layout.includes('Franklin Gothic') && layout.includes('fonts.css'));
 assert('portal pages are SSR', portal.includes('prerender = false') && section.includes('prerender = false'));
 
 const password = 'portal-test-pass';
@@ -109,13 +118,34 @@ try {
   await waitForServer(child);
 
   const origin = BASE;
-  const loginPage = await fetch(`${BASE}/admin`);
+  const loginPage = await fetch(`${BASE}/portal`);
   const loginHtml = await loginPage.text();
-  assert('GET /admin is 200 login', loginPage.status === 200 && loginHtml.includes('Client Portal') && loginHtml.includes('name="password"'));
-  assert('GET /admin noindex', loginPage.headers.get('x-robots-tag') === 'noindex, nofollow' && loginHtml.includes('noindex, nofollow'));
+  assert('GET /portal is 200 login', loginPage.status === 200 && loginHtml.includes('Client Portal') && loginHtml.includes('name="password"'));
+  assert('GET /portal noindex', loginPage.headers.get('x-robots-tag') === 'noindex, nofollow' && loginHtml.includes('noindex, nofollow'));
   assert('login does not leak hash', !loginHtml.includes('scrypt$') && !loginHtml.includes(password));
 
-  const bad = await fetch(`${BASE}/admin`, {
+  const staffPage = await fetch(`${BASE}/admin`);
+  const staffHtml = await staffPage.text();
+  assert('GET /admin is staff ops', staffPage.status === 200 && staffHtml.includes('Admin Panel') && !staffHtml.includes('Client Portal'));
+
+  const portalHostLogin = await fetch(`${BASE}/login`, { headers: { 'x-forwarded-host': 'portal.e5wheels.com' } });
+  const portalHostHtml = await portalHostLogin.text();
+  assert('portal host /login is login', portalHostLogin.status === 200 && portalHostHtml.includes('Client Portal') && portalHostLogin.headers.get('x-robots-tag') === 'noindex, nofollow');
+
+  const portalShop = await fetch(`${BASE}/shop`, { headers: { 'x-forwarded-host': 'portal.e5wheels.com' }, redirect: 'manual' });
+  assert('portal host /shop redirects to www', portalShop.status === 302 && (portalShop.headers.get('location') || '') === 'https://www.e5wheels.com/shop');
+
+  const portalRobots = await fetch(`${BASE}/portal/robots.txt`);
+  const portalRobotsBody = await portalRobots.text();
+  assert('portal robots disallow all', portalRobots.status === 200 && portalRobotsBody.includes('Disallow: /') && !portalRobotsBody.includes('Allow: /'));
+
+  const wwwPortal = await fetch(`${BASE}/portal`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
+  assert('www /portal redirects to portal host', wwwPortal.status === 301 && (wwwPortal.headers.get('location') || '') === 'https://portal.e5wheels.com/');
+
+  const wwwPortalSlides = await fetch(`${BASE}/portal/slides`, { headers: { 'x-forwarded-host': 'www.e5wheels.com' }, redirect: 'manual' });
+  assert('www /portal/slides redirects to portal /slides', wwwPortalSlides.status === 301 && (wwwPortalSlides.headers.get('location') || '') === 'https://portal.e5wheels.com/slides');
+
+  const bad = await fetch(`${BASE}/portal/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -130,7 +160,7 @@ try {
   assert('bad password stays on login', bad.status === 200 && badHtml.includes('Invalid password'));
   assert('bad password does not set session', !badCookie.includes('e5_portal=') || /e5_portal=deleted/i.test(badCookie));
 
-  const good = await fetch(`${BASE}/admin`, {
+  const good = await fetch(`${BASE}/portal/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -142,31 +172,29 @@ try {
   });
   const setCookie = good.headers.getSetCookie?.() || (good.headers.get('set-cookie') ? [good.headers.get('set-cookie')] : []);
   const sessionCookie = setCookie.find((c) => c.startsWith('e5_portal=')) || '';
-  assert('good password redirects', good.status === 302 && (good.headers.get('location') || '').includes('/admin'));
+  assert('good password redirects', good.status === 302 && (good.headers.get('location') || '').includes('/portal'));
   assert('session cookie is httpOnly', /httponly/i.test(sessionCookie) && sessionCookie.includes('e5_portal='));
+  assert('session cookie path /portal on preview', /path=\/portal/i.test(sessionCookie));
   assert('session cookie is not the password', !sessionCookie.includes(password));
   const cookieValue = sessionCookie.split(';')[0].replace('e5_portal=', '');
   const [body, sig] = cookieValue.split('.');
   const expectedSig = createHmac('sha256', secret).update(body).digest('base64url');
   assert('session cookie HMAC verifies', !!body && !!sig && timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig)));
 
-  const dash = await fetch(`${BASE}/admin`, { headers: { cookie: `e5_portal=${cookieValue}` } });
+  const dash = await fetch(`${BASE}/portal`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const dashHtml = await dash.text();
   assert('dashboard renders after login', dash.status === 200 && dashHtml.includes('Dashboard') && dashHtml.includes('Coming soon') && dashHtml.includes('Homepage Slides'));
   assert('dashboard uses site type', dashHtml.includes('Franklin Gothic'));
-  assert('dashboard has logout', dashHtml.includes('/admin/logout'));
+  assert('dashboard has logout', dashHtml.includes('/portal/logout'));
 
-  const soon = await fetch(`${BASE}/admin/slides`, { headers: { cookie: `e5_portal=${cookieValue}` } });
+  const soon = await fetch(`${BASE}/portal/slides`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const soonHtml = await soon.text();
   assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Homepage Slides') && soonHtml.includes('Coming soon'));
 
-  const unauth = await fetch(`${BASE}/admin/slides`, { redirect: 'manual' });
+  const unauth = await fetch(`${BASE}/portal/slides`, { redirect: 'manual' });
   assert('section redirects when logged out', unauth.status === 302);
 
-  const opsPage = await fetch(`${BASE}/admin/ops`);
-  assert('staff ops still served', opsPage.status === 200 && (await opsPage.text()).includes('Admin Panel'));
-
-  const out = await fetch(`${BASE}/admin/logout`, {
+  const out = await fetch(`${BASE}/portal/logout`, {
     headers: { cookie: `e5_portal=${cookieValue}` },
     redirect: 'manual',
   });
@@ -174,9 +202,22 @@ try {
   assert('logout redirects to login', out.status === 302);
   assert('logout clears cookie', outCookie.includes('e5_portal=') && (outCookie.includes('max-age=0') || outCookie.includes('expires=')));
 
-  let locked = false;
+  const hostLogin = await fetch(`${BASE}/login`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      origin,
+      'x-forwarded-host': 'portal.e5wheels.com',
+      'x-forwarded-for': '203.0.113.11',
+    },
+    body: `password=${encodeURIComponent(password)}`,
+    redirect: 'manual',
+  });
+  const hostCookie = (hostLogin.headers.getSetCookie?.() || []).find((c) => c.startsWith('e5_portal=')) || hostLogin.headers.get('set-cookie') || '';
+  assert('portal host login sets cookie path /', hostLogin.status === 302 && /path=\/(;|$)/i.test(hostCookie));
+
   for (let i = 0; i < 8; i += 1) {
-    await fetch(`${BASE}/admin`, {
+    await fetch(`${BASE}/portal/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -187,7 +228,7 @@ try {
       redirect: 'manual',
     });
   }
-  const lockRes = await fetch(`${BASE}/admin`, {
+  const lockRes = await fetch(`${BASE}/portal/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -198,8 +239,7 @@ try {
     redirect: 'manual',
   });
   const lockHtml = await lockRes.text();
-  locked = lockHtml.includes('Too many attempts');
-  assert('login rate limit locks after 8 failures', locked);
+  assert('login rate limit locks after 8 failures', lockHtml.includes('Too many attempts'));
 } catch (err) {
   failed += 1;
   console.error('fail live server', err);

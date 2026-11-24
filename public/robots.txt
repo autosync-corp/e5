@@ -5,6 +5,7 @@ Allow: /
 
 # Utility / account-style surfaces. Keep these out of the index.
 Disallow: /admin/
+Disallow: /portal/
 Disallow: /checkout/
 Disallow: /api/
 Disallow: /order-success

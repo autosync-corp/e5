@@ -1,6 +1,7 @@
 import { createHmac, randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
 import { Redis } from '@upstash/redis';
 import type { AstroCookies } from 'astro';
+import { isPortalHost } from './host.ts';
 
 function scryptAsync(
   password: string,
@@ -46,8 +47,19 @@ function env(name: string): string {
   return fromMeta || '';
 }
 
+export function portalConfigError(): string | null {
+  if (!env('PORTAL_PASSWORD_HASH') || !env('PORTAL_SESSION_SECRET')) {
+    return 'Portal login is disabled. Set PORTAL_PASSWORD_HASH and PORTAL_SESSION_SECRET.';
+  }
+  return null;
+}
+
 function sessionSecret(): string {
-  return env('PORTAL_SESSION_SECRET') || env('ADMIN_PASSWORD');
+  return env('PORTAL_SESSION_SECRET');
+}
+
+function cookiePath(request: Request): string {
+  return isPortalHost(request) ? '/' : '/portal';
 }
 
 function getRedis(): Redis | null {
@@ -169,12 +181,9 @@ async function verifyScrypt(password: string, stored: string): Promise<boolean> 
 }
 
 export async function verifyPortalPassword(password: string): Promise<boolean> {
-  if (!password) return false;
+  if (!password || portalConfigError()) return false;
   const hash = env('PORTAL_PASSWORD_HASH');
-  if (hash) return verifyScrypt(password, hash);
-  const legacy = env('ADMIN_PASSWORD');
-  if (legacy) return safeEqualString(password, legacy);
-  return false;
+  return verifyScrypt(password, hash);
 }
 
 function sign(body: string): string {
@@ -182,7 +191,7 @@ function sign(body: string): string {
 }
 
 export function createSessionCookieValue(user: PortalUser): string | null {
-  if (!sessionSecret()) return null;
+  if (portalConfigError()) return null;
   const payload: SessionPayload = {
     u: user.id,
     exp: Math.floor(Date.now() / 1000) + SESSION_MAX_AGE_SEC,
@@ -192,7 +201,7 @@ export function createSessionCookieValue(user: PortalUser): string | null {
 }
 
 export function readSession(cookies: AstroCookies): PortalUser | null {
-  if (!sessionSecret()) return null;
+  if (portalConfigError()) return null;
   const raw = cookies.get(PORTAL_COOKIE)?.value;
   if (!raw || !raw.includes('.')) return null;
   const [body, sig] = raw.split('.');
@@ -206,18 +215,18 @@ export function readSession(cookies: AstroCookies): PortalUser | null {
   }
 }
 
-export function setSessionCookie(cookies: AstroCookies, value: string, secure: boolean) {
+export function setSessionCookie(cookies: AstroCookies, request: Request, value: string, secure: boolean) {
   cookies.set(PORTAL_COOKIE, value, {
     httpOnly: true,
     secure,
     sameSite: 'lax',
-    path: '/admin',
+    path: cookiePath(request),
     maxAge: SESSION_MAX_AGE_SEC,
   });
 }
 
-export function clearSessionCookie(cookies: AstroCookies) {
-  cookies.delete(PORTAL_COOKIE, { path: '/admin' });
+export function clearSessionCookie(cookies: AstroCookies, request: Request) {
+  cookies.delete(PORTAL_COOKIE, { path: cookiePath(request) });
 }
 
 export function clientIp(request: Request): string {

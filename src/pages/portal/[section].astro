@@ -4,9 +4,11 @@ export const prerender = false;
 import PortalLayout from '@/layouts/PortalLayout.astro';
 import { COMING_SOON_SECTIONS } from '@/core/portal/sections.ts';
 import { readSession } from '@/core/portal/auth.ts';
+import { portalHref } from '@/core/portal/host.ts';
 
 const slug = Astro.params.section || '';
-if (slug === 'ops' || slug === 'logout') {
+const loginHref = portalHref(Astro.request, '/login');
+if (slug === 'login' || slug === 'logout') {
   return new Response('Not found', { status: 404 });
 }
 const section = COMING_SOON_SECTIONS.find((s) => s.slug === slug);
@@ -16,11 +18,12 @@ if (!section) {
 
 const user = readSession(Astro.cookies);
 if (!user) {
-  return Astro.redirect('/admin');
+  return Astro.redirect(loginHref);
 }
 ---
 
 <PortalLayout title={`${section.label} — E5 Client Portal`} userName={user.username}>
+  {loginHref && null}
   <h1>{section.label}</h1>
   <p class="lead">{section.summary}</p>
   <div class="soon-panel">

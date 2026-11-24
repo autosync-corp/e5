@@ -3,6 +3,33 @@
   "framework": "astro",
   "regions": ["iad1"],
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/robots.txt",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal/robots.txt"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal"
+    },
+    {
+      "source": "/login",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal"
+    },
+    {
+      "source": "/logout",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal/logout"
+    },
+    {
+      "source": "/:section(slides|links|blog|galleries|performance|sales)",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal/:section"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -64,6 +91,18 @@
       "source": "/:path*",
       "has": [{ "type": "host", "value": "e5wheels.com" }],
       "destination": "https://www.e5wheels.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/portal",
+      "has": [{ "type": "host", "value": "www.e5wheels.com" }],
+      "destination": "https://portal.e5wheels.com/",
+      "permanent": true
+    },
+    {
+      "source": "/portal/:path*",
+      "has": [{ "type": "host", "value": "www.e5wheels.com" }],
+      "destination": "https://portal.e5wheels.com/:path*",
       "permanent": true
     },
     { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },

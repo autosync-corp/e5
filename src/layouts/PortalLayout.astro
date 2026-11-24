@@ -1,6 +1,8 @@
 ---
 import '@/assets/fonts/fonts.css';
 import { E5_LOGO_BLACK } from '@/core/constants/App.ts';
+import { PORTAL_SECTIONS } from '@/core/portal/sections.ts';
+import { portalHref } from '@/core/portal/host.ts';
 
 interface Props {
   title: string;
@@ -8,17 +10,14 @@ interface Props {
 }
 
 const { title, userName } = Astro.props;
-const path = Astro.url.pathname.replace(/\/+$/, '') || '/admin';
+const home = portalHref(Astro.request, '/');
+const logout = portalHref(Astro.request, '/logout');
+const current = Astro.url.pathname.replace(/\/+$/, '') || home;
 
-const nav = [
-  { href: '/admin', label: 'Dashboard', ready: true },
-  { href: '/admin/slides', label: 'Homepage Slides', ready: false },
-  { href: '/admin/links', label: 'Header & Footer Links', ready: false },
-  { href: '/admin/blog', label: 'Blog Posts', ready: false },
-  { href: '/admin/galleries', label: 'Galleries', ready: false },
-  { href: '/admin/performance', label: 'Site Performance', ready: false },
-  { href: '/admin/sales', label: 'Sales & Prospects', ready: false },
-];
+const nav = PORTAL_SECTIONS.map((item) => {
+  const href = portalHref(Astro.request, item.path);
+  return { href, label: item.label, ready: item.ready, active: current === href };
+});
 ---
 
 <!DOCTYPE html>
@@ -120,24 +119,24 @@ const nav = [
   <body>
     <div class="portal-shell">
       <header class="portal-top">
-        <a class="portal-brand" href="/admin">
+        <a class="portal-brand" href={home}>
           <img src={E5_LOGO_BLACK} alt="E5 Wheels" width="140" height="28" />
           <span>Client Portal</span>
         </a>
         <div class="portal-user">
           {userName && <span>{userName}</span>}
-          <a href="/admin/logout">Log out</a>
+          <a href={logout}>Log out</a>
         </div>
       </header>
       <div class="portal-body">
         <nav class="portal-nav" aria-label="Portal">
           {nav.map((item) =>
             item.ready ? (
-              <a href={item.href} class:list={[path === item.href && 'is-active']}>
+              <a href={item.href} class:list={[item.active && 'is-active']}>
                 {item.label}
               </a>
             ) : (
-              <a href={item.href} class:list={['soon', path === item.href && 'is-active']}>
+              <a href={item.href} class:list={['soon', item.active && 'is-active']}>
                 {item.label}
                 <em>Soon</em>
               </a>

@@ -24,6 +24,7 @@ export default defineConfig({
         const path = (page.replace(SITE_URL, '') || '/').replace(/\/+$/, '') || '/';
         const excludedPrefixes = [
           '/admin',
+          '/portal',
           '/checkout',
           '/pending',
           '/visualize-test',

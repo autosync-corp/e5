@@ -1,5 +1,14 @@
 import { defineMiddleware } from 'astro:middleware';
 import { buildWheelUrlFromParams } from './core/utils/wheelUrl';
+import {
+  PORTAL_ORIGIN,
+  SITE_ORIGIN,
+  internalPortalPath,
+  isPortalHost,
+  isPortalPagePath,
+  isProductionSiteHost,
+  isStaticAssetPath,
+} from './core/portal/host.ts';
 
 const GONE = new Set([
   '/wp-admin',
@@ -77,9 +86,54 @@ function gone() {
   });
 }
 
+function noindex(response: Response) {
+  response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return response;
+}
+
+function portalRobots() {
+  return new Response('User-agent: *\nDisallow: /\n', {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
-  const { url, redirect } = context;
+  const { url, redirect, rewrite, request, locals } = context;
   const pathname = url.pathname.replace(/\/+$/, '') || '/';
+  const flags = locals as Record<string, unknown>;
+
+  if (isPortalHost(request) || flags.portalRewrite) {
+    if (pathname === '/robots.txt') return portalRobots();
+
+    if (isStaticAssetPath(pathname) || flags.portalRewrite) {
+      return noindex(await next());
+    }
+
+    if (pathname === '/portal' || pathname.startsWith('/portal/')) {
+      return noindex(await next());
+    }
+
+    if (isPortalPagePath(pathname)) {
+      flags.portalRewrite = true;
+      return noindex(await rewrite(internalPortalPath(pathname)));
+    }
+
+    return redirect(`${SITE_ORIGIN}${url.pathname}${url.search}`, 302);
+  }
+
+  if (isProductionSiteHost(request) && (pathname === '/portal' || pathname.startsWith('/portal/'))) {
+    const rest = pathname === '/portal' ? '/' : pathname.slice('/portal'.length) || '/';
+    return redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301);
+  }
+
+  if (pathname === '/portal/login') {
+    flags.portalRewrite = true;
+    return noindex(await rewrite('/portal'));
+  }
 
   if (GONE.has(pathname) || pathname.startsWith('/wp-admin/')) {
     return gone();
@@ -126,8 +180,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const response = await next();
-  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  if (
+    pathname === '/admin' ||
+    pathname.startsWith('/admin/') ||
+    pathname === '/portal' ||
+    pathname.startsWith('/portal/')
+  ) {
+    noindex(response);
   }
   return response;
 });
