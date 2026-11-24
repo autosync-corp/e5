@@ -3,6 +3,28 @@
   "framework": "astro",
   "regions": ["iad1"],
   "trailingSlash": false,
+  "routes": [
+    {
+      "src": "^/(login|dashboard)/?$",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "dest": "/portal"
+    },
+    {
+      "src": "^/logout/?$",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "dest": "/portal/logout"
+    },
+    {
+      "src": "^/(slides|links|blog|galleries|performance|sales)/?$",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "dest": "/portal/$1"
+    },
+    {
+      "src": "^/robots\\.txt$",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "dest": "/portal/robots.txt"
+    }
+  ],
   "rewrites": [
     {
       "source": "/robots.txt",
@@ -10,12 +32,12 @@
       "destination": "/portal/robots.txt"
     },
     {
-      "source": "/",
+      "source": "/login",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "destination": "/portal"
     },
     {
-      "source": "/login",
+      "source": "/dashboard",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "destination": "/portal"
     },
@@ -105,6 +127,18 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/login",
+      "statusCode": 302
+    },
+    {
+      "source": "/:path((?!login$|logout$|dashboard$|slides$|links$|blog$|galleries$|performance$|sales$|robots\\.txt$|_astro(?:/.*)?$|assets(?:/.*)?$|js(?:/.*)?$|favicon[^/]*$|portal(?:/.*)?$).*)",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "https://www.e5wheels.com/:path",
+      "statusCode": 302
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "e5wheels.com" }],
       "destination": "https://www.e5wheels.com/:path*",
@@ -113,7 +147,7 @@
     {
       "source": "/portal",
       "has": [{ "type": "host", "value": "www.e5wheels.com" }],
-      "destination": "https://portal.e5wheels.com/",
+      "destination": "https://portal.e5wheels.com/login",
       "permanent": true
     },
     {

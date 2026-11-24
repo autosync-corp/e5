@@ -4,9 +4,9 @@ export const SITE_ORIGIN = 'https://www.e5wheels.com';
 export const PORTAL_ORIGIN = 'https://portal.e5wheels.com';
 
 export const PORTAL_PAGE_PATHS = [
-  '/',
   '/login',
   '/logout',
+  '/dashboard',
   '/slides',
   '/links',
   '/blog',
@@ -31,10 +31,10 @@ export function isProductionSiteHost(request: Request): boolean {
   return host === WWW_HOST || host === 'e5wheels.com';
 }
 
-/** Public href for a portal path (`/`, `/logout`, `/slides`). */
+/** Public href for a portal path (`/`, `/logout`, `/slides`). Portal `/` is `/login`. */
 export function portalHref(request: Request, path: string): string {
   const normalized = path === '/' ? '/' : path.startsWith('/') ? path : `/${path}`;
-  if (isPortalHost(request)) return normalized;
+  if (isPortalHost(request)) return normalized === '/' ? '/login' : normalized;
   return normalized === '/' ? '/portal' : `/portal${normalized}`;
 }
 
@@ -43,7 +43,7 @@ export function isPortalPagePath(pathname: string): boolean {
 }
 
 export function internalPortalPath(pathname: string): string {
-  if (pathname === '/' || pathname === '/login') return '/portal';
+  if (pathname === '/' || pathname === '/login' || pathname === '/dashboard') return '/portal';
   return `/portal${pathname}`;
 }
 
@@ -51,6 +51,7 @@ export function isStaticAssetPath(pathname: string): boolean {
   return (
     pathname.startsWith('/assets') ||
     pathname.startsWith('/_astro') ||
+    pathname.startsWith('/js') ||
     pathname.startsWith('/favicon') ||
     pathname.startsWith('/@') ||
     pathname.startsWith('/node_modules') ||

@@ -125,6 +125,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (isPortalHost(request) || flags.portalRewrite) {
     if (pathname === '/robots.txt') return portalRobots();
 
+    if (pathname === '/') {
+      return portalHeaders(redirect('/login', 302));
+    }
+
     if (isStaticAssetPath(pathname) || flags.portalRewrite) {
       return portalHeaders(await next());
     }
@@ -142,7 +146,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   if (isProductionSiteHost(request) && isPortalPath(pathname)) {
-    const rest = pathname === '/portal' ? '/' : pathname.slice('/portal'.length) || '/';
+    const rest = pathname === '/portal' ? '/login' : pathname.slice('/portal'.length) || '/';
     return noStore(redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301));
   }
 
