@@ -67,7 +67,7 @@ assert('vercel catch-all sends other portal-host paths to www', (() => {
   const cfg = JSON.parse(vercel);
   const catchAll = cfg.redirects.find((r) => r.statusCode === 302 && String(r.destination || '').startsWith('https://www.e5wheels.com/') && r.has?.some((h) => h.value === 'portal.e5wheels.com'));
   const src = String(catchAll?.source || '');
-  return src.includes('login') && src.includes('slides') && src.includes('assets') && src.includes('_astro') && (catchAll?.destination || '').includes(':path');
+  return src.includes('login') && src.includes('slides') && src.includes('api/portal') && src.includes('assets') && src.includes('_astro') && (catchAll?.destination || '').includes(':path');
 })());
 assert('vercel dest-rewrites portal login and sections before filesystem', vercel.includes('"dest": "/portal"') && vercel.includes('/portal/$1') && vercel.includes('/portal/robots.txt'));
 assert('noindex on portal pages', login.includes('noindex, nofollow') && layout.includes('noindex, nofollow'));
@@ -234,11 +234,11 @@ try {
   assert('dashboard uses site type', dashHtml.includes('Franklin Gothic'));
   assert('dashboard has logout', dashHtml.includes('/portal/logout'));
 
-  const soon = await fetch(`${BASE}/portal/slides`, { headers: { cookie: `e5_portal=${cookieValue}` } });
+  const soon = await fetch(`${BASE}/portal/links`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const soonHtml = await soon.text();
-  assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Homepage Slides') && soonHtml.includes('Coming soon'));
+  assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Footer Links') && soonHtml.includes('Coming soon'));
 
-  const unauth = await fetch(`${BASE}/portal/slides`, { redirect: 'manual' });
+  const unauth = await fetch(`${BASE}/portal/links`, { redirect: 'manual' });
   assert('section redirects when logged out', unauth.status === 302);
 
   const out = await fetch(`${BASE}/portal/logout`, {

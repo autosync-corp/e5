@@ -18,9 +18,9 @@ Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on t
 
 Portal HTML is cookie-varying (login vs dashboard), so it must never be CDN-cached. The homepage `Cache-Control: public, s-maxage=3600` rule on `source: "/"` is skipped when the host is `portal.e5wheels.com`. The portal host instead gets `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow` on `/` and `/(.*)`. Middleware also sets `private, no-store` on every portal-host response, every `/portal/*` response, and any response that sets `Set-Cookie`.
 
-## Section 1 (this PR)
+## Section 1
 
-Login + shell only.
+Login + shell. Shipped.
 
 - Production: `https://portal.e5wheels.com`
 - Preview: `/portal` on the Vercel preview host
@@ -50,11 +50,24 @@ Later sections can add more users (table in Redis keyed by username) without cha
 
 In Vercel, add domain `portal.e5wheels.com` to the e5 project (same deployment as www). Point DNS to Vercel. Do not merge this PR until Dave replies **go live**.
 
+## Section 2 (this PR)
+
+Homepage banner slides.
+
+- Portal host: `https://portal.e5wheels.com/slides`
+- Preview: `/portal/slides`
+- Redis key `e5:portal:slides` (JSON). First GET seeds it from the current hardcoded slides. Empty Redis or Redis errors fall back to those slides, so the homepage does not change until the client saves an edit.
+- Public `GET /api/home-slides` is `s-maxage=60` (stale-while-revalidate 600). The homepage stays prerendered with `s-maxage=3600` and one SSR H1; the slider hydrates from this API so edits show within about a minute without hurting PageSpeed.
+- Auth-protected `GET/PUT /api/portal/slides` (preview: `/portal/api/slides`) and image upload `POST .../slides/upload`
+- Images go to the `e5-portal` Vercel Blob store (`BLOB_READ_WRITE_TOKEN`). JPEG/PNG/WebP, max 4 MB. Relative `/…` or `https://(www.)e5wheels.com/…` links only.
+- Film-poster layout (neon, Watch the Film lightbox) stays; copy and photo are editable.
+
+Do not merge until Dave replies **go live**.
+
 ## Later sections (not in this PR)
 
 | Section | Portal host | Preview |
 |---|---|---|
-| Homepage Slides | `/slides` | `/portal/slides` |
 | Header & Footer Links | `/links` | `/portal/links` |
 | Blog Posts | `/blog` | `/portal/blog` |
 | Galleries | `/galleries` | `/portal/galleries` |
@@ -67,9 +80,9 @@ Client edits must publish **live immediately** — no draft workflow and no rede
 
 Use **Upstash Redis** (already on this project as `KV_REST_API_URL` / `KV_REST_API_TOKEN`). Coupons already live at `e5:coupons` and are read at request time.
 
-Planned keys (write on save, read in SSR):
+Planned keys (write on save, read at request time):
 
-- `e5:portal:slides` — homepage hero slides
+- `e5:portal:slides` — homepage hero slides (Section 2)
 - `e5:portal:nav` — header / footer links
 - `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog
 - `e5:portal:galleries` — immersive gallery sets

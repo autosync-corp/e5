@@ -106,6 +106,10 @@ function isPortalPath(pathname: string) {
   return pathname === '/portal' || pathname.startsWith('/portal/');
 }
 
+function isPortalApiPath(pathname: string) {
+  return pathname === '/api/portal' || pathname.startsWith('/api/portal/');
+}
+
 function portalRobots() {
   return new Response('User-agent: *\nDisallow: /\n', {
     status: 200,
@@ -133,6 +137,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return portalHeaders(await next());
     }
 
+    if (isPortalApiPath(pathname)) {
+      flags.portalRewrite = true;
+      const rest = pathname.slice('/api/portal'.length) || '';
+      return portalHeaders(await rewrite(`/portal/api${rest}`));
+    }
+
     if (isPortalPath(pathname)) {
       return portalHeaders(await next());
     }
@@ -146,6 +156,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   if (isProductionSiteHost(request) && isPortalPath(pathname)) {
+    if (pathname.startsWith('/portal/api/')) {
+      const rest = pathname.slice('/portal/api'.length) || '';
+      return noStore(redirect(`${PORTAL_ORIGIN}/api/portal${rest}${url.search}`, 301));
+    }
     const rest = pathname === '/portal' ? '/login' : pathname.slice('/portal'.length) || '/';
     return noStore(redirect(`${PORTAL_ORIGIN}${rest}${url.search}`, 301));
   }

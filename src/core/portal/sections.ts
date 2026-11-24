@@ -18,7 +18,7 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     slug: 'slides',
     label: 'Homepage Slides',
     path: '/slides',
-    ready: false,
+    ready: true,
     summary: 'Edit the homepage film-poster hero slides. Live on save via Upstash.',
   },
   {

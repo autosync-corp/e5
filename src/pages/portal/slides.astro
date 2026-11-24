@@ -1,0 +1,469 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import {
+  blobConfigured,
+  loadHomepageSlides,
+  MAX_IMAGE_BYTES,
+  MAX_SLIDES,
+  previewSrc,
+  type HomepageSlide,
+} from '@/core/portal/slides.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const { slides, source } = await loadHomepageSlides();
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+const blobReady = blobConfigured();
+
+const layoutLabel: Record<HomepageSlide['layout'], string> = {
+  promo: 'Promo',
+  viz: 'Immersive Gallery',
+  laydown: 'GT.03 laydown',
+  film: 'Film poster',
+};
+---
+
+<PortalLayout title="Homepage Slides — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Homepage Slides</h1>
+  <p class="lead">
+    Edit the homepage banner. Saves write to Upstash Redis and show on the live homepage within about a minute — no redeploy.
+    The film poster keeps its neon layout and Watch the Film lightbox.
+  </p>
+
+  <div class="toolbar">
+    <button type="button" class="btn ghost" data-add>Add slide</button>
+    <button type="button" class="btn primary" data-save>Save changes</button>
+    <span class="status" data-status></span>
+  </div>
+  <p class="meta">
+    Loaded from {source === 'redis' ? 'Redis' : 'the current hardcoded slides'}.
+    {blobReady ? 'Image uploads use Vercel Blob.' : 'Image uploads need BLOB_READ_WRITE_TOKEN on this environment.'}
+  </p>
+
+  <ol class="list" data-list>
+    {slides.map((slide, index) => (
+      <li
+        class:list={['card', slide.hidden && 'is-hidden']}
+        data-card
+        data-id={slide.id}
+        data-layout={slide.layout}
+        data-stem={slide.stem}
+        data-image={slide.imageUrl}
+      >
+        <div class="thumb">
+          {previewSrc(slide) ? (
+            <img src={previewSrc(slide)} alt="" data-thumb />
+          ) : (
+            <img alt="" data-thumb hidden />
+          )}
+          <span class="badge">{layoutLabel[slide.layout]}</span>
+        </div>
+        <div class="fields">
+          <div class="row head">
+            <strong>Slide {index + 1}</strong>
+            <label class="check">
+              <input type="checkbox" data-field="hidden" checked={slide.hidden} />
+              Hidden
+            </label>
+          </div>
+          {slide.layout === 'film' && (
+            <p class="note">
+              Film poster: neon grid, Bebas / Yellowtail, and the Watch the Film lightbox stay. You can change copy and the photo.
+            </p>
+          )}
+          <label>
+            Headline
+            <input type="text" data-field="title" maxlength="80" value={slide.title} />
+          </label>
+          {slide.layout === 'film' && (
+            <label>
+              Subtitle
+              <input type="text" data-field="subtitle" maxlength="80" value={slide.subtitle} />
+            </label>
+          )}
+          <label>
+            Kicker
+            <input type="text" data-field="kicker" maxlength="48" value={slide.kicker} />
+          </label>
+          <label>
+            Subtext
+            <textarea data-field="body" maxlength="240" rows="2">{slide.body}</textarea>
+          </label>
+          {slide.layout === 'promo' && (
+            <label>
+              Promo code
+              <input type="text" data-field="code" maxlength="32" value={slide.code} />
+            </label>
+          )}
+          {slide.layout === 'film' && (
+            <>
+              <label>
+                Script word
+                <input type="text" data-field="script" maxlength="48" value={slide.script} />
+              </label>
+              <label>
+                Credits
+                <input type="text" data-field="credits" maxlength="220" value={slide.credits} />
+              </label>
+            </>
+          )}
+          <div class="split">
+            <label>
+              Button label
+              <input type="text" data-field="cta" maxlength="48" value={slide.cta} />
+            </label>
+            {slide.layout === 'film' ? (
+              <p class="note film-link">Button opens the film lightbox. Link is not used.</p>
+            ) : (
+              <label>
+                Button link
+                <input type="text" data-field="href" maxlength="300" value={slide.href} placeholder="/shop" />
+              </label>
+            )}
+          </div>
+          <label>
+            Image alt text
+            <input type="text" data-field="alt" maxlength="160" value={slide.alt} />
+          </label>
+          <div class="image-row">
+            {blobReady ? (
+              <label class="file">
+                Replace image
+                <input type="file" accept="image/jpeg,image/png,image/webp" data-upload />
+              </label>
+            ) : (
+              <p class="note">Uploads unavailable until Blob is connected.</p>
+            )}
+            <span class="hint">JPEG, PNG, or WebP. Max 4 MB. Wide 16:9 photos work best.</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn ghost" data-up>Move up</button>
+            <button type="button" class="btn ghost" data-down>Move down</button>
+            <button type="button" class="btn danger" data-delete>Delete</button>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</PortalLayout>
+
+<template id="slide-card-template">
+  <li class="card" data-card data-id="" data-layout="promo">
+    <div class="thumb">
+      <img alt="" data-thumb hidden />
+      <span class="badge">Promo</span>
+    </div>
+    <div class="fields">
+      <div class="row head">
+        <strong>New slide</strong>
+        <label class="check">
+          <input type="checkbox" data-field="hidden" />
+          Hidden
+        </label>
+      </div>
+      <label>
+        Headline
+        <input type="text" data-field="title" maxlength="80" value="NEW SLIDE" />
+      </label>
+      <label>
+        Kicker
+        <input type="text" data-field="kicker" maxlength="48" value="" />
+      </label>
+      <label>
+        Subtext
+        <textarea data-field="body" maxlength="240" rows="2"></textarea>
+      </label>
+      <label>
+        Promo code
+        <input type="text" data-field="code" maxlength="32" value="" />
+      </label>
+      <div class="split">
+        <label>
+          Button label
+          <input type="text" data-field="cta" maxlength="48" value="LEARN MORE" />
+        </label>
+        <label>
+          Button link
+          <input type="text" data-field="href" maxlength="300" value="/shop" placeholder="/shop" />
+        </label>
+      </div>
+      <label>
+        Image alt text
+        <input type="text" data-field="alt" maxlength="160" value="" />
+      </label>
+      <div class="image-row">
+        <label class="file">
+          Replace image
+          <input type="file" accept="image/jpeg,image/png,image/webp" data-upload />
+        </label>
+        <span class="hint">JPEG, PNG, or WebP. Max 4 MB.</span>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn ghost" data-up>Move up</button>
+        <button type="button" class="btn ghost" data-down>Move down</button>
+        <button type="button" class="btn danger" data-delete>Delete</button>
+      </div>
+    </div>
+  </li>
+</template>
+
+<script is:inline define:vars={{ apiBase, blobReady, maxSlides: MAX_SLIDES, maxBytes: MAX_IMAGE_BYTES }}>
+  (function () {
+    var list = document.querySelector('[data-list]');
+    var status = document.querySelector('[data-status]');
+    var template = document.getElementById('slide-card-template');
+    var addBtn = document.querySelector('[data-add]');
+    var saveBtn = document.querySelector('[data-save]');
+    if (!list || !template) return;
+    var urls = {};
+
+    function setStatus(text, ok) {
+      if (!status) return;
+      status.textContent = text || '';
+      status.classList.toggle('is-error', ok === false);
+    }
+
+    function cards() {
+      return Array.prototype.slice.call(list.querySelectorAll('[data-card]'));
+    }
+
+    function field(card, name) {
+      return card.querySelector('[data-field="' + name + '"]');
+    }
+
+    function readCard(card, index) {
+      var layout = card.getAttribute('data-layout') || 'promo';
+      var id = card.getAttribute('data-id') || 'slide-' + (index + 1);
+      return {
+        id: id,
+        layout: layout,
+        hidden: !!(field(card, 'hidden') && field(card, 'hidden').checked),
+        stem: urls[id] ? '' : card.getAttribute('data-stem') || '',
+        imageUrl: urls[id] || card.getAttribute('data-image') || '',
+        alt: field(card, 'alt') ? field(card, 'alt').value : '',
+        kicker: field(card, 'kicker') ? field(card, 'kicker').value : '',
+        title: field(card, 'title') ? field(card, 'title').value : '',
+        subtitle: field(card, 'subtitle') ? field(card, 'subtitle').value : '',
+        code: field(card, 'code') ? field(card, 'code').value : '',
+        body: field(card, 'body') ? field(card, 'body').value : '',
+        script: field(card, 'script') ? field(card, 'script').value : '',
+        credits: field(card, 'credits') ? field(card, 'credits').value : '',
+        cta: field(card, 'cta') ? field(card, 'cta').value : '',
+        href: layout === 'film' ? '' : field(card, 'href') ? field(card, 'href').value : '',
+        gtm: field(card, 'title') ? field(card, 'title').value : '',
+        emphasize: layout === 'laydown',
+      };
+    }
+
+    function refresh() {
+      cards().forEach(function (card, i) {
+        var label = card.querySelector('.head strong');
+        if (label) label.textContent = 'Slide ' + (i + 1);
+        card.classList.toggle('is-hidden', !!(field(card, 'hidden') && field(card, 'hidden').checked));
+      });
+    }
+
+    list.addEventListener('change', function (e) {
+      var hidden = e.target.closest('[data-field="hidden"]');
+      if (hidden) refresh();
+    });
+
+    list.addEventListener('click', function (e) {
+      var card = e.target.closest('[data-card]');
+      if (!card) return;
+      if (e.target.closest('[data-up]')) {
+        var prev = card.previousElementSibling;
+        if (prev) list.insertBefore(card, prev);
+        refresh();
+      }
+      if (e.target.closest('[data-down]')) {
+        var next = card.nextElementSibling;
+        if (next) list.insertBefore(next, card);
+        refresh();
+      }
+      if (e.target.closest('[data-delete]')) {
+        if (cards().length < 2) {
+          setStatus('Keep at least one slide.', false);
+          return;
+        }
+        if (window.confirm('Delete this slide?')) {
+          card.remove();
+          refresh();
+        }
+      }
+    });
+
+    list.addEventListener('change', async function (e) {
+      var input = e.target.closest('[data-upload]');
+      if (!input || !input.files || !input.files[0]) return;
+      var card = e.target.closest('[data-card]');
+      var file = input.files[0];
+      input.value = '';
+      if (!blobReady) {
+        setStatus('Vercel Blob is not configured on this environment.', false);
+        return;
+      }
+      if (file.size > maxBytes) {
+        setStatus('Image is too large (max 4 MB).', false);
+        return;
+      }
+      setStatus('Uploading image…');
+      var body = new FormData();
+      body.append('file', file);
+      body.append('slideId', card.getAttribute('data-id') || 'slide');
+      try {
+        var res = await fetch(apiBase + '/slides/upload', { method: 'POST', body: body, credentials: 'same-origin' });
+        var data = await res.json();
+        if (!res.ok) {
+          setStatus(data.error || 'Upload failed.', false);
+          return;
+        }
+        urls[card.getAttribute('data-id')] = data.url;
+        card.setAttribute('data-image', data.url);
+        card.setAttribute('data-stem', '');
+        var thumb = card.querySelector('[data-thumb]');
+        if (thumb) {
+          thumb.hidden = false;
+          thumb.src = data.url;
+        }
+        setStatus('Image uploaded. Save to publish.');
+      } catch (err) {
+        setStatus('Upload failed.', false);
+      }
+    });
+
+    if (addBtn) {
+      addBtn.addEventListener('click', function () {
+        if (cards().length >= maxSlides) {
+          setStatus('At most ' + maxSlides + ' slides.', false);
+          return;
+        }
+        var node = template.content.firstElementChild.cloneNode(true);
+        var id = 'slide-' + Date.now().toString(36);
+        node.setAttribute('data-id', id);
+        if (!blobReady) {
+          var fileLabel = node.querySelector('.file');
+          if (fileLabel) fileLabel.remove();
+        }
+        list.appendChild(node);
+        refresh();
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async function () {
+        var payload = cards().map(readCard);
+        payload.forEach(function (slide) {
+          if (urls[slide.id]) slide.imageUrl = urls[slide.id];
+        });
+        setStatus('Saving…');
+        try {
+          var res = await fetch(apiBase + '/slides', {
+            method: 'PUT',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slides: payload }),
+          });
+          var data = await res.json();
+          if (!res.ok) {
+            setStatus(data.error || 'Save failed.', false);
+            return;
+          }
+          setStatus('Saved. Homepage updates within about a minute.');
+        } catch (err) {
+          setStatus('Save failed.', false);
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .meta { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .status { font-size: 13px; color: #333; }
+  .status.is-error { color: #d31d25; }
+  .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.ghost:hover { background: #141414; color: #fff; }
+  .btn.danger { border-color: #d31d25; color: #d31d25; }
+  .list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 920px; }
+  .card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 16px;
+    background: #fff;
+  }
+  .card.is-hidden { opacity: 0.55; }
+  .thumb { position: relative; background: #111; height: 148px; overflow: hidden; }
+  .thumb img { width: 100%; height: 148px; object-fit: cover; display: block; }
+  .badge {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: #141414;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 6px;
+  }
+  .fields { display: flex; flex-direction: column; gap: 10px; }
+  .row.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .fields label, .check {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .check { flex-direction: row; align-items: center; text-transform: none; letter-spacing: 0; }
+  .fields input, .fields textarea {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 15px;
+    border: 1px solid #d9d9d9;
+    padding: 8px 10px;
+    color: #141414;
+    width: 100%;
+  }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .note { font-size: 13px; color: #333; line-height: 1.4; text-transform: none; letter-spacing: 0; }
+  .film-link { align-self: end; padding-bottom: 8px; }
+  .image-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .file { text-transform: none; letter-spacing: 0; }
+  .hint { font-size: 12px; color: #888; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 800px) {
+    .card, .split { grid-template-columns: 1fr; }
+  }
+</style>

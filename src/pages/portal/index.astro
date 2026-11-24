@@ -76,7 +76,7 @@ const userName = user?.username || '';
       {cards.map((card) => (
         <a class="card" href={card.href}>
           <strong>{card.label}</strong>
-          <span>Coming soon</span>
+          <span>{card.ready ? 'Open' : 'Coming soon'}</span>
           <p>{card.summary}</p>
         </a>
       ))}

@@ -3,12 +3,12 @@ import CtaLink from '@/core/components/CtaLink.astro';
 import { bannerPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
 import { E5_LOGO_WHITE } from '@/core/constants/App.ts';
 import {
-  SHOP_ROUTE,
-  INTERACTIVE_GALLERY_ROUTE,
-  WHEELS_GT_03_ROUTE,
-} from '@/core/constants/Routes.ts';
+  DEFAULT_HOMEPAGE_SLIDES,
+  slidesFingerprint,
+} from '@/core/portal/slides.ts';
 
 const FILM_VIDEO_ID = '2zk8Sdi3Yh8';
+const slidesSeedFp = slidesFingerprint(DEFAULT_HOMEPAGE_SLIDES);
 
 const vizFrames = [
   { stem: 'viz-01', caption: 'Torch Red · Daytona Gloss Black', alt: 'C8 Stingray Torch Red with Daytona Gloss Black wheels in the E5 Immersive Gallery' },
@@ -19,82 +19,10 @@ const vizFrames = [
 
 const gt03Laydown = gt03LaydownPicture();
 
-const slides = [
-  {
-    stem: 'bf-sale' as const,
-    // Real gallery photo: 2025 C8 Stingray Blue on Sebring Gloss Black
-    // (public/assets/images/gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp)
-    alt: 'Blue C8 Corvette Stingray fitted with E5 Sebring Gloss Black wheels',
-    kicker: 'LIMITED TIME',
-    title: 'BLACK FRIDAY SALE',
-    code: '15%OFF@E5',
-    body: 'Use this code at checkout for 15% off complete E5 wheel sets.',
-    cta: 'SHOP WHEELS',
-    href: SHOP_ROUTE,
-    gtm: 'Black Friday Shop Wheels',
-    viz: false,
-    laydown: false,
-    film: false,
-    subtitle: '',
-    credits: '',
-  },
-  {
-    stem: 'viz-01' as const,
-    viz: true,
-    alt: vizFrames[0].alt,
-    kicker: 'NOW LIVE',
-    title: 'E5 IMMERSIVE GALLERY',
-    code: '',
-    body: 'See E5 wheels on your Corvette — the new Immersive Gallery is live.',
-    cta: 'OPEN GALLERY',
-    href: INTERACTIVE_GALLERY_ROUTE,
-    gtm: 'Open Immersive Gallery',
-    laydown: false,
-    film: false,
-    subtitle: '',
-    credits: '',
-  },
-  {
-    stem: 'gt03-black' as const,
-    // Real GT.03 on a black C8 Z06: gallery 2025-c8-z06-black/1.webp
-    // Part numbers E5GT032010E25520AB / E5GT032113E20520AB.
-    // Laydown is Dave's transparent GT.03 Brushed Aluminum product shot (scripts/assets/gt03-laydown.png).
-    laydown: true,
-    alt: 'Black C8 Corvette Z06 fitted with in-stock E5 GT.03 wheels',
-    kicker: 'GT FORGED',
-    title: 'GT.03',
-    code: '',
-    body: 'IN-STOCK & READY-2-SHIP',
-    emphasize: true,
-    cta: 'EXPLORE GT.03',
-    href: WHEELS_GT_03_ROUTE,
-    gtm: 'Explore GT.03',
-    film: false,
-    subtitle: '',
-    credits: '',
-  },
-  {
-    stem: 'film-poster' as const,
-    // Real gallery vehicle (not generated): black 2018 C7 Grand Sport on
-    // Daytona Bronze Brushed Tint, palms and warm Florida light.
-    // public/assets/images/gallery/corvette/2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels/1.webp
-    // Poster-print grade: scripts/generate-banner-poster.py
-    film: true,
-    alt: 'Black C7 Corvette Grand Sport fitted with E5 Daytona Bronze Brushed Tint wheels, poster-print treatment',
-    kicker: 'NOW SHOWING',
-    title: 'FORGED',
-    subtitle: 'ON BLACKTOP',
-    code: '',
-    body: 'The wheels. The road. The',
-    script: 'machine.',
-    credits: 'E5 WHEELS presents  ·  a Corvette motion picture  ·  starring forged aluminum',
-    cta: 'WATCH THE FILM',
-    href: '',
-    gtm: 'Watch the Film',
-    viz: false,
-    laydown: false,
-  },
-];
+// Seed copy lives in src/core/portal/slides.ts (Redis e5:portal:slides).
+// Poster vehicle: 2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels
+// Poster-print grade: scripts/generate-banner-poster.py
+const slides = DEFAULT_HOMEPAGE_SLIDES;
 ---
 
 <section
@@ -103,23 +31,30 @@ const slides = [
   aria-roledescription="carousel"
   aria-label="Featured promotions"
   tabindex="0"
+  data-slides-fp={slidesSeedFp}
+  data-slides-api="/api/home-slides"
 >
   <div class="e5-banner-viewport">
     <div class="e5-banner-track">
       {slides.map((slide, index) => {
         const pic = bannerPicture(slide.stem);
         const eager = index === 0;
+        const isFilm = slide.layout === 'film';
+        const isViz = slide.layout === 'viz';
+        const isLaydown = slide.layout === 'laydown';
         return (
           <div
-            class:list={['e5-banner-slide', slide.laydown && 'is-split', slide.film && 'is-poster']}
+            class:list={['e5-banner-slide', isLaydown && 'is-split', isFilm && 'is-poster']}
             data-slide={index}
+            data-slide-id={slide.id}
+            data-layout={slide.layout}
             role="group"
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${slides.length}`}
             aria-hidden={index === 0 ? 'false' : 'true'}
             inert={index === 0 ? undefined : true}
           >
-            {slide.viz ? (
+            {isViz ? (
               <div class="e5-banner-viz" data-viz-cycle>
                 {vizFrames.map((frame, fi) => {
                   const framePic = bannerPicture(frame.stem);
@@ -175,7 +110,8 @@ const slides = [
                 />
               </picture>
             )}
-            {slide.laydown && gt03Laydown && (
+            <img class="e5-banner-override" data-banner-override hidden alt="" width="1280" height="720" decoding="async" />
+            {isLaydown && gt03Laydown && (
               <div class="e5-banner-laydown">
                 <picture>
                   {gt03Laydown.avif && <source type="image/avif" srcset={gt03Laydown.avif} sizes={gt03Laydown.sizes} />}
@@ -193,7 +129,7 @@ const slides = [
               </div>
             )}
             <div class="e5-banner-overlay"></div>
-            {slide.film && (
+            {isFilm && (
               <svg
                 class="e5-poster-grid"
                 viewBox="0 0 100 36"
@@ -222,9 +158,9 @@ const slides = [
               </svg>
             )}
             <div class="e5-banner-copy">
-              <div class:list={['e5-banner-copy-inner', slide.laydown && 'is-card']}>
-                {slide.kicker && <p class="e5-banner-kicker">{slide.kicker}</p>}
-                {slide.film && (
+              <div class:list={['e5-banner-copy-inner', isLaydown && 'is-card']}>
+                <p class="e5-banner-kicker" data-field="kicker" hidden={!slide.kicker}>{slide.kicker}</p>
+                {isFilm && (
                   <img
                     class="e5-poster-logo"
                     src={E5_LOGO_WHITE}
@@ -235,39 +171,34 @@ const slides = [
                     loading="lazy"
                   />
                 )}
-                {slide.film && <span class="e5-poster-rule" aria-hidden="true"></span>}
+                {isFilm && <span class="e5-poster-rule" aria-hidden="true"></span>}
                 <h2 class="e5-banner-title">
-                  {slide.title}
-                  {slide.subtitle && (
+                  <span data-field="title">{slide.title}</span>
+                  <span data-field="subtitle-wrap" hidden={!slide.subtitle}>
+                    <br />
+                    <span class="e5-poster-sub" data-field="subtitle">{slide.subtitle}</span>
+                  </span>
+                </h2>
+                <p class="e5-banner-code" data-field="code" aria-label={`Promo code ${slide.code}`} hidden={!slide.code}>
+                  {slide.code}
+                </p>
+                <p class:list={['e5-banner-body', slide.emphasize && 'is-emphasis']} data-field="body" hidden={!slide.body}>
+                  <span data-field="body-text">{slide.body}</span>
+                  {isFilm && (
                     <>
-                      <br />
-                      <span class="e5-poster-sub">{slide.subtitle}</span>
+                      {' '}
+                      <span class="e5-poster-script" data-field="script" hidden={!slide.script}>{slide.script}</span>
                     </>
                   )}
-                </h2>
-                {slide.code && (
-                  <p class="e5-banner-code" aria-label={`Promo code ${slide.code}`}>
-                    {slide.code}
-                  </p>
-                )}
-                {slide.body && (
-                  <p class:list={['e5-banner-body', slide.emphasize && 'is-emphasis']}>
-                    {slide.body}
-                    {slide.film && slide.script && (
-                      <>
-                        {' '}
-                        <span class="e5-poster-script">{slide.script}</span>
-                      </>
-                    )}
-                  </p>
-                )}
-                {slide.credits && <p class="e5-poster-credits">{slide.credits}</p>}
+                </p>
+                <p class="e5-poster-credits" data-field="credits" hidden={!slide.credits}>{slide.credits}</p>
                 <div class="e5-banner-cta">
-                  {slide.film ? (
+                  {isFilm ? (
                     <button
                       type="button"
                       class="e5-poster-cta"
                       data-film-open
+                      data-field="cta"
                       data-gtm-event="home_banner"
                       data-gtm-label={slide.gtm}
                     >
@@ -284,7 +215,7 @@ const slides = [
                     </CtaLink>
                   )}
                 </div>
-                {slide.viz && (
+                {isViz && (
                   <p class="e5-banner-combo" data-viz-caption>
                     {vizFrames[0].caption}
                   </p>
@@ -347,13 +278,14 @@ const slides = [
     var root = document.getElementById('e5-banner');
     if (!root) return;
     var track = root.querySelector('.e5-banner-track');
-    var slides = root.querySelectorAll('[data-slide]');
-    var dots = root.querySelectorAll('[data-dot]');
+    var dotsHost = root.querySelector('.e5-banner-dots');
     var prev = root.querySelector('[data-prev]');
     var next = root.querySelector('[data-next]');
     var live = root.querySelector('[data-live]');
-    if (!track || !slides.length) return;
-    var n = slides.length;
+    if (!track) return;
+    var slides = [];
+    var dots = [];
+    var n = 0;
     var i = 0;
     var timer = null;
     var paused = false;
@@ -366,6 +298,16 @@ const slides = [
     var vizI = 0;
     var vizLoaded = false;
     var vizHoldMs = 3000;
+
+    function querySlides() {
+      slides = root.querySelectorAll('.e5-banner-track [data-slide]');
+      dots = dotsHost ? dotsHost.querySelectorAll('[data-dot]') : [];
+      n = slides.length;
+    }
+
+    function currentHasViz() {
+      return !!(slides[i] && slides[i].querySelector('[data-viz-cycle]') && !slides[i].classList.contains('is-static-image'));
+    }
 
     function loadViz() {
       if (vizLoaded || !vizFrames.length) return;
@@ -401,7 +343,7 @@ const slides = [
     }
 
     function startViz() {
-      if (reduce || i !== 1 || !vizFrames.length) return;
+      if (reduce || !currentHasViz() || !vizFrames.length) return;
       loadViz();
       if (vizTimer) return;
       vizTimer = setInterval(function () {
@@ -411,18 +353,23 @@ const slides = [
     }
 
     function paint(idx) {
+      querySlides();
+      if (!n) return;
       i = ((idx % n) + n) % n;
       track.style.transform = 'translate3d(' + (-i * 100) + '%,0,0)';
       for (var s = 0; s < n; s++) {
         var hidden = s !== i;
         slides[s].setAttribute('aria-hidden', hidden ? 'true' : 'false');
+        slides[s].setAttribute('data-slide', String(s));
         if (hidden) slides[s].setAttribute('inert', '');
         else slides[s].removeAttribute('inert');
-        dots[s].setAttribute('aria-current', s === i ? 'true' : 'false');
-        dots[s].classList.toggle('is-active', s === i);
+        if (dots[s]) {
+          dots[s].setAttribute('aria-current', s === i ? 'true' : 'false');
+          dots[s].classList.toggle('is-active', s === i);
+        }
       }
       if (live) live.textContent = 'Slide ' + (i + 1) + ' of ' + n;
-      if (i === 1) startViz();
+      if (currentHasViz()) startViz();
       else stopViz();
     }
 
@@ -463,10 +410,12 @@ const slides = [
 
     prev.addEventListener('click', function () { go(i - 1, true); });
     next.addEventListener('click', function () { go(i + 1, true); });
-    for (var d = 0; d < dots.length; d++) {
-      (function (idx) {
-        dots[idx].addEventListener('click', function () { go(idx, true); });
-      })(d);
+    if (dotsHost) {
+      dotsHost.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-dot]');
+        if (!btn) return;
+        go(Number(btn.getAttribute('data-dot')), true);
+      });
     }
 
     root.addEventListener('mouseenter', pause);
@@ -544,13 +493,12 @@ const slides = [
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     }
 
-    var openers = root.querySelectorAll('[data-film-open]');
-    for (var o = 0; o < openers.length; o++) {
-      openers[o].addEventListener('click', function (e) {
+    root.addEventListener('click', function (e) {
+      if (e.target.closest('[data-film-open]')) {
         e.preventDefault();
         openFilm();
-      });
-    }
+      }
+    });
     if (modal) {
       modal.addEventListener('click', function (e) {
         if (e.target && e.target.closest('[data-film-close]')) closeFilm();
@@ -563,8 +511,122 @@ const slides = [
       }
     });
 
+    function setField(el, name, text) {
+      var node = el.querySelector('[data-field="' + name + '"]');
+      if (!node) return;
+      if (name === 'subtitle-wrap') {
+        node.hidden = !text;
+        return;
+      }
+      node.hidden = !text;
+      if (name !== 'body') node.textContent = text || '';
+    }
+
+    function applyOverride(el, url, alt) {
+      var override = el.querySelector('[data-banner-override]');
+      if (!override) return;
+      if (!url) {
+        el.classList.remove('is-static-image');
+        override.hidden = true;
+        override.removeAttribute('src');
+        return;
+      }
+      el.classList.add('is-static-image');
+      override.hidden = false;
+      override.src = url;
+      override.alt = alt || '';
+    }
+
+    function rebuildDots(items) {
+      if (!dotsHost) return;
+      dotsHost.innerHTML = '';
+      for (var d = 0; d < items.length; d++) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'e5-banner-dot' + (d === 0 ? ' is-active' : '');
+        btn.setAttribute('data-dot', String(d));
+        btn.setAttribute('aria-label', 'Go to slide ' + (d + 1) + ': ' + (items[d].title || ''));
+        btn.setAttribute('aria-current', d === 0 ? 'true' : 'false');
+        dotsHost.appendChild(btn);
+      }
+    }
+
+    function fillSlide(el, slide) {
+      setField(el, 'kicker', slide.kicker);
+      setField(el, 'title', slide.title);
+      setField(el, 'subtitle', slide.subtitle);
+      setField(el, 'subtitle-wrap', slide.subtitle);
+      setField(el, 'code', slide.code);
+      var bodyText = el.querySelector('[data-field="body-text"]');
+      var body = el.querySelector('[data-field="body"]');
+      if (bodyText) bodyText.textContent = slide.body || '';
+      if (body) body.hidden = !slide.body;
+      setField(el, 'script', slide.script);
+      setField(el, 'credits', slide.credits);
+      var cta = el.querySelector('[data-field="cta"]') || el.querySelector('.e5-banner-cta a');
+      if (cta) cta.textContent = slide.cta || '';
+      var link = el.querySelector('.e5-banner-cta a');
+      if (link && slide.href) link.setAttribute('href', slide.href);
+      var img = el.querySelector('.e5-banner-picture img');
+      if (img && slide.alt) img.setAttribute('alt', slide.alt);
+      applyOverride(el, slide.imageUrl || '', slide.alt || '');
+    }
+
+    function applyLiveSlides(payload) {
+      if (!payload || !payload.slides || !payload.slides.length) return false;
+      if (payload.fingerprint && payload.fingerprint === root.getAttribute('data-slides-fp')) return false;
+      var incoming = payload.slides;
+      var byId = {};
+      var existing = root.querySelectorAll('.e5-banner-track [data-slide]');
+      for (var e = 0; e < existing.length; e++) {
+        byId[existing[e].getAttribute('data-slide-id')] = existing[e];
+      }
+      var proto = null;
+      for (var p = 0; p < existing.length; p++) {
+        if (existing[p].getAttribute('data-layout') === 'promo') {
+          proto = existing[p];
+          break;
+        }
+      }
+      proto = proto || existing[0];
+      var used = {};
+      for (var s = 0; s < incoming.length; s++) {
+        var slide = incoming[s];
+        var el = byId[slide.id];
+        if (!el && proto) el = proto.cloneNode(true);
+        if (!el) continue;
+        el.setAttribute('data-slide-id', slide.id);
+        el.setAttribute('data-layout', slide.layout || el.getAttribute('data-layout') || 'promo');
+        fillSlide(el, slide);
+        track.appendChild(el);
+        used[slide.id] = true;
+      }
+      var leftover = root.querySelectorAll('.e5-banner-track [data-slide]');
+      for (var l = 0; l < leftover.length; l++) {
+        var id = leftover[l].getAttribute('data-slide-id');
+        if (!used[id]) leftover[l].remove();
+      }
+      rebuildDots(incoming);
+      return true;
+    }
+
+    querySlides();
+    if (!n) return;
     paint(0);
     start();
+
+    var api = root.getAttribute('data-slides-api');
+    if (api) {
+      fetch(api, { credentials: 'omit' })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          if (applyLiveSlides(data)) {
+            paint(0);
+            start();
+          }
+        })
+        .catch(function () {});
+    }
   })();
 </script>
 
@@ -607,12 +669,22 @@ const slides = [
   .e5-banner-picture img,
   .e5-banner-viz,
   .e5-banner-viz-frame,
-  .e5-banner-viz-frame img {
+  .e5-banner-viz-frame img,
+  .e5-banner-override {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     display: block;
+  }
+  .e5-banner-override {
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .e5-banner-slide.is-static-image .e5-banner-picture,
+  .e5-banner-slide.is-static-image .e5-banner-viz {
+    visibility: hidden;
   }
   .e5-banner-picture img,
   .e5-banner-viz-frame img {
