@@ -4,8 +4,7 @@
  *  1. gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp
  *  2. visualizer frames: scripts/generate-banner-viz-frames.py
  *  3. gallery/corvette/2025-c8-z06-black/1.webp (GT.03 on black C8 Z06)
- *  4. film-poster: gallery C7 Grand Sport black + Daytona Bronze
- *     (scripts/generate-banner-poster.py writes scripts/assets/film-poster-master.png)
+ *  4. film-car: isolated gallery C7 (scripts/assets/film-car-cutout.png)
  */
 import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
@@ -71,9 +70,22 @@ async function laydownVariants() {
   }
 }
 
-async function filmPosterVariants() {
-  const input = join(import.meta.dirname, 'assets', 'film-poster-master.png');
-  await variants(sharp(input), 'film-poster');
+async function filmCarVariants() {
+  const input = join(import.meta.dirname, 'assets', 'film-car-cutout.png');
+  const buf = await sharp(input).png().toBuffer();
+  for (const width of [800, 1280, 1600]) {
+    const resized = sharp(buf).resize({
+      width,
+      fit: 'inside',
+      withoutEnlargement: true,
+      kernel: sharp.kernel.lanczos3,
+    });
+    const webp = join(OUT, `film-car-${width}.webp`);
+    const avif = join(OUT, `film-car-${width}.avif`);
+    await resized.clone().webp({ quality: 86, alphaQuality: 100, effort: 5 }).toFile(webp);
+    await resized.clone().avif({ quality: 55, effort: 4 }).toFile(avif);
+    console.log('film-car', width, 'webp', statSync(webp).size, 'avif', statSync(avif).size);
+  }
 }
 
 const sebring = join(ROOT, 'gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp');
@@ -81,6 +93,6 @@ const gt03 = join(ROOT, 'gallery/corvette/2025-c8-z06-black/1.webp');
 await variants(await crop16x9(sebring, 'south'), 'bf-sale');
 await variants(await crop16x9(gt03, 'south'), 'gt03-black');
 await laydownVariants();
-await filmPosterVariants();
+await filmCarVariants();
 
 console.log('banner images done');

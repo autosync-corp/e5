@@ -1,7 +1,6 @@
 ---
 import CtaLink from '@/core/components/CtaLink.astro';
-import { bannerPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
-import { E5_LOGO_WHITE } from '@/core/constants/App.ts';
+import { bannerPicture, filmCarPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
 import {
   SHOP_ROUTE,
   INTERACTIVE_GALLERY_ROUTE,
@@ -18,6 +17,7 @@ const vizFrames = [
 ];
 
 const gt03Laydown = gt03LaydownPicture();
+const filmCar = filmCarPicture();
 
 const slides = [
   {
@@ -75,18 +75,17 @@ const slides = [
   },
   {
     stem: 'film-poster' as const,
-    // Real gallery vehicle (not generated): black 2018 C7 Grand Sport on
-    // Daytona Bronze Brushed Tint, palms and warm Florida light.
+    // Real gallery vehicle, isolated (not generated, wheels unaltered):
     // public/assets/images/gallery/corvette/2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels/1.webp
-    // Poster-print grade: scripts/generate-banner-poster.py
+    // Cutout variants: public/assets/images/banner/film-car-*.webp
     film: true,
-    alt: 'Black C7 Corvette Grand Sport fitted with E5 Daytona Bronze Brushed Tint wheels, poster-print treatment',
-    kicker: 'NOW SHOWING',
-    title: 'FORGED',
-    subtitle: 'ON BLACKTOP',
+    alt: 'Black C7 Corvette Grand Sport fitted with E5 Daytona Bronze Brushed Tint wheels',
+    kicker: '',
+    title: 'E5 Wheels',
+    subtitle: 'FORGED ON BLACKTOP',
     code: '',
-    body: 'The wheels. The road. The machine.',
-    credits: 'E5 WHEELS presents  ·  a Corvette motion picture  ·  starring forged aluminum',
+    body: '',
+    credits: 'E5 WHEELS presents  ·  a Corvette motion picture',
     cta: 'WATCH THE FILM',
     href: '',
     gtm: 'Watch the Film',
@@ -106,11 +105,68 @@ const slides = [
   <div class="e5-banner-viewport">
     <div class="e5-banner-track">
       {slides.map((slide, index) => {
-        const pic = bannerPicture(slide.stem);
+        const pic = slide.film ? filmCar : bannerPicture(slide.stem);
         const eager = index === 0;
+        if (slide.film) {
+          return (
+            <div
+              class="e5-banner-slide is-poster"
+              data-slide={index}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${slides.length}`}
+              aria-hidden={index === 0 ? 'false' : 'true'}
+              inert={index === 0 ? undefined : true}
+            >
+              <div class="e5-poster-stage" aria-hidden="true">
+                <div class="e5-poster-sun"></div>
+                <div class="e5-poster-ground"></div>
+              </div>
+              <picture class="e5-poster-car">
+                {pic.avif && <source type="image/avif" srcset={pic.avif} sizes={pic.sizes} />}
+                {pic.webp && <source type="image/webp" srcset={pic.webp} sizes={pic.sizes} />}
+                <img
+                  src={pic.src}
+                  alt={slide.alt}
+                  width="860"
+                  height="312"
+                  decoding="async"
+                  fetchpriority="low"
+                  loading="lazy"
+                />
+              </picture>
+              <div class="e5-poster-masthead">
+                <svg class="e5-poster-bolts" viewBox="0 0 1000 240" aria-hidden="true" focusable="false">
+                  <g transform="translate(70,8) rotate(-22)">
+                    <path fill="#fff" d="M42 10 H128 L100 58 H168 L58 178 L92 96 H42 Z" />
+                  </g>
+                  <g transform="translate(930,8) rotate(22) scale(-1,1)">
+                    <path fill="#fff" d="M42 10 H128 L100 58 H168 L58 178 L92 96 H42 Z" />
+                  </g>
+                </svg>
+                <h2 class="e5-banner-title e5-poster-title">
+                  <span class="e5-poster-script">{slide.title}</span>
+                  {slide.subtitle && <span class="e5-poster-banner">{slide.subtitle}</span>}
+                </h2>
+              </div>
+              {slide.credits && <p class="e5-poster-credits">{slide.credits}</p>}
+              <div class="e5-poster-cta-wrap">
+                <button
+                  type="button"
+                  class="e5-poster-cta"
+                  data-film-open
+                  data-gtm-event="home_banner"
+                  data-gtm-label={slide.gtm}
+                >
+                  {slide.cta}
+                </button>
+              </div>
+            </div>
+          );
+        }
         return (
           <div
-            class:list={['e5-banner-slide', slide.laydown && 'is-split', slide.film && 'is-poster']}
+            class:list={['e5-banner-slide', slide.laydown && 'is-split']}
             data-slide={index}
             role="group"
             aria-roledescription="slide"
@@ -195,26 +251,7 @@ const slides = [
             <div class="e5-banner-copy">
               <div class:list={['e5-banner-copy-inner', slide.laydown && 'is-card']}>
                 {slide.kicker && <p class="e5-banner-kicker">{slide.kicker}</p>}
-                {slide.film && (
-                  <img
-                    class="e5-poster-logo"
-                    src={E5_LOGO_WHITE}
-                    alt="E5 Wheels"
-                    width="220"
-                    height="48"
-                    decoding="async"
-                    loading="lazy"
-                  />
-                )}
-                <h2 class="e5-banner-title">
-                  {slide.title}
-                  {slide.subtitle && (
-                    <>
-                      <br />
-                      <span class="e5-poster-sub">{slide.subtitle}</span>
-                    </>
-                  )}
-                </h2>
+                <h2 class="e5-banner-title">{slide.title}</h2>
                 {slide.code && (
                   <p class="e5-banner-code" aria-label={`Promo code ${slide.code}`}>
                     {slide.code}
@@ -223,28 +260,15 @@ const slides = [
                 {slide.body && (
                   <p class:list={['e5-banner-body', slide.emphasize && 'is-emphasis']}>{slide.body}</p>
                 )}
-                {slide.credits && <p class="e5-poster-credits">{slide.credits}</p>}
                 <div class="e5-banner-cta">
-                  {slide.film ? (
-                    <button
-                      type="button"
-                      class="e5-poster-cta"
-                      data-film-open
-                      data-gtm-event="home_banner"
-                      data-gtm-label={slide.gtm}
-                    >
-                      {slide.cta}
-                    </button>
-                  ) : (
-                    <CtaLink
-                      primary
-                      href={slide.href}
-                      data-gtm-event="home_banner"
-                      data-gtm-label={slide.gtm}
-                    >
-                      {slide.cta}
-                    </CtaLink>
-                  )}
+                  <CtaLink
+                    primary
+                    href={slide.href}
+                    data-gtm-event="home_banner"
+                    data-gtm-label={slide.gtm}
+                  >
+                    {slide.cta}
+                  </CtaLink>
                 </div>
                 {slide.viz && (
                   <p class="e5-banner-combo" data-viz-caption>
@@ -585,10 +609,6 @@ const slides = [
   .e5-banner-slide.is-split .e5-banner-picture img {
     object-position: 72% center;
   }
-  .e5-banner-slide.is-poster .e5-banner-picture img {
-    object-position: 38% 58%;
-    filter: contrast(1.05) saturate(0.92);
-  }
   .e5-banner-viz-frame {
     opacity: 0;
     transition: opacity 0.9s ease;
@@ -637,11 +657,6 @@ const slides = [
     background:
       linear-gradient(90deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.1) 26%, transparent 48%),
       linear-gradient(270deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.18) 30%, transparent 58%);
-  }
-  .e5-banner-slide.is-poster .e5-banner-overlay {
-    background:
-      linear-gradient(270deg, rgba(42, 12, 4, 0.82) 0%, rgba(42, 12, 4, 0.48) 34%, rgba(20, 8, 4, 0.12) 62%, rgba(12, 6, 4, 0.28) 100%),
-      linear-gradient(180deg, rgba(20, 8, 4, 0.28) 0%, transparent 38%, rgba(18, 6, 2, 0.55) 100%);
   }
   .e5-banner-copy {
     position: relative;
@@ -717,72 +732,143 @@ const slides = [
   .e5-banner-cta {
     margin-top: 28px;
   }
-  .e5-banner-slide.is-poster .e5-banner-kicker {
-    font-family: 'Bebas Neue', 'Franklin Gothic Demi', sans-serif;
-    font-size: clamp(18px, 2.2vw, 26px);
-    letter-spacing: 0.28em;
-    color: #f3d08a;
-    text-shadow: 0 2px 0 #3a1208, 0 3px 10px rgba(0, 0, 0, 0.55);
+  .e5-banner-slide.is-poster {
+    background: #c8281e;
   }
-  .e5-poster-logo {
+  .e5-poster-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .e5-poster-sun {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: min(78vh, 62vw);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: #f5a623;
+    border-radius: 50%;
+  }
+  .e5-poster-ground {
+    position: absolute;
+    left: 50%;
+    bottom: 12%;
+    z-index: 1;
+    width: 52%;
+    height: 36px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42) 0%, transparent 72%);
+    filter: blur(8px);
+  }
+  .e5-poster-car {
+    position: absolute;
+    left: 52%;
+    bottom: 11%;
+    z-index: 2;
+    width: min(66%, 860px);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .e5-poster-car img {
     display: block;
-    width: min(220px, 42vw);
+    width: 100%;
     height: auto;
-    margin: 0 0 10px auto;
-    filter: none;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.38));
   }
-  .e5-banner-slide.is-poster .e5-banner-title {
-    font-family: 'Bebas Neue', 'Franklin Gothic Heavy', sans-serif;
+  .e5-poster-masthead {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    z-index: 3;
+    width: min(90%, 980px);
+    transform: translateX(-50%) rotate(-8deg);
+    text-align: center;
+    pointer-events: none;
+  }
+  .e5-poster-bolts {
+    position: absolute;
+    left: 50%;
+    top: 8%;
+    width: 108%;
+    height: auto;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+  .e5-poster-title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .e5-poster-script {
+    display: block;
+    font-family: 'Mr Dafoe', 'Franklin Gothic Heavy', cursive;
     font-weight: 400;
-    font-size: clamp(56px, 9vw, 118px);
-    line-height: 0.82;
-    letter-spacing: 0.04em;
-    color: #f6e0a8;
-    text-shadow:
-      3px 3px 0 #3a1208,
-      6px 6px 0 #8b2e0a,
-      0 10px 24px rgba(0, 0, 0, 0.55);
+    font-size: clamp(64px, 11vw, 138px);
+    line-height: 0.9;
+    color: #fff;
+    -webkit-text-stroke: 8px #111;
+    paint-order: stroke fill;
+    text-shadow: 0 7px 0 #111, 0 10px 18px rgba(0, 0, 0, 0.28);
   }
-  .e5-poster-sub {
-    font-size: 0.62em;
-    letter-spacing: 0.08em;
-  }
-  .e5-banner-slide.is-poster .e5-banner-body {
-    font-family: 'Bebas Neue', 'Franklin Gothic Book', sans-serif;
-    font-size: clamp(18px, 2.2vw, 28px);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #f4d6a0;
-    max-width: 22rem;
+  .e5-poster-banner {
+    display: inline-block;
+    margin-top: 2px;
+    padding: 7px 16px 5px;
+    background: #111;
+    color: #fff;
+    font-family: 'Bebas Neue', 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(16px, 2.1vw, 26px);
+    letter-spacing: 0.22em;
+    line-height: 1;
   }
   .e5-poster-credits {
-    margin: 14px 0 0;
-    max-width: 22rem;
+    position: absolute;
+    left: 50%;
+    bottom: 42px;
+    z-index: 3;
+    margin: 0;
+    transform: translateX(-50%);
+    max-width: 90%;
     font-family: 'Bebas Neue', 'Franklin Gothic Book', sans-serif;
     font-size: 13px;
-    letter-spacing: 0.14em;
-    line-height: 1.45;
+    letter-spacing: 0.16em;
+    line-height: 1.3;
     text-transform: uppercase;
-    color: #e8c98a;
+    text-align: center;
+    color: #fff;
+  }
+  .e5-poster-cta-wrap {
+    position: absolute;
+    right: 28px;
+    bottom: 52px;
+    z-index: 4;
   }
   .e5-poster-cta {
     display: inline-block;
     margin: 0;
     padding: 14px 22px 12px;
-    border: 3px solid #3a1208;
-    background: #d4741a;
-    color: #2a0e08;
+    border: 3px solid #111;
+    background: #fff;
+    color: #111;
     font-family: 'Bebas Neue', 'Franklin Gothic Heavy', sans-serif;
     font-size: 22px;
     letter-spacing: 0.18em;
     line-height: 1;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 4px 4px 0 #3a1208, 0 10px 22px rgba(0, 0, 0, 0.35);
+    box-shadow: 4px 4px 0 #111;
   }
   .e5-poster-cta:hover,
   .e5-poster-cta:focus-visible {
-    background: #f3d08a;
+    background: #f5a623;
   }
   .e5-poster-cta:focus-visible {
     outline: 2px solid #fff;
@@ -946,31 +1032,6 @@ const slides = [
     .e5-banner-slide.is-split .e5-banner-picture img {
       object-position: 62% 70%;
     }
-    .e5-banner-slide.is-poster .e5-banner-picture img {
-      width: 130%;
-      height: 130%;
-      top: 46%;
-      object-position: 40% 52%;
-    }
-    .e5-banner-slide.is-poster .e5-banner-copy {
-      padding: 14px 16px 96px 52px;
-    }
-    .e5-banner-slide.is-poster .e5-banner-kicker {
-      font-size: 13px;
-      letter-spacing: 0.22em;
-      margin-bottom: 4px;
-    }
-    .e5-banner-slide.is-poster .e5-poster-logo {
-      width: min(120px, 36vw);
-      margin-bottom: 2px;
-    }
-    .e5-banner-slide.is-poster .e5-banner-body {
-      margin-top: 8px;
-      font-size: 14px;
-    }
-    .e5-banner-slide.is-poster .e5-banner-cta {
-      margin-top: 12px;
-    }
     .e5-banner-copy {
       justify-content: flex-start;
       align-items: flex-end;
@@ -989,15 +1050,39 @@ const slides = [
       background:
         linear-gradient(180deg, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.22) 46%, rgba(0, 0, 0, 0.42) 100%);
     }
-    .e5-banner-slide.is-poster .e5-banner-overlay {
-      background:
-        linear-gradient(180deg, rgba(42, 12, 4, 0.62) 0%, rgba(20, 8, 4, 0.28) 42%, rgba(18, 6, 2, 0.55) 100%);
+    .e5-poster-sun {
+      width: 92vw;
+      top: 58%;
     }
-    .e5-banner-slide.is-poster .e5-banner-title {
-      font-size: clamp(36px, 12vw, 52px);
+    .e5-poster-car {
+      left: 50%;
+      width: 92%;
+      bottom: 18%;
+    }
+    .e5-poster-masthead {
+      top: 16px;
+      width: 94%;
+      transform: translateX(-50%) rotate(-6deg);
+    }
+    .e5-poster-bolts {
+      width: 100%;
+    }
+    .e5-poster-script {
+      font-size: clamp(48px, 16vw, 72px);
+      -webkit-text-stroke: 5px #111;
+    }
+    .e5-poster-banner {
+      font-size: 13px;
+      padding: 5px 10px 4px;
     }
     .e5-poster-credits {
+      bottom: 44px;
       font-size: 10px;
+      max-width: 70%;
+    }
+    .e5-poster-cta-wrap {
+      right: 14px;
+      bottom: 80px;
     }
     .e5-poster-cta {
       font-size: 16px;

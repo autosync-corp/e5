@@ -26,7 +26,7 @@ assert('no autoplay hero video', !banner.includes('autoplay=1') && !src.includes
 assert('film lightbox click-to-load', banner.includes('data-film-open') && banner.includes('data-film-modal') && banner.includes('youtube-nocookie.com/embed/') && banner.includes('2zk8Sdi3Yh8') && banner.includes('Escape'));
 assert('Hero.vue island removed from homepage', !src.includes('Hero.vue') && src.includes('BannerSlider'));
 assert('one H1 remains on the page copy', (src.match(/<h1\b/g) || []).length === 1 && !banner.includes('<h1'));
-assert('slider headlines are H2', (banner.match(/<h2\b/g) || []).length === 1 && banner.includes('e5-banner-title'));
+assert('slider headlines are H2', (banner.match(/<h2\b/g) || []).length === 2 && banner.includes('e5-banner-title'));
 assert('BLACK FRIDAY SALE copy', banner.includes('BLACK FRIDAY SALE'));
 assert('promo code is exact HTML text', banner.includes('15%OFF@E5'));
 assert('shop CTA goes to /shop', banner.includes('SHOP_ROUTE') && banner.includes('SHOP WHEELS'));
@@ -34,11 +34,12 @@ assert('gallery CTA goes to /e5-visualizer', banner.includes('INTERACTIVE_GALLER
 assert('GT.03 CTA goes to series page', banner.includes('WHEELS_GT_03_ROUTE') && banner.includes('IN-STOCK & READY-2-SHIP'));
 assert('four slides', banner.includes("stem: 'bf-sale'") && banner.includes("stem: 'viz-01'") && banner.includes("stem: 'gt03-black'") && banner.includes("stem: 'film-poster'"));
 assert('film slide sits after GT.03', banner.indexOf("stem: 'gt03-black'") < banner.indexOf("stem: 'film-poster'"));
-assert('poster vehicle is a gallery photo', banner.includes('2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels') && banner.includes('generate-banner-poster.py'));
-assert('NOW SHOWING / WATCH THE FILM', banner.includes('NOW SHOWING') && banner.includes('WATCH THE FILM') && banner.includes('FORGED') && banner.includes('ON BLACKTOP'));
+assert('poster vehicle is a gallery photo', banner.includes('2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels') && banner.includes('film-car'));
+assert('poster uses red field and amber sun', banner.includes('#c8281e') && banner.includes('#f5a623') && banner.includes('e5-poster-sun'));
+assert('WATCH THE FILM / FORGED ON BLACKTOP', banner.includes('WATCH THE FILM') && banner.includes('E5 Wheels') && banner.includes('FORGED ON BLACKTOP'));
 assert('credits billing block', banner.includes('E5 WHEELS presents') && banner.includes('a Corvette motion picture'));
-assert('Bebas Neue is self-hosted and poster-scoped', fonts.includes("font-family: 'Bebas Neue'") && fonts.includes('/assets/fonts/bebas-neue.woff2') && banner.includes('.e5-banner-slide.is-poster') && banner.includes("font-family: 'Bebas Neue'"));
-assert('unaltered E5 wordmark on the poster', banner.includes('E5_LOGO_WHITE') && banner.includes('e5-poster-logo'));
+assert('poster fonts are self-hosted and scoped', fonts.includes("font-family: 'Bebas Neue'") && fonts.includes("font-family: 'Mr Dafoe'") && fonts.includes('/assets/fonts/mr-dafoe.woff2') && banner.includes('.e5-banner-slide.is-poster') && banner.includes("font-family: 'Mr Dafoe'"));
+assert('lightning bolts are SVG', banner.includes('e5-poster-bolts') && banner.includes('path fill="#fff"'));
 assert('film CTA is a button not a link', banner.includes('data-film-open') && banner.includes('type="button"') && banner.includes('e5-poster-cta'));
 assert('visualizer cycle uses real C8 combos', banner.includes('Torch Red') && banner.includes('Daytona Gloss Black') && banner.includes('Arctic White') && banner.includes('Sebring Titanium') && banner.includes('Rapid Blue') && banner.includes('Speedway Chrome') && banner.includes('Bronze Brushed Tint'));
 assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('vizHoldMs') && banner.includes('3000'));
@@ -57,7 +58,7 @@ assert('AVIF and WebP srcset', banner.includes('type="image/avif"') && banner.in
 assert('arrows dots swipe keyboard autoplay', banner.includes('data-prev') && banner.includes('data-next') && banner.includes('data-dot') && banner.includes('pointerdown') && banner.includes('ArrowLeft') && banner.includes('6000') && banner.includes('prefers-reduced-motion'));
 assert('no Vue carousel island', !banner.includes('client:') && !src.includes('client:load'));
 
-const stems = ['bf-sale', 'gt03-black', 'viz-01', 'viz-02', 'viz-03', 'viz-04', 'film-poster'];
+const stems = ['bf-sale', 'gt03-black', 'viz-01', 'viz-02', 'viz-03', 'viz-04'];
 const widths = [800, 1280, 1920];
 for (const stem of stems) {
   for (const width of widths) {
@@ -71,7 +72,13 @@ for (const width of [800, 1200, 1500]) {
 }
 assert('bebas-neue.woff2', existsSync(join(root, 'public/assets/fonts/bebas-neue.woff2')));
 assert('Bebas Neue OFL', existsSync(join(root, 'public/assets/fonts/OFL-BebasNeue.txt')));
-assert('film poster master', existsSync(join(root, 'scripts/assets/film-poster-master.png')));
+assert('mr-dafoe.woff2', existsSync(join(root, 'public/assets/fonts/mr-dafoe.woff2')));
+assert('Mr Dafoe OFL', existsSync(join(root, 'public/assets/fonts/OFL-MrDafoe.txt')));
+assert('film car cutout', existsSync(join(root, 'scripts/assets/film-car-cutout.png')));
+for (const width of [800, 1280, 1600]) {
+  assert(`film-car-${width}.webp`, existsSync(join(root, `public/assets/images/banner/film-car-${width}.webp`)));
+  assert(`film-car-${width}.avif`, existsSync(join(root, `public/assets/images/banner/film-car-${width}.avif`)));
+}
 
 if (failed) {
   console.error(`${failed} home hero checks failed`);
