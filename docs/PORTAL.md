@@ -62,7 +62,7 @@ Homepage banner slides. Shipped.
 - Images go to the `e5-portal` Vercel Blob store (`BLOB_READ_WRITE_TOKEN`). JPEG/PNG/WebP, max 4 MB. Relative `/…` or `https://(www.)e5wheels.com/…` links only.
 - Film-poster layout (neon, Watch the Film lightbox) stays; copy and photo are editable.
 
-## Section 3 (this PR)
+## Section 3
 
 Header and footer links.
 
@@ -82,11 +82,24 @@ Three pages are prerendered for PageSpeed: `/`, plus two gallery detail routes. 
 
 Do not merge until Dave replies **go live**.
 
+## Section 4 (this PR)
+
+Blog posts.
+
+- Portal host: `https://portal.e5wheels.com/blog`
+- Preview: `/portal/blog`
+- Live public blog still reads **WordPress** at `https://post.e5wheels.com` for unedited posts, so current URLs, HTML, and SEO stay the same until the client saves an edit.
+- Redis keys `e5:portal:posts:{slug}` + `e5:portal:posts:index`. A save writes an overlay for that slug only. Unpublished overlays 404; deleted overlays 410; both drop from the blog index and `/sitemap-blog.xml`.
+- Auth-protected `GET/PUT/DELETE /api/portal/posts` (preview: `/portal/api/posts`) and image upload `POST .../posts/upload` to the `e5-portal` Blob store. JPEG/PNG/WebP, max 4 MB.
+- Public `/blog` and `/blog/{slug}` stay server-rendered. New live posts appear in the index and sitemap without a redeploy (`robots.txt` lists `/sitemap-blog.xml`).
+- Rendered HTML from portal edits is sanitized (no script/iframe/on* attributes; links limited to http(s)/mailto/tel). Unedited WordPress HTML is passed through unchanged.
+
+Do not merge until Dave replies **go live**.
+
 ## Later sections (not in this PR)
 
 | Section | Portal host | Preview |
 |---|---|---|
-| Blog Posts | `/blog` | `/portal/blog` |
 | Galleries | `/galleries` | `/portal/galleries` |
 | Site Performance | `/performance` | `/portal/performance` |
 | Sales & Prospects (GoHighLevel) | `/sales` | `/portal/sales` |
@@ -97,11 +110,11 @@ Client edits must publish **live immediately** — no draft workflow and no rede
 
 Use **Upstash Redis** (already on this project as `KV_REST_API_URL` / `KV_REST_API_TOKEN`). Coupons already live at `e5:coupons` and are read at request time.
 
-Planned keys (write on save, read at request time):
+Keys (write on save, read at request time):
 
 - `e5:portal:slides` — homepage hero slides (Section 2)
 - `e5:portal:nav` — header / footer links (Section 3)
-- `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog
+- `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog (Section 4)
 - `e5:portal:galleries` — immersive gallery sets
 - `e5:portal:users` — extra portal users (optional, later)
 

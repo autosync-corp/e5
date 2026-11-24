@@ -1,0 +1,161 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import { loadPortalPosts } from '@/core/portal/posts.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const posts = await loadPortalPosts();
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+const newHref = `${portalHref(Astro.request, '/blog')}/new`;
+const editBase = portalHref(Astro.request, '/blog');
+
+function formatDate(dateStr: string): string {
+  const parsed = new Date(dateStr);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<PortalLayout title="Blog Posts — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Blog Posts</h1>
+  <p class="lead">
+    Write and publish posts. Saved changes appear on the live blog within about a minute — no redeploy.
+    Hidden posts stay off the public blog. Removing a post takes it off the site right away.
+  </p>
+
+  <div class="toolbar">
+    <a class="btn primary" href={newHref}>New post</a>
+    <span class="status" data-status></span>
+  </div>
+
+  {posts.length === 0 ? (
+    <p class="empty">No posts yet. Start with a new post.</p>
+  ) : (
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Published</th>
+            <th>On the live blog</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody data-list>
+          {posts.map((post) => (
+            <tr data-row data-slug={post.slug}>
+              <td>
+                <a class="title" href={`${editBase}/${post.slug}`}>{post.titleText || post.slug}</a>
+                <span class="slug">/blog/{post.slug}</span>
+              </td>
+              <td>{formatDate(post.date)}</td>
+              <td>
+                <span class:list={['pill', post.published ? 'is-live' : 'is-hidden']}>
+                  {post.published ? 'Live' : 'Hidden'}
+                </span>
+              </td>
+              <td class="actions">
+                <a class="btn ghost" href={`${editBase}/${post.slug}`}>Edit</a>
+                <button type="button" class="btn danger" data-delete data-slug={post.slug} data-title={post.titleText}>
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</PortalLayout>
+
+<script is:inline define:vars={{ apiBase }}>
+  (function () {
+    var status = document.querySelector('[data-status]');
+    var list = document.querySelector('[data-list]');
+    function setStatus(text, ok) {
+      if (!status) return;
+      status.textContent = text || '';
+      status.classList.toggle('is-error', ok === false);
+    }
+    if (!list) return;
+    list.addEventListener('click', async function (e) {
+      var btn = e.target.closest('[data-delete]');
+      if (!btn) return;
+      var slug = btn.getAttribute('data-slug') || '';
+      var title = btn.getAttribute('data-title') || 'this post';
+      if (!slug) return;
+      if (!window.confirm('Remove “' + title + '” from the live blog? This cannot be undone from here.')) return;
+      setStatus('Removing…');
+      try {
+        var res = await fetch(apiBase + '/posts/' + encodeURIComponent(slug), {
+          method: 'DELETE',
+          credentials: 'same-origin',
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok) {
+          setStatus(data.error || 'Could not remove this post.', false);
+          return;
+        }
+        var row = btn.closest('[data-row]');
+        if (row) row.remove();
+        setStatus('Removed from the live blog.');
+      } catch (err) {
+        setStatus('Could not remove this post.', false);
+      }
+    });
+  })();
+</script>
+
+<style>
+  .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .status { font-size: 14px; color: #333; }
+  .status.is-error { color: #d31d25; }
+  .empty { color: #666; }
+  .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 10px 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.ghost:hover { background: #141414; color: #fff; }
+  .btn.danger { border-color: #d31d25; color: #d31d25; }
+  .table-wrap { overflow-x: auto; max-width: 960px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+  th {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .title { color: #141414; text-decoration: none; font-family: 'Franklin Gothic Demi', sans-serif; }
+  .title:hover { color: #d31d25; }
+  .slug { display: block; color: #888; font-size: 12px; margin-top: 4px; }
+  .pill {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+  }
+  .pill.is-live { background: #141414; color: #fff; }
+  .pill.is-hidden { background: #eee; color: #666; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+</style>

@@ -12,3 +12,4 @@ Disallow: /order-success
 Disallow: /visualizer-callback
 
 Sitemap: https://www.e5wheels.com/sitemap-index.xml
+Sitemap: https://www.e5wheels.com/sitemap-blog.xml

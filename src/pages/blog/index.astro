@@ -1,28 +1,12 @@
 ---
+export const prerender = false;
+
 import MainLayout from '@/layouts/MainLayout.astro';
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { loadPublicPosts } from '@/core/portal/posts.ts';
 
-const WP_API = 'https://post.e5wheels.com/wp-json/wp/v2';
 const siteUrl = SITE_URL;
-
-let posts: any[] = [];
-try {
-  const res = await fetch(`${WP_API}/posts?_embed&per_page=100&orderby=date&order=desc`);
-  if (res.ok) {
-    posts = await res.json();
-  }
-} catch (e) {
-  console.error('Failed to fetch blog posts from WordPress:', e);
-}
-
-function getFeaturedImage(post: any): string | null {
-  return post._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? null;
-}
-
-function getExcerpt(post: any): string {
-  const raw = post.excerpt?.rendered ?? '';
-  return raw.replace(/<[^>]*>/g, '').trim();
-}
+const posts = await loadPublicPosts();
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -62,8 +46,8 @@ function formatDate(dateStr: string): string {
       ) : (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => {
-            const image = getFeaturedImage(post);
-            const excerpt = getExcerpt(post);
+            const image = post.coverUrl || null;
+            const excerpt = post.excerpt;
             return (
               <a
                 href={`/blog/${post.slug}`}
@@ -74,7 +58,7 @@ function formatDate(dateStr: string): string {
                   {image ? (
                     <img
                       src={image}
-                      alt={post.title.rendered}
+                      alt={post.coverAlt || post.titleText}
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
@@ -91,7 +75,7 @@ function formatDate(dateStr: string): string {
                   </p>
                   <h2
                     class="font-['Franklin_Gothic_Demi'] text-black text-[18px] leading-snug tracking-wide uppercase mb-3 group-hover:text-e5-red transition-colors"
-                    set:html={post.title.rendered}
+                    set:html={post.titleHtml}
                   />
                   <p class="font-['Franklin_Gothic_Book'] text-black/55 text-[14px] leading-relaxed flex-1 mb-5">
                     {excerpt.length > 140 ? excerpt.slice(0, 140) + '…' : excerpt}

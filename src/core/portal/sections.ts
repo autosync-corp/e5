@@ -32,8 +32,8 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     slug: 'blog',
     label: 'Blog Posts',
     path: '/blog',
-    ready: false,
-    summary: 'Write and publish blog posts. Live on save via Upstash.',
+    ready: true,
+    summary: 'Write and publish blog posts. Saved changes appear on the live blog within about a minute.',
   },
   {
     slug: 'galleries',
