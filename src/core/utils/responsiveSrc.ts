@@ -6,7 +6,7 @@ export type PictureSources = {
 };
 
 const CATALOG_RE = /\/assets\/images\/catalog-800\/([^/]+)\.webp$/;
-const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4])(?:-1280)?\.webp$/;
+const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4]|film-poster)(?:-1280)?\.webp$/;
 
 export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
   return {

@@ -1,11 +1,14 @@
 ---
 import CtaLink from '@/core/components/CtaLink.astro';
 import { bannerPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
+import { E5_LOGO_WHITE } from '@/core/constants/App.ts';
 import {
   SHOP_ROUTE,
   INTERACTIVE_GALLERY_ROUTE,
   WHEELS_GT_03_ROUTE,
 } from '@/core/constants/Routes.ts';
+
+const FILM_VIDEO_ID = '2zk8Sdi3Yh8';
 
 const vizFrames = [
   { stem: 'viz-01', caption: 'Torch Red · Daytona Gloss Black', alt: 'C8 Stingray Torch Red with Daytona Gloss Black wheels in the E5 Immersive Gallery' },
@@ -31,6 +34,9 @@ const slides = [
     gtm: 'Black Friday Shop Wheels',
     viz: false,
     laydown: false,
+    film: false,
+    subtitle: '',
+    credits: '',
   },
   {
     stem: 'viz-01' as const,
@@ -44,6 +50,9 @@ const slides = [
     href: INTERACTIVE_GALLERY_ROUTE,
     gtm: 'Open Immersive Gallery',
     laydown: false,
+    film: false,
+    subtitle: '',
+    credits: '',
   },
   {
     stem: 'gt03-black' as const,
@@ -60,6 +69,29 @@ const slides = [
     cta: 'EXPLORE GT.03',
     href: WHEELS_GT_03_ROUTE,
     gtm: 'Explore GT.03',
+    film: false,
+    subtitle: '',
+    credits: '',
+  },
+  {
+    stem: 'film-poster' as const,
+    // Real gallery vehicle (not generated): black 2018 C7 Grand Sport on
+    // Daytona Bronze Brushed Tint, palms and warm Florida light.
+    // public/assets/images/gallery/corvette/2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels/1.webp
+    // Poster-print grade: scripts/generate-banner-poster.py
+    film: true,
+    alt: 'Black C7 Corvette Grand Sport fitted with E5 Daytona Bronze Brushed Tint wheels, poster-print treatment',
+    kicker: 'NOW SHOWING',
+    title: 'FORGED',
+    subtitle: 'ON BLACKTOP',
+    code: '',
+    body: 'The wheels. The road. The machine.',
+    credits: 'E5 WHEELS presents  ·  a Corvette motion picture  ·  starring forged aluminum',
+    cta: 'WATCH THE FILM',
+    href: '',
+    gtm: 'Watch the Film',
+    viz: false,
+    laydown: false,
   },
 ];
 ---
@@ -78,7 +110,7 @@ const slides = [
         const eager = index === 0;
         return (
           <div
-            class:list={['e5-banner-slide', slide.laydown && 'is-split']}
+            class:list={['e5-banner-slide', slide.laydown && 'is-split', slide.film && 'is-poster']}
             data-slide={index}
             role="group"
             aria-roledescription="slide"
@@ -163,7 +195,26 @@ const slides = [
             <div class="e5-banner-copy">
               <div class:list={['e5-banner-copy-inner', slide.laydown && 'is-card']}>
                 {slide.kicker && <p class="e5-banner-kicker">{slide.kicker}</p>}
-                <h2 class="e5-banner-title">{slide.title}</h2>
+                {slide.film && (
+                  <img
+                    class="e5-poster-logo"
+                    src={E5_LOGO_WHITE}
+                    alt="E5 Wheels"
+                    width="220"
+                    height="48"
+                    decoding="async"
+                    loading="lazy"
+                  />
+                )}
+                <h2 class="e5-banner-title">
+                  {slide.title}
+                  {slide.subtitle && (
+                    <>
+                      <br />
+                      <span class="e5-poster-sub">{slide.subtitle}</span>
+                    </>
+                  )}
+                </h2>
                 {slide.code && (
                   <p class="e5-banner-code" aria-label={`Promo code ${slide.code}`}>
                     {slide.code}
@@ -172,15 +223,28 @@ const slides = [
                 {slide.body && (
                   <p class:list={['e5-banner-body', slide.emphasize && 'is-emphasis']}>{slide.body}</p>
                 )}
+                {slide.credits && <p class="e5-poster-credits">{slide.credits}</p>}
                 <div class="e5-banner-cta">
-                  <CtaLink
-                    primary
-                    href={slide.href}
-                    data-gtm-event="home_banner"
-                    data-gtm-label={slide.gtm}
-                  >
-                    {slide.cta}
-                  </CtaLink>
+                  {slide.film ? (
+                    <button
+                      type="button"
+                      class="e5-poster-cta"
+                      data-film-open
+                      data-gtm-event="home_banner"
+                      data-gtm-label={slide.gtm}
+                    >
+                      {slide.cta}
+                    </button>
+                  ) : (
+                    <CtaLink
+                      primary
+                      href={slide.href}
+                      data-gtm-event="home_banner"
+                      data-gtm-label={slide.gtm}
+                    >
+                      {slide.cta}
+                    </CtaLink>
+                  )}
                 </div>
                 {slide.viz && (
                   <p class="e5-banner-combo" data-viz-caption>
@@ -220,6 +284,26 @@ const slides = [
   <p class="sr-only" data-live aria-live="polite">Slide 1 of {slides.length}</p>
 </section>
 
+<div
+  id="e5-film-modal"
+  class="e5-film-modal"
+  hidden
+  data-film-modal
+  data-film-id={FILM_VIDEO_ID}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="e5-film-title"
+>
+  <button type="button" class="e5-film-backdrop" data-film-close aria-label="Close film"></button>
+  <div class="e5-film-dialog">
+    <p id="e5-film-title" class="sr-only">E5 Wheels film</p>
+    <button type="button" class="e5-film-x" data-film-close aria-label="Close film">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="e5-film-frame" data-film-frame></div>
+  </div>
+</div>
+
 <script is:inline>
   (function () {
     var root = document.getElementById('e5-banner');
@@ -235,6 +319,7 @@ const slides = [
     var i = 0;
     var timer = null;
     var paused = false;
+    var filmOpen = false;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var vizRoot = root.querySelector('[data-viz-cycle]');
     var vizFrames = vizRoot ? vizRoot.querySelectorAll('[data-viz-frame]') : [];
@@ -316,7 +401,7 @@ const slides = [
     }
 
     function start() {
-      if (reduce || paused) return;
+      if (reduce || paused || filmOpen) return;
       stop();
       timer = setInterval(function () { go(i + 1, false); }, 6000);
       startViz();
@@ -333,6 +418,7 @@ const slides = [
     }
 
     function resume() {
+      if (filmOpen) return;
       paused = false;
       start();
     }
@@ -376,6 +462,68 @@ const slides = [
     }
     root.addEventListener('pointerup', endSwipe);
     root.addEventListener('pointercancel', endSwipe);
+
+    var modal = document.getElementById('e5-film-modal');
+    var filmFrame = modal ? modal.querySelector('[data-film-frame]') : null;
+    var filmId = modal ? modal.getAttribute('data-film-id') || '' : '';
+    var lastFocus = null;
+
+    function openFilm() {
+      if (!modal || !filmFrame || !filmId) return;
+      lastFocus = document.activeElement;
+      filmOpen = true;
+      pause();
+      if (!filmFrame.querySelector('iframe')) {
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute(
+          'src',
+          'https://www.youtube-nocookie.com/embed/' + filmId + '?rel=0&modestbranding=1'
+        );
+        iframe.setAttribute('title', 'E5 Wheels film');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute(
+          'allow',
+          'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        );
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        filmFrame.appendChild(iframe);
+      }
+      modal.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      var closeBtn = modal.querySelector('.e5-film-x');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeFilm() {
+      if (!modal || !filmOpen) return;
+      filmOpen = false;
+      modal.hidden = true;
+      if (filmFrame) filmFrame.innerHTML = '';
+      document.documentElement.style.overflow = '';
+      if (!root.matches(':hover') && !root.contains(document.activeElement)) {
+        resume();
+      }
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    var openers = root.querySelectorAll('[data-film-open]');
+    for (var o = 0; o < openers.length; o++) {
+      openers[o].addEventListener('click', function (e) {
+        e.preventDefault();
+        openFilm();
+      });
+    }
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target && e.target.closest('[data-film-close]')) closeFilm();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && filmOpen) {
+        e.preventDefault();
+        closeFilm();
+      }
+    });
 
     paint(0);
     start();
@@ -437,6 +585,10 @@ const slides = [
   .e5-banner-slide.is-split .e5-banner-picture img {
     object-position: 72% center;
   }
+  .e5-banner-slide.is-poster .e5-banner-picture img {
+    object-position: 38% 58%;
+    filter: contrast(1.05) saturate(0.92);
+  }
   .e5-banner-viz-frame {
     opacity: 0;
     transition: opacity 0.9s ease;
@@ -485,6 +637,11 @@ const slides = [
     background:
       linear-gradient(90deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.1) 26%, transparent 48%),
       linear-gradient(270deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.18) 30%, transparent 58%);
+  }
+  .e5-banner-slide.is-poster .e5-banner-overlay {
+    background:
+      linear-gradient(270deg, rgba(42, 12, 4, 0.82) 0%, rgba(42, 12, 4, 0.48) 34%, rgba(20, 8, 4, 0.12) 62%, rgba(12, 6, 4, 0.28) 100%),
+      linear-gradient(180deg, rgba(20, 8, 4, 0.28) 0%, transparent 38%, rgba(18, 6, 2, 0.55) 100%);
   }
   .e5-banner-copy {
     position: relative;
@@ -559,6 +716,137 @@ const slides = [
   }
   .e5-banner-cta {
     margin-top: 28px;
+  }
+  .e5-banner-slide.is-poster .e5-banner-kicker {
+    font-family: 'Bebas Neue', 'Franklin Gothic Demi', sans-serif;
+    font-size: clamp(18px, 2.2vw, 26px);
+    letter-spacing: 0.28em;
+    color: #f3d08a;
+    text-shadow: 0 2px 0 #3a1208, 0 3px 10px rgba(0, 0, 0, 0.55);
+  }
+  .e5-poster-logo {
+    display: block;
+    width: min(220px, 42vw);
+    height: auto;
+    margin: 0 0 10px auto;
+    filter: none;
+  }
+  .e5-banner-slide.is-poster .e5-banner-title {
+    font-family: 'Bebas Neue', 'Franklin Gothic Heavy', sans-serif;
+    font-weight: 400;
+    font-size: clamp(56px, 9vw, 118px);
+    line-height: 0.82;
+    letter-spacing: 0.04em;
+    color: #f6e0a8;
+    text-shadow:
+      3px 3px 0 #3a1208,
+      6px 6px 0 #8b2e0a,
+      0 10px 24px rgba(0, 0, 0, 0.55);
+  }
+  .e5-poster-sub {
+    font-size: 0.62em;
+    letter-spacing: 0.08em;
+  }
+  .e5-banner-slide.is-poster .e5-banner-body {
+    font-family: 'Bebas Neue', 'Franklin Gothic Book', sans-serif;
+    font-size: clamp(18px, 2.2vw, 28px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f4d6a0;
+    max-width: 22rem;
+  }
+  .e5-poster-credits {
+    margin: 14px 0 0;
+    max-width: 22rem;
+    font-family: 'Bebas Neue', 'Franklin Gothic Book', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    line-height: 1.45;
+    text-transform: uppercase;
+    color: #e8c98a;
+  }
+  .e5-poster-cta {
+    display: inline-block;
+    margin: 0;
+    padding: 14px 22px 12px;
+    border: 3px solid #3a1208;
+    background: #d4741a;
+    color: #2a0e08;
+    font-family: 'Bebas Neue', 'Franklin Gothic Heavy', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #3a1208, 0 10px 22px rgba(0, 0, 0, 0.35);
+  }
+  .e5-poster-cta:hover,
+  .e5-poster-cta:focus-visible {
+    background: #f3d08a;
+  }
+  .e5-poster-cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  .e5-film-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  .e5-film-modal[hidden] {
+    display: none;
+  }
+  .e5-film-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: rgba(8, 4, 2, 0.84);
+    cursor: pointer;
+  }
+  .e5-film-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(960px, 100%);
+    background: #111;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+  .e5-film-x {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .e5-film-x:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  .e5-film-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+  }
+  .e5-film-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
   .e5-banner-combo {
     margin: 16px 0 0;
@@ -658,6 +946,31 @@ const slides = [
     .e5-banner-slide.is-split .e5-banner-picture img {
       object-position: 62% 70%;
     }
+    .e5-banner-slide.is-poster .e5-banner-picture img {
+      width: 130%;
+      height: 130%;
+      top: 46%;
+      object-position: 40% 52%;
+    }
+    .e5-banner-slide.is-poster .e5-banner-copy {
+      padding: 14px 16px 96px 52px;
+    }
+    .e5-banner-slide.is-poster .e5-banner-kicker {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      margin-bottom: 4px;
+    }
+    .e5-banner-slide.is-poster .e5-poster-logo {
+      width: min(120px, 36vw);
+      margin-bottom: 2px;
+    }
+    .e5-banner-slide.is-poster .e5-banner-body {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    .e5-banner-slide.is-poster .e5-banner-cta {
+      margin-top: 12px;
+    }
     .e5-banner-copy {
       justify-content: flex-start;
       align-items: flex-end;
@@ -675,6 +988,20 @@ const slides = [
     .e5-banner-slide.is-split .e5-banner-overlay {
       background:
         linear-gradient(180deg, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.22) 46%, rgba(0, 0, 0, 0.42) 100%);
+    }
+    .e5-banner-slide.is-poster .e5-banner-overlay {
+      background:
+        linear-gradient(180deg, rgba(42, 12, 4, 0.62) 0%, rgba(20, 8, 4, 0.28) 42%, rgba(18, 6, 2, 0.55) 100%);
+    }
+    .e5-banner-slide.is-poster .e5-banner-title {
+      font-size: clamp(36px, 12vw, 52px);
+    }
+    .e5-poster-credits {
+      font-size: 10px;
+    }
+    .e5-poster-cta {
+      font-size: 16px;
+      padding: 10px 14px 8px;
     }
     .e5-banner-cta {
       margin-top: 18px;
