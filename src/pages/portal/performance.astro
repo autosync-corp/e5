@@ -1,0 +1,310 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { portalHref } from '@/core/portal/host.ts';
+import {
+  COMPARE_METRICS,
+  clientCaveats,
+  compareData,
+  directionLabel,
+  formatDay,
+  formatDelta,
+  formatMetric,
+  historyData,
+  historyRows,
+  homepageCompare,
+  latestData,
+} from '@/core/portal/performance.ts';
+import type { Direction, MetricKind } from '@/core/portal/performance.ts';
+
+import latestMobile from '@/data/performance/runs/2026-11-24/mobile.png';
+import latestDesktop from '@/data/performance/runs/2026-11-24/desktop.png';
+import latestCompare from '@/data/performance/runs/2026-11-24/compare.png';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const page = homepageCompare(compareData);
+const caveats = clientCaveats(compareData.caveats || []);
+const baselineLabel = formatDay(compareData.baseline_date);
+const latestLabel = compareData.latest_date ? formatDay(compareData.latest_date) : 'Latest';
+const runs = historyRows(historyData);
+const testedUrl = page.url || latestData.urls[0] || '';
+
+const pngSrc = (img: { src: string } | string) => (typeof img === 'string' ? img : img.src);
+
+type Row = {
+  label: string;
+  kind: MetricKind;
+  baseline: string;
+  latest: string;
+  change: string;
+  direction: Direction | null;
+  directionText: string;
+};
+
+function rowsFor(strategy: typeof page.mobile): Row[] {
+  if (!strategy) return [];
+  return COMPARE_METRICS.map((metric) => {
+    const cell = strategy[metric.key];
+    return {
+      label: metric.label,
+      kind: metric.kind,
+      baseline: formatMetric(metric.kind, cell.baseline),
+      latest: formatMetric(metric.kind, cell.latest),
+      change: cell.direction === 'same' ? 'No change' : formatDelta(metric.kind, cell.delta),
+      direction: cell.direction,
+      directionText: directionLabel(cell.direction),
+    };
+  });
+}
+
+const mobileRows = rowsFor(page.mobile);
+const desktopRows = rowsFor(page.desktop);
+---
+
+<PortalLayout title="Site Performance — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Site Performance</h1>
+  <p class="lead">
+    Lab test of the homepage on {latestLabel}, compared with {baselineLabel}. This is a snapshot, not live visitor data.
+  </p>
+
+  <p class="meta">
+    Tested URL: <a href={testedUrl}>{testedUrl}</a>
+    <span>Baseline {baselineLabel}</span>
+    <span>Latest {latestLabel}</span>
+  </p>
+
+  <ul class="caveats">
+    {caveats.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+
+  <div class="tabs" role="tablist" aria-label="Phone or computer">
+    <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="mobile">Mobile</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="desktop">Desktop</button>
+  </div>
+
+  <div class="panels">
+    <section class="panel is-active" data-panel="mobile">
+      <h2>Mobile</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>{baselineLabel}</th>
+              <th>{latestLabel}</th>
+              <th>Change</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {mobileRows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td>{row.baseline}</td>
+                <td>{row.latest}</td>
+                <td>{row.change}</td>
+                <td>
+                  <span class:list={['flag', row.direction && `is-${row.direction}`]}>{row.directionText}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {pngSrc(latestMobile) && (
+        <figure class="card">
+          <img src={pngSrc(latestMobile)} alt="Mobile score card for the latest homepage test" width="1200" />
+        </figure>
+      )}
+    </section>
+
+    <section class="panel" data-panel="desktop">
+      <h2>Desktop</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>{baselineLabel}</th>
+              <th>{latestLabel}</th>
+              <th>Change</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {desktopRows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td>{row.baseline}</td>
+                <td>{row.latest}</td>
+                <td>{row.change}</td>
+                <td>
+                  <span class:list={['flag', row.direction && `is-${row.direction}`]}>{row.directionText}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {pngSrc(latestDesktop) && (
+        <figure class="card">
+          <img src={pngSrc(latestDesktop)} alt="Desktop score card for the latest homepage test" width="1200" />
+        </figure>
+      )}
+    </section>
+  </div>
+
+  {pngSrc(latestCompare) && (
+    <figure class="card compare">
+      <figcaption>Baseline vs latest</figcaption>
+      <img src={pngSrc(latestCompare)} alt="Chart comparing November 1 and the latest homepage test" width="1200" />
+    </figure>
+  )}
+
+  <h2 class="history-title">Earlier tests</h2>
+  <ol class="history">
+    {runs.map((run) => (
+      <li>
+        <strong>{run.label}</strong>
+        <span>Mobile {run.mobile ?? '—'}</span>
+        <span>Desktop {run.desktop ?? '—'}</span>
+      </li>
+    ))}
+  </ol>
+</PortalLayout>
+
+<script is:inline>
+  (function () {
+    var tabs = document.querySelectorAll('[data-tab]');
+    var panels = document.querySelectorAll('[data-panel]');
+    function show(name) {
+      tabs.forEach(function (tab) {
+        var on = tab.getAttribute('data-tab') === name;
+        tab.classList.toggle('is-active', on);
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panels.forEach(function (panel) {
+        panel.classList.toggle('is-active', panel.getAttribute('data-panel') === name);
+      });
+    }
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        show(tab.getAttribute('data-tab'));
+      });
+    });
+  })();
+</script>
+
+<style>
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    color: #666;
+    font-size: 14px;
+    margin: -12px 0 20px;
+  }
+  .meta a { color: #d31d25; text-decoration: none; }
+  .caveats {
+    max-width: 46rem;
+    margin: 0 0 28px;
+    padding: 14px 18px 14px 32px;
+    border: 1px solid #d9d9d9;
+    background: #fafafa;
+  }
+  .caveats li { color: #333; font-size: 14px; line-height: 1.45; margin: 6px 0; }
+  .tabs {
+    display: none;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .tabs button {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 11px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .tabs button.is-active { background: #141414; color: #fff; }
+  .panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .panel h2 {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ececec;
+    white-space: nowrap;
+  }
+  tbody th { font-weight: 400; color: #333; }
+  .flag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .flag.is-better { color: #0b7a38; }
+  .flag.is-worse { color: #d31d25; }
+  .card { margin: 16px 0 0; }
+  .card img { width: 100%; height: auto; display: block; border: 1px solid #d9d9d9; }
+  .card.compare { margin-top: 28px; max-width: 920px; }
+  .card figcaption {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .history-title {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin: 32px 0 10px;
+  }
+  .history { list-style: none; max-width: 36rem; }
+  .history li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ececec;
+    font-size: 14px;
+  }
+  .history span { color: #666; }
+  @media (max-width: 900px) {
+    .tabs { display: flex; }
+    .panels { grid-template-columns: 1fr; }
+    .panel { display: none; }
+    .panel.is-active { display: block; }
+  }
+</style>

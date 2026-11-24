@@ -1,0 +1,267 @@
+{
+  "schema_version": 2,
+  "generated": "2026-11-24T13:49:05-08:00",
+  "client": {
+    "id": "e5wheels",
+    "name": "E5 Wheels"
+  },
+  "url": "https://www.e5wheels.com/",
+  "urls": [
+    "https://www.e5wheels.com/"
+  ],
+  "run_date": "2026-10-27",
+  "run_datetime": "2026-10-27T16:00:12-07:00",
+  "data_source": "lighthouse-local",
+  "lighthouse_version": "12.8.2",
+  "source": "lab",
+  "field": null,
+  "real_user": null,
+  "caveats": [
+    "Mobile performance scores in this snapshot spread from 56 to 82 across 3 runs (median 79). Treat the score as approximate.",
+    "PageSpeed Insights was unavailable for this run (HTTP 429, quota exceeded). Lab results are from local Lighthouse.",
+    "Real-user Chrome UX Report data is not available (CRUX_API_KEY is not set)."
+  ],
+  "by_url": {
+    "https://www.e5wheels.com/": {
+      "url": "https://www.e5wheels.com/",
+      "source": "lab",
+      "field": null,
+      "mobile": {
+        "run_date": "2026-10-27T16:00:12-07:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "12.8.2",
+        "scores": {
+          "performance": 79,
+          "accessibility": 95,
+          "best_practices": 75,
+          "seo": 92
+        },
+        "lcp_s": 3.47,
+        "tbt_ms": 332.0,
+        "cls": 0.0013,
+        "fcp_s": 2.3,
+        "speed_index_s": 4.27,
+        "ttfb_ms": 47.0,
+        "page_weight_kib": 4167,
+        "request_count": 91,
+        "third_party_kib": 2951,
+        "third_party_count": 56,
+        "resource_breakdown": {
+          "html": {
+            "kib": 73,
+            "count": 4
+          },
+          "js": {
+            "kib": 1794,
+            "count": 39
+          },
+          "css": {
+            "kib": 76,
+            "count": 5
+          },
+          "image": {
+            "kib": 1135,
+            "count": 20
+          },
+          "font": {
+            "kib": 119,
+            "count": 2
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 971,
+            "count": 21
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            56,
+            79,
+            82
+          ],
+          "min": 56,
+          "max": 82,
+          "spread": 26
+        },
+        "opportunities": [
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 1200,
+            "savings_kib": 596
+          },
+          {
+            "id": "uses-responsive-images",
+            "title": "Properly size images",
+            "savings_ms": 1010,
+            "savings_kib": 459
+          },
+          {
+            "id": "largest-contentful-paint-element",
+            "title": "Largest Contentful Paint element",
+            "savings_ms": 950,
+            "savings_kib": null
+          },
+          {
+            "id": "third-party-summary",
+            "title": "Reduce the impact of third-party code",
+            "savings_ms": 350,
+            "savings_kib": null
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 0,
+            "savings_kib": 293
+          },
+          {
+            "id": "unused-javascript",
+            "title": "Reduce unused JavaScript",
+            "savings_ms": 0,
+            "savings_kib": 197
+          },
+          {
+            "id": "legacy-javascript",
+            "title": "Avoid serving legacy JavaScript to modern browsers",
+            "savings_ms": 0,
+            "savings_kib": 13
+          },
+          {
+            "id": "legacy-javascript-insight",
+            "title": "Legacy JavaScript",
+            "savings_ms": 0,
+            "savings_kib": 13
+          },
+          {
+            "id": "uses-long-cache-ttl",
+            "title": "Serve static assets with an efficient cache policy",
+            "savings_ms": null,
+            "savings_kib": 293
+          }
+        ]
+      },
+      "desktop": {
+        "run_date": "2026-10-27T16:00:12-07:00",
+        "data_source": "lighthouse-local",
+        "lighthouse_version": "12.8.2",
+        "scores": {
+          "performance": 97,
+          "accessibility": 95,
+          "best_practices": 78,
+          "seo": 92
+        },
+        "lcp_s": 1.08,
+        "tbt_ms": 0,
+        "cls": 0.0065,
+        "fcp_s": 0.69,
+        "speed_index_s": 1.31,
+        "ttfb_ms": 7.0,
+        "page_weight_kib": 10142,
+        "request_count": 92,
+        "third_party_kib": 8926,
+        "third_party_count": 57,
+        "resource_breakdown": {
+          "html": {
+            "kib": 73,
+            "count": 4
+          },
+          "js": {
+            "kib": 1794,
+            "count": 39
+          },
+          "css": {
+            "kib": 76,
+            "count": 5
+          },
+          "image": {
+            "kib": 1135,
+            "count": 20
+          },
+          "font": {
+            "kib": 119,
+            "count": 2
+          },
+          "media": {
+            "kib": 0,
+            "count": 0
+          },
+          "other": {
+            "kib": 6946,
+            "count": 22
+          }
+        },
+        "run_to_run": {
+          "runs": 3,
+          "scores": [
+            97,
+            97,
+            98
+          ],
+          "min": 97,
+          "max": 98,
+          "spread": 1
+        },
+        "opportunities": [
+          {
+            "id": "render-blocking-resources",
+            "title": "Eliminate render-blocking resources",
+            "savings_ms": 259,
+            "savings_kib": null
+          },
+          {
+            "id": "image-delivery-insight",
+            "title": "Improve image delivery",
+            "savings_ms": 250,
+            "savings_kib": 685
+          },
+          {
+            "id": "render-blocking-insight",
+            "title": "Render blocking requests",
+            "savings_ms": 250,
+            "savings_kib": null
+          },
+          {
+            "id": "uses-responsive-images",
+            "title": "Properly size images",
+            "savings_ms": 240,
+            "savings_kib": 576
+          },
+          {
+            "id": "cache-insight",
+            "title": "Use efficient cache lifetimes",
+            "savings_ms": 100,
+            "savings_kib": 293
+          },
+          {
+            "id": "unused-javascript",
+            "title": "Reduce unused JavaScript",
+            "savings_ms": 100,
+            "savings_kib": 197
+          },
+          {
+            "id": "legacy-javascript-insight",
+            "title": "Legacy JavaScript",
+            "savings_ms": 100,
+            "savings_kib": 12
+          },
+          {
+            "id": "legacy-javascript",
+            "title": "Avoid serving legacy JavaScript to modern browsers",
+            "savings_ms": 0,
+            "savings_kib": 13
+          },
+          {
+            "id": "uses-long-cache-ttl",
+            "title": "Serve static assets with an efficient cache policy",
+            "savings_ms": null,
+            "savings_kib": 293
+          }
+        ]
+      }
+    }
+  }
+}
