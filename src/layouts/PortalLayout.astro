@@ -13,10 +13,16 @@ const { title, userName } = Astro.props;
 const home = portalHref(Astro.request, '/');
 const logout = portalHref(Astro.request, '/logout');
 const current = Astro.url.pathname.replace(/\/+$/, '') || home;
+const currentInternal = current.startsWith('/portal') ? current : current === '/login' ? '/portal' : `/portal${current}`;
 
 const nav = PORTAL_SECTIONS.map((item) => {
   const href = portalHref(Astro.request, item.path);
-  return { href, label: item.label, ready: item.ready, active: current === href };
+  const internal = item.path === '/' ? '/portal' : `/portal${item.path}`;
+  const active =
+    item.path === '/'
+      ? currentInternal === '/portal'
+      : current === href || current.startsWith(`${href}/`) || currentInternal === internal || currentInternal.startsWith(`${internal}/`);
+  return { href, label: item.label, ready: item.ready, active };
 });
 ---
 

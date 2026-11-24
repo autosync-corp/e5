@@ -1,0 +1,409 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import { blobConfigured, MAX_IMAGE_BYTES } from '@/core/portal/slides.ts';
+import { loadPortalPost, redisConfigured } from '@/core/portal/posts.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const slugParam = Astro.params.slug || 'new';
+const isNew = slugParam === 'new';
+const post = await loadPortalPost(slugParam);
+if (!post) {
+  return new Response('Not found', { status: 404 });
+}
+
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+const listHref = portalHref(Astro.request, '/blog');
+const blobReady = blobConfigured();
+const saveReady = redisConfigured();
+const keepLayout = post.bodyMode === 'html' && Boolean(post.bodyHtml);
+const title = isNew ? 'New post' : 'Edit post';
+
+function toLocalInput(iso: string): string {
+  const parsed = new Date(iso);
+  if (Number.isNaN(parsed.getTime())) return '';
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${parsed.getFullYear()}-${pad(parsed.getMonth() + 1)}-${pad(parsed.getDate())}T${pad(parsed.getHours())}:${pad(parsed.getMinutes())}`;
+}
+
+const initial = {
+  slug: post.slug,
+  title: post.titleText,
+  excerpt: post.excerpt,
+  author: post.author,
+  date: post.date,
+  coverUrl: post.coverUrl,
+  coverAlt: post.coverAlt,
+  text: post.bodyMarkdown,
+  published: post.published,
+  slugLocked: post.slugLocked,
+  keepLayout,
+};
+---
+
+<PortalLayout title={`${title} — E5 Client Portal`} userName={user.username}>
+  {loginHref && null}
+  <p class="back"><a href={listHref}>← All posts</a></p>
+  <h1>{isNew ? 'New post' : 'Edit post'}</h1>
+  <p class="lead">
+    Saved changes appear on the live blog within about a minute. Turn off “Show on the live blog” to hide a post without deleting it.
+  </p>
+  <p class="meta">
+    {saveReady ? 'Use Save to publish.' : 'Saving is not available in this environment.'}
+    {blobReady ? ' Cover and in-post photos: JPEG, PNG, or WebP up to 4 MB.' : ' Photo uploads are not available in this environment.'}
+  </p>
+
+  <form class="editor" data-editor>
+    <label>
+      Title
+      <input type="text" name="title" maxlength="180" required value={post.titleText} data-title />
+    </label>
+    <label>
+      Web address
+      <span class="slug-row">
+        <span class="prefix">/blog/</span>
+        {post.slugLocked ? (
+          <input type="text" name="slug" maxlength="80" value={post.slug} data-slug readonly />
+        ) : (
+          <input type="text" name="slug" maxlength="80" value={post.slug} data-slug />
+        )}
+      </span>
+      {post.slugLocked ? (
+        <small>This address is already live. Leave it so existing links keep working.</small>
+      ) : (
+        <small>Filled in from the title. You can change it before the first save.</small>
+      )}
+    </label>
+    <label>
+      Short description
+      <textarea name="excerpt" maxlength="320" rows="3" data-excerpt>{post.excerpt}</textarea>
+      <small>Shown on the blog list and in search results.</small>
+    </label>
+    <div class="split">
+      <label>
+        Author name
+        <input type="text" name="author" maxlength="80" value={post.author} data-author />
+      </label>
+      <label>
+        Publish date
+        <input type="datetime-local" name="date" value={toLocalInput(post.date)} data-date />
+      </label>
+    </div>
+    <label class="check">
+      <input type="checkbox" name="published" checked={post.published} data-published />
+      Show on the live blog
+    </label>
+
+    <fieldset class="cover">
+      <legend>Cover photo</legend>
+      <div class="cover-preview">
+        {post.coverUrl ? <img src={post.coverUrl} alt="" data-cover-preview /> : <img alt="" data-cover-preview hidden />}
+      </div>
+      <label>
+        Photo description
+        <input type="text" name="coverAlt" maxlength="160" value={post.coverAlt} data-cover-alt />
+      </label>
+      {blobReady ? (
+        <label class="file">
+          Upload cover photo
+          <input type="file" accept="image/jpeg,image/png,image/webp" data-cover-upload />
+        </label>
+      ) : (
+        <p class="note">Photo uploads are not available in this environment.</p>
+      )}
+    </fieldset>
+
+    {keepLayout && (
+      <label class="check warn">
+        <input type="checkbox" data-replace-body />
+        Rewrite the live page with the editor below
+      </label>
+    )}
+    {keepLayout && (
+      <p class="note keep" data-keep-note>
+        This post already has a designed layout on the live site. Leave the box above unchecked to keep that page. Only turn it on if you want to replace the layout with the simple editor.
+      </p>
+    )}
+
+    <div class:list={['body-wrap', keepLayout && 'is-locked']} data-body-wrap>
+      <span class="label">Post text</span>
+      <div class="toolbar" data-md-toolbar>
+        <button type="button" data-md="h2">Heading</button>
+        <button type="button" data-md="bold">Bold</button>
+        <button type="button" data-md="italic">Italic</button>
+        <button type="button" data-md="link">Link</button>
+        <button type="button" data-md="list">List</button>
+        {blobReady && <button type="button" data-md="image">Photo</button>}
+      </div>
+      <textarea name="body" rows="18" data-body>{post.bodyMarkdown}</textarea>
+      {blobReady && <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-body-upload />}
+    </div>
+
+    <div class="toolbar save-bar">
+      <button type="submit" class="btn primary" data-save>Save</button>
+      {!isNew && (
+        <button type="button" class="btn danger" data-delete>Remove post</button>
+      )}
+      <span class="status" data-status></span>
+    </div>
+  </form>
+  <script type="application/json" id="post-seed" set:html={JSON.stringify(initial).replace(/</g, '\\u003c')} />
+</PortalLayout>
+
+<script is:inline define:vars={{ apiBase, blobReady, saveReady, maxBytes: MAX_IMAGE_BYTES, listHref, isNew }}>
+  (function () {
+    var form = document.querySelector('[data-editor]');
+    var seedEl = document.getElementById('post-seed');
+    var status = document.querySelector('[data-status]');
+    if (!form || !seedEl) return;
+    var seed = {};
+    try { seed = JSON.parse(seedEl.textContent || '{}'); } catch (e) { seed = {}; }
+    var coverUrl = seed.coverUrl || '';
+    var slugLocked = !!seed.slugLocked;
+    var titleEl = form.querySelector('[data-title]');
+    var slugEl = form.querySelector('[data-slug]');
+    var bodyWrap = form.querySelector('[data-body-wrap]');
+    var replaceEl = form.querySelector('[data-replace-body]');
+    var bodyEl = form.querySelector('[data-body]');
+    var coverPreview = form.querySelector('[data-cover-preview]');
+    var slugTouched = false;
+
+    function setStatus(text, ok) {
+      if (!status) return;
+      status.textContent = text || '';
+      status.classList.toggle('is-error', ok === false);
+    }
+
+    function slugify(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80);
+    }
+
+    function bodyLocked() {
+      return !!(seed.keepLayout && replaceEl && !replaceEl.checked);
+    }
+
+    function syncLock() {
+      if (!bodyWrap) return;
+      bodyWrap.classList.toggle('is-locked', bodyLocked());
+    }
+
+    if (titleEl && slugEl && !slugLocked) {
+      titleEl.addEventListener('input', function () {
+        if (slugTouched && slugEl.value) return;
+        slugEl.value = slugify(titleEl.value);
+      });
+      slugEl.addEventListener('input', function () { slugTouched = true; });
+    }
+
+    if (replaceEl) replaceEl.addEventListener('change', syncLock);
+
+    function wrap(before, after) {
+      if (!bodyEl) return;
+      var start = bodyEl.selectionStart || 0;
+      var end = bodyEl.selectionEnd || 0;
+      var value = bodyEl.value;
+      var selected = value.slice(start, end) || 'text';
+      bodyEl.value = value.slice(0, start) + before + selected + after + value.slice(end);
+      bodyEl.focus();
+    }
+
+    async function uploadFile(file, slug) {
+      if (!blobReady) {
+        setStatus('Photo uploads are not available in this environment.', false);
+        return null;
+      }
+      if (file.size > maxBytes) {
+        setStatus('Image is too large (max 4 MB).', false);
+        return null;
+      }
+      var body = new FormData();
+      body.append('file', file);
+      body.append('slug', slug || slugEl.value || 'post');
+      setStatus('Uploading photo…');
+      var res = await fetch(apiBase + '/posts/upload', { method: 'POST', body: body, credentials: 'same-origin' });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) {
+        setStatus(data.error || 'Upload failed.', false);
+        return null;
+      }
+      return data.url;
+    }
+
+    form.addEventListener('click', async function (e) {
+      var md = e.target.closest('[data-md]');
+      if (md) {
+        e.preventDefault();
+        if (bodyLocked()) return;
+        var kind = md.getAttribute('data-md');
+        if (kind === 'h2') wrap('\n## ', '\n');
+        if (kind === 'bold') wrap('**', '**');
+        if (kind === 'italic') wrap('*', '*');
+        if (kind === 'link') wrap('[', '](https://)');
+        if (kind === 'list') wrap('\n- ', '');
+        if (kind === 'image') {
+          var picker = form.querySelector('[data-body-upload]');
+          if (picker) picker.click();
+        }
+      }
+    });
+
+    form.addEventListener('change', async function (e) {
+      var cover = e.target.closest('[data-cover-upload]');
+      if (cover && cover.files && cover.files[0]) {
+        var url = await uploadFile(cover.files[0], slugEl.value);
+        cover.value = '';
+        if (!url) return;
+        coverUrl = url;
+        if (coverPreview) {
+          coverPreview.hidden = false;
+          coverPreview.src = url;
+        }
+        setStatus('Cover photo uploaded. Save to publish.');
+      }
+      var inline = e.target.closest('[data-body-upload]');
+      if (inline && inline.files && inline.files[0]) {
+        var imageUrl = await uploadFile(inline.files[0], slugEl.value);
+        inline.value = '';
+        if (!imageUrl) return;
+        wrap('![', '](' + imageUrl + ')');
+        setStatus('Photo added to the post. Save to publish.');
+      }
+    });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!saveReady) {
+        setStatus('Saving is not available in this environment.', false);
+        return;
+      }
+      var payload = {
+        title: titleEl.value,
+        slug: slugEl.value,
+        previousSlug: seed.slug || '',
+        excerpt: form.querySelector('[data-excerpt]').value,
+        author: form.querySelector('[data-author]').value,
+        date: form.querySelector('[data-date]').value,
+        coverUrl: coverUrl,
+        coverAlt: form.querySelector('[data-cover-alt]').value,
+        bodyMarkdown: bodyEl ? bodyEl.value : '',
+        replaceBody: !bodyLocked(),
+        published: !!(form.querySelector('[data-published]') && form.querySelector('[data-published]').checked),
+      };
+      setStatus('Saving…');
+      try {
+        var target = seed.slug || payload.slug || 'new';
+        var res = await fetch(apiBase + '/posts/' + encodeURIComponent(target), {
+          method: 'PUT',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok) {
+          setStatus(data.error || 'Could not save this post.', false);
+          return;
+        }
+        setStatus(payload.published ? 'Saved. Live on the public blog within about a minute.' : 'Saved and hidden from the public blog.');
+        if (data.post && data.post.slug && (isNew || data.post.slug !== seed.slug)) {
+          window.location.href = listHref + '/' + data.post.slug;
+        }
+      } catch (err) {
+        setStatus('Could not save this post.', false);
+      }
+    });
+
+    var del = form.querySelector('[data-delete]');
+    if (del) {
+      del.addEventListener('click', async function () {
+        if (!seed.slug) return;
+        if (!window.confirm('Remove “' + (titleEl.value || 'this post') + '” from the live blog? This cannot be undone from here.')) return;
+        setStatus('Removing…');
+        try {
+          var res = await fetch(apiBase + '/posts/' + encodeURIComponent(seed.slug), {
+            method: 'DELETE',
+            credentials: 'same-origin',
+          });
+          var data = await res.json().catch(function () { return {}; });
+          if (!res.ok) {
+            setStatus(data.error || 'Could not remove this post.', false);
+            return;
+          }
+          window.location.href = listHref;
+        } catch (err) {
+          setStatus('Could not remove this post.', false);
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .back { margin-bottom: 12px; }
+  .back a { color: #d31d25; text-decoration: none; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .meta { color: #666; font-size: 14px; margin: -12px 0 24px; max-width: 44rem; line-height: 1.45; }
+  .editor { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+  .editor label, .label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .editor input, .editor textarea {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 15px;
+    border: 1px solid #d9d9d9;
+    padding: 8px 10px;
+    color: #141414;
+    width: 100%;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .editor small, .note { font-size: 13px; color: #666; text-transform: none; letter-spacing: 0; line-height: 1.4; }
+  .slug-row { display: flex; align-items: center; gap: 0; }
+  .prefix { border: 1px solid #d9d9d9; border-right: 0; padding: 8px 10px; background: #f7f7f7; color: #666; }
+  .slug-row input { border-left: 0; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .editor label.check { flex-direction: row; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; }
+  .check input { width: auto; }
+  .check.warn { color: #141414; }
+  .cover { border: 1px solid #d9d9d9; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .cover legend { font-family: 'Franklin Gothic Demi', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 6px; }
+  .cover-preview { background: #111; min-height: 120px; }
+  .cover-preview img { width: 100%; max-height: 220px; object-fit: cover; display: block; }
+  .file { text-transform: none; letter-spacing: 0; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 6px; }
+  .toolbar button, .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 11px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.danger { border-color: #d31d25; color: #d31d25; }
+  .save-bar { align-items: center; margin-top: 8px; }
+  .status { font-size: 14px; color: #333; text-transform: none; letter-spacing: 0; }
+  .status.is-error { color: #d31d25; }
+  .body-wrap.is-locked { opacity: 0.45; pointer-events: none; }
+  @media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+</style>

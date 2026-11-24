@@ -39,7 +39,8 @@ export function portalHref(request: Request, path: string): string {
 }
 
 export function isPortalPagePath(pathname: string): boolean {
-  return (PORTAL_PAGE_PATHS as readonly string[]).includes(pathname);
+  if ((PORTAL_PAGE_PATHS as readonly string[]).includes(pathname)) return true;
+  return pathname.startsWith('/blog/');
 }
 
 export function internalPortalPath(pathname: string): string {
