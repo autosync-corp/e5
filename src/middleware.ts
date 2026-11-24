@@ -77,7 +77,7 @@ function gone() {
   });
 }
 
-export const onRequest = defineMiddleware((context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const { url, redirect } = context;
   const pathname = url.pathname.replace(/\/+$/, '') || '/';
 
@@ -125,5 +125,9 @@ export const onRequest = defineMiddleware((context, next) => {
     }
   }
 
-  return next();
+  const response = await next();
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+  return response;
 });

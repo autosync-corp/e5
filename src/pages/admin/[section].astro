@@ -1,0 +1,46 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { COMING_SOON_SECTIONS } from '@/core/portal/sections.ts';
+import { readSession } from '@/core/portal/auth.ts';
+
+const slug = Astro.params.section || '';
+if (slug === 'ops' || slug === 'logout') {
+  return new Response('Not found', { status: 404 });
+}
+const section = COMING_SOON_SECTIONS.find((s) => s.slug === slug);
+if (!section) {
+  return new Response('Not found', { status: 404 });
+}
+
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect('/admin');
+}
+---
+
+<PortalLayout title={`${section.label} — E5 Client Portal`} userName={user.username}>
+  <h1>{section.label}</h1>
+  <p class="lead">{section.summary}</p>
+  <div class="soon-panel">
+    <p>Coming soon</p>
+    <small>This section ships in a later portal PR. Saves will go live immediately through Upstash Redis — no draft step and no redeploy.</small>
+  </div>
+</PortalLayout>
+
+<style>
+  .soon-panel {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    padding: 28px 20px;
+    max-width: 36rem;
+  }
+  .soon-panel p {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .soon-panel small { color: #333; line-height: 1.45; display: block; }
+</style>

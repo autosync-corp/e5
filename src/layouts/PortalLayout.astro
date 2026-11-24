@@ -1,0 +1,153 @@
+---
+import '@/assets/fonts/fonts.css';
+import { E5_LOGO_BLACK } from '@/core/constants/App.ts';
+
+interface Props {
+  title: string;
+  userName?: string;
+}
+
+const { title, userName } = Astro.props;
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/admin';
+
+const nav = [
+  { href: '/admin', label: 'Dashboard', ready: true },
+  { href: '/admin/slides', label: 'Homepage Slides', ready: false },
+  { href: '/admin/links', label: 'Header & Footer Links', ready: false },
+  { href: '/admin/blog', label: 'Blog Posts', ready: false },
+  { href: '/admin/galleries', label: 'Galleries', ready: false },
+  { href: '/admin/performance', label: 'Site Performance', ready: false },
+  { href: '/admin/sales', label: 'Sales & Prospects', ready: false },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light only" />
+    <title>{title}</title>
+    <style is:global>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        background: #fff;
+        color: #141414;
+        font-family: 'Franklin Gothic Book', sans-serif;
+        min-height: 100vh;
+      }
+      a { color: inherit; }
+      .portal-shell { min-height: 100vh; display: flex; flex-direction: column; }
+      .portal-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 24px;
+        border-bottom: 1px solid #d9d9d9;
+      }
+      .portal-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+      .portal-brand img { height: 28px; width: auto; }
+      .portal-brand span {
+        font-family: 'Franklin Gothic Heavy', sans-serif;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: #333;
+      }
+      .portal-user { display: flex; align-items: center; gap: 16px; font-size: 14px; color: #333; }
+      .portal-user a { color: #d31d25; text-decoration: none; font-family: 'Franklin Gothic Demi', sans-serif; }
+      .portal-user a:hover { text-decoration: underline; }
+      .portal-body { display: flex; flex: 1; min-height: 0; }
+      .portal-nav {
+        width: 260px;
+        flex-shrink: 0;
+        border-right: 1px solid #d9d9d9;
+        padding: 20px 12px;
+      }
+      .portal-nav a, .portal-nav span {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 10px 12px;
+        text-decoration: none;
+        font-family: 'Franklin Gothic Demi', sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+      .portal-nav a:hover { background: #f5f5f5; }
+      .portal-nav a.is-active { background: #141414; color: #fff; }
+      .portal-nav .soon { color: #888; }
+      .portal-nav .soon em {
+        font-style: normal;
+        font-family: 'Franklin Gothic Book', sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #aaa;
+      }
+      .portal-main { flex: 1; padding: 32px 28px 48px; }
+      .portal-main h1 {
+        font-family: 'Franklin Gothic Heavy', sans-serif;
+        font-size: clamp(22px, 3vw, 32px);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .portal-main p.lead { color: #333; max-width: 40rem; line-height: 1.45; margin-bottom: 28px; }
+      @media (max-width: 800px) {
+        .portal-body { flex-direction: column; }
+        .portal-nav {
+          width: 100%;
+          border-right: 0;
+          border-bottom: 1px solid #d9d9d9;
+          display: flex;
+          gap: 4px;
+          overflow-x: auto;
+          padding: 8px 12px;
+        }
+        .portal-nav a, .portal-nav span { white-space: nowrap; }
+        .portal-main { padding: 24px 16px 40px; }
+        .portal-brand span { display: none; }
+        .portal-user span { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="portal-shell">
+      <header class="portal-top">
+        <a class="portal-brand" href="/admin">
+          <img src={E5_LOGO_BLACK} alt="E5 Wheels" width="140" height="28" />
+          <span>Client Portal</span>
+        </a>
+        <div class="portal-user">
+          {userName && <span>{userName}</span>}
+          <a href="/admin/logout">Log out</a>
+        </div>
+      </header>
+      <div class="portal-body">
+        <nav class="portal-nav" aria-label="Portal">
+          {nav.map((item) =>
+            item.ready ? (
+              <a href={item.href} class:list={[path === item.href && 'is-active']}>
+                {item.label}
+              </a>
+            ) : (
+              <a href={item.href} class:list={['soon', path === item.href && 'is-active']}>
+                {item.label}
+                <em>Soon</em>
+              </a>
+            )
+          )}
+        </nav>
+        <main class="portal-main">
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

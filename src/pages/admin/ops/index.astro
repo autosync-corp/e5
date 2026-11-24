@@ -1,0 +1,882 @@
+---
+export const prerender = false;
+
+const adminPassword = import.meta.env.ADMIN_PASSWORD;
+
+const cookie = Astro.cookies.get('admin_auth');
+const isAuthenticated = cookie?.value === adminPassword;
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const password = form.get('password');
+  if (password === adminPassword) {
+    Astro.cookies.set('admin_auth', adminPassword, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 8,
+      path: '/',
+    });
+    Astro.cookies.set('admin_token', adminPassword, {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 8,
+      path: '/',
+    });
+    return Astro.redirect('/admin/ops');
+  }
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>E5 Wheels Admin</title>
+  <style is:global>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; min-height: 100vh; }
+
+    /* Login */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: #1a1a1a; padding: 40px; border-radius: 8px; width: 100%; max-width: 360px; }
+    .login-box img { height: 28px; display: block; margin: 0 auto 8px; }
+    .login-box p { text-align: center; color: #888; font-size: 13px; margin-bottom: 28px; }
+    .login-box label { display: block; font-size: 13px; color: #aaa; margin-bottom: 6px; }
+    .login-box input { width: 100%; background: #2a2a2a; border: 1px solid #333; border-radius: 4px; padding: 10px 14px; color: #fff; font-size: 14px; outline: none; margin-bottom: 16px; }
+    .login-box input:focus { border-color: #c0392b; }
+    .btn-primary { width: 100%; background: #c0392b; color: #fff; border: none; padding: 10px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-primary:hover { background: #a93226; }
+
+    /* Dashboard */
+    .dashboard { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+    .header img { height: 24px; }
+    .header-right { text-align: right; }
+    .header-right small { display: block; color: #666; font-size: 12px; margin-bottom: 4px; }
+    .logout { color: #888; font-size: 13px; text-decoration: none; }
+    .logout:hover { color: #fff; }
+
+    /* Card */
+    .card { background: #1a1a1a; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 20px; color: #eee; }
+
+    /* Form grid */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+    .form-grid input, .form-grid select {
+      background: #2a2a2a; border: 1px solid #333; border-radius: 4px;
+      padding: 9px 12px; color: #fff; font-size: 13px; outline: none; width: 100%;
+    }
+    .form-grid input:focus, .form-grid select:focus { border-color: #c0392b; }
+    .form-grid select option { background: #2a2a2a; }
+    .form-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-add { background: #c0392b; color: #fff; border: none; padding: 9px 24px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-add:hover { background: #a93226; }
+    .msg { font-size: 13px; }
+    .msg.success { color: #2ecc71; }
+    .msg.error { color: #e74c3c; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #2a2a2a; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab-btn { background: none; border: none; color: #666; font-size: 14px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; flex-shrink: 0; }
+    .tab-btn:hover { color: #ccc; }
+    .tab-btn.active { color: #fff; border-bottom-color: #c0392b; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Table scroll wrapper — lets wide tables scroll sideways on mobile instead of breaking layout */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-scroll table { min-width: 640px; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .dashboard { padding: 24px 16px; }
+      .card { padding: 16px; }
+      .header { margin-bottom: 24px; }
+      .form-grid { grid-template-columns: 1fr !important; }
+      .tab-btn { padding: 10px 14px; font-size: 13px; }
+    }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 8px 12px; color: #666; border-bottom: 1px solid #2a2a2a; font-weight: 500; }
+    td { padding: 12px; border-bottom: 1px solid #222; color: #ccc; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #222; }
+    .code { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; letter-spacing: 1px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+    .badge.active { background: #1a3a2a; color: #2ecc71; }
+    .badge.stripe { background: #1a2a3a; color: #5b9bd5; }
+    .badge.affirm { background: #1a2a1a; color: #4caf50; }
+    .discount { color: #2ecc71; font-weight: 600; }
+    .btn-delete { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete:hover { background: #2a1a1a; }
+    .btn-edit-event { background: none; border: none; color: #5b9bd5; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; margin-right: 4px; }
+    .btn-edit-event:hover { background: #1a2a3a; }
+    .btn-delete-event { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete-event:hover { background: #2a1a1a; }
+    .btn-delete-attendee { background: none; border: none; color: #e74c3c; font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 3px; }
+    .btn-delete-attendee:hover { background: #2a1a1a; }
+    .field-label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
+    textarea.form-textarea {
+      width: 100%; background: #2a2a2a; border: 1px solid #333; border-radius: 4px;
+      padding: 9px 12px; color: #fff; font-size: 13px; outline: none; resize: vertical; font-family: Arial, sans-serif;
+    }
+    textarea.form-textarea:focus { border-color: #c0392b; }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #ccc; }
+    .empty { color: #555; font-size: 13px; padding: 12px 0; }
+    .order-num { font-family: monospace; font-weight: 700; color: #fff; font-size: 14px; }
+    .order-total { color: #2ecc71; font-weight: 700; }
+    .order-items { font-size: 12px; color: #888; margin-top: 4px; }
+    .expand-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 12px; padding: 2px 6px; }
+    .expand-btn:hover { color: #fff; }
+    .order-detail { display: none; background: #111; border-radius: 4px; padding: 12px; margin-top: 8px; font-size: 12px; }
+    .order-detail.open { display: block; }
+    .detail-row { display: flex; gap: 8px; margin-bottom: 4px; }
+    .detail-label { color: #555; min-width: 80px; }
+    .detail-val { color: #ccc; }
+  </style>
+</head>
+<body>
+
+{!isAuthenticated && (
+  <div class="login-wrap">
+    <div class="login-box">
+      <img src="/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels" />
+      <p>Admin Panel</p>
+      <form method="POST">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter admin password" autofocus />
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+)}
+
+{isAuthenticated && (
+  <div class="dashboard">
+    <div class="header">
+      <img src="/assets/images/e5-wheels-logo-white.webp" alt="E5 Wheels" />
+      <div class="header-right">
+        <small>Admin Panel</small>
+        <a href="/admin/logout" class="logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="orders">Orders</button>
+      <button class="tab-btn" data-tab="events">Events</button>
+      <button class="tab-btn" data-tab="attendees">Attendees</button>
+      <button class="tab-btn" data-tab="coupons">Coupons</button>
+      <button class="tab-btn" data-tab="tracking">Tracking</button>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="tab-orders" class="tab-panel active">
+      <div class="card">
+        <h2>Order History</h2>
+        <div id="orderList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Events Tab -->
+    <div id="tab-events" class="tab-panel">
+      <div class="card">
+        <h2 id="eventFormTitle">Create New Event</h2>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Title</label>
+            <input id="evTitle" type="text" placeholder="Event Title" />
+          </div>
+          <div>
+            <label class="field-label">Slug (URL-safe, unique — can't change after creating)</label>
+            <input id="evSlug" type="text" placeholder="e.g. miami-showroom-grand-opening" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Date Label (display text)</label>
+            <input id="evDateLabel" type="text" placeholder="Saturday, September 26th, 2026." />
+          </div>
+          <div>
+            <label class="field-label">Start Date (for sorting)</label>
+            <input id="evStartAt" type="date" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="field-label">Location</label>
+            <input id="evLocation" type="text" placeholder="3500 NW 77 CT, Miami, FL 33122" />
+          </div>
+          <div>
+            <label class="field-label">Time Range</label>
+            <input id="evTimeRange" type="text" placeholder="7PM – 10PM EST" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">Hero Image URL (paste from WordPress media library — upload as .webp)</label>
+            <input id="evHeroImageUrl" type="text" placeholder="https://post.e5wheels.com/wp-content/uploads/..." />
+            <p style="font-size:12px;color:#888;margin-top:6px;">
+              Upload the image at
+              <a href="https://post.e5wheels.com/e5-event-image-uploader/" target="_blank" rel="noopener noreferrer" style="color:#5b9bd5;">post.e5wheels.com/e5-event-image-uploader</a>
+              (login with your credentials), then copy the link it gives you and paste it above.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">Description (one paragraph per line)</label>
+            <textarea id="evDescription" class="form-textarea" rows="4" placeholder="A few months ago, we cracked the doors open early..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 14px;">
+          <div>
+            <label class="field-label">What's In Store (one item per line)</label>
+            <textarea id="evWhatsInStore" class="form-textarea" rows="4" placeholder="Sim Racing — presented by Shift Arcade"></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 14px;">
+          <label class="checkbox-row"><input type="checkbox" id="evHasForm" checked /> Show RSVP Form</label>
+          <label class="checkbox-row"><input type="checkbox" id="evActive" /> Mark as Active (shown on /events/upcoming)</label>
+        </div>
+
+        <label class="field-label">Address</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 20px;">
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressNone" value="none" checked /> None</label>
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressStateCity" value="stateCity" /> State & City</label>
+          <label class="checkbox-row"><input type="radio" name="addressMode" id="evAddressFull" value="full" /> Full Address (Street, City, State, Zip)</label>
+        </div>
+
+        <label class="field-label">Built-in Optional Dropdowns</label>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; margin-bottom: 20px;">
+          <label class="checkbox-row"><input type="checkbox" id="evShowCorvetteGen" /> Corvette Generation</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowModelTrim" /> Model / Trim</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowWheel" /> Wheel Interested (live catalog)</label>
+          <label class="checkbox-row"><input type="checkbox" id="evShowFinish" /> Wheel Finish (live catalog)</label>
+        </div>
+
+        <h2>Custom Fields (optional, up to 10 — additional to Name/Email/Phone/Attending)</h2>
+        <div id="customFieldsWrap"></div>
+
+        <div class="form-actions" style="margin-top: 16px;">
+          <button id="btnSaveEvent" class="btn-add">Save Event</button>
+          <button id="btnCancelEdit" class="btn-delete-event" style="display:none;">Cancel Edit</button>
+          <span id="eventMessage" class="msg"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>All Events</h2>
+        <div id="eventList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Attendees Tab -->
+    <div id="tab-attendees" class="tab-panel">
+      <div class="card">
+        <h2>Event RSVPs</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 16px;">
+          <select id="attendeeEventPicker">
+            <option value="">Loading events...</option>
+          </select>
+        </div>
+        <div id="attendeeList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Tracking Tab -->
+    <div id="tab-tracking" class="tab-panel">
+      <div class="card">
+        <h2>Google Analytics</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Measurement ID</label>
+            <input id="gaId" type="text" placeholder="G-XXXXXXXXXX" />
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Google Tag Manager ID</label>
+            <input id="gtmId" type="text" placeholder="GTM-XXXXXXX" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Facebook</h2>
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Pixel ID</label>
+            <input id="fbPixelId" type="text" placeholder="1234567890" />
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#888;margin-bottom:6px;">Conversions API Token</label>
+            <input id="fbCapiToken" type="text" placeholder="EAAxxxxxxx..." />
+          </div>
+        </div>
+        <p style="font-size:12px;color:#555;margin-top:8px;">The Conversions API token fires a server-side Purchase event directly to Facebook when an order is placed &mdash; more reliable than the pixel alone.</p>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSaveTracking" class="btn-add">Save Tracking Settings</button>
+        <span id="trackingMessage" class="msg"></span>
+      </div>
+    </div>
+
+    <!-- Coupons Tab -->
+    <div id="tab-coupons" class="tab-panel">
+      <div class="card">
+        <h2>Add New Coupon</h2>
+        <div class="form-grid">
+          <input id="newCode" type="text" placeholder="Code (e.g. SAVE20)" />
+          <select id="newType">
+            <option value="percentage">Percentage (%)</option>
+            <option value="fixed">Fixed ($)</option>
+          </select>
+          <input id="newDiscount" type="number" placeholder="Discount amount" min="0" step="0.01" />
+          <input id="newExpires" type="date" />
+        </div>
+        <div class="form-actions">
+          <button id="btnAdd" class="btn-add">Add Coupon</button>
+          <span id="addMessage" class="msg"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Active Coupons</h2>
+        <div id="couponList"><p class="empty">Loading...</p></div>
+      </div>
+    </div>
+  </div>
+)}
+
+{isAuthenticated && (
+  <script>
+    // @ts-nocheck
+    const ADMIN_PASSWORD = document.cookie
+      .split('; ')
+      .find(r => r.startsWith('admin_token='))
+      ?.split('=')[1] || '';
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Orders
+    async function loadOrders() {
+      try {
+        const res = await fetch('/api/orders', {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const orders = await res.json();
+        renderOrders(orders);
+      } catch {
+        document.getElementById('orderList').innerHTML = '<p class="empty">Failed to load orders.</p>';
+      }
+    }
+
+    function renderOrders(orders) {
+      const list = document.getElementById('orderList');
+      if (!orders.length) {
+        list.innerHTML = '<p class="empty">No orders yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Order #</th><th>Date</th><th>Customer</th><th>Vehicle</th><th>Total</th><th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map((o, i) => {
+              const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '&mdash;';
+              const itemsSummary = (o.items || []).map(item => `${item.model} ${item.finish} (${item.config})`).join('<br>');
+              const payMethod = (o.paymentMethod || '').toLowerCase();
+              const badgeClass = payMethod === 'affirm' ? 'affirm' : 'stripe';
+              return `
+                <tr>
+                  <td>
+                    <span class="order-num">#${o.orderNumber || '&mdash;'}</span>
+                    <div class="order-items">${itemsSummary}</div>
+                    <button class="expand-btn" data-idx="${i}">▼ Details</button>
+                    <div class="order-detail" id="detail-${i}">
+                      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-val">${o.customer?.email || '&mdash;'}</span></div>
+                      <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-val">${o.customer?.phone || '&mdash;'}</span></div>
+                      ${(o.items || []).map(item => `<div class="detail-row"><span class="detail-label">Size</span><span class="detail-val">${item.size} &mdash; ${item.config}</span></div>`).join('')}
+                    </div>
+                  </td>
+                  <td>${date}</td>
+                  <td>${o.customer?.fullName || '&mdash;'}</td>
+                  <td>${o.vehicle || '&mdash;'}</td>
+                  <td class="order-total">$${o.total || '0.00'}</td>
+                  <td><span class="badge ${badgeClass}">${o.paymentMethod || '&mdash;'}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+        </div>
+      `;
+
+      document.querySelectorAll('.expand-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const detail = document.getElementById('detail-' + btn.dataset.idx);
+          const isOpen = detail.classList.contains('open');
+          detail.classList.toggle('open', !isOpen);
+          btn.textContent = isOpen ? '▼ Details' : '▲ Hide';
+        });
+      });
+    }
+
+    loadOrders();
+
+    // Events
+    function renderCustomFieldRows() {
+      const wrap = document.getElementById('customFieldsWrap');
+      let html = '';
+      for (let i = 0; i < 10; i++) {
+        html += `
+          <div class="form-grid" style="grid-template-columns: 3fr 1fr; margin-bottom: 8px;">
+            <input type="text" class="cf-label" data-idx="${i}" placeholder="Field ${i + 1} label (leave blank to skip)" />
+            <label class="checkbox-row"><input type="checkbox" class="cf-required" data-idx="${i}" /> Required</label>
+          </div>
+        `;
+      }
+      wrap.innerHTML = html;
+    }
+    renderCustomFieldRows();
+
+    function collectCustomFields() {
+      const fields = [];
+      document.querySelectorAll('.cf-label').forEach(input => {
+        const label = input.value.trim();
+        if (!label) return;
+        const idx = input.dataset.idx;
+        const required = document.querySelector(`.cf-required[data-idx="${idx}"]`).checked;
+        fields.push({ label, required });
+      });
+      return fields;
+    }
+
+    function populateCustomFields(fields) {
+      const labels = document.querySelectorAll('.cf-label');
+      const requireds = document.querySelectorAll('.cf-required');
+      labels.forEach((input, i) => {
+        input.value = fields[i]?.label || '';
+        requireds[i].checked = fields[i]?.required || false;
+      });
+    }
+
+    function resetEventForm() {
+      document.getElementById('eventFormTitle').textContent = 'Create New Event';
+      document.getElementById('evSlug').value = '';
+      document.getElementById('evSlug').disabled = false;
+      document.getElementById('evTitle').value = '';
+      document.getElementById('evDateLabel').value = '';
+      document.getElementById('evStartAt').value = '';
+      document.getElementById('evLocation').value = '';
+      document.getElementById('evTimeRange').value = '';
+      document.getElementById('evHeroImageUrl').value = '';
+      document.getElementById('evDescription').value = '';
+      document.getElementById('evWhatsInStore').value = '';
+      document.getElementById('evHasForm').checked = true;
+      document.getElementById('evShowWheel').checked = false;
+      document.getElementById('evShowFinish').checked = false;
+      document.getElementById('evAddressNone').checked = true;
+      document.getElementById('evShowCorvetteGen').checked = false;
+      document.getElementById('evShowModelTrim').checked = false;
+      document.getElementById('evActive').checked = false;
+      populateCustomFields([]);
+      document.getElementById('btnCancelEdit').style.display = 'none';
+    }
+
+    let loadedEvents = [];
+
+    function editEvent(slug) {
+      const event = loadedEvents.find(e => e.slug === slug);
+      if (!event) return;
+      document.getElementById('eventFormTitle').textContent = 'Edit Event: ' + event.title;
+      document.getElementById('evSlug').value = event.slug;
+      document.getElementById('evSlug').disabled = true;
+      document.getElementById('evTitle').value = event.title || '';
+      document.getElementById('evDateLabel').value = event.dateLabel || '';
+      document.getElementById('evStartAt').value = event.startAt || '';
+      document.getElementById('evLocation').value = event.location || '';
+      document.getElementById('evTimeRange').value = event.timeRange || '';
+      document.getElementById('evHeroImageUrl').value = event.heroImageUrl || '';
+      document.getElementById('evDescription').value = (event.description || []).join('\n');
+      document.getElementById('evWhatsInStore').value = (event.whatsInStore || []).join('\n');
+      document.getElementById('evHasForm').checked = event.hasForm !== false;
+      document.getElementById('evShowWheel').checked = !!event.showWheelDropdown;
+      document.getElementById('evShowFinish').checked = !!event.showFinishDropdown;
+      // addressMode replaces the old showState boolean — fall back to 'stateCity' for older events saved before this field existed
+      const addressMode = event.addressMode || (event.showState ? 'stateCity' : 'none');
+      document.getElementById('evAddress' + addressMode.charAt(0).toUpperCase() + addressMode.slice(1)).checked = true;
+      document.getElementById('evShowCorvetteGen').checked = !!event.showCorvetteGen;
+      document.getElementById('evShowModelTrim').checked = !!event.showModelTrim;
+      document.getElementById('evActive').checked = !!event.active;
+      populateCustomFields(event.customFields || []);
+      document.getElementById('btnCancelEdit').style.display = 'inline-block';
+      window.scrollTo({ top: document.getElementById('tab-events').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    async function deleteEvent(slug) {
+      if (!confirm(`Delete event "${slug}"? This cannot be undone.`)) return;
+      await fetch('/api/events?slug=' + encodeURIComponent(slug), {
+        method: 'DELETE',
+        headers: { 'x-admin-password': ADMIN_PASSWORD, 'Content-Type': 'application/json' },
+      });
+      loadEvents();
+    }
+
+    function renderEvents(events) {
+      const list = document.getElementById('eventList');
+      if (!events.length) {
+        list.innerHTML = '<p class="empty">No events yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Title</th><th>Slug</th><th>Date</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            ${events.map(e => `
+              <tr>
+                <td>${e.title || ''}</td>
+                <td style="font-size:12px;">${e.slug}</td>
+                <td>${e.dateLabel || '&mdash;'}</td>
+                <td><span class="badge ${e.active ? 'active' : ''}">${e.active ? 'Active' : 'Inactive'}</span></td>
+                <td>
+                  <button class="btn-edit-event" data-slug="${e.slug}">Edit</button>
+                  <button class="btn-delete-event" data-slug="${e.slug}">Delete</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        </div>
+      `;
+
+      list.querySelectorAll('.btn-edit-event').forEach(btn => {
+        btn.addEventListener('click', () => editEvent(btn.dataset.slug));
+      });
+      list.querySelectorAll('.btn-delete-event').forEach(btn => {
+        btn.addEventListener('click', () => deleteEvent(btn.dataset.slug));
+      });
+    }
+
+    function populateAttendeeEventPicker(events) {
+      const picker = document.getElementById('attendeeEventPicker');
+      const currentValue = picker.value;
+      if (!events.length) {
+        picker.innerHTML = '<option value="">No events yet</option>';
+        return;
+      }
+      picker.innerHTML = events.map(e => `<option value="${e.slug}">${e.title}${e.active ? ' (Active)' : ''}</option>`).join('');
+      const activeEvent = events.find(e => e.active);
+      if (currentValue && events.some(e => e.slug === currentValue)) {
+        picker.value = currentValue;
+      } else if (activeEvent) {
+        picker.value = activeEvent.slug;
+      }
+      loadAttendees(picker.value);
+    }
+
+    async function loadEvents() {
+      try {
+        const res = await fetch('/api/events', { headers: { 'x-admin-password': ADMIN_PASSWORD } });
+        const events = await res.json();
+        loadedEvents = events;
+        renderEvents(events);
+        populateAttendeeEventPicker(events);
+      } catch {
+        document.getElementById('eventList').innerHTML = '<p class="empty">Failed to load events.</p>';
+      }
+    }
+
+    document.getElementById('btnSaveEvent').addEventListener('click', async () => {
+      const msg = document.getElementById('eventMessage');
+      const slug = document.getElementById('evSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+      const title = document.getElementById('evTitle').value.trim();
+
+      if (!slug || !title) {
+        msg.textContent = 'Title and slug are required.';
+        msg.className = 'msg error';
+        return;
+      }
+
+      const payload = {
+        slug,
+        title,
+        dateLabel: document.getElementById('evDateLabel').value.trim(),
+        startAt: document.getElementById('evStartAt').value,
+        location: document.getElementById('evLocation').value.trim(),
+        timeRange: document.getElementById('evTimeRange').value.trim(),
+        heroImageUrl: document.getElementById('evHeroImageUrl').value.trim(),
+        description: document.getElementById('evDescription').value.split('\n').map(s => s.trim()).filter(Boolean),
+        whatsInStore: document.getElementById('evWhatsInStore').value.split('\n').map(s => s.trim()).filter(Boolean),
+        hasForm: document.getElementById('evHasForm').checked,
+        showWheelDropdown: document.getElementById('evShowWheel').checked,
+        showFinishDropdown: document.getElementById('evShowFinish').checked,
+        addressMode: document.querySelector('input[name="addressMode"]:checked').value,
+        showCorvetteGen: document.getElementById('evShowCorvetteGen').checked,
+        showModelTrim: document.getElementById('evShowModelTrim').checked,
+        active: document.getElementById('evActive').checked,
+        customFields: collectCustomFields(),
+      };
+
+      try {
+        const res = await fetch('/api/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = 'Event saved!';
+          msg.className = 'msg success';
+          resetEventForm();
+          loadEvents();
+        } else {
+          msg.textContent = data.error || 'Failed to save event.';
+          msg.className = 'msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Error: ' + e.message;
+        msg.className = 'msg error';
+      }
+    });
+
+    document.getElementById('btnCancelEdit').addEventListener('click', resetEventForm);
+
+    loadEvents();
+
+    // Attendees
+    document.getElementById('attendeeEventPicker').addEventListener('change', (e) => {
+      loadAttendees(e.target.value);
+    });
+
+    async function loadAttendees(slug) {
+      if (!slug) {
+        document.getElementById('attendeeList').innerHTML = '<p class="empty">No event selected.</p>';
+        return;
+      }
+      try {
+        const res = await fetch('/api/attendees?slug=' + encodeURIComponent(slug), {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const attendees = await res.json();
+        renderAttendees(attendees);
+      } catch {
+        document.getElementById('attendeeList').innerHTML = '<p class="empty">Failed to load attendees.</p>';
+      }
+    }
+
+    function renderAttendees(attendees) {
+      const list = document.getElementById('attendeeList');
+      if (!attendees.length) {
+        list.innerHTML = '<p class="empty">No RSVPs yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <p style="font-size:12px;color:#666;margin-bottom:16px;">${attendees.length} total RSVP${attendees.length !== 1 ? 's' : ''}</p>
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Phone</th><th>State</th><th>Corvette</th><th>Attending</th><th>Date</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${attendees.map(a => {
+              const date = a.timestamp ? new Date(a.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '&mdash;';
+              const attendingColor = a.attending === 'YES' ? '#2ecc71' : a.attending === 'MAYBE' ? '#f39c12' : '#e74c3c';
+              return `
+                <tr>
+                  <td>${a.firstName || ''} ${a.lastName || ''}</td>
+                  <td>${a.email || '&mdash;'}</td>
+                  <td>${a.phone || '&mdash;'}</td>
+                  <td>${a.state || '&mdash;'}${a.city ? ', ' + a.city : ''}</td>
+                  <td style="font-size:12px;">${a.corvetteGen || '&mdash;'}${a.modelTrim ? ' &mdash; ' + a.modelTrim : ''}</td>
+                  <td><span style="color:${attendingColor};font-weight:700;font-size:12px;">${a.attending || '&mdash;'}</span></td>
+                  <td>${date}</td>
+                  <td><button class="btn-delete-attendee" data-id="${a.id}">Delete</button></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+        </div>
+      `;
+
+      list.querySelectorAll('.btn-delete-attendee').forEach(btn => {
+        btn.addEventListener('click', () => deleteAttendee(btn.dataset.id));
+      });
+    }
+
+    async function deleteAttendee(id) {
+      if (!confirm('Delete this RSVP? This cannot be undone.')) return;
+      const slug = document.getElementById('attendeeEventPicker').value;
+      await fetch('/api/attendees?slug=' + encodeURIComponent(slug) + '&id=' + encodeURIComponent(id), {
+        method: 'DELETE',
+        headers: { 'x-admin-password': ADMIN_PASSWORD, 'Content-Type': 'application/json' },
+      });
+      loadAttendees(slug);
+    }
+
+    // Tracking
+    async function loadTracking() {
+      try {
+        const res = await fetch('/api/tracking', { headers: { 'x-admin-password': ADMIN_PASSWORD } });
+        const s = await res.json();
+        if (s.gaId) document.getElementById('gaId').value = s.gaId;
+        if (s.gtmId) document.getElementById('gtmId').value = s.gtmId;
+        if (s.fbPixelId) document.getElementById('fbPixelId').value = s.fbPixelId;
+        if (s.fbCapiToken) document.getElementById('fbCapiToken').value = s.fbCapiToken;
+      } catch {}
+    }
+
+    document.getElementById('btnSaveTracking').addEventListener('click', async () => {
+      const msg = document.getElementById('trackingMessage');
+      const settings = {
+        gaId: document.getElementById('gaId').value.trim(),
+        gtmId: document.getElementById('gtmId').value.trim(),
+        fbPixelId: document.getElementById('fbPixelId').value.trim(),
+        fbCapiToken: document.getElementById('fbCapiToken').value.trim(),
+      };
+      try {
+        const res = await fetch('/api/tracking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+          body: JSON.stringify(settings),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = 'Saved! Changes take effect on next page load.';
+          msg.className = 'msg success';
+        } else {
+          msg.textContent = 'Error: ' + (data.error || res.status);
+          msg.className = 'msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Error: ' + e.message;
+        msg.className = 'msg error';
+      }
+    });
+
+    loadTracking();
+
+    async function loadCoupons() {
+      try {
+        const res = await fetch('/api/coupons', {
+          headers: { 'x-admin-password': ADMIN_PASSWORD }
+        });
+        const coupons = await res.json();
+        renderCoupons(coupons);
+      } catch {
+        document.getElementById('couponList').innerHTML = '<p class="empty">Failed to load coupons.</p>';
+      }
+    }
+
+    function renderCoupons(coupons) {
+      const list = document.getElementById('couponList');
+      if (!coupons.length) {
+        list.innerHTML = '<p class="empty">No coupons yet.</p>';
+        return;
+      }
+      list.innerHTML = `
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th><th>Type</th><th>Discount</th><th>Expires</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${coupons.map(c => `
+              <tr>
+                <td class="code">${c.code}</td>
+                <td>${c.type === 'percentage' ? 'Percentage' : 'Fixed'}</td>
+                <td class="discount">${c.type === 'percentage' ? c.discount + '%' : '$' + c.discount}</td>
+                <td>${c.expires || 'Never'}</td>
+                <td><span class="badge ${c.active ? 'active' : ''}">${c.active ? 'Active' : 'Inactive'}</span></td>
+                <td><button class="btn-delete" data-code="${c.code}">Delete</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        </div>
+      `;
+
+      document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => deleteCoupon(btn.dataset.code));
+      });
+    }
+
+    async function deleteCoupon(code) {
+      if (!confirm(`Delete coupon "${code}"?`)) return;
+      await fetch('/api/coupons', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+        body: JSON.stringify({ code }),
+      });
+      loadCoupons();
+    }
+
+    document.getElementById('btnAdd').addEventListener('click', async () => {
+      const code = document.getElementById('newCode').value.trim().toUpperCase();
+      const type = document.getElementById('newType').value;
+      const discount = document.getElementById('newDiscount').value;
+      const expires = document.getElementById('newExpires').value;
+      const msg = document.getElementById('addMessage');
+
+      if (!code || !discount) {
+        msg.textContent = 'Code and discount are required.';
+        msg.className = 'msg error';
+        return;
+      }
+
+      const res = await fetch('/api/coupons', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+        body: JSON.stringify({ code, type, discount, expires }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        msg.textContent = `Coupon "${code}" added!`;
+        msg.className = 'msg success';
+        document.getElementById('newCode').value = '';
+        document.getElementById('newDiscount').value = '';
+        document.getElementById('newExpires').value = '';
+        loadCoupons();
+      } else {
+        msg.textContent = data.error || 'Failed to add coupon.';
+        msg.className = 'msg error';
+      }
+    });
+
+    loadCoupons();
+  </script>
+)}
+
+</body>
+</html>
