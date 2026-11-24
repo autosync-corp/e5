@@ -4,6 +4,7 @@ import { CartManager, calculateCartTotals, formatPrice, type CartItem } from '@/
 import { loadStripe, type Stripe, type StripeElements, type StripeCardNumberElement, type StripeCardExpiryElement, type StripeCardCvcElement } from '@stripe/stripe-js';
 import type { Vehicle } from '@/core/services/VehicleService';
 import { TERMS_ROUTE } from '@/core/constants/Routes';
+import { applyHowDidYouHear } from '@/core/utils/howDidYouHear';
 
 // Props
 const props = defineProps<{
@@ -297,6 +298,8 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
       // Keep timestamp fallback
     }
 
+    const { how_did_you_hear, orderNotes } = applyHowDidYouHear(customerData);
+
     const webhookData = {
       // Order Information
       orderId: paymentId,
@@ -367,8 +370,9 @@ async function sendOrderToWebhook(paymentId: string, paymentMethod: string, cust
         fullAddress: `${customerData.billing.streetAddress1}${customerData.billing.streetAddress2 ? ', ' + customerData.billing.streetAddress2 : ''}, ${customerData.billing.city}, ${customerData.billing.state} ${customerData.billing.zipCode}, ${customerData.billing.country}`,
       } : {}),
 
-      // Order Notes
-      orderNotes: customerData ? customerData.orderNotes : '',
+      // Order Notes (includes how-did-you-hear line when provided)
+      orderNotes,
+      how_did_you_hear,
 
       // Products/Items
       items: cartItems.value.map((item, index) => {
