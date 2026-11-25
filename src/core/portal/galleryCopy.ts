@@ -28,11 +28,14 @@ export function suggestGalleryTitle(input: {
   trim?: string;
   vehicleColor?: string;
   style?: string;
+  finish?: string;
 }): string {
-  const parts = [clean(input.year), clean(input.generation), clean(input.trim), clean(input.vehicleColor)].filter(Boolean);
-  const base = parts.join(' ') || 'Corvette';
+  const vehicle = [clean(input.year), clean(input.vehicleColor), clean(input.generation), clean(input.trim)].filter(Boolean);
+  const base = vehicle.join(' ') || 'Corvette';
   const style = clean(input.style);
-  if (style) return `${base} ${style}`.slice(0, 160);
+  const finish = clean(input.finish);
+  const wheel = [style ? `E5 ${style}` : '', finish].filter(Boolean).join(' ');
+  if (wheel) return `${base} with ${wheel} wheels`.slice(0, 160);
   return base.slice(0, 160);
 }
 
@@ -40,7 +43,14 @@ export function suggestGalleryDescription(gallery: Pick<
   StoredGallery,
   'year' | 'generation' | 'trim' | 'body' | 'vehicleColor' | 'front' | 'rear' | 'square'
 >): string {
-  const vehicle = [clean(gallery.year), 'Chevrolet Corvette', clean(gallery.generation), clean(gallery.trim), clean(gallery.body), clean(gallery.vehicleColor)]
+  const vehicle = [
+    clean(gallery.year),
+    clean(gallery.vehicleColor),
+    'Chevrolet Corvette',
+    clean(gallery.generation),
+    clean(gallery.trim),
+    clean(gallery.body),
+  ]
     .filter(Boolean)
     .join(' ');
   const front = wheelPhrase(gallery.front);
@@ -59,7 +69,7 @@ export function suggestPhotoAlt(
   _photo: Pick<StoredGalleryPhoto, 'id'>,
   index: number,
 ): string {
-  const vehicle = [clean(gallery.year), clean(gallery.generation), clean(gallery.trim), clean(gallery.vehicleColor)].filter(Boolean).join(' ');
+  const vehicle = [clean(gallery.year), clean(gallery.vehicleColor), clean(gallery.generation), clean(gallery.trim)].filter(Boolean).join(' ');
   const wheels = wheelPhrase(gallery.front);
   const subject = [vehicle || 'Corvette', wheels ? `with ${wheels} wheels` : ''].filter(Boolean).join(' ');
   return `${subject} — photo ${index + 1}`.replace(/\s+/g, ' ').trim().slice(0, 180);

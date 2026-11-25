@@ -52,7 +52,9 @@ const generations = uniqueValues(items.map((item) => item.generation), GENERATIO
 const trims = uniqueValues(items.map((item) => item.trim));
 const years = uniqueValues(items.map((item) => item.year)).sort((a, b) => Number(b) - Number(a) || b.localeCompare(a));
 const styles = uniqueValues(items.map((item) => item.wheelStyle));
+const colors = uniqueValues(items.map((item) => item.vehicleColor));
 const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
+const hasUnspecifiedColor = items.some((item) => !item.vehicleColor);
 ---
 
 <PortalLayout title="Galleries — E5 Client Portal" userName={user.username}>
@@ -111,6 +113,16 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
               ))}
             </select>
           </label>
+          <label>
+            Color
+            <select data-filter="color">
+              <option value="">Any</option>
+              {hasUnspecifiedColor && <option value="__none__">Not set</option>}
+              {colors.map((value) => (
+                <option value={value}>{value}</option>
+              ))}
+            </select>
+          </label>
         </fieldset>
         <fieldset class="filter-group">
           <legend>Wheel style</legend>
@@ -143,6 +155,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
             data-generation={item.generation}
             data-trim={item.trim}
             data-year={item.year}
+            data-color={item.vehicleColor}
             data-style={item.wheelStyle}
           >
             <div class="thumb">
@@ -158,7 +171,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
                 </label>
               </div>
               <p class="note">
-                {[item.year, item.generation, item.trim, item.wheelStyle || 'Style not set'].filter(Boolean).join(' · ')}
+                {[item.year, item.generation, item.trim, item.vehicleColor, item.wheelStyle || 'Style not set'].filter(Boolean).join(' · ')}
                 {' · '}
                 /gallery/{item.id}
               </p>
@@ -191,6 +204,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
     var generationSelect = document.querySelector('[data-filter="generation"]');
     var trimSelect = document.querySelector('[data-filter="trim"]');
     var yearSelect = document.querySelector('[data-filter="year"]');
+    var colorSelect = document.querySelector('[data-filter="color"]');
     var styleSelect = document.querySelector('[data-filter="style"]');
     var countEl = document.querySelector('[data-count]');
     var noteEl = document.querySelector('[data-filter-note]');
@@ -217,17 +231,20 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
     }
 
     function filtersOn() {
-      return !!(selected(generationSelect) || selected(trimSelect) || selected(yearSelect) || selected(styleSelect));
+      return !!(selected(generationSelect) || selected(trimSelect) || selected(yearSelect) || selected(colorSelect) || selected(styleSelect));
     }
 
     function cardMatches(card) {
       var generation = selected(generationSelect);
       var trim = selected(trimSelect);
       var year = selected(yearSelect);
+      var color = selected(colorSelect);
       var style = selected(styleSelect);
       if (generation && attr(card, 'data-generation') !== generation) return false;
       if (trim && attr(card, 'data-trim') !== trim) return false;
       if (year && attr(card, 'data-year') !== year) return false;
+      if (color === '__none__') return !attr(card, 'data-color');
+      if (color && attr(card, 'data-color') !== color) return false;
       if (style === '__none__') return !attr(card, 'data-style');
       if (style && attr(card, 'data-style') !== style) return false;
       return true;
@@ -365,6 +382,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
         if (generationSelect) generationSelect.value = '';
         if (trimSelect) trimSelect.value = '';
         if (yearSelect) yearSelect.value = '';
+        if (colorSelect) colorSelect.value = '';
         if (styleSelect) styleSelect.value = '';
         applyFilters();
       });
@@ -452,7 +470,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
     padding: 0;
     min-width: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
   .filter-group:last-of-type { grid-template-columns: minmax(0, 1fr); }

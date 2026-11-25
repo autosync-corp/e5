@@ -53,6 +53,9 @@ type AutoSyncWheelDetail = {
   Model?: string;
   Finish?: string;
   Color?: string;
+  Accent?: string;
+  ShortColor?: string;
+  ShortFinish?: string;
   Diameter?: number;
   Width?: number;
   Offset?: number;
@@ -204,7 +207,7 @@ const wheelCache = new Map<number, AutoSyncWheelDetail | null>();
 async function fetchWheel(id: number): Promise<AutoSyncWheelDetail | null> {
   if (wheelCache.has(id)) return wheelCache.get(id) || null;
   await sleep(50);
-  const params = new URLSearchParams({ key: autosyncKey(), 'f-id': String(id) });
+  const params = new URLSearchParams({ key: autosyncKey(), 'f-id': String(id), 'i-specs': 'true' });
   const res = await fetch(`${AUTOSYNC_WHEELS_URL}?${params.toString()}`, {
     headers: { Accept: 'application/json', 'User-Agent': AUTOSYNC_USER_AGENT },
     signal: AbortSignal.timeout(15000),
@@ -227,7 +230,10 @@ async function wheelPickFrom(
   let detail: AutoSyncWheelDetail | null = null;
   if (wheel?.WheelId) detail = await fetchWheel(wheel.WheelId);
   const style = (detail?.Model || styleFromPn(detail?.Pn || pn)).trim();
-  const finish = (detail?.Finish || detail?.Color || finishFromPath(path)).trim();
+  const finish = [detail?.Finish, detail?.Color, detail?.Accent]
+    .map((value) => (value || '').trim())
+    .filter(Boolean)
+    .join(' ') || finishFromPath(path);
   const size = wheelSize(detail || wheel);
   return {
     style,
@@ -263,14 +269,12 @@ export async function importAutoSyncGallery(
 
   const current = existingById || (await loadStoredGallery(slug));
   if (current?.deleted) return 'skipped';
-  if (
+  const photosFresh = Boolean(
     current &&
-    current.photos.length > 0 &&
-    current.autosyncUpdatedAt === (gallery.UpdatedAt || '') &&
-    current.autosyncImgUpdatedAt === (gallery.ImgUpdatedAt || '')
-  ) {
-    return 'skipped';
-  }
+      current.photos.length > 0 &&
+      current.autosyncUpdatedAt === (gallery.UpdatedAt || '') &&
+      current.autosyncImgUpdatedAt === (gallery.ImgUpdatedAt || ''),
+  );
 
   const wheels = gallery.Wheels || [];
   const frontWheel = wheels.find((wheel) => String(wheel.Position || '').toLowerCase() === 'front') || wheels[0];
@@ -280,6 +284,8 @@ export async function importAutoSyncGallery(
   const generation = generationFromYear(year);
   const trim = (vehicle.Submodel || '').trim();
   const body = (vehicle.Body || '').trim();
+  const staticItem = corvetteGalleryData.find((item) => item.galleryId === slug);
+  const paintColor = (staticItem?.vehicleColor || '').trim();
   const draft = current ? { ...current } : emptyGallery(slug);
   draft.slug = slug;
   draft.autosyncId = gallery.Id;
@@ -290,21 +296,26 @@ export async function importAutoSyncGallery(
     draft.generation = generation || draft.generation;
     draft.trim = trim || draft.trim;
     draft.body = body || draft.body;
+    draft.vehicleColor = paintColor || draft.vehicleColor;
   }
   if (!draft.clientEdited.wheels) {
     draft.front = front.style || front.pn ? front : draft.front;
     draft.rear = rear.style || rear.pn ? rear : draft.rear;
     draft.square = Boolean(draft.front.pn && draft.rear.pn && draft.front.pn === draft.rear.pn);
   }
-  const suggestedTitle = existingTitleForSlug(slug) || suggestGalleryTitle({
+  const generatedTitle = suggestGalleryTitle({
     year: draft.year,
+    vehicleColor: draft.vehicleColor,
     generation: draft.generation,
     trim: draft.trim,
     style: draft.front.style,
+    finish: draft.front.finish,
   });
+  const staticTitle = existingTitleForSlug(slug);
+  const suggestedTitle = draft.vehicleColor || !staticTitle ? generatedTitle : staticTitle;
   const suggestedDescription = suggestGalleryDescription(draft);
-  if (!draft.clientEdited.title) draft.title = draft.title || suggestedTitle;
-  if (!draft.clientEdited.description) draft.description = draft.description || suggestedDescription;
+  if (!draft.clientEdited.title) draft.title = suggestedTitle;
+  if (!draft.clientEdited.description) draft.description = suggestedDescription;
   if (!draft.clientEdited.youtube) {
     draft.youtubeId = gallery.Videos?.find((video) => video.Id)?.Id || draft.youtubeId;
   }
@@ -315,22 +326,41 @@ export async function importAutoSyncGallery(
   }
 
   if (!draft.clientEdited.photos) {
-    const have = new Set(draft.photos.map((photo) => photo.sourcePath).filter(Boolean));
-    const nextPhotos: StoredGalleryPhoto[] = [...draft.photos];
-    for (const [index, path] of images.slice(0, MAX_GALLERY_PHOTOS).entries()) {
-      if (have.has(path)) continue;
-      const alt = suggestPhotoAlt(draft, { id: `tmp-${index}` }, index);
-      const originalUrl = `${imgBase}${path}`;
-      try {
-        const photo = await copyRemotePhoto({ slug, url: originalUrl, sourcePath: path, alt });
-        nextPhotos.push(photo);
-        await sleep(50);
-      } catch (err) {
-        console.error(`portal-galleries photo failed slug=${slug} path=${path} ${err instanceof Error ? err.message : 'unknown'}`);
+    if (photosFresh) {
+      draft.photos = draft.photos.map((photo, index) => {
+        if (draft.clientEdited.alts?.[photo.id]) return photo;
+        return { ...photo, alt: suggestPhotoAlt(draft, photo, index) };
+      });
+    } else {
+      const have = new Set(draft.photos.map((photo) => photo.sourcePath).filter(Boolean));
+      const nextPhotos: StoredGalleryPhoto[] = [...draft.photos];
+      for (const [index, path] of images.slice(0, MAX_GALLERY_PHOTOS).entries()) {
+        if (have.has(path)) continue;
+        const alt = suggestPhotoAlt(draft, { id: `tmp-${index}` }, index);
+        const originalUrl = `${imgBase}${path}`;
+        try {
+          const photo = await copyRemotePhoto({ slug, url: originalUrl, sourcePath: path, alt });
+          nextPhotos.push(photo);
+          await sleep(50);
+        } catch (err) {
+          console.error(`portal-galleries photo failed slug=${slug} path=${path} ${err instanceof Error ? err.message : 'unknown'}`);
+        }
       }
+      draft.photos = nextPhotos.slice(0, MAX_GALLERY_PHOTOS);
+      if (!draft.coverId) draft.coverId = draft.photos[0]?.id || '';
     }
-    draft.photos = nextPhotos.slice(0, MAX_GALLERY_PHOTOS);
-    if (!draft.coverId) draft.coverId = draft.photos[0]?.id || '';
+  }
+
+  if (
+    photosFresh &&
+    current &&
+    current.vehicleColor === draft.vehicleColor &&
+    current.title === draft.title &&
+    current.description === draft.description &&
+    current.front.finish === draft.front.finish &&
+    current.photos.every((photo, index) => photo.alt === draft.photos[index]?.alt)
+  ) {
+    return 'skipped';
   }
 
   await saveStoredGallery(draft);

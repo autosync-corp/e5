@@ -58,6 +58,7 @@ assert(
   'portal rows carry vehicle and wheel fields',
   helper.includes('generation: item.submodel') &&
     helper.includes('trim: item.trim') &&
+    helper.includes('vehicleColor: item.vehicleColor') &&
     helper.includes('wheelStyle: portalWheelStyle') &&
     helper.includes('gtStyleFromPns'),
 );
@@ -67,6 +68,7 @@ assert(
     page.includes('data-filter="generation"') &&
     page.includes('data-filter="trim"') &&
     page.includes('data-filter="year"') &&
+    page.includes('data-filter="color"') &&
     page.includes('data-filter="style"') &&
     page.includes('data-clear') &&
     page.includes('data-count') &&
@@ -87,7 +89,7 @@ assert(
     !grid.includes('data-clear') &&
     !selector.includes('data-filter="style"'),
 );
-assert('docs mention editor filters', docs.includes('filter by generation, trim, year, and wheel style'));
+assert('docs mention editor filters', docs.includes('filter by generation, trim, year, color, and wheel style'));
 
 const password = 'portal-test-pass';
 const N = 16384;
