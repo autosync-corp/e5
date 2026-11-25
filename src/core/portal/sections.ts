@@ -53,8 +53,8 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     slug: 'sales',
     label: 'Sales & Prospects',
     path: '/sales',
-    ready: false,
-    summary: 'GoHighLevel pipeline view for sales and prospects.',
+    ready: true,
+    summary: 'New prospects, pipelines, and lead sources. View only.',
   },
 ];
 

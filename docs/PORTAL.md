@@ -119,12 +119,30 @@ When the Website Performance Audit bot drops a new v2 export:
 
 Do not merge until Dave replies **go live**.
 
+## Section 7 (this PR)
+
+Sales & Prospects.
+
+- Portal host: `https://portal.e5wheels.com/sales`
+- Preview: `/portal/sales`
+- Read-only. The page never creates, edits, or deletes CRM records. Range switching is a GET (`?days=7|30|90`, default 30).
+- Server-side fetch of contacts, opportunities, pipelines, and contact custom-field definitions. Results are cached about 5 minutes in memory and at `e5:portal:sales:v1:{days}` in Redis when Redis is up, so repeat views do not hit the CRM on every click.
+- Contacts are loaded with a date-ranged search, then GET `/contacts/` if that search fails. Opportunities use GET `/opportunities/search` with `date` / `endDate`. Both paginate (100 per page).
+- Summary cards: new contacts, open deals + value, won deals + value, and win rate (`won / (won + lost)`) for the selected period. If nothing closed, win rate is an em dash.
+- Pipeline boards are opportunities **created in the selected period**, grouped by current stage. Empty stages still list so the board matches the CRM.
+- Recent prospects: newest 25 contacts in the period. Name, date added, source, tags, and linked deal stage. No phone or email columns; those fields are dropped before the HTML is rendered.
+- Lead sources: counts of the contact `source` field, including “Not set”.
+- Checkout “How did you hear about us?” is **not** a contact custom field and **not** a location tag in this account. Checkout sends it on the order webhook (`how_did_you_hear` plus a line in order notes). The page only shows a hear-about chart if a matching contact field or tag actually has values; otherwise that block is omitted.
+- Env vars (already on the Vercel project, Production + Preview): `GHL_PRIVATE_TOKEN` (server-side only — never sent to the browser, logged, or committed) and `GHL_LOCATION_ID`. If either is missing or the CRM request fails, the page shows “Couldn't load sales data right now.”
+- Behind the existing `e5_portal` login. Not public.
+
+Do not merge until Dave replies **go live**.
+
 ## Later sections (not in this PR)
 
 | Section | Portal host | Preview |
 |---|---|---|
 | Galleries | `/galleries` | `/portal/galleries` |
-| Sales & Prospects (GoHighLevel) | `/sales` | `/portal/sales` |
 
 ## Content storage
 
@@ -137,6 +155,7 @@ Keys (write on save, read at request time):
 - `e5:portal:slides` — homepage hero slides (Section 2)
 - `e5:portal:nav` — header / footer links (Section 3)
 - `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog (Section 4)
+- `e5:portal:sales:v1:{days}` — read-only sales snapshot cache (Section 7, ~5 minutes)
 - `e5:portal:galleries` — immersive gallery sets
 - `e5:portal:users` — extra portal users (optional, later)
 

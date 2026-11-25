@@ -1,0 +1,321 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { portalHref } from '@/core/portal/host.ts';
+import {
+  SALES_RANGES,
+  formatDay,
+  formatMoney,
+  formatWinRate,
+  loadSalesSnapshot,
+  parseSalesRange,
+  type SalesSnapshot,
+} from '@/core/portal/sales.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const salesHref = portalHref(Astro.request, '/sales');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const days = parseSalesRange(Astro.url.searchParams.get('days'));
+let snapshot: SalesSnapshot | null = null;
+let loadError = false;
+try {
+  snapshot = await loadSalesSnapshot(days);
+} catch {
+  loadError = true;
+}
+
+const rangeLabel = snapshot ? `${formatDay(snapshot.from)} – ${formatDay(snapshot.to)}` : `Last ${days} days`;
+---
+
+<PortalLayout title="Sales & Prospects — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Sales & Prospects</h1>
+  <p class="lead">
+    New prospects, open deals, and where they sit in the pipeline. This page is view-only.
+  </p>
+
+  <nav class="ranges" aria-label="Date range">
+    {SALES_RANGES.map((range) => (
+      <a
+        href={`${salesHref}?days=${range}`}
+        class:list={[days === range && 'is-active']}
+        aria-current={days === range ? 'page' : undefined}
+      >
+        Last {range} days
+      </a>
+    ))}
+  </nav>
+
+  {loadError && (
+    <div class="error-panel" role="status">
+      <p>Couldn't load sales data right now.</p>
+      <small>Try again in a few minutes.</small>
+    </div>
+  )}
+
+  {snapshot && (
+    <>
+      <p class="meta">Showing {rangeLabel}</p>
+
+      <section class="cards" aria-label="Summary">
+        <article class="stat">
+          <h2>New prospects</h2>
+          <p class="num">{snapshot.summary.newContacts}</p>
+          <small>Contacts added in this period</small>
+        </article>
+        <article class="stat">
+          <h2>Open deals</h2>
+          <p class="num">{snapshot.summary.openCount}</p>
+          <small>{formatMoney(snapshot.summary.openValue)} total value</small>
+        </article>
+        <article class="stat">
+          <h2>Won deals</h2>
+          <p class="num">{snapshot.summary.wonCount}</p>
+          <small>{formatMoney(snapshot.summary.wonValue)} total value</small>
+        </article>
+        <article class="stat">
+          <h2>Win rate</h2>
+          <p class="num">{formatWinRate(snapshot.summary.winRate)}</p>
+          <small>
+            {snapshot.summary.winRate == null
+              ? 'No closed deals in this period'
+              : `${snapshot.summary.wonCount} won / ${snapshot.summary.wonCount + snapshot.summary.lostCount} closed`}
+          </small>
+        </article>
+      </section>
+
+      <section class="block">
+        <h2>Pipeline</h2>
+        <p class="hint">Deals started in this period, grouped by their current stage.</p>
+        <div class="pipelines">
+          {snapshot.pipelines.map((pipeline) => (
+            <article class="pipeline">
+              <h3>
+                {pipeline.name}
+                <span>
+                  {pipeline.count} · {formatMoney(pipeline.value)}
+                </span>
+              </h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Stage</th>
+                      <th>Deals</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pipeline.stages.map((stage) => (
+                      <tr>
+                        <th scope="row">{stage.name}</th>
+                        <td>{stage.count}</td>
+                        <td>{formatMoney(stage.value)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Recent prospects</h2>
+        <p class="hint">Newest contacts added in this period. Names only — no phone or email columns.</p>
+        {snapshot.prospects.length === 0 ? (
+          <p class="empty">No new prospects in this period.</p>
+        ) : (
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date added</th>
+                  <th>Source</th>
+                  <th>Tags</th>
+                  <th>Deal stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {snapshot.prospects.map((row) => (
+                  <tr>
+                    <th scope="row">{row.name}</th>
+                    <td>{formatDay(row.added)}</td>
+                    <td>{row.source}</td>
+                    <td>{row.tags.length ? row.tags.join(', ') : '—'}</td>
+                    <td>{row.stage || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <section class="block">
+        <h2>Lead sources</h2>
+        <p class="hint">Where new contacts in this period are marked as coming from.</p>
+        {snapshot.sources.length === 0 ? (
+          <p class="empty">No sources in this period.</p>
+        ) : (
+          <div class="table-wrap source-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Source</th>
+                  <th>Contacts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {snapshot.sources.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>{row.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {snapshot.hearAbout && (
+        <section class="block">
+          <h2>How did you hear about us?</h2>
+          <p class="hint">Answers saved on the contact.</p>
+          <div class="table-wrap source-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Answer</th>
+                  <th>Contacts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {snapshot.hearAbout.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>{row.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+    </>
+  )}
+</PortalLayout>
+
+<style>
+  .ranges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -8px 0 20px;
+  }
+  .ranges a {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 11px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 8px 12px;
+    text-decoration: none;
+  }
+  .ranges a.is-active { background: #141414; color: #fff; }
+  .meta {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 20px;
+  }
+  .error-panel {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    padding: 28px 20px;
+    max-width: 36rem;
+  }
+  .error-panel p {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .error-panel small { color: #333; line-height: 1.45; display: block; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stat {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 16px 16px 14px;
+  }
+  .stat h2, .block h2, .pipeline h3 {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .stat h2 { margin-bottom: 8px; color: #333; }
+  .num {
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    font-size: clamp(22px, 3vw, 32px);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+  .stat small { display: block; color: #666; font-size: 13px; margin-top: 6px; line-height: 1.35; }
+  .block { margin: 8px 0 36px; }
+  .block h2 { margin-bottom: 6px; }
+  .hint, .empty { color: #666; font-size: 14px; margin-bottom: 12px; max-width: 44rem; line-height: 1.45; }
+  .pipelines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .pipeline {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 14px 14px 8px;
+  }
+  .pipeline h3 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px 12px;
+    margin-bottom: 8px;
+  }
+  .pipeline h3 span { color: #666; font-family: 'Franklin Gothic Book', sans-serif; letter-spacing: 0; text-transform: none; }
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ececec;
+    vertical-align: top;
+  }
+  tbody th { font-weight: 400; color: #333; }
+  .source-table { max-width: 28rem; }
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
