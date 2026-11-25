@@ -47,7 +47,7 @@ assert('credits billing block', copy.includes('E5 WHEELS presents') && copy.incl
 assert('Miami Vice neon accents', banner.includes('#ff2e88') && banner.includes('#00e5d4') && banner.includes('e5-poster-grid') && banner.includes('e5-poster-rule'));
 assert('Bebas Neue is self-hosted and poster-scoped', fonts.includes("font-family: 'Bebas Neue'") && fonts.includes('/assets/fonts/bebas-neue.woff2') && banner.includes('.e5-banner-slide.is-poster') && banner.includes("font-family: 'Bebas Neue'"));
 assert('Yellowtail is self-hosted and poster-scoped', fonts.includes("font-family: 'Yellowtail'") && fonts.includes('/assets/fonts/yellowtail.woff2') && banner.includes("font-family: 'Yellowtail'") && !fonts.includes('Mr Dafoe'));
-assert('unaltered E5 wordmark on the poster', banner.includes('E5_LOGO_WHITE') && banner.includes('e5-poster-logo'));
+assert('unaltered E5 wordmark on the poster', banner.includes('E5_LOGO_WHITE_NAV') && banner.includes('e5-poster-logo'));
 assert('film CTA is a button not a link', banner.includes('data-film-open') && banner.includes('type="button"') && banner.includes('e5-poster-cta'));
 assert('visualizer cycle uses real C8 combos', banner.includes('Torch Red') && banner.includes('Daytona Gloss Black') && banner.includes('Arctic White') && banner.includes('Sebring Titanium') && banner.includes('Rapid Blue') && banner.includes('Speedway Chrome') && banner.includes('Bronze Brushed Tint'));
 assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('vizHoldMs') && banner.includes('3000'));
@@ -67,7 +67,7 @@ assert('arrows dots swipe keyboard autoplay', banner.includes('data-prev') && ba
 assert('no Vue carousel island', !banner.includes('client:') && !src.includes('client:load'));
 assert('dots are a group not a tablist', banner.includes('role="group"') && banner.includes('aria-label="Choose slide"') && !banner.includes('role="tablist"') && !banner.includes('role="tab"'));
 assert('dots keep aria-current', banner.includes("aria-current={index === 0 ? 'true' : 'false'}") && banner.includes("aria-current', d === 0 ? 'true' : 'false'"));
-assert('dot hit area is 24px with 10px visible', banner.includes('min-width: 24px') && banner.includes('min-height: 24px') && banner.includes('width: 10px') && banner.includes('height: 10px') && banner.includes('margin: 0 -2px'));
+assert('dot hit area is 24px with 10px visible', banner.includes('min-width: 24px') && banner.includes('min-height: 24px') && banner.includes('width: 10px') && banner.includes('height: 10px'));
 assert('non-first slides hydrate from data-srcset', banner.includes('hydrateLazyMedia') && banner.includes('LAZY_PIXEL') && banner.includes('data-srcset={eager ? undefined : pic.avif}'));
 assert('inline all stylesheets', astroCfg.includes("inlineStylesheets: 'always'"));
 assert('e5-defer is a hashed Vite asset', layout.includes("e5-defer.js?url") && !layout.includes('src="/js/e5-defer.js"'));
@@ -88,6 +88,7 @@ for (const width of [800, 1200, 1500]) {
   assert(`gt03-laydown-${width}.webp`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.webp`)));
   assert(`gt03-laydown-${width}.avif`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.avif`)));
 }
+assert('llms.txt has H1 and links', existsSync(join(root, 'public/llms.txt')) && readFileSync(join(root, 'public/llms.txt'), 'utf8').startsWith('# E5 Wheels') && readFileSync(join(root, 'public/llms.txt'), 'utf8').includes('https://www.e5wheels.com/shop'));
 assert('bebas-neue.woff2', existsSync(join(root, 'public/assets/fonts/bebas-neue.woff2')));
 assert('Bebas Neue OFL', existsSync(join(root, 'public/assets/fonts/OFL-BebasNeue.txt')));
 assert('yellowtail.woff2', existsSync(join(root, 'public/assets/fonts/yellowtail.woff2')));

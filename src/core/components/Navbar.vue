@@ -217,7 +217,7 @@ const closeMiniCart = () => {
             <a v-else :href="item.href" class="nav-link" :class="{'selected': isSelected(item)}">{{ item.label }}</a>
           </template>
           <button @click="toggleMiniCart" class="relative min-h-11 min-w-11" aria-label="Open cart">
-            <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
+            <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" width="32" height="26" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
             </span>
@@ -274,7 +274,7 @@ const closeMiniCart = () => {
         </template>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative min-h-11 min-w-11" aria-label="Open cart">
-            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" width="32" height="27" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
             </span>

@@ -1,7 +1,7 @@
 ---
 import CtaLink from '@/core/components/CtaLink.astro';
 import { bannerPicture, gt03LaydownPicture } from '@/core/utils/responsiveSrc';
-import { E5_LOGO_WHITE } from '@/core/constants/App.ts';
+import { E5_LOGO_WHITE_NAV, E5_LOGO_WHITE_NAV_SRCSET } from '@/core/constants/App.ts';
 import {
   DEFAULT_HOMEPAGE_SLIDES,
   slidesFingerprint,
@@ -195,9 +195,11 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
                 {isFilm && (
                   <img
                     class="e5-poster-logo"
-                    src={E5_LOGO_WHITE}
+                    src={E5_LOGO_WHITE_NAV}
+                    srcset={E5_LOGO_WHITE_NAV_SRCSET}
+                    sizes="(max-width: 767px) 120px, 220px"
                     alt="E5 Wheels"
-                    width="220"
+                    width="560"
                     height="48"
                     decoding="async"
                     loading="lazy"
@@ -1074,7 +1076,8 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
     align-items: center;
     gap: 0;
   }
-  /* 24×24 hit box; visible 10px dots stay 20px center-to-center (10px gap). */
+  /* 24×24 hit boxes sit flush (no overlap) so target-size passes.
+     Visible 10px discs stay the same; gap between discs is 14px instead of 10px. */
   .e5-banner-dot {
     box-sizing: border-box;
     position: relative;
@@ -1082,7 +1085,7 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
     height: 24px;
     min-width: 24px;
     min-height: 24px;
-    margin: 0 -2px;
+    margin: 0;
     padding: 0;
     border: 0;
     border-radius: 0;
