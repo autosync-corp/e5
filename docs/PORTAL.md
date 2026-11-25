@@ -148,6 +148,7 @@ Vehicle galleries from AutoSync, with a portal overlay for show/hide and order.
 - Public `/gallery/vehicles` and `/gallery/<id>` are SSR. They read E5 galleries from `GET https://api.autosyncstudio.com/galleries` (cached about 5 minutes in memory). Existing `/gallery/<id>` URLs, titles, and SEO stay when a gallery uniquely matches year + part numbers. Unmatched AutoSync galleries get a stable `g-<id>` slug. Static-only slugs still render so nothing 404s.
 - Redis key `e5:portal:galleries` stores order and hidden flags only. First save writes that overlay. Empty Redis = current catalog order, nothing hidden. New AutoSync galleries append at the end, visible, until the client moves or hides them.
 - Photos are not uploaded or edited here — they stay on AutoSync. The portal only controls which galleries appear on e5wheels.com and in what order.
+- The editor can filter by generation, trim, year, and wheel style without changing the saved order. Reorder is paused while a filter is on; Save still writes the full list.
 - `sitemap-galleries.xml` lists the live public galleries (`s-maxage=60`). Hidden galleries drop off the listing, detail pages, and that sitemap.
 - If AutoSync is down, the public pages fall back to the current static gallery data.
 - API key: `PUBLIC_AUTOSYNC_API_KEY` (same as the shop) with fallback `efive`. Add the named env on Vercel if you want a dedicated key; the shop fallback already works.

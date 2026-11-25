@@ -54,6 +54,40 @@ assert('sitemap-galleries is SSR', sitemap.includes('loadPublicGalleries') && si
 assert('docs describe section 5', docs.includes('Section 5') && docs.includes('e5:portal:galleries') && docs.includes('PUBLIC_AUTOSYNC_API_KEY') && docs.includes('g-<id>'));
 assert('editor copy is plain language', page.includes('Photos stay on AutoSync') && !page.includes('Upstash') && !page.includes('Redis'));
 assert('section 1 live galleries check moved off coming soon', section1.includes('galleries editor loads') && !section1.includes('section placeholder coming soon'));
+assert(
+  'portal rows carry vehicle and wheel fields',
+  helper.includes('generation: item.submodel') &&
+    helper.includes('trim: item.trim') &&
+    helper.includes('wheelStyle: portalWheelStyle') &&
+    helper.includes('gtStyleFromPns'),
+);
+assert(
+  'editor has vehicle and wheel filters',
+  page.includes('data-filters') &&
+    page.includes('data-filter="generation"') &&
+    page.includes('data-filter="trim"') &&
+    page.includes('data-filter="year"') &&
+    page.includes('data-filter="style"') &&
+    page.includes('data-clear') &&
+    page.includes('data-count') &&
+    page.includes('Vehicle') &&
+    page.includes('Wheel style'),
+);
+assert(
+  'filters hide cards without removing them from save',
+  page.includes('is-filtered-out') &&
+    page.includes("querySelectorAll('[data-card]')") &&
+    page.includes('if (!list || filtersOn()) return') &&
+    page.includes('Reorder is paused while a filter is on'),
+);
+assert(
+  'public pages have no portal gallery filters',
+  !publicDetail.includes('data-filters') &&
+    !publicIndex.includes('data-filter="generation"') &&
+    !grid.includes('data-clear') &&
+    !selector.includes('data-filter="style"'),
+);
+assert('docs mention editor filters', docs.includes('filter by generation, trim, year, and wheel style'));
 
 const password = 'portal-test-pass';
 const N = 16384;
@@ -64,7 +98,7 @@ const salt = randomBytes(16);
 const derived = await scryptAsync(password, salt, keylen, { N, r, p });
 const hash = `scrypt$${N}$${r}$${p}$${salt.toString('base64url')}$${derived.toString('base64url')}`;
 const secret = 'portal-test-session-secret-32bytes!!';
-const PORT = process.env.PORTAL_GALLERIES_TEST_PORT || '8785';
+const PORT = process.env.PORTAL_GALLERIES_TEST_PORT || '8791';
 const BASE = `http://127.0.0.1:${PORT}`;
 
 function waitForServer(child) {
@@ -172,10 +206,41 @@ try {
       !editorHtml.includes('Coming soon'),
   );
   assert('editor uses site type', editorHtml.includes('Franklin Gothic'));
+  assert(
+    'editor renders vehicle and wheel filters',
+    editorHtml.includes('data-filters') &&
+      editorHtml.includes('data-filter="generation"') &&
+      editorHtml.includes('data-filter="style"') &&
+      editorHtml.includes('data-clear') &&
+      editorHtml.includes('Showing ') &&
+      /<option[^>]*>C8<\/option>/.test(editorHtml) &&
+      editorHtml.includes('Sebring') &&
+      editorHtml.includes('data-generation="C8"') &&
+      editorHtml.includes('data-style='),
+  );
+  assert('public listing has no portal filter bar', !listingHtml.includes('data-filter="generation"') && !listingHtml.includes('data-clear'));
 
   const authedGet = await fetch(`${BASE}/portal/api/galleries`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const authedJson = await authedGet.json();
   assert('authed GET returns galleries', authedGet.status === 200 && Array.isArray(authedJson.items) && authedJson.items.some((row) => row.id === KNOWN_SLUG));
+  assert(
+    'GET rows include vehicle and wheel filter fields',
+    authedJson.items.some(
+      (row) =>
+        row.id === KNOWN_SLUG &&
+        row.generation === 'C8' &&
+        row.trim === 'Stingray' &&
+        row.year === '2025' &&
+        row.wheelStyle === 'Sebring',
+    ) && authedJson.items.some((row) => row.wheelStyle === 'GT.03'),
+  );
+  const combined = authedJson.items.filter((row) => row.generation === 'C8' && row.wheelStyle === 'Sebring');
+  assert(
+    'vehicle and wheel filters can combine',
+    combined.length > 0 &&
+      combined.length < authedJson.items.length &&
+      combined.every((row) => row.generation === 'C8' && row.wheelStyle === 'Sebring'),
+  );
 
   const noOrigin = await fetch(`${BASE}/portal/api/galleries`, {
     method: 'PUT',
