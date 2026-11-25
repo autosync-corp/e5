@@ -181,6 +181,15 @@
       ]
     },
     {
+      "source": "/sitemap-gallery-images.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
       "source": "/gallery-media/(.*)",
       "headers": [
         {

@@ -24,6 +24,9 @@ import { corvetteGalleryData } from '@/pages/gallery/constants/CorvetteGalleryDa
 import { blobConfigured, portalRedis } from '@/core/portal/slides.ts';
 import { FINISH_CODE_TO_SITE_NAME, finishCodeFromPn } from '@/core/utils/officialPricing.ts';
 import { proposedFactoryPaint } from '@/core/portal/galleryFactoryPaint.ts';
+import { nextDescriptivePhotoId, proposedSeoSlug, uniqueSeoSlug } from '@/core/portal/gallerySeo.ts';
+import { wheelOverrideFor } from '@/core/portal/galleryWheelOverrides.ts';
+import { MAX_GALLERY_SLUG } from '@/core/portal/galleryTypes.ts';
 
 const AUTOSYNC_GALLERIES_URL = 'https://api.autosyncstudio.com/galleries';
 const AUTOSYNC_WHEELS_URL = 'https://api.autosyncstudio.com/wheels';
@@ -265,10 +268,10 @@ export async function importAutoSyncGallery(
   const year = vehicle.Year ? String(vehicle.Year) : '';
   const existingById = byAutosyncId.get(gallery.Id);
   const matchedSlug = existingById?.slug || (year ? pickStaticSlug(year, pns, claimed) : null);
-  const slug = existingById?.slug || matchedSlug || `g-${gallery.Id}`;
+  let slug = existingById?.slug || matchedSlug || '';
   if (matchedSlug) claimed.add(matchedSlug);
 
-  const current = existingById || (await loadStoredGallery(slug));
+  const current = existingById || (slug ? await loadStoredGallery(slug) : null);
   if (current?.deleted) return 'skipped';
   const photosFresh = Boolean(
     current &&
@@ -286,7 +289,22 @@ export async function importAutoSyncGallery(
   const trim = (vehicle.Submodel || '').trim();
   const body = (vehicle.Body || '').trim();
   const staticItem = corvetteGalleryData.find((item) => item.galleryId === slug);
-  const paintColor = (staticItem?.vehicleColor || proposedFactoryPaint(slug) || '').trim();
+  const paintColor = (staticItem?.vehicleColor || (slug && proposedFactoryPaint(slug)) || '').trim();
+  if (!slug) {
+    slug = uniqueSeoSlug(
+      proposedSeoSlug({
+        year,
+        vehicleColor: paintColor,
+        generation,
+        trim,
+        style: front.style,
+        finish: front.finish,
+        maxLength: MAX_GALLERY_SLUG,
+      }),
+      claimed,
+      MAX_GALLERY_SLUG,
+    );
+  }
   const draft = current ? { ...current } : emptyGallery(slug);
   draft.slug = slug;
   draft.autosyncId = gallery.Id;
@@ -302,6 +320,11 @@ export async function importAutoSyncGallery(
   if (!draft.clientEdited.wheels) {
     draft.front = front.style || front.pn ? front : draft.front;
     draft.rear = rear.style || rear.pn ? rear : draft.rear;
+    const ov = wheelOverrideFor({ slug: draft.slug, autosyncId: gallery.Id });
+    if (ov) {
+      draft.front = { ...draft.front, style: ov.style, finish: ov.finish };
+      draft.rear = { ...draft.rear, style: ov.style, finish: ov.finish };
+    }
     draft.square = Boolean(draft.front.pn && draft.rear.pn && draft.front.pn === draft.rear.pn);
   }
   const generatedTitle = suggestGalleryTitle({
@@ -340,7 +363,14 @@ export async function importAutoSyncGallery(
         const alt = suggestPhotoAlt(draft, { id: `tmp-${index}` }, index);
         const originalUrl = `${imgBase}${path}`;
         try {
-          const photo = await copyRemotePhoto({ slug, url: originalUrl, sourcePath: path, alt });
+          const photo = await copyRemotePhoto({
+          slug,
+          url: originalUrl,
+          sourcePath: path,
+          alt,
+          photoId: nextDescriptivePhotoId(slug, nextPhotos),
+          existing: nextPhotos,
+        });
           nextPhotos.push(photo);
           await sleep(50);
         } catch (err) {

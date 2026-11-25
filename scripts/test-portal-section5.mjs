@@ -44,7 +44,7 @@ assert('dedicated galleries editor', existsSync(join(root, 'src/pages/portal/gal
 assert('no uploads or AutoSync writes', !page.includes('data-upload') && !page.includes('type="file"') && !helper.includes('method: \'POST\'') && !helper.includes('method: \'PUT\''));
 assert('redis key is e5:portal:galleries', helper.includes("GALLERIES_REDIS_KEY = 'e5:portal:galleries'"));
 assert('autosync fetch is cached and falls back', helper.includes('api.autosyncstudio.com/galleries') && helper.includes('GALLERY_CACHE_MS') && helper.includes('staticCatalog') && helper.includes('logGalleryFailure'));
-assert('unique year and part-number matching', helper.includes('pickUniqueStatic') && helper.includes('pnHit') && helper.includes('g-${gallery.Id}'));
+assert('unique year and part-number matching', helper.includes('pickUniqueStatic') && helper.includes('pnHit') && helper.includes('unmatched AutoSync'));
 assert('public pages are SSR', publicDetail.includes('prerender = false') && publicIndex.includes('prerender = false') && !publicDetail.includes('getStaticPaths'));
 assert('public pages use live catalog', publicDetail.includes('loadGalleryBySlug') && publicIndex.includes('loadPublicGalleries') && grid.includes('defineProps') && selector.includes('defineProps'));
 assert('vue grid is not hardcoded static data', !grid.includes('corvetteGalleryData') && !selector.includes('corvetteGalleryData'));
