@@ -38,6 +38,9 @@ export type PortalGalleryRow = {
   id: string;
   title: string;
   year: string;
+  generation: string;
+  trim: string;
+  wheelStyle: string;
   image: string;
   hidden: boolean;
   source: 'autosync' | 'site';
@@ -433,11 +436,28 @@ export function toGalleryListing(item: CorvetteGalleryItem): GalleryListing | nu
   };
 }
 
+function gtStyleFromPns(pns: Set<string>): string | null {
+  for (const pn of pns) {
+    const match = pn.match(/^E5GT0([1-4])/);
+    if (match) return `GT.0${match[1]}`;
+  }
+  return null;
+}
+
+function portalWheelStyle(item: GalleryRecord): string {
+  if (item.wheelStyle) return item.wheelStyle;
+  const pns = extractPns(`${item.partF || ''} ${item.wheelPartR || ''}`);
+  return styleFromPns(pns) || gtStyleFromPns(pns) || '';
+}
+
 function toPortalRow(item: GalleryRecord & { hidden: boolean }): PortalGalleryRow {
   return {
     id: item.galleryId || '',
     title: item.vehicleTitle || item.trim || item.galleryId || 'Gallery',
     year: item.year || '',
+    generation: item.submodel || '',
+    trim: item.trim || '',
+    wheelStyle: portalWheelStyle(item),
     image: galleryCoverUrl(item),
     hidden: item.hidden,
     source: item.catalogSource === 'static' ? 'site' : 'autosync',
