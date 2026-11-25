@@ -199,15 +199,6 @@
       ]
     },
     {
-      "source": "/gallery/:slug/:file(.*\\.(webp|jpg|jpeg|png))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
       "source": "/",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "headers": [

@@ -80,6 +80,10 @@ assert(
     (map.photos || []).every((row) => row.newPath.startsWith('/gallery/') && !row.newPath.startsWith('/gallery-media/')),
 );
 assert('docs map exists', read('docs/gallery-seo-rename-map.md').includes('/gallery/'));
+assert(
+  'vercel.json does not use an invalid image-file header pattern',
+  !read('vercel.json').includes(':file(.*'),
+);
 
 if (failed) {
   console.error(`${failed} gallery SEO rename checks failed`);
