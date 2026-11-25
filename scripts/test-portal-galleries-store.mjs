@@ -58,6 +58,33 @@ assert('copy does not invent facts', copy.includes('suggestGalleryTitle') && cop
 assert('titles put paint color before generation', copy.includes('clean(input.year), clean(input.vehicleColor), clean(input.generation), clean(input.trim)') && copy.includes('with ${wheel} wheels'));
 assert('sync reads wheel Color/Finish from i-specs', sync.includes("'i-specs': 'true'") && sync.includes('detail?.Color') && sync.includes('detail?.Accent'));
 assert('sync copies static paint color only', sync.includes('staticItem?.vehicleColor') && !sync.includes('ImgColorId') && !sync.includes('Colors['));
+const factoryHelper = read('src/core/portal/galleryFactoryPaint.ts');
+const factoryMap = read('src/data/gallery-factory-color-proposals.json');
+assert(
+  'sync can fill reviewed factory paint without ImgColorId',
+  sync.includes('proposedFactoryPaint(slug)') &&
+    factoryHelper.includes("row.confidence === 'low'") &&
+    factoryMap.includes('"confidence": "low"') &&
+    !factoryHelper.includes('ImgColorId'),
+);
+const factoryProposals = JSON.parse(factoryMap);
+assert('factory map covers 59 empty-color galleries', factoryProposals.items.length === 59);
+assert(
+  'factory map counts high 21 medium 8 low 30',
+  factoryProposals.counts.high === 21 &&
+    factoryProposals.counts.medium === 8 &&
+    factoryProposals.counts.low === 30 &&
+    factoryProposals.applyCount === 29,
+);
+const factoryBySlug = new Map(factoryProposals.items.map((row) => [row.slug, row]));
+const factoryPaint = (slug) => {
+  const row = factoryBySlug.get(slug);
+  if (!row || row.confidence === 'low') return '';
+  return (row.proposedColor || '').trim();
+};
+assert('low-confidence factory paint stays blank', factoryPaint('g-2991') === '');
+assert('high-confidence factory paint fills Torch Red', factoryPaint('g-2986') === 'Torch Red');
+assert('client-edited vehicle still gates paint in sync', sync.includes('if (!draft.clientEdited.vehicle)') && sync.includes('draft.vehicleColor = paintColor || draft.vehicleColor'));
 assert('sync does not overwrite client-edited title', sync.includes('if (!draft.clientEdited.title) draft.title = suggestedTitle'));
 
 function suggestGalleryTitle(input) {

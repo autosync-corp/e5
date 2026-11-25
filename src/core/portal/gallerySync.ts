@@ -23,6 +23,7 @@ import {
 import { corvetteGalleryData } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 import { blobConfigured, portalRedis } from '@/core/portal/slides.ts';
 import { FINISH_CODE_TO_SITE_NAME, finishCodeFromPn } from '@/core/utils/officialPricing.ts';
+import { proposedFactoryPaint } from '@/core/portal/galleryFactoryPaint.ts';
 
 const AUTOSYNC_GALLERIES_URL = 'https://api.autosyncstudio.com/galleries';
 const AUTOSYNC_WHEELS_URL = 'https://api.autosyncstudio.com/wheels';
@@ -285,7 +286,7 @@ export async function importAutoSyncGallery(
   const trim = (vehicle.Submodel || '').trim();
   const body = (vehicle.Body || '').trim();
   const staticItem = corvetteGalleryData.find((item) => item.galleryId === slug);
-  const paintColor = (staticItem?.vehicleColor || '').trim();
+  const paintColor = (staticItem?.vehicleColor || proposedFactoryPaint(slug) || '').trim();
   const draft = current ? { ...current } : emptyGallery(slug);
   draft.slug = slug;
   draft.autosyncId = gallery.Id;
