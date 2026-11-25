@@ -121,7 +121,7 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
                   alt={slide.alt}
                   width="1280"
                   height="720"
-                  decoding="async"
+                  decoding={eager ? 'sync' : 'async'}
                   fetchpriority={eager ? 'high' : 'low'}
                   loading={eager ? 'eager' : 'lazy'}
                 />

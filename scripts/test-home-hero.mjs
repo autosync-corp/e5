@@ -58,8 +58,11 @@ assert('banner copy sits on the right away from LiveChat', banner.includes('alig
 assert('mobile front-wheel crop', banner.includes('object-position: 50% 68%') && banner.includes('object-position: 62% 70%') && banner.includes('object-position: 42% 58%'));
 assert('laydown does not leak into other slides', banner.includes('overflow: hidden') && banner.includes('width: 62%'));
 assert('reduced motion freezes viz frames', banner.includes("prefers-reduced-motion: reduce") && banner.includes('.e5-banner-viz-frame'));
-assert('LCP preload uses mobile srcset', src.includes('imagesrcset="/assets/images/banner/bf-sale-400.webp 400w') && src.includes('bf-sale-600.webp 600w') && src.includes('media="(max-width: 1023px)"') && src.includes('fetchpriority="high"'));
-assert('LCP preload 1280 on desktop', src.includes('bf-sale-1280.webp 1280w') && src.includes('media="(min-width: 1024px)"'));
+assert('LCP preload uses mobile AVIF srcset', src.includes('imagesrcset="/assets/images/banner/bf-sale-400.avif 400w') && src.includes('bf-sale-600.avif 600w') && src.includes('bf-sale-800.avif 800w') && src.includes('media="(max-width: 1023px)"') && src.includes('fetchpriority="high"'));
+assert('LCP preload 1280 AVIF on laptop desktop', src.includes('href="/assets/images/banner/bf-sale-1280.avif"') && src.includes('min-width: 1024px') && src.includes('max-width: 1599px'));
+assert('LCP preload 1920 AVIF on wide desktop', src.includes('href="/assets/images/banner/bf-sale-1920.avif"') && src.includes('min-width: 1600px'));
+assert('LCP preload sits at the top of head', layout.includes('<slot name="head" />') && layout.indexOf('<slot name="head" />') < layout.indexOf('rel="icon"'));
+assert('eager banner image decodes sync', banner.includes("decoding={eager ? 'sync' : 'async'}"));
 assert('first slide is eager high priority', banner.includes("eager ? 'high'") && banner.includes("eager ? 'eager' : 'lazy'"));
 assert('fixed 1280x720 on banner imgs', banner.includes('width="1280"') && banner.includes('height="720"'));
 assert('AVIF and WebP srcset', banner.includes('type="image/avif"') && banner.includes('type="image/webp"'));
@@ -70,11 +73,13 @@ assert('dots keep aria-current', banner.includes("aria-current={index === 0 ? 't
 assert('dot hit area is 24px with 10px visible', banner.includes('min-width: 24px') && banner.includes('min-height: 24px') && banner.includes('width: 10px') && banner.includes('height: 10px'));
 assert('non-first slides hydrate from data-srcset', banner.includes('hydrateLazyMedia') && banner.includes('LAZY_PIXEL') && banner.includes('data-srcset={eager ? undefined : pic.avif}'));
 assert('inline all stylesheets', astroCfg.includes("inlineStylesheets: 'always'"));
-assert('e5-defer is a hashed Vite asset', layout.includes("e5-defer.js?url") && !layout.includes('src="/js/e5-defer.js"'));
+assert('e5-defer is a hashed Vite asset', layout.includes("e5-defer.js?url") && !layout.includes('src="/js/e5-defer.js"') && layout.includes('src={e5DeferUrl} defer'));
 assert('js assets are long-cached', vercel.includes('"source": "/js/(.*)"') && vercel.includes('max-age=31536000, immutable'));
 assert('navbar stays idle-hydrated; LiveChat waits longer', layout.includes('client:idle={{ timeout: 3500 }}') && layout.includes('LiveChat client:idle={{ timeout: 12000 }}'));
 assert('nav logo uses 280/560w', navbar.includes('E5_LOGO_WHITE_NAV') && navbar.includes('sizes="233px"'));
 assert('banner srcset includes 400 and 600', responsive.includes('-400.') && responsive.includes('-600.') && responsive.includes('-800.') && responsive.includes('-1920.'));
+assert('desktop banner sizes pick 1280 under 1600px', responsive.includes('(max-width: 1599px) 1280px'));
+assert('e5-defer is at end of body', layout.lastIndexOf('e5DeferUrl') > layout.lastIndexOf('<LiveChat'));
 
 const stems = ['bf-sale', 'gt03-black', 'viz-01', 'viz-02', 'viz-03', 'viz-04', 'film-poster'];
 const widths = [400, 600, 800, 1280, 1920];

@@ -11,7 +11,10 @@ const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4]|film
 const BANNER_SRCSET = (stem: string, ext: 'avif' | 'webp') =>
   `/assets/images/banner/${stem}-400.${ext} 400w, /assets/images/banner/${stem}-600.${ext} 600w, /assets/images/banner/${stem}-800.${ext} 800w, /assets/images/banner/${stem}-1280.${ext} 1280w, /assets/images/banner/${stem}-1920.${ext} 1920w`;
 
-export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
+export function bannerPicture(
+  stem: string,
+  sizes = '(max-width: 1023px) 100vw, (max-width: 1599px) 1280px, 1920px',
+): PictureSources {
   return {
     src: `/assets/images/banner/${stem}-1280.webp`,
     avif: BANNER_SRCSET(stem, 'avif'),

@@ -111,8 +111,8 @@ const homeSeries = [
     slot="head"
     rel="preload"
     as="image"
-    type="image/webp"
-    imagesrcset="/assets/images/banner/bf-sale-400.webp 400w, /assets/images/banner/bf-sale-600.webp 600w, /assets/images/banner/bf-sale-800.webp 800w"
+    type="image/avif"
+    imagesrcset="/assets/images/banner/bf-sale-400.avif 400w, /assets/images/banner/bf-sale-600.avif 600w, /assets/images/banner/bf-sale-800.avif 800w"
     imagesizes="100vw"
     media="(max-width: 1023px)"
     fetchpriority="high"
@@ -121,10 +121,18 @@ const homeSeries = [
     slot="head"
     rel="preload"
     as="image"
-    type="image/webp"
-    imagesrcset="/assets/images/banner/bf-sale-1280.webp 1280w, /assets/images/banner/bf-sale-1920.webp 1920w"
-    imagesizes="100vw"
-    media="(min-width: 1024px)"
+    type="image/avif"
+    href="/assets/images/banner/bf-sale-1280.avif"
+    media="(min-width: 1024px) and (max-width: 1599px)"
+    fetchpriority="high"
+  />
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    href="/assets/images/banner/bf-sale-1920.avif"
+    media="(min-width: 1600px)"
     fetchpriority="high"
   />
   <div class="w-full h-full">
