@@ -52,7 +52,7 @@ assert('rate limit on login', auth.includes('e5:portal:login:') && auth.includes
 assert('users list is extendable', auth.includes('PORTAL_USERS') && docs.includes('e5:portal:users'));
 assert('logout clears portal cookie', logout.includes('clearSessionCookie'));
 assert('coming soon placeholders', portal.includes('Coming soon') && section.includes('Coming soon'));
-assert('planned nav sections', layout.includes('PORTAL_SECTIONS') && read('src/core/portal/sections.ts').includes('Homepage Slides') && read('src/core/portal/sections.ts').includes('GoHighLevel'));
+assert('planned nav sections', layout.includes('PORTAL_SECTIONS') && read('src/core/portal/sections.ts').includes('Homepage Slides') && read('src/core/portal/sections.ts').includes('Sales & Prospects'));
 assert('no price editing in portal', portal.includes('not editable'));
 assert('docs forbid price editing', docs.includes('not editable') && docs.includes('AutoSync'));
 assert('docs plan Upstash live publish', docs.includes('Upstash') && docs.includes('no draft') && docs.includes('e5:portal:slides'));
