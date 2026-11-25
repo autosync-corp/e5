@@ -229,14 +229,14 @@ try {
 
   const dash = await fetch(`${BASE}/portal`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const dashHtml = await dash.text();
-  assert('dashboard renders after login', dash.status === 200 && dashHtml.includes('Dashboard') && dashHtml.includes('Coming soon') && dashHtml.includes('Homepage Slides'));
+  assert('dashboard renders after login', dash.status === 200 && dashHtml.includes('Dashboard') && dashHtml.includes('Galleries') && dashHtml.includes('Homepage Slides'));
   assert('dashboard is no-store', isNoStore(dash));
   assert('dashboard uses site type', dashHtml.includes('Franklin Gothic'));
   assert('dashboard has logout', dashHtml.includes('/portal/logout'));
 
   const soon = await fetch(`${BASE}/portal/galleries`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const soonHtml = await soon.text();
-  assert('section placeholder coming soon', soon.status === 200 && soonHtml.includes('Galleries') && soonHtml.includes('Coming soon'));
+  assert('galleries editor loads', soon.status === 200 && soonHtml.includes('Galleries') && soonHtml.includes('Save changes'));
 
   const unauth = await fetch(`${BASE}/portal/galleries`, { redirect: 'manual' });
   assert('section redirects when logged out', unauth.status === 302);
@@ -270,7 +270,7 @@ try {
     headers: { 'x-forwarded-host': 'portal.e5wheels.com', cookie: hostCookie.split(';')[0] },
   });
   const hostDashHtml = await hostDash.text();
-  assert('portal host /login shows dashboard when signed in', hostDash.status === 200 && hostDashHtml.includes('Dashboard') && hostDashHtml.includes('Coming soon'));
+  assert('portal host /login shows dashboard when signed in', hostDash.status === 200 && hostDashHtml.includes('Dashboard') && hostDashHtml.includes('Galleries'));
 
   for (let i = 0; i < 8; i += 1) {
     await fetch(`${BASE}/portal/login`, {

@@ -39,8 +39,8 @@ export const PORTAL_SECTIONS: PortalSection[] = [
     slug: 'galleries',
     label: 'Galleries',
     path: '/galleries',
-    ready: false,
-    summary: 'Manage Immersive Gallery sets. Live on save via Upstash.',
+    ready: true,
+    summary: 'Show, hide, and reorder vehicle galleries. Saved changes appear on the live gallery within about a minute.',
   },
   {
     slug: 'performance',

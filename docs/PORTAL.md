@@ -139,11 +139,24 @@ Sales & Prospects.
 
 Do not merge until Dave replies **go live**.
 
+## Section 5
+
+Vehicle galleries from AutoSync, with a portal overlay for show/hide and order.
+
+- Portal host: `https://portal.e5wheels.com/galleries`
+- Preview: `/portal/galleries`
+- Public `/gallery/vehicles` and `/gallery/<id>` are SSR. They read E5 galleries from `GET https://api.autosyncstudio.com/galleries` (cached about 5 minutes in memory). Existing `/gallery/<id>` URLs, titles, and SEO stay when a gallery uniquely matches year + part numbers. Unmatched AutoSync galleries get a stable `g-<id>` slug. Static-only slugs still render so nothing 404s.
+- Redis key `e5:portal:galleries` stores order and hidden flags only. First save writes that overlay. Empty Redis = current catalog order, nothing hidden. New AutoSync galleries append at the end, visible, until the client moves or hides them.
+- Photos are not uploaded or edited here — they stay on AutoSync. The portal only controls which galleries appear on e5wheels.com and in what order.
+- `sitemap-galleries.xml` lists the live public galleries (`s-maxage=60`). Hidden galleries drop off the listing, detail pages, and that sitemap.
+- If AutoSync is down, the public pages fall back to the current static gallery data.
+- API key: `PUBLIC_AUTOSYNC_API_KEY` (same as the shop) with fallback `efive`. Add the named env on Vercel if you want a dedicated key; the shop fallback already works.
+
+Do not merge until Dave replies **go live**.
+
 ## Later sections (not in this PR)
 
-| Section | Portal host | Preview |
-|---|---|---|
-| Galleries | `/galleries` | `/portal/galleries` |
+Extra portal users (`e5:portal:users`) can wait.
 
 ## Content storage
 
@@ -157,7 +170,7 @@ Keys (write on save, read at request time):
 - `e5:portal:nav` — header / footer links (Section 3)
 - `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog (Section 4)
 - `e5:portal:sales:v1:{days}` — read-only sales snapshot cache (Section 7, ~5 minutes)
-- `e5:portal:galleries` — immersive gallery sets
+- `e5:portal:galleries` — vehicle gallery order / hidden flags (Section 5)
 - `e5:portal:users` — extra portal users (optional, later)
 
 Public pages keep a code fallback (today’s hardcoded content) and overlay Redis when a key exists. Empty Redis = current site, unchanged.
