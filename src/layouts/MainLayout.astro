@@ -182,7 +182,9 @@ const fbPixelId = tracking.fbPixelId || '';
         });
       });
     </script>
-    <Navbar client:idle={{ timeout: 3500 }} transition:persist items={headerItems} fingerprint={navFp} />
+    <!-- client:load, not idle: Safari often never fires requestIdleCallback, so
+         the hamburger stays a dead button until the island hydrates. -->
+    <Navbar client:load transition:persist items={headerItems} fingerprint={navFp} />
     <div style="min-height: 100dvh; background-color: #ffffff">
       <main class="mt-107">
         <slot />
