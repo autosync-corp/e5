@@ -9,6 +9,10 @@ const seed = readFileSync(join(root, 'src/core/portal/slides.ts'), 'utf8');
 const copy = banner + seed;
 const vercel = readFileSync(join(root, 'vercel.json'), 'utf8');
 const fonts = readFileSync(join(root, 'src/assets/fonts/fonts.css'), 'utf8');
+const astroCfg = readFileSync(join(root, 'astro.config.mjs'), 'utf8');
+const layout = readFileSync(join(root, 'src/layouts/MainLayout.astro'), 'utf8');
+const navbar = readFileSync(join(root, 'src/core/components/Navbar.vue'), 'utf8');
+const responsive = readFileSync(join(root, 'src/core/utils/responsiveSrc.ts'), 'utf8');
 
 let failed = 0;
 function assert(label, ok) {
@@ -43,7 +47,7 @@ assert('credits billing block', copy.includes('E5 WHEELS presents') && copy.incl
 assert('Miami Vice neon accents', banner.includes('#ff2e88') && banner.includes('#00e5d4') && banner.includes('e5-poster-grid') && banner.includes('e5-poster-rule'));
 assert('Bebas Neue is self-hosted and poster-scoped', fonts.includes("font-family: 'Bebas Neue'") && fonts.includes('/assets/fonts/bebas-neue.woff2') && banner.includes('.e5-banner-slide.is-poster') && banner.includes("font-family: 'Bebas Neue'"));
 assert('Yellowtail is self-hosted and poster-scoped', fonts.includes("font-family: 'Yellowtail'") && fonts.includes('/assets/fonts/yellowtail.woff2') && banner.includes("font-family: 'Yellowtail'") && !fonts.includes('Mr Dafoe'));
-assert('unaltered E5 wordmark on the poster', banner.includes('E5_LOGO_WHITE') && banner.includes('e5-poster-logo'));
+assert('unaltered E5 wordmark on the poster', banner.includes('E5_LOGO_WHITE_NAV') && banner.includes('e5-poster-logo'));
 assert('film CTA is a button not a link', banner.includes('data-film-open') && banner.includes('type="button"') && banner.includes('e5-poster-cta'));
 assert('visualizer cycle uses real C8 combos', banner.includes('Torch Red') && banner.includes('Daytona Gloss Black') && banner.includes('Arctic White') && banner.includes('Sebring Titanium') && banner.includes('Rapid Blue') && banner.includes('Speedway Chrome') && banner.includes('Bronze Brushed Tint'));
 assert('viz extra frames lazy data-srcset', banner.includes('data-viz-cycle') && banner.includes('data-srcset') && banner.includes('vizHoldMs') && banner.includes('3000'));
@@ -54,16 +58,31 @@ assert('banner copy sits on the right away from LiveChat', banner.includes('alig
 assert('mobile front-wheel crop', banner.includes('object-position: 50% 68%') && banner.includes('object-position: 62% 70%') && banner.includes('object-position: 42% 58%'));
 assert('laydown does not leak into other slides', banner.includes('overflow: hidden') && banner.includes('width: 62%'));
 assert('reduced motion freezes viz frames', banner.includes("prefers-reduced-motion: reduce") && banner.includes('.e5-banner-viz-frame'));
-assert('LCP preload 800 on mobile', src.includes('href="/assets/images/banner/bf-sale-800.webp"') && src.includes('media="(max-width: 1023px)"'));
-assert('LCP preload 1280 on desktop', src.includes('href="/assets/images/banner/bf-sale-1280.webp"') && src.includes('media="(min-width: 1024px)"'));
+assert('LCP preload uses mobile AVIF srcset', src.includes('imagesrcset="/assets/images/banner/bf-sale-400.avif 400w') && src.includes('bf-sale-600.avif 600w') && src.includes('bf-sale-800.avif 800w') && src.includes('media="(max-width: 1023px)"') && src.includes('fetchpriority="high"'));
+assert('LCP preload 1280 AVIF on laptop desktop', src.includes('href="/assets/images/banner/bf-sale-1280.avif"') && src.includes('min-width: 1024px') && src.includes('max-width: 1599px'));
+assert('LCP preload 1920 AVIF on wide desktop', src.includes('href="/assets/images/banner/bf-sale-1920.avif"') && src.includes('min-width: 1600px'));
+assert('LCP preload sits at the top of head', layout.includes('<slot name="head" />') && layout.indexOf('<slot name="head" />') < layout.indexOf('rel="icon"'));
+assert('eager banner image decodes sync', banner.includes("decoding={eager ? 'sync' : 'async'}"));
 assert('first slide is eager high priority', banner.includes("eager ? 'high'") && banner.includes("eager ? 'eager' : 'lazy'"));
 assert('fixed 1280x720 on banner imgs', banner.includes('width="1280"') && banner.includes('height="720"'));
 assert('AVIF and WebP srcset', banner.includes('type="image/avif"') && banner.includes('type="image/webp"'));
 assert('arrows dots swipe keyboard autoplay', banner.includes('data-prev') && banner.includes('data-next') && banner.includes('data-dot') && banner.includes('pointerdown') && banner.includes('ArrowLeft') && banner.includes('6000') && banner.includes('prefers-reduced-motion'));
 assert('no Vue carousel island', !banner.includes('client:') && !src.includes('client:load'));
+assert('dots are a group not a tablist', banner.includes('role="group"') && banner.includes('aria-label="Choose slide"') && !banner.includes('role="tablist"') && !banner.includes('role="tab"'));
+assert('dots keep aria-current', banner.includes("aria-current={index === 0 ? 'true' : 'false'}") && banner.includes("aria-current', d === 0 ? 'true' : 'false'"));
+assert('dot hit area is 24px with 10px visible', banner.includes('min-width: 24px') && banner.includes('min-height: 24px') && banner.includes('width: 10px') && banner.includes('height: 10px'));
+assert('non-first slides hydrate from data-srcset', banner.includes('hydrateLazyMedia') && banner.includes('LAZY_PIXEL') && banner.includes('data-srcset={eager ? undefined : pic.avif}'));
+assert('inline all stylesheets', astroCfg.includes("inlineStylesheets: 'always'"));
+assert('e5-defer is a hashed Vite asset', layout.includes("e5-defer.js?url") && !layout.includes('src="/js/e5-defer.js"') && layout.includes('src={e5DeferUrl} defer'));
+assert('js assets are long-cached', vercel.includes('"source": "/js/(.*)"') && vercel.includes('max-age=31536000, immutable'));
+assert('navbar stays idle-hydrated; LiveChat waits longer', layout.includes('client:idle={{ timeout: 3500 }}') && layout.includes('LiveChat client:idle={{ timeout: 12000 }}'));
+assert('nav logo uses 280/560w', navbar.includes('E5_LOGO_WHITE_NAV') && navbar.includes('sizes="233px"'));
+assert('banner srcset includes 400 and 600', responsive.includes('-400.') && responsive.includes('-600.') && responsive.includes('-800.') && responsive.includes('-1920.'));
+assert('desktop banner sizes pick 1280 under 1600px', responsive.includes('(max-width: 1599px) 1280px'));
+assert('e5-defer is at end of body', layout.lastIndexOf('e5DeferUrl') > layout.lastIndexOf('<LiveChat'));
 
 const stems = ['bf-sale', 'gt03-black', 'viz-01', 'viz-02', 'viz-03', 'viz-04', 'film-poster'];
-const widths = [800, 1280, 1920];
+const widths = [400, 600, 800, 1280, 1920];
 for (const stem of stems) {
   for (const width of widths) {
     assert(`${stem}-${width}.webp`, existsSync(join(root, `public/assets/images/banner/${stem}-${width}.webp`)));
@@ -74,6 +93,7 @@ for (const width of [800, 1200, 1500]) {
   assert(`gt03-laydown-${width}.webp`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.webp`)));
   assert(`gt03-laydown-${width}.avif`, existsSync(join(root, `public/assets/images/banner/gt03-laydown-${width}.avif`)));
 }
+assert('llms.txt has H1 and links', existsSync(join(root, 'public/llms.txt')) && readFileSync(join(root, 'public/llms.txt'), 'utf8').startsWith('# E5 Wheels') && readFileSync(join(root, 'public/llms.txt'), 'utf8').includes('https://www.e5wheels.com/shop'));
 assert('bebas-neue.woff2', existsSync(join(root, 'public/assets/fonts/bebas-neue.woff2')));
 assert('Bebas Neue OFL', existsSync(join(root, 'public/assets/fonts/OFL-BebasNeue.txt')));
 assert('yellowtail.woff2', existsSync(join(root, 'public/assets/fonts/yellowtail.woff2')));

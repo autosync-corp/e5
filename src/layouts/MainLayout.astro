@@ -5,6 +5,7 @@ import LiveChat from '@/core/components/LiveChat.vue';
 import { Redis } from '@upstash/redis';
 import '@/assets/main.css';
 import '@/assets/fonts/fonts.css';
+import e5DeferUrl from '@/assets/js/e5-defer.js?url';
 import { SITE_URL } from '@/core/constants/Site.ts';
 import { loadSiteNav, navFingerprint, visibleHeaderItems } from '@/core/portal/nav.ts';
 
@@ -81,13 +82,14 @@ const fbPixelId = tracking.fbPixelId || '';
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light" />
     <meta name="theme-color" content="#ffffff" />
+    <!-- LCP preload from the page must sit before icons/JSON-LD so the
+         banner image starts during HTML download, not after. -->
+    <slot name="head" />
 
-    <!-- gtag stub queues events immediately; gtag.js / GTM / pixel / blog fonts load after idle via /js/e5-defer.js -->
+    <!-- gtag stub queues events immediately; gtag.js / GTM / pixel / blog fonts load after idle via hashed e5-defer.js -->
     {gaId && <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${gaId}');`} />}
     <link rel="icon" type="image/webp" href="/assets/images/e5-logo-short.webp">
-    <link rel="icon" type="image/png" href="/assets/images/e5-logo-short.png">
     <link rel="apple-touch-icon" href="/assets/images/e5-logo-short.png">
-    <link rel="shortcut icon" href="/assets/images/e5-logo-short.png">
     {blogFonts && (
       <>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,7 +103,6 @@ const fbPixelId = tracking.fbPixelId || '';
       type="font/woff2"
       crossorigin
     />
-    <script is:inline src="/js/e5-defer.js" defer></script>
 
     <!-- SEO Meta Tags -->
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
@@ -123,7 +124,6 @@ const fbPixelId = tracking.fbPixelId || '';
     <meta name="twitter:image" content={ogImage} />
 
     <title>{title}</title>
-    <slot name="head" />
 
     <!-- Organization + LocalBusiness JSON-LD -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify({
@@ -189,7 +189,8 @@ const fbPixelId = tracking.fbPixelId || '';
       </main>
     </div>
     <Footer />
-    <LiveChat client:idle />
+    <LiveChat client:idle={{ timeout: 12000 }} />
+    <script is:inline src={e5DeferUrl} defer></script>
   </body>
 </html>
 

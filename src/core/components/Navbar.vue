@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from 'vue';
-import { CART_ICON, E5_LOGO_WHITE } from '@/core/constants/App.ts';
+import { CART_ICON, E5_LOGO_WHITE_NAV, E5_LOGO_WHITE_NAV_SRCSET } from '@/core/constants/App.ts';
 import { HOME_ROUTE } from '@/core/constants/Routes.ts';
 import { CartManager } from '@/core/services/ProductService.ts';
 import MiniCart from '@/core/components/MiniCart.vue';
@@ -185,7 +185,7 @@ const closeMiniCart = () => {
 
         <div class="flex justify-center items-center px-2 xl:px-4 2xl:px-6">
           <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
-            <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" width="1191" height="102" style="aspect-ratio: 35/3" />
+            <img :src="E5_LOGO_WHITE_NAV" :srcset="E5_LOGO_WHITE_NAV_SRCSET" sizes="(max-width: 1279px) 210px, 280px" alt="E5 Wheels" class="max-h-[18px] xl:max-h-[20px] 2xl:max-h-[24px] w-auto" width="560" height="48" style="aspect-ratio: 35/3" decoding="async" />
           </a>
         </div>
 
@@ -217,7 +217,7 @@ const closeMiniCart = () => {
             <a v-else :href="item.href" class="nav-link" :class="{'selected': isSelected(item)}">{{ item.label }}</a>
           </template>
           <button @click="toggleMiniCart" class="relative min-h-11 min-w-11" aria-label="Open cart">
-            <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" />
+            <img :src="CART_ICON" alt="Cart" class="w-[26px] xl:w-[28px] 2xl:w-[32px] h-auto cursor-pointer hover:opacity-80 transition-opacity" width="32" height="26" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
             </span>
@@ -229,7 +229,7 @@ const closeMiniCart = () => {
     <!-- Mobile Navigation -->
     <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
       <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
-        <img :src="E5_LOGO_WHITE" alt="E5 Wheels" class="max-h-[20px] w-auto" width="1191" height="102" />
+        <img :src="E5_LOGO_WHITE_NAV" :srcset="E5_LOGO_WHITE_NAV_SRCSET" sizes="233px" alt="E5 Wheels" class="max-h-[20px] w-auto" width="560" height="48" decoding="async" />
       </a>
 
       <button @click="toggleMobileMenu" class="hamburger-btn min-h-12 min-w-12" aria-label="Toggle menu" :aria-expanded="isMobileMenuOpen">
@@ -274,7 +274,7 @@ const closeMiniCart = () => {
         </template>
         <div class="flex justify-center mt-8">
           <button @click="toggleMiniCart(); closeMobileMenu();" class="relative min-h-11 min-w-11" aria-label="Open cart">
-            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" />
+            <img :src="CART_ICON" alt="Cart" class="h-[26.503px] w-[32.109px] cursor-pointer hover:opacity-80 transition-opacity" width="32" height="27" />
             <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-e5-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {{ cartItemCount }}
             </span>

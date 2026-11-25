@@ -1,5 +1,5 @@
 /**
- * Crop homepage banner photos to 16:9 and emit 800/1280/1920 WebP+AVIF.
+ * Crop homepage banner photos to 16:9 and emit 400/600/800/1280/1920 WebP+AVIF.
  * Slide sources:
  *  1. gallery/corvette/2025-c8-stingray-blue-sebring-gloss-black/0.webp
  *  2. visualizer frames: scripts/generate-banner-viz-frames.py
@@ -34,7 +34,7 @@ async function crop16x9(input, position = 'south') {
   return img.extract(extract);
 }
 
-async function variants(pipeline, stem, widths = [800, 1280, 1920]) {
+async function variants(pipeline, stem, widths = [400, 600, 800, 1280, 1920]) {
   const buf = await pipeline.toBuffer();
   for (const width of widths) {
     const resized = sharp(buf).resize({

@@ -12,6 +12,10 @@ export const E5_LOGO_BLACK = "/assets/images/e5-wheels-alt-logo-black.webp";
  *  decode the lossy VP8+ALPH WebP (transparent-black fringe on the final S). */
 export const E5_LOGO_BLACK_PNG = "/assets/images/e5-wheels-alt-logo-black.png";
 export const E5_LOGO_WHITE = "/assets/images/e5-wheels-logo-white.webp";
+/** Nav lockup: 280/560w so a 233×20 mobile logo is not a 1191px download. */
+export const E5_LOGO_WHITE_NAV = "/assets/images/opt/e5-wheels-logo-white-560.webp";
+export const E5_LOGO_WHITE_NAV_SRCSET =
+  "/assets/images/opt/e5-wheels-logo-white-280.webp 280w, /assets/images/opt/e5-wheels-logo-white-560.webp 560w";
 export const E5_LOGO_WHITE_SHORT = "/assets/images/e5-logo-short.webp";
 export const E5_BLACK_RED_DRAW = "/assets/images/asset-29.webp";
 export const PIN_BLACK_ICON="/assets/images/pin-icon-black.webp";
