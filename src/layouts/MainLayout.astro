@@ -182,7 +182,9 @@ const fbPixelId = tracking.fbPixelId || '';
         });
       });
     </script>
-    <Navbar client:idle={{ timeout: 3500 }} transition:persist items={headerItems} fingerprint={navFp} />
+    <!-- client:load, not idle: Safari often never fires requestIdleCallback, so
+         the hamburger stays a dead button until the island hydrates. -->
+    <Navbar client:load transition:persist items={headerItems} fingerprint={navFp} />
     <div style="min-height: 100dvh; background-color: #ffffff">
       <main class="mt-107">
         <slot />
@@ -229,7 +231,22 @@ nav.fixed.top-0 {
 .mobile-nav { display: none; }
 @media (max-width: 1024px) {
   .desktop-nav { display: none; }
-  .mobile-nav { display: flex; }
+  .mobile-nav {
+    display: grid;
+    grid-template-columns: minmax(3rem, 1fr) minmax(0, auto) minmax(3rem, 1fr);
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .mobile-nav .mobile-logo {
+    grid-column: 2;
+    justify-self: center;
+    max-width: 100%;
+  }
+  .mobile-nav .hamburger-btn {
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 main.mt-107 {
   margin-top: 107px;

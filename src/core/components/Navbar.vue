@@ -226,10 +226,13 @@ const closeMiniCart = () => {
       </div>
     </div>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav w-full h-full flex items-center justify-between px-6">
-      <a :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
-        <img :src="E5_LOGO_WHITE_NAV" :srcset="E5_LOGO_WHITE_NAV_SRCSET" sizes="233px" alt="E5 Wheels" class="max-h-[20px] w-auto" width="560" height="48" decoding="async" />
+    <!-- Mobile Navigation: 3-column grid so the logo is centered on the
+         full header width (as if the hamburger were not there). Side
+         columns stay equal and at least 3rem so the 48px tap target
+         never overlaps the lockup. -->
+    <div class="mobile-nav w-full h-full">
+      <a class="mobile-logo" :href="HOME_ROUTE" aria-label="E5 Wheels - Home">
+        <img :src="E5_LOGO_WHITE_NAV" :srcset="E5_LOGO_WHITE_NAV_SRCSET" sizes="233px" alt="E5 Wheels" class="max-h-[20px] w-auto max-w-full" width="560" height="48" decoding="async" />
       </a>
 
       <button @click="toggleMobileMenu" class="hamburger-btn min-h-12 min-w-12" aria-label="Toggle menu" :aria-expanded="isMobileMenuOpen">
@@ -448,6 +451,20 @@ const closeMiniCart = () => {
   display: none;
 }
 
+.mobile-logo {
+  grid-column: 2;
+  justify-self: center;
+  max-width: 100%;
+}
+
+.mobile-logo img {
+  display: block;
+  max-height: 20px;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
 /* Mobile Navigation */
 @media (max-width: 1024px) {
   .desktop-nav {
@@ -455,7 +472,17 @@ const closeMiniCart = () => {
   }
 
   .mobile-nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(3rem, 1fr) minmax(0, auto) minmax(3rem, 1fr);
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .hamburger-btn {
+    grid-column: 3;
+    justify-self: end;
+    z-index: 1;
   }
 }
 
