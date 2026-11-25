@@ -19,6 +19,9 @@ const vehicleData = await loadGalleryBySlug(slug);
 if (!vehicleData || !vehicleData.galleryId) {
   return new Response('Not found', { status: 404 });
 }
+if (vehicleData.galleryId !== slug) {
+  return Astro.redirect(`/gallery/${vehicleData.galleryId}`, 301);
+}
 
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
 

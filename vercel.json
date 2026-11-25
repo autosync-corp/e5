@@ -181,7 +181,25 @@
       ]
     },
     {
+      "source": "/sitemap-gallery-images.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
       "source": "/gallery-media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/gallery/:slug/:file(.*\\.(webp|jpg|jpeg|png))",
       "headers": [
         {
           "key": "Cache-Control",

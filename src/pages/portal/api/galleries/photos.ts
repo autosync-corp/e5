@@ -47,7 +47,7 @@ export const POST: APIRoute = async ({ cookies, request }) => {
   const slug = String(form.get('slug') || 'draft')
     .toLowerCase()
     .replace(/[^a-z0-9._-]/g, '')
-    .slice(0, 80);
+    .slice(0, 120);
   if (!isValidGallerySlug(slug)) return jsonError(400, 'Invalid gallery id.');
 
   try {

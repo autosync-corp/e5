@@ -2,13 +2,13 @@ export const GALLERY_STORE_VERSION = 1;
 export const GALLERY_INDEX_KEY = 'e5:galleries:index';
 export const GALLERY_SYNC_KEY = 'e5:galleries:sync';
 export const GALLERY_MEDIA_PREFIX = 'gallery-media';
-export const GALLERY_PUBLIC_PREFIX = '/gallery-media';
+export const GALLERY_PUBLIC_PREFIX = '/gallery';
 export const MAX_GALLERY_TITLE = 160;
 export const MAX_GALLERY_DESCRIPTION = 800;
 export const MAX_GALLERY_ALT = 180;
 export const MAX_GALLERY_PHOTOS = 40;
 export const MAX_GALLERY_IMAGE_BYTES = 8 * 1024 * 1024;
-export const MAX_GALLERY_SLUG = 80;
+export const MAX_GALLERY_SLUG = 120;
 export const SYNC_BATCH = 3;
 
 export function galleryItemKey(slug: string): string {
@@ -40,6 +40,7 @@ export type GalleryClientEdited = {
   wheels?: boolean;
   vehicle?: boolean;
   youtube?: boolean;
+  slug?: boolean;
   alts?: Record<string, boolean>;
 };
 
@@ -66,6 +67,7 @@ export type StoredGallery = {
   updatedAt: string;
   autosyncUpdatedAt: string;
   autosyncImgUpdatedAt: string;
+  previousSlugs: string[];
   clientEdited: GalleryClientEdited;
 };
 
@@ -123,6 +125,7 @@ export function emptyGallery(slug = ''): StoredGallery {
     updatedAt: now,
     autosyncUpdatedAt: '',
     autosyncImgUpdatedAt: '',
+    previousSlugs: [],
     clientEdited: {},
   };
 }

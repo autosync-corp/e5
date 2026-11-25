@@ -6,8 +6,10 @@ import {
   loadGalleryIndex,
   loadStoredGallery,
   saveStoredGallery,
+  seoSlugFromGalleryFields,
   slugifyGalleryTitle,
 } from '@/core/portal/galleryStore.ts';
+import { RESERVED_GALLERY_SLUGS } from '@/core/portal/gallerySeo.ts';
 import { emptyGallery } from '@/core/portal/galleryTypes.ts';
 import { generationFromYear, suggestGalleryDescription, suggestGalleryTitle } from '@/core/portal/galleryCopy.ts';
 import { bustGalleryCatalogCache, loadGalleryCatalog, type GalleryRecord } from '@/core/portal/galleries.ts';
@@ -24,10 +26,11 @@ async function uniqueSlug(base: string): Promise<string> {
   for (const item of corvetteGalleryData) {
     if (item.galleryId) index.add(item.galleryId);
   }
+  for (const reserved of RESERVED_GALLERY_SLUGS) index.add(reserved);
   let slug = base || 'gallery';
   let n = 2;
   while (index.has(slug) || slug === 'new' || (await loadStoredGallery(slug))) {
-    slug = `${base.slice(0, 70)}-${n}`;
+    slug = `${base.slice(0, 110)}-${n}`;
     n += 1;
   }
   return slug;
@@ -92,24 +95,39 @@ export const POST: APIRoute = async ({ cookies, request }) => {
   }
 
   const title = String(body.title || '').trim();
-  let slug = String(body.slug || slugifyGalleryTitle(title) || 'gallery')
-    .toLowerCase()
-    .replace(/[^a-z0-9._-]/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 80);
-  if (!isValidGallerySlug(slug) || slug === 'new') return jsonError(400, 'Invalid gallery id.');
-  slug = await uniqueSlug(slug);
   const year = String(body.year || '').trim();
+  const generation = String(body.generation || generationFromYear(year));
+  const trim = String(body.trim || '');
+  const color = String(body.vehicleColor || '');
+  const front = (body.front as { style?: string; finish?: string } | undefined) || {};
+  const taken = new Set(await loadGalleryIndex());
+  for (const item of corvetteGalleryData) {
+    if (item.galleryId) taken.add(item.galleryId);
+  }
+  const requested = String(body.slug || '').trim();
+  let slug = requested
+    ? requested.toLowerCase().replace(/[^a-z0-9._-]/g, '-').replace(/^-+|-+$/g, '').slice(0, 120)
+    : seoSlugFromGalleryFields({
+        year,
+        vehicleColor: color,
+        generation,
+        trim,
+        style: front.style,
+        finish: front.finish,
+        taken,
+      }) || slugifyGalleryTitle(title) || 'gallery';
+  if (!isValidGallerySlug(slug) || slug === 'new' || RESERVED_GALLERY_SLUGS.has(slug)) return jsonError(400, 'Invalid gallery id.');
+  slug = await uniqueSlug(slug);
   const draft = emptyGallery(slug);
   const saved = await saveStoredGallery(
     applyClientEdits(draft, {
       ...draft,
-      title: title || suggestGalleryTitle({ year, generation: generationFromYear(year), trim: String(body.trim || '') }),
+      title: title || suggestGalleryTitle({ year, generation, trim, vehicleColor: color, style: front.style, finish: front.finish }),
       year,
-      generation: String(body.generation || generationFromYear(year)),
-      trim: String(body.trim || ''),
+      generation,
+      trim,
       body: String(body.body || ''),
-      vehicleColor: String(body.vehicleColor || ''),
+      vehicleColor: color,
       description: String(body.description || ''),
       front: (body.front as typeof draft.front) || draft.front,
       rear: (body.rear as typeof draft.rear) || draft.rear,
@@ -125,6 +143,7 @@ export const POST: APIRoute = async ({ cookies, request }) => {
       wheels: true,
       photos: Array.isArray(body.photos),
       youtube: Boolean(body.youtubeId),
+      slug: Boolean(requested),
     }),
   );
   bustGalleryCatalogCache();

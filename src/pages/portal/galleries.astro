@@ -5,6 +5,7 @@ import PortalLayout from '@/layouts/PortalLayout.astro';
 import { readSession } from '@/core/portal/auth.ts';
 import { isPortalHost, portalHref } from '@/core/portal/host.ts';
 import { loadPortalGalleries } from '@/core/portal/galleries.ts';
+import { publicSlugFor } from '@/core/portal/gallerySeo.ts';
 import { loadSyncState } from '@/core/portal/galleryStore.ts';
 import { blobConfigured } from '@/core/portal/slides.ts';
 import { redisConfigured } from '@/core/portal/posts.ts';
@@ -173,7 +174,7 @@ const hasUnspecifiedColor = items.some((item) => !item.vehicleColor);
               <p class="note">
                 {[item.year, item.generation, item.trim, item.vehicleColor, item.wheelStyle || 'Style not set'].filter(Boolean).join(' · ')}
                 {' · '}
-                /gallery/{item.id}
+                /gallery/{publicSlugFor(item.id)}
               </p>
               <div class="actions">
                 <button type="button" class="btn ghost" data-up>Move up</button>

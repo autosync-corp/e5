@@ -8,6 +8,7 @@ import { galleryCoverUrl } from '@/pages/gallery/utils/galleryMedia.ts';
 import { sortGalleryItems } from '@/pages/gallery/utils/sortGallery.ts';
 import { loadStoredGalleries, mergeStoredCatalog } from '@/core/portal/galleryStore.ts';
 import { suggestGalleryTitle } from '@/core/portal/galleryCopy.ts';
+import { internalSlugFor, projectGalleryForPublic, publicSlugFor } from '@/core/portal/gallerySeo.ts';
 
 export const GALLERIES_REDIS_KEY = 'e5:portal:galleries';
 export const GALLERIES_DOC_VERSION = 1;
@@ -267,7 +268,7 @@ function mapAutoSyncGallery(
     finish: wheelFinish || undefined,
   });
   return {
-    galleryId: `g-${gallery.Id}`,
+    galleryId: `g-${gallery.Id}`, // first-party import assigns a descriptive slug; this fallback is unmatched AutoSync only
     dateAdded: isoDate(gallery.ImgUpdatedAt) || isoDate(gallery.UpdatedAt),
     year,
     submodel: generation,
@@ -497,7 +498,17 @@ function toPortalRow(item: GalleryRecord & { hidden: boolean }): PortalGalleryRo
 export async function loadPublicGalleries(): Promise<CorvetteGalleryItem[]> {
   const catalog = await loadGalleryCatalog();
   const overlay = await loadOverlay();
-  return applyOverlay(catalog, overlay).filter((item) => !item.hidden);
+  return applyOverlay(catalog, overlay)
+    .filter((item) => !item.hidden)
+    .map((item) => projectGalleryForPublic(item));
+}
+
+function matchGallerySlug(item: GalleryRecord, slug: string): boolean {
+  if (!item.galleryId) return false;
+  if (item.galleryId === slug) return true;
+  if (publicSlugFor(item.galleryId) === slug) return true;
+  if (internalSlugFor(slug) === item.galleryId) return true;
+  return false;
 }
 
 export async function loadGalleryBySlug(slug: string): Promise<CorvetteGalleryItem | null> {
@@ -505,9 +516,9 @@ export async function loadGalleryBySlug(slug: string): Promise<CorvetteGalleryIt
   const catalog = await loadGalleryCatalog();
   const overlay = await loadOverlay();
   const ordered = applyOverlay(catalog, overlay);
-  const found = ordered.find((item) => item.galleryId === slug);
+  const found = ordered.find((item) => matchGallerySlug(item, slug));
   if (!found || found.hidden) return null;
-  return found;
+  return projectGalleryForPublic(found);
 }
 
 export async function loadPortalGalleries(): Promise<{ items: PortalGalleryRow[]; source: 'redis' | 'catalog' }> {

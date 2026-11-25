@@ -44,7 +44,7 @@ const vercel = read('vercel.json');
 const KNOWN_SLUG = '2025-c8-stingray-blue-sebring-gloss-black';
 
 assert('store keys are first-party redis documents', types.includes("GALLERY_INDEX_KEY = 'e5:galleries:index'") && types.includes('e5:galleries:item:'));
-assert('photos use gallery-media public paths', types.includes("GALLERY_PUBLIC_PREFIX = '/gallery-media'") && photos.includes('putGalleryPhoto') && media.includes('blobUrl'));
+assert('photos use /gallery public paths', types.includes("GALLERY_PUBLIC_PREFIX = '/gallery'") && photos.includes('putGalleryPhoto') && media.includes('redirect(dest, 301)'));
 assert('client edits are not overwritten by sync', sync.includes('clientEdited') && sync.includes('if (!draft.clientEdited.title)') && sync.includes('if (!draft.clientEdited.photos)'));
 assert('store wins by slug and deleted slugs drop from fallback', store.includes('mergeStoredCatalog') && store.includes('deleted.has(id)') && store.includes("catalogSource: 'store'"));
 assert('sync keeps claimed slugs across batches', sync.includes('loadStoredGalleries') && sync.includes('byAutosyncId'));
@@ -116,8 +116,8 @@ assert(
     '2025 C8 Z06 with E5 Talladega Gloss Black wheels',
 );
 assert('public pages still SSR from catalog helpers', publicDetail.includes('loadGalleryBySlug') && publicIndex.includes('loadPublicGalleries') && helper.includes('mergeStoredCatalog'));
-assert('existing slug matching stays', helper.includes('pickUniqueStatic') && helper.includes('g-${gallery.Id}'));
-assert('docs describe store blob cron and CRON_SECRET', docs.includes('e5:galleries:index') && docs.includes('BLOB_READ_WRITE_TOKEN') && docs.includes('CRON_SECRET') && docs.includes('/gallery-media/'));
+assert('existing slug matching stays', helper.includes('pickUniqueStatic') && helper.includes('unmatched AutoSync'));
+assert('docs describe store blob cron and CRON_SECRET', docs.includes('e5:galleries:index') && docs.includes('BLOB_READ_WRITE_TOKEN') && docs.includes('CRON_SECRET') && docs.includes('/gallery/{slug}/{slug}-1.webp'));
 assert('public pages have no portal add form', !publicDetail.includes('data-drop') && !publicIndex.includes('Import from AutoSync'));
 
 const password = 'portal-test-pass';
@@ -190,8 +190,11 @@ try {
       !detailHtml.includes('Not found'),
   );
 
-  const mediaMissing = await fetch(`${BASE}/gallery-media/not-a-gallery/p1.webp`);
-  assert('missing gallery-media is 404', mediaMissing.status === 404);
+  const mediaMissing = await fetch(`${BASE}/gallery-media/not-a-gallery/p1.webp`, { redirect: 'manual' });
+  assert(
+    'missing gallery-media 301s onto /gallery or 404s',
+    mediaMissing.status === 301 || mediaMissing.status === 404,
+  );
 
   const cronUnauth = await fetch(`${BASE}/api/cron/galleries`);
   assert('cron is 401 without bearer', cronUnauth.status === 401);

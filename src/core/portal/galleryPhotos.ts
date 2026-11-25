@@ -6,6 +6,7 @@ import {
   MAX_GALLERY_IMAGE_BYTES,
   type StoredGalleryPhoto,
 } from '@/core/portal/galleryTypes.ts';
+import { nextDescriptivePhotoId } from '@/core/portal/gallerySeo.ts';
 
 export const GALLERY_IMAGE_TYPES: Record<string, string> = {
   'image/jpeg': 'jpg',
@@ -23,7 +24,8 @@ export function galleryImageExtFromMagic(bytes: Uint8Array): string | null {
   return null;
 }
 
-export function newPhotoId(): string {
+export function newPhotoId(slug = 'gallery', existing: StoredGalleryPhoto[] = []): string {
+  if (slug) return nextDescriptivePhotoId(slug, existing);
   return `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
 }
 
@@ -44,6 +46,7 @@ export async function putGalleryPhoto(opts: {
   ext: string;
   alt?: string;
   sourcePath?: string;
+  existing?: StoredGalleryPhoto[];
 }): Promise<StoredGalleryPhoto> {
   if (!blobConfigured()) {
     throw new Error('Vercel Blob is not configured. Add BLOB_READ_WRITE_TOKEN.');
@@ -51,7 +54,7 @@ export async function putGalleryPhoto(opts: {
   if (opts.bytes.byteLength > MAX_GALLERY_IMAGE_BYTES) {
     throw new Error(`Image is too large (max ${MAX_GALLERY_IMAGE_BYTES / (1024 * 1024)} MB).`);
   }
-  const photoId = opts.photoId || newPhotoId();
+  const photoId = opts.photoId || newPhotoId(opts.slug, opts.existing || []);
   const ext = opts.ext;
   const blobPath = `${GALLERY_MEDIA_PREFIX}/${opts.slug}/${photoId}.${ext}`;
   const contentType = contentTypeFor(ext);
@@ -76,6 +79,7 @@ export async function copyRemotePhoto(opts: {
   sourcePath?: string;
   alt?: string;
   photoId?: string;
+  existing?: StoredGalleryPhoto[];
 }): Promise<StoredGalleryPhoto> {
   const res = await fetch(opts.url, {
     headers: { 'User-Agent': 'E5Portal/1.0', Accept: 'image/webp,image/jpeg,image/png,*/*' },
@@ -93,6 +97,7 @@ export async function copyRemotePhoto(opts: {
     ext,
     alt: opts.alt,
     sourcePath: opts.sourcePath,
+    existing: opts.existing,
   });
 }
 

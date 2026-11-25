@@ -17,6 +17,7 @@ import {
   type StoredGalleryPhoto,
 } from '@/core/portal/galleryTypes.ts';
 import { generationFromYear, youtubeIdFromInput } from '@/core/portal/galleryCopy.ts';
+import { proposedSeoSlug, uniqueSeoSlug } from '@/core/portal/gallerySeo.ts';
 import type { CorvetteGalleryItem } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 export type StoredGalleryRecord = CorvetteGalleryItem & {
@@ -43,7 +44,7 @@ function asWheel(raw: unknown): GalleryWheelPick {
 function asPhoto(raw: unknown): StoredGalleryPhoto | null {
   if (!raw || typeof raw !== 'object') return null;
   const row = raw as StoredGalleryPhoto;
-  const id = clip(row.id, 40);
+  const id = clip(row.id, 160);
   const publicPath = clip(row.publicPath, 300);
   const blobUrl = clip(row.blobUrl, 500);
   const blobPath = clip(row.blobPath, 300);
@@ -88,6 +89,9 @@ export function parseStoredGallery(raw: unknown): StoredGallery | null {
     updatedAt: clip(row.updatedAt, 40) || new Date().toISOString(),
     autosyncUpdatedAt: clip(row.autosyncUpdatedAt, 40),
     autosyncImgUpdatedAt: clip(row.autosyncImgUpdatedAt, 40),
+    previousSlugs: Array.isArray(row.previousSlugs)
+      ? row.previousSlugs.map((slug) => clip(slug, MAX_GALLERY_SLUG)).filter((slug) => ID_RE.test(slug))
+      : [],
     clientEdited: {
       title: Boolean(clientEdited.title),
       description: Boolean(clientEdited.description),
@@ -95,6 +99,7 @@ export function parseStoredGallery(raw: unknown): StoredGallery | null {
       wheels: Boolean(clientEdited.wheels),
       vehicle: Boolean(clientEdited.vehicle),
       youtube: Boolean(clientEdited.youtube),
+      slug: Boolean(clientEdited.slug),
       alts: clientEdited.alts && typeof clientEdited.alts === 'object' ? clientEdited.alts : {},
     },
   };
@@ -109,6 +114,27 @@ export function slugifyGalleryTitle(title: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, MAX_GALLERY_SLUG);
+}
+
+export function seoSlugFromGalleryFields(input: {
+  year?: string;
+  vehicleColor?: string;
+  generation?: string;
+  trim?: string;
+  style?: string;
+  finish?: string;
+  taken?: Set<string>;
+}): string {
+  const base = proposedSeoSlug({
+    year: input.year,
+    vehicleColor: input.vehicleColor,
+    generation: input.generation,
+    trim: input.trim,
+    style: input.style,
+    finish: input.finish,
+    maxLength: MAX_GALLERY_SLUG,
+  });
+  return uniqueSeoSlug(base, input.taken || new Set(), MAX_GALLERY_SLUG);
 }
 
 export async function loadGalleryIndex(): Promise<string[]> {

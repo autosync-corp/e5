@@ -14,3 +14,4 @@ Disallow: /visualizer-callback
 Sitemap: https://www.e5wheels.com/sitemap-index.xml
 Sitemap: https://www.e5wheels.com/sitemap-blog.xml
 Sitemap: https://www.e5wheels.com/sitemap-galleries.xml
+Sitemap: https://www.e5wheels.com/sitemap-gallery-images.xml

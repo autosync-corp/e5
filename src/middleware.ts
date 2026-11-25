@@ -9,6 +9,7 @@ import {
   isProductionSiteHost,
   isStaticAssetPath,
 } from './core/portal/host.ts';
+import { canonicalGalleryImagePath, isGalleryImagePath } from './core/portal/gallerySeo.ts';
 
 const GONE = new Set([
   '/wp-admin',
@@ -184,6 +185,22 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (pathname === '/' && url.searchParams.has('s')) {
     return redirect('/shop', 301);
+  }
+
+  if (pathname.startsWith('/gallery-media/') || isGalleryImagePath(pathname)) {
+    const dest = canonicalGalleryImagePath(pathname);
+    if (dest && dest !== pathname) {
+      return redirect(dest, 301);
+    }
+    // `/gallery/{slug}` is the HTML page. Image-extension URLs must never
+    // fall through to that route — including `/gallery/foo.webp`.
+    const galleryImage = pathname.startsWith('/gallery/') && !pathname.startsWith('/gallery-media/');
+    if (galleryImage) {
+      const parts = pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (parts.length !== 3) {
+        return new Response('Not found', { status: 404, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+      }
+    }
   }
 
   if (pathname === '/shop/single-product') {
