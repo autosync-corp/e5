@@ -30,6 +30,7 @@ const layout = read('src/layouts/PortalLayout.astro');
 const soon = read('src/pages/portal/[section].astro');
 const section1 = read('scripts/test-portal-section1.mjs');
 const webhook = read('src/pages/api/send-order-webhook.ts');
+const mw = read('src/middleware.ts');
 
 assert('sales section is ready', /slug: 'sales'[\s\S]*?ready: true/.test(sections));
 assert('sales summary has no CRM jargon', /slug: 'sales'[\s\S]*?summary: 'New prospects, pipelines, and lead sources. View only.'/.test(sections));
@@ -51,6 +52,17 @@ assert('five minute cache', helper.includes('CACHE_TTL_MS = 5 * 60 * 1000') && h
 assert('pagination limit 100', helper.includes('PAGE_LIMIT = 100') && helper.includes('searchAfter') && helper.includes('startAfterId'));
 assert('prospects omit phone and email columns', page.includes('Names only') && !page.includes('row.phone') && !page.includes('row.email') && helper.includes('name: displayName(contact)') && !helper.includes('contact.email') && !helper.includes('contact.phone'));
 assert('hear-about is detected not invented', helper.includes('HOW_DID_YOU_HEAR_OPTIONS') && helper.includes('hearAbout') && page.includes('snapshot.hearAbout') && docs.includes('not** a contact custom field'));
+assert(
+  'portal-host rewrites keep the query string',
+  mw.includes('`/portal/api${rest}${url.search}`') &&
+    mw.includes('`${internalPortalPath(pathname)}${url.search}`'),
+);
+assert(
+  'pipeline cards wrap wide enough for money',
+  page.includes('minmax(320px, 1fr)') &&
+    page.includes('white-space: nowrap') &&
+    page.includes('.table-wrap { overflow-x: auto; }'),
+);
 assert('friendly error copy', page.includes("Couldn't load sales data right now.") && page.includes('Try again in a few minutes.'));
 assert('page copy has no jargon', !page.includes('GHL') && !page.includes('GoHighLevel') && !page.includes('Redis') && !page.includes('API') && !page.includes('token') && !page.includes('LeadConnector'));
 assert('token stays server-side', helper.includes('GHL_PRIVATE_TOKEN') && helper.includes('Authorization') && !helper.includes('console.log') && !page.includes('GHL_PRIVATE_TOKEN') && !page.includes('GHL_LOCATION_ID'));
@@ -181,11 +193,40 @@ try {
   assert('dashboard lists sales as open', /Sales &amp; Prospects<\/strong><span[^>]*>Open<\/span>/.test(dashHtml));
   assert('dashboard sales summary is plain English', dashHtml.includes('New prospects, pipelines, and lead sources. View only.') && !dashHtml.includes('GoHighLevel') && !dashHtml.includes('GHL'));
 
-  const hostPage = await fetch(`${BASE}/sales`, {
-    headers: { cookie: `e5_portal=${cookieValue}`, 'x-forwarded-host': 'portal.e5wheels.com' },
-  });
+  const hostHeaders = { cookie: `e5_portal=${cookieValue}`, 'x-forwarded-host': 'portal.e5wheels.com' };
+  const hostPage = await fetch(`${BASE}/sales`, { headers: hostHeaders });
   const hostHtml = await hostPage.text();
   assert('portal host /sales loads', hostPage.status === 200 && hostHtml.includes('Sales & Prospects') && hostHtml.includes("Couldn't load sales data right now."));
+  assert(
+    'portal host range links stay on /sales',
+    hostHtml.includes('/sales?days=7') && hostHtml.includes('/sales?days=90') && /href="\/sales\?days=30"[^>]*aria-current="page"/.test(hostHtml),
+  );
+
+  const hostSeven = await fetch(`${BASE}/sales?days=7`, { headers: hostHeaders });
+  const hostSevenHtml = await hostSeven.text();
+  assert(
+    'portal host /sales?days=7 is the active range',
+    hostSeven.status === 200 && /href="\/sales\?days=7"[^>]*aria-current="page"/.test(hostSevenHtml),
+  );
+
+  const hostNinety = await fetch(`${BASE}/sales?days=90`, { headers: hostHeaders });
+  const hostNinetyHtml = await hostNinety.text();
+  assert(
+    'portal host /sales?days=90 is the active range',
+    hostNinety.status === 200 && /href="\/sales\?days=90"[^>]*aria-current="page"/.test(hostNinetyHtml),
+  );
+
+  const hostSlides = await fetch(`${BASE}/slides`, { headers: hostHeaders });
+  const hostSlidesHtml = await hostSlides.text();
+  assert('portal host /slides still loads', hostSlides.status === 200 && hostSlidesHtml.includes('Homepage Slides'));
+
+  const hostLinks = await fetch(`${BASE}/links`, { headers: hostHeaders });
+  const hostLinksHtml = await hostLinks.text();
+  assert('portal host /links still loads', hostLinks.status === 200 && hostLinksHtml.includes('Header & Footer Links'));
+
+  const hostBlog = await fetch(`${BASE}/blog`, { headers: hostHeaders });
+  const hostBlogHtml = await hostBlog.text();
+  assert('portal host /blog still loads', hostBlog.status === 200 && hostBlogHtml.includes('Blog Posts'));
 
   const hostUnauth = await fetch(`${BASE}/sales`, {
     headers: { 'x-forwarded-host': 'portal.e5wheels.com' },

@@ -14,7 +14,7 @@ Staff ops (orders, coupons, events, attendees, tracking) stay at **`/admin`** on
 | `www.e5wheels.com` | `/portal` 301s to `https://portal.e5wheels.com/login`. `/portal/*` 301s to `https://portal.e5wheels.com` (prefix stripped). |
 | Preview / localhost | `/portal` is the portal (no subdomain). Use this to test before DNS. |
 
-Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on the portal host onto those routes. The marketing homepage is a prerendered `index.html`, and Vercel serves the filesystem before rewrites, so `vercel.json` **redirects** `portal.e5wheels.com/` to `/login` (302) before that file can be cached. A catch-all 302 on the portal host sends any path outside the portal allowlist (login, logout, dashboard, sections, robots.txt, `_astro`/`assets`/`js`/favicon) to www. `/login` and section slugs are dest-rewritten at the edge so they still beat prerendered files such as `/blog`.
+Internal Astro routes live under `/portal/*`. Middleware rewrites SSR paths on the portal host onto those routes and keeps `url.search` (so `/sales?days=7` and `/api/portal/…?…` still receive their query string). The marketing homepage is a prerendered `index.html`, and Vercel serves the filesystem before rewrites, so `vercel.json` **redirects** `portal.e5wheels.com/` to `/login` (302) before that file can be cached. A catch-all 302 on the portal host sends any path outside the portal allowlist (login, logout, dashboard, sections, robots.txt, `_astro`/`assets`/`js`/favicon) to www. `/login` and section slugs are dest-rewritten at the edge so they still beat prerendered files such as `/blog`.
 
 Portal HTML is cookie-varying (login vs dashboard), so it must never be CDN-cached. The homepage `Cache-Control: public, s-maxage=3600` rule on `source: "/"` is skipped when the host is `portal.e5wheels.com`. The portal host instead gets `Cache-Control: private, no-store` and `X-Robots-Tag: noindex, nofollow` on `/` and `/(.*)`. Middleware also sets `private, no-store` on every portal-host response, every `/portal/*` response, and any response that sets `Set-Cookie`.
 
@@ -125,7 +125,7 @@ Sales & Prospects.
 
 - Portal host: `https://portal.e5wheels.com/sales`
 - Preview: `/portal/sales`
-- Read-only. The page never creates, edits, or deletes CRM records. Range switching is a GET (`?days=7|30|90`, default 30).
+- Read-only. The page never creates, edits, or deletes CRM records. Range switching is a GET (`?days=7|30|90`, default 30). On `portal.e5wheels.com` the query string is kept through the host rewrite, so Last 7 / 30 / 90 days actually change the range. Pipeline cards wrap at `minmax(320px, 1fr)` so Value amounts are not clipped.
 - Server-side fetch of contacts, opportunities, pipelines, and contact custom-field definitions. Results are cached about 5 minutes in memory and at `e5:portal:sales:v1:{days}` in Redis when Redis is up, so repeat views do not hit the CRM on every click.
 - Contacts are loaded with a date-ranged search, then GET `/contacts/` if that search fails. Opportunities use GET `/opportunities/search?location_id=&limit=100&page=` (snake_case `location_id` only — camelCase `locationId`, `date`, and `endDate` 422 on this endpoint) and filter `createdAt` client-side. Both paginate (100 per page).
 - Summary cards: new contacts, open deals + value, won deals + value, and win rate (`won / (won + lost)`) for the selected period. If nothing closed, win rate is an em dash.

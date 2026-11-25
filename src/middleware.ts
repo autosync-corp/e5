@@ -140,7 +140,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     if (isPortalApiPath(pathname)) {
       flags.portalRewrite = true;
       const rest = pathname.slice('/api/portal'.length) || '';
-      return portalHeaders(await rewrite(`/portal/api${rest}`));
+      return portalHeaders(await rewrite(`/portal/api${rest}${url.search}`));
     }
 
     if (isPortalPath(pathname)) {
@@ -149,7 +149,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     if (isPortalPagePath(pathname)) {
       flags.portalRewrite = true;
-      return portalHeaders(await rewrite(internalPortalPath(pathname)));
+      return portalHeaders(await rewrite(`${internalPortalPath(pathname)}${url.search}`));
     }
 
     return portalHeaders(redirect(`${SITE_ORIGIN}${url.pathname}${url.search}`, 302));
