@@ -1,0 +1,582 @@
+{
+  "source": "E5 Immersive Gallery paints from public/visualizer-app (GENS + Body/{paint}) plus AutoSync Colors Code/Rgb1 when the name matches.",
+  "byVisualizerGeneration": {
+    "C5": [
+      "50th Anniversary Red",
+      "Arctic White",
+      "Black",
+      "Competition Yellow",
+      "Bowling Green Metallic",
+      "Fairway Green Metallic",
+      "LeMans Blue Metallic",
+      "Pewter Metallic",
+      "Magnetic Red Metallic",
+      "Spiral Gray Metallic",
+      "Millennium Yellow",
+      "Nassau Blue",
+      "Navy Blue Metallic",
+      "Quicksilver Metallic",
+      "Sebring Silver Metallic",
+      "Torch Red",
+      "Electron Blue Metallic"
+    ],
+    "C6_Grand_Sport": [
+      "Arctic White",
+      "Black",
+      "Blade Silver Metallic",
+      "Carlisle Blue Metallic",
+      "Crystal Red Tintcoat",
+      "Cyber Gray Metallic",
+      "Inferno Orange Metallic",
+      "Jetstream Blue Metallic",
+      "Night Race Blue Metallic",
+      "Supersonic Blue Metallic",
+      "Torch Red",
+      "Velocity Yellow Tintcoat"
+    ],
+    "C6_Z06": [
+      "Arctic White",
+      "Atomic Orange Metallic",
+      "Black",
+      "Blade Silver Metallic",
+      "Carbon Flash Metallic",
+      "Carlisle Blue Metallic",
+      "Crystal Red Tintcoat",
+      "Cyber Gray Metallic",
+      "Daytona Sunset Orange Metallic",
+      "Inferno Orange Metallic",
+      "Jetstream Blue Metallic",
+      "LeMans Blue Metallic",
+      "Machine Silver Metallic",
+      "Night Race Blue Metallic",
+      "Supersonic Blue Metallic",
+      "Torch Red",
+      "Velocity Yellow Tintcoat",
+      "Victory Red"
+    ],
+    "C7_Grand_Sport": [
+      "Admiral Blue Metallic",
+      "Arctic White",
+      "Black",
+      "Black Rose Metallic",
+      "Blade Silver Metallic",
+      "Ceramic Matrix Gray Metallic",
+      "Corvette Racing Yellow Tintcoat",
+      "Elkhart Lake Blue Metallic",
+      "Long Beach Red Metallic Tintcoat",
+      "Sebring Orange Tintcoat",
+      "Shadow Grey Metallic",
+      "Sterling Blue Metallic",
+      "Torch Red",
+      "Watkins Glen Gray Metallic"
+    ],
+    "C7_Stingray": [
+      "Admiral Blue Metallic",
+      "Arctic White",
+      "Black",
+      "Black Rose Metallic",
+      "Blade Silver Metallic",
+      "Ceramic Matrix Gray Metallic",
+      "Corvette Racing Yellow Tintcoat",
+      "Crystal Red Tintcoat",
+      "Cyber Gray Metallic",
+      "Daytona Sunrise Orange Metallic",
+      "Elkhart Lake Blue Metallic",
+      "Laguna Blue Tintcoat",
+      "Lime Rock Green Metallic",
+      "Long Beach Red Metallic",
+      "Night Race Blue Metallic",
+      "Sebring Orange Tintcoat",
+      "Shadow Gray Metallic",
+      "Shark Gray Metallic",
+      "Sterling Blue Metallic",
+      "Torch Red",
+      "Velocity Yellow Tintcoat",
+      "Watkins Glen Gray Metallic"
+    ],
+    "C7_Z06": [
+      "Admiral Blue",
+      "Arctic White",
+      "Black",
+      "Black Rose Metallic",
+      "Blade Silver Metallic",
+      "Corvette Racing Yellow Tintcoat",
+      "Crystal Red Tintcoat",
+      "Daytona Sunrise Orange Metallic",
+      "Elkhart Lake Blue Metallic",
+      "Laguna Blue Tintcoat",
+      "Long Beach Red Metallic",
+      "Night Race Blue Metallic",
+      "Sebring Orange Tintcoat",
+      "Shadow Gray Metallic",
+      "Shark Grey Metallic",
+      "Sterling Blue Metallic",
+      "Torch Red",
+      "Velocity Yellow Tintcoat",
+      "Watkins Glen Gray Metallic"
+    ],
+    "C8_Z06": [
+      "Accelerate Yellow",
+      "Amplify Orange Tintcoat",
+      "Arctic White",
+      "Black",
+      "Cacti Green",
+      "Carbon Flash Metallic",
+      "Ceramic Matrix Gray Metallic",
+      "Hypersonic Gray Metallic",
+      "Rapid Blue",
+      "Red Mist Metallic Tintcoat",
+      "Riptide Blue Metallic",
+      "Sea Wolf Gray Tricoat",
+      "Silver Flare Metallic",
+      "Torch Red"
+    ],
+    "C8_Stingray": [
+      "Accelerate Yellow Metallic",
+      "Amplify Orange Tintcoat",
+      "Arctic White",
+      "Black",
+      "Cacti Green",
+      "Carbon Flash Metallic",
+      "Ceramic Matrix Gray Metallic",
+      "Hypersonic Gray Metallic",
+      "Rapid Blue metallic",
+      "Red Mist Metallic Tintcoat",
+      "Riptide Blue Metallic",
+      "Sea Wolf Gray Tricaot",
+      "Sebring Orange Tintcoat",
+      "Silver Flare Metallic",
+      "Torch Red"
+    ]
+  },
+  "swatches": [
+    {
+      "name": "50th Anniversary Red",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "62373B"
+    },
+    {
+      "name": "Arctic White",
+      "code": "G8G",
+      "autosyncName": "Arctic White",
+      "autosyncRgb": "FCFCFC",
+      "visualizerSampleHex": "A1ABAC"
+    },
+    {
+      "name": "Black",
+      "code": "GBA",
+      "autosyncName": "Black",
+      "autosyncRgb": "141414",
+      "visualizerSampleHex": "2F393C"
+    },
+    {
+      "name": "Competition Yellow",
+      "code": "GBK",
+      "autosyncName": "Competition Yellow Tintcoat Metallic",
+      "autosyncRgb": "E8BC31",
+      "visualizerSampleHex": "B1922B"
+    },
+    {
+      "name": "Bowling Green Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "304546"
+    },
+    {
+      "name": "Fairway Green Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "2D4F48"
+    },
+    {
+      "name": "LeMans Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "264666"
+    },
+    {
+      "name": "Pewter Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "65645F"
+    },
+    {
+      "name": "Magnetic Red Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "61383C"
+    },
+    {
+      "name": "Spiral Gray Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "404E56"
+    },
+    {
+      "name": "Millennium Yellow",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "AB8A2A"
+    },
+    {
+      "name": "Nassau Blue",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "244D6D"
+    },
+    {
+      "name": "Navy Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "2A3F52"
+    },
+    {
+      "name": "Quicksilver Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "798182"
+    },
+    {
+      "name": "Sebring Silver Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "7D8585"
+    },
+    {
+      "name": "Torch Red",
+      "code": "GKZ",
+      "autosyncName": "Torch Red",
+      "autosyncRgb": "C80505",
+      "visualizerSampleHex": "982F37"
+    },
+    {
+      "name": "Blade Silver Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "818788"
+    },
+    {
+      "name": "Carlisle Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "446C7A"
+    },
+    {
+      "name": "Crystal Red Tintcoat",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "794645"
+    },
+    {
+      "name": "Cyber Gray Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "626865"
+    },
+    {
+      "name": "Inferno Orange Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "93613A"
+    },
+    {
+      "name": "Jetstream Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "3E6C7C"
+    },
+    {
+      "name": "Night Race Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "475461"
+    },
+    {
+      "name": "Supersonic Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "406B7B"
+    },
+    {
+      "name": "Velocity Yellow Tintcoat",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "AB903D"
+    },
+    {
+      "name": "Atomic Orange Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "6C5839"
+    },
+    {
+      "name": "Carbon Flash Metallic",
+      "code": "GAR",
+      "autosyncName": "Carbon Flash Metallic",
+      "autosyncRgb": "282828",
+      "visualizerSampleHex": "494D48"
+    },
+    {
+      "name": "Daytona Sunset Orange Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "67563A"
+    },
+    {
+      "name": "Machine Silver Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "646768"
+    },
+    {
+      "name": "Victory Red",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "6A403D"
+    },
+    {
+      "name": "Admiral Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "3D6088"
+    },
+    {
+      "name": "Black Rose Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "545C72"
+    },
+    {
+      "name": "Ceramic Matrix Gray Metallic",
+      "code": "G9F",
+      "autosyncName": "Ceramic Matrix Gray Metallic",
+      "autosyncRgb": "B7C0C5",
+      "visualizerSampleHex": "637D8C"
+    },
+    {
+      "name": "Corvette Racing Yellow Tintcoat",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "9F9163"
+    },
+    {
+      "name": "Elkhart Lake Blue Metallic",
+      "code": "GS7",
+      "autosyncName": "Elkhart Lake Blue Metallic",
+      "autosyncRgb": "005AC7",
+      "visualizerSampleHex": "3D668D"
+    },
+    {
+      "name": "Long Beach Red Metallic Tintcoat",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "655B71"
+    },
+    {
+      "name": "Sebring Orange Tintcoat",
+      "code": "G26",
+      "autosyncName": "Sebring Orange Tintcoat",
+      "autosyncRgb": "FC6024",
+      "visualizerSampleHex": "8F6265"
+    },
+    {
+      "name": "Shadow Grey Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "566A81"
+    },
+    {
+      "name": "Sterling Blue Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "4F7594"
+    },
+    {
+      "name": "Watkins Glen Gray Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "546D86"
+    },
+    {
+      "name": "Daytona Sunrise Orange Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "7E5234"
+    },
+    {
+      "name": "Laguna Blue Tintcoat",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "336074"
+    },
+    {
+      "name": "Lime Rock Green Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "576F43"
+    },
+    {
+      "name": "Long Beach Red Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "5F443F"
+    },
+    {
+      "name": "Shadow Gray Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "525853"
+    },
+    {
+      "name": "Shark Gray Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "555C59"
+    },
+    {
+      "name": "Admiral Blue",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "153053"
+    },
+    {
+      "name": "Shark Grey Metallic",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "444D56"
+    },
+    {
+      "name": "Accelerate Yellow",
+      "code": "GD0",
+      "autosyncName": "Accelerate Yellow Metallic",
+      "autosyncRgb": "E6DC50",
+      "visualizerSampleHex": "70792C"
+    },
+    {
+      "name": "Amplify Orange Tintcoat",
+      "code": "GC5",
+      "autosyncName": "Amplify Orange",
+      "autosyncRgb": "E15F19",
+      "visualizerSampleHex": "614022"
+    },
+    {
+      "name": "Cacti Green",
+      "code": "",
+      "autosyncName": "",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "51584E"
+    },
+    {
+      "name": "Hypersonic Gray Metallic",
+      "code": "GA7",
+      "autosyncName": "Hypersonic Gray Metallic",
+      "autosyncRgb": "8E9191",
+      "visualizerSampleHex": "474D4F"
+    },
+    {
+      "name": "Rapid Blue",
+      "code": "GMO",
+      "autosyncName": "Rapid Blue",
+      "autosyncRgb": "28AFF5",
+      "visualizerSampleHex": "1E5275"
+    },
+    {
+      "name": "Red Mist Metallic Tintcoat",
+      "code": "GPH",
+      "autosyncName": "Red Mist Metallic Tricoat",
+      "autosyncRgb": "AF0F23",
+      "visualizerSampleHex": "4C3234"
+    },
+    {
+      "name": "Riptide Blue Metallic",
+      "code": "GJV",
+      "autosyncName": "Riptide Blue Metallic",
+      "autosyncRgb": "0A55BE",
+      "visualizerSampleHex": "234554"
+    },
+    {
+      "name": "Sea Wolf Gray Tricoat",
+      "code": "GXA",
+      "autosyncName": "Sea Wolf Gray Tricoat",
+      "autosyncRgb": "888F94",
+      "visualizerSampleHex": "495351"
+    },
+    {
+      "name": "Silver Flare Metallic",
+      "code": "GSJ",
+      "autosyncName": "Silver Flare Metallic",
+      "autosyncRgb": "C3BEBE",
+      "visualizerSampleHex": "5B6665"
+    },
+    {
+      "name": "Accelerate Yellow Metallic",
+      "code": "GD0",
+      "autosyncName": "Accelerate Yellow Metallic",
+      "autosyncRgb": "E6DC50",
+      "visualizerSampleHex": "AF741F"
+    },
+    {
+      "name": "Rapid Blue metallic",
+      "code": "GMO",
+      "autosyncName": "Rapid Blue",
+      "autosyncRgb": "28AFF5",
+      "visualizerSampleHex": "2E6FA2"
+    },
+    {
+      "name": "Sea Wolf Gray Tricaot",
+      "code": "GXA",
+      "autosyncName": "Sea Wolf Gray Tricoat",
+      "autosyncRgb": "888F94",
+      "visualizerSampleHex": "60574D"
+    },
+    {
+      "name": "Electron Blue Metallic",
+      "code": "28U",
+      "autosyncName": "Electron Blue Metallic",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "",
+      "note": "2003-2004 C5 Z06 Commemorative Edition. Not in Immersive Gallery C5 list; year-valid factory paint."
+    }
+  ]
+}
