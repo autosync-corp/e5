@@ -81,9 +81,9 @@ assert('docs cover section 7', docs.includes('Section 7') && docs.includes('/sal
 assert('docs mention user-agent and diagnostics', docs.includes('E5Portal/1.0') && docs.includes('never logged') && docs.includes('not written to the 5-minute cache'));
 assert('docs cover snake_case search and optional custom fields', docs.includes('location_id') && docs.includes('createdAt') && docs.includes('optional'));
 assert('checkout still sends hear-about on the webhook', webhook.includes('how_did_you_hear') && webhook.includes('applyHowDidYouHear'));
-assert('coming soon still on galleries', soon.includes('Coming soon') && section1.includes('/portal/galleries') && /slug: 'galleries'[\s\S]*?ready: false/.test(sections));
+assert('coming soon placeholder page still exists', soon.includes('Coming soon') && section1.includes('/portal/galleries'));
 assert('shell still noindex', layout.includes('noindex, nofollow'));
-assert('galleries remains the later section', docs.includes('Later sections') && docs.includes('Galleries') && !docs.includes('| Sales & Prospects (GoHighLevel)'));
+assert('sales is not listed as a later section', docs.includes('Later sections') && !docs.includes('| Sales & Prospects (GoHighLevel)'));
 
 const password = 'portal-test-pass';
 const N = 16384;
@@ -236,7 +236,7 @@ try {
 
   const galleries = await fetch(`${BASE}/portal/galleries`, { headers: { cookie: `e5_portal=${cookieValue}` } });
   const galleriesHtml = await galleries.text();
-  assert('galleries still coming soon', galleries.status === 200 && galleriesHtml.includes('Coming soon'));
+  assert('galleries editor is live', galleries.status === 200 && galleriesHtml.includes('Galleries') && galleriesHtml.includes('Save changes') && !galleriesHtml.includes('Coming soon'));
 } finally {
   child.kill('SIGTERM');
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { corvetteGalleryData, WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
-import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+import { WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
 import VehicleDetailedCard from "@/pages/gallery/components/_VehicleDetailedCard.vue";
 import YearMakeModelSelector from "@/pages/gallery/components/_YearMakeModelSelector.vue";
@@ -9,6 +8,9 @@ import { ref, computed, onMounted } from "vue";
 import { GALLERY_DETAIL_ROUTE } from "@/core/constants/Routes.ts";
 import { useWheelApi } from "@/core/composables/useWheelApi";
 import { sortGalleryItems } from "@/pages/gallery/utils/sortGallery.ts";
+import type { GalleryListing } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+
+const props = defineProps<{ items: GalleryListing[] }>();
 
 const detailedGallery = ref<boolean>(false);
 const filters = ref<{ model: string; trim: string; year: string }>({
@@ -49,7 +51,7 @@ onMounted(() => {
 const { wheelData, fetchWheelData } = useWheelApi();
 
 const pendingWheelEntries = computed(() =>
-  corvetteGalleryData.filter(item => !item.wheelStyle && (item.partF || item.wheelPartR))
+  props.items.filter(item => !item.wheelStyle && (item.partF || item.wheelPartR))
 );
 
 async function resolvePendingWheels() {
@@ -63,7 +65,7 @@ async function resolvePendingWheels() {
 }
 
 // Style/finish resolved from the API for an entry whose gallery data has none
-const resolvedWheel = (item: CorvetteGalleryItem) => {
+const resolvedWheel = (item: GalleryListing) => {
   if (item.wheelStyle || wheelData.value.length === 0) return null;
   const wheel = wheelData.value.find(w => w.Pn === item.partF || w.Pn === item.wheelPartR);
   if (!wheel) return null;
@@ -96,7 +98,7 @@ const pageHeading = computed(() => {
 });
 
 // Map CSV data to component format
-const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
+const mapVehicleData = (item: GalleryListing, index: number) => {
   const resolved = resolvedWheel(item);
   const sizing = item.wheelSizeF && item.wheelSizeRear
     ? `${item.wheelSizeF} / ${item.wheelSizeRear}`
@@ -105,7 +107,7 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
   return {
     id: item.galleryId || `vehicle-${index}`,
     vehicleId: item.galleryId || `vehicle-${index}`,
-    image: `/assets/images/gallery/corvette/${item.galleryId}/0.webp`,
+    image: item.image,
     logo: '/assets/images/form-forged-logo-black.png',
     year: item.year || 'N/A',
     model: item.submodel || 'N/A',
@@ -123,7 +125,7 @@ const mapVehicleData = (item: CorvetteGalleryItem, index: number) => {
 
 // Filtered vehicles based on selected filters
 const filteredVehicles = computed(() => {
-  let filtered = corvetteGalleryData;
+  let filtered = props.items;
 
   if (filters.value.model) {
     filtered = filtered.filter(item => item.submodel === filters.value.model);
@@ -160,7 +162,7 @@ const filteredVehicles = computed(() => {
     </div>
   </section>
 
-  <YearMakeModelSelector @filter="handleFilter" />
+  <YearMakeModelSelector :items="items" @filter="handleFilter" />
 
   <GalleryPageStyleSelector :detailedView="detailedGallery" @detailed-view="detailedGallery = $event" />
 

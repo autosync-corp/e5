@@ -37,6 +37,24 @@ export interface CorvetteGalleryItem {
   dateAdded?: string;
 }
 
+export type GalleryListing = {
+  galleryId: string;
+  vehicleTitle: string | null;
+  year: string | null;
+  submodel: string | null;
+  trim: string | null;
+  image: string;
+  wheelStyle: string | null;
+  wheelFinish: string | null;
+  wheelSizeF: string | null;
+  wheelSizeRear: string | null;
+  tireModel: string | null;
+  partF: string | null;
+  wheelPartR: string | null;
+  dateAdded?: string;
+  pinned?: boolean;
+};
+
 export const corvetteGalleryData: CorvetteGalleryItem[] = [
   {
     "galleryId": "2025-c8-stingray-blue-sebring-gloss-black",

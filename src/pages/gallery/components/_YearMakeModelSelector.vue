@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import { corvetteGalleryData } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import { ref, computed, watch, onMounted } from "vue";
+
+type FilterItem = {
+  year?: string | null;
+  submodel?: string | null;
+  trim?: string | null;
+};
+
+const props = defineProps<{ items: FilterItem[] }>();
 
 const selectedModel = ref<string>("");
 const selectedTrim = ref<string>("");
@@ -22,7 +29,7 @@ onMounted(() => {
 
 // Get all unique models (submodels) from the data, sorted
 const models = computed(() => {
-  const uniqueModels = [...new Set(corvetteGalleryData.map(item => item.submodel).filter(Boolean))];
+  const uniqueModels = [...new Set(props.items.map(item => item.submodel).filter(Boolean))];
   return uniqueModels.sort();
 });
 
@@ -32,7 +39,7 @@ const trims = computed(() => {
     return [];
   }
 
-  const filteredData = corvetteGalleryData.filter(item => item.submodel === selectedModel.value);
+  const filteredData = props.items.filter(item => item.submodel === selectedModel.value);
   const uniqueTrims = [...new Set(filteredData.map(item => item.trim).filter(Boolean))];
   return uniqueTrims.sort();
 });
@@ -43,7 +50,7 @@ const years = computed(() => {
     return [];
   }
 
-  const filteredData = corvetteGalleryData.filter(
+  const filteredData = props.items.filter(
     item => item.submodel === selectedModel.value && item.trim === selectedTrim.value
   );
   const uniqueYears = [...new Set(filteredData.map(item => item.year).filter(Boolean))];

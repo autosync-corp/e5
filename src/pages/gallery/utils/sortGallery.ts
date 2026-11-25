@@ -1,9 +1,14 @@
-import type { CorvetteGalleryItem } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
+type SortableGallery = {
+  pinned?: boolean;
+  dateAdded?: string;
+  submodel?: string | null;
+  year?: string | null;
+};
 
 const GENERATION_ORDER: Record<string, number> = { C8: 1, C7: 2, C6: 3, C5: 4 };
 
 /** Pinned first, then dateAdded desc, then generation (C8→C5), then year desc. */
-export function sortGalleryItems(items: CorvetteGalleryItem[]): CorvetteGalleryItem[] {
+export function sortGalleryItems<T extends SortableGallery>(items: T[]): T[] {
   return [...items].sort((a, b) => {
     if (a.pinned && !b.pinned) return -1;
     if (!a.pinned && b.pinned) return 1;

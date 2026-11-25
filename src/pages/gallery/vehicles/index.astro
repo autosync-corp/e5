@@ -1,17 +1,18 @@
 ---
+export const prerender = false;
+
 import GalleryVehiclesGrid from '@/pages/gallery/components/_GalleryVehiclesGrid.vue';
 import MainLayout from '@/layouts/MainLayout.astro';
-import { corvetteGalleryData, WHEELS_COMING_SOON } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
+import { WHEELS_COMING_SOON } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 import { sortGalleryItems } from '@/pages/gallery/utils/sortGallery.ts';
 import { GALLERY_DETAIL_ROUTE } from '@/core/constants/Routes.ts';
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { loadPublicGalleries, toGalleryListing } from '@/core/portal/galleries.ts';
 
-// Get URL parameters
 const url = new URL(Astro.request.url);
 const generation = url.searchParams.get('generation');
 const trim = url.searchParams.get('trim');
 
-// Build dynamic title
 let pageTitle = 'Corvette Gallery';
 if (generation) {
   pageTitle = `${generation} Corvette Gallery`;
@@ -26,14 +27,16 @@ if (generation) {
   pageHeading = `${generation}${trim ? ' ' + trim : ''} Corvette Gallery`;
 }
 
-// SEO metadata
 const baseUrl = SITE_URL;
 const description = generation
   ? `Browse our gallery of ${generation}${trim ? ' ' + trim : ''} Corvettes with E5 Wheels. See real customer builds and installations.`
   : 'Browse our complete Corvette gallery featuring C5, C6, C7, and C8 builds with E5 Wheels. Real customer installations and builds.';
 const canonicalUrl = `${baseUrl}/gallery/vehicles`;
 
-let listing = corvetteGalleryData;
+const publicItems = await loadPublicGalleries();
+const listings = publicItems.map(toGalleryListing).filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+let listing = publicItems;
 if (generation) {
   listing = listing.filter((item) => item.submodel === generation.toUpperCase());
 }
@@ -44,14 +47,19 @@ listing = sortGalleryItems(listing);
 
 const crawlableVehicles = listing
   .filter((item) => item.galleryId)
-  .map((item) => ({
-    id: item.galleryId as string,
-    image: `/assets/images/gallery/corvette/${item.galleryId}/0.webp`,
-    title: item.vehicleTitle || item.trim || 'Corvette',
-    style: item.wheelStyle || WHEELS_COMING_SOON,
-    finish: item.wheelFinish || '',
-    link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId}`,
-  }));
+  .map((item) => {
+    const row = toGalleryListing(item);
+    return {
+      id: item.galleryId as string,
+      image: row?.image || '',
+      title: item.vehicleTitle || item.trim || 'Corvette',
+      style: item.wheelStyle || WHEELS_COMING_SOON,
+      finish: item.wheelFinish || '',
+      link: `${GALLERY_DETAIL_ROUTE}/${item.galleryId}`,
+    };
+  });
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
 ---
 
 <MainLayout title={pageTitle} description={description} canonical={canonicalUrl}>
@@ -97,6 +105,6 @@ const crawlableVehicles = listing
         </div>
       </section>
     </div>
-    <GalleryVehiclesGrid client:only="vue" />
+    <GalleryVehiclesGrid client:only="vue" items={listings} />
   </div>
 </MainLayout>

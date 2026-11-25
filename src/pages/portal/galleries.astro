@@ -1,0 +1,209 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import { loadPortalGalleries } from '@/core/portal/galleries.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const { items, source } = await loadPortalGalleries();
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+---
+
+<PortalLayout title="Galleries — E5 Client Portal" userName={user.username}>
+  {loginHref && null}
+  <h1>Galleries</h1>
+  <p class="lead">
+    Choose which vehicle galleries appear on e5wheels.com and in what order. Photos stay on AutoSync — this page does not upload or edit them. Saved changes appear on the live gallery within about a minute.
+  </p>
+
+  <div class="toolbar">
+    <button type="button" class="btn primary" data-save>Save changes</button>
+    <span class="status" data-status></span>
+  </div>
+  <p class="meta">
+    {source === 'redis'
+      ? 'Showing the live saved order. New AutoSync galleries appear at the bottom until you move them.'
+      : 'Showing the current public gallery order. Nothing changes on the public site until you save.'}
+  </p>
+
+  {items.length === 0 ? (
+    <p class="empty">No galleries loaded right now. Try again in a few minutes.</p>
+  ) : (
+    <ol class="list" data-list>
+      {items.map((item) => (
+        <li class:list={['card', item.hidden && 'is-hidden']} data-card data-id={item.id}>
+          <div class="thumb">
+            {item.image ? <img src={item.image} alt="" /> : <div class="placeholder" />}
+            <span class="badge">{item.source === 'autosync' ? 'AutoSync' : 'Site'}</span>
+          </div>
+          <div class="fields">
+            <div class="row head">
+              <strong>{item.title}</strong>
+              <label class="check">
+                <input type="checkbox" data-field="hidden" checked={item.hidden} />
+                Hidden
+              </label>
+            </div>
+            <p class="note">
+              {item.year ? `${item.year} · ` : ''}
+              /gallery/{item.id}
+            </p>
+            <div class="actions">
+              <button type="button" class="btn ghost" data-up>Move up</button>
+              <button type="button" class="btn ghost" data-down>Move down</button>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
+</PortalLayout>
+
+<script is:inline define:vars={{ apiBase }}>
+  (function () {
+    var list = document.querySelector('[data-list]');
+    var saveBtn = document.querySelector('[data-save]');
+    var statusEl = document.querySelector('[data-status]');
+
+    function setStatus(text, ok) {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.classList.toggle('is-error', ok === false);
+    }
+
+    function cards() {
+      return list ? Array.prototype.slice.call(list.querySelectorAll('[data-card]')) : [];
+    }
+
+    function refreshHidden() {
+      cards().forEach(function (card) {
+        var hidden = card.querySelector('[data-field="hidden"]');
+        card.classList.toggle('is-hidden', hidden && hidden.checked);
+      });
+    }
+
+    function move(card, direction) {
+      if (!list) return;
+      if (direction < 0 && card.previousElementSibling) {
+        list.insertBefore(card, card.previousElementSibling);
+      } else if (direction > 0 && card.nextElementSibling) {
+        list.insertBefore(card.nextElementSibling, card);
+      }
+    }
+
+    if (list) {
+      list.addEventListener('change', function (event) {
+        var target = event.target;
+        if (target && target.getAttribute('data-field') === 'hidden') refreshHidden();
+      });
+      list.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        var card = target.closest('[data-card]');
+        if (!card) return;
+        if (target.closest('[data-up]')) move(card, -1);
+        if (target.closest('[data-down]')) move(card, 1);
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async function () {
+        var payload = cards().map(function (card) {
+          var hidden = card.querySelector('[data-field="hidden"]');
+          return { id: card.getAttribute('data-id'), hidden: !!(hidden && hidden.checked) };
+        });
+        setStatus('Saving…');
+        try {
+          var res = await fetch(apiBase + '/galleries', {
+            method: 'PUT',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: payload }),
+          });
+          var data = await res.json();
+          if (!res.ok) {
+            setStatus(data.error || 'Save failed.', false);
+            return;
+          }
+          setStatus('Saved. The live gallery updates within about a minute.');
+        } catch (err) {
+          setStatus('Save failed.', false);
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .meta { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .empty { color: #666; }
+  .status { font-size: 13px; color: #333; }
+  .status.is-error { color: #d31d25; }
+  .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.ghost:hover { background: #141414; color: #fff; }
+  .list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 920px; padding: 0; margin: 0; }
+  .card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 16px;
+    background: #fff;
+  }
+  .card.is-hidden { opacity: 0.55; }
+  .thumb { position: relative; background: #111; height: 148px; overflow: hidden; }
+  .thumb img, .placeholder { width: 100%; height: 148px; object-fit: cover; display: block; }
+  .placeholder { background: #222; }
+  .badge {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: #141414;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 6px;
+  }
+  .fields { display: flex; flex-direction: column; gap: 10px; }
+  .row.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+  }
+  .note { font-size: 13px; color: #333; line-height: 1.4; margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 800px) {
+    .card { grid-template-columns: 1fr; }
+  }
+</style>

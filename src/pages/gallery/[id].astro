@@ -1,7 +1,8 @@
 ---
+export const prerender = false;
+
 import MainLayout from '@/layouts/MainLayout.astro';
-import { corvetteGalleryData, WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
-import type { CorvetteGalleryItem } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
+import { WHEELS_COMING_SOON } from "@/pages/gallery/constants/CorvetteGalleryData.ts";
 import VehicleCard from "@/pages/gallery/components/_VehicleCard.vue";
 // @ts-expect-error - Vue component with script setup has implicit default export
 import VehicleImagesGallery from "@/pages/gallery/components/_VehicleImagesGallery.vue";
@@ -10,26 +11,22 @@ import VehicleWheelDetails from "@/pages/gallery/components/_VehicleWheelDetails
 import WheelGalleryImages from "@/pages/gallery/components/_WheelGalleryImages.vue";
 import {GALLERY_DETAIL_ROUTE, GALLERY_VEHICLES_ROUTE, WHEELS_ROUTE} from "@/core/constants/Routes.ts";
 import { SITE_URL } from '@/core/constants/Site.ts';
+import { loadGalleryBySlug, loadPublicGalleries, toGalleryListing } from '@/core/portal/galleries.ts';
+import { absoluteUrl, galleryCoverUrl, galleryMediaItems } from '@/pages/gallery/utils/galleryMedia.ts';
 
-export const prerender = true;
-
-export function getStaticPaths() {
-  return corvetteGalleryData.map((vehicle) => ({
-    params: { id: vehicle.galleryId || '' },
-    props: { vehicleData: vehicle },
-  }));
+const slug = Astro.params.id || '';
+const vehicleData = await loadGalleryBySlug(slug);
+if (!vehicleData || !vehicleData.galleryId) {
+  return new Response('Not found', { status: 404 });
 }
 
-const { vehicleData } = Astro.props as { vehicleData: CorvetteGalleryItem };
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
 
-// Build unique page title
 const buildPageTitle = () => {
-  // If vehicleTitle exists and is not "N/A", use it
   if (vehicleData.vehicleTitle && vehicleData.vehicleTitle !== 'N/A') {
     return `${vehicleData.vehicleTitle} Gallery - E5 Wheels`;
   }
 
-  // Otherwise, build from parts
   const parts = [];
   if (vehicleData.year && vehicleData.year !== 'N/A') parts.push(vehicleData.year);
   if (vehicleData.submodel && vehicleData.submodel !== 'N/A') parts.push(vehicleData.submodel);
@@ -39,13 +36,11 @@ const buildPageTitle = () => {
     return `${parts.join(' ')} Corvette Gallery - E5 Wheels`;
   }
 
-  // Fallback
   return `Corvette Gallery - E5 Wheels`;
 };
 
 const pageTitle = buildPageTitle();
 
-// Build meta description
 const buildDescription = () => {
   const parts = [];
   if (vehicleData.year && vehicleData.year !== 'N/A') parts.push(vehicleData.year);
@@ -59,44 +54,12 @@ const buildDescription = () => {
 };
 
 const description = buildDescription();
-
-// Build canonical URL
 const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}/gallery/${vehicleData.galleryId}`;
+const cover = galleryCoverUrl(vehicleData);
+const ogImage = absoluteUrl(cover, baseUrl);
+const galleryMedia = galleryMediaItems(vehicleData);
 
-// Helper function to get media items from the vehicle data
-function getGalleryMedia(vehicle: CorvetteGalleryItem): any[] {
-  const galleryPath = `/assets/images/gallery/corvette/${vehicle.galleryId}`;
-
-  // If media array exists, use it (supports videos)
-  if (vehicle.media && vehicle.media.length > 0) {
-    return vehicle.media.map((item: any) => {
-      if (item.type === 'video') {
-        return {
-          type: 'video',
-          youtubeId: item.youtubeId,
-          thumbnail: item.thumbnail ? `${galleryPath}/${item.thumbnail}` : null
-        };
-      }
-      return {
-        type: 'image',
-        url: item.url ? `${galleryPath}/${item.url}` : ''
-      };
-    });
-  }
-
-  // Fallback to images array for backward compatibility
-  if (vehicle.images && vehicle.images.length > 0) {
-    return vehicle.images.map((file: string) => ({
-      type: 'image',
-      url: `${galleryPath}/${file}`
-    }));
-  }
-
-  return [];
-}
-
-// Map CSV data to page format
 const vehicle = {
   id: vehicleData.galleryId,
   galleryId: vehicleData.galleryId,
@@ -106,28 +69,23 @@ const vehicle = {
   title: vehicleData.vehicleTitle || vehicleData.trim || 'N/A',
   style: vehicleData.wheelStyle || WHEELS_COMING_SOON,
   finish: vehicleData.wheelFinish || WHEELS_COMING_SOON,
-  image: `/assets/images/gallery/corvette/${vehicleData.galleryId}/0.webp`,
-  galleryMedia: getGalleryMedia(vehicleData),
-  // Empty rather than a guessed filename — without a style this used to build
-  // "e5-undefined.webp" and render as a broken image.
+  image: cover,
+  galleryMedia,
   wheelLogo: vehicleData.wheelStyle
     ? `/assets/images/logos/e5-${vehicleData.wheelStyle.toLowerCase().replace(' ', '-')}.webp`
     : '',
-  // Blank rather than "coming soon" — half the gallery has no tire model
-  // recorded, and those aren't pending, they were just never captured.
   tires: vehicleData.tireModel || '',
 };
 
-// Build ImageObject schema for Google Image Search
 const wheelDesc = vehicle.style !== WHEELS_COMING_SOON
   ? `E5 ${vehicle.style}${vehicle.finish !== WHEELS_COMING_SOON ? ` ${vehicle.finish}` : ''} wheels`
   : 'E5 custom wheels';
 
 const imageSchemaItems = vehicle.galleryMedia
-  .filter((m: any) => m.type === 'image')
-  .map((m: any, i: number) => ({
+  .filter((m) => m.type === 'image' && m.url)
+  .map((m, i) => ({
     '@type': 'ImageObject',
-    'contentUrl': `${baseUrl}${m.url}`,
+    'contentUrl': absoluteUrl(m.url || '', baseUrl),
     'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} &mdash; ${wheelDesc} &mdash; Photo ${i + 1}`,
     'description': `${vehicle.year !== 'N/A' ? vehicle.year + ' ' : ''}${vehicle.model !== 'N/A' ? vehicle.model + ' ' : ''}Corvette with ${wheelDesc}`,
   }));
@@ -138,7 +96,7 @@ const imageGallerySchema = imageSchemaItems.length > 0 ? JSON.stringify({
   'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : 'Corvette'} with ${wheelDesc}`,
   'description': description,
   'url': canonicalUrl,
-  'image': `${baseUrl}${vehicle.image}`,
+  'image': ogImage,
   'associatedMedia': imageSchemaItems,
 }) : null;
 
@@ -153,25 +111,27 @@ const breadcrumbSchema = JSON.stringify({
   ]
 });
 
-// Get similar corvettes (same model)
-const corvetteGalleryImages = corvetteGalleryData
-  .filter(v => v.submodel === vehicleData.submodel && v.galleryId !== vehicleData.galleryId)
+const publicGalleries = await loadPublicGalleries();
+const corvetteGalleryImages = publicGalleries
+  .filter((v) => v.submodel === vehicleData.submodel && v.galleryId !== vehicleData.galleryId)
   .slice(0, 3)
-  .map((item, index) => ({
-    id: item.galleryId || `vehicle-${index}`,
-    image: `/assets/images/gallery/corvette/${item.galleryId}/0.webp`,
-    year: item.year || 'N/A',
-    trim: item.vehicleTitle || item.trim || 'N/A',
-    title: item.vehicleTitle || item.trim || 'N/A',
-    wheelModel: item.wheelStyle || WHEELS_COMING_SOON,
-    wheelFinish: item.wheelFinish || WHEELS_COMING_SOON,
-    // Passed through so a card whose wheels have since launched can resolve them
-    partF: item.partF || undefined,
-    partR: item.wheelPartR || undefined,
-  }));
+  .map((item, index) => {
+    const listing = toGalleryListing(item);
+    return {
+      id: item.galleryId || `vehicle-${index}`,
+      image: listing?.image || galleryCoverUrl(item),
+      year: item.year || 'N/A',
+      trim: item.vehicleTitle || item.trim || 'N/A',
+      title: item.vehicleTitle || item.trim || 'N/A',
+      wheelModel: item.wheelStyle || WHEELS_COMING_SOON,
+      wheelFinish: item.wheelFinish || WHEELS_COMING_SOON,
+      partF: item.partF || undefined,
+      partR: item.wheelPartR || undefined,
+    };
+  });
 ---
 
-<MainLayout title={pageTitle} description={description} canonical={canonicalUrl} ogImage={`${baseUrl}${vehicle.image}`}>
+<MainLayout title={pageTitle} description={description} canonical={canonicalUrl} ogImage={ogImage}>
   <Fragment slot="head">
     {imageGallerySchema && <script is:inline type="application/ld+json" set:html={imageGallerySchema}></script>}
     <script is:inline type="application/ld+json" set:html={breadcrumbSchema}></script>
@@ -186,20 +146,12 @@ const corvetteGalleryImages = corvetteGalleryData
           >
             BACK TO GALLERY
           </a>
-
-          <!--<nav class="flex gap-8">-->
-          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SHOP</a>-->
-          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">SIZES</a>-->
-          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">FINISHES</a>-->
-          <!--  <a href={PENDING_ROUTE} class="font-franklin-book text-xs text-white tracking-[3.2px] uppercase hover:text-e5-red transition-colors">WARRANTY</a>-->
-          <!--</nav>-->
         </div>
       </div>
 
       <VehicleImagesGallery client:only="vue" trim={vehicle.trim} media={vehicle.galleryMedia} wheelDesc={wheelDesc} />
     </div>
 
-    <!-- Vehicle & Wheel Details Section -->
     <section class="container-e5 pt-4">
       <h1 class="text-2xl md:text-3xl lg:text-4xl font-franklin-heavy uppercase tracking-[2px] text-black mb-6">
         {vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`} with {wheelDesc}
@@ -238,7 +190,6 @@ const corvetteGalleryImages = corvetteGalleryData
       />
     </section>
 
-    <!-- C7 Corvette Gallery Section -->
     <section class="container-e5 pt-24">
       <h2 class="text-xl md:text-2xl text-black opacity-70 tracking-wide leading-[34px] mb-4">
         {vehicle.model} GALLERY
