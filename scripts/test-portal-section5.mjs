@@ -52,7 +52,7 @@ assert('media helper keeps absolute urls', media.includes('isAbsoluteUrl') && me
 assert('auth on portal galleries API', api.includes('requirePortalSession') && api.includes('requireSameOrigin'));
 assert('sitemap-galleries is SSR', sitemap.includes('loadPublicGalleries') && sitemap.includes('s-maxage=60') && robots.includes('sitemap-galleries.xml') && vercel.includes('/sitemap-galleries.xml'));
 assert('docs describe section 5', docs.includes('Section 5') && docs.includes('e5:portal:galleries') && docs.includes('PUBLIC_AUTOSYNC_API_KEY') && docs.includes('g-<id>'));
-assert('editor copy is plain language', page.includes('Photos stay on AutoSync') && !page.includes('Upstash') && !page.includes('Redis'));
+assert('editor copy is plain language', page.includes('Add a gallery') && !page.includes('Upstash') && !page.includes('Redis'));
 assert('section 1 live galleries check moved off coming soon', section1.includes('galleries editor loads') && !section1.includes('section placeholder coming soon'));
 assert(
   'portal rows carry vehicle and wheel fields',
@@ -201,7 +201,7 @@ try {
     'galleries editor lists current sets',
     editor.status === 200 &&
       editorHtml.includes('Galleries') &&
-      editorHtml.includes('Save changes') &&
+      editorHtml.includes('Save order') &&
       editorHtml.includes(KNOWN_SLUG) &&
       !editorHtml.includes('Coming soon'),
   );
@@ -282,7 +282,7 @@ try {
     headers: { cookie: `e5_portal=${cookieValue}`, 'x-forwarded-host': 'portal.e5wheels.com' },
   });
   const hostHtml = await hostPage.text();
-  assert('portal host /galleries loads editor', hostPage.status === 200 && hostHtml.includes('Save changes') && hostHtml.includes(KNOWN_SLUG));
+  assert('portal host /galleries loads editor', hostPage.status === 200 && hostHtml.includes('Save order') && hostHtml.includes(KNOWN_SLUG));
 } finally {
   child.kill('SIGTERM');
 }

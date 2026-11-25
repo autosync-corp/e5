@@ -6,6 +6,7 @@ import {
 } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 import { galleryCoverUrl } from '@/pages/gallery/utils/galleryMedia.ts';
 import { sortGalleryItems } from '@/pages/gallery/utils/sortGallery.ts';
+import { loadStoredGalleries, mergeStoredCatalog } from '@/core/portal/galleryStore.ts';
 
 export const GALLERIES_REDIS_KEY = 'e5:portal:galleries';
 export const GALLERIES_DOC_VERSION = 1;
@@ -27,7 +28,7 @@ const STYLE_BY_PREFIX: Record<string, string> = {
   E5LA: 'Laguna',
 };
 
-export type GalleryCatalogSource = 'autosync' | 'static' | 'matched';
+export type GalleryCatalogSource = 'autosync' | 'static' | 'matched' | 'store';
 
 export type GalleryRecord = CorvetteGalleryItem & {
   autosyncId?: number;
@@ -44,6 +45,7 @@ export type PortalGalleryRow = {
   image: string;
   hidden: boolean;
   source: 'autosync' | 'site';
+  owned: boolean;
 };
 
 export type { GalleryListing };
@@ -52,8 +54,8 @@ type OverlayItem = { id: string; hidden: boolean };
 type OverlayDoc = { version: number; items: OverlayItem[] };
 
 type AutoSyncImage = { Path?: string };
-type AutoSyncVehicle = { Year?: number; Make?: string; Model?: string; Submodel?: string };
-type AutoSyncWheel = { Diameter?: number; Width?: number; Offset?: number; Position?: string };
+type AutoSyncVehicle = { Year?: number; Make?: string; Model?: string; Submodel?: string; Body?: string };
+type AutoSyncWheel = { WheelId?: number; Diameter?: number; Width?: number; Offset?: number; Position?: string };
 type AutoSyncTire = {
   Brand?: string;
   SectionWidth?: number;
@@ -289,7 +291,7 @@ async function fetchAutoSyncPage(page: number): Promise<AutoSyncResponse> {
     'p-size': String(PAGE_SIZE),
     'p-number': String(page),
   });
-  const includes = 'i-img&i-vehicle&i-wheels&i-tires&i-videos&i-updatedAt';
+  const includes = 'i-img&i-vehicle&i-wheels&i-tires&i-videos&i-updatedAt&i-imgUpdatedAt';
   const res = await fetch(`${AUTOSYNC_GALLERIES_URL}?${params.toString()}&${includes}`, {
     headers: { Accept: 'application/json', 'User-Agent': AUTOSYNC_USER_AGENT },
     signal: AbortSignal.timeout(15000),
@@ -346,20 +348,36 @@ function staticCatalog(): GalleryRecord[] {
   return corvetteGalleryData.filter((item) => item.galleryId).map(cloneStatic);
 }
 
-export async function loadGalleryCatalog(): Promise<GalleryRecord[]> {
-  if (catalogCache && Date.now() - catalogCache.at < GALLERY_CACHE_MS) {
-    return catalogCache.items;
-  }
+async function loadLegacyCatalog(): Promise<GalleryRecord[]> {
   try {
     const { galleries, imgBase } = await fetchAutoSyncGalleries();
-    const items = mergeCatalog(galleries, imgBase);
-    catalogCache = { at: Date.now(), items };
-    return items;
+    return mergeCatalog(galleries, imgBase);
   } catch (err) {
     const detail = err instanceof Error ? err.message : 'unknown';
     logGalleryFailure('autosync-galleries', detail);
     return staticCatalog();
   }
+}
+
+export function bustGalleryCatalogCache(): void {
+  catalogCache = null;
+}
+
+export async function loadGalleryCatalog(): Promise<GalleryRecord[]> {
+  if (catalogCache && Date.now() - catalogCache.at < GALLERY_CACHE_MS) {
+    return catalogCache.items;
+  }
+  const fallback = await loadLegacyCatalog();
+  let stored: Awaited<ReturnType<typeof loadStoredGalleries>> = [];
+  try {
+    stored = await loadStoredGalleries();
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : 'unknown';
+    logGalleryFailure('gallery-store', detail);
+  }
+  const items = mergeStoredCatalog(fallback, stored) as GalleryRecord[];
+  catalogCache = { at: Date.now(), items };
+  return items;
 }
 
 function parseOverlay(raw: unknown): OverlayItem[] | null {
@@ -460,7 +478,8 @@ function toPortalRow(item: GalleryRecord & { hidden: boolean }): PortalGalleryRo
     wheelStyle: portalWheelStyle(item),
     image: galleryCoverUrl(item),
     hidden: item.hidden,
-    source: item.catalogSource === 'static' ? 'site' : 'autosync',
+    source: item.catalogSource === 'autosync' ? 'autosync' : 'site',
+    owned: item.catalogSource === 'store',
   };
 }
 

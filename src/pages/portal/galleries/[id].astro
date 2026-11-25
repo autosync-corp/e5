@@ -1,0 +1,462 @@
+---
+export const prerender = false;
+
+import PortalLayout from '@/layouts/PortalLayout.astro';
+import { readSession } from '@/core/portal/auth.ts';
+import { isPortalHost, portalHref } from '@/core/portal/host.ts';
+import { blobConfigured } from '@/core/portal/slides.ts';
+import { redisConfigured } from '@/core/portal/posts.ts';
+import { emptyGallery } from '@/core/portal/galleryTypes.ts';
+import { loadStoredGallery } from '@/core/portal/galleryStore.ts';
+import { generationFromYear, suggestGalleryDescription, suggestGalleryTitle } from '@/core/portal/galleryCopy.ts';
+import { wheelCatalogOptions, wheelStylesFromCatalog } from '@/core/portal/wheelPicker.ts';
+
+const loginHref = portalHref(Astro.request, '/login');
+const user = readSession(Astro.cookies);
+if (!user) {
+  return Astro.redirect(loginHref);
+}
+
+const id = Astro.params.id || 'new';
+const isNew = id === 'new';
+const stored = isNew ? emptyGallery('') : await loadStoredGallery(id);
+if (!isNew && (!stored || stored.deleted)) {
+  return new Response('Not found', { status: 404 });
+}
+
+const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+const listHref = portalHref(Astro.request, '/galleries');
+const blobReady = blobConfigured();
+const saveReady = redisConfigured();
+const styles = wheelStylesFromCatalog();
+const wheels = wheelCatalogOptions;
+const item = stored || emptyGallery('');
+const suggestedTitle = suggestGalleryTitle({
+  year: item.year,
+  generation: item.generation || generationFromYear(item.year),
+  trim: item.trim,
+  vehicleColor: item.vehicleColor,
+  style: item.front.style,
+});
+const suggestedDescription = suggestGalleryDescription(item);
+---
+
+<PortalLayout title={`${isNew ? 'Add gallery' : 'Edit gallery'} — E5 Client Portal`} userName={user.username}>
+  {loginHref && null}
+  <p class="back"><a href={listHref}>← All galleries</a></p>
+  <h1>{isNew ? 'Add gallery' : 'Edit gallery'}</h1>
+  <p class="lead">
+    Saved changes appear on the live gallery within about a minute. Photos are stored on e5wheels.com. Title and description start from the vehicle and wheel data — edit them as needed. Later AutoSync imports will not overwrite fields you change.
+  </p>
+  <p class="meta">
+    {saveReady ? 'Use Save to publish.' : 'Saving is not available in this environment.'}
+    {blobReady ? ' Photos: JPEG, PNG, or WebP up to 8 MB.' : ' Photo uploads are not available in this environment.'}
+  </p>
+
+  <form class="editor" data-editor>
+    <input type="hidden" name="slug" value={item.slug} data-slug />
+    <fieldset>
+      <legend>Photos</legend>
+      <div class="drop" data-drop tabindex="0">
+        <p>Drag photos here or <label class="file-link">choose files<input type="file" accept="image/jpeg,image/png,image/webp" multiple data-files /></label></p>
+      </div>
+      <ol class="photos" data-photos></ol>
+      <p class="hint">First photo is the cover unless you set another. Drag to reorder.</p>
+    </fieldset>
+
+    <div class="grid">
+      <label>Year <input type="number" min="1997" max="2035" name="year" value={item.year} data-year /></label>
+      <label>Generation <input type="text" name="generation" value={item.generation} data-generation readonly /></label>
+      <label>Trim <input type="text" name="trim" maxlength="40" value={item.trim} data-trim /></label>
+      <label>Body <input type="text" name="body" maxlength="40" value={item.body} data-body /></label>
+      <label>Vehicle color <input type="text" name="vehicleColor" maxlength="40" value={item.vehicleColor} data-color /></label>
+    </div>
+
+    <fieldset>
+      <legend>Wheels</legend>
+      <label class="check"><input type="checkbox" data-square checked={item.square} /> Square set (same wheel all around)</label>
+      <div class="wheels">
+        <div>
+          <h2>Front</h2>
+          <label>Style
+            <select data-front-style>
+              <option value="">Choose style</option>
+              {styles.map((style) => (
+                <option value={style} selected={style === item.front.style}>{style}</option>
+              ))}
+            </select>
+          </label>
+          <label>Wheel
+            <select data-front-pn>
+              <option value="">Choose size and finish</option>
+            </select>
+          </label>
+        </div>
+        <div data-rear-wrap>
+          <h2>Rear</h2>
+          <label>Style
+            <select data-rear-style>
+              <option value="">Choose style</option>
+              {styles.map((style) => (
+                <option value={style} selected={style === item.rear.style}>{style}</option>
+              ))}
+            </select>
+          </label>
+          <label>Wheel
+            <select data-rear-pn>
+              <option value="">Choose size and finish</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+
+    <label>YouTube video <input type="text" name="youtubeId" value={item.youtubeId} data-youtube placeholder="Video link or id" /></label>
+    <label>Title <input type="text" name="title" maxlength="160" required value={item.title} data-title /></label>
+    <p class="hint">Suggestion: {suggestedTitle || 'Add year, trim, and a wheel first.'} <button type="button" class="link" data-use-title>Use suggestion</button></p>
+    <label>Description <textarea name="description" maxlength="800" rows="4" data-description>{item.description}</textarea></label>
+    <p class="hint">Suggestion: {suggestedDescription || 'Add vehicle and wheel details first.'} <button type="button" class="link" data-use-description>Use suggestion</button></p>
+
+    <div class="toolbar">
+      <button type="submit" class="btn primary" data-save>Save</button>
+      <span class="status" data-status></span>
+    </div>
+  </form>
+</PortalLayout>
+
+<script is:inline define:vars={{ apiBase, isNew, item, wheels, blobReady, saveReady, suggestedTitle, suggestedDescription }}>
+  (function () {
+    var form = document.querySelector('[data-editor]');
+    var photosEl = document.querySelector('[data-photos]');
+    var drop = document.querySelector('[data-drop]');
+    var filesInput = document.querySelector('[data-files]');
+    var statusEl = document.querySelector('[data-status]');
+    var slugInput = document.querySelector('[data-slug]');
+    var yearInput = document.querySelector('[data-year]');
+    var generationInput = document.querySelector('[data-generation]');
+    var titleInput = document.querySelector('[data-title]');
+    var descriptionInput = document.querySelector('[data-description]');
+    var squareInput = document.querySelector('[data-square]');
+    var rearWrap = document.querySelector('[data-rear-wrap]');
+    var frontStyle = document.querySelector('[data-front-style]');
+    var frontPn = document.querySelector('[data-front-pn]');
+    var rearStyle = document.querySelector('[data-rear-style]');
+    var rearPn = document.querySelector('[data-rear-pn]');
+    var photos = (item.photos || []).slice();
+    var coverId = item.coverId || (photos[0] && photos[0].id) || '';
+
+    function setStatus(text, ok) {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.classList.toggle('is-error', ok === false);
+    }
+
+    function generationFromYear(year) {
+      var n = Number(year);
+      if (n >= 2020) return 'C8';
+      if (n >= 2014) return 'C7';
+      if (n >= 2005) return 'C6';
+      if (n >= 1997) return 'C5';
+      return '';
+    }
+
+    function slugify(text) {
+      return String(text || '')
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80) || 'gallery';
+    }
+
+    function ensureSlug() {
+      if (slugInput.value) return slugInput.value;
+      var slug = slugify(titleInput.value || ('gallery-' + Date.now()));
+      slugInput.value = slug;
+      return slug;
+    }
+
+    function fillWheels(styleSelect, pnSelect, selectedPn) {
+      var style = styleSelect.value;
+      var current = pnSelect.value;
+      pnSelect.innerHTML = '<option value="">Choose size and finish</option>';
+      wheels.filter(function (row) { return !style || row.style === style; }).forEach(function (row) {
+        var opt = document.createElement('option');
+        opt.value = row.pn;
+        opt.textContent = row.size ? row.size + ' · ' + row.finish : row.label;
+        opt.setAttribute('data-style', row.style);
+        opt.setAttribute('data-size', row.size);
+        opt.setAttribute('data-finish', row.finish);
+        if (row.pn === selectedPn || row.pn === current) opt.selected = true;
+        pnSelect.appendChild(opt);
+      });
+    }
+
+    function pickFromSelect(select) {
+      var opt = select.selectedOptions[0];
+      if (!opt || !opt.value) return { style: '', size: '', finish: '', pn: '' };
+      return {
+        style: opt.getAttribute('data-style') || '',
+        size: opt.getAttribute('data-size') || '',
+        finish: opt.getAttribute('data-finish') || '',
+        pn: opt.value,
+      };
+    }
+
+    var titleTouched = Boolean(item.title);
+    var descriptionTouched = Boolean(item.description);
+
+    function liveSuggestion() {
+      var year = yearInput.value.trim();
+      var generation = generationInput.value.trim() || generationFromYear(year);
+      var trim = document.querySelector('[data-trim]').value.trim();
+      var color = document.querySelector('[data-color]').value.trim();
+      var front = pickFromSelect(frontPn);
+      var style = front.style || frontStyle.value;
+      var titleParts = [year, generation, trim, color].filter(Boolean);
+      var title = (titleParts.join(' ') || 'Corvette') + (style ? ' ' + style : '');
+      var vehicle = [year, 'Chevrolet Corvette', generation, trim, document.querySelector('[data-body]').value.trim(), color].filter(Boolean).join(' ');
+      var wheel = style ? ['E5 ' + style, front.finish, front.size].filter(Boolean).join(' ') : '';
+      var description = wheel ? (vehicle || 'Corvette') + ' with ' + wheel + ' wheels.' : (vehicle ? vehicle + '.' : '');
+      return { title: title.trim(), description: description.replace(/\s+/g, ' ').trim() };
+    }
+
+    function maybePrefillCopy() {
+      if (!yearInput.value.trim() && !(frontPn && frontPn.value)) return;
+      var suggestion = liveSuggestion();
+      if (!titleTouched && suggestion.title) titleInput.value = suggestion.title;
+      if (!descriptionTouched && suggestion.description) descriptionInput.value = suggestion.description;
+    }
+
+    function renderPhotos() {
+      photosEl.innerHTML = '';
+      photos.forEach(function (photo, index) {
+        var li = document.createElement('li');
+        li.className = 'photo' + (photo.id === coverId ? ' is-cover' : '');
+        li.draggable = true;
+        li.setAttribute('data-photo-id', photo.id);
+        li.innerHTML = '<img src="' + (photo.blobUrl || photo.publicPath) + '" alt="">' +
+          '<div class="photo-meta">' +
+          '<label>Alt text<input data-alt value="' + String(photo.alt || '').replace(/"/g, '&quot;') + '"></label>' +
+          '<div class="photo-actions">' +
+          '<button type="button" class="btn ghost" data-cover>Set cover</button>' +
+          '<button type="button" class="btn ghost" data-remove>Delete photo</button>' +
+          '</div></div>';
+        li.addEventListener('dragstart', function (event) {
+          event.dataTransfer.setData('text/plain', String(index));
+        });
+        li.addEventListener('dragover', function (event) { event.preventDefault(); });
+        li.addEventListener('drop', function (event) {
+          event.preventDefault();
+          var from = Number(event.dataTransfer.getData('text/plain'));
+          var moved = photos.splice(from, 1)[0];
+          photos.splice(index, 0, moved);
+          renderPhotos();
+        });
+        photosEl.appendChild(li);
+      });
+    }
+
+    async function uploadFiles(fileList) {
+      if (!blobReady) {
+        setStatus('Photo uploads are not available in this environment.', false);
+        return;
+      }
+      var slug = ensureSlug();
+      setStatus('Uploading photos…');
+      for (var i = 0; i < fileList.length; i += 1) {
+        var formData = new FormData();
+        formData.append('file', fileList[i]);
+        formData.append('slug', slug);
+        var res = await fetch(apiBase + '/galleries/photos', { method: 'POST', credentials: 'same-origin', body: formData });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed.');
+        photos.push(data.photo);
+        if (!coverId) coverId = data.photo.id;
+      }
+      renderPhotos();
+      setStatus('Photos added.');
+    }
+
+    fillWheels(frontStyle, frontPn, item.front && item.front.pn);
+    fillWheels(rearStyle, rearPn, item.rear && item.rear.pn);
+    if (squareInput.checked && rearWrap) rearWrap.hidden = true;
+    renderPhotos();
+    if (yearInput && !generationInput.value) generationInput.value = generationFromYear(yearInput.value);
+    if (isNew) maybePrefillCopy();
+
+    yearInput.addEventListener('input', function () {
+      generationInput.value = generationFromYear(yearInput.value);
+      maybePrefillCopy();
+    });
+    ['data-trim', 'data-body', 'data-color'].forEach(function (name) {
+      var el = document.querySelector('[' + name + ']');
+      if (el) el.addEventListener('input', maybePrefillCopy);
+    });
+    titleInput.addEventListener('input', function () { titleTouched = true; });
+    descriptionInput.addEventListener('input', function () { descriptionTouched = true; });
+    frontStyle.addEventListener('change', function () { fillWheels(frontStyle, frontPn, ''); maybePrefillCopy(); });
+    frontPn.addEventListener('change', maybePrefillCopy);
+    rearStyle.addEventListener('change', function () { fillWheels(rearStyle, rearPn, ''); });
+    squareInput.addEventListener('change', function () {
+      if (rearWrap) rearWrap.hidden = squareInput.checked;
+    });
+    document.querySelector('[data-use-title]').addEventListener('click', function () {
+      titleInput.value = liveSuggestion().title || suggestedTitle || titleInput.value;
+      titleTouched = true;
+    });
+    document.querySelector('[data-use-description]').addEventListener('click', function () {
+      descriptionInput.value = liveSuggestion().description || suggestedDescription || descriptionInput.value;
+      descriptionTouched = true;
+    });
+    filesInput.addEventListener('change', function () {
+      uploadFiles(filesInput.files).catch(function (err) { setStatus(err.message, false); });
+    });
+    ['dragenter', 'dragover'].forEach(function (name) {
+      drop.addEventListener(name, function (event) { event.preventDefault(); drop.classList.add('is-over'); });
+    });
+    drop.addEventListener('dragleave', function () { drop.classList.remove('is-over'); });
+    drop.addEventListener('drop', function (event) {
+      event.preventDefault();
+      drop.classList.remove('is-over');
+      uploadFiles(event.dataTransfer.files).catch(function (err) { setStatus(err.message, false); });
+    });
+    photosEl.addEventListener('click', function (event) {
+      var photoEl = event.target.closest('[data-photo-id]');
+      if (!photoEl) return;
+      var id = photoEl.getAttribute('data-photo-id');
+      if (event.target.closest('[data-cover]')) {
+        coverId = id;
+        renderPhotos();
+      }
+      if (event.target.closest('[data-remove]')) {
+        photos = photos.filter(function (photo) { return photo.id !== id; });
+        if (coverId === id) coverId = photos[0] ? photos[0].id : '';
+        renderPhotos();
+      }
+    });
+    photosEl.addEventListener('input', function (event) {
+      if (!event.target || event.target.getAttribute('data-alt') == null) return;
+      var photoEl = event.target.closest('[data-photo-id]');
+      var id = photoEl && photoEl.getAttribute('data-photo-id');
+      photos.forEach(function (photo) {
+        if (photo.id === id) photo.alt = event.target.value;
+      });
+    });
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      if (!saveReady) {
+        setStatus('Saving is not available in this environment.', false);
+        return;
+      }
+      var slug = ensureSlug();
+      var front = pickFromSelect(frontPn);
+      if (!front.style) front.style = frontStyle.value;
+      var rear = squareInput.checked ? front : pickFromSelect(rearPn);
+      if (!rear.style) rear.style = rearStyle.value;
+      var payload = {
+        slug: slug,
+        title: titleInput.value.trim(),
+        description: descriptionInput.value.trim(),
+        year: yearInput.value.trim(),
+        generation: generationInput.value.trim(),
+        trim: document.querySelector('[data-trim]').value.trim(),
+        body: document.querySelector('[data-body]').value.trim(),
+        vehicleColor: document.querySelector('[data-color]').value.trim(),
+        front: front,
+        rear: rear,
+        square: squareInput.checked,
+        youtubeId: document.querySelector('[data-youtube]').value.trim(),
+        photos: photos,
+        coverId: coverId,
+      };
+      setStatus('Saving…');
+      try {
+        var url = isNew ? apiBase + '/galleries/records' : apiBase + '/galleries/records/' + encodeURIComponent(slug);
+        var res = await fetch(url, {
+          method: isNew ? 'POST' : 'PUT',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        var data = await res.json();
+        if (!res.ok) {
+          setStatus(data.error || 'Save failed.', false);
+          return;
+        }
+        setStatus('Saved. The live gallery updates within about a minute.');
+        if (isNew && data.item && data.item.slug) {
+          window.location.href = window.location.pathname.replace(/\/new$/, '/' + data.item.slug);
+        }
+      } catch (err) {
+        setStatus('Save failed.', false);
+      }
+    });
+  })();
+</script>
+
+<style>
+  .back { margin-bottom: 12px; }
+  .back a { color: #d31d25; text-decoration: none; font-family: 'Franklin Gothic Demi', sans-serif; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .editor { max-width: 920px; display: flex; flex-direction: column; gap: 16px; }
+  fieldset { border: 1px solid #d9d9d9; border-radius: 6px; padding: 14px; }
+  legend, h2 {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #666; }
+  input, select, textarea {
+    font-family: 'Franklin Gothic Book', sans-serif;
+    font-size: 14px;
+    color: #141414;
+    border: 1px solid #d9d9d9;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .wheels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .check { flex-direction: row; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .drop {
+    border: 1px dashed #bdbdbd;
+    border-radius: 6px;
+    padding: 18px;
+    text-align: center;
+    background: #fafafa;
+  }
+  .drop.is-over { border-color: #d31d25; background: #fff5f5; }
+  .file-link { color: #d31d25; cursor: pointer; }
+  .file-link input { display: none; }
+  .photos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; padding: 0; margin: 12px 0 0; }
+  .photo { border: 1px solid #d9d9d9; border-radius: 6px; overflow: hidden; background: #fff; }
+  .photo.is-cover { outline: 2px solid #d31d25; }
+  .photo img { width: 100%; height: 120px; object-fit: cover; display: block; }
+  .photo-meta { padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+  .photo-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hint { font-size: 13px; color: #666; margin: 0; }
+  .link { background: none; border: 0; color: #d31d25; cursor: pointer; font: inherit; padding: 0; }
+  .toolbar { display: flex; gap: 10px; align-items: center; }
+  .status { font-size: 13px; }
+  .status.is-error { color: #d31d25; }
+  .btn {
+    font-family: 'Franklin Gothic Demi', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #141414;
+    background: #fff;
+    color: #141414;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .btn.primary { background: #d31d25; border-color: #d31d25; color: #fff; }
+  .btn.ghost:hover { background: #141414; color: #fff; }
+  @media (max-width: 800px) {
+    .grid, .wheels { grid-template-columns: 1fr; }
+  }
+</style>

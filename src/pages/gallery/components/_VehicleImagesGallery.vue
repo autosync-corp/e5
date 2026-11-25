@@ -10,6 +10,7 @@ interface MediaItem {
   url?: string;
   youtubeId?: string;
   thumbnail?: string;
+  alt?: string;
 }
 
 const props = defineProps({
@@ -134,7 +135,7 @@ onUnmounted(() => {
       <img
           v-if="!isCurrentVideo"
           :src="currentMediaItem.url"
-          :alt="`${props.trim} with ${props.wheelDesc} — photo ${currentImageIndex + 1}`"
+          :alt="currentMediaItem.alt || `${props.trim} with ${props.wheelDesc} — photo ${currentImageIndex + 1}`"
           class="w-full max-h-[740px] object-cover"
           width="1920"
           height="740"
@@ -226,7 +227,7 @@ onUnmounted(() => {
             >
               <img
                   :src="item.type === 'video' ? item.thumbnail : item.url"
-                  :alt="`${props.trim} with ${props.wheelDesc} — photo ${index + 1}`"
+                  :alt="item.alt || `${props.trim} with ${props.wheelDesc} — photo ${index + 1}`"
                   class="w-full h-full object-cover"
                   width="235"
                   height="157"

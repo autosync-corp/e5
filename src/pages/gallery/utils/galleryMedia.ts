@@ -33,6 +33,7 @@ export function galleryMediaItems(item: CorvetteGalleryItem): GalleryMediaItem[]
       return {
         type: 'image',
         url: localGalleryPath(id, entry.url || ''),
+        alt: entry.alt,
       };
     });
   }
