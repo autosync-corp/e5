@@ -93,6 +93,7 @@ Blog posts.
 - Auth-protected `GET/PUT/DELETE /api/portal/posts` (preview: `/portal/api/posts`) and image upload `POST .../posts/upload` to the `e5-portal` Blob store. JPEG/PNG/WebP, max 4 MB.
 - Public `/blog` and `/blog/{slug}` stay server-rendered. New live posts appear in the index and sitemap without a redeploy (`robots.txt` lists `/sitemap-blog.xml`).
 - Rendered HTML from portal edits is sanitized (no script/iframe/on* attributes; links limited to http(s)/mailto/tel). Unedited WordPress HTML is passed through unchanged.
+- The post editor decodes WordPress excerpt entities (en dashes, ellipses) and drops a trailing `[&hellip;]` / `[...]` so a save does not write those into the live meta description. Public pages keep the WordPress excerpt until the client saves.
 
 Do not merge until Dave replies **go live**.
 

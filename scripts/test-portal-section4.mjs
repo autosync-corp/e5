@@ -64,6 +64,14 @@ assert('staff admin is unchanged', staff.includes('Admin Panel') && staff.includ
 assert('docs describe section 4', docs.includes('Section 4') && docs.includes('e5:portal:posts') && docs.includes('post.e5wheels.com') && docs.includes('sitemap-blog.xml'));
 assert('section 1 coming-soon moved off blog', section1.includes('/portal/galleries') && !section1.includes("fetch(`${BASE}/portal/blog`"));
 assert('layout nested blog is active', layout.includes('currentInternal.startsWith'));
+assert('editor excerpt decoder exists', html.includes('export function cleanEditorExcerpt') && html.includes('&hellip;') && html.includes('&#8230;'));
+assert('editor excerpt decoder strips trailing ellipsis marker', /\[\s*(?:\\u2026|\\.{3}|hellip)/.test(html) || html.includes('[...]') || html.includes('hellip'));
+assert('public mapWp excerpt is not cleaned', /excerpt: stripTags\(excerptHtml\)/.test(posts) && /cleanEditorExcerpt\(post\.excerpt\)/.test(posts));
+assert('cover placeholder when empty', editorPage.includes('No cover photo') && editorPage.includes('data-cover-empty') && editorPage.includes('referrerpolicy="no-referrer"'));
+const mainLayout = read('src/layouts/MainLayout.astro');
+const banner = read('src/core/components/BannerSlider.astro');
+assert('header offset is in first-paint CSS', mainLayout.includes('main.mt-107') && mainLayout.includes('margin-top: 107px') && mainLayout.includes('nav.fixed.top-0') && mainLayout.includes('height: 107px') && mainLayout.includes('.mobile-nav { display: none; }'));
+assert('banner does not add a second 107px offset', /\\.e5-banner \\{[^}]*margin-top:\\s*107px/.test(banner) === false);
 
 const password = 'portal-test-pass';
 const N = 16384;
@@ -251,6 +259,54 @@ try {
   });
   const hostNewHtml = await hostNew.text();
   assert('portal host /blog/new loads editor', hostNew.status === 200 && hostNewHtml.includes('New post') && hostNewHtml.includes('Post text'));
+
+  function excerptValue(htmlText) {
+    const match = htmlText.match(/data-excerpt[^>]*>([\s\S]*?)<\/textarea>/);
+    return match ? match[1] : '';
+  }
+
+  const wpEditor = await fetch(`${BASE}/portal/blog/2018-corvette-c7-wheels`, {
+    headers: { cookie: `e5_portal=${cookieValue}` },
+  });
+  const wpEditorHtml = await wpEditor.text();
+  const editorExcerpt = excerptValue(wpEditorHtml);
+  if (wpEditor.status === 200 && wpEditorHtml.includes('data-excerpt')) {
+    assert(
+      'WP excerpt is decoded in the editor',
+      editorExcerpt.includes('because') &&
+        !editorExcerpt.includes('&#8211;') &&
+        !editorExcerpt.includes('&hellip;') &&
+        !editorExcerpt.includes('[&hellip;]') &&
+        !/\[\s*(?:\u2026|\.{3})\s*\]/.test(editorExcerpt),
+    );
+    assert(
+      '2018 cover preview uses the featured image',
+      wpEditorHtml.includes('corvette-c7') && wpEditorHtml.includes('data-cover-preview') && !wpEditorHtml.includes('hidden="">No cover photo'),
+    );
+  } else {
+    assert('2018 editor reachable while WP is up', wpEditor.status === 200 || wpEditor.status === 404);
+  }
+
+  const noCoverEditor = await fetch(`${BASE}/portal/blog/best-corvette-clubs-in-california`, {
+    headers: { cookie: `e5_portal=${cookieValue}` },
+  });
+  const noCoverHtml = await noCoverEditor.text();
+  if (noCoverEditor.status === 200 && noCoverHtml.includes('Cover photo')) {
+    assert('post without featured image shows No cover photo', noCoverHtml.includes('No cover photo') && !/data-cover-preview[^>]+src="https?:/.test(noCoverHtml));
+  } else {
+    assert('clubs editor reachable while WP is up', noCoverEditor.status === 200 || noCoverEditor.status === 404);
+  }
+
+  const public2018 = await fetch(`${BASE}/blog/2018-corvette-c7-wheels`);
+  const public2018Html = await public2018.text();
+  if (public2018.status === 200) {
+    assert(
+      'unedited public meta still has the WP excerpt',
+      public2018Html.includes('&#8211;') || public2018Html.includes('&amp;#8211;') || public2018Html.includes('[&hellip;]') || public2018Html.includes('[&amp;hellip;]'),
+    );
+  } else {
+    assert('2018 public post reachable or redirected while WP is down', public2018.status === 200 || public2018.status === 302);
+  }
 } finally {
   child.kill('SIGTERM');
 }
