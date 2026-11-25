@@ -8,11 +8,14 @@ export type PictureSources = {
 const CATALOG_RE = /\/assets\/images\/catalog-800\/([^/]+)\.webp$/;
 const BANNER_RE = /\/assets\/images\/banner\/(bf-sale|gt03-black|viz-0[1-4]|film-poster)(?:-1280)?\.webp$/;
 
+const BANNER_SRCSET = (stem: string, ext: 'avif' | 'webp') =>
+  `/assets/images/banner/${stem}-400.${ext} 400w, /assets/images/banner/${stem}-600.${ext} 600w, /assets/images/banner/${stem}-800.${ext} 800w, /assets/images/banner/${stem}-1280.${ext} 1280w, /assets/images/banner/${stem}-1920.${ext} 1920w`;
+
 export function bannerPicture(stem: string, sizes = '100vw'): PictureSources {
   return {
     src: `/assets/images/banner/${stem}-1280.webp`,
-    avif: `/assets/images/banner/${stem}-800.avif 800w, /assets/images/banner/${stem}-1280.avif 1280w, /assets/images/banner/${stem}-1920.avif 1920w`,
-    webp: `/assets/images/banner/${stem}-800.webp 800w, /assets/images/banner/${stem}-1280.webp 1280w, /assets/images/banner/${stem}-1920.webp 1920w`,
+    avif: BANNER_SRCSET(stem, 'avif'),
+    webp: BANNER_SRCSET(stem, 'webp'),
     sizes,
   };
 }

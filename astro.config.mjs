@@ -14,6 +14,12 @@ export default defineConfig({
   output: 'server',
   trailingSlash: 'ignore',
   adapter: vercel(),
+  build: {
+    // Homepage Lighthouse: MainLayout CSS (~16KB) and page CSS were
+    // render-blocking. Inline every stylesheet so first paint does not wait
+    // on /_astro/*.css. Other routes get the same FCP win.
+    inlineStylesheets: 'always',
+  },
   integrations: [
     vue(),
     tailwind({

@@ -18,6 +18,8 @@ const vizFrames = [
 ];
 
 const gt03Laydown = gt03LaydownPicture();
+const LAZY_PIXEL =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
 // Seed copy lives in src/core/portal/slides.ts (Redis e5:portal:slides).
 // Poster vehicle: 2018-c7-grand-sport-black-with-e5-daytona-bronze-brushed-tint-wheels
@@ -58,38 +60,38 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
               <div class="e5-banner-viz" data-viz-cycle>
                 {vizFrames.map((frame, fi) => {
                   const framePic = bannerPicture(frame.stem);
-                  const first = fi === 0;
+                  const frameEager = eager && fi === 0;
                   return (
                     <picture
-                      class:list={['e5-banner-viz-frame', first && 'is-active']}
+                      class:list={['e5-banner-viz-frame', fi === 0 && 'is-active']}
                       data-viz-frame={fi}
                       data-combo={frame.caption}
                     >
                       {framePic.avif && (
                         <source
                           type="image/avif"
-                          srcset={first ? framePic.avif : undefined}
-                          data-srcset={first ? undefined : framePic.avif}
+                          srcset={frameEager ? framePic.avif : undefined}
+                          data-srcset={frameEager ? undefined : framePic.avif}
                           sizes={framePic.sizes}
                         />
                       )}
                       {framePic.webp && (
                         <source
                           type="image/webp"
-                          srcset={first ? framePic.webp : undefined}
-                          data-srcset={first ? undefined : framePic.webp}
+                          srcset={frameEager ? framePic.webp : undefined}
+                          data-srcset={frameEager ? undefined : framePic.webp}
                           sizes={framePic.sizes}
                         />
                       )}
                       <img
-                        src={first ? framePic.src : `/assets/images/banner/${frame.stem}-800.webp`}
-                        data-src={first ? undefined : framePic.src}
+                        src={frameEager ? framePic.src : LAZY_PIXEL}
+                        data-src={frameEager ? undefined : framePic.src}
                         alt={frame.alt}
                         width="1280"
                         height="720"
                         decoding="async"
-                        fetchpriority="low"
-                        loading="lazy"
+                        fetchpriority={frameEager ? 'high' : 'low'}
+                        loading={frameEager ? 'eager' : 'lazy'}
                       />
                     </picture>
                   );
@@ -97,10 +99,25 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
               </div>
             ) : (
               <picture class="e5-banner-picture">
-                {pic.avif && <source type="image/avif" srcset={pic.avif} sizes={pic.sizes} />}
-                {pic.webp && <source type="image/webp" srcset={pic.webp} sizes={pic.sizes} />}
+                {pic.avif && (
+                  <source
+                    type="image/avif"
+                    srcset={eager ? pic.avif : undefined}
+                    data-srcset={eager ? undefined : pic.avif}
+                    sizes={pic.sizes}
+                  />
+                )}
+                {pic.webp && (
+                  <source
+                    type="image/webp"
+                    srcset={eager ? pic.webp : undefined}
+                    data-srcset={eager ? undefined : pic.webp}
+                    sizes={pic.sizes}
+                  />
+                )}
                 <img
-                  src={pic.src}
+                  src={eager ? pic.src : LAZY_PIXEL}
+                  data-src={eager ? undefined : pic.src}
                   alt={slide.alt}
                   width="1280"
                   height="720"
@@ -114,10 +131,25 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
             {isLaydown && gt03Laydown && (
               <div class="e5-banner-laydown">
                 <picture>
-                  {gt03Laydown.avif && <source type="image/avif" srcset={gt03Laydown.avif} sizes={gt03Laydown.sizes} />}
-                  {gt03Laydown.webp && <source type="image/webp" srcset={gt03Laydown.webp} sizes={gt03Laydown.sizes} />}
+                  {gt03Laydown.avif && (
+                    <source
+                      type="image/avif"
+                      srcset={eager ? gt03Laydown.avif : undefined}
+                      data-srcset={eager ? undefined : gt03Laydown.avif}
+                      sizes={gt03Laydown.sizes}
+                    />
+                  )}
+                  {gt03Laydown.webp && (
+                    <source
+                      type="image/webp"
+                      srcset={eager ? gt03Laydown.webp : undefined}
+                      data-srcset={eager ? undefined : gt03Laydown.webp}
+                      sizes={gt03Laydown.sizes}
+                    />
+                  )}
                   <img
-                    src={gt03Laydown.src}
+                    src={eager ? gt03Laydown.src : LAZY_PIXEL}
+                    data-src={eager ? undefined : gt03Laydown.src}
                     alt="GT.03 Brushed Aluminum wheel, product laydown"
                     width="1500"
                     height="1500"
@@ -239,7 +271,7 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
     </svg>
   </button>
 
-  <div class="e5-banner-dots" role="tablist" aria-label="Choose slide">
+  <div class="e5-banner-dots" role="group" aria-label="Choose slide">
     {slides.map((slide, index) => (
       <button
         type="button"
@@ -309,21 +341,25 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
       return !!(slides[i] && slides[i].querySelector('[data-viz-cycle]') && !slides[i].classList.contains('is-static-image'));
     }
 
+    function hydrateLazyMedia(scope) {
+      if (!scope) return;
+      var sources = scope.querySelectorAll('source[data-srcset]');
+      for (var s = 0; s < sources.length; s++) {
+        if (!sources[s].getAttribute('srcset')) {
+          sources[s].setAttribute('srcset', sources[s].getAttribute('data-srcset'));
+        }
+      }
+      var imgs = scope.querySelectorAll('img[data-src]');
+      for (var m = 0; m < imgs.length; m++) {
+        imgs[m].setAttribute('src', imgs[m].getAttribute('data-src'));
+        imgs[m].removeAttribute('data-src');
+      }
+    }
+
     function loadViz() {
       if (vizLoaded || !vizFrames.length) return;
       vizLoaded = true;
-      for (var f = 0; f < vizFrames.length; f++) {
-        var sources = vizFrames[f].querySelectorAll('source[data-srcset]');
-        for (var s = 0; s < sources.length; s++) {
-          if (!sources[s].getAttribute('srcset')) {
-            sources[s].setAttribute('srcset', sources[s].getAttribute('data-srcset'));
-          }
-        }
-        var img = vizFrames[f].querySelector('img');
-        if (img && img.getAttribute('data-src') && !img.getAttribute('src')) {
-          img.setAttribute('src', img.getAttribute('data-src'));
-        }
-      }
+      hydrateLazyMedia(vizRoot);
     }
 
     function paintViz() {
@@ -369,6 +405,7 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
         }
       }
       if (live) live.textContent = 'Slide ' + (i + 1) + ' of ' + n;
+      hydrateLazyMedia(slides[i]);
       if (currentHasViz()) startViz();
       else stopViz();
     }
@@ -1030,22 +1067,41 @@ const slides = DEFAULT_HOMEPAGE_SLIDES;
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 18px;
+    bottom: 11px;
     z-index: 3;
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 0;
   }
+  /* 24×24 hit box; visible 10px dots stay 20px center-to-center (10px gap). */
   .e5-banner-dot {
-    width: 10px;
-    height: 10px;
+    box-sizing: border-box;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    margin: 0 -2px;
     padding: 0;
     border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .e5-banner-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 10px;
+    height: 10px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.45);
-    cursor: pointer;
   }
-  .e5-banner-dot.is-active {
+  .e5-banner-dot.is-active::after {
     background: #d31d25;
     transform: scale(1.15);
   }
