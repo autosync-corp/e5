@@ -70,11 +70,11 @@ assert(
 const factoryProposals = JSON.parse(factoryMap);
 assert('factory map covers 59 empty-color galleries', factoryProposals.items.length === 59);
 assert(
-  'factory map counts high 21 medium 8 low 30',
-  factoryProposals.counts.high === 21 &&
-    factoryProposals.counts.medium === 8 &&
-    factoryProposals.counts.low === 30 &&
-    factoryProposals.applyCount === 29,
+  'factory map counts high 55 medium 2 low 2',
+  factoryProposals.counts.high === 55 &&
+    factoryProposals.counts.medium === 2 &&
+    factoryProposals.counts.low === 2 &&
+    factoryProposals.applyCount === 57,
 );
 const factoryBySlug = new Map(factoryProposals.items.map((row) => [row.slug, row]));
 const factoryPaint = (slug) => {
@@ -82,8 +82,10 @@ const factoryPaint = (slug) => {
   if (!row || row.confidence === 'low') return '';
   return (row.proposedColor || '').trim();
 };
-assert('low-confidence factory paint stays blank', factoryPaint('g-2991') === '');
+assert('low-confidence wrap stays blank', factoryPaint('2016-c7-corvette-z06') === '');
 assert('high-confidence factory paint fills Torch Red', factoryPaint('g-2986') === 'Torch Red');
+assert('reviewed white C7 is Arctic White not Black', factoryPaint('g-2927') === 'Arctic White');
+assert('2004 C5 Z06 is Electron Blue Metallic', factoryPaint('2004-c5-z06') === 'Electron Blue Metallic');
 assert('client-edited vehicle still gates paint in sync', sync.includes('if (!draft.clientEdited.vehicle)') && sync.includes('draft.vehicleColor = paintColor || draft.vehicleColor'));
 assert('sync does not overwrite client-edited title', sync.includes('if (!draft.clientEdited.title) draft.title = suggestedTitle'));
 

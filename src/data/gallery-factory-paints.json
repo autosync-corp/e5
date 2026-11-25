@@ -17,7 +17,8 @@
       "Navy Blue Metallic",
       "Quicksilver Metallic",
       "Sebring Silver Metallic",
-      "Torch Red"
+      "Torch Red",
+      "Electron Blue Metallic"
     ],
     "C6_Grand_Sport": [
       "Arctic White",
@@ -568,6 +569,14 @@
       "autosyncName": "Sea Wolf Gray Tricoat",
       "autosyncRgb": "888F94",
       "visualizerSampleHex": "60574D"
+    },
+    {
+      "name": "Electron Blue Metallic",
+      "code": "28U",
+      "autosyncName": "Electron Blue Metallic",
+      "autosyncRgb": "",
+      "visualizerSampleHex": "",
+      "note": "2003-2004 C5 Z06 Commemorative Edition. Not in Immersive Gallery C5 list; year-valid factory paint."
     }
   ]
 }
