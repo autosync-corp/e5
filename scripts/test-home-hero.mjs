@@ -77,6 +77,7 @@ assert('e5-defer is a hashed Vite asset', layout.includes("e5-defer.js?url") && 
 assert('js assets are long-cached', vercel.includes('"source": "/js/(.*)"') && vercel.includes('max-age=31536000, immutable'));
 assert('navbar hydrates on load so the hamburger works before idle; LiveChat waits longer', layout.includes('Navbar client:load') && layout.includes('LiveChat client:idle={{ timeout: 12000 }}'));
 assert('nav logo uses 280/560w', navbar.includes('E5_LOGO_WHITE_NAV') && navbar.includes('sizes="233px"'));
+assert('mobile nav centers logo on a 3-column grid', navbar.includes('minmax(3rem, 1fr) minmax(0, auto) minmax(3rem, 1fr)') && navbar.includes('class="mobile-logo"') && layout.includes('minmax(3rem, 1fr) minmax(0, auto) minmax(3rem, 1fr)'));
 assert('banner srcset includes 400 and 600', responsive.includes('-400.') && responsive.includes('-600.') && responsive.includes('-800.') && responsive.includes('-1920.'));
 assert('desktop banner sizes pick 1280 under 1600px', responsive.includes('(max-width: 1599px) 1280px'));
 assert('e5-defer is at end of body', layout.lastIndexOf('e5DeferUrl') > layout.lastIndexOf('<LiveChat'));
