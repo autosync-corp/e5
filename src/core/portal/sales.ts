@@ -148,19 +148,6 @@ function money(value: unknown): number {
   return Math.round(n * 100) / 100;
 }
 
-function mmDdYyyy(date: Date): string {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'UTC',
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric',
-  }).formatToParts(date);
-  const month = parts.find((p) => p.type === 'month')?.value || '01';
-  const day = parts.find((p) => p.type === 'day')?.value || '01';
-  const year = parts.find((p) => p.type === 'year')?.value || '1970';
-  return `${month}-${day}-${year}`;
-}
-
 function displayName(contact: GhlContact): string {
   const first = String(contact.firstName || '').trim();
   const last = String(contact.lastName || '').trim();
@@ -210,18 +197,21 @@ function isSnapshot(raw: unknown): raw is SalesSnapshot {
   );
 }
 
-async function ghlRequest(path: string, step: string, init?: RequestInit): Promise<unknown> {
+type GhlInit = RequestInit & { optional?: boolean };
+
+async function ghlRequest(path: string, step: string, init?: GhlInit): Promise<unknown> {
   const token = env('GHL_PRIVATE_TOKEN');
   const locationId = env('GHL_LOCATION_ID');
   if (!token || !locationId) fail(step, 'missing-env');
 
+  const { optional = false, ...fetchInit } = init || {};
   const url = path.startsWith('http') ? new URL(path) : new URL(path, GHL_BASE);
-  const headers = new Headers(init?.headers);
+  const headers = new Headers(fetchInit.headers);
   headers.set('Authorization', `Bearer ${token}`);
   headers.set('Version', GHL_VERSION);
   headers.set('Accept', 'application/json');
   headers.set('User-Agent', GHL_USER_AGENT);
-  if (init?.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+  if (fetchInit.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
 
   let signal: AbortSignal | undefined;
   try {
@@ -230,17 +220,28 @@ async function ghlRequest(path: string, step: string, init?: RequestInit): Promi
     signal = undefined;
   }
 
+  const skip = (status: GhlFailStatus): null => {
+    logSalesFailure(step, status);
+    return null;
+  };
+
   let res: Response;
   try {
-    res = await fetch(url, { ...init, headers, cache: 'no-store', ...(signal ? { signal } : {}) });
+    res = await fetch(url, { ...fetchInit, headers, cache: 'no-store', ...(signal ? { signal } : {}) });
   } catch (err) {
     const name = err instanceof Error ? err.name : '';
-    fail(step, name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'network');
+    const status: GhlFailStatus = name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'network';
+    if (optional) return skip(status);
+    fail(step, status);
   }
-  if (!res.ok) fail(step, res.status);
+  if (!res.ok) {
+    if (optional) return skip(res.status);
+    fail(step, res.status);
+  }
   try {
     return await res.json();
   } catch {
+    if (optional) return skip('parse');
     fail(step, 'parse');
   }
 }
@@ -257,52 +258,43 @@ async function listPipelines(locationId: string): Promise<GhlPipeline[]> {
 
 async function listCustomFields(locationId: string): Promise<GhlCustomField[]> {
   try {
-    const data = (await ghlRequest(
+    const data = await ghlRequest(
       `/locations/${encodeURIComponent(locationId)}/customFields?model=contact`,
       'custom-fields',
-    )) as { customFields?: GhlCustomField[] };
-    return Array.isArray(data.customFields) ? data.customFields : [];
+      { optional: true },
+    );
+    if (!data || typeof data !== 'object') return [];
+    const fields = (data as { customFields?: GhlCustomField[] }).customFields;
+    return Array.isArray(fields) ? fields : [];
   } catch {
     return [];
   }
-}
-
-async function listOpportunities(locationId: string, start: Date, end: Date): Promise<GhlOpportunity[]> {
-  const all: GhlOpportunity[] = [];
-  let startAfter = '';
-  let startAfterId = '';
-  for (let page = 0; page < MAX_PAGES; page += 1) {
-    const params = new URLSearchParams({
-      location_id: locationId,
-      locationId,
-      limit: String(PAGE_LIMIT),
-      status: 'all',
-      order: 'added_desc',
-      date: mmDdYyyy(start),
-      endDate: mmDdYyyy(end),
-    });
-    if (startAfter) params.set('startAfter', startAfter);
-    if (startAfterId) params.set('startAfterId', startAfterId);
-    const data = (await ghlRequest(`/opportunities/search?${params}`, 'opportunities-search')) as {
-      opportunities?: GhlOpportunity[];
-      meta?: { startAfter?: number | string; startAfterId?: string; total?: number };
-    };
-    const batch = Array.isArray(data.opportunities) ? data.opportunities : [];
-    all.push(...batch);
-    if (batch.length < PAGE_LIMIT) break;
-    const last = batch[batch.length - 1];
-    startAfter = String(data.meta?.startAfter || Date.parse(last?.createdAt || '') || '');
-    startAfterId = String(data.meta?.startAfterId || last?.id || '');
-    if (!startAfter || !startAfterId) break;
-    if (typeof data.meta?.total === 'number' && all.length >= data.meta.total) break;
-  }
-  return all;
 }
 
 function inRange(iso: string | undefined, start: Date, end: Date): boolean {
   if (!iso) return false;
   const at = Date.parse(iso);
   return Number.isFinite(at) && at >= start.getTime() && at <= end.getTime();
+}
+
+async function listOpportunities(locationId: string, start: Date, end: Date): Promise<GhlOpportunity[]> {
+  const all: GhlOpportunity[] = [];
+  for (let page = 1; page <= MAX_PAGES; page += 1) {
+    const params = new URLSearchParams({
+      location_id: locationId,
+      limit: String(PAGE_LIMIT),
+      page: String(page),
+    });
+    const data = (await ghlRequest(`/opportunities/search?${params}`, 'opportunities-search')) as {
+      opportunities?: GhlOpportunity[];
+      meta?: { total?: number };
+    };
+    const batch = Array.isArray(data.opportunities) ? data.opportunities : [];
+    all.push(...batch);
+    if (batch.length < PAGE_LIMIT) break;
+    if (typeof data.meta?.total === 'number' && all.length >= data.meta.total) break;
+  }
+  return all.filter((item) => inRange(item.createdAt, start, end));
 }
 
 async function searchContacts(locationId: string, start: Date, end: Date): Promise<GhlContact[]> {
@@ -502,10 +494,12 @@ async function fetchSnapshot(days: SalesRangeDays): Promise<SalesSnapshot> {
   const locationId = env('GHL_LOCATION_ID');
   const end = new Date();
   const start = new Date(end.getTime() - days * 24 * 60 * 60 * 1000);
-  const pipelines = await listPipelines(locationId);
-  const fields = await listCustomFields(locationId);
-  const contacts = await listContacts(locationId, start, end);
-  const opportunities = await listOpportunities(locationId, start, end);
+  const [pipelines, fields, contacts, opportunities] = await Promise.all([
+    listPipelines(locationId),
+    listCustomFields(locationId),
+    listContacts(locationId, start, end),
+    listOpportunities(locationId, start, end),
+  ]);
   return buildSnapshot(days, start, end, pipelines, fields, contacts, opportunities);
 }
 

@@ -35,7 +35,18 @@ assert('sales section is ready', /slug: 'sales'[\s\S]*?ready: true/.test(section
 assert('sales summary has no CRM jargon', /slug: 'sales'[\s\S]*?summary: 'New prospects, pipelines, and lead sources. View only.'/.test(sections));
 assert('dedicated sales page', existsSync(join(root, 'src/pages/portal/sales.astro')) && page.includes('Sales & Prospects') && page.includes('Last {range} days'));
 assert('range default 30 with 7 and 90', helper.includes('SALES_RANGES = [7, 30, 90]') && helper.includes('return 30'));
-assert('read-only CRM access', !/method:\s*'PUT'|method:\s*'PATCH'|method:\s*'DELETE'/.test(helper) && helper.includes("status: 'all'") && helper.includes('/opportunities/pipelines') && helper.includes('/contacts/search') && helper.includes('/contacts/?'));
+assert('read-only CRM access', !/method:\s*'PUT'|method:\s*'PATCH'|method:\s*'DELETE'/.test(helper) && helper.includes('/opportunities/pipelines') && helper.includes('/contacts/search') && helper.includes('/contacts/?'));
+assert(
+  'opportunities search uses location_id and page',
+  helper.includes('location_id: locationId') &&
+    helper.includes('page: String(page)') &&
+    helper.includes('inRange(item.createdAt') &&
+    !helper.includes("status: 'all'") &&
+    !helper.includes('endDate') &&
+    !helper.includes('mmDdYyyy') &&
+    !/opportunities\/search[\s\S]{0,400}locationId,/.test(helper),
+);
+assert('custom-field lookup is optional', helper.includes("'custom-fields'") && helper.includes('optional: true') && helper.includes('if (optional) return skip'));
 assert('five minute cache', helper.includes('CACHE_TTL_MS = 5 * 60 * 1000') && helper.includes('ex: CACHE_TTL_SEC') && helper.includes('e5:portal:sales:v1:'));
 assert('pagination limit 100', helper.includes('PAGE_LIMIT = 100') && helper.includes('searchAfter') && helper.includes('startAfterId'));
 assert('prospects omit phone and email columns', page.includes('Names only') && !page.includes('row.phone') && !page.includes('row.email') && helper.includes('name: displayName(contact)') && !helper.includes('contact.email') && !helper.includes('contact.phone'));
@@ -56,6 +67,7 @@ assert(
 assert('errors are not cached', helper.includes('if (!isSnapshot(snapshot)) return') && helper.includes('await writeCache(days, snapshot)') && helper.includes('throw err'));
 assert('docs cover section 7', docs.includes('Section 7') && docs.includes('/sales') && docs.includes('GHL_PRIVATE_TOKEN') && docs.includes('Read-only') && docs.includes('how_did_you_hear'));
 assert('docs mention user-agent and diagnostics', docs.includes('E5Portal/1.0') && docs.includes('never logged') && docs.includes('not written to the 5-minute cache'));
+assert('docs cover snake_case search and optional custom fields', docs.includes('location_id') && docs.includes('createdAt') && docs.includes('optional'));
 assert('checkout still sends hear-about on the webhook', webhook.includes('how_did_you_hear') && webhook.includes('applyHowDidYouHear'));
 assert('coming soon still on galleries', soon.includes('Coming soon') && section1.includes('/portal/galleries') && /slug: 'galleries'[\s\S]*?ready: false/.test(sections));
 assert('shell still noindex', layout.includes('noindex, nofollow'));
