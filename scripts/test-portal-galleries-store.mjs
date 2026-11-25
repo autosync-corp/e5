@@ -88,6 +88,30 @@ assert('reviewed white C7 is Arctic White not Black', factoryPaint('g-2927') ===
 assert('2004 C5 Z06 is Electron Blue Metallic', factoryPaint('2004-c5-z06') === 'Electron Blue Metallic');
 assert('client-edited vehicle still gates paint in sync', sync.includes('if (!draft.clientEdited.vehicle)') && sync.includes('draft.vehicleColor = paintColor || draft.vehicleColor'));
 assert('sync does not overwrite client-edited title', sync.includes('if (!draft.clientEdited.title) draft.title = suggestedTitle'));
+const wheelOverrides = JSON.parse(read('src/data/gallery-wheel-overrides.json'));
+assert(
+  'g-2991 stores Sebring style and stainless lip finish in separate fields',
+  wheelOverrides['g-2991']?.style === 'Sebring 2P Forged' &&
+    wheelOverrides['g-2991']?.finish === 'Gloss Black with Stainless Steel Lip' &&
+    wheelOverrides['g-2991']?.autosyncId === 2991,
+);
+assert(
+  'sync and public listing apply wheel overrides',
+  sync.includes('wheelOverrideFor') &&
+    store.includes('applyWheelOverrideToStored') &&
+    helper.includes('applyWheelOverrideToRecord'),
+);
+assert(
+  'g-2991 title formula uses separate style then finish',
+  suggestGalleryTitle({
+    year: '2025',
+    vehicleColor: 'Black',
+    generation: 'C8',
+    trim: 'Z06',
+    style: 'Sebring 2P Forged',
+    finish: 'Gloss Black with Stainless Steel Lip',
+  }) === '2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels',
+);
 
 function suggestGalleryTitle(input) {
   const clean = (value) => String(value || '').replace(/\s+/g, ' ').trim();

@@ -9,6 +9,7 @@ import { sortGalleryItems } from '@/pages/gallery/utils/sortGallery.ts';
 import { loadStoredGalleries, mergeStoredCatalog } from '@/core/portal/galleryStore.ts';
 import { suggestGalleryTitle } from '@/core/portal/galleryCopy.ts';
 import { internalSlugFor, projectGalleryForPublic, publicSlugFor } from '@/core/portal/gallerySeo.ts';
+import { applyWheelOverrideToRecord } from '@/core/portal/galleryWheelOverrides.ts';
 
 export const GALLERIES_REDIS_KEY = 'e5:portal:galleries';
 export const GALLERIES_DOC_VERSION = 1;
@@ -386,7 +387,7 @@ export async function loadGalleryCatalog(): Promise<GalleryRecord[]> {
     const detail = err instanceof Error ? err.message : 'unknown';
     logGalleryFailure('gallery-store', detail);
   }
-  const items = mergeStoredCatalog(fallback, stored) as GalleryRecord[];
+  const items = (mergeStoredCatalog(fallback, stored) as GalleryRecord[]).map(applyWheelOverrideToRecord);
   catalogCache = { at: Date.now(), items };
   return items;
 }
@@ -506,8 +507,10 @@ export async function loadPublicGalleries(): Promise<CorvetteGalleryItem[]> {
 function matchGallerySlug(item: GalleryRecord, slug: string): boolean {
   if (!item.galleryId) return false;
   if (item.galleryId === slug) return true;
-  if (publicSlugFor(item.galleryId) === slug) return true;
+  const canonical = publicSlugFor(item.galleryId);
+  if (canonical === slug) return true;
   if (internalSlugFor(slug) === item.galleryId) return true;
+  if (publicSlugFor(slug) === canonical) return true;
   return false;
 }
 

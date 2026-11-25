@@ -14,7 +14,9 @@ import {
   RESERVED_GALLERY_SLUGS,
   seoPhotoAlt,
   shouldRenameSlug,
+  suggestGalleryTitle,
   uniqueSeoSlug,
+  wheelOverrideFor,
 } from './gallery-seo-lib.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -104,7 +106,27 @@ function oldPhotoPath(slug, photo, index, fallbackUrl) {
   return `/gallery-media/${slug}/${id}.${ext}`;
 }
 
-const staticItems = parseStaticCatalog();
+const previousMap = JSON.parse(readFileSync(join(root, 'src/data/gallery-seo-rename-map.json'), 'utf8'));
+const wheelOverrides = JSON.parse(readFileSync(join(root, 'src/data/gallery-wheel-overrides.json'), 'utf8'));
+
+function applyWheelOverride(item, stored) {
+  if (stored?.clientEdited?.wheels) return item;
+  const ov = wheelOverrideFor(wheelOverrides, item.galleryId, stored?.autosyncId);
+  if (!ov) return item;
+  const title = stored?.clientEdited?.title
+    ? item.title
+    : suggestGalleryTitle({
+        year: item.year,
+        vehicleColor: item.vehicleColor,
+        generation: item.generation,
+        trim: item.trim,
+        style: ov.style,
+        finish: ov.finish,
+      });
+  return { ...item, style: ov.style, finish: ov.finish, title };
+}
+
+const staticItems = parseStaticCatalog().map((item) => applyWheelOverride(item));
 const staticById = new Map(staticItems.map((item) => [item.galleryId, item]));
 
 const stored = [];
@@ -121,7 +143,7 @@ const overlayItems = Array.isArray(overlayRaw?.items) ? overlayRaw.items : null;
 const byId = new Map();
 for (const item of staticItems) byId.set(item.galleryId, item);
 for (const item of stored) {
-  byId.set(item.slug, {
+  byId.set(item.slug, applyWheelOverride({
     galleryId: item.slug,
     year: item.year || '',
     generation: item.generation || '',
@@ -135,7 +157,7 @@ for (const item of stored) {
     origin: item.origin || 'autosync',
     clientEditedSlug: Boolean(item.clientEdited?.slug),
     blob: true,
-  });
+  }, item));
 }
 
 const ordered = [];
@@ -222,6 +244,42 @@ for (const item of ordered) {
   }
 }
 
+const seenOldSlugs = new Set(slugRows.map((row) => row.old));
+for (const row of previousMap.slugs || []) {
+  const current = slugRows.find((next) => next.old === row.old);
+  if (!current || !row.new || row.new === current.new || seenOldSlugs.has(row.new)) continue;
+  slugRows.push({
+    old: row.new,
+    new: current.new,
+    title: current.title,
+    reason: 'previous-seo-slug',
+    clientEditedConflict: false,
+  });
+  seenOldSlugs.add(row.new);
+}
+
+const seenPhotoOld = new Set(photoRows.map((row) => row.oldPath));
+for (const photo of previousMap.photos || []) {
+  const current = photoRows.find((row) => row.oldPath === photo.oldPath);
+  if (!current || !photo.newPath || photo.newPath === current.newPath || seenPhotoOld.has(photo.newPath)) continue;
+  photoRows.push({
+    oldSlug: photo.newSlug || current.oldSlug,
+    newSlug: current.newSlug,
+    oldPath: photo.newPath,
+    newPath: current.newPath,
+    alt: current.alt,
+  });
+  seenPhotoOld.add(photo.newPath);
+}
+
+const customWheels = ordered
+  .filter((item) => !String(item.style || '').trim())
+  .map((item) => ({
+    slug: item.galleryId,
+    title: item.title || '',
+    origin: item.origin || 'static',
+  }));
+
 const generatedAt = new Date().toISOString();
 const json = {
   generatedAt,
@@ -240,7 +298,8 @@ md.push('# Gallery SEO rename map');
 md.push('');
 md.push(`Generated ${generatedAt}. Dry run only — this file is the plan. Production Redis/Blob are rewritten only by \`scripts/apply-gallery-seo-rename.mjs --apply\` after go-live.`);
 md.push('');
-md.push(`Public galleries in this plan: **${ordered.length}**. Opaque slugs to rename: **${slugRows.length}**. Photo paths to rename: **${photoRows.length}**.`);
+const opaqueCount = slugRows.filter((row) => row.reason !== 'previous-seo-slug').length;
+md.push(`Public galleries in this plan: **${ordered.length}**. Opaque slugs to rename: **${opaqueCount}**. Photo paths to rename: **${photoRows.length}**.`);
 md.push('');
 md.push('Pages live at `/gallery/{slug}`. Photos are served at `/gallery/{slug}/{slug}-n.webp`. Image-extension requests under `/gallery/` go to the media handler, so they cannot clash with the HTML page. `/gallery/vehicles` and `/gallery/wheels` stay reserved.');
 md.push('');
@@ -268,6 +327,28 @@ if (conflicts.length) {
   md.push('None.');
   md.push('');
 }
+md.push('## Static wheel overrides');
+md.push('');
+md.push('Series and finish stay in **separate fields** (same as other galleries). AutoSync imports cannot overwrite these unless a portal user edits wheels.');
+md.push('');
+md.push('| Id | Style | Finish |');
+md.push('|---|---|---|');
+for (const [id, row] of Object.entries(wheelOverrides)) {
+  md.push(`| \`${id}\` | ${row.style} | ${row.finish} |`);
+}
+md.push('');
+md.push('## Remaining empty wheel style');
+md.push('');
+if (customWheels.length) {
+  md.push('These public galleries still have no series in the style field, so the detail page falls back to “E5 custom wheels”:');
+  md.push('');
+  for (const row of customWheels) {
+    md.push(`- \`${row.slug}\` — ${row.title || '(untitled)'} (${row.origin})`);
+  }
+} else {
+  md.push('None of the public galleries in this plan are missing a wheel style after overrides.');
+}
+md.push('');
 md.push('## Opaque slugs');
 md.push('');
 md.push('| Old slug | New slug | Title | Reason |');
@@ -295,5 +376,6 @@ console.log(JSON.stringify({
   photosRenamed: photoRows.length,
   clashes: clashes.length,
   conflicts: conflicts.length,
+  customWheels,
   redis: Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN),
 }, null, 2));

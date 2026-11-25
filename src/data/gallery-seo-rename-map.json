@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-25T18:38:46.990Z",
-  "slugCount": 29,
-  "photoCount": 1802,
+  "generatedAt": "2026-11-25T19:58:03.784Z",
+  "slugCount": 30,
+  "photoCount": 1960,
   "clashes": [],
   "conflicts": [],
   "slugs": [
     {
       "old": "g-2991",
-      "new": "2025-black-c8-z06-e5-wheels",
-      "title": "2025 Black C8 Z06",
+      "new": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "title": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels",
       "reason": "opaque-autosync-id",
       "clientEditedConflict": false
     },
@@ -206,6 +206,13 @@
       "new": "2016-arctic-white-c7-z06-e5-daytona-gloss-black-wheels-2",
       "title": "2016 Arctic White C7 Z06 with E5 Daytona Gloss Black wheels",
       "reason": "opaque-autosync-id",
+      "clientEditedConflict": false
+    },
+    {
+      "old": "2025-black-c8-z06-e5-wheels",
+      "new": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "title": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels",
+      "reason": "previous-seo-slug",
       "clientEditedConflict": false
     }
   ],
@@ -9655,262 +9662,262 @@
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyf7qqijjd8.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-1.webp",
-      "alt": "2025 Black C8 Z06 — photo 1"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-1.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 1"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyfgqa1tsbb.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-2.webp",
-      "alt": "2025 Black C8 Z06 — photo 2"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-2.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 2"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyfq3dk432f.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-3.webp",
-      "alt": "2025 Black C8 Z06 — photo 3"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-3.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 3"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyfws2o1ucm.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-4.webp",
-      "alt": "2025 Black C8 Z06 — photo 4"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-4.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 4"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyg6h4cspud.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-5.webp",
-      "alt": "2025 Black C8 Z06 — photo 5"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-5.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 5"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsygdls3l6go.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-6.webp",
-      "alt": "2025 Black C8 Z06 — photo 6"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-6.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 6"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyglp0rlzx4.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-7.webp",
-      "alt": "2025 Black C8 Z06 — photo 7"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-7.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 7"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyguikw19h0.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-8.webp",
-      "alt": "2025 Black C8 Z06 — photo 8"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-8.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 8"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyh3jz0ql59.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-9.webp",
-      "alt": "2025 Black C8 Z06 — photo 9"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-9.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 9"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyhb8he8339.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-10.webp",
-      "alt": "2025 Black C8 Z06 — photo 10"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-10.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 10"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyhjr5g38bb.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-11.webp",
-      "alt": "2025 Black C8 Z06 — photo 11"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-11.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 11"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyhswjshl0c.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-12.webp",
-      "alt": "2025 Black C8 Z06 — photo 12"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-12.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 12"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyi0zamo3gr.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-13.webp",
-      "alt": "2025 Black C8 Z06 — photo 13"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-13.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 13"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyi7cfvtryx.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-14.webp",
-      "alt": "2025 Black C8 Z06 — photo 14"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-14.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 14"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyid8dj38ul.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-15.webp",
-      "alt": "2025 Black C8 Z06 — photo 15"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-15.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 15"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyilqz1y9ss.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-16.webp",
-      "alt": "2025 Black C8 Z06 — photo 16"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-16.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 16"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyisxn166ds.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-17.webp",
-      "alt": "2025 Black C8 Z06 — photo 17"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-17.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 17"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyj03h7qnpo.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-18.webp",
-      "alt": "2025 Black C8 Z06 — photo 18"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-18.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 18"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyj6owzxed2.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-19.webp",
-      "alt": "2025 Black C8 Z06 — photo 19"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-19.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 19"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyjdymrmhft.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-20.webp",
-      "alt": "2025 Black C8 Z06 — photo 20"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-20.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 20"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyjn7dttqzx.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-21.webp",
-      "alt": "2025 Black C8 Z06 — photo 21"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-21.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 21"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyjvzo7an3q.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-22.webp",
-      "alt": "2025 Black C8 Z06 — photo 22"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-22.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 22"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyk4g01qcid.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-23.webp",
-      "alt": "2025 Black C8 Z06 — photo 23"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-23.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 23"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsykb3vb06je.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-24.webp",
-      "alt": "2025 Black C8 Z06 — photo 24"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-24.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 24"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsykin7m74d9.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-25.webp",
-      "alt": "2025 Black C8 Z06 — photo 25"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-25.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 25"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsykpgskvxb5.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-26.webp",
-      "alt": "2025 Black C8 Z06 — photo 26"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-26.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 26"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsykzpllbf9l.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-27.webp",
-      "alt": "2025 Black C8 Z06 — photo 27"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-27.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 27"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyl99blyme8.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-28.webp",
-      "alt": "2025 Black C8 Z06 — photo 28"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-28.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 28"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsylih9x3mqr.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-29.webp",
-      "alt": "2025 Black C8 Z06 — photo 29"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-29.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 29"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsylq7hqugw9.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-30.webp",
-      "alt": "2025 Black C8 Z06 — photo 30"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-30.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 30"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsyly1dvtl8s.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-31.webp",
-      "alt": "2025 Black C8 Z06 — photo 31"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-31.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 31"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsym61dgo8tm.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-32.webp",
-      "alt": "2025 Black C8 Z06 — photo 32"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-32.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 32"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsymfrnky95a.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-33.webp",
-      "alt": "2025 Black C8 Z06 — photo 33"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-33.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 33"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsymowxoht1f.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-34.webp",
-      "alt": "2025 Black C8 Z06 — photo 34"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-34.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 34"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsymzyt2axog.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-35.webp",
-      "alt": "2025 Black C8 Z06 — photo 35"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-35.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 35"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsynawbpee9m.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-36.webp",
-      "alt": "2025 Black C8 Z06 — photo 36"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-36.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 36"
     },
     {
       "oldSlug": "g-2991",
-      "newSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
       "oldPath": "/gallery-media/g-2991/pmwvsynjuzq6m9n.webp",
-      "newPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-37.webp",
-      "alt": "2025 Black C8 Z06 — photo 37"
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-37.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 37"
     },
     {
       "oldSlug": "g-2986",
@@ -12823,6 +12830,1112 @@
       "oldPath": "/gallery-media/g-2927/pmwvtkumhgeq1ri.webp",
       "newPath": "/gallery/2016-arctic-white-c7-z06-e5-daytona-gloss-black-wheels-2/2016-arctic-white-c7-z06-e5-daytona-gloss-black-wheels-2-6.webp",
       "alt": "2016 Arctic White C7 Z06 with E5 Daytona Gloss Black wheels — photo 6"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-10.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-10.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 10"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-11.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-11.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 11"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-12.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-12.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 12"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-13.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-13.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 13"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-14.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-14.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 14"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-15.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-15.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 15"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-16.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-16.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 16"
+    },
+    {
+      "oldSlug": "2019-c7-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06/2019-c7-z06-17.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-17.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 17"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2019-c7-z06-purple",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2019-c7-z06-purple/2019-c7-z06-purple-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-10.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-10.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 10"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-11.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-11.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 11"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-12.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-12.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 12"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-13.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-13.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 13"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-14.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-14.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 14"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-15.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-15.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 15"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-16.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-16.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 16"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-17.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-17.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 17"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-18.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-18.webp",
+      "alt": "2019 C7 Z06 — photo 18"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-19.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-19.webp",
+      "alt": "2019 C7 Z06 — photo 19"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-20.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-20.webp",
+      "alt": "2019 C7 Z06 — photo 20"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-21.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-21.webp",
+      "alt": "2019 C7 Z06 — photo 21"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-22.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-22.webp",
+      "alt": "2019 C7 Z06 — photo 22"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-23.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-23.webp",
+      "alt": "2019 C7 Z06 — photo 23"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-24.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-24.webp",
+      "alt": "2019 C7 Z06 — photo 24"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-25.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-25.webp",
+      "alt": "2019 C7 Z06 — photo 25"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-26.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-26.webp",
+      "alt": "2019 C7 Z06 — photo 26"
+    },
+    {
+      "oldSlug": "2023-c8-corvette-stingray-blue",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2023-c8-corvette-stingray-blue/2023-c8-corvette-stingray-blue-27.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-27.webp",
+      "alt": "2019 C7 Z06 — photo 27"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-10.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-10.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 10"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-11.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-11.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 11"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-12.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-12.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 12"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-13.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-13.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 13"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-14.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-14.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 14"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-15.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-15.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 15"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-16.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-16.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 16"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-17.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-17.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 17"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-18.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-18.webp",
+      "alt": "2019 C7 Z06 — photo 18"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-z06-downtown",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-z06-downtown/2025-c8-corvette-z06-downtown-19.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-19.webp",
+      "alt": "2019 C7 Z06 — photo 19"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-10.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-10.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 10"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-11.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-11.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 11"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-12.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-12.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 12"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-13.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-13.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 13"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-14.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-14.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 14"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-15.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-15.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 15"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-16.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-16.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 16"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-17.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-17.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 17"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-18.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-18.webp",
+      "alt": "2019 C7 Z06 — photo 18"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-19.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-19.webp",
+      "alt": "2019 C7 Z06 — photo 19"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-20.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-20.webp",
+      "alt": "2019 C7 Z06 — photo 20"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-21.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-21.webp",
+      "alt": "2019 C7 Z06 — photo 21"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-22.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-22.webp",
+      "alt": "2019 C7 Z06 — photo 22"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-23.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-23.webp",
+      "alt": "2019 C7 Z06 — photo 23"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-24.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-24.webp",
+      "alt": "2019 C7 Z06 — photo 24"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-25.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-25.webp",
+      "alt": "2019 C7 Z06 — photo 25"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-26.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-26.webp",
+      "alt": "2019 C7 Z06 — photo 26"
+    },
+    {
+      "oldSlug": "2025-c8-corvette-zr1",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-corvette-zr1/2025-c8-corvette-zr1-27.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-27.webp",
+      "alt": "2019 C7 Z06 — photo 27"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-1.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-1.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 1"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-2.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-2.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 2"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-3.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-3.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 3"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-4.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-4.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 4"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-5.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-5.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 5"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-6.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-6.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 6"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-7.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-7.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 7"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-8.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-8.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 8"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-9.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-9.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 9"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-10.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-10.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 10"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-11.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-11.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 11"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-12.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-12.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 12"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-13.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-13.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 13"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-14.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-14.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 14"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-15.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-15.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 15"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-16.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-16.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 16"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2016-corvette-c7-z06-white",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-17.webp",
+      "newPath": "/gallery/2016-corvette-c7-z06-white/2016-corvette-c7-z06-white-17.webp",
+      "alt": "2016 C7 Corvette Z06 — photo 17"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-18.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-18.webp",
+      "alt": "2019 C7 Z06 — photo 18"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-19.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-19.webp",
+      "alt": "2019 C7 Z06 — photo 19"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-20.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-20.webp",
+      "alt": "2019 C7 Z06 — photo 20"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-21.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-21.webp",
+      "alt": "2019 C7 Z06 — photo 21"
+    },
+    {
+      "oldSlug": "2025-c8-z06",
+      "newSlug": "2019-c7-z06",
+      "oldPath": "/gallery/2025-c8-z06/2025-c8-z06-22.webp",
+      "newPath": "/gallery/2019-c7-z06/2019-c7-z06-22.webp",
+      "alt": "2019 C7 Z06 — photo 22"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-1.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-1.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 1"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-2.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-2.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 2"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-3.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-3.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 3"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-4.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-4.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 4"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-5.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-5.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 5"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-6.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-6.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 6"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-7.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-7.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 7"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-8.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-8.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 8"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-9.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-9.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 9"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-10.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-10.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 10"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-11.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-11.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 11"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-12.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-12.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 12"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-13.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-13.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 13"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-14.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-14.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 14"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-15.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-15.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 15"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-16.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-16.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 16"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-17.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-17.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 17"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-18.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-18.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 18"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-19.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-19.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 19"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-20.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-20.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 20"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-21.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-21.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 21"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-22.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-22.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 22"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-23.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-23.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 23"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-24.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-24.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 24"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-25.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-25.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 25"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-26.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-26.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 26"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-27.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-27.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 27"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-28.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-28.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 28"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-29.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-29.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 29"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-30.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-30.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 30"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-31.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-31.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 31"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-32.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-32.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 32"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-33.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-33.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 33"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-34.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-34.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 34"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-35.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-35.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 35"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-36.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-36.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 36"
+    },
+    {
+      "oldSlug": "2025-black-c8-z06-e5-wheels",
+      "newSlug": "2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels",
+      "oldPath": "/gallery/2025-black-c8-z06-e5-wheels/2025-black-c8-z06-e5-wheels-37.webp",
+      "newPath": "/gallery/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels/2025-black-c8-z06-e5-sebring-2p-forged-gloss-black-with-stainless-steel-lip-wheels-37.webp",
+      "alt": "2025 Black C8 Z06 with E5 Sebring 2P Forged Gloss Black with Stainless Steel Lip wheels — photo 37"
     }
   ]
 }

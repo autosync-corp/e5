@@ -66,7 +66,9 @@ function maps() {
     for (const row of map.slugs || []) {
       if (!row.old || !row.new) continue;
       slugOldToNew.set(row.old, row.new);
-      slugNewToOld.set(row.new, row.old);
+      if (isOpaqueGallerySlug(row.old) || !slugNewToOld.has(row.new)) {
+        slugNewToOld.set(row.new, row.old);
+      }
     }
     for (const row of map.photos || []) {
       if (row.oldPath) photoOldToNew.set(normalizePath(row.oldPath), row);

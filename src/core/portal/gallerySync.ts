@@ -25,6 +25,7 @@ import { blobConfigured, portalRedis } from '@/core/portal/slides.ts';
 import { FINISH_CODE_TO_SITE_NAME, finishCodeFromPn } from '@/core/utils/officialPricing.ts';
 import { proposedFactoryPaint } from '@/core/portal/galleryFactoryPaint.ts';
 import { nextDescriptivePhotoId, proposedSeoSlug, uniqueSeoSlug } from '@/core/portal/gallerySeo.ts';
+import { wheelOverrideFor } from '@/core/portal/galleryWheelOverrides.ts';
 import { MAX_GALLERY_SLUG } from '@/core/portal/galleryTypes.ts';
 
 const AUTOSYNC_GALLERIES_URL = 'https://api.autosyncstudio.com/galleries';
@@ -319,6 +320,11 @@ export async function importAutoSyncGallery(
   if (!draft.clientEdited.wheels) {
     draft.front = front.style || front.pn ? front : draft.front;
     draft.rear = rear.style || rear.pn ? rear : draft.rear;
+    const ov = wheelOverrideFor({ slug: draft.slug, autosyncId: gallery.Id });
+    if (ov) {
+      draft.front = { ...draft.front, style: ov.style, finish: ov.finish };
+      draft.rear = { ...draft.rear, style: ov.style, finish: ov.finish };
+    }
     draft.square = Boolean(draft.front.pn && draft.rear.pn && draft.front.pn === draft.rear.pn);
   }
   const generatedTitle = suggestGalleryTitle({

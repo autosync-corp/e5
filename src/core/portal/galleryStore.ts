@@ -18,6 +18,7 @@ import {
 } from '@/core/portal/galleryTypes.ts';
 import { generationFromYear, youtubeIdFromInput } from '@/core/portal/galleryCopy.ts';
 import { proposedSeoSlug, uniqueSeoSlug } from '@/core/portal/gallerySeo.ts';
+import { applyWheelOverrideToStored } from '@/core/portal/galleryWheelOverrides.ts';
 import type { CorvetteGalleryItem } from '@/pages/gallery/constants/CorvetteGalleryData.ts';
 
 export type StoredGalleryRecord = CorvetteGalleryItem & {
@@ -203,6 +204,7 @@ export async function deleteStoredGallery(slug: string): Promise<StoredGallery |
 }
 
 export function storedToRecord(item: StoredGallery): StoredGalleryRecord {
+  item = applyWheelOverrideToStored(item);
   const cover = item.photos.find((photo) => photo.id === item.coverId) || item.photos[0];
   const ordered = cover ? [cover, ...item.photos.filter((photo) => photo.id !== cover.id)] : item.photos;
   const media: CorvetteGalleryItem['media'] = ordered.map((photo) => ({

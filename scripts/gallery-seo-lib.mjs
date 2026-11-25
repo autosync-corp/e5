@@ -89,6 +89,29 @@ export function seoPhotoAlt(title, index1) {
   return `${base} — photo ${index1}`.slice(0, 180);
 }
 
+export function suggestGalleryTitle(input = {}) {
+  const clean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+  const vehicle = [clean(input.year), clean(input.vehicleColor), clean(input.generation), clean(input.trim)].filter(Boolean);
+  const base = vehicle.join(' ') || 'Corvette';
+  const style = clean(input.style);
+  const finish = clean(input.finish);
+  const wheel = [style ? `E5 ${style}` : '', finish].filter(Boolean).join(' ');
+  if (wheel) return `${base} with ${wheel} wheels`.slice(0, 160);
+  return base.slice(0, 160);
+}
+
+export function wheelOverrideFor(overrides, slug, autosyncId) {
+  const id = Number(autosyncId);
+  if (Number.isInteger(id) && id > 0) {
+    for (const row of Object.values(overrides || {})) {
+      if (row && row.autosyncId === id) return row;
+    }
+  }
+  const key = String(slug || '').trim();
+  if (key && overrides && overrides[key]) return overrides[key];
+  return null;
+}
+
 export function shouldRenameSlug(opts) {
   const slug = opts.slug;
   const opaque = isOpaqueGallerySlug(slug);
