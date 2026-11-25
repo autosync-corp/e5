@@ -141,17 +141,26 @@ Do not merge until Dave replies **go live**.
 
 ## Section 5
 
-Vehicle galleries from AutoSync, with a portal overlay for show/hide and order.
+First-party vehicle galleries on e5wheels.com, plus the existing hide/reorder editor.
 
-- Portal host: `https://portal.e5wheels.com/galleries`
-- Preview: `/portal/galleries`
-- Public `/gallery/vehicles` and `/gallery/<id>` are SSR. They read E5 galleries from `GET https://api.autosyncstudio.com/galleries` (cached about 5 minutes in memory). Existing `/gallery/<id>` URLs, titles, and SEO stay when a gallery uniquely matches year + part numbers. Unmatched AutoSync galleries get a stable `g-<id>` slug. Static-only slugs still render so nothing 404s.
-- Redis key `e5:portal:galleries` stores order and hidden flags only. First save writes that overlay. Empty Redis = current catalog order, nothing hidden. New AutoSync galleries append at the end, visible, until the client moves or hides them.
-- Photos are not uploaded or edited here — they stay on AutoSync. The portal only controls which galleries appear on e5wheels.com and in what order.
-- The editor can filter by generation, trim, year, and wheel style without changing the saved order. Reorder is paused while a filter is on; Save still writes the full list.
-- `sitemap-galleries.xml` lists the live public galleries (`s-maxage=60`). Hidden galleries drop off the listing, detail pages, and that sitemap.
-- If AutoSync is down, the public pages fall back to the current static gallery data.
-- API key: `PUBLIC_AUTOSYNC_API_KEY` (same as the shop) with fallback `efive`. Add the named env on Vercel if you want a dedicated key; the shop fallback already works.
+- Portal host: `https://portal.e5wheels.com/galleries` — Add gallery, edit, delete, hide/reorder, filters, and Import from AutoSync.
+- Preview: `/portal/galleries` and `/portal/galleries/new`
+- **Records** live in Upstash Redis (already on this project). Index `e5:galleries:index`, one document per slug at `e5:galleries:item:{slug}`, sync cursor at `e5:galleries:sync`. Hide/reorder stays on `e5:portal:galleries`.
+- **Photos** go to the existing `e5-portal` Vercel Blob store (`BLOB_READ_WRITE_TOKEN`). Public HTML uses `/gallery-media/{slug}/{photoId}.webp` on e5wheels.com (proxied, long-cache). Originals stay in Blob. AutoSync `webp` files are already web-sized; Vercel Image Optimization can wrap them later if we want extra sizes.
+- Add gallery: drag/drop photos, reorder, set cover, year (generation fills from year), trim, body, color, front/rear wheels from the official catalog (staggered by default, square allowed), optional YouTube, title and description with editable suggestions. Publishes live immediately and appears in `sitemap-galleries.xml`.
+- Nightly cron `GET /api/cron/galleries` (`15 6 * * *`) imports new/updated AutoSync galleries in small batches (3 per run) and copies photos to Blob. Title, description, and per-photo alt text are generated only from vehicle + wheel data. Fields the client has edited are not overwritten. Unmatched AutoSync galleries keep a stable `g-<id>` slug.
+- Public `/gallery/vehicles` and `/gallery/<id>` read the on-site store first, then the current AutoSync + static catalog as fallback, so existing slugs and titles stay.
+- The editor can filter by generation, trim, year, and wheel style without changing the saved order. Reorder is paused while a filter is on; Save still writes the full list. Hide and reorder still work.
+
+### Env / storage to add
+
+Already on the project: `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `BLOB_READ_WRITE_TOKEN`, `PUBLIC_AUTOSYNC_API_KEY` (fallback `efive`).
+
+Add for the nightly import:
+
+| Variable | Required | What it is |
+|---|---|---|
+| `CRON_SECRET` | Yes for cron | Bearer token Vercel sends to `/api/cron/galleries`. `vercel env add CRON_SECRET production,preview` |
 
 Do not merge until Dave replies **go live**.
 
@@ -172,6 +181,8 @@ Keys (write on save, read at request time):
 - `e5:portal:posts:{slug}` + `e5:portal:posts:index` — blog (Section 4)
 - `e5:portal:sales:v1:{days}` — read-only sales snapshot cache (Section 7, ~5 minutes)
 - `e5:portal:galleries` — vehicle gallery order / hidden flags (Section 5)
+- `e5:galleries:index` + `e5:galleries:item:{slug}` — first-party gallery records (Section 5)
+- `e5:galleries:sync` — AutoSync import cursor / status (Section 5)
 - `e5:portal:users` — extra portal users (optional, later)
 
 Public pages keep a code fallback (today’s hardcoded content) and overlay Redis when a key exists. Empty Redis = current site, unchanged.

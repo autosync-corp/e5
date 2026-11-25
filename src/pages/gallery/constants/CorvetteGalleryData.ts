@@ -9,6 +9,7 @@ export interface GalleryMediaItem {
   url?: string;
   youtubeId?: string;
   thumbnail?: string;
+  alt?: string;
 }
 
 export interface CorvetteGalleryItem {
@@ -18,6 +19,7 @@ export interface CorvetteGalleryItem {
   trim: string | null;
   vehicleColor: string | null;
   vehicleTitle: string | null;
+  description?: string | null;
   wheelStyle: string | null;
   wheelFinish: string | null;
   wheelSizeF: string | null;

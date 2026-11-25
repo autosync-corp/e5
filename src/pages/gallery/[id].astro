@@ -53,7 +53,7 @@ const buildDescription = () => {
   return `View ${vehicleName} Corvette with ${wheelInfo} wheels. See detailed photos, wheel specifications, and fitment details from our customer gallery.`;
 };
 
-const description = buildDescription();
+const description = (vehicleData.description || '').trim() || buildDescription();
 const baseUrl = SITE_URL;
 const canonicalUrl = `${baseUrl}/gallery/${vehicleData.galleryId}`;
 const cover = galleryCoverUrl(vehicleData);
@@ -86,7 +86,7 @@ const imageSchemaItems = vehicle.galleryMedia
   .map((m, i) => ({
     '@type': 'ImageObject',
     'contentUrl': absoluteUrl(m.url || '', baseUrl),
-    'name': `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} &mdash; ${wheelDesc} &mdash; Photo ${i + 1}`,
+    'name': m.alt || `${vehicle.trim !== 'N/A' ? vehicle.trim : vehicle.year + ' ' + vehicle.model + ' Corvette'} — ${wheelDesc} — Photo ${i + 1}`,
     'description': `${vehicle.year !== 'N/A' ? vehicle.year + ' ' : ''}${vehicle.model !== 'N/A' ? vehicle.model + ' ' : ''}Corvette with ${wheelDesc}`,
   }));
 

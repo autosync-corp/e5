@@ -5,6 +5,9 @@ import PortalLayout from '@/layouts/PortalLayout.astro';
 import { readSession } from '@/core/portal/auth.ts';
 import { isPortalHost, portalHref } from '@/core/portal/host.ts';
 import { loadPortalGalleries } from '@/core/portal/galleries.ts';
+import { loadSyncState } from '@/core/portal/galleryStore.ts';
+import { blobConfigured } from '@/core/portal/slides.ts';
+import { redisConfigured } from '@/core/portal/posts.ts';
 
 const loginHref = portalHref(Astro.request, '/login');
 const user = readSession(Astro.cookies);
@@ -14,6 +17,10 @@ if (!user) {
 
 const { items, source } = await loadPortalGalleries();
 const apiBase = isPortalHost(Astro.request) ? '/api/portal' : '/portal/api';
+const newHref = portalHref(Astro.request, '/galleries/new');
+const sync = await loadSyncState();
+const blobReady = blobConfigured();
+const saveReady = redisConfigured();
 
 const GENERATION_ORDER = ['C8', 'C7', 'C6', 'C5'];
 
@@ -52,17 +59,22 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
   {loginHref && null}
   <h1>Galleries</h1>
   <p class="lead">
-    Choose which vehicle galleries appear on e5wheels.com and in what order. Photos stay on AutoSync — this page does not upload or edit them. Saved changes appear on the live gallery within about a minute.
+    Choose which vehicle galleries appear on e5wheels.com and in what order. Add a gallery to publish photos on e5wheels.com. Saved changes appear on the live gallery within about a minute.
   </p>
 
   <div class="toolbar">
-    <button type="button" class="btn primary" data-save>Save changes</button>
+    <a class="btn primary" href={newHref}>Add gallery</a>
+    <button type="button" class="btn primary" data-save>Save order</button>
+    <button type="button" class="btn ghost" data-sync>Import from AutoSync</button>
     <span class="status" data-status></span>
   </div>
   <p class="meta">
     {source === 'redis'
       ? 'Showing the live saved order. New AutoSync galleries appear at the bottom until you move them.'
       : 'Showing the current public gallery order. Nothing changes on the public site until you save.'}
+    {saveReady ? '' : ' Saving is not available in this environment.'}
+    {blobReady ? '' : ' Photo uploads need Vercel Blob.'}
+    {sync.total ? ` AutoSync import: ${sync.imported} of ${sync.total} (${sync.status}).` : ''}
   </p>
 
   {items.length === 0 ? (
@@ -135,7 +147,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
           >
             <div class="thumb">
               {item.image ? <img src={item.image} alt="" /> : <div class="placeholder" />}
-              <span class="badge">{item.source === 'autosync' ? 'AutoSync' : 'Site'}</span>
+              <span class="badge">{item.owned ? 'On-site' : item.source === 'autosync' ? 'AutoSync' : 'Site'}</span>
             </div>
             <div class="fields">
               <div class="row head">
@@ -153,6 +165,14 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
               <div class="actions">
                 <button type="button" class="btn ghost" data-up>Move up</button>
                 <button type="button" class="btn ghost" data-down>Move down</button>
+                {item.owned ? (
+                  <a class="btn ghost" href={portalHref(Astro.request, `/galleries/${item.id}`)}>Edit</a>
+                ) : (
+                  <button type="button" class="btn ghost" data-promote>Edit on-site</button>
+                )}
+                {item.owned && (
+                  <button type="button" class="btn ghost" data-delete>Delete</button>
+                )}
               </div>
             </div>
           </li>
@@ -176,6 +196,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
     var noteEl = document.querySelector('[data-filter-note]');
     var emptyEl = document.querySelector('[data-empty-filter]');
     var clearBtn = document.querySelector('[data-clear]');
+    var syncBtn = document.querySelector('[data-sync]');
 
     function setStatus(text, ok) {
       if (!statusEl) return;
@@ -299,6 +320,39 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
         if (!card) return;
         if (target.closest('[data-up]')) move(card, -1);
         if (target.closest('[data-down]')) move(card, 1);
+        if (target.closest('[data-promote]')) {
+          event.preventDefault();
+          var promoteId = card.getAttribute('data-id');
+          setStatus('Copying this gallery on-site…');
+          fetch(apiBase + '/galleries/records', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ promote: promoteId }),
+          }).then(function (res) { return res.json().then(function (data) { return { res: res, data: data }; }); })
+            .then(function (out) {
+              if (!out.res.ok) {
+                setStatus(out.data.error || 'Could not copy this gallery.', false);
+                return;
+              }
+              window.location.href = window.location.pathname.replace(/\/$/, '') + '/' + promoteId;
+            })
+            .catch(function () { setStatus('Could not copy this gallery.', false); });
+        }
+        if (target.closest('[data-delete]')) {
+          event.preventDefault();
+          if (!window.confirm('Delete this on-site gallery? The public page will go away.')) return;
+          var deleteId = card.getAttribute('data-id');
+          fetch(apiBase + '/galleries/records/' + encodeURIComponent(deleteId), {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+          }).then(function (res) {
+            if (!res.ok) return res.json().then(function (data) { throw new Error(data.error || 'Delete failed.'); });
+            card.remove();
+            setStatus('Deleted. The live gallery updates within about a minute.');
+          }).catch(function (err) { setStatus(err.message || 'Delete failed.', false); });
+        }
       });
     }
 
@@ -313,6 +367,28 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
         if (yearSelect) yearSelect.value = '';
         if (styleSelect) styleSelect.value = '';
         applyFilters();
+      });
+    }
+
+    if (syncBtn) {
+      syncBtn.addEventListener('click', async function () {
+        setStatus('Importing AutoSync galleries…');
+        try {
+          var res = await fetch(apiBase + '/galleries/sync', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ incremental: false, maxGalleries: 2 }),
+          });
+          var data = await res.json();
+          if (!res.ok) {
+            setStatus(data.error || 'Import failed.', false);
+            return;
+          }
+          setStatus('Imported ' + data.imported + ' of ' + data.total + '. ' + data.remaining + ' remaining. Run again to continue.');
+        } catch (err) {
+          setStatus('Import failed.', false);
+        }
       });
     }
 
@@ -426,6 +502,7 @@ const hasUnspecifiedStyle = items.some((item) => !item.wheelStyle);
     margin: 0;
     line-height: 1.4;
   }
+  a.btn { text-decoration: none; display: inline-block; }
   .btn {
     font-family: 'Franklin Gothic Demi', sans-serif;
     letter-spacing: 0.08em;

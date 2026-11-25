@@ -3,6 +3,12 @@
   "framework": "astro",
   "regions": ["iad1"],
   "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/cron/galleries",
+      "schedule": "15 6 * * *"
+    }
+  ],
   "routes": [
     {
       "src": "^/(login|dashboard)/?$",
@@ -18,6 +24,11 @@
       "src": "^/(slides|links|blog|galleries|performance|sales)/?$",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "dest": "/portal/$1"
+    },
+    {
+      "src": "^/galleries/([^/]+)/?$",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "dest": "/portal/galleries/$1"
     },
     {
       "src": "^/blog/([^/]+)/?$",
@@ -60,6 +71,11 @@
       "source": "/:section(slides|links|blog|galleries|performance|sales)",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "destination": "/portal/:section"
+    },
+    {
+      "source": "/galleries/:id",
+      "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
+      "destination": "/portal/galleries/:id"
     },
     {
       "source": "/blog/:slug",
@@ -165,6 +181,15 @@
       ]
     },
     {
+      "source": "/gallery-media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "headers": [
@@ -189,7 +214,7 @@
       "statusCode": 302
     },
     {
-      "source": "/:path((?!login$|logout$|dashboard$|slides$|links$|blog(?:/.*)?$|galleries$|performance$|sales$|robots\\.txt$|_astro(?:/.*)?$|assets(?:/.*)?$|js(?:/.*)?$|favicon[^/]*$|portal(?:/.*)?$|api/portal(?:/.*)?$).*)",
+      "source": "/:path((?!login$|logout$|dashboard$|slides$|links$|blog(?:/.*)?$|galleries(?:/.*)?$|performance$|sales$|robots\\.txt$|_astro(?:/.*)?$|assets(?:/.*)?$|js(?:/.*)?$|favicon[^/]*$|portal(?:/.*)?$|api/portal(?:/.*)?$).*)",
       "has": [{ "type": "host", "value": "portal.e5wheels.com" }],
       "destination": "https://www.e5wheels.com/:path",
       "statusCode": 302
