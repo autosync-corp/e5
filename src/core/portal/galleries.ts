@@ -7,6 +7,7 @@ import {
 import { galleryCoverUrl } from '@/pages/gallery/utils/galleryMedia.ts';
 import { sortGalleryItems } from '@/pages/gallery/utils/sortGallery.ts';
 import { loadStoredGalleries, mergeStoredCatalog } from '@/core/portal/galleryStore.ts';
+import { suggestGalleryTitle } from '@/core/portal/galleryCopy.ts';
 
 export const GALLERIES_REDIS_KEY = 'e5:portal:galleries';
 export const GALLERIES_DOC_VERSION = 1;
@@ -41,6 +42,7 @@ export type PortalGalleryRow = {
   year: string;
   generation: string;
   trim: string;
+  vehicleColor: string;
   wheelStyle: string;
   image: string;
   hidden: boolean;
@@ -255,7 +257,15 @@ function mapAutoSyncGallery(
     };
   }
 
-  const title = [year, generation, 'Corvette', trim].filter(Boolean).join(' ');
+  const wheelStyle = styleFromPns(pns);
+  const wheelFinish = finishFromPath(firstPath);
+  const title = suggestGalleryTitle({
+    year: year || undefined,
+    generation,
+    trim: trim || undefined,
+    style: wheelStyle || undefined,
+    finish: wheelFinish || undefined,
+  });
   return {
     galleryId: `g-${gallery.Id}`,
     dateAdded: isoDate(gallery.ImgUpdatedAt) || isoDate(gallery.UpdatedAt),
@@ -264,8 +274,8 @@ function mapAutoSyncGallery(
     trim,
     vehicleColor: null,
     vehicleTitle: title || `Corvette gallery ${gallery.Id}`,
-    wheelStyle: styleFromPns(pns),
-    wheelFinish: finishFromPath(firstPath),
+    wheelStyle,
+    wheelFinish,
     wheelSizeF: wheelSize(frontWheel),
     offesetF: wheelOffset(frontWheel),
     partF: [...pns][0] || null,
@@ -475,6 +485,7 @@ function toPortalRow(item: GalleryRecord & { hidden: boolean }): PortalGalleryRo
     year: item.year || '',
     generation: item.submodel || '',
     trim: item.trim || '',
+    vehicleColor: item.vehicleColor || '',
     wheelStyle: portalWheelStyle(item),
     image: galleryCoverUrl(item),
     hidden: item.hidden,

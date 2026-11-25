@@ -51,10 +51,41 @@ assert('sync keeps claimed slugs across batches', sync.includes('loadStoredGalle
 assert('sync copies autosync photos to blob', sync.includes('copyRemotePhoto') && sync.includes('api.autosyncstudio.com/galleries') && sync.includes('f-imgUpdatedAfter') && !sync.includes("method: 'POST'"));
 assert('cron is nightly and authed', vercel.includes('/api/cron/galleries') && vercel.includes('15 6 * * *') && cron.includes('CRON_SECRET') && cron.includes('Bearer'));
 assert('add gallery form has vehicle and wheel fields', editPage.includes('Add gallery') && editPage.includes('data-drop') && editPage.includes('data-square') && editPage.includes('YouTube') && editPage.includes('data-front-pn') && editPage.includes('data-rear-pn'));
-assert('list page keeps filters and add', listPage.includes('Add gallery') && listPage.includes('data-filter="generation"') && listPage.includes('data-sync') && listPage.includes('if (!list || filtersOn()) return'));
+assert('list page keeps filters and add', listPage.includes('Add gallery') && listPage.includes('data-filter="generation"') && listPage.includes('data-filter="color"') && listPage.includes('data-sync') && listPage.includes('if (!list || filtersOn()) return'));
 assert('write APIs are authed and same-origin', recordsApi.includes('requirePortalSession') && recordsApi.includes('requireSameOrigin') && recordApi.includes('DELETE') && photoApi.includes('MAX_GALLERY_IMAGE_BYTES') && photoApi.includes('WebP'));
 assert('wheel picker uses official catalog', picker.includes('e5-official-pricing.csv') && picker.includes('FINISH_CODE_TO_SITE_NAME') && picker.includes('sizeFromPn'));
 assert('copy does not invent facts', copy.includes('suggestGalleryTitle') && copy.includes('Chevrolet Corvette') && !copy.includes('openai') && !copy.includes('generateImage'));
+assert('titles put paint color before generation', copy.includes('clean(input.year), clean(input.vehicleColor), clean(input.generation), clean(input.trim)') && copy.includes('with ${wheel} wheels'));
+assert('sync reads wheel Color/Finish from i-specs', sync.includes("'i-specs': 'true'") && sync.includes('detail?.Color') && sync.includes('detail?.Accent'));
+assert('sync copies static paint color only', sync.includes('staticItem?.vehicleColor') && !sync.includes('ImgColorId') && !sync.includes('Colors['));
+assert('sync does not overwrite client-edited title', sync.includes('if (!draft.clientEdited.title) draft.title = suggestedTitle'));
+
+function suggestGalleryTitle(input) {
+  const clean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+  const vehicle = [clean(input.year), clean(input.vehicleColor), clean(input.generation), clean(input.trim)].filter(Boolean);
+  const base = vehicle.join(' ') || 'Corvette';
+  const style = clean(input.style);
+  const finish = clean(input.finish);
+  const wheel = [style ? `E5 ${style}` : '', finish].filter(Boolean).join(' ');
+  if (wheel) return `${base} with ${wheel} wheels`.slice(0, 160);
+  return base.slice(0, 160);
+}
+assert(
+  'title formula keeps paint and wheel facts',
+  suggestGalleryTitle({
+    year: '2025',
+    vehicleColor: 'Torch Red',
+    generation: 'C8',
+    trim: 'Z06',
+    style: 'GT.03',
+    finish: 'Gloss Black',
+  }) === '2025 Torch Red C8 Z06 with E5 GT.03 Gloss Black wheels',
+);
+assert(
+  'title formula omits color when the field is empty',
+  suggestGalleryTitle({ year: '2025', generation: 'C8', trim: 'Z06', style: 'Talladega', finish: 'Gloss Black' }) ===
+    '2025 C8 Z06 with E5 Talladega Gloss Black wheels',
+);
 assert('public pages still SSR from catalog helpers', publicDetail.includes('loadGalleryBySlug') && publicIndex.includes('loadPublicGalleries') && helper.includes('mergeStoredCatalog'));
 assert('existing slug matching stays', helper.includes('pickUniqueStatic') && helper.includes('g-${gallery.Id}'));
 assert('docs describe store blob cron and CRON_SECRET', docs.includes('e5:galleries:index') && docs.includes('BLOB_READ_WRITE_TOKEN') && docs.includes('CRON_SECRET') && docs.includes('/gallery-media/'));

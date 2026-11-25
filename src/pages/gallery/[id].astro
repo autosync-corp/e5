@@ -44,13 +44,15 @@ const pageTitle = buildPageTitle();
 const buildDescription = () => {
   const parts = [];
   if (vehicleData.year && vehicleData.year !== 'N/A') parts.push(vehicleData.year);
+  if (vehicleData.vehicleColor) parts.push(vehicleData.vehicleColor);
   if (vehicleData.submodel && vehicleData.submodel !== 'N/A') parts.push(vehicleData.submodel);
   if (vehicleData.trim && vehicleData.trim !== 'N/A') parts.push(vehicleData.trim);
 
   const vehicleName = parts.length > 0 ? parts.join(' ') : 'Corvette';
   const wheelInfo = vehicleData.wheelStyle && vehicleData.wheelStyle !== 'N/A' ? `${vehicleData.wheelStyle}` : 'E5';
+  const finishInfo = vehicleData.wheelFinish && vehicleData.wheelFinish !== 'N/A' ? ` ${vehicleData.wheelFinish}` : '';
 
-  return `View ${vehicleName} Corvette with ${wheelInfo} wheels. See detailed photos, wheel specifications, and fitment details from our customer gallery.`;
+  return `View ${vehicleName} Corvette with ${wheelInfo}${finishInfo} wheels. See detailed photos, wheel specifications, and fitment details from our customer gallery.`;
 };
 
 const description = (vehicleData.description || '').trim() || buildDescription();
@@ -154,7 +156,9 @@ const corvetteGalleryImages = publicGalleries
 
     <section class="container-e5 pt-4">
       <h1 class="text-2xl md:text-3xl lg:text-4xl font-franklin-heavy uppercase tracking-[2px] text-black mb-6">
-        {vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`} with {wheelDesc}
+        {vehicle.title.includes(' with ')
+          ? vehicle.title
+          : `${vehicle.trim !== 'N/A' ? vehicle.trim : `${vehicle.year} ${vehicle.model} Corvette`} with ${wheelDesc}`}
       </h1>
       {(vehicleData.partF || vehicleData.wheelPartR) && (
         <p class="text-lg text-black opacity-70 tracking-wide leading-[30px] mb-6">
