@@ -43,7 +43,19 @@ assert('hear-about is detected not invented', helper.includes('HOW_DID_YOU_HEAR_
 assert('friendly error copy', page.includes("Couldn't load sales data right now.") && page.includes('Try again in a few minutes.'));
 assert('page copy has no jargon', !page.includes('GHL') && !page.includes('GoHighLevel') && !page.includes('Redis') && !page.includes('API') && !page.includes('token') && !page.includes('LeadConnector'));
 assert('token stays server-side', helper.includes('GHL_PRIVATE_TOKEN') && helper.includes('Authorization') && !helper.includes('console.log') && !page.includes('GHL_PRIVATE_TOKEN') && !page.includes('GHL_LOCATION_ID'));
+assert('crm fetch sends a named user-agent', helper.includes("GHL_USER_AGENT = 'E5Portal/1.0'") && helper.includes("headers.set('User-Agent', GHL_USER_AGENT)"));
+assert(
+  'failed crm calls log a safe diagnostic',
+  helper.includes('portal-sales failed step=') &&
+    helper.includes('missing-env token=') &&
+    helper.includes('console.error') &&
+    !/console\.error\([^)]*Authorization/.test(helper) &&
+    !helper.includes('res.headers') &&
+    !helper.includes('getSetCookie'),
+);
+assert('errors are not cached', helper.includes('if (!isSnapshot(snapshot)) return') && helper.includes('await writeCache(days, snapshot)') && helper.includes('throw err'));
 assert('docs cover section 7', docs.includes('Section 7') && docs.includes('/sales') && docs.includes('GHL_PRIVATE_TOKEN') && docs.includes('Read-only') && docs.includes('how_did_you_hear'));
+assert('docs mention user-agent and diagnostics', docs.includes('E5Portal/1.0') && docs.includes('never logged') && docs.includes('not written to the 5-minute cache'));
 assert('checkout still sends hear-about on the webhook', webhook.includes('how_did_you_hear') && webhook.includes('applyHowDidYouHear'));
 assert('coming soon still on galleries', soon.includes('Coming soon') && section1.includes('/portal/galleries') && /slug: 'galleries'[\s\S]*?ready: false/.test(sections));
 assert('shell still noindex', layout.includes('noindex, nofollow'));

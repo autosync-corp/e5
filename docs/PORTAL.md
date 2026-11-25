@@ -134,6 +134,7 @@ Sales & Prospects.
 - Lead sources: counts of the contact `source` field, including “Not set”.
 - Checkout “How did you hear about us?” is **not** a contact custom field and **not** a location tag in this account. Checkout sends it on the order webhook (`how_did_you_hear` plus a line in order notes). The page only shows a hear-about chart if a matching contact field or tag actually has values; otherwise that block is omitted.
 - Env vars (already on the Vercel project, Production + Preview): `GHL_PRIVATE_TOKEN` (server-side only — never sent to the browser, logged, or committed) and `GHL_LOCATION_ID`. If either is missing or the CRM request fails, the page shows “Couldn't load sales data right now.”
+- CRM fetches send `User-Agent: E5Portal/1.0` (LeadConnector’s edge 403s some default agents). Failed requests log one line (`step`, HTTP status or `missing-env`/`network`/`timeout`/`parse`, whether each env var is missing). The token and response headers are never logged. Failures are not written to the 5-minute cache.
 - Behind the existing `e5_portal` login. Not public.
 
 Do not merge until Dave replies **go live**.
